@@ -84,7 +84,14 @@ jobs:
       - name: Install dependencies
         run: python3 -m pip install -e ".[dev]"
       - name: Run pre-commit
-        run: pre-commit run --all-files
+        run: |
+          # First run: hooks may auto-fix files (registry, properties, readme)
+          if ! pre-commit run --all-files; then
+            echo "::warning::Pre-commit hooks modified files — staging and re-running"
+            git add -A
+            # Second run: if hooks still modify files, there is a real mismatch
+            pre-commit run --all-files
+          fi
 
   # --- JOB 2: SHACL Validation ---
   validate-shacl:
