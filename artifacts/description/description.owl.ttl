@@ -42,7 +42,7 @@
 ## Content of an Ontology
 # Every Ontology needs to be declared as an OWL-Ontology by including a triple
 # Example:
-# <https://github.com/GAIA-X4PLC-AAD/ontology-management-base/tree/main/example/description_ontology#> rdf:type owl:Ontology .
+# <https://github.com/ASCS-eV/ontology-management-base/tree/main/example/description_ontology#> rdf:type owl:Ontology .
 # In this case <https://w3id.org/gaia-x4plcaad/ontologies/description/v1#> is the IRI for the ontology we are defining.
 
 # We define that the ontology "https://w3id.org/gaia-x4plcaad/ontologies/description/v1" is an owl Ontology, this is required for the FC

@@ -10,7 +10,7 @@ This page covers the full setup flow for users and contributors.
 ## Install
 
 ```bash
-git clone https://github.com/gaia-x4plc-aad/ontology-management-base.git
+git clone https://github.com/ASCS-eV/ontology-management-base.git
 cd ontology-management-base
 
 git submodule update --init --recursive

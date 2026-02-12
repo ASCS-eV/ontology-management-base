@@ -155,7 +155,7 @@ def build_raw_owl_url(
     if ARTIFACTS_SITE_BASE_URL:
         return f"{ARTIFACTS_SITE_BASE_URL}/{domain}/{version_info}/{owl_name}"
     return (
-        "https://raw.githubusercontent.com/gaia-x4plc-aad/"
+        "https://raw.githubusercontent.com/ASCS-eV/"
         f"ontology-management-base/main/artifacts/{domain}/{owl_name}"
     )
 

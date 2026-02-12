@@ -3,4 +3,4 @@
 	url = git@gitlab.com:ascs-ev/service-characteristics.git
 [submodule "w3id.org"]
 	path = submodules/w3id.org
-	url = git@github.com:GAIA-X4PLC-AAD/w3id.org.git
+	url = git@github.com:ASCS-eV/w3id.org.git

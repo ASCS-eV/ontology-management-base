@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ontology-management-base"
-version = "0.1.0"
+version = "0.1.1"
 description = "Ontology validation tools and management for the ENVITED-X ecosystem"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -52,10 +52,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/gaia-x4plc-aad/ontology-management-base"
-Documentation = "https://gaia-x4plc-aad.github.io/ontology-management-base/"
-Repository = "https://github.com/gaia-x4plc-aad/ontology-management-base.git"
-Issues = "https://github.com/gaia-x4plc-aad/ontology-management-base/issues"
+Homepage = "https://github.com/ASCS-eV/ontology-management-base"
+Documentation = "https://ascs-ev.github.io/ontology-management-base/"
+Repository = "https://github.com/ASCS-eV/ontology-management-base.git"
+Issues = "https://github.com/ASCS-eV/ontology-management-base/issues"
 
 [project.scripts]
 onto-validate = "src.tools.validators.validation_suite:main"
