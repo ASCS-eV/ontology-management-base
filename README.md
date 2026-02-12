@@ -90,8 +90,8 @@ Hook flow (via `hooks/copy_artifacts.py`):
 | `https://w3id.org/ascs-ev/envited-x/hdmap/v5/shapes` | [hdmap/hdmap.shacl.ttl](artifacts/hdmap/hdmap.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5` | [manifest/manifest.owl.ttl](artifacts/manifest/manifest.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes` | [manifest/manifest.shacl.ttl](artifacts/manifest/manifest.shacl.ttl) |
-| `https://w3id.org/ascs-ev/envited-x/ositrace/v5` | [ositrace/ositrace.owl.ttl](artifacts/ositrace/ositrace.owl.ttl) |
-| `https://w3id.org/ascs-ev/envited-x/ositrace/v5/shapes` | [ositrace/ositrace.shacl.ttl](artifacts/ositrace/ositrace.shacl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ositrace/v6` | [ositrace/ositrace.owl.ttl](artifacts/ositrace/ositrace.owl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes` | [ositrace/ositrace.shacl.ttl](artifacts/ositrace/ositrace.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v5` | [scenario/scenario.owl.ttl](artifacts/scenario/scenario.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v5/shapes` | [scenario/scenario.shacl.ttl](artifacts/scenario/scenario.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/surface-model/v6` | [surface-model/surface-model.owl.ttl](artifacts/surface-model/surface-model.owl.ttl) |
