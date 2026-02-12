@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Central repository for **Gaia-X 25.11 compliant ontologies** for the ENVITED-X Ecosystem. Provides OWL ontology definitions, SHACL validation shapes, JSON-LD context files, and a Python validation suite.
+Central repository for **Gaia-X 25.11 compliant ontologies** for the ENVITED-X Ecosystem, maintained by ASCS e.V. Provides OWL ontology definitions, SHACL validation shapes, JSON-LD context files, and a Python validation suite.
+
+Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`). This is the active development home.
 
 **Key URLs:**
 - Documentation: https://ascs-ev.github.io/ontology-management-base/
@@ -95,8 +97,24 @@ All file discovery goes through XML catalogs. Validators never scan the filesyst
 Four checks run in sequence (selectable via `--run`):
 1. **check-syntax** — JSON/Turtle well-formedness
 2. **check-artifact-coherence** — SHACL targets exist in OWL (domain mode only)
-3. **check-data-conformance** — SHACL validation of instance data (loads data → extracts types → discovers schemas → resolves `did:web:` fixtures → applies RDFS inference → runs pyshacl)
+3. **check-data-conformance** — SHACL validation of instance data
 4. **check-failing-tests** — Invalid data in `tests/data/{domain}/invalid/` fails as expected, matched against `.expected` files (domain mode only)
+
+**SHACL conformance detail** (check 3 — the most complex path):
+Load JSON-LD data → extract `@type` IRIs → discover matching SHACL shapes via catalog → load OWL+SHACL graphs → resolve `did:web:` fixture IRIs from test catalog → apply RDFS inference → run pyshacl
+
+### W3ID Ontology Namespaces
+
+Two coexisting W3ID IRI namespaces resolve to GitHub Pages (`ascs-ev.github.io/ontology-management-base/w3id/...`):
+
+| Namespace | Pattern | Status |
+|-----------|---------|--------|
+| **ASCS-eV** | `w3id.org/ascs-ev/envited-x/{domain}/v{n}` | Active — new domains use this |
+| **Gaia-X4PLC-AAD** | `w3id.org/gaia-x4plcaad/ontologies/{domain}/v{n}` | Legacy — migrate to ASCS-eV on next version bump |
+
+**Migration policy:** When bumping a `gaia-x4plcaad` ontology's version, change its IRI to `ascs-ev/envited-x/{domain}/v{n+1}` and add `owl:priorVersion` pointing to the old IRI. Old version IRIs continue resolving permanently via w3id redirects.
+
+W3ID redirect rules live in the `submodules/w3id.org/` submodule (`gaia-x4plcaad/.htaccess` and `ascs-ev/envited-x/.htaccess`).
 
 ### Pre-commit Hooks
 
@@ -121,6 +139,22 @@ from src.tools.utils.print_formatter import normalize_path_for_display
 logger = get_logger(__name__)
 ```
 
+## Return Codes
+
+```
+0       SUCCESS
+1       GENERAL_ERROR
+10      SYNTAX_ERROR
+101     JSON_SYNTAX_ERROR
+102     TURTLE_SYNTAX_ERROR
+200     COHERENCE_ERROR
+201     MISSING_TARGET_CLASS
+210     CONFORMANCE_ERROR
+211     SHACL_VIOLATION
+99      DEPENDENCY_ERROR
+100     SKIPPED
+```
+
 ## File Types
 
 | Extension | Purpose | Location |
@@ -131,6 +165,23 @@ logger = get_logger(__name__)
 | `.json` / `.jsonld` | JSON-LD instance data | `tests/data/{domain}/valid/` or `invalid/` |
 | `.expected` | Expected error output for invalid test data | `tests/data/{domain}/invalid/` |
 | `catalog-v001.xml` | OASIS XML catalog | `artifacts/`, `imports/`, `tests/` |
+
+## Test Structure
+
+```
+tests/
+├── unit/              # Unit tests per module (core/, utils/, validators/)
+├── integration/       # Cross-module integration tests
+├── data/              # Test instance data per domain
+│   └── {domain}/
+│       ├── valid/     # Instances that must pass SHACL validation
+│       └── invalid/   # Instances that must fail (with .expected files)
+├── fixtures/          # Shared RDF fixtures (mock did:web: references)
+├── catalog-v001.xml   # Test catalog for fixture resolution
+└── conftest.py        # Shared pytest fixtures (resolver, tmp_path helpers)
+```
+
+Modules also have `_run_tests()` functions for self-testing: `python3 -m src.tools.utils.file_collector --test`
 
 ## Coding Conventions
 
