@@ -17,7 +17,7 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 
 ## Quick Links
 
-- **[Full Documentation](https://ascs-ev.github.io/ontology-management-base/)** - Complete guides and references
+- **[Full Documentation](docs/)** - Complete guides and references
 - **[Validation](docs/validation/strategy.md)** - Run checks on your data
 - **[Contributing](docs/getting-started/contribute.md)** - How to add or modify ontologies
 - **[Gaia-X 4 PLC-AAD](docs/gaiax/gaiax4plc-aad.md)** - Federated catalog upload flow
@@ -96,9 +96,9 @@ Hook flow (via `hooks/copy_artifacts.py`):
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5` | [manifest/manifest.owl.ttl](artifacts/manifest/manifest.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/context` | [manifest/manifest.context.jsonld](artifacts/manifest/manifest.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes` | [manifest/manifest.shacl.ttl](artifacts/manifest/manifest.shacl.ttl) |
-| `https://w3id.org/ascs-ev/envited-x/ositrace/v5` | [ositrace/ositrace.owl.ttl](artifacts/ositrace/ositrace.owl.ttl) |
-| `https://w3id.org/ascs-ev/envited-x/ositrace/v5/context` | [ositrace/ositrace.context.jsonld](artifacts/ositrace/ositrace.context.jsonld) |
-| `https://w3id.org/ascs-ev/envited-x/ositrace/v5/shapes` | [ositrace/ositrace.shacl.ttl](artifacts/ositrace/ositrace.shacl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ositrace/v6` | [ositrace/ositrace.owl.ttl](artifacts/ositrace/ositrace.owl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ositrace/v6/context` | [ositrace/ositrace.context.jsonld](artifacts/ositrace/ositrace.context.jsonld) |
+| `https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes` | [ositrace/ositrace.shacl.ttl](artifacts/ositrace/ositrace.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v5` | [scenario/scenario.owl.ttl](artifacts/scenario/scenario.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v5/context` | [scenario/scenario.context.jsonld](artifacts/scenario/scenario.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v5/shapes` | [scenario/scenario.shacl.ttl](artifacts/scenario/scenario.shacl.ttl) |

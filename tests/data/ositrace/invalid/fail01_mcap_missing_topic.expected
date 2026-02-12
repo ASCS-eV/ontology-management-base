@@ -1,0 +1,24 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                           ['tests/data/ositrace/invalid/fail01_mcap_missing_topic.json']                                           =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Error:            Format must conform to either SingleChannelFormatShape (.osi) or MultiChannelFormatShape (MCAP).                              =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.ositrace.net:OSITrace:test_invalid_fail01_mcap_missing_topic                                                     =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasDomainSpecification                                                         =
+=    Error:            Each OSI trace must have one associated DomainSpecification object with content, format, quality, quantity, and dataSource.   =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasFormat                                                                      =
+=    Error:            Value does not conform to Shape ositrace:FormatShape. See details for more information.                                       =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/topic                                                                          =
+=    Error:            Validation of topic failed! Each channel must have exactly one topic name.                                                    =
+======================================================================================================================================================

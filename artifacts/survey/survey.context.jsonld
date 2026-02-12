@@ -19,21 +19,6 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "survey": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "surveyUrl": {
-      "@id": "survey:surveyUrl"
-    },
-    "surveyEndTime": {
-      "@id": "survey:surveyEndTime",
-      "@type": "xsd:dateTime"
-    },
-    "dataSize": {
-      "@id": "survey:dataSize",
-      "@type": "xsd:float"
-    },
-    "surveyCreationTime": {
-      "@id": "survey:surveyCreationTime",
-      "@type": "xsd:dateTime"
-    },
     "hasManifest": {
       "@id": "survey:hasManifest",
       "@type": "@id"
@@ -45,6 +30,21 @@
     "hasServiceOffering": {
       "@id": "survey:hasServiceOffering",
       "@type": "@id"
+    },
+    "surveyCreationTime": {
+      "@id": "survey:surveyCreationTime",
+      "@type": "xsd:dateTime"
+    },
+    "dataSize": {
+      "@id": "survey:dataSize",
+      "@type": "xsd:float"
+    },
+    "surveyEndTime": {
+      "@id": "survey:surveyEndTime",
+      "@type": "xsd:dateTime"
+    },
+    "surveyUrl": {
+      "@id": "survey:surveyUrl"
     },
     "hasContent": {
       "@id": "survey:hasContent",
@@ -58,13 +58,13 @@
       "@id": "survey:surveyCloseTime",
       "@type": "xsd:dateTime"
     },
-    "belongsTo": {
-      "@id": "survey:belongsTo",
-      "@type": "@id"
-    },
     "surveyStartTime": {
       "@id": "survey:surveyStartTime",
       "@type": "xsd:dateTime"
+    },
+    "belongsTo": {
+      "@id": "survey:belongsTo",
+      "@type": "@id"
     },
     "ResultContent": "survey:ResultContent",
     "ResultDomainSpecification": "survey:ResultDomainSpecification",

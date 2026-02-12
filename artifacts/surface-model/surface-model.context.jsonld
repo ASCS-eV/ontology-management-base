@@ -17,35 +17,19 @@
     "surface-model": "https://w3id.org/ascs-ev/envited-x/surface-model/v6/",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasDomainSpecification": {
-      "@id": "surface-model:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasResourceDescription": {
-      "@id": "surface-model:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "surface-model:hasManifest",
-      "@type": "@id"
-    },
     "formatType": {
       "@id": "surface-model:formatType"
     },
     "version": {
       "@id": "surface-model:version"
     },
-    "mapDataField": {
-      "@id": "surface-model:mapDataField",
-      "@type": "xsd:boolean"
+    "hasContent": {
+      "@id": "surface-model:hasContent",
+      "@type": "@id"
     },
-    "elevationRange": {
-      "@id": "surface-model:elevationRange",
-      "@type": "xsd:float"
-    },
-    "length": {
-      "@id": "surface-model:length",
-      "@type": "xsd:float"
+    "hasQuality": {
+      "@id": "surface-model:hasQuality",
+      "@type": "@id"
     },
     "hasFormat": {
       "@id": "surface-model:hasFormat",
@@ -55,40 +39,56 @@
       "@id": "surface-model:hasQuantity",
       "@type": "@id"
     },
-    "hasQuality": {
-      "@id": "surface-model:hasQuality",
-      "@type": "@id"
-    },
     "hasGeoreference": {
       "@id": "surface-model:hasGeoreference",
       "@type": "@id"
     },
-    "hasContent": {
-      "@id": "surface-model:hasContent",
+    "elevationRange": {
+      "@id": "surface-model:elevationRange",
+      "@type": "xsd:float"
+    },
+    "mapDataField": {
+      "@id": "surface-model:mapDataField",
+      "@type": "xsd:boolean"
+    },
+    "length": {
+      "@id": "surface-model:length",
+      "@type": "xsd:float"
+    },
+    "hasDomainSpecification": {
+      "@id": "surface-model:hasDomainSpecification",
       "@type": "@id"
     },
-    "contentType": {
-      "@id": "surface-model:contentType"
+    "hasManifest": {
+      "@id": "surface-model:hasManifest",
+      "@type": "@id"
+    },
+    "hasResourceDescription": {
+      "@id": "surface-model:hasResourceDescription",
+      "@type": "@id"
     },
     "resolutionLateral": {
       "@id": "surface-model:resolutionLateral",
+      "@type": "xsd:float"
+    },
+    "rampExists": {
+      "@id": "surface-model:rampExists",
+      "@type": "xsd:boolean"
+    },
+    "resolutionLongitudinal": {
+      "@id": "surface-model:resolutionLongitudinal",
+      "@type": "xsd:float"
+    },
+    "orientation": {
+      "@id": "surface-model:orientation",
       "@type": "xsd:float"
     },
     "platformExists": {
       "@id": "surface-model:platformExists",
       "@type": "xsd:boolean"
     },
-    "orientation": {
-      "@id": "surface-model:orientation",
-      "@type": "xsd:float"
-    },
-    "resolutionLongitudinal": {
-      "@id": "surface-model:resolutionLongitudinal",
-      "@type": "xsd:float"
-    },
-    "rampExists": {
-      "@id": "surface-model:rampExists",
-      "@type": "xsd:boolean"
+    "contentType": {
+      "@id": "surface-model:contentType"
     },
     "Content": "surface-model:Content",
     "DomainSpecification": "surface-model:DomainSpecification",

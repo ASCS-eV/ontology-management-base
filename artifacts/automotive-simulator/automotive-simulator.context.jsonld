@@ -16,6 +16,12 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "automotive-simulator": "https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "interface": {
+      "@id": "automotive-simulator:interface"
+    },
+    "scenarioDefinition": {
+      "@id": "automotive-simulator:scenarioDefinition"
+    },
     "hasManifest": {
       "@id": "automotive-simulator:hasManifest",
       "@type": "@id"
@@ -28,26 +34,12 @@
       "@id": "automotive-simulator:hasDomainSpecification",
       "@type": "@id"
     },
-    "scenarioDefinition": {
-      "@id": "automotive-simulator:scenarioDefinition"
-    },
-    "interface": {
-      "@id": "automotive-simulator:interface"
-    },
-    "hasFormat": {
-      "@id": "automotive-simulator:hasFormat",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "automotive-simulator:hasContent",
-      "@type": "@id"
-    },
-    "softwareVersion": {
-      "@id": "automotive-simulator:softwareVersion"
-    },
     "sensorFailureFlag": {
       "@id": "automotive-simulator:sensorFailureFlag",
       "@type": "xsd:boolean"
+    },
+    "softwareVersion": {
+      "@id": "automotive-simulator:softwareVersion"
     },
     "sensorAttackFlag": {
       "@id": "automotive-simulator:sensorAttackFlag",
@@ -55,6 +47,14 @@
     },
     "simulatorMake": {
       "@id": "automotive-simulator:simulatorMake"
+    },
+    "hasContent": {
+      "@id": "automotive-simulator:hasContent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "automotive-simulator:hasFormat",
+      "@type": "@id"
     },
     "AutomotiveSimulator": "automotive-simulator:AutomotiveSimulator",
     "Content": "automotive-simulator:Content",

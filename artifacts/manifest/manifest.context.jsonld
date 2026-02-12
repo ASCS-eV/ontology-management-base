@@ -15,24 +15,28 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "hasCategory": {
-      "@id": "manifest:hasCategory",
+    "hasManifestReference": {
+      "@id": "manifest:hasManifestReference",
       "@type": "@id"
     },
     "hasReferencedArtifacts": {
       "@id": "manifest:hasReferencedArtifacts",
       "@type": "@id"
     },
-    "hasManifestReference": {
-      "@id": "manifest:hasManifestReference",
+    "hasArtifacts": {
+      "@id": "manifest:hasArtifacts",
       "@type": "@id"
     },
     "hasLicense": {
       "@id": "manifest:hasLicense",
       "@type": "@id"
     },
-    "hasArtifacts": {
-      "@id": "manifest:hasArtifacts",
+    "hasFileMetadata": {
+      "@id": "manifest:hasFileMetadata",
+      "@type": "@id"
+    },
+    "hasCategory": {
+      "@id": "manifest:hasCategory",
       "@type": "@id"
     },
     "conformsTo": {
@@ -40,24 +44,16 @@
       "@type": "@id",
       "@container": "@set"
     },
-    "iri": {
-      "@id": "manifest:iri",
-      "@type": "@id"
-    },
     "note": {
       "@id": "skos:note"
-    },
-    "hasFileMetadata": {
-      "@id": "manifest:hasFileMetadata",
-      "@type": "@id"
     },
     "hasAccessRole": {
       "@id": "manifest:hasAccessRole",
       "@type": "@id"
     },
-    "filePath": {
-      "@id": "manifest:filePath",
-      "@type": "xsd:anyURI"
+    "iri": {
+      "@id": "manifest:iri",
+      "@type": "@id"
     },
     "fileSize": {
       "@id": "manifest:fileSize",
@@ -66,9 +62,6 @@
     "filename": {
       "@id": "manifest:filename"
     },
-    "cid": {
-      "@id": "manifest:cid"
-    },
     "mimeType": {
       "@id": "manifest:mimeType"
     },
@@ -76,23 +69,30 @@
       "@id": "manifest:timestamp",
       "@type": "xsd:dateTime"
     },
+    "cid": {
+      "@id": "manifest:cid"
+    },
     "hasDimensions": {
       "@id": "manifest:hasDimensions",
       "@type": "@id"
+    },
+    "filePath": {
+      "@id": "manifest:filePath",
+      "@type": "xsd:anyURI"
+    },
+    "unit": {
+      "@id": "manifest:unit"
     },
     "height": {
       "@id": "manifest:height",
       "@type": "xsd:float"
     },
-    "width": {
-      "@id": "manifest:width",
-      "@type": "xsd:float"
-    },
-    "unit": {
-      "@id": "manifest:unit"
-    },
     "depth": {
       "@id": "manifest:depth",
+      "@type": "xsd:float"
+    },
+    "width": {
+      "@id": "manifest:width",
       "@type": "xsd:float"
     },
     "AccessRole": "manifest:AccessRole",

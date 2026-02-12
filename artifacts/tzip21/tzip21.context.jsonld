@@ -23,44 +23,106 @@
     "value": {
       "@id": "tzip21:value"
     },
-    "hash": {
-      "@id": "tzip21:hash"
-    },
     "fileSize": {
       "@id": "tzip21:fileSize",
       "@type": "xsd:integer"
-    },
-    "duration": {
-      "@id": "tzip21:duration",
-      "@type": "xsd:time"
-    },
-    "fileName": {
-      "@id": "tzip21:fileName"
     },
     "dimensions": {
       "@id": "tzip21:dimensions",
       "@type": "@id"
     },
-    "dataRate": {
-      "@id": "tzip21:dataRate",
-      "@type": "@id"
+    "hash": {
+      "@id": "tzip21:hash"
     },
     "uri": {
       "@id": "tzip21:uri",
       "@type": "xsd:anyURI"
     },
+    "fileName": {
+      "@id": "tzip21:fileName"
+    },
     "mimeType": {
       "@id": "tzip21:mimeType"
     },
-    "publishers": {
-      "@id": "tzip21:publishers"
+    "duration": {
+      "@id": "tzip21:duration",
+      "@type": "xsd:time"
+    },
+    "dataRate": {
+      "@id": "tzip21:dataRate",
+      "@type": "@id"
+    },
+    "decimals": {
+      "@id": "tzip21:decimals",
+      "@type": "xsd:integer"
     },
     "ttl": {
       "@id": "tzip21:ttl",
       "@type": "xsd:integer"
     },
+    "externalUri": {
+      "@id": "tzip21:externalUri",
+      "@type": "xsd:anyURI"
+    },
+    "language": {
+      "@id": "tzip21:language",
+      "@type": "http://www.w3.org/2001/XMLSchema#language"
+    },
     "creators": {
       "@id": "tzip21:creators"
+    },
+    "description": {
+      "@id": "tzip21:description"
+    },
+    "identifier": {
+      "@id": "tzip21:identifier",
+      "@type": "@id"
+    },
+    "symbol": {
+      "@id": "tzip21:symbol"
+    },
+    "shouldPreferSymbol": {
+      "@id": "tzip21:shouldPreferSymbol",
+      "@type": "xsd:boolean"
+    },
+    "blockLevel": {
+      "@id": "tzip21:blockLevel",
+      "@type": "xsd:integer"
+    },
+    "attributes": {
+      "@id": "tzip21:attributes",
+      "@type": "@id"
+    },
+    "publishers": {
+      "@id": "tzip21:publishers"
+    },
+    "rights": {
+      "@id": "tzip21:rights"
+    },
+    "tags": {
+      "@id": "tzip21:tags"
+    },
+    "isBooleanAmount": {
+      "@id": "tzip21:isBooleanAmount",
+      "@type": "xsd:boolean"
+    },
+    "genres": {
+      "@id": "tzip21:genres"
+    },
+    "rightsUri": {
+      "@id": "tzip21:rightsUri",
+      "@type": "xsd:anyURI"
+    },
+    "displayUri": {
+      "@id": "tzip21:displayUri",
+      "@type": "xsd:anyURI"
+    },
+    "name": {
+      "@id": "tzip21:name"
+    },
+    "artifactUri": {
+      "@id": "tzip21:artifactUri",
+      "@type": "xsd:anyURI"
     },
     "contributors": {
       "@id": "tzip21:contributors"
@@ -68,89 +130,27 @@
     "minter": {
       "@id": "tzip21:minter"
     },
-    "genres": {
-      "@id": "tzip21:genres"
-    },
-    "artifactUri": {
-      "@id": "tzip21:artifactUri",
-      "@type": "xsd:anyURI"
-    },
-    "description": {
-      "@id": "tzip21:description"
-    },
-    "rightsUri": {
-      "@id": "tzip21:rightsUri",
-      "@type": "xsd:anyURI"
-    },
-    "identifier": {
-      "@id": "tzip21:identifier",
-      "@type": "@id"
-    },
-    "thumbnailUri": {
-      "@id": "tzip21:thumbnailUri",
-      "@type": "xsd:anyURI"
-    },
-    "rights": {
-      "@id": "tzip21:rights"
-    },
     "assets": {
       "@id": "tzip21:assets",
       "@type": "@id"
-    },
-    "displayUri": {
-      "@id": "tzip21:displayUri",
-      "@type": "xsd:anyURI"
-    },
-    "type": {
-      "@id": "tzip21:type"
-    },
-    "blockLevel": {
-      "@id": "tzip21:blockLevel",
-      "@type": "xsd:integer"
-    },
-    "isBooleanAmount": {
-      "@id": "tzip21:isBooleanAmount",
-      "@type": "xsd:boolean"
-    },
-    "symbol": {
-      "@id": "tzip21:symbol"
-    },
-    "decimals": {
-      "@id": "tzip21:decimals",
-      "@type": "xsd:integer"
-    },
-    "name": {
-      "@id": "tzip21:name"
-    },
-    "language": {
-      "@id": "tzip21:language",
-      "@type": "http://www.w3.org/2001/XMLSchema#language"
-    },
-    "externalUri": {
-      "@id": "tzip21:externalUri",
-      "@type": "xsd:anyURI"
     },
     "formats": {
       "@id": "tzip21:formats",
       "@type": "@id"
     },
-    "tags": {
-      "@id": "tzip21:tags"
-    },
     "date": {
       "@id": "tzip21:date",
       "@type": "xsd:dateTime"
     },
+    "thumbnailUri": {
+      "@id": "tzip21:thumbnailUri",
+      "@type": "xsd:anyURI"
+    },
+    "type": {
+      "@id": "tzip21:type"
+    },
     "isTransferable": {
       "@id": "tzip21:isTransferable",
-      "@type": "xsd:boolean"
-    },
-    "attributes": {
-      "@id": "tzip21:attributes",
-      "@type": "@id"
-    },
-    "shouldPreferSymbol": {
-      "@id": "tzip21:shouldPreferSymbol",
       "@type": "xsd:boolean"
     },
     "Asset": "tzip21:Asset",

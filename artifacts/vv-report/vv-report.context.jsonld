@@ -16,31 +16,24 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "vv-report": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "result": {
-      "@id": "vv-report:result",
+    "hasDomainSpecification": {
+      "@id": "vv-report:hasDomainSpecification",
       "@type": "@id"
     },
-    "metric": {
-      "@id": "vv-report:metric",
+    "hasCodeArtifact": {
+      "@id": "vv-report:hasCodeArtifact",
       "@type": "@id"
     },
-    "conceptSpecificData": {
-      "@id": "vv-report:conceptSpecificData"
-    },
-    "inputData": {
-      "@id": "vv-report:inputData",
+    "hasManifest": {
+      "@id": "vv-report:hasManifest",
       "@type": "@id"
     },
-    "parameters": {
-      "@id": "vv-report:parameters",
-      "@type": "@id"
+    "inputDescription": {
+      "@id": "vv-report:inputDescription"
     },
-    "resultVerificationReference": {
-      "@id": "vv-report:resultVerificationReference",
+    "inputReference": {
+      "@id": "vv-report:inputReference",
       "@type": "xsd:anyURI"
-    },
-    "resultVerificationDescription": {
-      "@id": "vv-report:resultVerificationDescription"
     },
     "parameterValue": {
       "@id": "vv-report:parameterValue"
@@ -51,15 +44,67 @@
     "parameterDescription": {
       "@id": "vv-report:parameterDescription"
     },
+    "conceptSpecificData": {
+      "@id": "vv-report:conceptSpecificData"
+    },
+    "metric": {
+      "@id": "vv-report:metric",
+      "@type": "@id"
+    },
+    "parameters": {
+      "@id": "vv-report:parameters",
+      "@type": "@id"
+    },
+    "result": {
+      "@id": "vv-report:result",
+      "@type": "@id"
+    },
+    "inputData": {
+      "@id": "vv-report:inputData",
+      "@type": "@id"
+    },
+    "resultVerification": {
+      "@id": "vv-report:resultVerification",
+      "@type": "@id"
+    },
+    "resultVerifiable": {
+      "@id": "vv-report:resultVerifiable",
+      "@type": "xsd:boolean"
+    },
+    "resultLog": {
+      "@id": "vv-report:resultLog"
+    },
+    "resultTestPassed": {
+      "@id": "vv-report:resultTestPassed",
+      "@type": "xsd:boolean"
+    },
+    "systemUnderTest": {
+      "@id": "vv-report:systemUnderTest",
+      "@type": "xsd:anyURI"
+    },
+    "evaluations": {
+      "@id": "vv-report:evaluations",
+      "@type": "@id"
+    },
     "metricReference": {
       "@id": "vv-report:metricReference",
       "@type": "xsd:anyURI"
     },
+    "metricTitle": {
+      "@id": "vv-report:metricTitle"
+    },
     "metricDescription": {
       "@id": "vv-report:metricDescription"
     },
-    "metricTitle": {
-      "@id": "vv-report:metricTitle"
+    "resultVerificationReference": {
+      "@id": "vv-report:resultVerificationReference",
+      "@type": "xsd:anyURI"
+    },
+    "resultVerificationDescription": {
+      "@id": "vv-report:resultVerificationDescription"
+    },
+    "reportFormat": {
+      "@id": "vv-report:reportFormat"
     },
     "hasFormat": {
       "@id": "vv-report:hasFormat",
@@ -67,51 +112,6 @@
     },
     "hasContent": {
       "@id": "vv-report:hasContent",
-      "@type": "@id"
-    },
-    "evaluations": {
-      "@id": "vv-report:evaluations",
-      "@type": "@id"
-    },
-    "systemUnderTest": {
-      "@id": "vv-report:systemUnderTest",
-      "@type": "xsd:anyURI"
-    },
-    "inputReference": {
-      "@id": "vv-report:inputReference",
-      "@type": "xsd:anyURI"
-    },
-    "inputDescription": {
-      "@id": "vv-report:inputDescription"
-    },
-    "resultLog": {
-      "@id": "vv-report:resultLog"
-    },
-    "resultVerifiable": {
-      "@id": "vv-report:resultVerifiable",
-      "@type": "xsd:boolean"
-    },
-    "resultVerification": {
-      "@id": "vv-report:resultVerification",
-      "@type": "@id"
-    },
-    "resultTestPassed": {
-      "@id": "vv-report:resultTestPassed",
-      "@type": "xsd:boolean"
-    },
-    "reportFormat": {
-      "@id": "vv-report:reportFormat"
-    },
-    "hasCodeArtifact": {
-      "@id": "vv-report:hasCodeArtifact",
-      "@type": "@id"
-    },
-    "hasDomainSpecification": {
-      "@id": "vv-report:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "vv-report:hasManifest",
       "@type": "@id"
     },
     "Content": "vv-report:Content",

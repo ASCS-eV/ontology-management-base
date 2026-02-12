@@ -1,4 +1,4 @@
-@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v5/> .
+@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v6/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
 @prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
@@ -9,15 +9,15 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 # The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/ositrace/v5/shapes>
+<https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes>
     a owl:Ontology ;
     # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/ositrace/v5> .
+    owl:imports <https://w3id.org/ascs-ev/envited-x/ositrace/v6> .
 
 ### OSITrace SHACL Shape
 ositrace:OSITraceShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     # 1) hasResourceDescription: Aligning with the flexible logic in envited-x:SimulationAssetShape
     sh:property [
         sh:path ositrace:hasResourceDescription ;
@@ -49,7 +49,7 @@ ositrace:OSITraceShape a sh:NodeShape ;
         sh:or (
             # Case 1: Inline manifest node
             [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ]
-            
+
             # Case 2: Linked manifest reference (improved logic from Point A)
             [ sh:node envited-x:ManifestLinkReferenceShape ]
         ) ;
@@ -61,8 +61,8 @@ ositrace:OSITraceShape a sh:NodeShape ;
 ### DomainSpecification SHACL Shape
 ositrace:DomainSpecificationShape a sh:NodeShape ;
     sh:closed false ;
-    
-    sh:property 
+
+    sh:property
         [ sh:maxCount 1 ;
           sh:minCount 1 ;
           sh:node ositrace:ContentShape ;
@@ -108,7 +108,7 @@ ositrace:DomainSpecificationShape a sh:NodeShape ;
 
 ositrace:ContentShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "[motorway, rural]" ;
             sh:description "Covered/used road types, defined over ODR element t_road_type, see ODR spec section 8.3"@en ;
             sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "town" "unknown") ;
@@ -129,7 +129,7 @@ ositrace:ContentShape a sh:NodeShape ;
             sh:message "Validation of levelOfDetail failed!"@en ;
             sh:name "level of detail"@en ;
             sh:order 2 ;
-            sh:path ositrace:levelOfDetail ], 
+            sh:path ositrace:levelOfDetail ],
         [ skos:example "right-hand traffic"@en ;
             sh:description "Traffic direction, i.e. right-hand or left-hand traffic"@en ;
             sh:in ("left-hand" "right-hand") ;
@@ -197,7 +197,7 @@ ositrace:ContentShape a sh:NodeShape ;
 
 ositrace:DataSourceShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "PMSF DroneTracker; ARS 548 Sensor Output" ;
             sh:datatype xsd:string ;
             sh:description "Main acquisition device"@en ;
@@ -215,30 +215,177 @@ ositrace:DataSourceShape a sh:NodeShape ;
             sh:path ositrace:usedDataSources ] ;
     sh:targetClass ositrace:DataSource .
 
+### Format SHACL Shape (disjunction: single-channel .osi or multi-channel MCAP)
 ositrace:FormatShape a sh:NodeShape ;
     sh:closed false ;
-    
-    sh:property [ skos:example "3.7.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Version of data format"@en ;
+    sh:or (
+        [ sh:node ositrace:SingleChannelFormatShape ]
+        [ sh:node ositrace:MultiChannelFormatShape ]
+    ) ;
+    sh:message "Format must conform to either SingleChannelFormatShape (.osi) or MultiChannelFormatShape (MCAP)."@en ;
+    sh:targetClass ositrace:Format .
+
+### SingleChannelFormatShape — validates classic single-channel .osi trace files
+ositrace:SingleChannelFormatShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "Validation shape for single-channel .osi trace files with a formatType and version."@en ;
+    sh:property [ skos:example "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData" ;
+            sh:description "Format type definition for single-channel .osi files."@en ;
+            sh:in ("ASAM OSI GroundTruth" "ASAM OSI SensorView" "ASAM OSI SensorData") ;
             sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:message "Validation of formatType failed! Must be one of: ASAM OSI GroundTruth, ASAM OSI SensorView, ASAM OSI SensorData."@en ;
+            sh:name "type"@en ;
+            sh:order 0 ;
+            sh:path ositrace:formatType ],
+        [ skos:example "3.7.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Version of data format (OSI version / protobuf version)."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
             sh:message "Validation of version failed!"@en ;
             sh:name "version"@en ;
             sh:order 1 ;
-            sh:path ositrace:version ],
-        [ skos:example "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData" ;
-            sh:description "Format type definition."@en ;
-            sh:in ("ASAM OSI GroundTruth" "ASAM OSI SensorView" "ASAM OSI SensorData") ;
+            sh:path ositrace:version ] .
+
+### MultiChannelFormatShape — validates multi-channel MCAP container files
+ositrace:MultiChannelFormatShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "Validation shape for multi-channel MCAP container files."@en ;
+    sh:property [ skos:example "MCAP" ;
+            sh:description "File format discriminator. Must be 'MCAP' for multi-channel files."@en ;
+            sh:in ("MCAP") ;
             sh:maxCount 1 ;
-            sh:message "Validation of type failed!"@en ;
-            sh:name "type"@en ;
+            sh:minCount 1 ;
+            sh:message "Validation of fileFormat failed! Must be 'MCAP'."@en ;
+            sh:name "file format"@en ;
             sh:order 0 ;
-            sh:path ositrace:formatType ] ;
-    sh:targetClass ositrace:Format .
+            sh:path ositrace:fileFormat ],
+        [ sh:description "Channels in the MCAP container. Each channel carries messages of one OSI top-level type."@en ;
+            sh:minCount 1 ;
+            sh:node ositrace:ChannelShape ;
+            sh:message "Validation of hasChannel failed! At least one channel is required."@en ;
+            sh:name "channels"@en ;
+            sh:order 1 ;
+            sh:path ositrace:hasChannel ],
+        [ skos:example "zstd" ;
+            sh:description "MCAP chunk compression algorithm."@en ;
+            sh:in ("uncompressed" "zstd" "lz4") ;
+            sh:maxCount 1 ;
+            sh:message "Validation of compression failed! Must be one of: uncompressed, zstd, lz4."@en ;
+            sh:name "compression"@en ;
+            sh:order 2 ;
+            sh:path ositrace:compression ],
+        [ skos:example "net.asam.osi.trace" ;
+            sh:datatype xsd:string ;
+            sh:description "OSI trace format version identifier from MCAP profile field."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of osiTraceFormatVersion failed!"@en ;
+            sh:name "OSI trace format version"@en ;
+            sh:order 3 ;
+            sh:path ositrace:osiTraceFormatVersion ],
+        [ skos:example "2024-06-03T14:37:10Z" ;
+            sh:datatype xsd:dateTime ;
+            sh:description "Zero-time reference point for the MCAP recording."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of zeroTime failed!"@en ;
+            sh:name "zero time"@en ;
+            sh:order 4 ;
+            sh:path ositrace:zeroTime ],
+        [ skos:example "3.6.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Minimum OSI schema version across all channels."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of minOsiVersion failed!"@en ;
+            sh:name "min OSI version"@en ;
+            sh:order 5 ;
+            sh:path ositrace:minOsiVersion ],
+        [ skos:example "3.7.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Maximum OSI schema version across all channels."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of maxOsiVersion failed!"@en ;
+            sh:name "max OSI version"@en ;
+            sh:order 6 ;
+            sh:path ositrace:maxOsiVersion ],
+        [ skos:example "3.20.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Minimum protobuf version across all channels."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of minProtobufVersion failed!"@en ;
+            sh:name "min protobuf version"@en ;
+            sh:order 7 ;
+            sh:path ositrace:minProtobufVersion ],
+        [ skos:example "3.21.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Maximum protobuf version across all channels."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of maxProtobufVersion failed!"@en ;
+            sh:name "max protobuf version"@en ;
+            sh:order 8 ;
+            sh:path ositrace:maxProtobufVersion ] .
+
+### ChannelShape — validates individual channels within an MCAP container
+ositrace:ChannelShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "Validation shape for a single channel in an MCAP container."@en ;
+    sh:property [ skos:example "RadarSensorFL.OSMPSensorDataOut" ;
+            sh:datatype xsd:string ;
+            sh:description "Unique MCAP topic name identifying this channel."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:message "Validation of topic failed! Each channel must have exactly one topic name."@en ;
+            sh:name "topic"@en ;
+            sh:order 0 ;
+            sh:path ositrace:topic ],
+        [ skos:example "SensorData" ;
+            sh:description "OSI top-level message type carried by this channel."@en ;
+            sh:in ("GroundTruth" "SensorView" "SensorData" "SensorViewConfiguration" "HostVehicleData" "TrafficCommand" "TrafficCommandUpdate" "TrafficUpdate" "MotionRequest" "StreamingUpdate") ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:message "Validation of messageType failed! Must be one of the 10 OSI top-level types: GroundTruth, SensorView, SensorData, SensorViewConfiguration, HostVehicleData, TrafficCommand, TrafficCommandUpdate, TrafficUpdate, MotionRequest, StreamingUpdate."@en ;
+            sh:name "message type"@en ;
+            sh:order 1 ;
+            sh:path ositrace:messageType ],
+        [ skos:example "3.7.0" ;
+            sh:datatype xsd:string ;
+            sh:description "OSI schema version used by this channel."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:message "Validation of osiVersion failed!"@en ;
+            sh:name "OSI version"@en ;
+            sh:order 2 ;
+            sh:path ositrace:osiVersion ],
+        [ skos:example "3.20.0" ;
+            sh:datatype xsd:string ;
+            sh:description "Protobuf version used for serialization in this channel."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of protobufVersion failed!"@en ;
+            sh:name "protobuf version"@en ;
+            sh:order 3 ;
+            sh:path ositrace:protobufVersion ],
+        [ skos:example "1448" ;
+            sh:datatype xsd:integer ;
+            sh:minInclusive 0 ;
+            sh:description "Number of messages in this channel."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of numberOfMessages failed!"@en ;
+            sh:name "number of messages"@en ;
+            sh:order 4 ;
+            sh:path ositrace:numberOfMessages ],
+        [ skos:example "Front-left radar sensor data output" ;
+            sh:datatype xsd:string ;
+            sh:description "Human-readable description of this channel."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of description failed!"@en ;
+            sh:name "description"@en ;
+            sh:order 5 ;
+            sh:path ositrace:description ] ;
+    sh:targetClass ositrace:Channel .
 
 ositrace:QualityShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "0.1" ;
             sh:datatype xsd:float ;
             sh:description "Accuracy of traffic relevant objects, signs and signals."@en ;
@@ -315,21 +462,30 @@ ositrace:QualityShape a sh:NodeShape ;
 
 ositrace:QuantityShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "1000" ;
             sh:datatype xsd:integer ;
             sh:minInclusive 0 ;
-            sh:description "Number of frames/messages in the trace file."@en ;
+            sh:description "Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."@en ;
             sh:maxCount 1 ;
             sh:message "Validation of numberFrames failed!"@en ;
             sh:name "number frames"@en ;
             sh:order 0 ;
-            sh:path ositrace:numberFrames ] ;
+            sh:path ositrace:numberFrames ],
+        [ skos:example "3" ;
+            sh:datatype xsd:integer ;
+            sh:minInclusive 1 ;
+            sh:description "Number of channels in the MCAP container (MCAP files only)."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of numberOfChannels failed!"@en ;
+            sh:name "number of channels"@en ;
+            sh:order 1 ;
+            sh:path ositrace:numberOfChannels ] ;
     sh:targetClass ositrace:Quantity .
 
 ositrace:MovingObjectShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "42" ;
             sh:datatype xsd:integer ;
             sh:minInclusive 0 ;
@@ -352,7 +508,7 @@ ositrace:MovingObjectShape a sh:NodeShape ;
 
 ositrace:EventShape a sh:NodeShape ;
     sh:closed false ;
-    
+
     sh:property [ skos:example "2024-05-11T13:20:03.250320Z" ;
             sh:datatype xsd:dateTime ;
             sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" ;

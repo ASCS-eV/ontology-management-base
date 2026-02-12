@@ -15,9 +15,8 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "example": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
-    "belongsTo": {
-      "@id": "example:belongsTo",
-      "@type": "@id"
+    "property1": {
+      "@id": "example:property1"
     },
     "property2": {
       "@id": "example:property2"
@@ -26,8 +25,9 @@
       "@id": "example:hasJunctionIntersection",
       "@type": "@id"
     },
-    "property1": {
-      "@id": "example:property1"
+    "belongsTo": {
+      "@id": "example:belongsTo",
+      "@type": "@id"
     },
     "ExampleServiceOffering": "example:ExampleServiceOffering"
   }

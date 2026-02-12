@@ -17,15 +17,58 @@
     "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "sourceType": {
-      "@id": "scenario:sourceType"
-    },
     "sourceDescription": {
       "@id": "scenario:sourceDescription"
     },
-    "temporaryTrafficObjects": {
-      "@id": "scenario:temporaryTrafficObjects",
-      "@type": "xsd:integer"
+    "sourceType": {
+      "@id": "scenario:sourceType"
+    },
+    "hasResourceDescription": {
+      "@id": "scenario:hasResourceDescription",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "scenario:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "scenario:hasManifest",
+      "@type": "@id"
+    },
+    "country": {
+      "@id": "scenario:country"
+    },
+    "aim": {
+      "@id": "scenario:aim"
+    },
+    "sunAzimuth": {
+      "@id": "scenario:sunAzimuth",
+      "@type": "xsd:float"
+    },
+    "usedStandardFunctions": {
+      "@id": "scenario:usedStandardFunctions"
+    },
+    "movementDescription": {
+      "@id": "scenario:movementDescription"
+    },
+    "timeDate": {
+      "@id": "scenario:timeDate",
+      "@type": "xsd:dateTime"
+    },
+    "customCommands": {
+      "@id": "scenario:customCommands"
+    },
+    "abstractionLevel": {
+      "@id": "scenario:abstractionLevel"
+    },
+    "countrySpecificSign": {
+      "@id": "scenario:countrySpecificSign"
+    },
+    "countrySpecificTrafficParticipants": {
+      "@id": "scenario:countrySpecificTrafficParticipants"
+    },
+    "controllers": {
+      "@id": "scenario:controllers"
     },
     "numberTrafficObjects": {
       "@id": "scenario:numberTrafficObjects",
@@ -35,73 +78,22 @@
       "@id": "scenario:permanentTrafficObjects",
       "@type": "xsd:integer"
     },
-    "controllers": {
-      "@id": "scenario:controllers"
+    "temporaryTrafficObjects": {
+      "@id": "scenario:temporaryTrafficObjects",
+      "@type": "xsd:integer"
+    },
+    "accuracyObjects": {
+      "@id": "scenario:accuracyObjects",
+      "@type": "xsd:float"
+    },
+    "calibration": {
+      "@id": "scenario:calibration"
     },
     "formatType": {
       "@id": "scenario:formatType"
     },
     "version": {
       "@id": "scenario:version"
-    },
-    "calibration": {
-      "@id": "scenario:calibration"
-    },
-    "accuracyObjects": {
-      "@id": "scenario:accuracyObjects",
-      "@type": "xsd:float"
-    },
-    "abstractionLevel": {
-      "@id": "scenario:abstractionLevel"
-    },
-    "countrySpecificTrafficParticipants": {
-      "@id": "scenario:countrySpecificTrafficParticipants"
-    },
-    "sunAzimuth": {
-      "@id": "scenario:sunAzimuth",
-      "@type": "xsd:float"
-    },
-    "aim": {
-      "@id": "scenario:aim"
-    },
-    "timeDate": {
-      "@id": "scenario:timeDate",
-      "@type": "xsd:dateTime"
-    },
-    "movementDescription": {
-      "@id": "scenario:movementDescription"
-    },
-    "country": {
-      "@id": "scenario:country"
-    },
-    "countrySpecificSign": {
-      "@id": "scenario:countrySpecificSign"
-    },
-    "customCommands": {
-      "@id": "scenario:customCommands"
-    },
-    "usedStandardFunctions": {
-      "@id": "scenario:usedStandardFunctions"
-    },
-    "hasDomainSpecification": {
-      "@id": "scenario:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasResourceDescription": {
-      "@id": "scenario:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "scenario:hasManifest",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "scenario:hasQuality",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "scenario:hasGeoreference",
-      "@type": "@id"
     },
     "hasQuantity": {
       "@id": "scenario:hasQuantity",
@@ -111,12 +103,20 @@
       "@id": "scenario:hasDataSource",
       "@type": "@id"
     },
+    "hasGeoreference": {
+      "@id": "scenario:hasGeoreference",
+      "@type": "@id"
+    },
     "hasFormat": {
       "@id": "scenario:hasFormat",
       "@type": "@id"
     },
     "hasContent": {
       "@id": "scenario:hasContent",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "scenario:hasQuality",
       "@type": "@id"
     },
     "Content": "scenario:Content",

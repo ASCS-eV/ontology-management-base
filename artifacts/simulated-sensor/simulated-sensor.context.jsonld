@@ -37,6 +37,22 @@
     "mountingPosition": {
       "@id": "simulated-sensor:mountingPosition"
     },
+    "fovAngle2": {
+      "@id": "simulated-sensor:fovAngle2",
+      "@type": "xsd:float"
+    },
+    "fovAngle3": {
+      "@id": "simulated-sensor:fovAngle3",
+      "@type": "xsd:float"
+    },
+    "fovAngle1": {
+      "@id": "simulated-sensor:fovAngle1",
+      "@type": "xsd:float"
+    },
+    "flag3D": {
+      "@id": "simulated-sensor:flag3D",
+      "@type": "xsd:boolean"
+    },
     "depthFlag": {
       "@id": "simulated-sensor:depthFlag",
       "@type": "xsd:boolean"
@@ -44,22 +60,6 @@
     "rgbFlag": {
       "@id": "simulated-sensor:rgbFlag",
       "@type": "xsd:boolean"
-    },
-    "flag3D": {
-      "@id": "simulated-sensor:flag3D",
-      "@type": "xsd:boolean"
-    },
-    "fovAngle2": {
-      "@id": "simulated-sensor:fovAngle2",
-      "@type": "xsd:float"
-    },
-    "fovAngle1": {
-      "@id": "simulated-sensor:fovAngle1",
-      "@type": "xsd:float"
-    },
-    "fovAngle3": {
-      "@id": "simulated-sensor:fovAngle3",
-      "@type": "xsd:float"
     },
     "Camera": "simulated-sensor:Camera",
     "FieldOfView": "simulated-sensor:FieldOfView",

@@ -19,9 +19,9 @@
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5" uri="manifest/manifest.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5/context" uri="manifest/manifest.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes" uri="manifest/manifest.shacl.ttl"/>
-  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v5" uri="ositrace/ositrace.owl.ttl"/>
-  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v5/context" uri="ositrace/ositrace.context.jsonld"/>
-  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v5/shapes" uri="ositrace/ositrace.shacl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v6" uri="ositrace/ositrace.owl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v6/context" uri="ositrace/ositrace.context.jsonld"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes" uri="ositrace/ositrace.shacl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v5" uri="scenario/scenario.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v5/context" uri="scenario/scenario.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v5/shapes" uri="scenario/scenario.shacl.ttl"/>
