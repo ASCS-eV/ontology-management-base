@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Updated: Use the input ref if provided (e.g., 'main'), 
+          # Updated: Use the input ref if provided (e.g., 'main'),
           # otherwise default to the current context (tag or branch)
           ref: ${{ inputs.ref }}
 
@@ -74,6 +74,84 @@ jobs:
             cp -r docs/* site/
           fi
 
+      - name: Build W3ID artifacts
+        run: |
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import shutil
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          import rdflib
+          from rdflib.namespace import RDF, OWL
+
+          ROOT = Path(".").resolve()
+          ARTIFACTS_DIR = ROOT / "artifacts"
+          SITE_DIR = ROOT / "site"
+          W3ID_DIR = SITE_DIR / "w3id"
+
+          W3ID_DIR.mkdir(parents=True, exist_ok=True)
+          (SITE_DIR / ".nojekyll").write_text("")
+
+          def w3id_path(version_iri: str) -> str | None:
+            parsed = urlparse(version_iri)
+            if parsed.netloc != "w3id.org":
+              return None
+            path = parsed.path.lstrip("/").rstrip("/")
+            if path.startswith("gaia-x4plcaad/ontologies/"):
+              return path
+            if path.startswith("ascs-ev/envited-x/"):
+              return path
+            return None
+
+          def parse_version_iri(owl_path: Path) -> str | None:
+            g = rdflib.Graph()
+            g.parse(owl_path)
+            ontology = next(g.subjects(RDF.type, OWL.Ontology), None)
+            if ontology is None:
+              return None
+            version_iri = g.value(ontology, OWL.versionIRI) or ontology
+            return str(version_iri)
+
+          def merge_shacl(shacl_files: list[Path], output_path: Path) -> None:
+            g = rdflib.Graph()
+            for file_path in shacl_files:
+              g.parse(file_path)
+            g.serialize(destination=output_path, format="turtle")
+
+          for owl_path in sorted(ARTIFACTS_DIR.glob("*/*.owl.ttl")):
+            version_iri = parse_version_iri(owl_path)
+            if not version_iri:
+              continue
+
+            path = w3id_path(version_iri)
+            if not path:
+              continue
+
+            version_dir = W3ID_DIR / path
+            version_dir.mkdir(parents=True, exist_ok=True)
+
+            shutil.copy2(owl_path, version_dir / "ontology.ttl")
+
+            shacl_files = sorted(owl_path.parent.glob("*.shacl.ttl"))
+            if shacl_files:
+              merge_shacl(shacl_files, version_dir / "shapes.ttl")
+
+            context_files = sorted(owl_path.parent.glob("*.context.jsonld"))
+            if context_files:
+              shutil.copy2(context_files[0], version_dir / "context.jsonld")
+
+            latest_dir = version_dir.parent / "latest"
+            latest_dir.mkdir(parents=True, exist_ok=True)
+
+            shutil.copy2(version_dir / "ontology.ttl", latest_dir / "ontology.ttl")
+            if (version_dir / "shapes.ttl").exists():
+              shutil.copy2(version_dir / "shapes.ttl", latest_dir / "shapes.ttl")
+            if (version_dir / "context.jsonld").exists():
+              shutil.copy2(version_dir / "context.jsonld", latest_dir / "context.jsonld")
+          PY
+
       - name: Fetch existing W3ID artifacts (gh-pages)
         uses: actions/checkout@v4
         with:
@@ -85,8 +163,16 @@ jobs:
       - name: Preserve W3ID artifacts
         run: |
           if [ -d gh-pages/w3id ]; then
-            mkdir -p site/w3id
-            cp -a gh-pages/w3id/. site/w3id/
+            # Preserve previously-published versions that are not in the fresh build.
+            # Fresh build takes precedence (don't overwrite with stale artifacts).
+            find gh-pages/w3id -type f | while read -r src; do
+              rel="${src#gh-pages/w3id/}"
+              dest="site/w3id/$rel"
+              if [ ! -f "$dest" ]; then
+                mkdir -p "$(dirname "$dest")"
+                cp -a "$src" "$dest"
+              fi
+            done
           fi
 
       - name: Upload artifact
