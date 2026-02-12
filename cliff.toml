@@ -1,0 +1,55 @@
+# git-cliff ~ configuration file
+# https://git-cliff.org/docs/configuration
+
+[remote.github]
+owner = "ASCS-eV"
+repo = "ontology-management-base"
+
+[changelog]
+# template for the changelog body
+# https://keats.github.io/tera/docs/#introduction
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}
+### {{ group | striptags | trim | upper_first }}
+{% for commit in commits %}
+- {{ commit.message | split(pat="\n") | first | upper_first | trim }}\
+  {% if commit.remote.pr_number %} ([#{{ commit.remote.pr_number }}](https://github.com/{{ remote.github.owner }}/{{ remote.github.repo }}/pull/{{ commit.remote.pr_number }})){% endif %}\
+  {% if commit.breaking %} **BREAKING**{% endif %}
+{%- endfor %}
+{% endfor %}
+"""
+trim = true
+# do not render a header/footer for release notes (only the body)
+header = ""
+footer = ""
+
+[git]
+# parse the commits based on https://www.conventionalcommits.org
+conventional_commits = true
+# filter out the commits that are not conventional
+filter_unconventional = false
+# process each line of a commit as an individual commit
+split_commits = false
+# sort the tags topologically
+topo_order = false
+# sort the commits inside sections by oldest/newest order
+sort_commits = "newest"
+# regex for parsing and grouping commits
+commit_parsers = [
+    { message = "^feat", group = "<!-- 0 -->Features" },
+    { message = "^fix", group = "<!-- 1 -->Bug Fixes" },
+    { message = "^docs", group = "<!-- 2 -->Documentation" },
+    { message = "^refactor", group = "<!-- 3 -->Refactoring" },
+    { message = "^test", group = "<!-- 4 -->Testing" },
+    { message = "^ci", group = "<!-- 5 -->CI/CD" },
+    { message = "^chore", group = "<!-- 6 -->Maintenance" },
+    { message = "^.*", group = "<!-- 9 -->Other" },
+]
+# protect breaking changes from being skipped due to matching a skipping commit_parser
+protect_breaking_commits = true
+# filter out the commits that are not matched by commit parsers
+filter_commits = false
+# glob pattern for matching git tags
+tag_pattern = "v[0-9].*"
+# skip tags matching a pattern
+skip_tags = ""

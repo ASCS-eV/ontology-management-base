@@ -66,26 +66,22 @@ jobs:
           git commit -s -m "chore: update registry for ${{ steps.tag.outputs.tag }} [skip ci]" || echo "No changes to commit"
           git push origin main || echo "Push failed - may need manual intervention"
 
+      - name: Generate changelog
+        id: changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
           name: Release ${{ steps.tag.outputs.tag }}
-          body: |
-            ## Ontology Management Base ${{ steps.tag.outputs.tag }}
-
-            This release includes:
-            - Updated ontology definitions in `artifacts/{domain}/`
-            - Updated SHACL shapes in `artifacts/{domain}/`
-            - Test instances in `tests/data/`
-
-            ### Resolution
-            After this release is published, ontologies can be resolved via:
-            ```
-            [https://w3id.org/ascs-ev/envited-x/](https://w3id.org/ascs-ev/envited-x/){ontology}/{version}
-            ```
-
-            See [registry.json](./docs/registry.json) for version mappings.
+          body: ${{ steps.changelog.outputs.content }}
           draft: false
           prerelease: false
         env:
