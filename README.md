@@ -1,6 +1,6 @@
 # Ontology Management Base
 
-[![CI Pipeline](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci.yml/badge.svg)](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml/badge.svg)](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://ascs-ev.github.io/ontology-management-base/)
 
 Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the Automotive Solution Center for Simulation e.V. It serves as the single source of truth for [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics) compliant ontologies, including those developed within the [Gaia-X 4 PLC-AAD](https://www.gaia-x4plcaad.info/) project.
