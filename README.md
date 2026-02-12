@@ -1,11 +1,11 @@
 # Ontology Management Base
 
-[![CI Pipeline](https://github.com/gaia-x4plc-aad/ontology-management-base/actions/workflows/ci.yml/badge.svg)](https://github.com/gaia-x4plc-aad/ontology-management-base/actions/workflows/ci.yml)
-[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://gaia-x4plc-aad.github.io/ontology-management-base/)
+[![CI Pipeline](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci.yml/badge.svg)](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci.yml)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://ascs-ev.github.io/ontology-management-base/)
 
 Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the Automotive Solution Center for Simulation e.V. It serves as the single source of truth for [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics) compliant ontologies, including those developed within the [Gaia-X 4 PLC-AAD](https://www.gaia-x4plcaad.info/) project.
 
-> **Note:** After release `v0.1.0`, this repository will be archived (read-only). Ongoing maintenance continues at [ASCS-eV/ontology-management-base](https://github.com/ASCS-eV/ontology-management-base).
+> **Note:** This repository is the active development home, forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`).
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 ## Installation
 
 ```bash
-git clone https://github.com/gaia-x4plc-aad/ontology-management-base.git
+git clone https://github.com/ASCS-eV/ontology-management-base.git
 cd ontology-management-base
 
 # Create and activate virtual environment

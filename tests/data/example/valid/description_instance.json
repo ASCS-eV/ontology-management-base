@@ -1,6 +1,6 @@
 {
   "@context": {
-    "description_ontology": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/tree/main/example/description_ontology#",
+    "description_ontology": "https://github.com/ASCS-eV/ontology-management-base/tree/main/example/description_ontology#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
   },

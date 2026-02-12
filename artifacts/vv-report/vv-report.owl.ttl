@@ -27,10 +27,10 @@
     dcterms:identifier <https://w3id.org/gaia-x4plcaad/ontologies/vv-report> ;
 
     # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/GAIA-X4PLC-AAD/ontology-management-base> ;
+    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 
     # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/GAIA-X4PLC-AAD/ontology-management-base/releases/tag/v0.1.0> ;
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
 
     # Versioning
     owl:versionIRI <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2> ;
@@ -44,7 +44,7 @@
 
     # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies
     dcterms:references <https://github.com/asam-ev/qc-framework> ;
-    rdfs:seeAlso <https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/README.md> .
+    rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md> .
 
 
 #### Classes

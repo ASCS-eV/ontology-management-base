@@ -4,7 +4,7 @@ This repository is the working home for the ENVITED-X and Gaia-X4PLC-AAD ontolog
 
 ## Important Notice
 
-After release `v0.1.0`, this repository will be archived as read-only. Ongoing maintenance will continue at [ASCS-eV/ontology-management-base](https://github.com/ASCS-eV/ontology-management-base). Plan new contributions against that repository after the release cut.
+This repository at [ASCS-eV/ontology-management-base](https://github.com/ASCS-eV/ontology-management-base) is the active development home, forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`). All new contributions should target this repository.
 
 ## What You Can Do Here
 

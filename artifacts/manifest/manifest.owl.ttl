@@ -33,10 +33,10 @@
     dcterms:identifier <https://w3id.org/ascs-ev/envited-x/manifest> ;
 
     # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/GAIA-X4PLC-AAD/ontology-management-base> ;
+    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 
     # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/GAIA-X4PLC-AAD/ontology-management-base/releases/tag/v0.1.0> ;
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
 
     # Versioning
     owl:versionIRI <https://w3id.org/ascs-ev/envited-x/manifest/v5> ;
