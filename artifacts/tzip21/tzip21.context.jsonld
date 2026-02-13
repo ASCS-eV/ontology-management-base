@@ -1,0 +1,161 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/tzip21/tzip21.owl.ttl",
+    "source_shacl": "artifacts/tzip21/tzip21.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "tzip21": "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "name": {
+      "@id": "tzip21:name"
+    },
+    "symbol": {
+      "@id": "tzip21:symbol"
+    },
+    "decimals": {
+      "@id": "tzip21:decimals",
+      "@type": "xsd:integer"
+    },
+    "description": {
+      "@id": "tzip21:description"
+    },
+    "minter": {
+      "@id": "tzip21:minter"
+    },
+    "creators": {
+      "@id": "tzip21:creators"
+    },
+    "contributors": {
+      "@id": "tzip21:contributors"
+    },
+    "publishers": {
+      "@id": "tzip21:publishers"
+    },
+    "date": {
+      "@id": "tzip21:date",
+      "@type": "xsd:dateTime"
+    },
+    "blockLevel": {
+      "@id": "tzip21:blockLevel",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "tzip21:type"
+    },
+    "tags": {
+      "@id": "tzip21:tags"
+    },
+    "genres": {
+      "@id": "tzip21:genres"
+    },
+    "language": {
+      "@id": "tzip21:language",
+      "@type": "http://www.w3.org/2001/XMLSchema#language"
+    },
+    "identifier": {
+      "@id": "tzip21:identifier",
+      "@type": "@id"
+    },
+    "rights": {
+      "@id": "tzip21:rights"
+    },
+    "rightsUri": {
+      "@id": "tzip21:rightsUri",
+      "@type": "xsd:anyURI"
+    },
+    "artifactUri": {
+      "@id": "tzip21:artifactUri",
+      "@type": "xsd:anyURI"
+    },
+    "displayUri": {
+      "@id": "tzip21:displayUri",
+      "@type": "xsd:anyURI"
+    },
+    "thumbnailUri": {
+      "@id": "tzip21:thumbnailUri",
+      "@type": "xsd:anyURI"
+    },
+    "externalUri": {
+      "@id": "tzip21:externalUri",
+      "@type": "xsd:anyURI"
+    },
+    "isTransferable": {
+      "@id": "tzip21:isTransferable",
+      "@type": "xsd:boolean"
+    },
+    "isBooleanAmount": {
+      "@id": "tzip21:isBooleanAmount",
+      "@type": "xsd:boolean"
+    },
+    "shouldPreferSymbol": {
+      "@id": "tzip21:shouldPreferSymbol",
+      "@type": "xsd:boolean"
+    },
+    "ttl": {
+      "@id": "tzip21:ttl",
+      "@type": "xsd:integer"
+    },
+    "formats": {
+      "@id": "tzip21:formats",
+      "@type": "@id"
+    },
+    "attributes": {
+      "@id": "tzip21:attributes",
+      "@type": "@id"
+    },
+    "assets": {
+      "@id": "tzip21:assets",
+      "@type": "@id"
+    },
+    "uri": {
+      "@id": "tzip21:uri",
+      "@type": "xsd:anyURI"
+    },
+    "hash": {
+      "@id": "tzip21:hash"
+    },
+    "mimeType": {
+      "@id": "tzip21:mimeType"
+    },
+    "fileSize": {
+      "@id": "tzip21:fileSize",
+      "@type": "xsd:integer"
+    },
+    "fileName": {
+      "@id": "tzip21:fileName"
+    },
+    "duration": {
+      "@id": "tzip21:duration",
+      "@type": "xsd:time"
+    },
+    "dimensions": {
+      "@id": "tzip21:dimensions",
+      "@type": "@id"
+    },
+    "dataRate": {
+      "@id": "tzip21:dataRate",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "tzip21:value"
+    },
+    "unit": {
+      "@id": "tzip21:unit"
+    },
+    "Asset": "tzip21:Asset",
+    "Attribute": "tzip21:Attribute",
+    "DataRate": "tzip21:DataRate",
+    "Dimensions": "tzip21:Dimensions",
+    "Format": "tzip21:Format",
+    "OntologyConformanceAttribute": "tzip21:OntologyConformanceAttribute"
+  }
+}

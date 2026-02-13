@@ -1,0 +1,161 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/ositrace/ositrace.owl.ttl",
+    "source_shacl": "artifacts/ositrace/ositrace.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "ositrace": "https://w3id.org/ascs-ev/envited-x/ositrace/v5/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "hasResourceDescription": {
+      "@id": "ositrace:hasResourceDescription"
+    },
+    "hasDomainSpecification": {
+      "@id": "ositrace:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "ositrace:hasManifest"
+    },
+    "hasContent": {
+      "@id": "ositrace:hasContent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "ositrace:hasFormat",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "ositrace:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "ositrace:hasQuantity",
+      "@type": "@id"
+    },
+    "hasDataSource": {
+      "@id": "ositrace:hasDataSource",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "ositrace:hasGeoreference",
+      "@type": "@id"
+    },
+    "roadTypes": {
+      "@id": "ositrace:roadTypes"
+    },
+    "laneTypes": {
+      "@id": "ositrace:laneTypes"
+    },
+    "levelOfDetail": {
+      "@id": "ositrace:levelOfDetail"
+    },
+    "trafficDirection": {
+      "@id": "ositrace:trafficDirection"
+    },
+    "granularity": {
+      "@id": "ositrace:granularity"
+    },
+    "scenarioIdentifier": {
+      "@id": "ositrace:scenarioIdentifier"
+    },
+    "startTime": {
+      "@id": "ositrace:startTime",
+      "@type": "xsd:dateTime"
+    },
+    "stopTime": {
+      "@id": "ositrace:stopTime",
+      "@type": "xsd:dateTime"
+    },
+    "hasHostMovingObject": {
+      "@id": "ositrace:hasHostMovingObject",
+      "@type": "@id"
+    },
+    "hasTargetMovingObject": {
+      "@id": "ositrace:hasTargetMovingObject",
+      "@type": "@id"
+    },
+    "hasEvent": {
+      "@id": "ositrace:hasEvent",
+      "@type": "@id"
+    },
+    "measurementSystem": {
+      "@id": "ositrace:measurementSystem"
+    },
+    "usedDataSources": {
+      "@id": "ositrace:usedDataSources"
+    },
+    "version": {
+      "@id": "ositrace:version"
+    },
+    "formatType": {
+      "@id": "ositrace:formatType"
+    },
+    "accuracySignals": {
+      "@id": "ositrace:accuracySignals",
+      "@type": "xsd:float"
+    },
+    "accuracyObjects": {
+      "@id": "ositrace:accuracyObjects",
+      "@type": "xsd:float"
+    },
+    "accuracyLaneModelHeight": {
+      "@id": "ositrace:accuracyLaneModelHeight",
+      "@type": "xsd:float"
+    },
+    "precision": {
+      "@id": "ositrace:precision",
+      "@type": "xsd:float"
+    },
+    "accuracyLaneModel2d": {
+      "@id": "ositrace:accuracyLaneModel2d",
+      "@type": "xsd:float"
+    },
+    "calibration": {
+      "@id": "ositrace:calibration"
+    },
+    "validationReport": {
+      "@id": "ositrace:validationReport",
+      "@type": "xsd:anyURI"
+    },
+    "validationReportType": {
+      "@id": "ositrace:validationReportType"
+    },
+    "numberFrames": {
+      "@id": "ositrace:numberFrames",
+      "@type": "xsd:integer"
+    },
+    "identifier": {
+      "@id": "ositrace:identifier",
+      "@type": "xsd:integer"
+    },
+    "description": {
+      "@id": "ositrace:description"
+    },
+    "time": {
+      "@id": "ositrace:time",
+      "@type": "xsd:dateTime"
+    },
+    "tag": {
+      "@id": "ositrace:tag"
+    },
+    "Content": "ositrace:Content",
+    "DataSource": "ositrace:DataSource",
+    "DomainSpecification": "ositrace:DomainSpecification",
+    "Event": "ositrace:Event",
+    "Format": "ositrace:Format",
+    "MovingObject": "ositrace:MovingObject",
+    "OSITrace": "ositrace:OSITrace",
+    "Quality": "ositrace:Quality",
+    "Quantity": "ositrace:Quantity"
+  }
+}
