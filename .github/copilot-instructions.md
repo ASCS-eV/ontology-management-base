@@ -2,10 +2,17 @@
 
 This repository contains a validation suite for ontology artifacts (OWL, SHACL, JSON-LD).
 
-## Quick Start Commands
+## Build, Test, and Lint Commands
 
 ```bash
-# Run full validation suite
+# Install dev dependencies + pre-commit hooks
+make install-dev
+
+# Lint and format
+make lint
+make format
+
+# Run full validation suite (catalog-driven)
 python3 -m src.tools.validators.validation_suite
 
 # Validate specific domain
@@ -14,11 +21,26 @@ python3 -m src.tools.validators.validation_suite --domain manifest
 # Validate arbitrary paths
 python3 -m src.tools.validators.validation_suite --path ./my_data.json
 
+# Run specific validation checks
+python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+
 # Run tests
 pytest tests/
 
+# Run a single test file
+pytest tests/unit/utils/test_file_collector.py
+
+# Run tests matching a pattern
+pytest tests/ -k "test_load"
+
 # Run with coverage
 pytest tests/ --cov=src/tools --cov-report=html
+
+# Run full validation suite via Make
+make test
+
+# Run a single domain via Make
+make test-domain DOMAIN=hdmap
 ```
 
 ## Instruction Files
@@ -51,6 +73,23 @@ Read these BEFORE making changes:
    - IRI string operations → `core/iri_utils.py`
    - Graph operations → `utils/graph_loader.py`
    - Path resolution → `utils/registry_resolver.py`
+
+## High-Level Architecture
+
+- **Layered modules**: `src/tools/core` (foundations) → `src/tools/utils` (catalog + graph helpers) → `src/tools/validators` (CLI pipeline). No upward imports.
+- **Catalog-driven discovery**: XML catalogs in `artifacts/`, `imports/`, and `tests/` are the single source of truth for file resolution.
+- **Validation pipeline**: `check-syntax` → `check-artifact-coherence` → `check-data-conformance` → `check-failing-tests` (domain mode only for coherence/failing tests).
+- **Path mode** builds a temporary in-memory catalog from `--path` inputs, then runs the standard pipeline.
+
+## Key Conventions
+
+- **Catalog responsibilities**: `registry_updater.py` writes catalogs (and is the only user of `file_collector.py`); `registry_resolver.py` reads catalogs. Validators never scan the filesystem.
+- **Ontology IRI policy**: new domains use `w3id.org/ascs-ev/envited-x/{domain}/v{n}`. When bumping a legacy `gaia-x4plcaad` ontology, switch to the ASCS-eV namespace and add `owl:priorVersion`.
+- **Module docstrings** must follow the template in `coding-standards.md`, and modules include a `main()` + `_run_tests()` for self-testing.
+- **Logging/output**: use `get_logger(__name__)` for progress; `print()` only for final CLI output; normalize paths with `normalize_path_for_display()`.
+- **Errors/return codes**: raise specific exceptions (no silent `None`), and use `ReturnCodes` from `core/result.py`.
+- **Test data**: invalid instances live in `tests/data/{domain}/invalid/` and require a matching `.expected` file.
+- **Artifact changes**: run `python3 -m src.tools.utils.registry_updater` (pre-commit hooks also update catalogs/README/PROPERTIES).
 
 ## Before You Code
 

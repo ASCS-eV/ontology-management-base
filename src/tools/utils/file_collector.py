@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-File Collector - Centralized File Discovery Utilities
+File Collector - Centralized File Discovery and Write Utilities
 
 FEATURE SET:
 ============
@@ -11,6 +11,7 @@ FEATURE SET:
 5. collect_files_by_pattern - Glob pattern-based collection
 6. collect_ontology_files - Get {ontology, shacl, context} paths for a domain
 7. collect_test_files - Collect test files from valid/invalid subdirs
+8. write_if_changed - Write file only if content differs (with LF normalization)
 
 USAGE:
 ======
@@ -349,6 +350,36 @@ def collect_ontology_bundles(
         }
 
     return bundles
+
+
+def write_if_changed(path: Path, content: str) -> bool:
+    """
+    Write content to file only if it differs from existing content.
+
+    Uses LF line endings for cross-platform consistency.
+    Normalizes line endings when comparing to avoid false positives.
+
+    Args:
+        path: Target file path
+        content: New content to write
+
+    Returns:
+        True if file was written, False if unchanged
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Normalize to LF for comparison
+    def normalize(s: str) -> str:
+        return s.replace("\r\n", "\n").replace("\r", "\n")
+
+    if path.exists():
+        existing = path.read_text(encoding="utf-8")
+        if normalize(existing) == normalize(content):
+            return False
+
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(content)
+    return True
 
 
 def _run_tests() -> bool:

@@ -1,0 +1,68 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/simulated-sensor/simulated-sensor.owl.ttl",
+    "source_shacl": "artifacts/simulated-sensor/simulated-sensor.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "simulated-sensor": "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
+    "sensorType": {
+      "@id": "simulated-sensor:sensorType"
+    },
+    "sensorIdentifier": {
+      "@id": "simulated-sensor:sensorIdentifier"
+    },
+    "mountingPosition": {
+      "@id": "simulated-sensor:mountingPosition"
+    },
+    "numberOfBeams": {
+      "@id": "simulated-sensor:numberOfBeams",
+      "@type": "xsd:integer"
+    },
+    "distance": {
+      "@id": "simulated-sensor:distance",
+      "@type": "xsd:float"
+    },
+    "fieldOfView": {
+      "@id": "simulated-sensor:fieldOfView",
+      "@type": "@id"
+    },
+    "rgbFlag": {
+      "@id": "simulated-sensor:rgbFlag",
+      "@type": "xsd:boolean"
+    },
+    "flag3D": {
+      "@id": "simulated-sensor:flag3D",
+      "@type": "xsd:boolean"
+    },
+    "depthFlag": {
+      "@id": "simulated-sensor:depthFlag",
+      "@type": "xsd:boolean"
+    },
+    "fovAngle1": {
+      "@id": "simulated-sensor:fovAngle1",
+      "@type": "xsd:float"
+    },
+    "fovAngle2": {
+      "@id": "simulated-sensor:fovAngle2",
+      "@type": "xsd:float"
+    },
+    "fovAngle3": {
+      "@id": "simulated-sensor:fovAngle3",
+      "@type": "xsd:float"
+    },
+    "Camera": "simulated-sensor:Camera",
+    "FieldOfView": "simulated-sensor:FieldOfView",
+    "Lidar": "simulated-sensor:Lidar",
+    "Radar": "simulated-sensor:Radar",
+    "SimulatedSensor": "simulated-sensor:SimulatedSensor"
+  }
+}

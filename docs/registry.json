@@ -1,6 +1,6 @@
 {
   "version": "2.1.0",
-  "latestRelease": "v0.1.2",
+  "latestRelease": "v0.1.3",
   "ontologies": {
     "automotive-simulator": {
       "namespace": "gaia-x4plcaad",
@@ -8,7 +8,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2",
           "files": {
@@ -16,6 +16,7 @@
             "shacl": [
               "artifacts/automotive-simulator/automotive-simulator.shacl.ttl"
             ],
+            "jsonld": "artifacts/automotive-simulator/automotive-simulator.context.jsonld",
             "properties": "artifacts/automotive-simulator/PROPERTIES.md",
             "instance": "tests/data/automotive-simulator/valid/automotive-simulator_instance.json"
           }
@@ -28,7 +29,7 @@
       "latest": "v0.5",
       "versions": {
         "v0.5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v0.5",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/description/v1",
           "files": {
@@ -36,6 +37,7 @@
             "shacl": [
               "artifacts/description/description.shacl.ttl"
             ],
+            "jsonld": "artifacts/description/description.context.jsonld",
             "properties": "artifacts/description/PROPERTIES.md"
           }
         }
@@ -47,7 +49,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/environment-model/v5",
           "files": {
@@ -55,6 +57,7 @@
             "shacl": [
               "artifacts/environment-model/environment-model.shacl.ttl"
             ],
+            "jsonld": "artifacts/environment-model/environment-model.context.jsonld",
             "properties": "artifacts/environment-model/PROPERTIES.md",
             "instance": "tests/data/environment-model/valid/environment-model_instance.json"
           }
@@ -67,7 +70,7 @@
       "latest": "v3",
       "versions": {
         "v3": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v3",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/envited-x/v3",
           "files": {
@@ -75,6 +78,7 @@
             "shacl": [
               "artifacts/envited-x/envited-x.shacl.ttl"
             ],
+            "jsonld": "artifacts/envited-x/envited-x.context.jsonld",
             "properties": "artifacts/envited-x/PROPERTIES.md",
             "instance": "tests/data/envited-x/valid/envited-x_instance.json"
           }
@@ -87,7 +91,7 @@
       "latest": "v0.5",
       "versions": {
         "v0.5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v0.5",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1",
           "files": {
@@ -95,6 +99,7 @@
             "shacl": [
               "artifacts/example/example.shacl.ttl"
             ],
+            "jsonld": "artifacts/example/example.context.jsonld",
             "properties": "artifacts/example/PROPERTIES.md",
             "instance": "tests/data/example/valid/example_instance.json"
           }
@@ -107,7 +112,7 @@
       "latest": "v3",
       "versions": {
         "v3": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v3",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/general/v3",
           "files": {
@@ -115,6 +120,7 @@
             "shacl": [
               "artifacts/general/general.shacl.ttl"
             ],
+            "jsonld": "artifacts/general/general.context.jsonld",
             "properties": "artifacts/general/PROPERTIES.md",
             "instance": "tests/data/general/valid/general_instance.json"
           }
@@ -127,7 +133,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/georeference/v5",
           "files": {
@@ -135,6 +141,7 @@
             "shacl": [
               "artifacts/georeference/georeference.shacl.ttl"
             ],
+            "jsonld": "artifacts/georeference/georeference.context.jsonld",
             "properties": "artifacts/georeference/PROPERTIES.md",
             "instance": "tests/data/georeference/valid/georeference_instance.json"
           }
@@ -147,7 +154,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/hdmap/v5",
           "files": {
@@ -155,6 +162,7 @@
             "shacl": [
               "artifacts/hdmap/hdmap.shacl.ttl"
             ],
+            "jsonld": "artifacts/hdmap/hdmap.context.jsonld",
             "properties": "artifacts/hdmap/PROPERTIES.md",
             "instance": "tests/data/hdmap/valid/hdmap_instance.json"
           }
@@ -167,7 +175,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2",
           "files": {
@@ -175,6 +183,7 @@
             "shacl": [
               "artifacts/leakage-test/leakage-test.shacl.ttl"
             ],
+            "jsonld": "artifacts/leakage-test/leakage-test.context.jsonld",
             "properties": "artifacts/leakage-test/PROPERTIES.md",
             "instance": "tests/data/leakage-test/valid/leakage-test_instance.json"
           }
@@ -187,7 +196,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/manifest/v5",
           "files": {
@@ -195,6 +204,7 @@
             "shacl": [
               "artifacts/manifest/manifest.shacl.ttl"
             ],
+            "jsonld": "artifacts/manifest/manifest.context.jsonld",
             "properties": "artifacts/manifest/PROPERTIES.md",
             "instance": "tests/data/manifest/valid/manifest_instance.json"
           }
@@ -207,7 +217,7 @@
       "latest": "v1.0.0",
       "versions": {
         "v1.0.0": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v1.0.0",
           "versionIri": "https://openlabel.asam.net/V1-0-0/ontologies/",
           "files": {
@@ -215,6 +225,7 @@
             "shacl": [
               "artifacts/openlabel/openlabel.shacl.ttl"
             ],
+            "jsonld": "artifacts/openlabel/openlabel.context.jsonld",
             "properties": "artifacts/openlabel/PROPERTIES.md",
             "instance": "tests/data/openlabel/valid/openlabel_instance.json"
           }
@@ -227,7 +238,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/ositrace/v5",
           "files": {
@@ -235,6 +246,7 @@
             "shacl": [
               "artifacts/ositrace/ositrace.shacl.ttl"
             ],
+            "jsonld": "artifacts/ositrace/ositrace.context.jsonld",
             "properties": "artifacts/ositrace/PROPERTIES.md",
             "instance": "tests/data/ositrace/valid/ositrace_instance.json"
           }
@@ -247,7 +259,7 @@
       "latest": "v5",
       "versions": {
         "v5": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v5",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/scenario/v5",
           "files": {
@@ -255,6 +267,7 @@
             "shacl": [
               "artifacts/scenario/scenario.shacl.ttl"
             ],
+            "jsonld": "artifacts/scenario/scenario.context.jsonld",
             "properties": "artifacts/scenario/PROPERTIES.md",
             "instance": "tests/data/scenario/valid/scenario_instance.json"
           }
@@ -267,7 +280,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/service/v2",
           "files": {
@@ -275,6 +288,7 @@
             "shacl": [
               "artifacts/service/service.shacl.ttl"
             ],
+            "jsonld": "artifacts/service/service.context.jsonld",
             "properties": "artifacts/service/PROPERTIES.md",
             "instance": "tests/data/service/valid/service_instance.json"
           }
@@ -287,7 +301,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2",
           "files": {
@@ -295,6 +309,7 @@
             "shacl": [
               "artifacts/simulated-sensor/simulated-sensor.shacl.ttl"
             ],
+            "jsonld": "artifacts/simulated-sensor/simulated-sensor.context.jsonld",
             "properties": "artifacts/simulated-sensor/PROPERTIES.md",
             "instance": "tests/data/simulated-sensor/valid/simulated-sensor_instance.json"
           }
@@ -307,7 +322,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2",
           "files": {
@@ -315,6 +330,7 @@
             "shacl": [
               "artifacts/simulation-model/simulation-model.shacl.ttl"
             ],
+            "jsonld": "artifacts/simulation-model/simulation-model.context.jsonld",
             "properties": "artifacts/simulation-model/PROPERTIES.md",
             "instance": "tests/data/simulation-model/valid/simulation-model_instance.json"
           }
@@ -327,7 +343,7 @@
       "latest": "v6",
       "versions": {
         "v6": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v6",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/surface-model/v6",
           "files": {
@@ -335,6 +351,7 @@
             "shacl": [
               "artifacts/surface-model/surface-model.shacl.ttl"
             ],
+            "jsonld": "artifacts/surface-model/surface-model.context.jsonld",
             "properties": "artifacts/surface-model/PROPERTIES.md",
             "instance": "tests/data/surface-model/valid/surface-model_instance.json"
           }
@@ -347,7 +364,7 @@
       "latest": "v6",
       "versions": {
         "v6": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v6",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6",
           "files": {
@@ -356,6 +373,7 @@
               "artifacts/survey/survey-result-data-offering.shacl.ttl",
               "artifacts/survey/survey-service-offering.shacl.ttl"
             ],
+            "jsonld": "artifacts/survey/survey.context.jsonld",
             "properties": "artifacts/survey/PROPERTIES.md",
             "instance": "tests/data/survey/valid/survey-result-data-offering_instance.json"
           }
@@ -368,7 +386,7 @@
       "latest": "v1",
       "versions": {
         "v1": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v1",
           "versionIri": "https://w3id.org/ascs-ev/envited-x/tzip21/v1",
           "files": {
@@ -376,6 +394,7 @@
             "shacl": [
               "artifacts/tzip21/tzip21.shacl.ttl"
             ],
+            "jsonld": "artifacts/tzip21/tzip21.context.jsonld",
             "properties": "artifacts/tzip21/PROPERTIES.md",
             "instance": "tests/data/tzip21/valid/tzip21_instance.json"
           }
@@ -388,7 +407,7 @@
       "latest": "v2",
       "versions": {
         "v2": {
-          "releaseTag": "v0.1.2",
+          "releaseTag": "v0.1.3",
           "versionInfo": "v2",
           "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2",
           "files": {
@@ -396,6 +415,7 @@
             "shacl": [
               "artifacts/vv-report/vv-report.shacl.ttl"
             ],
+            "jsonld": "artifacts/vv-report/vv-report.context.jsonld",
             "properties": "artifacts/vv-report/PROPERTIES.md",
             "instance": "tests/data/vv-report/valid/vv-report_instance.json"
           }

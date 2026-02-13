@@ -9,6 +9,7 @@ Key utilities:
 - file_collector: File discovery utilities
 - graph_loader: RDF graph loading utilities
 - print_formatter: Output formatting utilities
+- context_generator: JSON-LD context generation from OWL/SHACL
 
 The registry resolver is used by the SHACL validation pipeline (see
 src.tools.validators.shacl) to discover required ontologies and SHACL
@@ -36,6 +37,7 @@ from .file_collector import (
     collect_ontology_files,
     collect_test_files,
     collect_turtle_files,
+    write_if_changed,
 )
 from .graph_loader import (
     FAST_STORE,
@@ -53,7 +55,7 @@ from .registry_resolver import RegistryResolver
 __all__ = [
     # Registry
     "RegistryResolver",
-    # File collection
+    # File collection and writing
     "collect_files_by_extension",
     "collect_files_by_pattern",
     "collect_jsonld_files",
@@ -61,6 +63,7 @@ __all__ = [
     "collect_ontology_files",
     "collect_test_files",
     "collect_turtle_files",
+    "write_if_changed",
     # Graph loading
     "FAST_STORE",
     "extract_external_iris",

@@ -1,0 +1,125 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/vv-report/vv-report.owl.ttl",
+    "source_shacl": "artifacts/vv-report/vv-report.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "vv-report": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasCodeArtifact": {
+      "@id": "vv-report:hasCodeArtifact"
+    },
+    "hasDomainSpecification": {
+      "@id": "vv-report:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "vv-report:hasManifest"
+    },
+    "hasContent": {
+      "@id": "vv-report:hasContent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "vv-report:hasFormat",
+      "@type": "@id"
+    },
+    "reportFormat": {
+      "@id": "vv-report:reportFormat"
+    },
+    "systemUnderTest": {
+      "@id": "vv-report:systemUnderTest",
+      "@type": "xsd:anyURI"
+    },
+    "evaluations": {
+      "@id": "vv-report:evaluations",
+      "@type": "@id"
+    },
+    "metric": {
+      "@id": "vv-report:metric",
+      "@type": "@id"
+    },
+    "inputData": {
+      "@id": "vv-report:inputData",
+      "@type": "@id"
+    },
+    "parameters": {
+      "@id": "vv-report:parameters",
+      "@type": "@id"
+    },
+    "result": {
+      "@id": "vv-report:result",
+      "@type": "@id"
+    },
+    "conceptSpecificData": {
+      "@id": "vv-report:conceptSpecificData"
+    },
+    "metricTitle": {
+      "@id": "vv-report:metricTitle"
+    },
+    "metricDescription": {
+      "@id": "vv-report:metricDescription"
+    },
+    "metricReference": {
+      "@id": "vv-report:metricReference",
+      "@type": "xsd:anyURI"
+    },
+    "inputDescription": {
+      "@id": "vv-report:inputDescription"
+    },
+    "inputReference": {
+      "@id": "vv-report:inputReference",
+      "@type": "xsd:anyURI"
+    },
+    "parameterName": {
+      "@id": "vv-report:parameterName"
+    },
+    "parameterDescription": {
+      "@id": "vv-report:parameterDescription"
+    },
+    "parameterValue": {
+      "@id": "vv-report:parameterValue"
+    },
+    "resultTestPassed": {
+      "@id": "vv-report:resultTestPassed",
+      "@type": "xsd:boolean"
+    },
+    "resultLog": {
+      "@id": "vv-report:resultLog"
+    },
+    "resultVerifiable": {
+      "@id": "vv-report:resultVerifiable",
+      "@type": "xsd:boolean"
+    },
+    "resultVerification": {
+      "@id": "vv-report:resultVerification",
+      "@type": "@id"
+    },
+    "resultVerificationDescription": {
+      "@id": "vv-report:resultVerificationDescription"
+    },
+    "resultVerificationReference": {
+      "@id": "vv-report:resultVerificationReference",
+      "@type": "xsd:anyURI"
+    },
+    "Content": "vv-report:Content",
+    "DomainSpecification": "vv-report:DomainSpecification",
+    "Evaluation": "vv-report:Evaluation",
+    "Format": "vv-report:Format",
+    "InputData": "vv-report:InputData",
+    "Metric": "vv-report:Metric",
+    "Parameter": "vv-report:Parameter",
+    "Result": "vv-report:Result",
+    "ResultVerification": "vv-report:ResultVerification",
+    "VvReport": "vv-report:VvReport"
+  }
+}

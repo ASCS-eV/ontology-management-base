@@ -42,6 +42,15 @@ repos:
         types: [text]
         files: \.(ttl)$
 
+      - id: update-context
+        name: Update JSON-LD Contexts
+        # Cross-platform: generates context files from OWL+SHACL
+        entry: python -m src.tools.utils.context_generator --all
+        language: system
+        pass_filenames: false
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl)$
+        stages: [pre-commit]
+
       - id: update-registry
         name: Update Ontology Registry and Catalog
         # Cross-platform: uses 'python' which works on Windows and most Unix systems

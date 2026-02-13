@@ -1,0 +1,107 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/manifest/manifest.owl.ttl",
+    "source_shacl": "artifacts/manifest/manifest.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+    "hasManifestReference": {
+      "@id": "manifest:hasManifestReference",
+      "@type": "@id"
+    },
+    "hasLicense": {
+      "@id": "manifest:hasLicense",
+      "@type": "@id"
+    },
+    "hasArtifacts": {
+      "@id": "manifest:hasArtifacts",
+      "@type": "@id"
+    },
+    "hasReferencedArtifacts": {
+      "@id": "manifest:hasReferencedArtifacts",
+      "@type": "@id"
+    },
+    "hasCategory": {
+      "@id": "manifest:hasCategory",
+      "@type": "@id"
+    },
+    "iri": {
+      "@id": "manifest:iri",
+      "@type": "@id"
+    },
+    "note": {
+      "@id": "skos:note"
+    },
+    "conformsTo": {
+      "@id": "sh:conformsTo",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "hasAccessRole": {
+      "@id": "manifest:hasAccessRole",
+      "@type": "@id"
+    },
+    "hasFileMetadata": {
+      "@id": "manifest:hasFileMetadata",
+      "@type": "@id"
+    },
+    "filePath": {
+      "@id": "manifest:filePath",
+      "@type": "xsd:anyURI"
+    },
+    "mimeType": {
+      "@id": "manifest:mimeType"
+    },
+    "cid": {
+      "@id": "manifest:cid"
+    },
+    "fileSize": {
+      "@id": "manifest:fileSize",
+      "@type": "xsd:integer"
+    },
+    "filename": {
+      "@id": "manifest:filename"
+    },
+    "timestamp": {
+      "@id": "manifest:timestamp",
+      "@type": "xsd:dateTime"
+    },
+    "hasDimensions": {
+      "@id": "manifest:hasDimensions",
+      "@type": "@id"
+    },
+    "unit": {
+      "@id": "manifest:unit"
+    },
+    "width": {
+      "@id": "manifest:width",
+      "@type": "xsd:float"
+    },
+    "height": {
+      "@id": "manifest:height",
+      "@type": "xsd:float"
+    },
+    "depth": {
+      "@id": "manifest:depth",
+      "@type": "xsd:float"
+    },
+    "AccessRole": "manifest:AccessRole",
+    "Category": "manifest:Category",
+    "Dimensions": "manifest:Dimensions",
+    "FileMetadata": "manifest:FileMetadata",
+    "LicenseCategory": "manifest:LicenseCategory",
+    "Link": "manifest:Link",
+    "Manifest": "manifest:Manifest",
+    "ManifestCategory": "manifest:ManifestCategory",
+    "MiscellaneousCategory": "manifest:MiscellaneousCategory"
+  }
+}

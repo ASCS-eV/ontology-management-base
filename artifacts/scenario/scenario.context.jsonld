@@ -1,0 +1,128 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/scenario/scenario.owl.ttl",
+    "source_shacl": "artifacts/scenario/scenario.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "hasResourceDescription": {
+      "@id": "scenario:hasResourceDescription"
+    },
+    "hasDomainSpecification": {
+      "@id": "scenario:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "scenario:hasManifest"
+    },
+    "hasContent": {
+      "@id": "scenario:hasContent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "scenario:hasFormat",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "scenario:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "scenario:hasQuantity",
+      "@type": "@id"
+    },
+    "hasDataSource": {
+      "@id": "scenario:hasDataSource",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "scenario:hasGeoreference",
+      "@type": "@id"
+    },
+    "formatType": {
+      "@id": "scenario:formatType"
+    },
+    "version": {
+      "@id": "scenario:version"
+    },
+    "abstractionLevel": {
+      "@id": "scenario:abstractionLevel"
+    },
+    "timeDate": {
+      "@id": "scenario:timeDate",
+      "@type": "xsd:dateTime"
+    },
+    "aim": {
+      "@id": "scenario:aim"
+    },
+    "usedStandardFunctions": {
+      "@id": "scenario:usedStandardFunctions"
+    },
+    "movementDescription": {
+      "@id": "scenario:movementDescription"
+    },
+    "customCommands": {
+      "@id": "scenario:customCommands"
+    },
+    "sunAzimuth": {
+      "@id": "scenario:sunAzimuth",
+      "@type": "xsd:float"
+    },
+    "countrySpecificSign": {
+      "@id": "scenario:countrySpecificSign"
+    },
+    "countrySpecificTrafficParticipants": {
+      "@id": "scenario:countrySpecificTrafficParticipants"
+    },
+    "country": {
+      "@id": "scenario:country"
+    },
+    "temporaryTrafficObjects": {
+      "@id": "scenario:temporaryTrafficObjects",
+      "@type": "xsd:integer"
+    },
+    "numberTrafficObjects": {
+      "@id": "scenario:numberTrafficObjects",
+      "@type": "xsd:integer"
+    },
+    "controllers": {
+      "@id": "scenario:controllers"
+    },
+    "permanentTrafficObjects": {
+      "@id": "scenario:permanentTrafficObjects",
+      "@type": "xsd:integer"
+    },
+    "accuracyObjects": {
+      "@id": "scenario:accuracyObjects",
+      "@type": "xsd:float"
+    },
+    "calibration": {
+      "@id": "scenario:calibration"
+    },
+    "sourceType": {
+      "@id": "scenario:sourceType"
+    },
+    "sourceDescription": {
+      "@id": "scenario:sourceDescription"
+    },
+    "Content": "scenario:Content",
+    "ContentOrTag": "scenario:ContentOrTag",
+    "DataSource": "scenario:DataSource",
+    "DomainSpecification": "scenario:DomainSpecification",
+    "Format": "scenario:Format",
+    "Quality": "scenario:Quality",
+    "Quantity": "scenario:Quantity",
+    "Scenario": "scenario:Scenario"
+  }
+}

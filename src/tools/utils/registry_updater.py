@@ -39,6 +39,7 @@ from src.tools.core.logging import get_logger
 from src.tools.utils.file_collector import (
     collect_jsonld_files,
     collect_ontology_bundles,
+    write_if_changed,
 )
 
 logger = get_logger(__name__)
@@ -343,28 +344,14 @@ def load_existing_registry() -> dict:
     return {"version": REGISTRY_VERSION, "ontologies": {}}
 
 
-def _normalize_line_endings(content: str) -> str:
-    """Normalize line endings to LF for consistent comparison."""
-    return content.replace("\r\n", "\n").replace("\r", "\n")
-
-
 def write_registry(registry: dict) -> None:
     """Write registry to file only if content has changed."""
-    REGISTRY_PATH.parent.mkdir(parents=True, exist_ok=True)
     new_content = json.dumps(registry, indent=2, sort_keys=False) + "\n"
 
-    # Check if content has changed (normalize line endings for cross-platform)
-    if REGISTRY_PATH.exists():
-        existing_content = REGISTRY_PATH.read_text(encoding="utf-8")
-        if _normalize_line_endings(existing_content) == _normalize_line_endings(
-            new_content
-        ):
-            logger.info("Registry unchanged: %s", REGISTRY_PATH.as_posix())
-            return
-
-    with REGISTRY_PATH.open("w", encoding="utf-8", newline="\n") as f:
-        f.write(new_content)
-    logger.info("Registry updated: %s", REGISTRY_PATH.as_posix())
+    if write_if_changed(REGISTRY_PATH, new_content):
+        logger.info("Registry updated: %s", REGISTRY_PATH.as_posix())
+    else:
+        logger.info("Registry unchanged: %s", REGISTRY_PATH.as_posix())
 
 
 def extract_shacl_iri(shacl_file: Path) -> Optional[str]:
@@ -535,20 +522,10 @@ def pretty_print_xml(element: ET.Element) -> str:
 
 def write_file(content: str, path: Path) -> None:
     """Write content to file only if it has changed."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Check if content has changed (normalize line endings for cross-platform)
-    if path.exists():
-        existing_content = path.read_text(encoding="utf-8")
-        if _normalize_line_endings(existing_content) == _normalize_line_endings(
-            content
-        ):
-            logger.info("Unchanged: %s", path.as_posix())
-            return
-
-    with path.open("w", encoding="utf-8", newline="\n") as f:
-        f.write(content)
-    logger.info("Generated: %s", path.as_posix())
+    if write_if_changed(path, content):
+        logger.info("Generated: %s", path.as_posix())
+    else:
+        logger.info("Unchanged: %s", path.as_posix())
 
 
 def discover_test_data() -> Dict[str, dict]:
