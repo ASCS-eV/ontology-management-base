@@ -1,6 +1,6 @@
 # Long-Term Maintenance
 
-This is the active development home for ENVITED-X ontologies, maintained by [ASCS e.V.](https://www.2simulations.de/)
+This is the active development home for ENVITED-X ontologies, maintained by [ASCS e.V.]([https://www.2simulations.de/](https://www.asc-s.de/))
 
 The repository was forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base), which was archived after release `v0.1.0`.
 
