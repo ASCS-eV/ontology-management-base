@@ -8,10 +8,10 @@ from src.tools.core.result import ReturnCodes, ValidationResult
 
 def test_return_codes_values():
     assert ReturnCodes.SUCCESS == 0
-    assert ReturnCodes.SYNTAX_ERROR == 100
+    assert ReturnCodes.SYNTAX_ERROR == 10
+    assert ReturnCodes.SKIPPED == 100
     assert ReturnCodes.COHERENCE_ERROR == 200
     assert ReturnCodes.CONFORMANCE_ERROR == 210
-    assert ReturnCodes.SKIPPED == 100
 
 
 def test_validation_result_success():
