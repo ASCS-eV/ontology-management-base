@@ -17,48 +17,9 @@
     "ositrace": "https://w3id.org/ascs-ev/envited-x/ositrace/v5/",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasResourceDescription": {
-      "@id": "ositrace:hasResourceDescription"
-    },
-    "hasDomainSpecification": {
-      "@id": "ositrace:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "ositrace:hasManifest"
-    },
-    "hasContent": {
-      "@id": "ositrace:hasContent",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "ositrace:hasFormat",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "ositrace:hasQuality",
-      "@type": "@id"
-    },
-    "hasQuantity": {
-      "@id": "ositrace:hasQuantity",
-      "@type": "@id"
-    },
-    "hasDataSource": {
-      "@id": "ositrace:hasDataSource",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "ositrace:hasGeoreference",
-      "@type": "@id"
-    },
-    "roadTypes": {
-      "@id": "ositrace:roadTypes"
-    },
-    "laneTypes": {
-      "@id": "ositrace:laneTypes"
-    },
-    "levelOfDetail": {
-      "@id": "ositrace:levelOfDetail"
+    "stopTime": {
+      "@id": "ositrace:stopTime",
+      "@type": "xsd:dateTime"
     },
     "trafficDirection": {
       "@id": "ositrace:trafficDirection"
@@ -69,45 +30,72 @@
     "scenarioIdentifier": {
       "@id": "ositrace:scenarioIdentifier"
     },
-    "startTime": {
-      "@id": "ositrace:startTime",
-      "@type": "xsd:dateTime"
-    },
-    "stopTime": {
-      "@id": "ositrace:stopTime",
-      "@type": "xsd:dateTime"
-    },
-    "hasHostMovingObject": {
-      "@id": "ositrace:hasHostMovingObject",
-      "@type": "@id"
-    },
-    "hasTargetMovingObject": {
-      "@id": "ositrace:hasTargetMovingObject",
-      "@type": "@id"
+    "levelOfDetail": {
+      "@id": "ositrace:levelOfDetail"
     },
     "hasEvent": {
       "@id": "ositrace:hasEvent",
       "@type": "@id"
     },
-    "measurementSystem": {
-      "@id": "ositrace:measurementSystem"
+    "laneTypes": {
+      "@id": "ositrace:laneTypes"
     },
-    "usedDataSources": {
-      "@id": "ositrace:usedDataSources"
+    "hasHostMovingObject": {
+      "@id": "ositrace:hasHostMovingObject",
+      "@type": "@id"
     },
-    "version": {
-      "@id": "ositrace:version"
+    "roadTypes": {
+      "@id": "ositrace:roadTypes"
     },
-    "formatType": {
-      "@id": "ositrace:formatType"
+    "startTime": {
+      "@id": "ositrace:startTime",
+      "@type": "xsd:dateTime"
+    },
+    "hasTargetMovingObject": {
+      "@id": "ositrace:hasTargetMovingObject",
+      "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "ositrace:hasContent",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "ositrace:hasQuantity",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "ositrace:hasGeoreference",
+      "@type": "@id"
+    },
+    "hasDataSource": {
+      "@id": "ositrace:hasDataSource",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "ositrace:hasFormat",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "ositrace:hasQuality",
+      "@type": "@id"
+    },
+    "calibration": {
+      "@id": "ositrace:calibration"
+    },
+    "accuracyObjects": {
+      "@id": "ositrace:accuracyObjects",
+      "@type": "xsd:float"
+    },
+    "validationReport": {
+      "@id": "ositrace:validationReport",
+      "@type": "xsd:anyURI"
     },
     "accuracySignals": {
       "@id": "ositrace:accuracySignals",
       "@type": "xsd:float"
     },
-    "accuracyObjects": {
-      "@id": "ositrace:accuracyObjects",
-      "@type": "xsd:float"
+    "validationReportType": {
+      "@id": "ositrace:validationReportType"
     },
     "accuracyLaneModelHeight": {
       "@id": "ositrace:accuracyLaneModelHeight",
@@ -121,19 +109,23 @@
       "@id": "ositrace:accuracyLaneModel2d",
       "@type": "xsd:float"
     },
-    "calibration": {
-      "@id": "ositrace:calibration"
+    "hasDomainSpecification": {
+      "@id": "ositrace:hasDomainSpecification",
+      "@type": "@id"
     },
-    "validationReport": {
-      "@id": "ositrace:validationReport",
-      "@type": "xsd:anyURI"
+    "hasResourceDescription": {
+      "@id": "ositrace:hasResourceDescription",
+      "@type": "@id"
     },
-    "validationReportType": {
-      "@id": "ositrace:validationReportType"
+    "hasManifest": {
+      "@id": "ositrace:hasManifest",
+      "@type": "@id"
     },
-    "numberFrames": {
-      "@id": "ositrace:numberFrames",
-      "@type": "xsd:integer"
+    "usedDataSources": {
+      "@id": "ositrace:usedDataSources"
+    },
+    "measurementSystem": {
+      "@id": "ositrace:measurementSystem"
     },
     "identifier": {
       "@id": "ositrace:identifier",
@@ -142,12 +134,22 @@
     "description": {
       "@id": "ositrace:description"
     },
-    "time": {
-      "@id": "ositrace:time",
-      "@type": "xsd:dateTime"
+    "numberFrames": {
+      "@id": "ositrace:numberFrames",
+      "@type": "xsd:integer"
+    },
+    "version": {
+      "@id": "ositrace:version"
+    },
+    "formatType": {
+      "@id": "ositrace:formatType"
     },
     "tag": {
       "@id": "ositrace:tag"
+    },
+    "time": {
+      "@id": "ositrace:time",
+      "@type": "xsd:dateTime"
     },
     "Content": "ositrace:Content",
     "DataSource": "ositrace:DataSource",

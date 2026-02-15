@@ -19,7 +19,7 @@ def test_generate_table_sorted(monkeypatch, temp_dir: Path):
 """
     xml_path = temp_dir / "catalog-v001.xml"
     xml_path.write_text(xml)
-    monkeypatch.setattr(readme_updater, "XML_FILE", str(xml_path))
+    monkeypatch.setattr(readme_updater, "XML_FILE", xml_path)
 
     table = readme_updater.generate_table()
     assert "`a`" in table.splitlines()[2]
@@ -41,8 +41,8 @@ def test_update_readme_inserts_table(monkeypatch, temp_dir: Path):
         "Header\n<!-- START_CATALOG_TABLE -->\nold\n<!-- END_CATALOG_TABLE -->\nFooter"
     )
 
-    monkeypatch.setattr(readme_updater, "XML_FILE", str(xml_path))
-    monkeypatch.setattr(readme_updater, "README_FILE", str(readme_path))
+    monkeypatch.setattr(readme_updater, "XML_FILE", xml_path)
+    monkeypatch.setattr(readme_updater, "README_FILE", readme_path)
 
     readme_updater.update_readme()
     content = readme_path.read_text()

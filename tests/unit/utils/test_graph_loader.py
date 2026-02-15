@@ -50,6 +50,7 @@ def test_load_jsonld_files_extracts_prefixes(temp_dir: Path):
             {
                 "@context": {"ex": "http://example.org/"},
                 "@id": "ex:thing",
+                "ex:prop": "value",
             }
         )
     )
@@ -100,7 +101,14 @@ def test_load_fixtures_for_iris(temp_dir: Path):
     fixtures_dir = temp_dir / "tests" / "fixtures"
     fixtures_dir.mkdir()
     fixture_file = fixtures_dir / "entity.json"
-    fixture_file.write_text(json.dumps({"@id": "did:web:test.fixture:entity"}))
+    fixture_file.write_text(
+        json.dumps(
+            {
+                "@id": "did:web:test.fixture:entity",
+                "http://example.org/name": "Test Entity",
+            }
+        )
+    )
 
     resolver = RegistryResolver(temp_dir)
     g = Graph()

@@ -6,6 +6,7 @@ on:
     paths:
       - 'docs/**'
       - 'artifacts/**/*.ttl'
+      - 'artifacts/**/*.context.jsonld'
       - 'mkdocs.yml'
       - '.github/workflows/cd-docs.yml'
 

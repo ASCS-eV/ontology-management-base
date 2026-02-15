@@ -209,16 +209,19 @@ The `did:web:registry.gaia-x.eu:participant:xyz` IRI is:
 
 ## Return Codes
 
-| Code | Meaning                                     |
-| ---- | ------------------------------------------- |
-| 0    | Success                                     |
-| 1    | General error                               |
-| 100  | Skipped                                     |
-| 101  | JSON syntax error                           |
-| 102  | Turtle syntax error                         |
-| 200  | Coherence error (SHACL target not in OWL)   |
-| 210  | Conformance error (SHACL validation failed) |
-| 99   | Missing dependency (pyshacl not installed)  |
+| Code | Constant               | Meaning                                     |
+| ---- | ---------------------- | ------------------------------------------- |
+| 0    | `SUCCESS`              | Success                                     |
+| 1    | `GENERAL_ERROR`        | General error                               |
+| 10   | `SYNTAX_ERROR`         | Generic syntax error                        |
+| 99   | `MISSING_DEPENDENCY`   | Missing dependency (pyshacl not installed)  |
+| 100  | `SKIPPED`              | Skipped                                     |
+| 101  | `JSON_SYNTAX_ERROR`    | JSON syntax error                           |
+| 102  | `TURTLE_SYNTAX_ERROR`  | Turtle syntax error                         |
+| 200  | `COHERENCE_ERROR`      | Coherence error (SHACL target not in OWL)   |
+| 201  | `MISSING_TARGET_CLASS` | SHACL target class not found in ontology    |
+| 210  | `CONFORMANCE_ERROR`    | Conformance error (SHACL validation failed) |
+| 211  | `SHACL_VIOLATION`      | Specific SHACL constraint violation         |
 
 ## Failing Tests (check-failing-tests)
 

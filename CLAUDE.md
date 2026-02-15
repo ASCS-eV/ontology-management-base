@@ -123,6 +123,7 @@ Auto-triggered on relevant file changes (configured in `.pre-commit-config.yaml`
 - **jsonld-lint / turtle-lint** — Syntax validation for `.json`/`.jsonld`/`.ttl` files
 - **update-registry** — Regenerates `artifacts/catalog-v001.xml` when artifact files change
 - **update-properties** — Regenerates `PROPERTIES.md` documentation
+- **update-context** — Regenerates `.context.jsonld` files from OWL+SHACL definitions
 - **update-readme** — Updates the catalog table in `README.md`
 
 ## Key Imports
@@ -151,7 +152,7 @@ logger = get_logger(__name__)
 201     MISSING_TARGET_CLASS
 210     CONFORMANCE_ERROR
 211     SHACL_VIOLATION
-99      DEPENDENCY_ERROR
+99      MISSING_DEPENDENCY
 100     SKIPPED
 ```
 

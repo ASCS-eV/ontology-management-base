@@ -91,7 +91,7 @@ jobs:
           pre-commit run --all-files || true
 
           # Check if only auto-generated files changed (registry, properties, catalog)
-          UNEXPECTED=$(git diff --name-only | grep -vE '(registry\.json|PROPERTIES\.md|properties\.md|catalog\.md|ontoenv\.toml|README\.md)' || true)
+          UNEXPECTED=$(git diff --name-only | grep -vE '(registry\.json|PROPERTIES\.md|properties\.md|catalog\.md|ontoenv\.toml|README\.md|context\.jsonld)' || true)
           if [ -n "$UNEXPECTED" ]; then
             echo "::error::Pre-commit hooks modified unexpected files:"
             echo "$UNEXPECTED"
@@ -133,7 +133,22 @@ jobs:
       - name: Run Target Class Checks
         run: python3 -m src.tools.validators.validation_suite --run check-artifact-coherence ${{ needs.changes.outputs.folders_arg }}
 
-  # --- JOB 4: Regression Tests ---
+  # --- JOB 4: Unit & Integration Tests ---
+  unit-tests:
+    name: Unit & Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: 'pip'
+      - name: Install dependencies
+        run: python3 -m pip install -e ".[dev]"
+      - name: Run pytest
+        run: pytest tests/
+
+  # --- JOB 5: Regression Tests ---
   regression-tests:
     name: Regression Tests
     needs: changes

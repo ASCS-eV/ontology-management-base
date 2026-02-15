@@ -17,15 +17,13 @@
     "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasResourceDescription": {
-      "@id": "hdmap:hasResourceDescription"
-    },
-    "hasDomainSpecification": {
-      "@id": "hdmap:hasDomainSpecification",
+    "hasQuality": {
+      "@id": "hdmap:hasQuality",
       "@type": "@id"
     },
-    "hasManifest": {
-      "@id": "hdmap:hasManifest"
+    "hasDataSource": {
+      "@id": "hdmap:hasDataSource",
+      "@type": "@id"
     },
     "hasFormat": {
       "@id": "hdmap:hasFormat",
@@ -39,35 +37,41 @@
       "@id": "hdmap:hasQuantity",
       "@type": "@id"
     },
-    "hasQuality": {
-      "@id": "hdmap:hasQuality",
-      "@type": "@id"
-    },
-    "hasDataSource": {
-      "@id": "hdmap:hasDataSource",
-      "@type": "@id"
-    },
     "hasGeoreference": {
       "@id": "hdmap:hasGeoreference",
       "@type": "@id"
     },
-    "roadTypes": {
-      "@id": "hdmap:roadTypes"
+    "hasResourceDescription": {
+      "@id": "hdmap:hasResourceDescription",
+      "@type": "@id"
     },
-    "laneTypes": {
-      "@id": "hdmap:laneTypes"
+    "hasManifest": {
+      "@id": "hdmap:hasManifest",
+      "@type": "@id"
     },
-    "levelOfDetail": {
-      "@id": "hdmap:levelOfDetail"
+    "hasDomainSpecification": {
+      "@id": "hdmap:hasDomainSpecification",
+      "@type": "@id"
     },
-    "trafficDirection": {
-      "@id": "hdmap:trafficDirection"
+    "accuracyObjects": {
+      "@id": "hdmap:accuracyObjects",
+      "@type": "xsd:float"
     },
-    "measurementSystem": {
-      "@id": "hdmap:measurementSystem"
+    "accuracyLaneModel2d": {
+      "@id": "hdmap:accuracyLaneModel2d",
+      "@type": "xsd:float"
     },
-    "usedDataSources": {
-      "@id": "hdmap:usedDataSources"
+    "accuracyLaneModelHeight": {
+      "@id": "hdmap:accuracyLaneModelHeight",
+      "@type": "xsd:float"
+    },
+    "accuracySignals": {
+      "@id": "hdmap:accuracySignals",
+      "@type": "xsd:float"
+    },
+    "precision": {
+      "@id": "hdmap:precision",
+      "@type": "xsd:float"
     },
     "version": {
       "@id": "hdmap:version"
@@ -75,61 +79,59 @@
     "formatType": {
       "@id": "hdmap:formatType"
     },
-    "accuracySignals": {
-      "@id": "hdmap:accuracySignals",
-      "@type": "xsd:float"
-    },
-    "accuracyObjects": {
-      "@id": "hdmap:accuracyObjects",
-      "@type": "xsd:float"
-    },
-    "accuracyLaneModelHeight": {
-      "@id": "hdmap:accuracyLaneModelHeight",
-      "@type": "xsd:float"
-    },
-    "precision": {
-      "@id": "hdmap:precision",
-      "@type": "xsd:float"
-    },
-    "accuracyLaneModel2d": {
-      "@id": "hdmap:accuracyLaneModel2d",
-      "@type": "xsd:float"
-    },
-    "numberIntersections": {
-      "@id": "hdmap:numberIntersections",
-      "@type": "xsd:integer"
-    },
-    "numberTrafficLights": {
-      "@id": "hdmap:numberTrafficLights",
-      "@type": "xsd:integer"
-    },
     "rangeOfModeling": {
       "@id": "hdmap:rangeOfModeling",
       "@type": "xsd:float"
     },
-    "numberOutlines": {
-      "@id": "hdmap:numberOutlines",
+    "numberTrafficLights": {
+      "@id": "hdmap:numberTrafficLights",
       "@type": "xsd:integer"
     },
     "speedLimit": {
       "@id": "hdmap:speedLimit",
       "@type": "@id"
     },
-    "length": {
-      "@id": "hdmap:length",
-      "@type": "xsd:float"
-    },
-    "elevationRange": {
-      "@id": "hdmap:elevationRange",
-      "@type": "xsd:float"
+    "numberOutlines": {
+      "@id": "hdmap:numberOutlines",
+      "@type": "xsd:integer"
     },
     "numberObjects": {
       "@id": "hdmap:numberObjects",
       "@type": "xsd:integer"
     },
+    "elevationRange": {
+      "@id": "hdmap:elevationRange",
+      "@type": "xsd:float"
+    },
+    "numberIntersections": {
+      "@id": "hdmap:numberIntersections",
+      "@type": "xsd:integer"
+    },
+    "length": {
+      "@id": "hdmap:length",
+      "@type": "xsd:float"
+    },
     "numberTrafficSigns": {
       "@id": "hdmap:numberTrafficSigns",
       "@type": "xsd:integer"
+    },
+    "usedDataSources": {
+      "@id": "hdmap:usedDataSources"
+    },
+    "measurementSystem": {
+      "@id": "hdmap:measurementSystem"
+    },
+    "levelOfDetail": {
+      "@id": "hdmap:levelOfDetail"
+    },
+    "roadTypes": {
+      "@id": "hdmap:roadTypes"
+    },
+    "laneTypes": {
+      "@id": "hdmap:laneTypes"
+    },
+    "trafficDirection": {
+      "@id": "hdmap:trafficDirection"
     },
     "max": {
       "@id": "hdmap:max",

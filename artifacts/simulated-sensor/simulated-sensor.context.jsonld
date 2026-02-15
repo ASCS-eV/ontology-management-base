@@ -15,19 +15,6 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "simulated-sensor": "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
-    "sensorType": {
-      "@id": "simulated-sensor:sensorType"
-    },
-    "sensorIdentifier": {
-      "@id": "simulated-sensor:sensorIdentifier"
-    },
-    "mountingPosition": {
-      "@id": "simulated-sensor:mountingPosition"
-    },
-    "numberOfBeams": {
-      "@id": "simulated-sensor:numberOfBeams",
-      "@type": "xsd:integer"
-    },
     "distance": {
       "@id": "simulated-sensor:distance",
       "@type": "xsd:float"
@@ -35,6 +22,24 @@
     "fieldOfView": {
       "@id": "simulated-sensor:fieldOfView",
       "@type": "@id"
+    },
+    "numberOfBeams": {
+      "@id": "simulated-sensor:numberOfBeams",
+      "@type": "xsd:integer"
+    },
+    "sensorType": {
+      "@id": "simulated-sensor:sensorType",
+      "@type": "@id"
+    },
+    "sensorIdentifier": {
+      "@id": "simulated-sensor:sensorIdentifier"
+    },
+    "mountingPosition": {
+      "@id": "simulated-sensor:mountingPosition"
+    },
+    "depthFlag": {
+      "@id": "simulated-sensor:depthFlag",
+      "@type": "xsd:boolean"
     },
     "rgbFlag": {
       "@id": "simulated-sensor:rgbFlag",
@@ -44,16 +49,12 @@
       "@id": "simulated-sensor:flag3D",
       "@type": "xsd:boolean"
     },
-    "depthFlag": {
-      "@id": "simulated-sensor:depthFlag",
-      "@type": "xsd:boolean"
+    "fovAngle2": {
+      "@id": "simulated-sensor:fovAngle2",
+      "@type": "xsd:float"
     },
     "fovAngle1": {
       "@id": "simulated-sensor:fovAngle1",
-      "@type": "xsd:float"
-    },
-    "fovAngle2": {
-      "@id": "simulated-sensor:fovAngle2",
       "@type": "xsd:float"
     },
     "fovAngle3": {

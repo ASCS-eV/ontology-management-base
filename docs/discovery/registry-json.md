@@ -19,7 +19,7 @@ Example snippet:
 ```json
 {
   "version": "2.1.0",
-  "latestRelease": "v0.1.0",
+  "latestRelease": "v0.1.2",
   "ontologies": {
     "automotive-simulator": {
       "namespace": "gaia-x4plcaad",
@@ -35,6 +35,7 @@ Example snippet:
             "shacl": [
               "artifacts/automotive-simulator/automotive-simulator.shacl.ttl"
             ],
+            "jsonld": "artifacts/automotive-simulator/automotive-simulator.context.jsonld",
             "properties": "artifacts/automotive-simulator/PROPERTIES.md",
             "instance": "tests/data/automotive-simulator/valid/automotive-simulator_instance.json"
           }

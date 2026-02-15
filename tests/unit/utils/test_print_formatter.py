@@ -56,6 +56,7 @@ def test_format_data_conformance_result_with_errors():
 
     result = URIRef("urn:res1")
     g.add((result, RDF.type, SH.ValidationResult))
+    g.add((result, SH.focusNode, URIRef("urn:node1")))
     g.add((result, SH.resultMessage, Literal("bad")))
     print_formatter.format_data_conformance_result(
         False, onto_files=["file.json"], report_graph=g, file=buffer
