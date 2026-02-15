@@ -287,6 +287,8 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
 
     # Build context
     context: Dict[str, Any] = {
+        # JSON-LD 1.1 required for @container features
+        "@version": 1.1,
         # Standard prefixes
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
@@ -298,18 +300,15 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         prefix: ontology_iri if ontology_iri.endswith("/") else ontology_iri + "/",
     }
 
-    # Add common external prefixes if needed
-    # Check if domain imports other ontologies
+    # Add prefixes for imported ontologies (resolved from owl:imports IRIs)
     for imported in owl_graph.objects(URIRef(ontology_iri), OWL.imports):
         imported_str = str(imported)
-        if "envited-x" in imported_str and "envited-x" not in context:
-            context["envited-x"] = "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-        if "manifest" in imported_str and "manifest" not in context:
-            context["manifest"] = "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-        if "georeference" in imported_str and "georeference" not in context:
-            context["georeference"] = (
-                "https://w3id.org/ascs-ev/envited-x/georeference/v5/"
+        imported_prefix = extract_prefix_from_iri(imported_str)
+        if imported_prefix and imported_prefix not in context:
+            imported_ns = (
+                imported_str if imported_str.endswith("/") else imported_str + "/"
             )
+            context[imported_prefix] = imported_ns
 
     # Extract property definitions from SHACL
     properties = extract_property_datatypes(shacl_graph, prefix, ontology_iri)

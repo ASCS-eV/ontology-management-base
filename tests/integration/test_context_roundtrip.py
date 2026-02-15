@@ -159,6 +159,9 @@ class TestContextRoundtripGeneric:
         assert "@context" in doc, "Document should have @context key"
         ctx = doc["@context"]
 
+        # Should declare JSON-LD 1.1 for @container support
+        assert ctx.get("@version") == 1.1, "Context should declare @version 1.1"
+
         # Should have standard prefixes
         assert "xsd" in ctx, "Context should define xsd prefix"
         assert domain in ctx, f"Context should define {domain} prefix"
