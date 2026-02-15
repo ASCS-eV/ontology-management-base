@@ -12,7 +12,7 @@ The repository was forked from [GAIA-X4PLC-AAD/ontology-management-base](https:/
 
 ## IRI Namespace Migration
 
-Legacy ontologies use the `gaia-x4plcaad` W3ID namespace. When bumping a legacy ontology's version, its IRI is migrated to the `ascs-ev/envited-x` namespace with `owl:priorVersion` linking back to the old IRI. See [W3ID resolution](../discovery/w3id-resolution.md) for details.
+Legacy ontologies use the `gaia-x4plcaad` W3ID namespace. When bumping a legacy ontology's version, its IRI is migrated to the `ascs-ev/envited-x` namespace with `owl:priorVersion` linking back to the old IRI. See [Discovery & Resolution](../discovery/index.md) for details.
 
 ## Governance
 
