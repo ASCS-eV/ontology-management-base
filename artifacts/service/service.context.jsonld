@@ -1,0 +1,58 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/service/service.owl.ttl",
+    "source_shacl": "artifacts/service/service.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "service": "https://w3id.org/gaia-x4plcaad/ontologies/service/v2/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasServiceOffering": {
+      "@id": "service:hasServiceOffering"
+    },
+    "hasDomainSpecification": {
+      "@id": "service:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "service:hasManifest"
+    },
+    "hasContent": {
+      "@id": "service:hasContent",
+      "@type": "@id"
+    },
+    "requiredFile": {
+      "@id": "service:requiredFile",
+      "@type": "@id"
+    },
+    "resultingFile": {
+      "@id": "service:resultingFile",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "service:description"
+    },
+    "specification": {
+      "@id": "service:specification",
+      "@type": "xsd:anyURI"
+    },
+    "tooling": {
+      "@id": "service:tooling",
+      "@type": "xsd:anyURI"
+    },
+    "Content": "service:Content",
+    "DomainSpecification": "service:DomainSpecification",
+    "RequiredFile": "service:RequiredFile",
+    "ResultingFile": "service:ResultingFile",
+    "Service": "service:Service"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/leakage-test/leakage-test.owl.ttl",
+    "source_shacl": "artifacts/leakage-test/leakage-test.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "leakage-test": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasCodeArtifact": {
+      "@id": "leakage-test:hasCodeArtifact"
+    },
+    "hasDomainSpecification": {
+      "@id": "leakage-test:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "leakage-test:hasManifest"
+    },
+    "hasContent": {
+      "@id": "leakage-test:hasContent",
+      "@type": "@id"
+    },
+    "machineParameter": {
+      "@id": "leakage-test:machineParameter",
+      "@type": "@id"
+    },
+    "processParameter": {
+      "@id": "leakage-test:processParameter",
+      "@type": "@id"
+    },
+    "maximumPressure": {
+      "@id": "leakage-test:maximumPressure",
+      "@type": "@id"
+    },
+    "minimumPressure": {
+      "@id": "leakage-test:minimumPressure",
+      "@type": "@id"
+    },
+    "codingDownholder": {
+      "@id": "leakage-test:codingDownholder",
+      "@type": "@id"
+    },
+    "codingTestAdapter": {
+      "@id": "leakage-test:codingTestAdapter",
+      "@type": "@id"
+    },
+    "codingRFID": {
+      "@id": "leakage-test:codingRFID",
+      "@type": "@id"
+    },
+    "unit": {
+      "@id": "leakage-test:unit"
+    },
+    "upperTolerance": {
+      "@id": "leakage-test:upperTolerance",
+      "@type": "xsd:float"
+    },
+    "setpoint": {
+      "@id": "leakage-test:setpoint",
+      "@type": "xsd:integer"
+    },
+    "lowerTolerance": {
+      "@id": "leakage-test:lowerTolerance",
+      "@type": "xsd:float"
+    },
+    "CodingDownholder": "leakage-test:CodingDownholder",
+    "CodingRFID": "leakage-test:CodingRFID",
+    "CodingTestAdapter": "leakage-test:CodingTestAdapter",
+    "Content": "leakage-test:Content",
+    "DomainSpecification": "leakage-test:DomainSpecification",
+    "LeakageTest": "leakage-test:LeakageTest",
+    "MachineParameter": "leakage-test:MachineParameter",
+    "MaximumPressure": "leakage-test:MaximumPressure",
+    "MinimumPressure": "leakage-test:MinimumPressure",
+    "ProcessParameter": "leakage-test:ProcessParameter"
+  }
+}

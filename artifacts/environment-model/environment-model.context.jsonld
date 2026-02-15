@@ -1,0 +1,114 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/environment-model/environment-model.owl.ttl",
+    "source_shacl": "artifacts/environment-model/environment-model.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "environment-model": "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasResourceDescription": {
+      "@id": "environment-model:hasResourceDescription"
+    },
+    "hasDomainSpecification": {
+      "@id": "environment-model:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "environment-model:hasManifest"
+    },
+    "hasProject": {
+      "@id": "environment-model:hasProject",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "environment-model:hasFormat",
+      "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "environment-model:hasContent",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "environment-model:hasQuantity",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "environment-model:hasQuality",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "environment-model:hasGeoreference",
+      "@type": "@id"
+    },
+    "formatType": {
+      "@id": "environment-model:formatType"
+    },
+    "version": {
+      "@id": "environment-model:version"
+    },
+    "elements": {
+      "@id": "environment-model:elements"
+    },
+    "useCase": {
+      "@id": "environment-model:useCase"
+    },
+    "visualisationToolName": {
+      "@id": "environment-model:visualisationToolName"
+    },
+    "visualisationToolVendor": {
+      "@id": "environment-model:visualisationToolVendor"
+    },
+    "visualisationToolVersion": {
+      "@id": "environment-model:visualisationToolVersion"
+    },
+    "creationToolName": {
+      "@id": "environment-model:creationToolName"
+    },
+    "creationToolVendor": {
+      "@id": "environment-model:creationToolVendor"
+    },
+    "creationToolVersion": {
+      "@id": "environment-model:creationToolVersion"
+    },
+    "features": {
+      "@id": "environment-model:features"
+    },
+    "detailLevel": {
+      "@id": "environment-model:detailLevel"
+    },
+    "textureResolution": {
+      "@id": "environment-model:textureResolution",
+      "@type": "xsd:float"
+    },
+    "geometryCount": {
+      "@id": "environment-model:geometryCount",
+      "@type": "xsd:integer"
+    },
+    "triangleCount": {
+      "@id": "environment-model:triangleCount",
+      "@type": "xsd:integer"
+    },
+    "textureMaterialCount": {
+      "@id": "environment-model:textureMaterialCount",
+      "@type": "xsd:integer"
+    },
+    "Content": "environment-model:Content",
+    "DomainSpecification": "environment-model:DomainSpecification",
+    "EnvironmentModel": "environment-model:EnvironmentModel",
+    "Format": "environment-model:Format",
+    "Project": "environment-model:Project",
+    "Quality": "environment-model:Quality",
+    "Quantity": "environment-model:Quantity"
+  }
+}

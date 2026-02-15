@@ -1,0 +1,152 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/hdmap/hdmap.owl.ttl",
+    "source_shacl": "artifacts/hdmap/hdmap.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasResourceDescription": {
+      "@id": "hdmap:hasResourceDescription"
+    },
+    "hasDomainSpecification": {
+      "@id": "hdmap:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "hdmap:hasManifest"
+    },
+    "hasFormat": {
+      "@id": "hdmap:hasFormat",
+      "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "hdmap:hasContent",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "hdmap:hasQuantity",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "hdmap:hasQuality",
+      "@type": "@id"
+    },
+    "hasDataSource": {
+      "@id": "hdmap:hasDataSource",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "hdmap:hasGeoreference",
+      "@type": "@id"
+    },
+    "roadTypes": {
+      "@id": "hdmap:roadTypes"
+    },
+    "laneTypes": {
+      "@id": "hdmap:laneTypes"
+    },
+    "levelOfDetail": {
+      "@id": "hdmap:levelOfDetail"
+    },
+    "trafficDirection": {
+      "@id": "hdmap:trafficDirection"
+    },
+    "measurementSystem": {
+      "@id": "hdmap:measurementSystem"
+    },
+    "usedDataSources": {
+      "@id": "hdmap:usedDataSources"
+    },
+    "version": {
+      "@id": "hdmap:version"
+    },
+    "formatType": {
+      "@id": "hdmap:formatType"
+    },
+    "accuracySignals": {
+      "@id": "hdmap:accuracySignals",
+      "@type": "xsd:float"
+    },
+    "accuracyObjects": {
+      "@id": "hdmap:accuracyObjects",
+      "@type": "xsd:float"
+    },
+    "accuracyLaneModelHeight": {
+      "@id": "hdmap:accuracyLaneModelHeight",
+      "@type": "xsd:float"
+    },
+    "precision": {
+      "@id": "hdmap:precision",
+      "@type": "xsd:float"
+    },
+    "accuracyLaneModel2d": {
+      "@id": "hdmap:accuracyLaneModel2d",
+      "@type": "xsd:float"
+    },
+    "numberIntersections": {
+      "@id": "hdmap:numberIntersections",
+      "@type": "xsd:integer"
+    },
+    "numberTrafficLights": {
+      "@id": "hdmap:numberTrafficLights",
+      "@type": "xsd:integer"
+    },
+    "rangeOfModeling": {
+      "@id": "hdmap:rangeOfModeling",
+      "@type": "xsd:float"
+    },
+    "numberOutlines": {
+      "@id": "hdmap:numberOutlines",
+      "@type": "xsd:integer"
+    },
+    "speedLimit": {
+      "@id": "hdmap:speedLimit",
+      "@type": "@id"
+    },
+    "length": {
+      "@id": "hdmap:length",
+      "@type": "xsd:float"
+    },
+    "elevationRange": {
+      "@id": "hdmap:elevationRange",
+      "@type": "xsd:float"
+    },
+    "numberObjects": {
+      "@id": "hdmap:numberObjects",
+      "@type": "xsd:integer"
+    },
+    "numberTrafficSigns": {
+      "@id": "hdmap:numberTrafficSigns",
+      "@type": "xsd:integer"
+    },
+    "max": {
+      "@id": "hdmap:max",
+      "@type": "xsd:float"
+    },
+    "min": {
+      "@id": "hdmap:min",
+      "@type": "xsd:float"
+    },
+    "Content": "hdmap:Content",
+    "ContentOrOddScenery": "hdmap:ContentOrOddScenery",
+    "DataSource": "hdmap:DataSource",
+    "DomainSpecification": "hdmap:DomainSpecification",
+    "Format": "hdmap:Format",
+    "HdMap": "hdmap:HdMap",
+    "Quality": "hdmap:Quality",
+    "Quantity": "hdmap:Quantity",
+    "Range2D": "hdmap:Range2D"
+  }
+}

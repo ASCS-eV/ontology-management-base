@@ -1,0 +1,62 @@
+{
+  "comments": {
+    "description": "Auto-generated JSON-LD context for compact instance syntax",
+    "generator": "context_generator.py",
+    "source_owl": "artifacts/automotive-simulator/automotive-simulator.owl.ttl",
+    "source_shacl": "artifacts/automotive-simulator/automotive-simulator.shacl.ttl",
+    "note": "Transitional artifact - will be replaced by LinkML-generated context"
+  },
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "automotive-simulator": "https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasSoftwareResource": {
+      "@id": "automotive-simulator:hasSoftwareResource"
+    },
+    "hasDomainSpecification": {
+      "@id": "automotive-simulator:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "automotive-simulator:hasManifest"
+    },
+    "hasContent": {
+      "@id": "automotive-simulator:hasContent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "automotive-simulator:hasFormat",
+      "@type": "@id"
+    },
+    "simulatorMake": {
+      "@id": "automotive-simulator:simulatorMake"
+    },
+    "softwareVersion": {
+      "@id": "automotive-simulator:softwareVersion"
+    },
+    "sensorFailureFlag": {
+      "@id": "automotive-simulator:sensorFailureFlag",
+      "@type": "xsd:boolean"
+    },
+    "sensorAttackFlag": {
+      "@id": "automotive-simulator:sensorAttackFlag",
+      "@type": "xsd:boolean"
+    },
+    "scenarioDefinition": {
+      "@id": "automotive-simulator:scenarioDefinition"
+    },
+    "interface": {
+      "@id": "automotive-simulator:interface"
+    },
+    "AutomotiveSimulator": "automotive-simulator:AutomotiveSimulator",
+    "Content": "automotive-simulator:Content",
+    "DomainSpecification": "automotive-simulator:DomainSpecification",
+    "Format": "automotive-simulator:Format"
+  }
+}
