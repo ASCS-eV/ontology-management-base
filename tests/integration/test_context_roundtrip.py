@@ -11,6 +11,7 @@ from pathlib import Path
 
 import pytest
 from rdflib import Graph
+from rdflib.namespace import RDF
 
 # Test paths
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
@@ -31,6 +32,18 @@ def load_context_inline(instance_path: Path, context_path: Path) -> dict:
     return instance
 
 
+# Collect all domains that have generated context files
+def _context_domains():
+    """Return list of domains with .context.jsonld files."""
+    domains = []
+    for ctx_file in sorted(ARTIFACTS_DIR.glob("*/*.context.jsonld")):
+        domain = ctx_file.parent.name
+        # Skip gx — has LinkML-generated context with different structure
+        if domain != "gx":
+            domains.append(domain)
+    return domains
+
+
 class TestManifestContextRoundtrip:
     """Tests for manifest context round-trip equivalence."""
 
@@ -49,14 +62,15 @@ class TestManifestContextRoundtrip:
         """Path to compact manifest instance."""
         return TESTS_DATA_DIR / "manifest" / "valid" / "manifest_compact_instance.json"
 
-    def test_context_file_exists(self, manifest_context):
+    def test_manifest_context_file_exists(self, manifest_context):
         """Context file should exist."""
         assert manifest_context.exists(), f"Context file not found: {manifest_context}"
 
-    def test_compact_instance_parses(self, compact_instance, manifest_context):
+    def test_compact_instance_parses_with_inline_context(
+        self, compact_instance, manifest_context
+    ):
         """Compact instance should parse successfully with inline context."""
-        if not compact_instance.exists():
-            pytest.skip("Compact instance not found")
+        assert compact_instance.exists(), "Compact instance not found"
 
         instance = load_context_inline(compact_instance, manifest_context)
 
@@ -66,32 +80,30 @@ class TestManifestContextRoundtrip:
         # Should have parsed some triples
         assert len(g) > 0, "Graph should contain triples"
 
-    def test_compact_has_expected_types(self, compact_instance, manifest_context):
+    def test_compact_instance_has_manifest_rdf_type(
+        self, compact_instance, manifest_context
+    ):
         """Compact instance should have correct RDF types after parsing."""
-        if not compact_instance.exists():
-            pytest.skip("Compact instance not found")
+        assert compact_instance.exists(), "Compact instance not found"
 
         instance = load_context_inline(compact_instance, manifest_context)
 
         g = Graph()
         g.parse(data=json.dumps(instance), format="json-ld")
 
-        # Check for expected type
+        # Check for expected type using proper RDF.type predicate
         manifest_type = "https://w3id.org/ascs-ev/envited-x/manifest/v5/Manifest"
-        types = [
-            str(o)
-            for s, p, o in g.triples((None, None, None))
-            if "type" in str(p).lower()
-        ]
+        types = [str(o) for s, p, o in g.triples((None, RDF.type, None))]
 
         assert (
             manifest_type in types
         ), f"Expected Manifest type not found. Found: {types}"
 
-    def test_datatype_coercion_integer(self, compact_instance, manifest_context):
+    def test_datatype_coercion_integer_filesize(
+        self, compact_instance, manifest_context
+    ):
         """Integer values should be correctly typed in RDF."""
-        if not compact_instance.exists():
-            pytest.skip("Compact instance not found")
+        assert compact_instance.exists(), "Compact instance not found"
 
         instance = load_context_inline(compact_instance, manifest_context)
 
@@ -112,10 +124,9 @@ class TestManifestContextRoundtrip:
         # fileSize should exist in the graph
         pytest.fail("No fileSize triple found in graph")
 
-    def test_datatype_coercion_float(self, compact_instance, manifest_context):
+    def test_datatype_coercion_float_width(self, compact_instance, manifest_context):
         """Float values should be correctly typed in RDF."""
-        if not compact_instance.exists():
-            pytest.skip("Compact instance not found")
+        assert compact_instance.exists(), "Compact instance not found"
 
         instance = load_context_inline(compact_instance, manifest_context)
 
@@ -140,18 +151,11 @@ class TestManifestContextRoundtrip:
 class TestContextRoundtripGeneric:
     """Generic round-trip tests that can be applied to any domain."""
 
-    @pytest.mark.parametrize(
-        "domain",
-        [
-            "manifest",
-            # Add more domains as contexts are generated
-        ],
-    )
-    def test_context_structure(self, domain):
+    @pytest.mark.parametrize("domain", _context_domains())
+    def test_context_structure_valid(self, domain):
         """Context file should have valid structure."""
         context_path = ARTIFACTS_DIR / domain / f"{domain}.context.jsonld"
-        if not context_path.exists():
-            pytest.skip(f"Context file not found for {domain}")
+        assert context_path.exists(), f"Context file not found for {domain}"
 
         with open(context_path, "r", encoding="utf-8") as f:
             doc = json.load(f)
@@ -164,8 +168,23 @@ class TestContextRoundtripGeneric:
 
         # Should have standard prefixes
         assert "xsd" in ctx, "Context should define xsd prefix"
-        assert domain in ctx, f"Context should define {domain} prefix"
+        assert domain in ctx or any(
+            isinstance(v, str) and domain in v for v in ctx.values()
+        ), f"Context should define {domain} prefix"
 
-        # Prefix should be a valid IRI
-        prefix_value = ctx[domain]
-        assert prefix_value.startswith("http"), f"Prefix should be IRI: {prefix_value}"
+    @pytest.mark.parametrize("domain", _context_domains())
+    def test_context_prefix_is_valid_iri(self, domain):
+        """Domain prefix should be a valid IRI."""
+        context_path = ARTIFACTS_DIR / domain / f"{domain}.context.jsonld"
+        assert context_path.exists(), f"Context file not found for {domain}"
+
+        with open(context_path, "r", encoding="utf-8") as f:
+            doc = json.load(f)
+
+        ctx = doc["@context"]
+        # Find the domain prefix (may differ from domain name for legacy domains)
+        domain_prefix_value = ctx.get(domain)
+        if domain_prefix_value:
+            assert domain_prefix_value.startswith(
+                "http"
+            ), f"Prefix should be IRI: {domain_prefix_value}"

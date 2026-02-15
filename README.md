@@ -17,7 +17,7 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 
 ## Quick Links
 
-- **[Full Documentation](docs/)** - Complete guides and references
+- **[Full Documentation](https://ascs-ev.github.io/ontology-management-base/)** - Complete guides and references
 - **[Validation](docs/validation/strategy.md)** - Run checks on your data
 - **[Contributing](docs/getting-started/contribute.md)** - How to add or modify ontologies
 - **[Gaia-X 4 PLC-AAD](docs/gaiax/gaiax4plc-aad.md)** - Federated catalog upload flow

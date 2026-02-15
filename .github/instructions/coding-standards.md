@@ -130,7 +130,7 @@ print("Loading files...")  # Should be logger.info
 ### Use Specific Exceptions
 
 ```python
-from src.tools.core.exceptions import CatalogError, ValidationError
+from src.tools.core.result import ReturnCodes  # for return code checks
 
 def get_schema_path(domain: str) -> Path:
     path = self._catalog.get(domain)

@@ -27,7 +27,6 @@ dependencies = [
     "pyshacl>=0.31.0",
     "keycloak_client>=0.15.4",
     "requests>=2.32.5",
-    "linkml>=1.9.6",
     "oxrdflib>=0.5.0",
 ]
 
@@ -62,6 +61,7 @@ onto-validate = "src.tools.validators.validation_suite:main"
 onto-check-conformance = "src.tools.validators.conformance_validator:main"
 onto-check-coherence = "src.tools.validators.coherence_validator:main"
 onto-generate-docs = "src.tools.utils.properties_updater:main"
+onto-generate-context = "src.tools.utils.context_generator:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

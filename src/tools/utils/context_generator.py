@@ -41,7 +41,9 @@ NOTES:
 """
 
 import argparse
+import copy
 import json
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 
@@ -49,8 +51,10 @@ from rdflib import RDF, Graph, Namespace, URIRef
 from rdflib.namespace import OWL, XSD
 
 from src.tools.core.constants import FAST_STORE, Extensions
+from src.tools.core.iri_utils import get_local_name, iri_to_domain_hint, normalize_iri
 from src.tools.core.logging import get_logger
-from src.tools.utils.file_collector import write_if_changed
+from src.tools.utils.graph_loader import load_graph, load_graphs
+from src.tools.utils.print_formatter import normalize_path_for_display
 
 logger = get_logger(__name__)
 
@@ -80,19 +84,30 @@ XSD_TYPE_MAP = {
 }
 
 
-def parse_graph(file_path: Path) -> Optional[Graph]:
-    """Parse an RDF file into a graph."""
-    if not file_path.exists():
-        logger.warning("File not found: %s", file_path)
-        return None
+def write_if_changed(path: Path, content: str) -> bool:
+    """Write content to file only if it differs from existing content.
 
-    g = Graph(store=FAST_STORE)
-    try:
-        g.parse(file_path, format="turtle")
-        return g
-    except Exception as e:
-        logger.error("Failed to parse %s: %s", file_path, e)
-        return None
+    Uses LF line endings for cross-platform consistency.
+
+    Args:
+        path: Target file path
+        content: New content to write
+
+    Returns:
+        True if file was written, False if unchanged
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    def normalize(s: str) -> str:
+        return s.replace("\r\n", "\n").replace("\r", "\n")
+
+    if path.exists():
+        existing = path.read_text(encoding="utf-8")
+        if normalize(existing) == normalize(content):
+            return False
+
+    path.write_text(content, encoding="utf-8", newline="\n")
+    return True
 
 
 def extract_ontology_iri(owl_graph: Graph) -> Optional[str]:
@@ -102,17 +117,45 @@ def extract_ontology_iri(owl_graph: Graph) -> Optional[str]:
     return None
 
 
-def extract_prefix_from_iri(iri: str) -> str:
-    """Extract a short prefix name from an ontology IRI."""
-    # Handle trailing slash or hash
-    iri = iri.rstrip("/#")
-    # Get the last path segment
-    parts = iri.split("/")
-    # Find the domain part (e.g., 'manifest' from '.../manifest/v5')
-    for i, part in enumerate(parts):
-        if part.startswith("v") and part[1:].isdigit():
-            return parts[i - 1] if i > 0 else part
-    return parts[-1]
+def _has_object_type_in_or_branches(shacl_graph: Graph, prop_node: URIRef) -> bool:
+    """Check if sh:or branches contain sh:node, sh:class, or sh:and with node shapes.
+
+    This handles the polymorphic SHACL pattern where a property uses sh:or
+    with nested sh:node/sh:and branches, indicating an object property.
+    """
+    or_list = shacl_graph.value(prop_node, SH["or"])
+    if or_list is None:
+        return False
+
+    # Walk the RDF list
+    from rdflib import RDF as RDF_NS
+
+    current = or_list
+    while current and current != RDF_NS.nil:
+        item = shacl_graph.value(current, RDF_NS.first)
+        if item:
+            # Check if this branch has sh:node or sh:class
+            if shacl_graph.value(item, SH.node) is not None:
+                return True
+            if shacl_graph.value(item, SH["class"]) is not None:
+                return True
+            if shacl_graph.value(item, SH.nodeKind) == SH.IRI:
+                return True
+            # Check sh:and branches inside sh:or
+            and_list = shacl_graph.value(item, SH["and"])
+            if and_list is not None:
+                and_current = and_list
+                while and_current and and_current != RDF_NS.nil:
+                    and_item = shacl_graph.value(and_current, RDF_NS.first)
+                    if and_item:
+                        if shacl_graph.value(and_item, SH.node) is not None:
+                            return True
+                        if shacl_graph.value(and_item, SH["class"]) is not None:
+                            return True
+                    and_current = shacl_graph.value(and_current, RDF_NS.rest)
+        current = shacl_graph.value(current, RDF_NS.rest)
+
+    return False
 
 
 def extract_property_datatypes(
@@ -156,8 +199,12 @@ def extract_property_datatypes(
                         }
                 continue
 
-            # Extract local name
-            local_name = path_str.replace(domain_iri, "").lstrip("/")
+            # Extract local name using namespace-aware splitting
+            domain_ns = normalize_iri(domain_iri, trailing_slash=True)
+            if path_str.startswith(domain_ns):
+                local_name = path_str[len(domain_ns) :]
+            else:
+                local_name = get_local_name(path_str)
 
             # Determine the type coercion
             datatype = shacl_graph.value(prop_node, SH.datatype)
@@ -181,12 +228,9 @@ def extract_property_datatypes(
                 # Object property - reference to another node
                 prop_def["@type"] = "@id"
 
-            # Check if it's a list/set property (minCount > 1 or no maxCount with minCount)
-            max_count = shacl_graph.value(prop_node, SH.maxCount)
-            if max_count is None or int(max_count) > 1:
-                # Could be multi-valued, but we only add @container if clearly a list
-                # For now, skip container annotation unless we have clear evidence
-                pass
+            elif _has_object_type_in_or_branches(shacl_graph, prop_node):
+                # Object property via sh:or branches (polymorphic pattern)
+                prop_def["@type"] = "@id"
 
             properties[local_name] = prop_def
 
@@ -196,31 +240,20 @@ def extract_property_datatypes(
 def extract_classes(owl_graph: Graph, domain_iri: str) -> Set[str]:
     """Extract class local names from the OWL ontology."""
     classes = set()
-    domain_ns = domain_iri if domain_iri.endswith("/") else domain_iri + "/"
+    domain_ns = normalize_iri(domain_iri, trailing_slash=True)
 
     for cls in owl_graph.subjects(RDF.type, OWL.Class):
         cls_str = str(cls)
-        if cls_str.startswith(domain_iri):
-            local_name = cls_str.replace(domain_ns, "").replace(domain_iri, "")
-            if local_name and not local_name.startswith("http"):
+        if cls_str.startswith(domain_ns):
+            local_name = cls_str[len(domain_ns) :]
+            if local_name and "/" not in local_name:
+                classes.add(local_name)
+        elif cls_str.startswith(domain_iri) and not cls_str.startswith("http", 1):
+            local_name = get_local_name(cls_str)
+            if local_name:
                 classes.add(local_name)
 
     return classes
-
-
-def extract_named_individuals(owl_graph: Graph, domain_iri: str) -> Dict[str, str]:
-    """Extract named individuals (enum values) from the OWL ontology."""
-    individuals: Dict[str, str] = {}
-    domain_ns = domain_iri if domain_iri.endswith("/") else domain_iri + "/"
-
-    for ind in owl_graph.subjects(RDF.type, OWL.NamedIndividual):
-        ind_str = str(ind)
-        if ind_str.startswith(domain_iri):
-            local_name = ind_str.replace(domain_ns, "").replace(domain_iri, "")
-            if local_name and not local_name.startswith("http"):
-                individuals[local_name] = ind_str
-
-    return individuals
 
 
 def generate_context(domain: str) -> Optional[Dict[str, Any]]:
@@ -238,7 +271,10 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     shacl_path = domain_dir / f"{domain}{Extensions.SHACL}"
 
     if not owl_path.exists():
-        logger.error("OWL file not found: %s", owl_path)
+        logger.error(
+            "OWL file not found: %s",
+            normalize_path_for_display(owl_path, ROOT_DIR),
+        )
         return None
 
     # Handle domains with multiple SHACL files or non-standard naming
@@ -249,7 +285,10 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         # Look for any .shacl.ttl files in the domain directory
         shacl_paths = sorted(domain_dir.glob(f"*{Extensions.SHACL}"))
         if not shacl_paths:
-            logger.error("No SHACL files found in: %s", domain_dir)
+            logger.error(
+                "No SHACL files found in: %s",
+                normalize_path_for_display(domain_dir, ROOT_DIR),
+            )
             return None
         logger.info(
             "Using %d SHACL file(s) for domain '%s': %s",
@@ -259,16 +298,10 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         )
 
     # Parse OWL graph
-    owl_graph = parse_graph(owl_path)
-    if not owl_graph:
-        return None
+    owl_graph = load_graph(owl_path, format="turtle")
 
     # Parse and merge all SHACL graphs
-    shacl_graph = Graph(store=FAST_STORE)
-    for sp in shacl_paths:
-        g = parse_graph(sp)
-        if g:
-            shacl_graph += g
+    shacl_graph = load_graphs(shacl_paths, format="turtle")
 
     if len(shacl_graph) == 0:
         logger.error("Failed to parse any SHACL files for domain '%s'", domain)
@@ -277,13 +310,16 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     # Extract ontology IRI
     ontology_iri = extract_ontology_iri(owl_graph)
     if not ontology_iri:
-        logger.error("Could not extract ontology IRI from %s", owl_path)
+        logger.error(
+            "Could not extract ontology IRI from %s",
+            normalize_path_for_display(owl_path, ROOT_DIR),
+        )
         return None
 
     logger.info("Processing domain '%s' with IRI: %s", domain, ontology_iri)
 
     # Determine prefix
-    prefix = extract_prefix_from_iri(ontology_iri)
+    prefix = iri_to_domain_hint(ontology_iri) or domain
 
     # Build context
     context: Dict[str, Any] = {
@@ -297,32 +333,46 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         "sh": "http://www.w3.org/ns/shacl#",
         "skos": "http://www.w3.org/2004/02/skos/core#",
         # Domain prefix
-        prefix: ontology_iri if ontology_iri.endswith("/") else ontology_iri + "/",
+        prefix: normalize_iri(ontology_iri, trailing_slash=True),
     }
+
+    # Reserved keys that properties/classes must not overwrite
+    reserved_keys = set(context.keys())
 
     # Add prefixes for imported ontologies (resolved from owl:imports IRIs)
     for imported in owl_graph.objects(URIRef(ontology_iri), OWL.imports):
         imported_str = str(imported)
-        imported_prefix = extract_prefix_from_iri(imported_str)
+        imported_prefix = iri_to_domain_hint(imported_str)
         if imported_prefix and imported_prefix not in context:
-            imported_ns = (
-                imported_str if imported_str.endswith("/") else imported_str + "/"
-            )
+            imported_ns = normalize_iri(imported_str, trailing_slash=True)
             context[imported_prefix] = imported_ns
+            reserved_keys.add(imported_prefix)
 
     # Extract property definitions from SHACL
     properties = extract_property_datatypes(shacl_graph, prefix, ontology_iri)
 
-    # Also check for properties in imported SHACL if owl:imports exists
-    # (For now, we focus on the domain's own properties)
-
-    # Add properties to context
-    context.update(properties)
+    # Add properties to context, warning on collisions
+    for key, value in properties.items():
+        if key in reserved_keys:
+            logger.warning(
+                "Property '%s' collides with reserved prefix in domain '%s', skipping",
+                key,
+                domain,
+            )
+            continue
+        context[key] = value
 
     # Extract and add class term mappings for compact @type usage
     # This allows: "@type": "Manifest" instead of "@type": "manifest:Manifest"
     classes = extract_classes(owl_graph, ontology_iri)
     for class_name in sorted(classes):
+        if class_name in reserved_keys:
+            logger.warning(
+                "Class '%s' collides with reserved prefix in domain '%s', skipping",
+                class_name,
+                domain,
+            )
+            continue
         # Map bare class names to full IRIs for @type expansion
         context[class_name] = f"{prefix}:{class_name}"
 
@@ -347,13 +397,27 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     return context_doc
 
 
-def write_context(domain: str, context_doc: Dict[str, Any]) -> Optional[Path]:
-    """Write context document to file only if content has changed."""
+def _write_context(
+    domain: str, context_doc: Dict[str, Any], dry_run: bool = False
+) -> Optional[Path]:
+    """Write context document to file only if content has changed.
+
+    Args:
+        domain: Domain name
+        context_doc: The context document to write
+        dry_run: If True, do not write the file
+
+    Returns:
+        Path if file was written, None if unchanged or dry_run
+    """
     output_path = ARTIFACTS_DIR / domain / f"{domain}{Extensions.CONTEXT}"
     new_content = json.dumps(context_doc, indent=2, ensure_ascii=False) + "\n"
 
+    if dry_run:
+        return None
+
     if write_if_changed(output_path, new_content):
-        logger.info("Written: %s", output_path)
+        logger.info("Written: %s", normalize_path_for_display(output_path, ROOT_DIR))
         return output_path
     else:
         logger.debug("Context unchanged: %s", output_path.name)
@@ -362,17 +426,22 @@ def write_context(domain: str, context_doc: Dict[str, Any]) -> Optional[Path]:
 
 def generate_all_contexts(
     exclude: Optional[List[str]] = None,
+    dry_run: bool = False,
 ) -> Dict[str, Optional[Path]]:
     """
     Generate contexts for all domains in artifacts/.
 
     Args:
-        exclude: List of domains to skip (e.g., ['gx'] which has LinkML-generated context)
+        exclude: List of domains to skip (e.g., ['gx'] which has
+            LinkML-generated context). Pass None for default ['gx'].
+        dry_run: If True, generate but do not write files
 
     Returns:
-        Dict mapping domain names to output paths (or None if failed)
+        Dict mapping domain names to output paths (or None if
+        failed/unchanged/skipped)
     """
-    exclude = exclude or ["gx"]  # gx already has LinkML-generated context
+    if exclude is None:
+        exclude = ["gx"]  # gx already has LinkML-generated context
     results: Dict[str, Optional[Path]] = {}
 
     for domain_dir in sorted(ARTIFACTS_DIR.iterdir()):
@@ -392,7 +461,7 @@ def generate_all_contexts(
 
         context_doc = generate_context(domain)
         if context_doc:
-            results[domain] = write_context(domain, context_doc)
+            results[domain] = _write_context(domain, context_doc, dry_run=dry_run)
         else:
             results[domain] = None
 
@@ -419,11 +488,17 @@ def test_context_roundtrip(domain: str, instance_path: Path) -> bool:
 
     context_path = ARTIFACTS_DIR / domain / f"{domain}{Extensions.CONTEXT}"
     if not context_path.exists():
-        logger.error("Context file not found: %s", context_path)
+        logger.error(
+            "Context file not found: %s",
+            normalize_path_for_display(context_path, ROOT_DIR),
+        )
         return False
 
     if not instance_path.exists():
-        logger.error("Instance file not found: %s", instance_path)
+        logger.error(
+            "Instance file not found: %s",
+            normalize_path_for_display(instance_path, ROOT_DIR),
+        )
         return False
 
     # Load context
@@ -436,15 +511,15 @@ def test_context_roundtrip(domain: str, instance_path: Path) -> bool:
         original = json.load(f)
 
     # Parse original to graph
-    g_original = Graph()
+    g_original = Graph(store=FAST_STORE)
     g_original.parse(data=json.dumps(original), format="json-ld")
 
-    # Create compact version by replacing context
-    compact = original.copy()
+    # Create compact version by replacing context (deep copy to avoid mutation)
+    compact = copy.deepcopy(original)
     compact["@context"] = context
 
     # Parse compact to graph
-    g_compact = Graph()
+    g_compact = Graph(store=FAST_STORE)
     try:
         g_compact.parse(data=json.dumps(compact), format="json-ld")
     except Exception as e:
@@ -453,10 +528,10 @@ def test_context_roundtrip(domain: str, instance_path: Path) -> bool:
 
     # Compare
     if isomorphic(g_original, g_compact):
-        logger.info("✅ Round-trip test PASSED for %s", instance_path.name)
+        logger.info("Round-trip test PASSED for %s", instance_path.name)
         return True
     else:
-        logger.warning("❌ Round-trip test FAILED for %s", instance_path.name)
+        logger.warning("Round-trip test FAILED for %s", instance_path.name)
         logger.debug("Original triples: %d", len(g_original))
         logger.debug("Compact triples: %d", len(g_compact))
 
@@ -483,17 +558,17 @@ def _run_tests() -> bool:
     print("Running context_generator self-tests...")
     all_passed = True
 
-    # Test 1: Extract prefix from IRI
+    # Test 1: iri_to_domain_hint (replaces extract_prefix_from_iri)
     try:
         iri1 = "https://w3id.org/ascs-ev/envited-x/manifest/v5"
-        assert extract_prefix_from_iri(iri1) == "manifest"
+        assert iri_to_domain_hint(iri1) == "manifest"
 
         iri2 = "https://w3id.org/ascs-ev/envited-x/hdmap/v5/"
-        assert extract_prefix_from_iri(iri2) == "hdmap"
+        assert iri_to_domain_hint(iri2) == "hdmap"
 
-        print("PASS: extract_prefix_from_iri")
+        print("PASS: iri_to_domain_hint")
     except AssertionError as e:
-        print(f"FAIL: extract_prefix_from_iri - {e}")
+        print(f"FAIL: iri_to_domain_hint - {e}")
         all_passed = False
 
     # Test 2: Generate context for manifest (if files exist)
@@ -520,7 +595,7 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main():
+def main() -> int:
     """Main entry point."""
     parser = argparse.ArgumentParser(
         description="Generate JSON-LD context files from OWL/SHACL artifacts"
@@ -537,7 +612,7 @@ def main():
     parser.add_argument(
         "--exclude",
         nargs="*",
-        default=["gx"],
+        default=None,
         help="Domains to exclude (default: gx)",
     )
     parser.add_argument(
@@ -571,7 +646,7 @@ def main():
         if not args.instance:
             # Try to find a valid instance
             test_dir = ROOT_DIR / "tests" / "data" / args.test_roundtrip / "valid"
-            instances = list(test_dir.glob("*.json"))
+            instances = list(test_dir.glob("*.json")) + list(test_dir.glob("*.jsonld"))
             if instances:
                 args.instance = instances[0]
             else:
@@ -582,22 +657,38 @@ def main():
         return 0 if success else 1
 
     if args.all:
-        results = generate_all_contexts(exclude=args.exclude)
+        results = generate_all_contexts(exclude=args.exclude, dry_run=args.dry_run)
+        exclude_set = set(args.exclude) if args.exclude else {"gx"}
         written_count = sum(1 for p in results.values() if p is not None)
-        total_count = len([d for d in results if d not in (args.exclude or [])])
-        if written_count > 0:
+        total_count = len([d for d in results if d not in exclude_set])
+        if args.dry_run:
+            print(f"\nDry run: {total_count} context files would be generated")
+        elif written_count > 0:
             print(f"\nUpdated {written_count}/{total_count} context files")
         else:
             print(f"\nAll {total_count} context files unchanged")
         return 0
 
     if args.domain:
+        domain_dir = ARTIFACTS_DIR / args.domain
+        if not domain_dir.is_dir():
+            print(f"Unknown domain: {args.domain}")
+            print(
+                "Available: "
+                + ", ".join(
+                    d.name
+                    for d in sorted(ARTIFACTS_DIR.iterdir())
+                    if d.is_dir() and (d / f"{d.name}{Extensions.OWL}").exists()
+                )
+            )
+            return 1
+
         context_doc = generate_context(args.domain)
         if context_doc:
             if args.dry_run:
                 print(json.dumps(context_doc, indent=2))
             else:
-                write_context(args.domain, context_doc)
+                _write_context(args.domain, context_doc)
             return 0
         return 1
 
@@ -606,6 +697,4 @@ def main():
 
 
 if __name__ == "__main__":
-    import sys
-
     sys.exit(main())

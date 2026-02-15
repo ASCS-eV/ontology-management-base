@@ -16,22 +16,23 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "general": "https://w3id.org/gaia-x4plcaad/ontologies/general/v3/",
     "description": {
-      "@id": "general:description"
-    },
-    "data": {
-      "@id": "general:data",
+      "@id": "general:description",
       "@type": "@id"
     },
     "name": {
       "@id": "general:name"
     },
-    "size": {
-      "@id": "general:size",
-      "@type": "xsd:float"
+    "data": {
+      "@id": "general:data",
+      "@type": "@id"
     },
     "recordingTime": {
       "@id": "general:recordingTime",
       "@type": "xsd:dateTime"
+    },
+    "size": {
+      "@id": "general:size",
+      "@type": "xsd:float"
     },
     "Data": "general:Data",
     "Description": "general:Description",

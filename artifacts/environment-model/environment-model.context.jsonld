@@ -17,39 +17,15 @@
     "environment-model": "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasResourceDescription": {
-      "@id": "environment-model:hasResourceDescription"
+    "textureResolution": {
+      "@id": "environment-model:textureResolution",
+      "@type": "xsd:float"
     },
-    "hasDomainSpecification": {
-      "@id": "environment-model:hasDomainSpecification",
-      "@type": "@id"
+    "detailLevel": {
+      "@id": "environment-model:detailLevel"
     },
-    "hasManifest": {
-      "@id": "environment-model:hasManifest"
-    },
-    "hasProject": {
-      "@id": "environment-model:hasProject",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "environment-model:hasFormat",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "environment-model:hasContent",
-      "@type": "@id"
-    },
-    "hasQuantity": {
-      "@id": "environment-model:hasQuantity",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "environment-model:hasQuality",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "environment-model:hasGeoreference",
-      "@type": "@id"
+    "features": {
+      "@id": "environment-model:features"
     },
     "formatType": {
       "@id": "environment-model:formatType"
@@ -57,39 +33,33 @@
     "version": {
       "@id": "environment-model:version"
     },
-    "elements": {
-      "@id": "environment-model:elements"
+    "hasContent": {
+      "@id": "environment-model:hasContent",
+      "@type": "@id"
     },
-    "useCase": {
-      "@id": "environment-model:useCase"
+    "hasGeoreference": {
+      "@id": "environment-model:hasGeoreference",
+      "@type": "@id"
     },
-    "visualisationToolName": {
-      "@id": "environment-model:visualisationToolName"
+    "hasQuality": {
+      "@id": "environment-model:hasQuality",
+      "@type": "@id"
     },
-    "visualisationToolVendor": {
-      "@id": "environment-model:visualisationToolVendor"
+    "hasFormat": {
+      "@id": "environment-model:hasFormat",
+      "@type": "@id"
     },
-    "visualisationToolVersion": {
-      "@id": "environment-model:visualisationToolVersion"
+    "hasQuantity": {
+      "@id": "environment-model:hasQuantity",
+      "@type": "@id"
     },
-    "creationToolName": {
-      "@id": "environment-model:creationToolName"
+    "hasProject": {
+      "@id": "environment-model:hasProject",
+      "@type": "@id"
     },
-    "creationToolVendor": {
-      "@id": "environment-model:creationToolVendor"
-    },
-    "creationToolVersion": {
-      "@id": "environment-model:creationToolVersion"
-    },
-    "features": {
-      "@id": "environment-model:features"
-    },
-    "detailLevel": {
-      "@id": "environment-model:detailLevel"
-    },
-    "textureResolution": {
-      "@id": "environment-model:textureResolution",
-      "@type": "xsd:float"
+    "textureMaterialCount": {
+      "@id": "environment-model:textureMaterialCount",
+      "@type": "xsd:integer"
     },
     "geometryCount": {
       "@id": "environment-model:geometryCount",
@@ -99,9 +69,41 @@
       "@id": "environment-model:triangleCount",
       "@type": "xsd:integer"
     },
-    "textureMaterialCount": {
-      "@id": "environment-model:textureMaterialCount",
-      "@type": "xsd:integer"
+    "creationToolName": {
+      "@id": "environment-model:creationToolName"
+    },
+    "creationToolVendor": {
+      "@id": "environment-model:creationToolVendor"
+    },
+    "visualisationToolVendor": {
+      "@id": "environment-model:visualisationToolVendor"
+    },
+    "visualisationToolName": {
+      "@id": "environment-model:visualisationToolName"
+    },
+    "creationToolVersion": {
+      "@id": "environment-model:creationToolVersion"
+    },
+    "visualisationToolVersion": {
+      "@id": "environment-model:visualisationToolVersion"
+    },
+    "useCase": {
+      "@id": "environment-model:useCase"
+    },
+    "elements": {
+      "@id": "environment-model:elements"
+    },
+    "hasResourceDescription": {
+      "@id": "environment-model:hasResourceDescription",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "environment-model:hasManifest",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "environment-model:hasDomainSpecification",
+      "@type": "@id"
     },
     "Content": "environment-model:Content",
     "DomainSpecification": "environment-model:DomainSpecification",
