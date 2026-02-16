@@ -16,50 +16,6 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "simulation-model": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "modelImplementationPerformanceCharacteristics": {
-      "@id": "simulation-model:modelImplementationPerformanceCharacteristics"
-    },
-    "modelVerificationReport": {
-      "@id": "simulation-model:modelVerificationReport",
-      "@type": "xsd:anyURI"
-    },
-    "modelLimitations": {
-      "@id": "simulation-model:modelLimitations"
-    },
-    "modelVerificationStatus": {
-      "@id": "simulation-model:modelVerificationStatus",
-      "@type": "xsd:boolean"
-    },
-    "modelValidationReport": {
-      "@id": "simulation-model:modelValidationReport",
-      "@type": "xsd:anyURI"
-    },
-    "modelValidationPlatform": {
-      "@id": "simulation-model:modelValidationPlatform"
-    },
-    "modelValidationConcept": {
-      "@id": "simulation-model:modelValidationConcept",
-      "@type": "xsd:anyURI"
-    },
-    "modelValidityRange": {
-      "@id": "simulation-model:modelValidityRange"
-    },
-    "modelValidationStatus": {
-      "@id": "simulation-model:modelValidationStatus",
-      "@type": "xsd:boolean"
-    },
-    "hasQuantity": {
-      "@id": "simulation-model:hasQuantity",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "simulation-model:hasQuality",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "simulation-model:hasFormat",
-      "@type": "@id"
-    },
     "hasContent": {
       "@id": "simulation-model:hasContent",
       "@type": "@id"
@@ -68,97 +24,141 @@
       "@id": "simulation-model:hasDataSource",
       "@type": "@id"
     },
-    "modelManufacturer": {
-      "@id": "simulation-model:modelManufacturer"
+    "hasDomainSpecification": {
+      "@id": "simulation-model:hasDomainSpecification",
+      "@type": "@id"
     },
-    "modelFamily": {
-      "@id": "simulation-model:modelFamily"
-    },
-    "modelReleasedate": {
-      "@id": "simulation-model:modelReleasedate",
-      "@type": "xsd:dateTime"
-    },
-    "sensorType": {
-      "@id": "simulation-model:sensorType"
-    },
-    "sensorManufacturer": {
-      "@id": "simulation-model:sensorManufacturer"
-    },
-    "modelType": {
-      "@id": "simulation-model:modelType"
-    },
-    "sensorManufacturerPartnumber": {
-      "@id": "simulation-model:sensorManufacturerPartnumber"
-    },
-    "modelReleasestatus": {
-      "@id": "simulation-model:modelReleasestatus"
-    },
-    "modelVersion": {
-      "@id": "simulation-model:modelVersion"
-    },
-    "sensorVersion": {
-      "@id": "simulation-model:sensorVersion"
-    },
-    "sensorTechnology": {
-      "@id": "simulation-model:sensorTechnology"
-    },
-    "modelName": {
-      "@id": "simulation-model:modelName"
-    },
-    "modelGuid": {
-      "@id": "simulation-model:modelGuid"
-    },
-    "modelModellingApproach": {
-      "@id": "simulation-model:modelModellingApproach"
-    },
-    "sensorFamily": {
-      "@id": "simulation-model:sensorFamily"
-    },
-    "modelPurpose": {
-      "@id": "simulation-model:modelPurpose"
-    },
-    "sensorName": {
-      "@id": "simulation-model:sensorName"
-    },
-    "sensorTechnologyVariant": {
-      "@id": "simulation-model:sensorTechnologyVariant"
-    },
-    "maxObjects": {
-      "@id": "simulation-model:maxObjects",
-      "@type": "xsd:integer"
-    },
-    "maxDetections": {
-      "@id": "simulation-model:maxDetections",
-      "@type": "xsd:integer"
+    "hasFormat": {
+      "@id": "simulation-model:hasFormat",
+      "@type": "@id"
     },
     "hasManifest": {
       "@id": "simulation-model:hasManifest",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "simulation-model:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "simulation-model:hasQuantity",
       "@type": "@id"
     },
     "hasSoftwareResource": {
       "@id": "simulation-model:hasSoftwareResource",
       "@type": "@id"
     },
-    "hasDomainSpecification": {
-      "@id": "simulation-model:hasDomainSpecification",
-      "@type": "@id"
+    "maxDetections": {
+      "@id": "simulation-model:maxDetections",
+      "@type": "xsd:integer"
     },
-    "modelSpecification": {
-      "@id": "simulation-model:modelSpecification",
-      "@type": "xsd:anyURI"
+    "maxObjects": {
+      "@id": "simulation-model:maxObjects",
+      "@type": "xsd:integer"
+    },
+    "modelFamily": {
+      "@id": "simulation-model:modelFamily"
+    },
+    "modelGuid": {
+      "@id": "simulation-model:modelGuid"
     },
     "modelImplementationFormat": {
       "@id": "simulation-model:modelImplementationFormat"
+    },
+    "modelImplementationPerformanceCharacteristics": {
+      "@id": "simulation-model:modelImplementationPerformanceCharacteristics"
+    },
+    "modelImplementationPreconditions": {
+      "@id": "simulation-model:modelImplementationPreconditions"
     },
     "modelIntegrationRequirements": {
       "@id": "simulation-model:modelIntegrationRequirements",
       "@type": "xsd:anyURI"
     },
+    "modelLimitations": {
+      "@id": "simulation-model:modelLimitations"
+    },
+    "modelManufacturer": {
+      "@id": "simulation-model:modelManufacturer"
+    },
+    "modelModellingApproach": {
+      "@id": "simulation-model:modelModellingApproach"
+    },
+    "modelName": {
+      "@id": "simulation-model:modelName"
+    },
     "modelPreconditions": {
       "@id": "simulation-model:modelPreconditions"
     },
-    "modelImplementationPreconditions": {
-      "@id": "simulation-model:modelImplementationPreconditions"
+    "modelPurpose": {
+      "@id": "simulation-model:modelPurpose"
+    },
+    "modelReleasedate": {
+      "@id": "simulation-model:modelReleasedate",
+      "@type": "xsd:dateTime"
+    },
+    "modelReleasestatus": {
+      "@id": "simulation-model:modelReleasestatus"
+    },
+    "modelSpecification": {
+      "@id": "simulation-model:modelSpecification",
+      "@type": "xsd:anyURI"
+    },
+    "modelType": {
+      "@id": "simulation-model:modelType"
+    },
+    "modelValidationConcept": {
+      "@id": "simulation-model:modelValidationConcept",
+      "@type": "xsd:anyURI"
+    },
+    "modelValidationPlatform": {
+      "@id": "simulation-model:modelValidationPlatform"
+    },
+    "modelValidationReport": {
+      "@id": "simulation-model:modelValidationReport",
+      "@type": "xsd:anyURI"
+    },
+    "modelValidationStatus": {
+      "@id": "simulation-model:modelValidationStatus",
+      "@type": "xsd:boolean"
+    },
+    "modelValidityRange": {
+      "@id": "simulation-model:modelValidityRange"
+    },
+    "modelVerificationReport": {
+      "@id": "simulation-model:modelVerificationReport",
+      "@type": "xsd:anyURI"
+    },
+    "modelVerificationStatus": {
+      "@id": "simulation-model:modelVerificationStatus",
+      "@type": "xsd:boolean"
+    },
+    "modelVersion": {
+      "@id": "simulation-model:modelVersion"
+    },
+    "sensorFamily": {
+      "@id": "simulation-model:sensorFamily"
+    },
+    "sensorManufacturer": {
+      "@id": "simulation-model:sensorManufacturer"
+    },
+    "sensorManufacturerPartnumber": {
+      "@id": "simulation-model:sensorManufacturerPartnumber"
+    },
+    "sensorName": {
+      "@id": "simulation-model:sensorName"
+    },
+    "sensorTechnology": {
+      "@id": "simulation-model:sensorTechnology"
+    },
+    "sensorTechnologyVariant": {
+      "@id": "simulation-model:sensorTechnologyVariant"
+    },
+    "sensorType": {
+      "@id": "simulation-model:sensorType"
+    },
+    "sensorVersion": {
+      "@id": "simulation-model:sensorVersion"
     },
     "Content": "simulation-model:Content",
     "DataSource": "simulation-model:DataSource",

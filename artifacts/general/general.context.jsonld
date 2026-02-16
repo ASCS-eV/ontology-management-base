@@ -15,11 +15,12 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "general": "https://w3id.org/gaia-x4plcaad/ontologies/general/v3/",
-    "description": {
-      "@id": "general:description"
-    },
     "data": {
       "@id": "general:data",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "general:description",
       "@type": "@id"
     },
     "name": {

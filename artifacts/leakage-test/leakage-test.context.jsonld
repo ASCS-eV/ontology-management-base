@@ -16,39 +16,24 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "leakage-test": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "machineParameter": {
-      "@id": "leakage-test:machineParameter",
+    "codingDownholder": {
+      "@id": "leakage-test:codingDownholder",
       "@type": "@id"
     },
-    "processParameter": {
-      "@id": "leakage-test:processParameter",
+    "codingRFID": {
+      "@id": "leakage-test:codingRFID",
       "@type": "@id"
     },
-    "lowerTolerance": {
-      "@id": "leakage-test:lowerTolerance",
-      "@type": "xsd:float"
-    },
-    "setpoint": {
-      "@id": "leakage-test:setpoint",
-      "@type": "xsd:integer"
-    },
-    "unit": {
-      "@id": "leakage-test:unit"
-    },
-    "upperTolerance": {
-      "@id": "leakage-test:upperTolerance",
-      "@type": "xsd:float"
-    },
-    "maximumPressure": {
-      "@id": "leakage-test:maximumPressure",
-      "@type": "@id"
-    },
-    "minimumPressure": {
-      "@id": "leakage-test:minimumPressure",
+    "codingTestAdapter": {
+      "@id": "leakage-test:codingTestAdapter",
       "@type": "@id"
     },
     "hasCodeArtifact": {
       "@id": "leakage-test:hasCodeArtifact",
+      "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "leakage-test:hasContent",
       "@type": "@id"
     },
     "hasDomainSpecification": {
@@ -59,21 +44,36 @@
       "@id": "leakage-test:hasManifest",
       "@type": "@id"
     },
-    "hasContent": {
-      "@id": "leakage-test:hasContent",
+    "lowerTolerance": {
+      "@id": "leakage-test:lowerTolerance",
+      "@type": "xsd:float"
+    },
+    "machineParameter": {
+      "@id": "leakage-test:machineParameter",
       "@type": "@id"
     },
-    "codingDownholder": {
-      "@id": "leakage-test:codingDownholder",
+    "maximumPressure": {
+      "@id": "leakage-test:maximumPressure",
       "@type": "@id"
     },
-    "codingTestAdapter": {
-      "@id": "leakage-test:codingTestAdapter",
+    "minimumPressure": {
+      "@id": "leakage-test:minimumPressure",
       "@type": "@id"
     },
-    "codingRFID": {
-      "@id": "leakage-test:codingRFID",
+    "processParameter": {
+      "@id": "leakage-test:processParameter",
       "@type": "@id"
+    },
+    "setpoint": {
+      "@id": "leakage-test:setpoint",
+      "@type": "xsd:float"
+    },
+    "unit": {
+      "@id": "leakage-test:unit"
+    },
+    "upperTolerance": {
+      "@id": "leakage-test:upperTolerance",
+      "@type": "xsd:float"
     },
     "CodingDownholder": "leakage-test:CodingDownholder",
     "CodingRFID": "leakage-test:CodingRFID",

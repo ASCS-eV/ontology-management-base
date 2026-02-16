@@ -15,45 +15,21 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "hasManifestReference": {
-      "@id": "manifest:hasManifestReference",
-      "@type": "@id"
-    },
-    "hasReferencedArtifacts": {
-      "@id": "manifest:hasReferencedArtifacts",
-      "@type": "@id"
-    },
-    "hasArtifacts": {
-      "@id": "manifest:hasArtifacts",
-      "@type": "@id"
-    },
-    "hasLicense": {
-      "@id": "manifest:hasLicense",
-      "@type": "@id"
-    },
-    "hasFileMetadata": {
-      "@id": "manifest:hasFileMetadata",
-      "@type": "@id"
-    },
-    "hasCategory": {
-      "@id": "manifest:hasCategory",
-      "@type": "@id"
+    "cid": {
+      "@id": "manifest:cid"
     },
     "conformsTo": {
       "@id": "sh:conformsTo",
       "@type": "@id",
       "@container": "@set"
     },
-    "note": {
-      "@id": "skos:note"
+    "depth": {
+      "@id": "manifest:depth",
+      "@type": "xsd:float"
     },
-    "hasAccessRole": {
-      "@id": "manifest:hasAccessRole",
-      "@type": "@id"
-    },
-    "iri": {
-      "@id": "manifest:iri",
-      "@type": "@id"
+    "filePath": {
+      "@id": "manifest:filePath",
+      "@type": "xsd:anyURI"
     },
     "fileSize": {
       "@id": "manifest:fileSize",
@@ -62,34 +38,58 @@
     "filename": {
       "@id": "manifest:filename"
     },
-    "mimeType": {
-      "@id": "manifest:mimeType"
+    "hasAccessRole": {
+      "@id": "manifest:hasAccessRole",
+      "@type": "@id"
     },
-    "timestamp": {
-      "@id": "manifest:timestamp",
-      "@type": "xsd:dateTime"
+    "hasArtifacts": {
+      "@id": "manifest:hasArtifacts",
+      "@type": "@id"
     },
-    "cid": {
-      "@id": "manifest:cid"
+    "hasCategory": {
+      "@id": "manifest:hasCategory",
+      "@type": "@id"
     },
     "hasDimensions": {
       "@id": "manifest:hasDimensions",
       "@type": "@id"
     },
-    "filePath": {
-      "@id": "manifest:filePath",
-      "@type": "xsd:anyURI"
+    "hasFileMetadata": {
+      "@id": "manifest:hasFileMetadata",
+      "@type": "@id"
     },
-    "unit": {
-      "@id": "manifest:unit"
+    "hasLicense": {
+      "@id": "manifest:hasLicense",
+      "@type": "@id"
+    },
+    "hasManifestReference": {
+      "@id": "manifest:hasManifestReference",
+      "@type": "@id"
+    },
+    "hasReferencedArtifacts": {
+      "@id": "manifest:hasReferencedArtifacts",
+      "@type": "@id"
     },
     "height": {
       "@id": "manifest:height",
       "@type": "xsd:float"
     },
-    "depth": {
-      "@id": "manifest:depth",
-      "@type": "xsd:float"
+    "iri": {
+      "@id": "manifest:iri",
+      "@type": "@id"
+    },
+    "mimeType": {
+      "@id": "manifest:mimeType"
+    },
+    "note": {
+      "@id": "skos:note"
+    },
+    "timestamp": {
+      "@id": "manifest:timestamp",
+      "@type": "xsd:dateTime"
+    },
+    "unit": {
+      "@id": "manifest:unit"
     },
     "width": {
       "@id": "manifest:width",

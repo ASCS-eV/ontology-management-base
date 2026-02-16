@@ -15,25 +15,10 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "environment-model": "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
-    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "geometryCount": {
-      "@id": "environment-model:geometryCount",
-      "@type": "xsd:integer"
-    },
-    "textureMaterialCount": {
-      "@id": "environment-model:textureMaterialCount",
-      "@type": "xsd:integer"
-    },
-    "triangleCount": {
-      "@id": "environment-model:triangleCount",
-      "@type": "xsd:integer"
-    },
-    "elements": {
-      "@id": "environment-model:elements"
-    },
-    "useCase": {
-      "@id": "environment-model:useCase"
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "creationToolName": {
+      "@id": "environment-model:creationToolName"
     },
     "creationToolVendor": {
       "@id": "environment-model:creationToolVendor"
@@ -41,11 +26,75 @@
     "creationToolVersion": {
       "@id": "environment-model:creationToolVersion"
     },
-    "visualisationToolVersion": {
-      "@id": "environment-model:visualisationToolVersion"
+    "detailLevel": {
+      "@id": "environment-model:detailLevel"
     },
-    "creationToolName": {
-      "@id": "environment-model:creationToolName"
+    "elements": {
+      "@id": "environment-model:elements"
+    },
+    "features": {
+      "@id": "environment-model:features"
+    },
+    "formatType": {
+      "@id": "environment-model:formatType"
+    },
+    "geometryCount": {
+      "@id": "environment-model:geometryCount",
+      "@type": "xsd:integer"
+    },
+    "hasContent": {
+      "@id": "environment-model:hasContent",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "environment-model:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "environment-model:hasFormat",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "environment-model:hasGeoreference",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "environment-model:hasManifest",
+      "@type": "@id"
+    },
+    "hasProject": {
+      "@id": "environment-model:hasProject",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "environment-model:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "environment-model:hasQuantity",
+      "@type": "@id"
+    },
+    "hasResourceDescription": {
+      "@id": "environment-model:hasResourceDescription",
+      "@type": "@id"
+    },
+    "textureMaterialCount": {
+      "@id": "environment-model:textureMaterialCount",
+      "@type": "xsd:integer"
+    },
+    "textureResolution": {
+      "@id": "environment-model:textureResolution",
+      "@type": "xsd:float"
+    },
+    "triangleCount": {
+      "@id": "environment-model:triangleCount",
+      "@type": "xsd:integer"
+    },
+    "useCase": {
+      "@id": "environment-model:useCase"
+    },
+    "version": {
+      "@id": "environment-model:version"
     },
     "visualisationToolName": {
       "@id": "environment-model:visualisationToolName"
@@ -53,57 +102,8 @@
     "visualisationToolVendor": {
       "@id": "environment-model:visualisationToolVendor"
     },
-    "features": {
-      "@id": "environment-model:features"
-    },
-    "detailLevel": {
-      "@id": "environment-model:detailLevel"
-    },
-    "textureResolution": {
-      "@id": "environment-model:textureResolution",
-      "@type": "xsd:float"
-    },
-    "formatType": {
-      "@id": "environment-model:formatType"
-    },
-    "version": {
-      "@id": "environment-model:version"
-    },
-    "hasDomainSpecification": {
-      "@id": "environment-model:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "environment-model:hasManifest",
-      "@type": "@id"
-    },
-    "hasResourceDescription": {
-      "@id": "environment-model:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasProject": {
-      "@id": "environment-model:hasProject",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "environment-model:hasFormat",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "environment-model:hasContent",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "environment-model:hasGeoreference",
-      "@type": "@id"
-    },
-    "hasQuantity": {
-      "@id": "environment-model:hasQuantity",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "environment-model:hasQuality",
-      "@type": "@id"
+    "visualisationToolVersion": {
+      "@id": "environment-model:visualisationToolVersion"
     },
     "Content": "environment-model:Content",
     "DomainSpecification": "environment-model:DomainSpecification",

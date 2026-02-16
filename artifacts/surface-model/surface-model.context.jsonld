@@ -15,69 +15,57 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "surface-model": "https://w3id.org/ascs-ev/envited-x/surface-model/v6/",
-    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "contentType": {
+      "@id": "surface-model:contentType"
+    },
+    "elevationRange": {
+      "@id": "surface-model:elevationRange",
+      "@type": "xsd:float"
+    },
     "formatType": {
       "@id": "surface-model:formatType"
-    },
-    "version": {
-      "@id": "surface-model:version"
     },
     "hasContent": {
       "@id": "surface-model:hasContent",
       "@type": "@id"
     },
-    "hasQuality": {
-      "@id": "surface-model:hasQuality",
+    "hasDomainSpecification": {
+      "@id": "surface-model:hasDomainSpecification",
       "@type": "@id"
     },
     "hasFormat": {
       "@id": "surface-model:hasFormat",
       "@type": "@id"
     },
-    "hasQuantity": {
-      "@id": "surface-model:hasQuantity",
-      "@type": "@id"
-    },
     "hasGeoreference": {
       "@id": "surface-model:hasGeoreference",
-      "@type": "@id"
-    },
-    "elevationRange": {
-      "@id": "surface-model:elevationRange",
-      "@type": "xsd:float"
-    },
-    "mapDataField": {
-      "@id": "surface-model:mapDataField",
-      "@type": "xsd:boolean"
-    },
-    "length": {
-      "@id": "surface-model:length",
-      "@type": "xsd:float"
-    },
-    "hasDomainSpecification": {
-      "@id": "surface-model:hasDomainSpecification",
       "@type": "@id"
     },
     "hasManifest": {
       "@id": "surface-model:hasManifest",
       "@type": "@id"
     },
+    "hasQuality": {
+      "@id": "surface-model:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "surface-model:hasQuantity",
+      "@type": "@id"
+    },
     "hasResourceDescription": {
       "@id": "surface-model:hasResourceDescription",
       "@type": "@id"
     },
-    "resolutionLateral": {
-      "@id": "surface-model:resolutionLateral",
+    "length": {
+      "@id": "surface-model:length",
       "@type": "xsd:float"
     },
-    "rampExists": {
-      "@id": "surface-model:rampExists",
+    "mapDataField": {
+      "@id": "surface-model:mapDataField",
       "@type": "xsd:boolean"
-    },
-    "resolutionLongitudinal": {
-      "@id": "surface-model:resolutionLongitudinal",
-      "@type": "xsd:float"
     },
     "orientation": {
       "@id": "surface-model:orientation",
@@ -87,8 +75,20 @@
       "@id": "surface-model:platformExists",
       "@type": "xsd:boolean"
     },
-    "contentType": {
-      "@id": "surface-model:contentType"
+    "rampExists": {
+      "@id": "surface-model:rampExists",
+      "@type": "xsd:boolean"
+    },
+    "resolutionLateral": {
+      "@id": "surface-model:resolutionLateral",
+      "@type": "xsd:float"
+    },
+    "resolutionLongitudinal": {
+      "@id": "surface-model:resolutionLongitudinal",
+      "@type": "xsd:float"
+    },
+    "version": {
+      "@id": "surface-model:version"
     },
     "Content": "surface-model:Content",
     "DomainSpecification": "surface-model:DomainSpecification",

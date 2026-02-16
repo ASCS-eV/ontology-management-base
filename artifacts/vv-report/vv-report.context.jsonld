@@ -16,16 +16,35 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "vv-report": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasDomainSpecification": {
-      "@id": "vv-report:hasDomainSpecification",
+    "conceptSpecificData": {
+      "@id": "vv-report:conceptSpecificData"
+    },
+    "evaluations": {
+      "@id": "vv-report:evaluations",
       "@type": "@id"
     },
     "hasCodeArtifact": {
       "@id": "vv-report:hasCodeArtifact",
       "@type": "@id"
     },
+    "hasContent": {
+      "@id": "vv-report:hasContent",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "vv-report:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "vv-report:hasFormat",
+      "@type": "@id"
+    },
     "hasManifest": {
       "@id": "vv-report:hasManifest",
+      "@type": "@id"
+    },
+    "inputData": {
+      "@id": "vv-report:inputData",
       "@type": "@id"
     },
     "inputDescription": {
@@ -35,56 +54,12 @@
       "@id": "vv-report:inputReference",
       "@type": "xsd:anyURI"
     },
-    "parameterValue": {
-      "@id": "vv-report:parameterValue"
-    },
-    "parameterName": {
-      "@id": "vv-report:parameterName"
-    },
-    "parameterDescription": {
-      "@id": "vv-report:parameterDescription"
-    },
-    "conceptSpecificData": {
-      "@id": "vv-report:conceptSpecificData"
-    },
     "metric": {
       "@id": "vv-report:metric",
       "@type": "@id"
     },
-    "parameters": {
-      "@id": "vv-report:parameters",
-      "@type": "@id"
-    },
-    "result": {
-      "@id": "vv-report:result",
-      "@type": "@id"
-    },
-    "inputData": {
-      "@id": "vv-report:inputData",
-      "@type": "@id"
-    },
-    "resultVerification": {
-      "@id": "vv-report:resultVerification",
-      "@type": "@id"
-    },
-    "resultVerifiable": {
-      "@id": "vv-report:resultVerifiable",
-      "@type": "xsd:boolean"
-    },
-    "resultLog": {
-      "@id": "vv-report:resultLog"
-    },
-    "resultTestPassed": {
-      "@id": "vv-report:resultTestPassed",
-      "@type": "xsd:boolean"
-    },
-    "systemUnderTest": {
-      "@id": "vv-report:systemUnderTest",
-      "@type": "xsd:anyURI"
-    },
-    "evaluations": {
-      "@id": "vv-report:evaluations",
-      "@type": "@id"
+    "metricDescription": {
+      "@id": "vv-report:metricDescription"
     },
     "metricReference": {
       "@id": "vv-report:metricReference",
@@ -93,26 +68,51 @@
     "metricTitle": {
       "@id": "vv-report:metricTitle"
     },
-    "metricDescription": {
-      "@id": "vv-report:metricDescription"
+    "parameterDescription": {
+      "@id": "vv-report:parameterDescription"
+    },
+    "parameterName": {
+      "@id": "vv-report:parameterName"
+    },
+    "parameterValue": {
+      "@id": "vv-report:parameterValue"
+    },
+    "parameters": {
+      "@id": "vv-report:parameters",
+      "@type": "@id"
+    },
+    "reportFormat": {
+      "@id": "vv-report:reportFormat"
+    },
+    "result": {
+      "@id": "vv-report:result",
+      "@type": "@id"
+    },
+    "resultLog": {
+      "@id": "vv-report:resultLog"
+    },
+    "resultTestPassed": {
+      "@id": "vv-report:resultTestPassed",
+      "@type": "xsd:boolean"
+    },
+    "resultVerifiable": {
+      "@id": "vv-report:resultVerifiable",
+      "@type": "xsd:boolean"
+    },
+    "resultVerification": {
+      "@id": "vv-report:resultVerification",
+      "@type": "@id"
+    },
+    "resultVerificationDescription": {
+      "@id": "vv-report:resultVerificationDescription"
     },
     "resultVerificationReference": {
       "@id": "vv-report:resultVerificationReference",
       "@type": "xsd:anyURI"
     },
-    "resultVerificationDescription": {
-      "@id": "vv-report:resultVerificationDescription"
-    },
-    "reportFormat": {
-      "@id": "vv-report:reportFormat"
-    },
-    "hasFormat": {
-      "@id": "vv-report:hasFormat",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "vv-report:hasContent",
-      "@type": "@id"
+    "systemUnderTest": {
+      "@id": "vv-report:systemUnderTest",
+      "@type": "xsd:anyURI"
     },
     "Content": "vv-report:Content",
     "DomainSpecification": "vv-report:DomainSpecification",

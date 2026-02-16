@@ -15,13 +15,28 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "development": "https://w3id.org/gaia-x/development#",
     "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "hasFormat": {
-      "@id": "envited-x:hasFormat"
+    "development": "https://w3id.org/gaia-x/development#",
+    "hasCodeArtifact": {
+      "@id": "envited-x:hasCodeArtifact",
+      "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "envited-x:hasContent"
     },
     "hasDataSource": {
       "@id": "envited-x:hasDataSource"
+    },
+    "hasDomainSpecification": {
+      "@id": "envited-x:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "envited-x:hasFormat"
+    },
+    "hasManifest": {
+      "@id": "envited-x:hasManifest",
+      "@type": "@id"
     },
     "hasQuality": {
       "@id": "envited-x:hasQuality"
@@ -29,31 +44,16 @@
     "hasQuantity": {
       "@id": "envited-x:hasQuantity"
     },
-    "hasContent": {
-      "@id": "envited-x:hasContent"
-    },
-    "hasDomainSpecification": {
-      "@id": "envited-x:hasDomainSpecification",
-      "@type": "@id"
-    },
     "hasResourceDescription": {
       "@id": "envited-x:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "envited-x:hasManifest",
-      "@type": "@id"
-    },
-    "hasSoftwareResource": {
-      "@id": "envited-x:hasSoftwareResource",
       "@type": "@id"
     },
     "hasServiceOffering": {
       "@id": "envited-x:hasServiceOffering",
       "@type": "@id"
     },
-    "hasCodeArtifact": {
-      "@id": "envited-x:hasCodeArtifact",
+    "hasSoftwareResource": {
+      "@id": "envited-x:hasSoftwareResource",
       "@type": "@id"
     },
     "CodeArtifactBase": "envited-x:CodeArtifactBase",

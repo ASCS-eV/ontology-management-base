@@ -15,19 +15,19 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "description": "https://w3id.org/gaia-x4plcaad/ontologies/description/v1/",
-    "property2": {
-      "@id": "description:property2"
-    },
-    "property1": {
-      "@id": "description:property1"
+    "belongsTo": {
+      "@id": "description:belongsTo",
+      "@type": "@id"
     },
     "hasJunctionIntersection": {
       "@id": "description:hasJunctionIntersection",
       "@type": "@id"
     },
-    "belongsTo": {
-      "@id": "description:belongsTo",
-      "@type": "@id"
+    "property1": {
+      "@id": "description:property1"
+    },
+    "property2": {
+      "@id": "description:property2"
     },
     "ExampleServiceOffering": "description:ExampleServiceOffering"
   }

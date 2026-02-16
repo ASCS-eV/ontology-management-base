@@ -15,42 +15,103 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "ositrace": "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
-    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "measurementSystem": {
-      "@id": "ositrace:measurementSystem"
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "accuracyLaneModel2d": {
+      "@id": "ositrace:accuracyLaneModel2d",
+      "@type": "xsd:float"
     },
-    "usedDataSources": {
-      "@id": "ositrace:usedDataSources"
+    "accuracyLaneModelHeight": {
+      "@id": "ositrace:accuracyLaneModelHeight",
+      "@type": "xsd:float"
     },
-    "version": {
-      "@id": "ositrace:version"
+    "accuracyObjects": {
+      "@id": "ositrace:accuracyObjects",
+      "@type": "xsd:float"
     },
-    "formatType": {
-      "@id": "ositrace:formatType"
+    "accuracySignals": {
+      "@id": "ositrace:accuracySignals",
+      "@type": "xsd:float"
     },
-    "osiTraceFormatVersion": {
-      "@id": "ositrace:osiTraceFormatVersion"
+    "calibration": {
+      "@id": "ositrace:calibration"
     },
     "compression": {
       "@id": "ositrace:compression"
     },
-    "zeroTime": {
-      "@id": "ositrace:zeroTime",
-      "@type": "xsd:dateTime"
+    "description": {
+      "@id": "ositrace:description"
     },
     "fileFormat": {
       "@id": "ositrace:fileFormat"
     },
-    "minOsiVersion": {
-      "@id": "ositrace:minOsiVersion"
+    "formatType": {
+      "@id": "ositrace:formatType"
     },
-    "minProtobufVersion": {
-      "@id": "ositrace:minProtobufVersion"
+    "granularity": {
+      "@id": "ositrace:granularity"
     },
     "hasChannel": {
       "@id": "ositrace:hasChannel",
       "@type": "@id"
+    },
+    "hasContent": {
+      "@id": "ositrace:hasContent",
+      "@type": "@id"
+    },
+    "hasDataSource": {
+      "@id": "ositrace:hasDataSource",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "ositrace:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasEvent": {
+      "@id": "ositrace:hasEvent",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "ositrace:hasFormat",
+      "@type": "@id"
+    },
+    "hasGeoreference": {
+      "@id": "ositrace:hasGeoreference",
+      "@type": "@id"
+    },
+    "hasHostMovingObject": {
+      "@id": "ositrace:hasHostMovingObject",
+      "@type": "@id"
+    },
+    "hasManifest": {
+      "@id": "ositrace:hasManifest",
+      "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "ositrace:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "ositrace:hasQuantity",
+      "@type": "@id"
+    },
+    "hasResourceDescription": {
+      "@id": "ositrace:hasResourceDescription",
+      "@type": "@id"
+    },
+    "hasTargetMovingObject": {
+      "@id": "ositrace:hasTargetMovingObject",
+      "@type": "@id"
+    },
+    "identifier": {
+      "@id": "ositrace:identifier",
+      "@type": "xsd:integer"
+    },
+    "laneTypes": {
+      "@id": "ositrace:laneTypes"
+    },
+    "levelOfDetail": {
+      "@id": "ositrace:levelOfDetail"
     },
     "maxOsiVersion": {
       "@id": "ositrace:maxOsiVersion"
@@ -58,66 +119,72 @@
     "maxProtobufVersion": {
       "@id": "ositrace:maxProtobufVersion"
     },
-    "hasResourceDescription": {
-      "@id": "ositrace:hasResourceDescription",
-      "@type": "@id"
+    "measurementSystem": {
+      "@id": "ositrace:measurementSystem"
     },
-    "hasManifest": {
-      "@id": "ositrace:hasManifest",
-      "@type": "@id"
+    "messageType": {
+      "@id": "ositrace:messageType"
     },
-    "hasDomainSpecification": {
-      "@id": "ositrace:hasDomainSpecification",
-      "@type": "@id"
+    "minOsiVersion": {
+      "@id": "ositrace:minOsiVersion"
     },
-    "hasTargetMovingObject": {
-      "@id": "ositrace:hasTargetMovingObject",
-      "@type": "@id"
+    "minProtobufVersion": {
+      "@id": "ositrace:minProtobufVersion"
+    },
+    "numberFrames": {
+      "@id": "ositrace:numberFrames",
+      "@type": "xsd:integer"
+    },
+    "numberOfChannels": {
+      "@id": "ositrace:numberOfChannels",
+      "@type": "xsd:integer"
+    },
+    "numberOfMessages": {
+      "@id": "ositrace:numberOfMessages",
+      "@type": "xsd:integer"
+    },
+    "osiTraceFormatVersion": {
+      "@id": "ositrace:osiTraceFormatVersion"
+    },
+    "osiVersion": {
+      "@id": "ositrace:osiVersion"
+    },
+    "precision": {
+      "@id": "ositrace:precision",
+      "@type": "xsd:float"
+    },
+    "protobufVersion": {
+      "@id": "ositrace:protobufVersion"
     },
     "roadTypes": {
       "@id": "ositrace:roadTypes"
     },
-    "stopTime": {
-      "@id": "ositrace:stopTime",
-      "@type": "xsd:dateTime"
-    },
-    "levelOfDetail": {
-      "@id": "ositrace:levelOfDetail"
-    },
-    "hasHostMovingObject": {
-      "@id": "ositrace:hasHostMovingObject",
-      "@type": "@id"
+    "scenarioIdentifier": {
+      "@id": "ositrace:scenarioIdentifier"
     },
     "startTime": {
       "@id": "ositrace:startTime",
       "@type": "xsd:dateTime"
     },
+    "stopTime": {
+      "@id": "ositrace:stopTime",
+      "@type": "xsd:dateTime"
+    },
+    "tag": {
+      "@id": "ositrace:tag"
+    },
+    "time": {
+      "@id": "ositrace:time",
+      "@type": "xsd:dateTime"
+    },
+    "topic": {
+      "@id": "ositrace:topic"
+    },
     "trafficDirection": {
       "@id": "ositrace:trafficDirection"
     },
-    "scenarioIdentifier": {
-      "@id": "ositrace:scenarioIdentifier"
-    },
-    "hasEvent": {
-      "@id": "ositrace:hasEvent",
-      "@type": "@id"
-    },
-    "laneTypes": {
-      "@id": "ositrace:laneTypes"
-    },
-    "granularity": {
-      "@id": "ositrace:granularity"
-    },
-    "accuracyLaneModel2d": {
-      "@id": "ositrace:accuracyLaneModel2d",
-      "@type": "xsd:float"
-    },
-    "calibration": {
-      "@id": "ositrace:calibration"
-    },
-    "accuracyLaneModelHeight": {
-      "@id": "ositrace:accuracyLaneModelHeight",
-      "@type": "xsd:float"
+    "usedDataSources": {
+      "@id": "ositrace:usedDataSources"
     },
     "validationReport": {
       "@id": "ositrace:validationReport",
@@ -126,79 +193,12 @@
     "validationReportType": {
       "@id": "ositrace:validationReportType"
     },
-    "accuracySignals": {
-      "@id": "ositrace:accuracySignals",
-      "@type": "xsd:float"
+    "version": {
+      "@id": "ositrace:version"
     },
-    "accuracyObjects": {
-      "@id": "ositrace:accuracyObjects",
-      "@type": "xsd:float"
-    },
-    "precision": {
-      "@id": "ositrace:precision",
-      "@type": "xsd:float"
-    },
-    "description": {
-      "@id": "ositrace:description"
-    },
-    "osiVersion": {
-      "@id": "ositrace:osiVersion"
-    },
-    "protobufVersion": {
-      "@id": "ositrace:protobufVersion"
-    },
-    "numberOfMessages": {
-      "@id": "ositrace:numberOfMessages",
-      "@type": "xsd:integer"
-    },
-    "messageType": {
-      "@id": "ositrace:messageType"
-    },
-    "topic": {
-      "@id": "ositrace:topic"
-    },
-    "time": {
-      "@id": "ositrace:time",
+    "zeroTime": {
+      "@id": "ositrace:zeroTime",
       "@type": "xsd:dateTime"
-    },
-    "tag": {
-      "@id": "ositrace:tag"
-    },
-    "hasQuantity": {
-      "@id": "ositrace:hasQuantity",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "ositrace:hasFormat",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "ositrace:hasQuality",
-      "@type": "@id"
-    },
-    "hasDataSource": {
-      "@id": "ositrace:hasDataSource",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "ositrace:hasGeoreference",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "ositrace:hasContent",
-      "@type": "@id"
-    },
-    "numberOfChannels": {
-      "@id": "ositrace:numberOfChannels",
-      "@type": "xsd:integer"
-    },
-    "numberFrames": {
-      "@id": "ositrace:numberFrames",
-      "@type": "xsd:integer"
-    },
-    "identifier": {
-      "@id": "ositrace:identifier",
-      "@type": "xsd:integer"
     },
     "Channel": "ositrace:Channel",
     "Content": "ositrace:Content",

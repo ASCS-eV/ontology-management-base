@@ -232,7 +232,41 @@ def extract_property_datatypes(
                 # Object property via sh:or branches (polymorphic pattern)
                 prop_def["@type"] = "@id"
 
-            properties[local_name] = prop_def
+            # Deterministic conflict resolution: when the same property appears
+            # in multiple SHACL shapes with different datatypes, use a stable
+            # tiebreaker instead of depending on graph iteration order.
+            if local_name in properties:
+                existing = properties[local_name]
+                if existing != prop_def:
+                    existing_type = existing.get("@type")
+                    new_type = prop_def.get("@type")
+
+                    # Prefer definition that has @type over one without
+                    if new_type and not existing_type:
+                        logger.debug(
+                            "Property '%s': preferring typed definition (%s) over untyped",
+                            local_name,
+                            new_type,
+                        )
+                        properties[local_name] = prop_def
+                    elif existing_type and not new_type:
+                        pass  # keep existing (already typed)
+                    elif existing_type and new_type and existing_type != new_type:
+                        # Both typed differently — use lexicographic order for stability
+                        winner = min(existing_type, new_type)
+                        logger.warning(
+                            "Property '%s' has conflicting datatypes: %s vs %s — using %s",
+                            local_name,
+                            existing_type,
+                            new_type,
+                            winner,
+                        )
+                        if winner == new_type:
+                            properties[local_name] = prop_def
+                        # else keep existing
+                    # else: identical definitions or both untyped — keep existing
+            else:
+                properties[local_name] = prop_def
 
     return properties
 
@@ -340,7 +374,7 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     reserved_keys = set(context.keys())
 
     # Add prefixes for imported ontologies (resolved from owl:imports IRIs)
-    for imported in owl_graph.objects(URIRef(ontology_iri), OWL.imports):
+    for imported in sorted(owl_graph.objects(URIRef(ontology_iri), OWL.imports)):
         imported_str = str(imported)
         imported_prefix = iri_to_domain_hint(imported_str)
         if imported_prefix and imported_prefix not in context:
@@ -352,7 +386,7 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     properties = extract_property_datatypes(shacl_graph, prefix, ontology_iri)
 
     # Add properties to context, warning on collisions
-    for key, value in properties.items():
+    for key, value in sorted(properties.items()):
         if key in reserved_keys:
             logger.warning(
                 "Property '%s' collides with reserved prefix in domain '%s', skipping",

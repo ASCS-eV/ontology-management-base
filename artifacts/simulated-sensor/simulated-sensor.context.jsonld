@@ -15,6 +15,10 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "simulated-sensor": "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
+    "depthFlag": {
+      "@id": "simulated-sensor:depthFlag",
+      "@type": "xsd:boolean"
+    },
     "distance": {
       "@id": "simulated-sensor:distance",
       "@type": "xsd:float"
@@ -23,19 +27,13 @@
       "@id": "simulated-sensor:fieldOfView",
       "@type": "@id"
     },
-    "numberOfBeams": {
-      "@id": "simulated-sensor:numberOfBeams",
-      "@type": "xsd:integer"
+    "flag3D": {
+      "@id": "simulated-sensor:flag3D",
+      "@type": "xsd:boolean"
     },
-    "sensorType": {
-      "@id": "simulated-sensor:sensorType",
-      "@type": "@id"
-    },
-    "sensorIdentifier": {
-      "@id": "simulated-sensor:sensorIdentifier"
-    },
-    "mountingPosition": {
-      "@id": "simulated-sensor:mountingPosition"
+    "fovAngle1": {
+      "@id": "simulated-sensor:fovAngle1",
+      "@type": "xsd:float"
     },
     "fovAngle2": {
       "@id": "simulated-sensor:fovAngle2",
@@ -45,21 +43,23 @@
       "@id": "simulated-sensor:fovAngle3",
       "@type": "xsd:float"
     },
-    "fovAngle1": {
-      "@id": "simulated-sensor:fovAngle1",
-      "@type": "xsd:float"
+    "mountingPosition": {
+      "@id": "simulated-sensor:mountingPosition"
     },
-    "flag3D": {
-      "@id": "simulated-sensor:flag3D",
-      "@type": "xsd:boolean"
-    },
-    "depthFlag": {
-      "@id": "simulated-sensor:depthFlag",
-      "@type": "xsd:boolean"
+    "numberOfBeams": {
+      "@id": "simulated-sensor:numberOfBeams",
+      "@type": "xsd:integer"
     },
     "rgbFlag": {
       "@id": "simulated-sensor:rgbFlag",
       "@type": "xsd:boolean"
+    },
+    "sensorIdentifier": {
+      "@id": "simulated-sensor:sensorIdentifier"
+    },
+    "sensorType": {
+      "@id": "simulated-sensor:sensorType",
+      "@type": "@id"
     },
     "Camera": "simulated-sensor:Camera",
     "FieldOfView": "simulated-sensor:FieldOfView",
