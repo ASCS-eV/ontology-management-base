@@ -51,17 +51,17 @@
       ],
       "ositrace:startTime": {
         "@value": "2024-06-03T16:37:10.835792+02:00",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:stopTime": {
         "@value": "2024-06-03T16:38:28.636671+02:00",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:hasHostMovingObject": {
         "@type": "ositrace:MovingObject",
         "ositrace:identifier": {
           "@value": "1",
-          "@type": "xsd:unsignedLong"
+          "@type": "xsd:integer"
         },
         "ositrace:description": {
           "@value": "PMSF MB CLS 500 Host Vehicle",
@@ -72,7 +72,7 @@
         "@type": "ositrace:MovingObject",
         "ositrace:identifier": {
           "@value": "2",
-          "@type": "xsd:unsignedLong"
+          "@type": "xsd:integer"
         },
         "ositrace:description": {
           "@value": "ADC Target Vehicle",
@@ -95,7 +95,7 @@
       "@type": "ositrace:Quantity",
       "ositrace:numberFrames": {
         "@value": "1448",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       }
     },
     "ositrace:hasDataSource": {

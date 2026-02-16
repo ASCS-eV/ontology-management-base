@@ -50,17 +50,17 @@
       "ositrace:granularity": "object list",
       "ositrace:startTime": {
         "@value": "2024-06-03T14:37:10.000000Z",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:stopTime": {
         "@value": "2024-06-03T14:38:42.000000Z",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:hasHostMovingObject": {
         "@type": "ositrace:MovingObject",
         "ositrace:identifier": {
           "@value": "1",
-          "@type": "xsd:unsignedLong"
+          "@type": "xsd:integer"
         },
         "ositrace:description": {
           "@value": "Ego vehicle",
@@ -75,7 +75,7 @@
       "@type": "ositrace:Quantity",
       "ositrace:numberFrames": {
         "@value": "1448",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       }
     },
     "ositrace:hasDataSource": {

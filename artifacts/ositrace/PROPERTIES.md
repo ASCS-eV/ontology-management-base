@@ -37,7 +37,7 @@ class Class_definition_for_Quantity
 |Class definition for Content|https://w3id.org/ascs-ev/envited-x/ositrace/v6/Content|Attributes for the content of ASAM OSI trace files.|Content|
 |Class definition for DataSource|https://w3id.org/ascs-ev/envited-x/ositrace/v6/DataSource|Attributes for the data source of ASAM OSI trace files.|DataSource|
 |Class definition for DomainSpecification|https://w3id.org/ascs-ev/envited-x/ositrace/v6/DomainSpecification|OSI trace DomainSpecification containing additional metadata information of the simulation asset.|DomainSpecification|
-|Class definition for Event|https://w3id.org/ascs-ev/envited-x/ositrace/v6/Event|Attributes for event in  ASAM OSI trace files.||
+|Class definition for Event|https://w3id.org/ascs-ev/envited-x/ositrace/v6/Event|Attributes for event in ASAM OSI trace files.||
 |Class definition for Format|https://w3id.org/ascs-ev/envited-x/ositrace/v6/Format|Attributes for the format of ASAM OSI trace files, covering both single-channel .osi files and multi-channel MCAP containers.|Format|
 |Class definition for MovingObject|https://w3id.org/ascs-ev/envited-x/ositrace/v6/MovingObject|Attributes for moving objects in ASAM OSI trace files.||
 |Class definition for OSITrace|https://w3id.org/ascs-ev/envited-x/ositrace/v6/OSITrace|Attributes for ASAM OSI trace files.|SimulationAsset|
@@ -164,7 +164,7 @@ class Class_definition_for_Quantity
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-fileformat"></a>fileFormat|1|1|File format discriminator. Must be 'MCAP' for multi-channel files.||ositrace.shacl.ttl|
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-haschannel"></a>hasChannel|1||Channels in the MCAP container. Each channel carries messages of one OSI top-level type.||ositrace.shacl.ttl|
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-compression"></a>compression||1|MCAP chunk compression algorithm.||ositrace.shacl.ttl|
-|MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-ositraceformatversion"></a>osiTraceFormatVersion||1|OSI trace format version identifier from MCAP profile field.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
+|MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-ositraceformatversion"></a>osiTraceFormatVersion||1|MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace').|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-zerotime"></a>zeroTime||1|Zero-time reference point for the MCAP recording.|<http://www.w3.org/2001/XMLSchema#dateTime>|ositrace.shacl.ttl|
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-minosiversion"></a>minOsiVersion||1|Minimum OSI schema version across all channels.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
 |MultiChannelFormatShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-maxosiversion"></a>maxOsiVersion||1|Maximum OSI schema version across all channels.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
@@ -186,8 +186,8 @@ class Class_definition_for_Quantity
 |QualityShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-validationreporttype"></a>validationReportType|0|1|Type of OSI trace validation report, if any exists. As mime-type.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
 |QuantityShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-numberframes"></a>numberFrames||1|Number of frames/messages in the trace file. For MCAP files, this is the total across all channels.|<http://www.w3.org/2001/XMLSchema#integer>|ositrace.shacl.ttl|
 |QuantityShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-numberofchannels"></a>numberOfChannels||1|Number of channels in the MCAP container (MCAP files only).|<http://www.w3.org/2001/XMLSchema#integer>|ositrace.shacl.ttl|
-|MovingObjectShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-identifier"></a>identifier|1||Moving object identifier in trace file.|<http://www.w3.org/2001/XMLSchema#integer>|ositrace.shacl.ttl|
+|MovingObjectShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-identifier"></a>identifier|1|1|Moving object identifier in trace file.|<http://www.w3.org/2001/XMLSchema#integer>|ositrace.shacl.ttl|
 |MovingObjectShape|ositrace|description||1|Description of moving object in the trace file.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
 |EventShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-time"></a>time|1|1|Exact timestamp of the event in the recorded trace.|<http://www.w3.org/2001/XMLSchema#dateTime>|ositrace.shacl.ttl|
-|EventShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-tag"></a>tag|1||Unique tag of the event in trace file.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
+|EventShape|ositrace|<a id="prop-https---w3id-org-ascs-ev-envited-x-ositrace-v6-tag"></a>tag|1|1|Unique tag of the event in trace file.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|
 |EventShape|ositrace|description||1|Description of event in the trace file.|<http://www.w3.org/2001/XMLSchema#string>|ositrace.shacl.ttl|

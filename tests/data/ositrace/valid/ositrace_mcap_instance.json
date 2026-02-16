@@ -139,17 +139,17 @@
       ],
       "ositrace:startTime": {
         "@value": "2024-06-03T14:37:10.000000Z",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:stopTime": {
         "@value": "2024-06-03T14:38:42.000000Z",
-        "@type": "xsd:dateTimeStamp"
+        "@type": "xsd:dateTime"
       },
       "ositrace:hasHostMovingObject": {
         "@type": "ositrace:MovingObject",
         "ositrace:identifier": {
           "@value": "1",
-          "@type": "xsd:unsignedLong"
+          "@type": "xsd:integer"
         },
         "ositrace:description": {
           "@value": "Ego vehicle in highway scenario",
@@ -161,7 +161,7 @@
           "@type": "ositrace:MovingObject",
           "ositrace:identifier": {
             "@value": "2",
-            "@type": "xsd:unsignedLong"
+            "@type": "xsd:integer"
           },
           "ositrace:description": {
             "@value": "Lead vehicle",
@@ -172,7 +172,7 @@
           "@type": "ositrace:MovingObject",
           "ositrace:identifier": {
             "@value": "3",
-            "@type": "xsd:unsignedLong"
+            "@type": "xsd:integer"
           },
           "ositrace:description": {
             "@value": "Adjacent lane vehicle",
@@ -192,7 +192,7 @@
       "@type": "ositrace:Quantity",
       "ositrace:numberFrames": {
         "@value": "7848",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "ositrace:numberOfChannels": {
         "@value": "3",
