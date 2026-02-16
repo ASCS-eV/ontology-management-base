@@ -234,13 +234,13 @@
     },
     "ositrace": {
       "namespace": "ascs-ev",
-      "iri": "https://w3id.org/ascs-ev/envited-x/ositrace/v5",
-      "latest": "v5",
+      "iri": "https://w3id.org/ascs-ev/envited-x/ositrace/v6",
+      "latest": "v6",
       "versions": {
-        "v5": {
+        "v6": {
           "releaseTag": "v0.1.3",
-          "versionInfo": "v5",
-          "versionIri": "https://w3id.org/ascs-ev/envited-x/ositrace/v5",
+          "versionInfo": "v6",
+          "versionIri": "https://w3id.org/ascs-ev/envited-x/ositrace/v6",
           "files": {
             "ontology": "artifacts/ositrace/ositrace.owl.ttl",
             "shacl": [

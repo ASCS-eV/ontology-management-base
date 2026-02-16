@@ -16,24 +16,31 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "service": "https://w3id.org/gaia-x4plcaad/ontologies/service/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "hasDomainSpecification": {
-      "@id": "service:hasDomainSpecification",
+    "description": {
+      "@id": "service:description"
+    },
+    "hasContent": {
+      "@id": "service:hasContent",
       "@type": "@id"
     },
-    "hasServiceOffering": {
-      "@id": "service:hasServiceOffering",
+    "hasDomainSpecification": {
+      "@id": "service:hasDomainSpecification",
       "@type": "@id"
     },
     "hasManifest": {
       "@id": "service:hasManifest",
       "@type": "@id"
     },
-    "resultingFile": {
-      "@id": "service:resultingFile",
+    "hasServiceOffering": {
+      "@id": "service:hasServiceOffering",
       "@type": "@id"
     },
     "requiredFile": {
       "@id": "service:requiredFile",
+      "@type": "@id"
+    },
+    "resultingFile": {
+      "@id": "service:resultingFile",
       "@type": "@id"
     },
     "specification": {
@@ -43,13 +50,6 @@
     "tooling": {
       "@id": "service:tooling",
       "@type": "xsd:anyURI"
-    },
-    "description": {
-      "@id": "service:description"
-    },
-    "hasContent": {
-      "@id": "service:hasContent",
-      "@type": "@id"
     },
     "Content": "service:Content",
     "DomainSpecification": "service:DomainSpecification",

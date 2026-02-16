@@ -17,141 +17,142 @@
     "tzip21": "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
     "development": "https://w3id.org/gaia-x/development#",
-    "unit": {
-      "@id": "tzip21:unit"
+    "artifactUri": {
+      "@id": "tzip21:artifactUri",
+      "@type": "xsd:anyURI"
     },
-    "value": {
-      "@id": "tzip21:value"
+    "assets": {
+      "@id": "tzip21:assets",
+      "@type": "@id"
     },
-    "hash": {
-      "@id": "tzip21:hash"
+    "attributes": {
+      "@id": "tzip21:attributes",
+      "@type": "@id"
     },
-    "fileSize": {
-      "@id": "tzip21:fileSize",
+    "blockLevel": {
+      "@id": "tzip21:blockLevel",
       "@type": "xsd:integer"
     },
-    "duration": {
-      "@id": "tzip21:duration",
-      "@type": "xsd:time"
+    "contributors": {
+      "@id": "tzip21:contributors"
     },
-    "fileName": {
-      "@id": "tzip21:fileName"
-    },
-    "dimensions": {
-      "@id": "tzip21:dimensions",
-      "@type": "@id"
+    "creators": {
+      "@id": "tzip21:creators"
     },
     "dataRate": {
       "@id": "tzip21:dataRate",
       "@type": "@id"
     },
-    "uri": {
-      "@id": "tzip21:uri",
-      "@type": "xsd:anyURI"
+    "date": {
+      "@id": "tzip21:date",
+      "@type": "xsd:dateTime"
     },
-    "mimeType": {
-      "@id": "tzip21:mimeType"
-    },
-    "publishers": {
-      "@id": "tzip21:publishers"
-    },
-    "ttl": {
-      "@id": "tzip21:ttl",
+    "decimals": {
+      "@id": "tzip21:decimals",
       "@type": "xsd:integer"
-    },
-    "creators": {
-      "@id": "tzip21:creators"
-    },
-    "contributors": {
-      "@id": "tzip21:contributors"
-    },
-    "minter": {
-      "@id": "tzip21:minter"
-    },
-    "genres": {
-      "@id": "tzip21:genres"
-    },
-    "artifactUri": {
-      "@id": "tzip21:artifactUri",
-      "@type": "xsd:anyURI"
     },
     "description": {
       "@id": "tzip21:description"
     },
-    "rightsUri": {
-      "@id": "tzip21:rightsUri",
-      "@type": "xsd:anyURI"
-    },
-    "identifier": {
-      "@id": "tzip21:identifier",
-      "@type": "@id"
-    },
-    "thumbnailUri": {
-      "@id": "tzip21:thumbnailUri",
-      "@type": "xsd:anyURI"
-    },
-    "rights": {
-      "@id": "tzip21:rights"
-    },
-    "assets": {
-      "@id": "tzip21:assets",
+    "dimensions": {
+      "@id": "tzip21:dimensions",
       "@type": "@id"
     },
     "displayUri": {
       "@id": "tzip21:displayUri",
       "@type": "xsd:anyURI"
     },
-    "type": {
-      "@id": "tzip21:type"
-    },
-    "blockLevel": {
-      "@id": "tzip21:blockLevel",
-      "@type": "xsd:integer"
-    },
-    "isBooleanAmount": {
-      "@id": "tzip21:isBooleanAmount",
-      "@type": "xsd:boolean"
-    },
-    "symbol": {
-      "@id": "tzip21:symbol"
-    },
-    "decimals": {
-      "@id": "tzip21:decimals",
-      "@type": "xsd:integer"
-    },
-    "name": {
-      "@id": "tzip21:name"
-    },
-    "language": {
-      "@id": "tzip21:language",
-      "@type": "http://www.w3.org/2001/XMLSchema#language"
+    "duration": {
+      "@id": "tzip21:duration",
+      "@type": "xsd:time"
     },
     "externalUri": {
       "@id": "tzip21:externalUri",
       "@type": "xsd:anyURI"
     },
+    "fileName": {
+      "@id": "tzip21:fileName"
+    },
+    "fileSize": {
+      "@id": "tzip21:fileSize",
+      "@type": "xsd:integer"
+    },
     "formats": {
       "@id": "tzip21:formats",
       "@type": "@id"
     },
-    "tags": {
-      "@id": "tzip21:tags"
+    "genres": {
+      "@id": "tzip21:genres"
     },
-    "date": {
-      "@id": "tzip21:date",
-      "@type": "xsd:dateTime"
+    "hash": {
+      "@id": "tzip21:hash"
+    },
+    "identifier": {
+      "@id": "tzip21:identifier",
+      "@type": "@id"
+    },
+    "isBooleanAmount": {
+      "@id": "tzip21:isBooleanAmount",
+      "@type": "xsd:boolean"
     },
     "isTransferable": {
       "@id": "tzip21:isTransferable",
       "@type": "xsd:boolean"
     },
-    "attributes": {
-      "@id": "tzip21:attributes",
-      "@type": "@id"
+    "language": {
+      "@id": "tzip21:language",
+      "@type": "http://www.w3.org/2001/XMLSchema#language"
+    },
+    "mimeType": {
+      "@id": "tzip21:mimeType"
+    },
+    "minter": {
+      "@id": "tzip21:minter"
+    },
+    "name": {
+      "@id": "tzip21:name"
+    },
+    "publishers": {
+      "@id": "tzip21:publishers"
+    },
+    "rights": {
+      "@id": "tzip21:rights"
+    },
+    "rightsUri": {
+      "@id": "tzip21:rightsUri",
+      "@type": "xsd:anyURI"
     },
     "shouldPreferSymbol": {
       "@id": "tzip21:shouldPreferSymbol",
       "@type": "xsd:boolean"
+    },
+    "symbol": {
+      "@id": "tzip21:symbol"
+    },
+    "tags": {
+      "@id": "tzip21:tags"
+    },
+    "thumbnailUri": {
+      "@id": "tzip21:thumbnailUri",
+      "@type": "xsd:anyURI"
+    },
+    "ttl": {
+      "@id": "tzip21:ttl",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "tzip21:type"
+    },
+    "unit": {
+      "@id": "tzip21:unit"
+    },
+    "uri": {
+      "@id": "tzip21:uri",
+      "@type": "xsd:anyURI"
+    },
+    "value": {
+      "@id": "tzip21:value",
+      "@type": "xsd:integer"
     },
     "Asset": "tzip21:Asset",
     "Attribute": "tzip21:Attribute",

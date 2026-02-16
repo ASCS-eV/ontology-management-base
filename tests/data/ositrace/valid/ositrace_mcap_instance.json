@@ -9,13 +9,13 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#"
   },
-  "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_instance",
+  "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance",
   "@type": "ositrace:OSITrace",
   "ositrace:hasResourceDescription": {
-    "@id": "did:web:registry.envited-x.net::ResourceDescription:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
+    "@id": "did:web:registry.envited-x.net::ResourceDescription:Mcap3ChHighwayRecording",
     "@type": "envited-x:ResourceDescription",
-    "gx:name": "Cut-out scenario on testing ground",
-    "gx:description": "OSI SensorData trace of cut-out scenario on testing ground.",
+    "gx:name": "Highway scenario MCAP recording with 3 channels",
+    "gx:description": "Multi-channel MCAP recording of a highway scenario with radar SensorData, camera SensorView, and GroundTruth channels.",
     "gx:version": "1.0.0",
     "gx:license": "EPL-2.0",
     "gx:resourcePolicy": "allow",
@@ -31,17 +31,105 @@
     "@type": "ositrace:DomainSpecification",
     "ositrace:hasFormat": {
       "@type": "ositrace:Format",
-      "ositrace:formatType": "ASAM OSI SensorData",
-      "ositrace:version": {
-        "@value": "3.6.0/3.20.0",
+      "ositrace:fileFormat": "MCAP",
+      "ositrace:compression": "zstd",
+      "ositrace:osiTraceFormatVersion": {
+        "@value": "net.asam.osi.trace",
         "@type": "xsd:string"
-      }
+      },
+      "ositrace:minOsiVersion": {
+        "@value": "3.6.0",
+        "@type": "xsd:string"
+      },
+      "ositrace:maxOsiVersion": {
+        "@value": "3.7.0",
+        "@type": "xsd:string"
+      },
+      "ositrace:minProtobufVersion": {
+        "@value": "3.20.0",
+        "@type": "xsd:string"
+      },
+      "ositrace:maxProtobufVersion": {
+        "@value": "3.21.0",
+        "@type": "xsd:string"
+      },
+      "ositrace:hasChannel": [
+        {
+          "@type": "ositrace:Channel",
+          "ositrace:topic": {
+            "@value": "RadarSensorFL.OSMPSensorDataOut",
+            "@type": "xsd:string"
+          },
+          "ositrace:messageType": "SensorData",
+          "ositrace:osiVersion": {
+            "@value": "3.7.0",
+            "@type": "xsd:string"
+          },
+          "ositrace:protobufVersion": {
+            "@value": "3.21.0",
+            "@type": "xsd:string"
+          },
+          "ositrace:numberOfMessages": {
+            "@value": "1448",
+            "@type": "xsd:integer"
+          },
+          "ositrace:description": {
+            "@value": "Front-left radar sensor data output",
+            "@type": "xsd:string"
+          }
+        },
+        {
+          "@type": "ositrace:Channel",
+          "ositrace:topic": {
+            "@value": "CameraFront.OSMPSensorViewOut",
+            "@type": "xsd:string"
+          },
+          "ositrace:messageType": "SensorView",
+          "ositrace:osiVersion": {
+            "@value": "3.6.0",
+            "@type": "xsd:string"
+          },
+          "ositrace:protobufVersion": {
+            "@value": "3.20.0",
+            "@type": "xsd:string"
+          },
+          "ositrace:numberOfMessages": {
+            "@value": "3200",
+            "@type": "xsd:integer"
+          },
+          "ositrace:description": {
+            "@value": "Front camera sensor view output",
+            "@type": "xsd:string"
+          }
+        },
+        {
+          "@type": "ositrace:Channel",
+          "ositrace:topic": {
+            "@value": "Simulation.OSMPGroundTruthOut",
+            "@type": "xsd:string"
+          },
+          "ositrace:messageType": "GroundTruth",
+          "ositrace:osiVersion": {
+            "@value": "3.7.0",
+            "@type": "xsd:string"
+          },
+          "ositrace:numberOfMessages": {
+            "@value": "3200",
+            "@type": "xsd:integer"
+          },
+          "ositrace:description": {
+            "@value": "Simulation ground truth output",
+            "@type": "xsd:string"
+          }
+        }
+      ]
     },
     "ositrace:hasContent": {
       "@type": "ositrace:Content",
-      "ositrace:roadTypes": "rural",
+      "ositrace:roadTypes": "motorway",
       "ositrace:laneTypes": [
-        "driving"
+        "driving",
+        "shoulder"
       ],
       "ositrace:levelOfDetail": "car",
       "ositrace:trafficDirection": "right-hand",
@@ -50,11 +138,11 @@
         "detection list"
       ],
       "ositrace:startTime": {
-        "@value": "2024-06-03T16:37:10.835792+02:00",
+        "@value": "2024-06-03T14:37:10.000000Z",
         "@type": "xsd:dateTime"
       },
       "ositrace:stopTime": {
-        "@value": "2024-06-03T16:38:28.636671+02:00",
+        "@value": "2024-06-03T14:38:42.000000Z",
         "@type": "xsd:dateTime"
       },
       "ositrace:hasHostMovingObject": {
@@ -64,54 +152,67 @@
           "@type": "xsd:integer"
         },
         "ositrace:description": {
-          "@value": "PMSF MB CLS 500 Host Vehicle",
+          "@value": "Ego vehicle in highway scenario",
           "@type": "xsd:string"
         }
       },
-      "ositrace:hasTargetMovingObject": {
-        "@type": "ositrace:MovingObject",
-        "ositrace:identifier": {
-          "@value": "2",
-          "@type": "xsd:integer"
+      "ositrace:hasTargetMovingObject": [
+        {
+          "@type": "ositrace:MovingObject",
+          "ositrace:identifier": {
+            "@value": "2",
+            "@type": "xsd:integer"
+          },
+          "ositrace:description": {
+            "@value": "Lead vehicle",
+            "@type": "xsd:string"
+          }
         },
-        "ositrace:description": {
-          "@value": "ADC Target Vehicle",
-          "@type": "xsd:string"
+        {
+          "@type": "ositrace:MovingObject",
+          "ositrace:identifier": {
+            "@value": "3",
+            "@type": "xsd:integer"
+          },
+          "ositrace:description": {
+            "@value": "Adjacent lane vehicle",
+            "@type": "xsd:string"
+          }
         }
-      }
+      ]
     },
     "ositrace:hasQuality": {
       "@type": "ositrace:Quality",
-      "ositrace:validationReport": {
-        "@value": "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar",
-        "@type": "xsd:anyURI"
-      },
-      "ositrace:validationReportType": {
-        "@value": "application/xqar",
-        "@type": "xsd:string"
+      "ositrace:precision": {
+        "@value": "0.01",
+        "@type": "xsd:float"
       }
     },
     "ositrace:hasQuantity": {
       "@type": "ositrace:Quantity",
       "ositrace:numberFrames": {
-        "@value": "1448",
+        "@value": "7848",
+        "@type": "xsd:integer"
+      },
+      "ositrace:numberOfChannels": {
+        "@value": "3",
         "@type": "xsd:integer"
       }
     },
     "ositrace:hasDataSource": {
       "@type": "ositrace:DataSource",
       "ositrace:usedDataSources": {
-        "@value": "Direct Sensor Capture ARS 548 FW05.38.14 on PMSF MB CLS 500",
+        "@value": "Co-simulation recording with OSMP-compliant sensor models",
         "@type": "xsd:string"
       },
       "ositrace:measurementSystem": {
-        "@value": "pcapng2osi converter v1.1",
+        "@value": "esmini v2.37.4 with OSI trace recording",
         "@type": "xsd:string"
       }
     },
     "ositrace:hasGeoreference": {
       "@type": "georeference:Georeference",
-      "@id": "did:web:registry.envited-x.net:Georeference:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
+      "@id": "did:web:registry.envited-x.net:Georeference:Mcap3ChHighwayRecording",
       "georeference:hasProjectLocation": {
         "@type": "georeference:ProjectLocation",
         "georeference:country": {
@@ -119,37 +220,37 @@
           "@type": "xsd:string"
         },
         "georeference:state": {
-          "@value": "DE-NI",
+          "@value": "DE-BY",
           "@type": "xsd:string"
         },
         "georeference:region": {
-          "@value": "Brunswick",
+          "@value": "Upper Bavaria",
           "@type": "xsd:string"
         },
         "georeference:city": {
-          "@value": "Edemissen",
+          "@value": "Munich",
           "@type": "xsd:string"
         },
         "georeference:relationOrArea": {
-          "@value": "Airport Peine-Eddesse",
+          "@value": "A9 motorway near Munich",
           "@type": "xsd:string"
         },
         "georeference:hasBoundingBox": {
           "@type": "georeference:BoundingBox",
           "georeference:xMin": {
-            "@value": "10.22518251",
+            "@value": "11.5500",
             "@type": "xsd:float"
           },
           "georeference:yMin": {
-            "@value": "52.4017796466667",
+            "@value": "48.1200",
             "@type": "xsd:float"
           },
           "georeference:xMax": {
-            "@value": "10.23265636",
+            "@value": "11.5800",
             "@type": "xsd:float"
           },
           "georeference:yMax": {
-            "@value": "52.403132605",
+            "@value": "48.1500",
             "@type": "xsd:float"
           }
         }
@@ -163,22 +264,22 @@
         "georeference:hasOrigin": {
           "@type": "georeference:LatLonCoordinate",
           "georeference:lat": {
-            "@value": "52.4017796466667",
+            "@value": "48.1200",
             "@type": "xsd:float"
           },
           "georeference:lon": {
-            "@value": "10.22518251",
+            "@value": "11.5500",
             "@type": "xsd:float"
           }
         },
         "georeference:hasViewPoint": {
           "@type": "georeference:LatLonCoordinate",
           "georeference:lat": {
-            "@value": "52.4017796466667",
+            "@value": "48.1350",
             "@type": "xsd:float"
           },
           "georeference:lon": {
-            "@value": "10.22518251",
+            "@value": "11.5650",
             "@type": "xsd:float"
           }
         },

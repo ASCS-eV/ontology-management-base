@@ -16,6 +16,18 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "automotive-simulator": "https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+    "hasContent": {
+      "@id": "automotive-simulator:hasContent",
+      "@type": "@id"
+    },
+    "hasDomainSpecification": {
+      "@id": "automotive-simulator:hasDomainSpecification",
+      "@type": "@id"
+    },
+    "hasFormat": {
+      "@id": "automotive-simulator:hasFormat",
+      "@type": "@id"
+    },
     "hasManifest": {
       "@id": "automotive-simulator:hasManifest",
       "@type": "@id"
@@ -24,37 +36,25 @@
       "@id": "automotive-simulator:hasSoftwareResource",
       "@type": "@id"
     },
-    "hasDomainSpecification": {
-      "@id": "automotive-simulator:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "scenarioDefinition": {
-      "@id": "automotive-simulator:scenarioDefinition"
-    },
     "interface": {
       "@id": "automotive-simulator:interface"
     },
-    "hasFormat": {
-      "@id": "automotive-simulator:hasFormat",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "automotive-simulator:hasContent",
-      "@type": "@id"
-    },
-    "softwareVersion": {
-      "@id": "automotive-simulator:softwareVersion"
-    },
-    "sensorFailureFlag": {
-      "@id": "automotive-simulator:sensorFailureFlag",
-      "@type": "xsd:boolean"
+    "scenarioDefinition": {
+      "@id": "automotive-simulator:scenarioDefinition"
     },
     "sensorAttackFlag": {
       "@id": "automotive-simulator:sensorAttackFlag",
       "@type": "xsd:boolean"
     },
+    "sensorFailureFlag": {
+      "@id": "automotive-simulator:sensorFailureFlag",
+      "@type": "xsd:boolean"
+    },
     "simulatorMake": {
       "@id": "automotive-simulator:simulatorMake"
+    },
+    "softwareVersion": {
+      "@id": "automotive-simulator:softwareVersion"
     },
     "AutomotiveSimulator": "automotive-simulator:AutomotiveSimulator",
     "Content": "automotive-simulator:Content",

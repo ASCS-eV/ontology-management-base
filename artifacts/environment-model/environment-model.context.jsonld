@@ -15,14 +15,22 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "environment-model": "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
-    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
     "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "textureResolution": {
-      "@id": "environment-model:textureResolution",
-      "@type": "xsd:float"
+    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+    "creationToolName": {
+      "@id": "environment-model:creationToolName"
+    },
+    "creationToolVendor": {
+      "@id": "environment-model:creationToolVendor"
+    },
+    "creationToolVersion": {
+      "@id": "environment-model:creationToolVersion"
     },
     "detailLevel": {
       "@id": "environment-model:detailLevel"
+    },
+    "elements": {
+      "@id": "environment-model:elements"
     },
     "features": {
       "@id": "environment-model:features"
@@ -30,80 +38,72 @@
     "formatType": {
       "@id": "environment-model:formatType"
     },
-    "version": {
-      "@id": "environment-model:version"
+    "geometryCount": {
+      "@id": "environment-model:geometryCount",
+      "@type": "xsd:integer"
     },
     "hasContent": {
       "@id": "environment-model:hasContent",
       "@type": "@id"
     },
-    "hasGeoreference": {
-      "@id": "environment-model:hasGeoreference",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "environment-model:hasQuality",
+    "hasDomainSpecification": {
+      "@id": "environment-model:hasDomainSpecification",
       "@type": "@id"
     },
     "hasFormat": {
       "@id": "environment-model:hasFormat",
       "@type": "@id"
     },
-    "hasQuantity": {
-      "@id": "environment-model:hasQuantity",
-      "@type": "@id"
-    },
-    "hasProject": {
-      "@id": "environment-model:hasProject",
-      "@type": "@id"
-    },
-    "textureMaterialCount": {
-      "@id": "environment-model:textureMaterialCount",
-      "@type": "xsd:integer"
-    },
-    "geometryCount": {
-      "@id": "environment-model:geometryCount",
-      "@type": "xsd:integer"
-    },
-    "triangleCount": {
-      "@id": "environment-model:triangleCount",
-      "@type": "xsd:integer"
-    },
-    "creationToolName": {
-      "@id": "environment-model:creationToolName"
-    },
-    "creationToolVendor": {
-      "@id": "environment-model:creationToolVendor"
-    },
-    "visualisationToolVendor": {
-      "@id": "environment-model:visualisationToolVendor"
-    },
-    "visualisationToolName": {
-      "@id": "environment-model:visualisationToolName"
-    },
-    "creationToolVersion": {
-      "@id": "environment-model:creationToolVersion"
-    },
-    "visualisationToolVersion": {
-      "@id": "environment-model:visualisationToolVersion"
-    },
-    "useCase": {
-      "@id": "environment-model:useCase"
-    },
-    "elements": {
-      "@id": "environment-model:elements"
-    },
-    "hasResourceDescription": {
-      "@id": "environment-model:hasResourceDescription",
+    "hasGeoreference": {
+      "@id": "environment-model:hasGeoreference",
       "@type": "@id"
     },
     "hasManifest": {
       "@id": "environment-model:hasManifest",
       "@type": "@id"
     },
-    "hasDomainSpecification": {
-      "@id": "environment-model:hasDomainSpecification",
+    "hasProject": {
+      "@id": "environment-model:hasProject",
       "@type": "@id"
+    },
+    "hasQuality": {
+      "@id": "environment-model:hasQuality",
+      "@type": "@id"
+    },
+    "hasQuantity": {
+      "@id": "environment-model:hasQuantity",
+      "@type": "@id"
+    },
+    "hasResourceDescription": {
+      "@id": "environment-model:hasResourceDescription",
+      "@type": "@id"
+    },
+    "textureMaterialCount": {
+      "@id": "environment-model:textureMaterialCount",
+      "@type": "xsd:integer"
+    },
+    "textureResolution": {
+      "@id": "environment-model:textureResolution",
+      "@type": "xsd:float"
+    },
+    "triangleCount": {
+      "@id": "environment-model:triangleCount",
+      "@type": "xsd:integer"
+    },
+    "useCase": {
+      "@id": "environment-model:useCase"
+    },
+    "version": {
+      "@id": "environment-model:version"
+    },
+    "visualisationToolName": {
+      "@id": "environment-model:visualisationToolName"
+    },
+    "visualisationToolVendor": {
+      "@id": "environment-model:visualisationToolVendor"
+    },
+    "visualisationToolVersion": {
+      "@id": "environment-model:visualisationToolVersion"
     },
     "Content": "environment-model:Content",
     "DomainSpecification": "environment-model:DomainSpecification",

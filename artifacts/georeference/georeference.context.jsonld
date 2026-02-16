@@ -15,13 +15,58 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-    "yMin": {
-      "@id": "georeference:yMin",
+    "city": {
+      "@id": "georeference:city"
+    },
+    "codeEPSG": {
+      "@id": "georeference:codeEPSG",
+      "@type": "xsd:integer"
+    },
+    "coordinateSystemName": {
+      "@id": "georeference:coordinateSystemName"
+    },
+    "country": {
+      "@id": "georeference:country"
+    },
+    "hasBoundingBox": {
+      "@id": "georeference:hasBoundingBox",
+      "@type": "@id"
+    },
+    "hasGeodeticReferenceSystem": {
+      "@id": "georeference:hasGeodeticReferenceSystem",
+      "@type": "@id"
+    },
+    "hasOrigin": {
+      "@id": "georeference:hasOrigin",
+      "@type": "@id"
+    },
+    "hasProjectLocation": {
+      "@id": "georeference:hasProjectLocation",
+      "@type": "@id"
+    },
+    "hasViewPoint": {
+      "@id": "georeference:hasViewPoint",
+      "@type": "@id"
+    },
+    "heightSystem": {
+      "@id": "georeference:heightSystem"
+    },
+    "lat": {
+      "@id": "georeference:lat",
       "@type": "xsd:float"
     },
-    "yMax": {
-      "@id": "georeference:yMax",
+    "lon": {
+      "@id": "georeference:lon",
       "@type": "xsd:float"
+    },
+    "region": {
+      "@id": "georeference:region"
+    },
+    "relationOrArea": {
+      "@id": "georeference:relationOrArea"
+    },
+    "state": {
+      "@id": "georeference:state"
     },
     "xMax": {
       "@id": "georeference:xMax",
@@ -31,58 +76,13 @@
       "@id": "georeference:xMin",
       "@type": "xsd:float"
     },
-    "coordinateSystemName": {
-      "@id": "georeference:coordinateSystemName"
-    },
-    "heightSystem": {
-      "@id": "georeference:heightSystem"
-    },
-    "hasOrigin": {
-      "@id": "georeference:hasOrigin",
-      "@type": "@id"
-    },
-    "codeEPSG": {
-      "@id": "georeference:codeEPSG",
-      "@type": "xsd:integer"
-    },
-    "hasViewPoint": {
-      "@id": "georeference:hasViewPoint",
-      "@type": "@id"
-    },
-    "hasProjectLocation": {
-      "@id": "georeference:hasProjectLocation",
-      "@type": "@id"
-    },
-    "hasGeodeticReferenceSystem": {
-      "@id": "georeference:hasGeodeticReferenceSystem",
-      "@type": "@id"
-    },
-    "lon": {
-      "@id": "georeference:lon",
+    "yMax": {
+      "@id": "georeference:yMax",
       "@type": "xsd:float"
     },
-    "lat": {
-      "@id": "georeference:lat",
+    "yMin": {
+      "@id": "georeference:yMin",
       "@type": "xsd:float"
-    },
-    "city": {
-      "@id": "georeference:city"
-    },
-    "state": {
-      "@id": "georeference:state"
-    },
-    "country": {
-      "@id": "georeference:country"
-    },
-    "hasBoundingBox": {
-      "@id": "georeference:hasBoundingBox",
-      "@type": "@id"
-    },
-    "relationOrArea": {
-      "@id": "georeference:relationOrArea"
-    },
-    "region": {
-      "@id": "georeference:region"
     },
     "BoundingBox": "georeference:BoundingBox",
     "GeodeticReferenceSystem": "georeference:GeodeticReferenceSystem",

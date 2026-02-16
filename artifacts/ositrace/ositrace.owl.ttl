@@ -1,4 +1,4 @@
-@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v5/> .
+@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v6/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
@@ -11,9 +11,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix gx: <https://w3id.org/gaia-x/development#> .
 
-<https://w3id.org/ascs-ev/envited-x/ositrace/v5> a owl:Ontology ;
+<https://w3id.org/ascs-ev/envited-x/ositrace/v6> a owl:Ontology ;
     rdfs:label "Ontology definition for ositrace"@en ;
-    rdfs:comment "An ontology with common classes to describe ASAM OSI trace files."@en ;
+    rdfs:comment "An ontology with common classes to describe ASAM OSI trace files, including single-channel .osi and multi-channel .mcap formats."@en ;
 
     dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
     dcterms:contributor [
@@ -33,18 +33,19 @@
     dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 
     # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.3> ;
 
     # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/ositrace/v5> ;
-    owl:versionInfo "v5" ;
+    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/ositrace/v6> ;
+    owl:versionInfo "v6" ;
+    owl:priorVersion <https://w3id.org/ascs-ev/envited-x/ositrace/v5> ;
 
     # Imports strict dependencies
     owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
                 <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
 
     # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/ositrace/v5/shapes> ;
+    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes> ;
 
     # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies/specifications
     dcterms:references <https://github.com/OpenSimulationInterface> ;
@@ -131,7 +132,7 @@ ositrace:DataSource a owl:Class ;
 
 ositrace:Format a owl:Class ;
     rdfs:label "Class definition for Format"@en ;
-    rdfs:comment "Attributes for the format of ASAM OSI trace files."@en ;
+    rdfs:comment "Attributes for the format of ASAM OSI trace files, covering both single-channel .osi files and multi-channel MCAP containers."@en ;
     rdfs:subClassOf envited-x:Format .
 
 ositrace:Quality a owl:Class ;
@@ -144,13 +145,17 @@ ositrace:Quantity a owl:Class ;
     rdfs:comment "Attributes for the quantity of ASAM OSI trace files."@en ;
     rdfs:subClassOf envited-x:Quantity .
 
+ositrace:Channel a owl:Class ;
+    rdfs:label "Class definition for Channel"@en ;
+    rdfs:comment "Represents a single channel in an MCAP container file. Each channel carries messages of one OSI top-level type at a specific OSI schema version. Linked from ositrace:Format via ositrace:hasChannel."@en .
+
 ositrace:MovingObject a owl:Class ;
     rdfs:label "Class definition for MovingObject"@en ;
     rdfs:comment "Attributes for moving objects in ASAM OSI trace files."@en .
 
 ositrace:Event a owl:Class ;
     rdfs:label "Class definition for Event"@en ;
-    rdfs:comment "Attributes for event in  ASAM OSI trace files."@en .
+    rdfs:comment "Attributes for event in ASAM OSI trace files."@en .
 
 #### Object properties
 
@@ -236,6 +241,13 @@ ositrace:hasQuantity a owl:ObjectProperty ;
     rdfs:subPropertyOf envited-x:hasQuantity ;
     rdfs:domain ositrace:DomainSpecification ;
     rdfs:range ositrace:Quantity .
+
+### hasChannel (Format -> Channel)
+ositrace:hasChannel a owl:ObjectProperty ;
+    rdfs:label "Object property: hasChannel"@en ;
+    rdfs:comment "Links an MCAP Format to one or more Channel instances, each describing a single message stream within the MCAP container."@en ;
+    rdfs:domain ositrace:Format ;
+    rdfs:range ositrace:Channel .
 
 ### hasTargetMovingObject (Content -> MovingObject)
 ositrace:hasTargetMovingObject a owl:ObjectProperty ;

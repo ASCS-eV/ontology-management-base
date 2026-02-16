@@ -19,15 +19,15 @@
       "@id": "example:belongsTo",
       "@type": "@id"
     },
-    "property2": {
-      "@id": "example:property2"
-    },
     "hasJunctionIntersection": {
       "@id": "example:hasJunctionIntersection",
       "@type": "@id"
     },
     "property1": {
       "@id": "example:property1"
+    },
+    "property2": {
+      "@id": "example:property2"
     },
     "ExampleServiceOffering": "example:ExampleServiceOffering"
   }

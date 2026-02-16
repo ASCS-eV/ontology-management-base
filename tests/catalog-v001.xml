@@ -40,7 +40,9 @@
   <uri name="did:web:test.manifest.net:Manifest:test_valid_manifest_instance" uri="tests/data/manifest/valid/manifest_instance.json" domain="manifest" test-type="valid" category="test-data"/>
   <uri name="did:web:test.openlabel.net:Tag:test_invalid_fail01_wrong_value_openlabel_instance" uri="tests/data/openlabel/invalid/fail01_wrong_value_openlabel_instance.json" domain="openlabel" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.openlabel.net:Tag:test_valid_openlabel_instance" uri="tests/data/openlabel/valid/openlabel_instance.json" domain="openlabel" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.ositrace.net:OSITrace:test_invalid_fail01_mcap_missing_topic" uri="tests/data/ositrace/invalid/fail01_mcap_missing_topic.json" domain="ositrace" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.ositrace.net:OSITrace:test_valid_ositrace_instance" uri="tests/data/ositrace/valid/ositrace_instance.json" domain="ositrace" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance" uri="tests/data/ositrace/valid/ositrace_mcap_instance.json" domain="ositrace" test-type="valid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail01_false_value_scenario_instance" uri="tests/data/scenario/invalid/fail01_false_value_scenario_instance.json" domain="scenario" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_valid_scenario_instance" uri="tests/data/scenario/valid/scenario_instance.json" domain="scenario" test-type="valid" category="test-data"/>
   <uri name="did:web:test.service.net:Service:test_valid_service_instance" uri="tests/data/service/valid/service_instance.json" domain="service" test-type="valid" category="test-data"/>
