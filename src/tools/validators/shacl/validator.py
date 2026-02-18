@@ -83,6 +83,7 @@ class ShaclValidator:
         root_dir: Path,
         inference_mode: str = "rdfs",
         verbose: bool = True,
+        artifact_dirs: Optional[List[Path]] = None,
     ):
         """
         Initialize the SHACL validator.
@@ -91,11 +92,46 @@ class ShaclValidator:
             root_dir: Repository root directory
             inference_mode: Inference mode (rdfs|owlrl|none|both)
             verbose: Whether to print progress messages
+            artifact_dirs: Additional artifact directories to register.
+                Each directory should contain domain subdirectories with
+                ``{domain}.owl.ttl``, ``{domain}.shacl.ttl``, and
+                ``{domain}.context.jsonld`` files.
         """
         self.root_dir = Path(root_dir).resolve()
         self.resolver = RegistryResolver(root_dir)
         self.inference_mode = inference_mode
         self.verbose = verbose
+        self._context_url_map: Optional[Dict[str, "Path"]] = None
+
+        # Register additional artifact directories
+        if artifact_dirs:
+            for artifact_dir in artifact_dirs:
+                registered = self.resolver.register_artifact_directory(artifact_dir)
+                if registered:
+                    self._log(
+                        f"  Registered artifact domains: {', '.join(registered)}"
+                    )
+
+            # Build context URL map for inlining
+            self._build_context_url_map(artifact_dirs)
+
+    def _build_context_url_map(self, artifact_dirs: List[Path]) -> None:
+        """Build URL-to-local-file mapping for context inlining."""
+        from src.tools.utils.context_resolver import (
+            build_context_url_map,
+            discover_context_files,
+        )
+
+        url_map: Dict[str, Path] = {}
+
+        # From the resolver's own catalog
+        url_map.update(build_context_url_map(self.resolver, self.root_dir))
+
+        # From additional artifact directories
+        url_map.update(discover_context_files(artifact_dirs))
+
+        if url_map:
+            self._context_url_map = url_map
 
     def _log(self, message: str) -> None:
         """Print verbose progress if enabled (user-facing output)."""
@@ -166,7 +202,9 @@ class ShaclValidator:
 
     def _load_data(self, jsonld_files: List[Path]) -> Tuple[Graph, Dict[str, str]]:
         """Load JSON-LD files and resolve fixture references."""
-        data_graph, prefixes = load_jsonld_files(jsonld_files, self.root_dir)
+        data_graph, prefixes = load_jsonld_files(
+            jsonld_files, self.root_dir, context_url_map=self._context_url_map
+        )
 
         for i, f in enumerate(jsonld_files, 1):
             self._log(f"  [{i}/{len(jsonld_files)}] Loaded: {self._rel_path(f)}")
@@ -321,6 +359,7 @@ def validate_data_conformance(
     inference_mode: str = "rdfs",
     debug: bool = False,
     logfile: Optional[Path] = None,
+    artifact_dirs: Optional[List[Path]] = None,
 ) -> Tuple[int, str]:
     """
     Main validation entry point (backwards compatible).
@@ -334,6 +373,8 @@ def validate_data_conformance(
         inference_mode: Inference mode for validation
         debug: Enable debug logging
         logfile: Optional log file path
+        artifact_dirs: Additional artifact directories to register
+            for schema discovery and context inlining.
 
     Returns:
         Tuple of (return_code, output_message)
@@ -361,7 +402,12 @@ def validate_data_conformance(
 
     # Initialize validator
     print(f"\nRepository Root: {root_dir.as_posix()}")
-    validator = ShaclValidator(root_dir, inference_mode=inference_mode, verbose=True)
+    validator = ShaclValidator(
+        root_dir,
+        inference_mode=inference_mode,
+        verbose=True,
+        artifact_dirs=artifact_dirs,
+    )
 
     info = validator.resolver.get_registry_info()
     print(f"Registry Domains: {info['domains_available']}")

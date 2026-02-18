@@ -79,6 +79,7 @@ def validate_data_conformance(
     inference_mode: str = "rdfs",
     debug: bool = False,
     logfile: Optional[Path] = None,
+    artifact_dirs: Optional[List[Path]] = None,
 ) -> Tuple[int, str]:
     """
     Validate JSON-LD files against SHACL shapes.
@@ -92,12 +93,15 @@ def validate_data_conformance(
         inference_mode: Inference mode (rdfs|owlrl|none|both)
         debug: Enable debug logging
         logfile: Optional log file path
+        artifact_dirs: Additional artifact directories to register
+            for schema discovery and context inlining.
 
     Returns:
         Tuple of (return_code, output_message)
     """
     return _validate_data_conformance(
-        jsonld_files, root_dir, inference_mode, debug, logfile
+        jsonld_files, root_dir, inference_mode, debug, logfile,
+        artifact_dirs=artifact_dirs,
     )
 
 

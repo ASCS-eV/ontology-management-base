@@ -499,6 +499,15 @@ def main():
         help=argparse.SUPPRESS,
     )
 
+    target_group.add_argument(
+        "--artifacts",
+        type=str,
+        nargs="+",
+        default=None,
+        metavar="DIR",
+        help="Additional artifact directories for schema discovery and context inlining.",
+    )
+
     options_group.add_argument(
         "--no-catalog",
         action="store_true",
@@ -529,6 +538,26 @@ def main():
 
         # Create catalog resolver and temporary domain
         catalog_resolver = RegistryResolver(ROOT_DIR)
+
+        # Register additional artifact directories for schema discovery
+        artifact_dir_paths = []
+        if args.artifacts:
+            for ad in args.artifacts:
+                ad_path = Path(ad).resolve()
+                if ad_path.is_dir():
+                    registered = catalog_resolver.register_artifact_directory(ad_path)
+                    if registered:
+                        artifact_dir_paths.append(ad_path)
+                        print(
+                            f"📦 Registered artifact domains: {', '.join(registered)}",
+                            flush=True,
+                        )
+                else:
+                    print(
+                        f"⚠️  Warning: Artifact directory does not exist: {ad}",
+                        file=sys.stderr,
+                    )
+
         temp_domain = catalog_resolver.create_temporary_domain(valid_paths)
 
         if not temp_domain:
@@ -644,6 +673,7 @@ def main():
                 inference_mode="rdfs",
                 debug=False,
                 logfile=None,
+                artifact_dirs=artifact_dir_paths or None,
             )
 
             if returncode != 0:
