@@ -49,7 +49,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import rdflib
 from rdflib import Graph
@@ -150,14 +150,21 @@ def load_jsonld_files(
     files: List[Path],
     root_dir: Path,
     store: str = None,
+    context_url_map: Optional[Dict[str, Path]] = None,
 ) -> Tuple[Graph, Dict[str, str]]:
     """
     Load JSON-LD files into a graph with prefix extraction.
+
+    When ``context_url_map`` is provided, remote ``@context`` URLs that
+    match entries in the map are inlined from local files before parsing.
+    This avoids network fetches for unpublished or unreachable contexts.
 
     Args:
         files: List of JSON-LD file paths to load
         root_dir: Repository root directory for path normalization
         store: RDF store to use (default: auto-detect oxigraph)
+        context_url_map: Optional mapping of context URL → local file path.
+            When provided, contexts are inlined before rdflib parsing.
 
     Returns:
         Tuple of (graph, prefixes) where prefixes is a dict of prefix->namespace
@@ -178,9 +185,19 @@ def load_jsonld_files(
         except Exception as e:
             logger.debug("Could not extract prefixes from %s: %s", rel_path, e)
 
-        # Parse into graph
+        # Parse into graph, with optional context inlining
         try:
-            graph.parse(str(json_file), format="json-ld")
+            if context_url_map:
+                from src.tools.utils.context_resolver import (
+                    load_jsonld_with_local_contexts,
+                )
+
+                json_str = load_jsonld_with_local_contexts(
+                    json_file, context_url_map
+                )
+                graph.parse(data=json_str, format="json-ld")
+            else:
+                graph.parse(str(json_file), format="json-ld")
         except Exception as e:
             logger.error("Failed to load %s: %s", rel_path, e)
             raise

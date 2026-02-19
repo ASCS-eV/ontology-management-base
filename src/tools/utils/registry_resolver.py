@@ -570,6 +570,94 @@ class RegistryResolver:
 
         return temp_domain
 
+    def register_artifact_directory(self, artifact_dir: Path) -> List[str]:
+        """
+        Register an external artifact directory with the resolver.
+
+        Scans ``artifact_dir`` for domain subdirectories, each containing
+        ``{domain}.owl.ttl``, ``{domain}.shacl.ttl``, and
+        ``{domain}.context.jsonld`` files.  Reads ``@vocab`` from context
+        files to determine the ontology IRI for each domain.
+
+        This enables consuming repositories to register their own generated
+        artifacts so the validation pipeline can discover schemas, inline
+        contexts, and resolve types for domains not present in the base
+        catalog.
+
+        Args:
+            artifact_dir: Absolute path to an artifacts directory.
+                          Expected structure: ``artifact_dir/{domain}/{domain}.*``
+
+        Returns:
+            List of domain names that were registered.
+        """
+        import json as _json
+
+        artifact_dir = Path(artifact_dir).resolve()
+        registered: List[str] = []
+
+        if not artifact_dir.is_dir():
+            return registered
+
+        for child in sorted(artifact_dir.iterdir()):
+            if not child.is_dir():
+                continue
+
+            domain = child.name
+            owl_path = child / f"{domain}.owl.ttl"
+            shacl_path = child / f"{domain}.shacl.ttl"
+            context_path = child / f"{domain}.context.jsonld"
+
+            # Need at least the ontology file
+            if not owl_path.exists():
+                continue
+
+            # Determine repo-relative path for the domain
+            try:
+                rel_base = artifact_dir.relative_to(self.root_dir)
+            except ValueError:
+                # External directory — store absolute paths
+                rel_base = artifact_dir
+
+            owl_rel = (rel_base / domain / f"{domain}.owl.ttl").as_posix()
+            shacl_rel = (rel_base / domain / f"{domain}.shacl.ttl").as_posix()
+            ctx_rel = (rel_base / domain / f"{domain}.context.jsonld").as_posix()
+
+            # Build artifact domain entry
+            info: Dict[str, object] = {
+                "ontology": owl_rel,
+                "shacl": [shacl_rel] if shacl_path.exists() else [],
+                "jsonld": ctx_rel if context_path.exists() else None,
+            }
+            self._artifact_domains[domain] = info
+
+            # Extract IRI from context @vocab
+            if context_path.exists():
+                try:
+                    with context_path.open("r", encoding="utf-8") as f:
+                        ctx_data = _json.load(f)
+                    context = ctx_data.get("@context", {})
+                    vocab = None
+                    if isinstance(context, dict):
+                        vocab = context.get("@vocab")
+                    elif isinstance(context, list):
+                        for entry in context:
+                            if isinstance(entry, dict) and "@vocab" in entry:
+                                vocab = entry["@vocab"]
+                                break
+                    if vocab:
+                        self._domain_iris[domain] = vocab
+                except Exception:
+                    pass
+
+            registered.append(domain)
+
+        # Rebuild IRI index with newly registered domains
+        if registered:
+            self._build_iri_index()
+
+        return registered
+
     # =========================================================================
     # Bulk Accessors
     # =========================================================================
