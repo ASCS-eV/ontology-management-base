@@ -318,39 +318,42 @@ def test_resolver_register_artifact_directory(temp_dir: Path, minimal_repo: Path
 
 
 def test_discover_data_hierarchy_single_file(temp_dir: Path):
-    """Single file becomes top-level."""
+    """Single file becomes top-level when explicitly provided."""
     from src.tools.utils.file_collector import discover_data_hierarchy
 
+    # Explicit files are always validated, even with did: scheme
     test_file = temp_dir / "test.json"
-    test_file.write_text('{"@id": "did:test:001", "@type": "Thing"}')
+    test_file.write_text('{"@id": "https://example.com/thing/001", "@type": "Thing"}')
 
-    top_level, iri_map = discover_data_hierarchy([test_file])
+    top_level, iri_map, _metadata = discover_data_hierarchy([test_file])
 
     assert len(top_level) == 1
-    assert "did:test:001" in iri_map
+    assert "https://example.com/thing/001" in iri_map
 
 
 def test_discover_data_hierarchy_with_fixtures(temp_dir: Path):
     """Referenced files become fixtures."""
     from src.tools.utils.file_collector import discover_data_hierarchy
 
+    # Main file uses https:// IRI (not did:) so it's top-level
     main_file = temp_dir / "main.json"
     main_file.write_text(
         json.dumps(
             {
-                "@id": "did:test:main",
+                "@id": "https://example.com/credentials/123",
                 "@type": "Thing",
                 "hasRef": {"@id": "did:test:fixture"},
             }
         )
     )
 
+    # Fixture uses did: scheme so it's auto-classified as fixture
     fixture_file = temp_dir / "fixture.json"
     fixture_file.write_text(json.dumps({"@id": "did:test:fixture", "@type": "Fixture"}))
 
-    top_level, iri_map = discover_data_hierarchy([temp_dir])
+    top_level, iri_map, _metadata = discover_data_hierarchy([temp_dir])
 
-    # Only main is top-level (fixture is referenced)
+    # Only main is top-level (did: files are fixtures)
     assert len(top_level) == 1
     assert top_level[0].name == "main.json"
     assert "did:test:fixture" in iri_map
