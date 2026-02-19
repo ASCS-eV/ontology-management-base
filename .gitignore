@@ -21,3 +21,6 @@ site/
 .ontology_iri_cache.json
 *.egg-info/
 .repo_registry_cache.json
+.coverage
+htmlcov/
+.pytest_cache/

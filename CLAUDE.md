@@ -231,12 +231,16 @@ Read these before making changes:
 
 ## Change Documentation
 
-When making changes to the codebase, always update these two files in `.playground/` (gitignored):
+When making changes to the codebase, always create/update these files in `.playground/` (gitignored):
 
 | File | Purpose |
 |------|---------|
-| `.playground/change-summary.md` | Detailed markdown summary of all changes grouped by severity/category, including file paths, problem descriptions, and fixes applied |
-| `.playground/commit-message.md` | Conventional commit message with bullet points, ready for copy-paste into `git commit` |
+| `.playground/commit-message.md` | Conventional commit message with bullet points, ready for copy-paste into `git commit -s -S` |
+| `.playground/pr-description.md` | PR description following `.github/pull_request_template.md` |
+
+**When instructed to prepare a commit or PR, do not commit directly.** Instead, create these files for human review. The operator will either:
+- Use them to manually commit/push and create a PR, or
+- Use automated tooling with signed commits (`git commit -s -S`)
 
 Update both files **before** presenting the final result to the user. If a session involves multiple rounds of changes, keep these files in sync with the cumulative state.
 

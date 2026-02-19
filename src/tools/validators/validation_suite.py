@@ -604,14 +604,23 @@ def main():
             sys.exit(1)
 
         # Auto-discover top-level files and fixture mappings
-        top_level_files, iri_to_file = discover_data_hierarchy(valid_paths)
+        top_level_files, iri_to_file, metadata = discover_data_hierarchy(valid_paths)
 
         if not top_level_files:
             print("❌ Error: No top-level files found to validate.", file=sys.stderr)
             sys.exit(1)
 
         print(f"   Found {len(top_level_files)} top-level file(s) to validate")
-        print(f"   Found {len(iri_to_file)} potential fixture(s) for IRI resolution")
+        print(f"   Found {metadata['fixture_count']} fixture(s) for IRI resolution")
+
+        # Warn about duplicate IDs
+        if metadata["duplicate_ids"]:
+            print(
+                f"   ⚠️  Warning: {len(metadata['duplicate_ids'])} duplicate ID(s) found:"
+            )
+            for dup_id, dup_files in metadata["duplicate_ids"]:
+                file_names = ", ".join(f.name for f in dup_files)
+                print(f"      - {dup_id}: {file_names}")
 
         # Create catalog resolver
         catalog_resolver = RegistryResolver(ROOT_DIR)

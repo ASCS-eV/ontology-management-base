@@ -468,6 +468,33 @@ def extract_jsonld_iris(file_path: Path) -> tuple:
     return root_id, referenced
 
 
+def _is_did_document(file_path: Path, root_id: Optional[str]) -> bool:
+    """
+    Check if a file is a DID document.
+
+    A file is considered a DID document if:
+    - Its filename matches *-did.json or *-did.jsonld pattern, OR
+    - Its @id starts with 'did:' scheme
+
+    Args:
+        file_path: Path to the file
+        root_id: The @id value extracted from the file
+
+    Returns:
+        True if the file is a DID document
+    """
+    # Check filename pattern
+    name_lower = file_path.stem.lower()
+    if name_lower.endswith("-did"):
+        return True
+
+    # Check @id scheme
+    if root_id and root_id.startswith("did:"):
+        return True
+
+    return False
+
+
 def discover_data_hierarchy(
     paths: List[Union[str, Path]],
 ) -> tuple:
@@ -478,16 +505,23 @@ def discover_data_hierarchy(
     - FILE: Added to validate list, parent directory scanned for fixtures
     - DIRECTORY: Scanned recursively, auto-detects top-level vs fixtures
 
-    Top-level files: Files whose @id is NOT referenced by any other file.
-    Fixtures: Files whose @id IS referenced by another file.
+    Top-level files: All non-DID document files (credentials, etc.)
+    Fixtures: ALL DID documents (used for IRI resolution only, not validated)
+
+    A file is considered a DID document if:
+    - Its filename matches *-did.json pattern, OR
+    - Its @id starts with 'did:' scheme
 
     Args:
         paths: List of files or directories to process
 
     Returns:
-        Tuple of (files_to_validate, iri_to_file_map)
+        Tuple of (files_to_validate, iri_to_file_map, metadata)
         - files_to_validate: List of Path objects to validate
         - iri_to_file_map: Dict mapping IRIs to file paths (for fixture resolution)
+        - metadata: Dict with additional info:
+            - fixture_count: Number of DID document fixtures
+            - duplicate_ids: List of (id, [file1, file2, ...]) for duplicate IDs
     """
     explicit_files: List[Path] = []
     scan_dirs: Set[Path] = set()
@@ -508,25 +542,45 @@ def discover_data_hierarchy(
             list(scan_dirs), return_pathlib=True, sort_and_deduplicate=True
         )
 
-    # Single pass: build IRI→file mapping and collect all referenced IRIs
+    # Single pass: build IRI→file mapping and track DID documents
     iri_to_file: Dict[str, Path] = {}
-    referenced_iris: Set[str] = set()
+    iri_to_all_files: Dict[str, List[Path]] = {}  # Track all files per IRI
     file_ids: Dict[Path, Optional[str]] = {}
+    did_documents: Set[Path] = set()
 
     for f in all_files:
         root_id, refs = extract_jsonld_iris(f)
         file_ids[f] = root_id
         if root_id:
             iri_to_file[root_id] = f
-        referenced_iris.update(refs)
+            # Track duplicates
+            if root_id not in iri_to_all_files:
+                iri_to_all_files[root_id] = []
+            iri_to_all_files[root_id].append(f)
 
-    # Top-level = explicit files + files not referenced by others
+        # Track DID documents
+        if _is_did_document(f, root_id):
+            did_documents.add(f)
+
+    # Top-level = explicit files + non-DID files only
+    # All DID documents are fixtures (for IRI resolution), not validated
     top_level: Set[Path] = set(explicit_files)
     for f, fid in file_ids.items():
-        if fid and fid not in referenced_iris:
+        # Only non-DID documents are top-level (unless explicitly specified)
+        if f not in did_documents:
             top_level.add(f)
 
-    return sorted(top_level), iri_to_file
+    # Find duplicate IDs
+    duplicate_ids = [
+        (iri, files) for iri, files in iri_to_all_files.items() if len(files) > 1
+    ]
+
+    metadata = {
+        "fixture_count": len(did_documents),
+        "duplicate_ids": duplicate_ids,
+    }
+
+    return sorted(top_level), iri_to_file, metadata
 
 
 def _run_tests() -> bool:

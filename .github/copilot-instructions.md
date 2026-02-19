@@ -135,6 +135,19 @@ Read these BEFORE making changes:
 git commit -s -S -m "feat: add new feature"
 ```
 
+## Preparing Commits and Pull Requests
+
+When instructed to prepare a commit or PR, **do not commit directly**. Instead:
+
+1. Create files in the `.playground/` directory (already in `.gitignore`)
+2. Generate two markdown files:
+   - `.playground/commit-message.md` — Conventional commit message(s)
+   - `.playground/pr-description.md` — PR description following `.github/pull_request_template.md`
+
+The human operator will review these files and either:
+- Use them to manually commit/push and create a PR, or
+- Use automated tooling with signed commits (`git commit -s -S`)
+
 ## Key Imports
 
 ```python

@@ -53,4 +53,57 @@ Read these before making changes; they are authoritative for repo workflows.
 - PRs should follow `.github/pull_request_template.md`: clear summary, linked issue, test evidence, and versioning/compatibility checklist items when ontology changes apply.
 - **Always sign commits** with `-s -S` flags (Signed-off-by + GPG signature).
 - **Never include AI attribution** in commits — no `Co-Authored-By` or similar headers mentioning AI assistants.
+- **Never mention AI tools in commit messages** — do not reference that code was AI-generated or AI-assisted.
 - **Author must be a human developer** with their official email address.
+
+### Preparing Commits and Pull Requests
+
+When instructed to prepare a commit or PR, **do not commit directly**. Instead:
+
+1. Create files in the `.playground/` directory (already in `.gitignore`)
+2. Generate two markdown files:
+   - `.playground/commit-message.md` — Conventional commit message(s)
+   - `.playground/pr-description.md` — PR description following `.github/pull_request_template.md`
+
+The human operator will review these files and either:
+- Use them to manually commit/push and create a PR, or
+- Use automated tooling with signed commits (`git commit -s -S`)
+
+#### Commit Message Format
+
+```markdown
+# .playground/commit-message.md
+
+feat(ontology): add vehicle domain ontology
+
+- Define VehicleCredential type with SHACL shapes
+- Add JSON-LD context with proper prefixes
+- Include valid/invalid test instances
+
+Refs: #123
+```
+
+#### PR Description Format
+
+Follow `.github/pull_request_template.md`:
+
+```markdown
+# .playground/pr-description.md
+
+## Summary
+
+Brief description of the changes.
+
+## Changes
+
+- List of specific changes made
+
+## Testing
+
+- [ ] Validation passes (`make test`)
+- [ ] Pre-commit hooks pass (`make lint`)
+
+## Related Issues
+
+Closes #123
+```
