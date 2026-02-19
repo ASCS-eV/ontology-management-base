@@ -4,6 +4,29 @@ Main SHACL validation orchestrator.
 
 This module provides the ShaclValidator class which orchestrates the complete
 SHACL validation pipeline using the modular components.
+
+FEATURES:
+=========
+- Catalog-based schema discovery (ontologies, SHACL shapes, contexts)
+- External artifact directory registration for cross-repository validation
+- DID document resolution for linked data with external references:
+  1. Catalog-first: resolve via registered fixtures/DID documents
+  2. Online fallback: attempt HTTP resolution with warning
+  3. Graceful handling: unresolved IRIs log warnings but don't fail validation
+- RDFS inference support for proper type hierarchies
+- Detailed validation reporting with source focus
+
+USAGE:
+======
+    from src.tools.validators.shacl.validator import ShaclValidator
+
+    validator = ShaclValidator(
+        root_dir=Path("/path/to/repo"),
+        artifact_dirs=[Path("/path/to/external/artifacts")],
+    )
+    result = validator.validate([Path("data.json")])
+
+For command-line usage, see: src.tools.validators.validation_suite
 """
 
 import sys
@@ -83,7 +106,7 @@ class ShaclValidator:
         root_dir: Path,
         inference_mode: str = "rdfs",
         verbose: bool = True,
-        artifact_dirs: Optional[List[Path]] = None,
+        resolver: Optional["RegistryResolver"] = None,
     ):
         """
         Initialize the SHACL validator.
@@ -92,44 +115,24 @@ class ShaclValidator:
             root_dir: Repository root directory
             inference_mode: Inference mode (rdfs|owlrl|none|both)
             verbose: Whether to print progress messages
-            artifact_dirs: Additional artifact directories to register.
-                Each directory should contain domain subdirectories with
-                ``{domain}.owl.ttl``, ``{domain}.shacl.ttl``, and
-                ``{domain}.context.jsonld`` files.
+            resolver: Optional pre-configured RegistryResolver. If provided,
+                uses this instead of creating a new one. Artifacts should be
+                registered on the resolver before passing.
         """
         self.root_dir = Path(root_dir).resolve()
-        self.resolver = RegistryResolver(root_dir)
+        self.resolver = resolver if resolver else RegistryResolver(root_dir)
         self.inference_mode = inference_mode
         self.verbose = verbose
         self._context_url_map: Optional[Dict[str, "Path"]] = None
 
-        # Register additional artifact directories
-        if artifact_dirs:
-            for artifact_dir in artifact_dirs:
-                registered = self.resolver.register_artifact_directory(artifact_dir)
-                if registered:
-                    self._log(
-                        f"  Registered artifact domains: {', '.join(registered)}"
-                    )
+        # Build context URL map from resolver's catalog
+        self._build_context_url_map()
 
-            # Build context URL map for inlining
-            self._build_context_url_map(artifact_dirs)
-
-    def _build_context_url_map(self, artifact_dirs: List[Path]) -> None:
+    def _build_context_url_map(self) -> None:
         """Build URL-to-local-file mapping for context inlining."""
-        from src.tools.utils.context_resolver import (
-            build_context_url_map,
-            discover_context_files,
-        )
+        from src.tools.utils.context_resolver import build_context_url_map
 
-        url_map: Dict[str, Path] = {}
-
-        # From the resolver's own catalog
-        url_map.update(build_context_url_map(self.resolver, self.root_dir))
-
-        # From additional artifact directories
-        url_map.update(discover_context_files(artifact_dirs))
-
+        url_map = build_context_url_map(self.resolver, self.root_dir)
         if url_map:
             self._context_url_map = url_map
 
@@ -141,6 +144,36 @@ class ShaclValidator:
     def _rel_path(self, path: Path) -> str:
         """Convert to repository-relative string for display."""
         return normalize_path_for_display(path, self.root_dir)
+
+    def validate_from_catalog(
+        self, domain: str, test_type: str = "valid"
+    ) -> ValidationResult:
+        """
+        Validate files for a domain using catalog-based discovery.
+
+        This is the preferred method for catalog-based workflows. Files are
+        discovered via the resolver's catalog entries.
+
+        Args:
+            domain: Domain name to validate (e.g., "manifest", "hdmap")
+            test_type: Test type filter ("valid", "invalid", or None for all)
+
+        Returns:
+            ValidationResult with validation outcome and details
+        """
+        jsonld_files = self.resolver.get_test_files(domain, test_type=test_type)
+
+        if not jsonld_files:
+            return ValidationResult(
+                conforms=True,
+                return_code=0,
+                report_text=f"No {test_type} test files found for domain '{domain}'",
+                files_validated=[],
+            )
+
+        # Convert string paths to Path objects
+        file_paths = [Path(f) for f in jsonld_files]
+        return self.validate(file_paths)
 
     def validate(self, jsonld_files: List[Path]) -> ValidationResult:
         """
@@ -212,16 +245,25 @@ class ShaclValidator:
         self._log(f"  Data triples: {len(data_graph)}")
         self._log(f"  Prefixes discovered: {len(prefixes)}")
 
-        # Load fixtures for external references
+        # Load fixtures for external references (catalog-first, online fallback)
         external_iris = extract_external_iris(data_graph)
         if external_iris:
             self._log(f"\n  Resolving {len(external_iris)} external references...")
-            fixtures_loaded = load_fixtures_for_iris(
-                external_iris, self.resolver, data_graph, self.root_dir
+            fixtures_loaded, unresolved = load_fixtures_for_iris(
+                external_iris,
+                self.resolver,
+                data_graph,
+                self.root_dir,
+                allow_online_fallback=True,
+                verbose=self.verbose,
             )
             if fixtures_loaded > 0:
                 self._log(f"  Fixtures loaded: {fixtures_loaded}")
                 self._log(f"  Updated triples: {len(data_graph)}")
+            if unresolved:
+                self._log(
+                    f"  ⚠️  Unresolved IRIs ({len(unresolved)}): {unresolved[:3]}..."
+                )
 
         return data_graph, prefixes
 

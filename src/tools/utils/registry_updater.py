@@ -39,6 +39,7 @@ from src.tools.core.logging import get_logger
 from src.tools.utils.file_collector import (
     collect_jsonld_files,
     collect_ontology_bundles,
+    extract_jsonld_iris,
     write_if_changed,
 )
 
@@ -573,22 +574,16 @@ def discover_test_data() -> Dict[str, dict]:
 
 
 def discover_fixtures() -> Dict[str, str]:
-    fixtures = {}
+    """Discover fixture files and extract IRI → filename mappings."""
     if not FIXTURES_DIR.exists():
-        return fixtures
-    files = collect_jsonld_files(
-        [FIXTURES_DIR], return_pathlib=True, warn_on_invalid=False
-    )
-    for fixture_file in files:
-        try:
-            with fixture_file.open("r", encoding="utf-8") as f:
-                data = json.load(f)
-            iri = data.get("@id")
-            if iri:
-                fixtures[iri] = fixture_file.name
-        except Exception:
-            pass
-    return fixtures
+        return {}
+    files = collect_jsonld_files([FIXTURES_DIR], return_pathlib=True)
+    mappings = {}
+    for f in files:
+        iri, _ = extract_jsonld_iris(f)
+        if iri:
+            mappings[iri] = f.name
+    return mappings
 
 
 def generate_test_catalog(test_data: Dict[str, dict], fixtures: Dict[str, str]) -> str:

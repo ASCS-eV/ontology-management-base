@@ -177,3 +177,63 @@ def test_base_ontology_filtering_normalizes_http_https(temp_dir):
     filtered = resolver.get_base_ontology_paths_for_iris({"https://schema.org/name"})
 
     assert filtered == ["imports/schema/schema.owl.ttl"]
+
+
+def test_get_all_cataloged_files_filters_by_domain(temp_dir):
+    """Test that get_all_cataloged_files filters by domain."""
+    registry = {"version": "1.0.0", "ontologies": {}}
+    _write_registry(temp_dir, registry)
+
+    # Create test catalog with multiple domains
+    tests_dir = temp_dir / "tests"
+    tests_dir.mkdir()
+    catalog_path = tests_dir / "catalog-v001.xml"
+    catalog_path.write_text(
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="did:test:domain1:file1" uri="tests/data/domain1/file1.json" domain="domain1" test-type="valid" category="test-data"/>
+  <uri name="did:test:domain1:file2" uri="tests/data/domain1/file2.json" domain="domain1" test-type="valid" category="test-data"/>
+  <uri name="did:test:domain2:file1" uri="tests/data/domain2/file1.json" domain="domain2" test-type="valid" category="test-data"/>
+</catalog>
+"""
+    )
+
+    # Create actual files (relative to root_dir)
+    (temp_dir / "tests" / "data" / "domain1").mkdir(parents=True)
+    (temp_dir / "tests" / "data" / "domain2").mkdir(parents=True)
+    (temp_dir / "tests" / "data" / "domain1" / "file1.json").write_text("{}")
+    (temp_dir / "tests" / "data" / "domain1" / "file2.json").write_text("{}")
+    (temp_dir / "tests" / "data" / "domain2" / "file1.json").write_text("{}")
+
+    # Create artifacts catalog
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+</catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+
+    # Without domain filter - get all files
+    all_files = resolver.get_all_cataloged_files(extensions={".json"})
+    assert len(all_files.get(".json", [])) == 3
+
+    # With domain filter - get only domain1 files
+    domain1_files = resolver.get_all_cataloged_files(
+        extensions={".json"}, domains=["domain1"]
+    )
+    assert len(domain1_files.get(".json", [])) == 2
+    assert all("domain1" in str(f) for f in domain1_files.get(".json", []))
+
+    # With domain filter - get only domain2 files
+    domain2_files = resolver.get_all_cataloged_files(
+        extensions={".json"}, domains=["domain2"]
+    )
+    assert len(domain2_files.get(".json", [])) == 1
+    assert all("domain2" in str(f) for f in domain2_files.get(".json", []))

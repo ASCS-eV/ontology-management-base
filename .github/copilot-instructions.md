@@ -18,8 +18,16 @@ python3 -m src.tools.validators.validation_suite
 # Validate specific domain
 python3 -m src.tools.validators.validation_suite --domain manifest
 
-# Validate arbitrary paths
-python3 -m src.tools.validators.validation_suite --path ./my_data.json
+# Validate arbitrary data paths (auto-discovers fixtures)
+python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+
+# Validate with external artifact directories
+python3 -m src.tools.validators.validation_suite --run check-data-conformance \
+    --data-paths ./examples/credential.json \
+    --artifacts ./artifacts ../external-repo/artifacts
+
+# Use specific inference mode (rdfs, owlrl, none, both)
+python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
 
 # Run specific validation checks
 python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
@@ -41,6 +49,10 @@ make test
 
 # Run a single domain via Make
 make test-domain DOMAIN=hdmap
+
+# Run module self-tests
+python3 -m src.tools.validators.syntax_validator --test
+python3 -m src.tools.utils.file_collector --test
 ```
 
 ## Instruction Files
@@ -73,13 +85,14 @@ Read these BEFORE making changes:
    - IRI string operations → `core/iri_utils.py`
    - Graph operations → `utils/graph_loader.py`
    - Path resolution → `utils/registry_resolver.py`
+   - Path normalization → `utils/file_collector.py` (`PathsInput`, `normalize_paths_to_list`)
 
 ## High-Level Architecture
 
 - **Layered modules**: `src/tools/core` (foundations) → `src/tools/utils` (catalog + graph helpers) → `src/tools/validators` (CLI pipeline). No upward imports.
 - **Catalog-driven discovery**: XML catalogs in `artifacts/`, `imports/`, and `tests/` are the single source of truth for file resolution.
 - **Validation pipeline**: `check-syntax` → `check-artifact-coherence` → `check-data-conformance` → `check-failing-tests` (domain mode only for coherence/failing tests).
-- **Path mode** builds a temporary in-memory catalog from `--path` inputs, then runs the standard pipeline.
+- **Data paths mode** builds a temporary in-memory catalog from `--data-paths` inputs, then runs the standard pipeline.
 
 ## Key Conventions
 
@@ -90,6 +103,7 @@ Read these BEFORE making changes:
 - **Errors/return codes**: raise specific exceptions (no silent `None`), and use `ReturnCodes` from `core/result.py`.
 - **Test data**: invalid instances live in `tests/data/{domain}/invalid/` and require a matching `.expected` file.
 - **Artifact changes**: run `python3 -m src.tools.utils.registry_updater` (pre-commit hooks also update catalogs/README/PROPERTIES).
+- **Path input flexibility**: Collection functions accept `PathsInput` (single path or list) - use `normalize_paths_to_list()` from `file_collector.py` when needed.
 
 ## Before You Code
 
@@ -105,6 +119,7 @@ Read these BEFORE making changes:
 - ❌ **Don't use `os.path`** - Use `pathlib.Path` instead
 - ❌ **Don't silently return `None`** - Raise specific exceptions
 - ❌ **Don't use `print()` for logging** - Use `logger` from `core/logging.py`
+- ❌ **Don't duplicate path normalization** - Use `normalize_paths_to_list()` or `normalize_path_for_display()`
 
 ## Key Imports
 
@@ -121,4 +136,14 @@ from src.tools.utils.graph_loader import load_graph, load_jsonld_files
 
 # Return codes
 from src.tools.core.result import ReturnCodes, ValidationResult
+
+# Path utilities
+from src.tools.utils.file_collector import PathsInput, normalize_paths_to_list
+from src.tools.utils.print_formatter import normalize_path_for_display
+
+# Syntax validation (unified API)
+from src.tools.validators.syntax_validator import (
+    check_json_wellformedness,
+    check_turtle_wellformedness,
+)
 ```

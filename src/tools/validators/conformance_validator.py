@@ -100,7 +100,11 @@ def validate_data_conformance(
         Tuple of (return_code, output_message)
     """
     return _validate_data_conformance(
-        jsonld_files, root_dir, inference_mode, debug, logfile,
+        jsonld_files,
+        root_dir,
+        inference_mode,
+        debug,
+        logfile,
         artifact_dirs=artifact_dirs,
     )
 

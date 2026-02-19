@@ -4,31 +4,38 @@ File Collector - Centralized File Discovery and Write Utilities
 
 FEATURE SET:
 ============
-1. collect_files_by_extension - Generic pattern-based file collection
-2. collect_turtle_files - Collect all .ttl files from paths
-3. collect_jsonld_files - Collect all .json/.jsonld files from paths
-4. collect_ontology_bundles - Discover complete ontology bundles
-5. collect_files_by_pattern - Glob pattern-based collection
-6. collect_ontology_files - Get {ontology, shacl, context} paths for a domain
-7. collect_test_files - Collect test files from valid/invalid subdirs
-8. write_if_changed - Write file only if content differs (with LF normalization)
+1. normalize_paths_to_list - Convert single path or list to list of strings
+2. collect_files_by_extension - Generic extension-based file collection
+3. collect_turtle_files - Collect all .ttl files from paths
+4. collect_jsonld_files - Collect all .json/.jsonld files from paths
+5. collect_ontology_bundles - Discover complete ontology bundles
+6. collect_files_by_pattern - Glob pattern-based collection
+7. collect_ontology_files - Get {ontology, shacl, context} paths for a domain
+8. collect_test_files - Collect test files from valid/invalid subdirs
+9. write_if_changed - Write file only if content differs (with LF normalization)
+10. discover_data_hierarchy - Auto-detect top-level files vs fixtures
+
+PATH INPUT:
+==========
+All collection functions accept flexible path input (PathsInput type):
+- Single file: "data/file.json" or Path("data/file.json")
+- Single directory: "artifacts/" or Path("artifacts/")
+- List of paths: ["data/", "examples/", "file.json"]
 
 USAGE:
 ======
     from src.tools.utils.file_collector import (
+        normalize_paths_to_list,
         collect_jsonld_files,
         collect_turtle_files,
-        collect_ontology_bundles,
     )
 
-    # Collect JSON-LD files from multiple paths
+    # Single file or directory
+    files = collect_jsonld_files("data/instance.json")
+    files = collect_turtle_files("artifacts/")
+
+    # Multiple paths
     files = collect_jsonld_files(["data/", "examples/"])
-
-    # Collect Turtle files
-    ttl_files = collect_turtle_files(["artifacts/"])
-
-    # Discover ontology bundles
-    bundles = collect_ontology_bundles(Path("artifacts/"))
 
 STANDALONE TESTING:
 ==================
@@ -51,9 +58,39 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Union
 
+# Type alias for flexible path input (single or multiple)
+PathsInput = Union[str, Path, List[Union[str, Path]]]
+
+
+def normalize_paths_to_list(paths: PathsInput) -> List[str]:
+    """
+    Normalize path input to a list of string paths.
+
+    Accepts a single path (str or Path) or a list of paths, and returns
+    a list of string paths. This is useful for functions that accept
+    flexible input but internally need a list.
+
+    Args:
+        paths: Single path or list of paths
+
+    Returns:
+        List of string paths
+
+    Examples:
+        >>> normalize_paths_to_list("data/file.json")
+        ['data/file.json']
+        >>> normalize_paths_to_list(Path("artifacts/"))
+        ['artifacts']
+        >>> normalize_paths_to_list(["data/", "examples/"])
+        ['data/', 'examples/']
+    """
+    if isinstance(paths, (str, Path)):
+        return [str(paths)]
+    return [str(p) for p in paths]
+
 
 def collect_files_by_extension(
-    paths: List[Union[str, Path]],
+    paths: PathsInput,
     extensions: Union[str, Set[str]],
     warn_on_invalid: bool = True,
     return_pathlib: bool = False,
@@ -63,11 +100,11 @@ def collect_files_by_extension(
     Collect all files with specified extensions from the given paths.
 
     This function walks through directories recursively and collects files
-    matching the specified extensions. It can handle both individual files
-    and directories.
+    matching the specified extensions. It can handle a single file/directory
+    or a list of files/directories.
 
     Args:
-        paths: List of file or directory paths to search
+        paths: Single path or list of file/directory paths to search
         extensions: File extension(s) to collect (e.g., ".ttl" or {".json", ".jsonld"})
                     Extensions should include the dot prefix
         warn_on_invalid: If True, write warnings to stderr for invalid paths
@@ -78,10 +115,13 @@ def collect_files_by_extension(
         List of file paths matching the specified extensions
 
     Examples:
-        # Collect Turtle files
-        files = collect_files_by_extension(["artifacts/"], ".ttl")
+        # Single file
+        files = collect_files_by_extension("data/file.ttl", ".ttl")
 
-        # Collect JSON-LD files
+        # Single directory
+        files = collect_files_by_extension("artifacts/", ".ttl")
+
+        # Multiple paths
         files = collect_files_by_extension(
             ["data/", "examples/"],
             {".json", ".jsonld"},
@@ -89,6 +129,9 @@ def collect_files_by_extension(
             sort_and_deduplicate=True
         )
     """
+    # Normalize paths to list
+    path_list = normalize_paths_to_list(paths)
+
     # Normalize extensions to a set
     if isinstance(extensions, str):
         ext_set = {extensions}
@@ -100,8 +143,8 @@ def collect_files_by_extension(
 
     files = []
 
-    for path_input in paths:
-        path = Path(path_input).resolve() if isinstance(path_input, str) else path_input
+    for path_input in path_list:
+        path = Path(path_input).resolve()
 
         if path.is_file():
             # Check if file has the right extension
@@ -129,7 +172,7 @@ def collect_files_by_extension(
 
 
 def collect_turtle_files(
-    paths: List[Union[str, Path]],
+    paths: PathsInput,
     warn_on_invalid: bool = True,
     return_pathlib: bool = False,
 ) -> List[Union[str, Path]]:
@@ -137,7 +180,7 @@ def collect_turtle_files(
     Collect all Turtle (.ttl) files from the given paths.
 
     Args:
-        paths: List of file or directory paths to search
+        paths: Single path or list of file/directory paths to search
         warn_on_invalid: If True, write warnings to stderr for invalid paths
         return_pathlib: If True, return Path objects; if False, return strings
 
@@ -150,7 +193,7 @@ def collect_turtle_files(
 
 
 def collect_jsonld_files(
-    paths: List[Union[str, Path]],
+    paths: PathsInput,
     warn_on_invalid: bool = True,
     return_pathlib: bool = False,
     sort_and_deduplicate: bool = False,
@@ -159,7 +202,7 @@ def collect_jsonld_files(
     Collect all JSON-LD (.json, .jsonld) files from the given paths.
 
     Args:
-        paths: List of file or directory paths to search
+        paths: Single path or list of file/directory paths to search
         warn_on_invalid: If True, write warnings to stderr for invalid paths
         return_pathlib: If True, return Path objects; if False, return strings
         sort_and_deduplicate: If True, sort and remove duplicates
@@ -177,7 +220,7 @@ def collect_jsonld_files(
 
 
 def collect_files_by_pattern(
-    paths: List[Union[str, Path]],
+    paths: PathsInput,
     pattern: str,
     return_pathlib: bool = False,
 ) -> List[Union[str, Path]]:
@@ -185,17 +228,19 @@ def collect_files_by_pattern(
     Generic pattern-based file collection using glob patterns.
 
     Args:
-        paths: List of directory paths to search
+        paths: Single path or list of directory paths to search
         pattern: Glob pattern to match (e.g., "*.shacl.ttl", "**/*.json")
         return_pathlib: If True, return Path objects; if False, return strings
 
     Returns:
         List of matching file paths
     """
+    # Normalize paths to list
+    path_list = normalize_paths_to_list(paths)
     files = []
 
-    for path_input in paths:
-        path = Path(path_input).resolve() if isinstance(path_input, str) else path_input
+    for path_input in path_list:
+        path = Path(path_input).resolve()
 
         if path.is_dir():
             for file_path in path.glob(pattern):
@@ -380,6 +425,108 @@ def write_if_changed(path: Path, content: str) -> bool:
     with path.open("w", encoding="utf-8", newline="\n") as f:
         f.write(content)
     return True
+
+
+def extract_jsonld_iris(file_path: Path) -> tuple:
+    """
+    Extract root @id and all referenced IRIs from a JSON-LD file.
+
+    Args:
+        file_path: Path to JSON-LD file
+
+    Returns:
+        Tuple of (root_id, referenced_iris) where:
+        - root_id: The @id value of the document, or None
+        - referenced_iris: Set of IRIs referenced in nested objects
+    """
+    import json as _json
+
+    try:
+        with file_path.open("r", encoding="utf-8") as f:
+            doc = _json.load(f)
+    except Exception:
+        return None, set()
+
+    root_id = doc.get("@id") or doc.get("id")
+    referenced: Set[str] = set()
+
+    def extract_from_value(value, depth: int = 0):
+        """Recursively extract @id values from nested structures."""
+        if isinstance(value, dict):
+            obj_id = value.get("@id") or value.get("id")
+            if obj_id and depth > 0 and obj_id != root_id:
+                # Only add if it looks like an IRI (not a blank node)
+                if isinstance(obj_id, str) and not obj_id.startswith("_:"):
+                    referenced.add(obj_id)
+            for v in value.values():
+                extract_from_value(v, depth + 1)
+        elif isinstance(value, list):
+            for item in value:
+                extract_from_value(item, depth + 1)
+
+    extract_from_value(doc)
+    return root_id, referenced
+
+
+def discover_data_hierarchy(
+    paths: List[Union[str, Path]],
+) -> tuple:
+    """
+    Discover top-level files and fixture mappings from paths.
+
+    This function implements smart path expansion:
+    - FILE: Added to validate list, parent directory scanned for fixtures
+    - DIRECTORY: Scanned recursively, auto-detects top-level vs fixtures
+
+    Top-level files: Files whose @id is NOT referenced by any other file.
+    Fixtures: Files whose @id IS referenced by another file.
+
+    Args:
+        paths: List of files or directories to process
+
+    Returns:
+        Tuple of (files_to_validate, iri_to_file_map)
+        - files_to_validate: List of Path objects to validate
+        - iri_to_file_map: Dict mapping IRIs to file paths (for fixture resolution)
+    """
+    explicit_files: List[Path] = []
+    scan_dirs: Set[Path] = set()
+
+    # Expand paths: files → validate + scan parent, dirs → scan
+    for p in paths:
+        p = Path(p).resolve()
+        if p.is_file():
+            explicit_files.append(p)
+            scan_dirs.add(p.parent)
+        elif p.is_dir():
+            scan_dirs.add(p)
+
+    # Collect all JSON-LD files from directories
+    all_files: List[Path] = []
+    if scan_dirs:
+        all_files = collect_jsonld_files(
+            list(scan_dirs), return_pathlib=True, sort_and_deduplicate=True
+        )
+
+    # Single pass: build IRI→file mapping and collect all referenced IRIs
+    iri_to_file: Dict[str, Path] = {}
+    referenced_iris: Set[str] = set()
+    file_ids: Dict[Path, Optional[str]] = {}
+
+    for f in all_files:
+        root_id, refs = extract_jsonld_iris(f)
+        file_ids[f] = root_id
+        if root_id:
+            iri_to_file[root_id] = f
+        referenced_iris.update(refs)
+
+    # Top-level = explicit files + files not referenced by others
+    top_level: Set[Path] = set(explicit_files)
+    for f, fid in file_ids.items():
+        if fid and fid not in referenced_iris:
+            top_level.add(f)
+
+    return sorted(top_level), iri_to_file
 
 
 def _run_tests() -> bool:

@@ -113,9 +113,7 @@ def discover_context_files(
     return url_map
 
 
-def _load_and_tweak_context(
-    local_path: Path, uri_tweaks: Dict[str, str]
-) -> dict:
+def _load_and_tweak_context(local_path: Path, uri_tweaks: Dict[str, str]) -> dict:
     """Load a context file and apply URI tweaks to its serialised content."""
     with open(local_path, "r", encoding="utf-8") as f:
         raw = f.read()

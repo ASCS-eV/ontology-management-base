@@ -30,6 +30,7 @@ See also:
 """
 
 from .file_collector import (
+    PathsInput,
     collect_files_by_extension,
     collect_files_by_pattern,
     collect_jsonld_files,
@@ -37,6 +38,7 @@ from .file_collector import (
     collect_ontology_files,
     collect_test_files,
     collect_turtle_files,
+    normalize_paths_to_list,
     write_if_changed,
 )
 from .graph_loader import (
@@ -56,6 +58,8 @@ __all__ = [
     # Registry
     "RegistryResolver",
     # File collection and writing
+    "PathsInput",
+    "normalize_paths_to_list",
     "collect_files_by_extension",
     "collect_files_by_pattern",
     "collect_jsonld_files",

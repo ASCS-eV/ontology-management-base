@@ -10,6 +10,7 @@ PREREQUISITES:
 =============
 - Python 3.12 or higher
 - Active Virtual Environment (venv, conda, etc.)
+- Catalogs must be generated (run: python -m src.tools.utils.registry_updater)
 
 OPERATION MODES:
 ===============
@@ -25,12 +26,41 @@ OPERATION MODES:
      python3 -m src.tools.validators.validation_suite --domain manifest
      python3 -m src.tools.validators.validation_suite --domain manifest scenario
 
-3. PATH VALIDATION MODE
-   Validates arbitrary files or directories by creating a temporary in-memory catalog.
-   Useful for checking files before they are added to the official catalog.
+3. DATA PATHS MODE
+   Validates arbitrary files or directories with auto-discovery of fixtures.
    Usage:
-     python3 -m src.tools.validators.validation_suite --path tests/data/manifest/valid/
-     python3 -m src.tools.validators.validation_suite --path my_new_file.json
+     python3 -m src.tools.validators.validation_suite --data-paths tests/data/manifest/valid/
+     python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+
+ADDITIONAL OPTIONS:
+==================
+
+--data-paths PATH [PATH ...]
+    Files or directories containing JSON-LD data to validate.
+
+    Behavior:
+    - FILE: Validates this file. Parent directory is scanned for fixtures.
+    - DIRECTORY: Scans recursively. Auto-detects top-level files vs fixtures.
+
+    Top-level files (validated): Files whose @id is NOT referenced by others.
+    Fixtures (auto-loaded): Files whose @id IS referenced by top-level files.
+
+    Examples:
+      --data-paths ./my-credential.json
+      --data-paths ./examples/
+      --data-paths ./data/credential.json ./data/did-documents/
+
+--artifacts DIR [DIR ...]
+    Register additional artifact directories for schema discovery and context inlining.
+    Each directory should follow the standard structure:
+      artifacts/{domain}/{domain}.owl.ttl
+      artifacts/{domain}/{domain}.shacl.ttl
+      artifacts/{domain}/{domain}.context.jsonld
+
+    This enables validation of data that uses schemas from external repositories.
+    Example:
+      python3 -m src.tools.validators.validation_suite --data-paths ./my-data.json \\
+          --artifacts ../other-repo/artifacts
 
 VALIDATION PHASES (--run):
 =========================
@@ -51,7 +81,7 @@ VALIDATION PHASES (--run):
 --run check-data-conformance
     Validates JSON-LD data instances against their associated SHACL shapes.
     - In Catalog Mode: Uses shapes linked in the catalog.
-    - In Path Mode: Attempts to validate files against available shapes.
+    - In Data Path Mode: Discovers schemas from --artifacts directories.
 
 --run check-failing-tests
     (Catalog/Domain Mode only)
@@ -66,8 +96,13 @@ python3 -m src.tools.validators.validation_suite
 # Check only syntax for the 'manifest' domain
 python3 -m src.tools.validators.validation_suite --run check-syntax --domain manifest
 
-# Validate a specific file against rules
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --path ./my_data.json
+# Validate data with auto-discovery of fixtures
+python3 -m src.tools.validators.validation_suite --run check-data-conformance \\
+    --data-paths ./examples/
+
+# Validate a single file (parent dir scanned for fixtures)
+python3 -m src.tools.validators.validation_suite --run check-data-conformance \\
+    --data-paths ./examples/my-data.json --artifacts ./artifacts
 """
 
 import argparse
@@ -79,21 +114,16 @@ from pathlib import Path
 from typing import List
 
 # Import from new module locations (with backward compatibility)
+from src.tools.utils.file_collector import discover_data_hierarchy
 from src.tools.utils.print_formatter import normalize_path_for_display, normalize_text
 from src.tools.utils.registry_resolver import RegistryResolver
 
 # New imports from refactored modules
 from src.tools.validators.coherence_validator import validate_artifact_coherence
-from src.tools.validators.conformance_validator import (
-    collect_jsonld_files,
-    validate_data_conformance,
-)
+from src.tools.validators.shacl.validator import ShaclValidator
 from src.tools.validators.syntax_validator import (
-    check_json_syntax as check_json_wellformedness,
-)
-from src.tools.validators.syntax_validator import (
-    verify_json_syntax,
-    verify_turtle_syntax,
+    check_json_wellformedness,
+    check_turtle_wellformedness,
 )
 
 # Define the root directory of the repository
@@ -132,167 +162,194 @@ GITIGNORE_FOLDERS = parse_gitignore_patterns(ROOT_DIR)
 EXPECTED_TARGETCLASS_FAILURES = set()
 
 
-def check_syntax_all(ontology_domains: List[str]) -> int:
-    """Check the syntax of all Turtle (.ttl) and JSON-LD (.json) files."""
+def check_syntax_all(
+    ontology_domains: List[str],
+    resolver: RegistryResolver = None,
+) -> int:
+    """
+    Check the syntax of all Turtle (.ttl) and JSON-LD (.json) files.
+
+    All files are discovered via the catalog system. If a resolver with temporary
+    entries is provided, those entries are included in the syntax check.
+
+    Args:
+        ontology_domains: List of domain names to check (used for filtering)
+        resolver: Optional pre-configured RegistryResolver (with temporary entries)
+
+    Returns:
+        0 on success, non-zero on failure
+    """
     if not ontology_domains:
         return 0
 
-    # Use catalog-based discovery for comprehensive JSON-LD file collection
-    catalog_resolver = RegistryResolver(ROOT_DIR)
+    # Use provided resolver or create new one
+    catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
 
     print("\n=== Checking JSON-LD syntax ===", flush=True)
 
-    if catalog_resolver.is_catalog_loaded():
-        # Catalog-based approach: Get ALL JSON-LD files from catalog
-        json_files_to_check = []
+    # Check if we have data to validate (either from catalog or temporary domains)
+    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
+        print(
+            "❌ Error: No data to validate. Either load catalog or use --data-paths.",
+            file=sys.stderr,
+        )
+        return 1
 
-        # Get all entries from catalog (test-data, fixtures, etc.)
-        for test_id, metadata in catalog_resolver._catalog.items():
-            file_path = ROOT_DIR / metadata["path"]
-            if file_path.suffix in [".json", ".jsonld"] and file_path.exists():
-                json_files_to_check.append(str(file_path))
+    # Collect files from catalogs filtered by domain via unified API
+    cataloged_files = catalog_resolver.get_all_cataloged_files(
+        extensions={".json", ".jsonld", ".ttl"},
+        include_artifacts=True,
+        domains=ontology_domains,
+    )
 
-        # Also check for any JSON-LD files in artifacts that might not be cataloged
-        for domain in ontology_domains:
-            artifact_dir = ARTIFACTS_DIR / domain
-            if artifact_dir.is_dir():
-                for file in artifact_dir.iterdir():
-                    if file.suffix in (".json", ".jsonld"):
-                        file_str = str(file)
-                        if file_str not in json_files_to_check:
-                            json_files_to_check.append(file_str)
+    # Build file lists from catalog results
+    json_files_to_check = [str(p) for p in cataloged_files.get(".json", [])] + [
+        str(p) for p in cataloged_files.get(".jsonld", [])
+    ]
+    ttl_files_to_check = [str(p) for p in cataloged_files.get(".ttl", [])]
 
-        # Check each file individually
-        json_results = []
-        for json_file in sorted(json_files_to_check):
-            code, msg = check_json_wellformedness(json_file, ROOT_DIR)
-            json_results.append((code, msg))
-            if code != 0:
+    # Check JSON-LD files
+    for json_file in sorted(set(json_files_to_check)):
+        code, results = check_json_wellformedness(json_file, ROOT_DIR)
+        for c, msg in results:
+            if c != 0:
                 print(msg, file=sys.stderr)
-                return code
+                return c
             print(msg)
-    else:
-        # Fallback: directory-based approach
-        dirs_to_check = []
-        for domain in ontology_domains:
-            artifact_dir = ARTIFACTS_DIR / domain
-            if artifact_dir.is_dir():
-                dirs_to_check.append(str(artifact_dir))
-            valid_dir = TESTS_DATA_DIR / domain / "valid"
-            if valid_dir.is_dir():
-                dirs_to_check.append(str(valid_dir))
-            invalid_dir = TESTS_DATA_DIR / domain / "invalid"
-            if invalid_dir.is_dir():
-                dirs_to_check.append(str(invalid_dir))
-
-        # Add fixtures directory
-        fixtures_dir = ROOT_DIR / "tests" / "fixtures"
-        if fixtures_dir.is_dir():
-            dirs_to_check.append(str(fixtures_dir))
-
-        json_ret, json_results = verify_json_syntax(dirs_to_check, ROOT_DIR)
-        for code, msg in json_results:
-            if code == 0:
-                print(msg)
-            else:
-                print(msg, file=sys.stderr)
-                return code
 
     print("\n=== Checking TTL syntax ===", flush=True)
-    # Check TTL files in all domain directories
-    ttl_dirs = [
-        str(ARTIFACTS_DIR / domain)
-        for domain in ontology_domains
-        if (ARTIFACTS_DIR / domain).is_dir()
-    ]
-    ttl_ret, ttl_results = verify_turtle_syntax(ttl_dirs, ROOT_DIR)
-    for code, msg in ttl_results:
-        if code == 0:
-            print(msg)
-        else:
-            print(msg, file=sys.stderr)
-            return code
+
+    # Check TTL files
+    if ttl_files_to_check:
+        for ttl_file in sorted(set(ttl_files_to_check)):
+            code, results = check_turtle_wellformedness(ttl_file, ROOT_DIR)
+            for c, msg in results:
+                if c != 0:
+                    print(msg, file=sys.stderr)
+                    return c
+                print(msg)
+    else:
+        print("  No TTL files in catalog to check")
 
     print("📌 Completed TTL and JSON syntax tests", flush=True)
     return 0
 
 
-def validate_data_conformance_all(ontology_domains: List[str]) -> int:
+def validate_data_conformance_all(
+    ontology_domains: List[str],
+    resolver: RegistryResolver = None,
+    inference_mode: str = "rdfs",
+) -> int:
     """
     Validate JSON-LD files against SHACL schemas.
 
+    All files are discovered via the catalog system. If a resolver with temporary
+    entries is provided, those entries are included in the validation.
+
     Args:
         ontology_domains: List of domain names to test
+        resolver: Optional pre-configured RegistryResolver (with temporary entries)
+        inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
+
+    Returns:
+        0 on success, non-zero on failure
     """
     if not ontology_domains:
         return 0
     print("\n=== Checking JSON-LD against SHACL ===", flush=True)
 
-    catalog_resolver = RegistryResolver(ROOT_DIR)
-    if not catalog_resolver.is_catalog_loaded():
+    catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+
+    # Check if we have data to validate (either from catalog or temporary domains)
+    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
         print(
-            "❌ Error: tests/catalog-v001.xml is required for catalog-based discovery.",
+            "❌ Error: No data to validate. Either load catalog or use --data-paths.",
             file=sys.stderr,
         )
         return 1
 
     print("📋 Using catalog-based test discovery\n", flush=True)
+
+    # Create validator with shared resolver
+    validator = ShaclValidator(
+        ROOT_DIR,
+        inference_mode=inference_mode,
+        verbose=True,
+        resolver=catalog_resolver,
+    )
 
     for domain in ontology_domains:
         print(
             f"\n🔍 Starting JSON-LD SHACL validation for domain: {domain}", flush=True
         )
 
-        jsonld_files = catalog_resolver.get_test_files(domain, test_type="valid")
-        if jsonld_files:
-            print(f"   Found {len(jsonld_files)} test files from catalog", flush=True)
+        # Use catalog-based validation method
+        result = validator.validate_from_catalog(domain, test_type="valid")
 
-        if not jsonld_files:
+        if not result.files_validated:
             print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
             continue
 
-        # Use new catalog-based validator
-        returncode, output = validate_data_conformance(
-            jsonld_files,
-            ROOT_DIR,
-            inference_mode="rdfs",
-            debug=False,
-            logfile=None,
-        )
+        print(f"   Found {len(result.files_validated)} test files from catalog")
 
-        if returncode != 0:
+        if result.return_code != 0:
             print(
                 f"\n❌ Error during JSON-LD SHACL validation for domain '{domain}'. Aborting.",
                 file=sys.stderr,
                 flush=True,
             )
-            return returncode
+            return result.return_code
         else:
             print(f"\n✅ {domain} conforms to SHACL constraints.", flush=True)
 
     return 0
 
 
-def check_failing_tests_all(ontology_domains: List[str]) -> int:
+def check_failing_tests_all(
+    ontology_domains: List[str],
+    resolver: RegistryResolver = None,
+    inference_mode: str = "rdfs",
+) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
 
+    All files are discovered via the catalog system. If a resolver with temporary
+    entries is provided, those entries are included in the validation.
+
     Args:
         ontology_domains: List of domain names to test
+        resolver: Optional pre-configured RegistryResolver (with temporary entries)
+        inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
+
+    Returns:
+        0 on success, non-zero on failure
     """
     if not ontology_domains:
         return 0
     print("\n=== Running failing tests ===", flush=True)
 
-    catalog_resolver = RegistryResolver(ROOT_DIR)
-    if not catalog_resolver.is_catalog_loaded():
+    catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+
+    # Check if we have data to validate (either from catalog or temporary domains)
+    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
         print(
-            "❌ Error: tests/catalog-v001.xml is required for catalog-based discovery.",
+            "❌ Error: No data to validate. Either load catalog or use --data-paths.",
             file=sys.stderr,
         )
         return 1
 
     print("📋 Using catalog-based test discovery\n", flush=True)
+
+    # Create validator with shared resolver
+    validator = ShaclValidator(
+        ROOT_DIR,
+        inference_mode=inference_mode,
+        verbose=True,
+        resolver=catalog_resolver,
+    )
 
     for domain in ontology_domains:
         print(f"\n🔍 Running failing tests for domain: {domain}", flush=True)
@@ -325,20 +382,13 @@ def check_failing_tests_all(ontology_domains: List[str]) -> int:
 
             print(f"🔍 Running failing test: {test_path}", flush=True)
 
-            # Collect failing test file
-            jsonld_files = collect_jsonld_files([str(test_abs_path)])
-
-            # Use new catalog-based validator
-            returncode, output = validate_data_conformance(
-                jsonld_files,
-                ROOT_DIR,
-                inference_mode="rdfs",
-                debug=False,
-                logfile=None,
-            )
+            # Validate single file (fixtures/schemas resolved via catalog)
+            result = validator.validate([test_abs_path])
+            output = validator.format_result(result)
+            print(output)
             print("\n", flush=True)
 
-            if returncode == 210:
+            if result.return_code == 210:
                 output_norm = normalize_text(output)
                 expected_norm = normalize_text(expected_output)
 
@@ -375,26 +425,46 @@ def check_failing_tests_all(ontology_domains: List[str]) -> int:
                     return 1
             else:
                 print(
-                    f"\n❌ Test {test_path} did not return code 210 (got {returncode}). Aborting.",
+                    f"\n❌ Test {test_path} did not return code 210 (got {result.return_code}). Aborting.",
                     file=sys.stderr,
                     flush=True,
                 )
-                return returncode or 1
+                return result.return_code or 1
 
     return 0
 
 
-def validate_artifact_coherence_all(ontology_domains: List[str]) -> int:
-    """Validate target classes against OWL for each domain."""
+def validate_artifact_coherence_all(
+    ontology_domains: List[str],
+    resolver: RegistryResolver = None,
+) -> int:
+    """
+    Validate target classes against OWL for each domain.
+
+    Args:
+        ontology_domains: List of domain names to check
+        resolver: Optional pre-configured RegistryResolver (with registered artifacts)
+
+    Returns:
+        0 on success, non-zero on failure
+    """
     if not ontology_domains:
         return 0
     print("\n=== Checking target classes against OWL classes ===", flush=True)
 
-    for domain in ontology_domains:
+    # Skip coherence check for temporary domains (no artifacts)
+    domains_to_check = [d for d in ontology_domains if not d.startswith("custom-path-")]
+    if not domains_to_check:
+        print("📋 Skipping coherence check (no artifact domains)", flush=True)
+        return 0
+
+    for domain in domains_to_check:
         print(f"\n🔍 Checking target classes for domain: {domain}", flush=True)
 
-        # Call the updated validator with the new structure
-        returncode, output = validate_artifact_coherence(domain, root_dir=ROOT_DIR)
+        # Call the validator with resolver
+        returncode, output = validate_artifact_coherence(
+            domain, root_dir=ROOT_DIR, resolver=resolver
+        )
 
         if output:
             target = sys.stdout if returncode == 0 else sys.stderr
@@ -455,7 +525,6 @@ def main():
     # Create argument groups for better organization
     mode_group = parser.add_argument_group("Validation Modes")
     target_group = parser.add_argument_group("Target Selection")
-    options_group = parser.add_argument_group("General Options")
 
     mode_group.add_argument(
         "--run",
@@ -481,22 +550,16 @@ def main():
     )
 
     target_group.add_argument(
-        "--path",
+        "--data-paths",
         type=str,
         nargs="+",
         default=None,
         metavar="PATH",
-        help="File or directory path(s) to validate.",
-    )
-
-    # Move legacy/deprecated args to the general parser or suppress them clearly
-    parser.add_argument(
-        "--folder",
-        type=str,
-        nargs="+",
-        default=None,
-        dest="folder_deprecated",
-        help=argparse.SUPPRESS,
+        help=(
+            "Files or directories to validate. "
+            "FILE: validates file, scans parent for fixtures. "
+            "DIR: scans recursively, auto-detects top-level vs fixtures."
+        ),
     )
 
     target_group.add_argument(
@@ -508,21 +571,25 @@ def main():
         help="Additional artifact directories for schema discovery and context inlining.",
     )
 
-    options_group.add_argument(
-        "--no-catalog",
-        action="store_true",
-        help="Disable catalog-based discovery (use file system only)",
+    target_group.add_argument(
+        "--inference-mode",
+        type=str,
+        choices=["rdfs", "owlrl", "none", "both"],
+        default="rdfs",
+        help="Inference mode for SHACL validation (default: rdfs).",
     )
 
     args = parser.parse_args()
 
-    # PATH MODE: User specified file/directory paths
-    # Create temporary catalog domain for these paths
-    if args.path:
-        print("🔍 Path mode: Validating specified paths", flush=True)
+    # DATA PATHS MODE: User specified file/directory paths
+    # Uses auto-discovery to detect top-level files vs fixtures
+    data_paths = args.data_paths
+    if data_paths:
+        print("🔍 Data paths mode: Auto-discovering files to validate", flush=True)
+
         # Validate that paths exist
         valid_paths = []
-        for p in args.path:
+        for p in data_paths:
             if Path(p).exists():
                 valid_paths.append(p)
             else:
@@ -536,8 +603,22 @@ def main():
             print("❌ Error: No valid paths provided.", file=sys.stderr)
             sys.exit(1)
 
-        # Create catalog resolver and temporary domain
+        # Auto-discover top-level files and fixture mappings
+        top_level_files, iri_to_file = discover_data_hierarchy(valid_paths)
+
+        if not top_level_files:
+            print("❌ Error: No top-level files found to validate.", file=sys.stderr)
+            sys.exit(1)
+
+        print(f"   Found {len(top_level_files)} top-level file(s) to validate")
+        print(f"   Found {len(iri_to_file)} potential fixture(s) for IRI resolution")
+
+        # Create catalog resolver
         catalog_resolver = RegistryResolver(ROOT_DIR)
+
+        # Register discovered fixtures for IRI resolution
+        if iri_to_file:
+            catalog_resolver.register_fixture_mappings(iri_to_file)
 
         # Register additional artifact directories for schema discovery
         artifact_dir_paths = []
@@ -558,33 +639,55 @@ def main():
                         file=sys.stderr,
                     )
 
-        temp_domain = catalog_resolver.create_temporary_domain(valid_paths)
+        # Create temporary domain with top-level files only
+        temp_domain = catalog_resolver.create_temporary_domain(
+            [str(f) for f in top_level_files]
+        )
 
         if not temp_domain:
-            print(
-                "❌ Error: No JSON-LD files found in provided paths.", file=sys.stderr
-            )
+            print("❌ Error: Failed to create temporary domain.", file=sys.stderr)
             sys.exit(1)
 
         # Use temporary domain like a regular catalog domain
         ontology_domains = [temp_domain]
-        paths_to_check = valid_paths  # Keep for potential direct file operations
 
     # DOMAIN MODE: User specified catalog domains
     elif args.domain is not None:
         print(f"🔍 Domain mode: Using catalog for domain(s): {args.domain}", flush=True)
         catalog_resolver = RegistryResolver(ROOT_DIR)
+
+        # Register additional artifact directories (before checking domains)
+        if args.artifacts:
+            for ad in args.artifacts:
+                ad_path = Path(ad).resolve()
+                if ad_path.is_dir():
+                    registered = catalog_resolver.register_artifact_directory(ad_path)
+                    if registered:
+                        print(
+                            f"📦 Registered artifact domains: {', '.join(registered)}",
+                            flush=True,
+                        )
+                else:
+                    print(
+                        f"⚠️  Warning: Artifact directory does not exist: {ad}",
+                        file=sys.stderr,
+                    )
+
+        # Get available domains (including registered artifacts)
         available_domains = set(catalog_resolver.get_test_domains())
-        ontology_domains = [d for d in args.domain if d in available_domains]
+        # Also include artifact domains for coherence checks
+        artifact_domains = set(catalog_resolver.get_artifact_domains())
+        all_available = available_domains | artifact_domains
+
+        ontology_domains = [d for d in args.domain if d in all_available]
 
         if not ontology_domains and len(args.domain) > 0:
-            print(
-                f"⚠️ None of the provided domains exist in tests/catalog-v001.xml: {args.domain}"
-            )
-            print("Available domains:", sorted(available_domains))
+            print(f"⚠️ None of the provided domains exist: {args.domain}")
+            print("Available test domains:", sorted(available_domains))
+            if artifact_domains:
+                print("Available artifact domains:", sorted(artifact_domains))
             sys.exit(1)
 
-        paths_to_check = None
         print(f"Detected ontology domains: {ontology_domains}", flush=True)
 
     # AUTO MODE: Discover all domains from catalog
@@ -592,7 +695,6 @@ def main():
         print("🔍 Auto mode: Discovering all domains from catalog", flush=True)
         catalog_resolver = RegistryResolver(ROOT_DIR)
         ontology_domains = catalog_resolver.get_test_domains()
-        paths_to_check = None
 
         if not ontology_domains:
             print("No ontology domains to check in tests/catalog-v001.xml. Exiting.")
@@ -600,149 +702,71 @@ def main():
 
         print(f"Detected ontology domains: {ontology_domains}", flush=True)
 
-    # 5. Define validation checks based on mode (PATH vs DOMAIN)
-    if args.path:
-        # PATH MODE: Use temporary catalog domain
-        # Artifact coherence and failing tests require standard structure
-        if args.run in ["check-artifact-coherence", "check-failing-tests"]:
-            print(
-                f"❌ Error: {args.run} is not supported in path mode.", file=sys.stderr
+    # 5. Define validation checks
+    # Both path mode and domain mode use the same catalog-based functions
+    # (path mode creates a temporary catalog domain)
+    _inference_mode = args.inference_mode
+
+    # Artifact coherence and failing tests require standard domain structure
+    if data_paths and args.run in ["check-artifact-coherence", "check-failing-tests"]:
+        print(
+            f"❌ Error: {args.run} is not supported in data-paths mode.",
+            file=sys.stderr,
+        )
+        print(
+            "   These checks require catalog structure with domain artifacts.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    check_map = {
+        "check-syntax": [
+            (
+                "Check Syntax",
+                lambda: check_syntax_all(ontology_domains, catalog_resolver),
             )
-            print(
-                "   These checks require catalog structure and domain information.",
-                file=sys.stderr,
+        ],
+        "check-artifact-coherence": [
+            (
+                "Check Artifact Coherence",
+                lambda: validate_artifact_coherence_all(
+                    ontology_domains, catalog_resolver
+                ),
             )
-            print(
-                "   Use --domain instead of --path for these checks.", file=sys.stderr
+        ],
+        "check-data-conformance": [
+            (
+                "Check Data Conformance",
+                lambda: validate_data_conformance_all(
+                    ontology_domains, catalog_resolver, _inference_mode
+                ),
             )
-            sys.exit(1)
-
-        # Store catalog_resolver for use in nested functions
-        _path_catalog_resolver = catalog_resolver  # Capture from outer scope
-
-        # Helper function for syntax checking in path mode
-        def check_syntax_path_mode():
-            """Check syntax using catalog for JSON-LD and direct check for TTL."""
-
-            # Check JSON-LD files via catalog (already in temporary domain)
-            print("\n=== Checking JSON-LD syntax ===", flush=True)
-            jsonld_files = _path_catalog_resolver.get_test_files(ontology_domains[0])
-
-            if jsonld_files:
-                for json_file in sorted(jsonld_files):
-                    code, msg = check_json_wellformedness(str(json_file), ROOT_DIR)
-                    if code == 0:
-                        print(msg)
-                    else:
-                        print(msg, file=sys.stderr)
-                        return code
-            else:
-                print("⚠️ No JSON-LD files found in provided paths.")
-
-            # Check TTL files directly
-            print("\n=== Checking TTL syntax ===", flush=True)
-            ttl_ret, ttl_results = verify_turtle_syntax(paths_to_check, ROOT_DIR)
-            for code, msg in ttl_results:
-                if code == 0:
-                    print(msg)
-                elif "No Turtle files found" not in msg:
-                    print(msg, file=sys.stderr)
-                    return code
-
-            print("📌 Completed syntax tests", flush=True)
-            return 0
-
-        # Helper function for data conformance in path mode
-        def check_data_conformance_path_mode():
-            """Check data conformance using temporary catalog domain."""
-            print("\n=== Checking JSON-LD against SHACL ===", flush=True)
-
-            # Get JSON-LD files from temporary catalog
-            jsonld_files = _path_catalog_resolver.get_test_files(ontology_domains[0])
-
-            if not jsonld_files:
-                print("⚠️ No JSON-LD files found in provided paths.", flush=True)
-                return 0
-
-            print(f"Found {len(jsonld_files)} JSON-LD file(s) to validate", flush=True)
-
-            # Use validator directly with files from temporary catalog
-            returncode, output = validate_data_conformance(
-                [str(f) for f in jsonld_files],
-                ROOT_DIR,
-                inference_mode="rdfs",
-                debug=False,
-                logfile=None,
-                artifact_dirs=artifact_dir_paths or None,
+        ],
+        "check-failing-tests": [
+            (
+                "Check Failing Tests",
+                lambda: check_failing_tests_all(
+                    ontology_domains, catalog_resolver, _inference_mode
+                ),
             )
+        ],
+    }
 
-            if returncode != 0:
-                print(
-                    "\n❌ Error during JSON-LD SHACL validation. Aborting.",
-                    file=sys.stderr,
-                    flush=True,
-                )
-                return returncode
-            else:
-                print("\n✅ All files conform to SHACL constraints.", flush=True)
-
-            return 0
-
-        check_map = {
-            "check-syntax": [("Check Syntax", check_syntax_path_mode)],
-            "check-data-conformance": [
-                (
-                    "Check Data Conformance",
-                    check_data_conformance_path_mode,
-                )
-            ],
-        }
-
-        if args.run == "all":
-            print(
-                "ℹ️  Path mode: Running syntax and conformance checks only.", flush=True
-            )
+    if args.run == "all":
+        if data_paths:
+            # Path mode: skip artifact coherence and failing tests
             checks_to_run = (
                 check_map["check-syntax"] + check_map["check-data-conformance"]
             )
         else:
-            checks_to_run = check_map[args.run]
-
-    else:
-        # DOMAIN MODE: Validate using catalog structure
-        check_map = {
-            "check-syntax": [
-                ("Check Syntax", lambda: check_syntax_all(ontology_domains))
-            ],
-            "check-artifact-coherence": [
-                (
-                    "Check Artifact Coherence",
-                    lambda: validate_artifact_coherence_all(ontology_domains),
-                )
-            ],
-            "check-data-conformance": [
-                (
-                    "Check Data Conformance",
-                    lambda: validate_data_conformance_all(ontology_domains),
-                )
-            ],
-            "check-failing-tests": [
-                (
-                    "Check Failing Tests",
-                    lambda: check_failing_tests_all(ontology_domains),
-                )
-            ],
-        }
-
-        if args.run == "all":
             checks_to_run = (
                 check_map["check-syntax"]
                 + check_map["check-artifact-coherence"]
                 + check_map["check-data-conformance"]
                 + check_map["check-failing-tests"]
             )
-        else:
-            checks_to_run = check_map[args.run]
+    else:
+        checks_to_run = check_map[args.run]
 
     print(f"\n🚀 Running check mode: {args.run.upper()} ...", flush=True)
 

@@ -33,19 +33,19 @@ python3 -m src.tools.validators.validation_suite --domain manifest scenario
 - Filters to specified domains only
 - Runs all checks for those domains
 
-### 3. Path Validation Mode
+### 3. Data Paths Validation Mode
 
 ```bash
-python3 -m src.tools.validators.validation_suite --path ./my_data.json ./more_data/
+python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json ./more_data/
 ```
 
 - Creates temporary in-memory catalog from provided paths
 - Limited checks available (syntax, conformance only)
 - Useful for pre-commit validation
 
-## Path Mode Workflow
+## Data Paths Mode Workflow
 
-When `--path` is used, the system builds a temporary catalog:
+When `--data-paths` is used, the system builds a temporary catalog:
 
 ```
 ┌──────────────────────────────────────────────────────────┐
@@ -71,7 +71,7 @@ When `--path` is used, the system builds a temporary catalog:
 │  Step 3: Build Temporary Catalog                         │
 │                                                          │
 │  Create in-memory catalog entries:                       │
-│  • Test data files (from --path)                         │
+│  • Test data files (from --data-paths)                         │
 │  • Required ontologies (from artifacts/catalog)          │
 │  • Required SHACL shapes (from artifacts/catalog)        │
 │  • Required fixtures (from tests/catalog)                │

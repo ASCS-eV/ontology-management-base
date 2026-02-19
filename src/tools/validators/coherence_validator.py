@@ -190,6 +190,7 @@ def validate_artifact_coherence(
     shacl_dir: str = None,
     imports_dir: str = None,
     root_dir: Path = None,
+    resolver: RegistryResolver = None,
 ) -> Tuple[int, str]:
     """
     Validate that all target classes in SHACL shapes are defined in ontology.
@@ -200,12 +201,13 @@ def validate_artifact_coherence(
         shacl_dir: Deprecated (catalogs are used for resolution)
         imports_dir: Deprecated (catalogs are used for resolution)
         root_dir: Repository root directory for path normalization
+        resolver: Optional pre-configured RegistryResolver (with registered artifacts)
 
     Returns:
         Tuple of (return_code, message) where return_code is 0 for success
     """
     root_dir = root_dir or Path.cwd()
-    resolver = RegistryResolver(root_dir)
+    resolver = resolver if resolver else RegistryResolver(root_dir)
 
     ontology_rel = resolver.get_ontology_path(domain)
     shacl_rels = resolver.get_shacl_paths(domain)

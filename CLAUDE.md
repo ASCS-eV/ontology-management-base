@@ -27,8 +27,16 @@ python3 -m src.tools.validators.validation_suite --domain manifest hdmap
 # Run a specific validation check only
 python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
 
-# Validate arbitrary files (for pre-commit / ad-hoc)
-python3 -m src.tools.validators.validation_suite --path ./my_data.json
+# Validate arbitrary files (auto-discovers fixtures from referenced IRIs)
+python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+
+# Validate with external artifact directories
+python3 -m src.tools.validators.validation_suite --run check-data-conformance \
+    --data-paths ./examples/credential.json \
+    --artifacts ./artifacts ../external-repo/artifacts
+
+# Use specific inference mode (rdfs, owlrl, none, both)
+python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
 
 # Run all pytest tests
 pytest tests/

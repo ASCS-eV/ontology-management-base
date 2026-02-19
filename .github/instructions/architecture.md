@@ -42,7 +42,7 @@ User Request
     │
     ├─── --domain manifest ─────┐
     │                           │
-    └─── --path ./data/*.json   │
+    └─── --data-paths ./data/*.json   │
               │                 │
               ▼                 │
     ┌─────────────────────┐     │

@@ -7,9 +7,21 @@ The RegistryResolver loads XML catalogs to resolve:
 - SHACL shapes for a given domain (artifacts/catalog-v001.xml)
 - Base ontologies for inference (imports/catalog-v001.xml)
 - Test data and fixtures (tests/catalog-v001.xml)
+- DID documents for linked data validation (via register_did_documents)
 
 docs/registry.json is still loaded for metadata, but runtime path resolution
 is driven by the catalogs for consistency.
+
+EXTERNAL REGISTRATION:
+=====================
+For cross-repository validation, external artifacts and DID documents can be
+registered at runtime:
+
+    # Register external artifact directories
+    resolver.register_artifact_directory(Path("../other-repo/artifacts"))
+
+    # Register fixture mappings (from discover_data_hierarchy)
+    resolver.register_fixture_mappings(iri_to_file_map)
 
 Usage:
     from src.tools.utils import RegistryResolver
@@ -19,8 +31,11 @@ Usage:
     shacl_paths = resolver.get_shacl_paths("general")
 
     # Discover required schemas based on RDF types
-    rdf_types = {"https://w3id.org/ascs-ev/envited-x/scenario/v5/Scenario"}
+    rdf_types = {"https://example.org/ontology/MyClass"}
     ontology_paths, shacl_paths = resolver.discover_required_schemas(rdf_types)
+
+    # Resolve DID document to local file
+    fixture_path = resolver.resolve_fixture_iri("did:web:example.com:entity:123")
 
 See also:
     - artifacts/catalog-v001.xml
@@ -471,6 +486,87 @@ class RegistryResolver:
 
         return sorted(test_files)
 
+    def get_all_cataloged_files(
+        self,
+        extensions: set = None,
+        include_artifacts: bool = True,
+        domains: List[str] = None,
+    ) -> Dict[str, List[Path]]:
+        """
+        Get all files from catalogs, grouped by extension.
+
+        This provides a clean API for syntax checking without direct catalog access.
+        Collects files from both the tests catalog and artifacts catalog.
+
+        Args:
+            extensions: Optional set of extensions to filter (e.g., {".json", ".ttl"}).
+                       If None, returns all files.
+            include_artifacts: If True (default), also include OWL, SHACL, and context
+                              files from the artifacts catalog.
+            domains: Optional list of domains to filter. If None, returns files from
+                    all domains.
+
+        Returns:
+            Dict mapping extension to list of absolute file paths.
+            Example: {".json": [Path(...), ...], ".ttl": [Path(...), ...]}
+        """
+        files_by_ext: Dict[str, List[Path]] = {}
+        domains_set = set(domains) if domains else None
+
+        def add_file(file_path: Path) -> None:
+            """Helper to add a file to the appropriate extension list."""
+            if not file_path.exists():
+                return
+            ext = file_path.suffix
+            if extensions is None or ext in extensions:
+                if ext not in files_by_ext:
+                    files_by_ext[ext] = []
+                files_by_ext[ext].append(file_path)
+
+        # 1. Files from tests catalog
+        for metadata in self._catalog.values():
+            path_str = metadata.get("path")
+            if not path_str:
+                continue
+
+            # Filter by domain if specified
+            if domains_set:
+                entry_domain = metadata.get("domain")
+                if entry_domain and entry_domain not in domains_set:
+                    continue
+
+            if Path(path_str).is_absolute():
+                file_path = Path(path_str)
+            else:
+                file_path = self.root_dir / path_str
+
+            add_file(file_path)
+
+        # 2. Files from artifacts catalog (OWL, SHACL, context)
+        if include_artifacts:
+            for domain, paths in self._artifact_domains.items():
+                # Filter by domain if specified
+                if domains_set and domain not in domains_set:
+                    continue
+
+                # OWL ontology
+                if paths.get("ontology"):
+                    add_file(self.root_dir / paths["ontology"])
+
+                # SHACL shapes
+                for shacl in paths.get("shacl", []):
+                    add_file(self.root_dir / shacl)
+
+                # JSON-LD context
+                if paths.get("context"):
+                    add_file(self.root_dir / paths["context"])
+
+        # Sort and deduplicate each list
+        for ext in files_by_ext:
+            files_by_ext[ext] = sorted(set(files_by_ext[ext]))
+
+        return files_by_ext
+
     def get_test_domains(self, category: str = "test-data") -> List[str]:
         """
         Get list of all test domains in the catalog.
@@ -488,6 +584,15 @@ class RegistryResolver:
                 if domain:
                     domains.add(domain)
         return sorted(domains)
+
+    def get_artifact_domains(self) -> List[str]:
+        """
+        Get list of all artifact domains (from artifacts catalog).
+
+        Returns:
+            Sorted list of domain names that have registered artifacts
+        """
+        return sorted(self._artifact_domains.keys())
 
     def is_catalog_loaded(self) -> bool:
         """
@@ -657,6 +762,31 @@ class RegistryResolver:
             self._build_iri_index()
 
         return registered
+
+    def register_fixture_mappings(self, mappings: Dict[str, Path]) -> int:
+        """
+        Register pre-computed IRI → file path mappings for fixture resolution.
+
+        This is used by discover_data_hierarchy() to register all discovered
+        files as potential fixtures.
+
+        Args:
+            mappings: Dictionary mapping IRIs to absolute file paths
+
+        Returns:
+            Number of fixtures registered
+        """
+        count = 0
+        for iri, file_path in mappings.items():
+            try:
+                rel_path = str(file_path.relative_to(self.root_dir))
+            except ValueError:
+                rel_path = str(file_path)
+
+            self._fixtures_catalog[iri] = rel_path
+            count += 1
+
+        return count
 
     # =========================================================================
     # Bulk Accessors
