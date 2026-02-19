@@ -203,6 +203,20 @@ Modules also have `_run_tests()` functions for self-testing: `python3 -m src.too
 - **Path display** — use `normalize_path_for_display()` to avoid leaking absolute paths in output
 - **Conventional commits** — short imperative subjects prefixed with `feat:`, `fix:`, `docs:`, or scoped like `feat(ontology): ...`
 
+## Git Commit Policy
+
+**STRICT REQUIREMENTS:**
+
+- **Always sign commits** with `-s -S` flags (Signed-off-by + GPG signature)
+- **Never include AI attribution** — no `Co-Authored-By`, `Generated-By`, or similar headers mentioning AI assistants (Claude, Copilot, ChatGPT, etc.)
+- **Author must be the human developer** — use `carlo.van-driesten@bmw.de` or appropriate human email
+- **No AI tool names in commit messages** — do not mention that code was generated or assisted by AI
+
+Example commit command:
+```bash
+git commit -s -S -m "feat: add new feature"
+```
+
 ## Instruction Files
 
 Read these before making changes:

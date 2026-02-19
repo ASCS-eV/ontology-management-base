@@ -121,6 +121,20 @@ Read these BEFORE making changes:
 - ❌ **Don't use `print()` for logging** - Use `logger` from `core/logging.py`
 - ❌ **Don't duplicate path normalization** - Use `normalize_paths_to_list()` or `normalize_path_for_display()`
 
+## Git Commit Policy
+
+**STRICT REQUIREMENTS:**
+
+- ✅ **Always sign commits** with `-s -S` flags (Signed-off-by + GPG signature)
+- ❌ **Never include AI attribution** — no `Co-Authored-By`, `Generated-By`, or similar headers mentioning AI assistants (Claude, Copilot, ChatGPT, etc.)
+- ❌ **Never mention AI tools in commit messages** — do not reference that code was AI-generated or AI-assisted
+- ✅ **Author must be the human developer** — use official company email (e.g., `carlo.van-driesten@bmw.de`)
+
+```bash
+# Correct commit command
+git commit -s -S -m "feat: add new feature"
+```
+
 ## Key Imports
 
 ```python

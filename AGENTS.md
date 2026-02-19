@@ -51,3 +51,6 @@ Read these before making changes; they are authoritative for repo workflows.
 
 - Recent history favors short, imperative subjects with optional prefixes like `feat:`, `fix:`, `docs:`, or scoped forms like `feat(ontology): ...`.
 - PRs should follow `.github/pull_request_template.md`: clear summary, linked issue, test evidence, and versioning/compatibility checklist items when ontology changes apply.
+- **Always sign commits** with `-s -S` flags (Signed-off-by + GPG signature).
+- **Never include AI attribution** in commits — no `Co-Authored-By` or similar headers mentioning AI assistants.
+- **Author must be a human developer** with their official email address.
