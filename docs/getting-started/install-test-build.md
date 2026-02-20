@@ -15,19 +15,14 @@ cd ontology-management-base
 
 git submodule update --init --recursive
 
-python3 -m venv .venv
-source .venv/bin/activate
-
-python3 -m pip install --upgrade pip
-
-python3 -m pip install -e .
+# One-command setup (creates .venv, installs dev deps, installs pre-commit hooks)
+make setup
 ```
 
-For development:
+Activate the environment in your current shell when needed:
 
 ```bash
-python3 -m pip install -e ".[dev]"
-pre-commit install
+source .venv/bin/activate
 ```
 
 ## VS Code: Auto-activate virtual environment
@@ -55,27 +50,21 @@ make test
 Run a single domain:
 
 ```bash
-python3 -m src.tools.validators.validation_suite --run all --domain hdmap
+make test-domain DOMAIN=hdmap
 ```
 
 ## Build Documentation
 
-Install docs extras first:
-
-```bash
-python3 -m pip install -e ".[docs]"
-```
-
 Build the site:
 
 ```bash
-mkdocs build
+make docs-build
 ```
 
 To preview locally (auto-generates docs assets):
 
 ```bash
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base mkdocs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
 ```
 
 Notes:

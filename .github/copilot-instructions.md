@@ -5,7 +5,10 @@ This repository contains a validation suite for ontology artifacts (OWL, SHACL, 
 ## Build, Test, and Lint Commands
 
 ```bash
-# Install dev dependencies + pre-commit hooks
+# One-command setup (creates .venv, installs dev dependencies, installs pre-commit hooks)
+make setup
+
+# Reinstall dev dependencies + pre-commit hooks in active environment
 make install-dev
 
 # Lint and format

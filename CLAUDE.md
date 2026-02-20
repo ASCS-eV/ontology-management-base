@@ -15,8 +15,8 @@ Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4
 ## Essential Commands
 
 ```bash
-# Install (dev mode with pre-commit hooks)
-pip install -e ".[dev]" && pre-commit install
+# One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
+make setup
 
 # Run full validation suite
 python3 -m src.tools.validators.validation_suite
@@ -58,13 +58,13 @@ make format     # black + isort on src/
 python3 -m src.tools.utils.file_collector --test
 
 # Local docs server
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base mkdocs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
 
 # Update catalogs after artifact changes
 python3 -m src.tools.utils.registry_updater
 ```
 
-**Installed CLI entry points** (after `pip install -e .`):
+**Installed CLI entry points** (after `make setup` or `pip install -e .`):
 - `onto-validate` → `validation_suite:main`
 - `onto-check-conformance` → `conformance_validator:main`
 - `onto-check-coherence` → `coherence_validator:main`
