@@ -84,30 +84,7 @@ XSD_TYPE_MAP = {
 }
 
 
-def write_if_changed(path: Path, content: str) -> bool:
-    """Write content to file only if it differs from existing content.
-
-    Uses LF line endings for cross-platform consistency.
-
-    Args:
-        path: Target file path
-        content: New content to write
-
-    Returns:
-        True if file was written, False if unchanged
-    """
-    path.parent.mkdir(parents=True, exist_ok=True)
-
-    def normalize(s: str) -> str:
-        return s.replace("\r\n", "\n").replace("\r", "\n")
-
-    if path.exists():
-        existing = path.read_text(encoding="utf-8")
-        if normalize(existing) == normalize(content):
-            return False
-
-    path.write_text(content, encoding="utf-8", newline="\n")
-    return True
+from src.tools.utils.file_collector import write_if_changed  # noqa: E402
 
 
 def extract_ontology_iri(owl_graph: Graph) -> Optional[str]:

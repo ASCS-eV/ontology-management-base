@@ -36,7 +36,7 @@ Usage:
     # Run all validators
     python -m src.tools.validators.validation_suite --run all --domain general
 
-    # Run specific validator
+    # Run path-based conformance validator
     from src.tools.validators.conformance_validator import validate_data_conformance
-    result = validate_data_conformance(["data.jsonld"], root_dir=".")
+    return_code, output = validate_data_conformance(["data.jsonld"], root_dir=".")
 """

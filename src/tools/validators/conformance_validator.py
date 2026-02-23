@@ -48,9 +48,6 @@ from src.tools.utils.file_collector import collect_jsonld_files as _collect_json
 from src.tools.validators.shacl.validator import (
     ShaclValidator,
 )
-from src.tools.validators.shacl.validator import (  # noqa: F401
-    ValidationResult as ShaclValidationResult,
-)
 from src.tools.validators.shacl.validator import (
     validate_data_conformance as _validate_data_conformance,
 )
@@ -141,20 +138,8 @@ def validate_files(
     # Initialize validator
     validator = ShaclValidator(root_dir, inference_mode=inference_mode, verbose=False)
 
-    # Run validation
-    result = validator.validate(jsonld_files)
-
-    # Convert to our ValidationResult type
-    return ValidationResult(
-        conforms=result.conforms,
-        return_code=result.return_code,
-        report_text=result.report_text,
-        report_graph=result.report_graph,
-        files_validated=result.files_validated,
-        triples_count=result.triples_count,
-        inferred_count=result.inferred_count,
-        duration_seconds=result.duration_seconds,
-    )
+    # Run validation — ShaclValidator now returns core.result.ValidationResult directly
+    return validator.validate(jsonld_files)
 
 
 def _run_tests() -> bool:

@@ -19,6 +19,13 @@ def test_normalize_path_for_display(temp_dir: Path):
     assert normalized == "nested/file.ttl"
 
 
+def test_normalize_path_for_display_outside_root(temp_dir: Path):
+    outside_path = temp_dir.parent / "outside.ttl"
+    outside_path.write_text("")
+    normalized = print_formatter.normalize_path_for_display(outside_path, temp_dir)
+    assert normalized == "../outside.ttl"
+
+
 def test_normalize_text_scrubs_bnode():
     text = "N1234567890abcdef1234567890abcdef"
     normalized = print_formatter.normalize_text(text)
@@ -31,7 +38,6 @@ def test_format_artifact_coherence_result_contains_header():
         3,
         2,
         {"a"},
-        set(),
         set(),
         set(),
     )

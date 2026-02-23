@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 from typing import Dict, List, Optional, Union
 
+from src.tools.core.iri_utils import iri_variants
 from src.tools.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -23,15 +24,11 @@ DEFAULT_URI_TWEAKS: Dict[str, str] = {}
 def _add_url_variants(url_map: Dict[str, Path], iri: str, abs_path: Path) -> None:
     """Add URL variants for an IRI to the URL map.
 
-    Handles the mismatch between ``#``-fragment and ``/``-slash IRIs:
-    ontologies like Gaia-X use ``https://w3id.org/gaia-x/development#`` as
-    their ``@vocab``, but credentials may reference the context URL as
-    ``https://w3id.org/gaia-x/development/``.  Both forms should resolve.
+    Handles the mismatch between ``#``-fragment and ``/``-slash IRIs
+    using the centralized ``iri_variants()`` utility.
     """
-    base = iri.rstrip("/#")
-    url_map[base] = abs_path
-    url_map[base + "/"] = abs_path
-    url_map[base + "#"] = abs_path
+    for variant in iri_variants(iri):
+        url_map[variant] = abs_path
 
 
 def build_context_url_map(resolver, root_dir: Path) -> Dict[str, Path]:
@@ -56,6 +53,11 @@ def build_context_url_map(resolver, root_dir: Path) -> Dict[str, Path]:
             abs_path = (root_dir / context_rel).resolve()
             if abs_path.exists():
                 _add_url_variants(url_map, iri, abs_path)
+    # Import contexts are resolved from imports/catalog-v001.xml
+    for iri, context_rel in resolver.get_import_context_mappings().items():
+        abs_path = (root_dir / context_rel).resolve()
+        if abs_path.exists():
+            _add_url_variants(url_map, iri, abs_path)
     return url_map
 
 
@@ -163,6 +165,34 @@ def _inline_contexts_recursive(
     return data
 
 
+def _collect_unresolved_context_urls(
+    data: Union[dict, list],
+    url_map: Dict[str, Path],
+) -> List[str]:
+    """Collect remote @context URLs that could not be inlined locally."""
+    unresolved: set[str] = set()
+
+    def _walk(node: Union[dict, list, str], in_context: bool = False) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                _walk(value, in_context=(key == "@context"))
+            return
+        if isinstance(node, list):
+            for item in node:
+                _walk(item, in_context=in_context)
+            return
+        if (
+            isinstance(node, str)
+            and in_context
+            and node.startswith(("http://", "https://"))
+        ):
+            if not (url_map.get(node) or url_map.get(node.rstrip("/"))):
+                unresolved.add(node)
+
+    _walk(data)
+    return sorted(unresolved)
+
+
 def load_jsonld_with_local_contexts(
     file_path: Path,
     url_map: Optional[Dict[str, Path]],
@@ -192,6 +222,13 @@ def load_jsonld_with_local_contexts(
 
     if url_map:
         data = _inline_contexts_recursive(data, url_map, uri_tweaks)
+        unresolved = _collect_unresolved_context_urls(data, url_map)
+        if unresolved:
+            logger.warning(
+                "Unresolved @context URL(s) in %s (rdflib will fetch remotely): %s",
+                file_path,
+                ", ".join(unresolved),
+            )
 
     result = json.dumps(data)
 

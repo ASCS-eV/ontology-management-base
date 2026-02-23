@@ -19,6 +19,9 @@ import pytest
 
 from src.tools.utils.registry_resolver import RegistryResolver
 from src.tools.validators import validation_suite
+from src.tools.validators.shacl.validator import (
+    ValidationResult as ShaclValidationResult,
+)
 
 # =============================================================================
 # Fixtures
@@ -131,36 +134,15 @@ def repo_with_test_data(minimal_repo: Path):
 
 
 # =============================================================================
-# Tests: parse_gitignore_patterns
+# Tests: check_environment
 # =============================================================================
 
 
-def test_parse_gitignore_patterns(temp_dir: Path):
-    """Test parsing .gitignore for directory patterns."""
-    gitignore = temp_dir / ".gitignore"
-    gitignore.write_text(
-        "\n".join(
-            [
-                "# comment",
-                "dist/",
-                "build/",
-                "file.txt",
-            ]
-        )
-    )
-    # Create directories so they are detected
-    (temp_dir / "dist").mkdir()
-    (temp_dir / "build").mkdir()
-    ignored = validation_suite.parse_gitignore_patterns(temp_dir)
-    assert "dist" in ignored
-    assert "build" in ignored
-    assert "file.txt" not in ignored
-
-
-def test_parse_gitignore_no_file(temp_dir: Path):
-    """Test with no .gitignore file."""
-    ignored = validation_suite.parse_gitignore_patterns(temp_dir)
-    assert len(ignored) == 0  # Empty list or set
+def test_check_environment_passes_in_venv():
+    """check_environment() should not raise when running inside a venv."""
+    # This test runs inside a venv, so it should pass without error.
+    # We just verify it's callable and doesn't crash in normal test env.
+    validation_suite.check_environment()
 
 
 # =============================================================================
@@ -229,6 +211,51 @@ def test_validate_data_conformance_inference_mode(repo_with_test_data: Path):
         )
         # May pass or fail depending on data, but shouldn't crash
         assert result in [0, 1, 210]
+
+
+def test_validate_data_conformance_all_prints_formatted_report(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+):
+    """Failed SHACL validation prints the formatted report output."""
+
+    class DummyResolver:
+        def is_catalog_loaded(self):
+            return True
+
+    class FakeValidator:
+        def __init__(
+            self,
+            root_dir: Path,
+            inference_mode: str = "rdfs",
+            verbose: bool = True,
+            resolver: RegistryResolver = None,
+            strict: bool = False,
+            allow_online: bool = False,
+        ):
+            self._resolver = resolver
+
+        def validate_from_catalog(self, domain: str, test_type: str = "valid"):
+            return ShaclValidationResult(
+                conforms=False,
+                return_code=210,
+                report_text="RAW REPORT TEXT",
+                files_validated=["tests/data/demo/valid/demo.json"],
+            )
+
+        def format_result(self, _result):
+            return "FORMATTED REPORT TEXT"
+
+    monkeypatch.setattr(validation_suite, "ShaclValidator", FakeValidator)
+
+    return_code = validation_suite.validate_data_conformance_all(
+        ["demo-domain"], resolver=DummyResolver(), inference_mode="rdfs"
+    )
+    captured = capsys.readouterr()
+
+    assert return_code == 210
+    assert "📄 SHACL validation report:" in captured.out
+    assert "FORMATTED REPORT TEXT" in captured.out
+    assert "RAW REPORT TEXT" not in captured.out
 
 
 # =============================================================================

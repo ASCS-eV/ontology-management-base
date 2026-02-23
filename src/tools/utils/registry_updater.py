@@ -59,6 +59,7 @@ TEST_CATALOG_PATH = ROOT_DIR / "tests" / "catalog-v001.xml"
 ONTOENV_PATH = ROOT_DIR / "config" / "ontoenv.toml"
 
 REGISTRY_VERSION = "2.1.0"
+JSONLD_CONTEXT_CLASS = URIRef("http://www.w3.org/ns/json-ld#Context")
 
 # Known IRIs for standard ontologies that might fail auto-detection
 KNOWN_IRIS = {
@@ -241,6 +242,24 @@ def extract_dependency_info(owl_file: Path) -> Dict[str, Optional[str]]:
         "iri": cleaned_iri,
         "label": label,
     }
+
+
+def extract_context_iris(owl_file: Path) -> List[str]:
+    """
+    Extract JSON-LD context URL IRIs declared in an ontology file.
+
+    Context URLs are represented as individuals of jsonld:Context.
+    """
+    g = parse_graph(owl_file)
+    if not g:
+        return []
+
+    iris = {
+        str(subject)
+        for subject in g.subjects(RDF.type, JSONLD_CONTEXT_CLASS)
+        if isinstance(subject, URIRef)
+    }
+    return sorted(iris)
 
 
 def to_relative_str(
@@ -489,9 +508,14 @@ def generate_imports_catalog(
         # Add JSON-LD context file if present
         jsonld_path = files.get("jsonld")
         if jsonld_path:
-            context_iri = build_context_iri(iri)
             rel = to_posix_relative(Path(jsonld_path), catalog_base)
-            uri_mappings.append((context_iri, rel))
+            context_iris = extract_context_iris(Path(owl_path))
+            if context_iris:
+                for context_iri in context_iris:
+                    uri_mappings.append((context_iri, rel))
+            else:
+                context_iri = build_context_iri(iri)
+                uri_mappings.append((context_iri, rel))
 
     uri_mappings.sort(key=lambda x: x[0])
     for iri, path in uri_mappings:

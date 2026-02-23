@@ -24,7 +24,8 @@ load_fixtures_for_iris implements a catalog-first resolution strategy:
 2. Online Fallback (Optional)
    - For http:// and https:// IRIs not found in catalog
    - Logs warning but continues validation
-   - Enabled by default (allow_online_fallback=True)
+   - Disabled by default (allow_online_fallback=False)
+   - Enable via --allow-online CLI flag
 
 3. Graceful Handling
    - Unresolved IRIs are collected and returned
@@ -280,7 +281,7 @@ def load_fixtures_for_iris(
     resolver: "RegistryResolver",  # noqa: F821 - forward reference
     graph: Graph,
     root_dir: Path,
-    allow_online_fallback: bool = True,
+    allow_online_fallback: bool = False,
     verbose: bool = False,
 ) -> Tuple[int, List[str]]:
     """
@@ -297,7 +298,7 @@ def load_fixtures_for_iris(
         graph: Graph to load fixtures into
         root_dir: Repository root directory
         allow_online_fallback: If True, attempt online resolution for
-            unresolved IRIs (with warning). Default True.
+            unresolved IRIs (with warning). Default False.
         verbose: If True, print details about each resolved fixture.
 
     Returns:

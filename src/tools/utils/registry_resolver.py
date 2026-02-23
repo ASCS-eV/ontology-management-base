@@ -50,6 +50,9 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
+# Prefix for temporary domains created by --data-paths mode.
+TEMP_DOMAIN_PREFIX = "custom-path-"
+
 
 class RegistryResolver:
     """
@@ -77,6 +80,7 @@ class RegistryResolver:
         self._domain_iris: Dict[str, str] = {}
         self._iri_to_domain: Dict[str, str] = {}
         self._imports_catalog_entries: Optional[Dict[str, str]] = None
+        self._imports_context_entries: Optional[Dict[str, str]] = None
 
         self._load_registry()
         self._load_catalog()  # Replaces _load_fixtures_catalog
@@ -254,30 +258,34 @@ class RegistryResolver:
         for info in self._artifact_domains.values():
             info["shacl"] = sorted(set(info["shacl"]))
 
-    def _load_imports_catalog_entries(self) -> Dict[str, str]:
+    def _parse_imports_catalog_entries(self) -> Tuple[Dict[str, str], Dict[str, str]]:
         """
-        Load base ontology entries from imports/catalog-v001.xml.
+        Parse imports/catalog-v001.xml into ontology and context mappings.
 
         Returns:
-            Mapping of base ontology IRI to repository-relative path
+            Tuple of:
+              - ontology IRI -> repository-relative ontology path
+              - context URL -> repository-relative context path
         """
         catalog_path = self.root_dir / "imports" / "catalog-v001.xml"
         if not catalog_path.exists():
-            return {}
+            return {}, {}
 
         try:
             tree = ET.parse(catalog_path)
             root = tree.getroot()
         except Exception as e:
             warnings.warn(f"Could not parse imports catalog: {e}")
-            return {}
+            return {}, {}
 
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
         uri_elems = root.findall("cat:uri", ns)
         if not uri_elems:
             uri_elems = root.findall("uri")
 
-        entries: Dict[str, str] = {}
+        ontology_entries: Dict[str, str] = {}
+        context_entries: Dict[str, str] = {}
+
         for uri_elem in uri_elems:
             iri = uri_elem.get("name")
             uri = uri_elem.get("uri")
@@ -285,12 +293,35 @@ class RegistryResolver:
                 continue
 
             rel_path = self._normalize_catalog_path("imports", uri)
-            if not self._is_ontology_file(rel_path):
+            if self._is_context_path(rel_path):
+                context_entries[iri] = rel_path.as_posix()
                 continue
+            if self._is_ontology_file(rel_path):
+                ontology_entries[iri] = rel_path.as_posix()
 
-            entries[iri] = rel_path.as_posix()
+        return ontology_entries, context_entries
 
-        return entries
+    def _load_imports_catalog_entries(self) -> Dict[str, str]:
+        """
+        Load base ontology entries from imports/catalog-v001.xml.
+
+        Returns:
+            Mapping of base ontology IRI to repository-relative path
+        """
+        ontology_entries, context_entries = self._parse_imports_catalog_entries()
+        self._imports_context_entries = context_entries
+        return ontology_entries
+
+    def _load_imports_context_entries(self) -> Dict[str, str]:
+        """
+        Load JSON-LD context entries from imports/catalog-v001.xml.
+
+        Returns:
+            Mapping of context URL to repository-relative context file path
+        """
+        ontology_entries, context_entries = self._parse_imports_catalog_entries()
+        self._imports_catalog_entries = ontology_entries
+        return context_entries
 
     @staticmethod
     def _is_context_path(path: Path) -> bool:
@@ -414,6 +445,17 @@ class RegistryResolver:
         if self._imports_catalog_entries:
             return sorted(set(self._imports_catalog_entries.values()))
         return []
+
+    def get_import_context_mappings(self) -> Dict[str, str]:
+        """
+        Get import context URL mappings from imports/catalog-v001.xml.
+
+        Returns:
+            Dict mapping context URL -> repository-relative context path
+        """
+        if self._imports_context_entries is None:
+            self._imports_context_entries = self._load_imports_context_entries()
+        return dict(self._imports_context_entries or {})
 
     def get_base_ontology_paths_for_iris(self, iris: Set[str]) -> List[str]:
         """
@@ -654,7 +696,7 @@ class RegistryResolver:
 
         # Generate unique domain name from paths
         path_hash = hashlib.md5("|".join(sorted(paths)).encode()).hexdigest()[:8]
-        temp_domain = f"custom-path-{path_hash}"
+        temp_domain = f"{TEMP_DOMAIN_PREFIX}{path_hash}"
 
         # Collect all JSON-LD files from provided paths
         jsonld_files = collect_jsonld_files(paths)

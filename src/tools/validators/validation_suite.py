@@ -108,17 +108,14 @@ python3 -m src.tools.validators.validation_suite --run check-data-conformance \\
 import argparse
 import difflib
 import io
-import os  # retained for os.environ usage
+import os
 import sys
 from pathlib import Path
 from typing import List
 
-# Import from new module locations (with backward compatibility)
 from src.tools.utils.file_collector import discover_data_hierarchy
 from src.tools.utils.print_formatter import normalize_path_for_display, normalize_text
-from src.tools.utils.registry_resolver import RegistryResolver
-
-# New imports from refactored modules
+from src.tools.utils.registry_resolver import TEMP_DOMAIN_PREFIX, RegistryResolver
 from src.tools.validators.coherence_validator import validate_artifact_coherence
 from src.tools.validators.shacl.validator import ShaclValidator
 from src.tools.validators.syntax_validator import (
@@ -126,40 +123,19 @@ from src.tools.validators.syntax_validator import (
     check_turtle_wellformedness,
 )
 
-# Define the root directory of the repository
-# Navigate up from src/tools/validators to the repo root
+# Default root directory (computed from module location).
+# Functions accept root_dir as parameter; this is only used as fallback.
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-SRC_DIR = ROOT_DIR / "src"
-ARTIFACTS_DIR = ROOT_DIR / "artifacts"
-TESTS_DATA_DIR = ROOT_DIR / "tests" / "data"
-IMPORTS_DIR = ROOT_DIR / "imports"
 
-
-def parse_gitignore_patterns(root_dir):
-    """
-    Parses .gitignore to find folders that should be ignored.
-    Returns a set of folder names.
-    """
-    root_path = Path(root_dir)
-    gitignore_path = root_path / ".gitignore"
-    ignored_folders = set()
-
-    if gitignore_path.exists():
-        with open(gitignore_path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
-                clean_name = line.strip("/")
-                if line.endswith("/") or (root_path / clean_name).is_dir():
-                    ignored_folders.add(clean_name)
-    return ignored_folders
-
-
-# Add dynamic folders from .gitignore
-GITIGNORE_FOLDERS = parse_gitignore_patterns(ROOT_DIR)
-
-EXPECTED_TARGETCLASS_FAILURES = set()
+# Known upstream coherence failures that should warn instead of fail.
+# Maps (domain, lowercase_class_name) -> upstream issue URL.
+# Remove entries once the upstream issue is resolved.
+KNOWN_COHERENCE_ISSUES = {
+    ("gx", "consent"): (
+        "https://gitlab.com/gaia-x/technical-committee/"
+        "service-characteristics-working-group/service-characteristics/-/issues/353"
+    ),
+}
 
 
 def check_syntax_all(
@@ -188,7 +164,7 @@ def check_syntax_all(
     print("\n=== Checking JSON-LD syntax ===", flush=True)
 
     # Check if we have data to validate (either from catalog or temporary domains)
-    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    has_temp_domains = any(d.startswith(TEMP_DOMAIN_PREFIX) for d in ontology_domains)
     if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
         print(
             "❌ Error: No data to validate. Either load catalog or use --data-paths.",
@@ -240,6 +216,8 @@ def validate_data_conformance_all(
     ontology_domains: List[str],
     resolver: RegistryResolver = None,
     inference_mode: str = "rdfs",
+    strict: bool = False,
+    allow_online: bool = False,
 ) -> int:
     """
     Validate JSON-LD files against SHACL schemas.
@@ -251,6 +229,8 @@ def validate_data_conformance_all(
         ontology_domains: List of domain names to test
         resolver: Optional pre-configured RegistryResolver (with temporary entries)
         inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
+        strict: If True, unresolved IRIs cause validation failure
+        allow_online: If True, attempt HTTP resolution for unresolved IRIs
 
     Returns:
         0 on success, non-zero on failure
@@ -262,7 +242,7 @@ def validate_data_conformance_all(
     catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
 
     # Check if we have data to validate (either from catalog or temporary domains)
-    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    has_temp_domains = any(d.startswith(TEMP_DOMAIN_PREFIX) for d in ontology_domains)
     if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
         print(
             "❌ Error: No data to validate. Either load catalog or use --data-paths.",
@@ -278,6 +258,8 @@ def validate_data_conformance_all(
         inference_mode=inference_mode,
         verbose=True,
         resolver=catalog_resolver,
+        strict=strict,
+        allow_online=allow_online,
     )
 
     for domain in ontology_domains:
@@ -295,6 +277,9 @@ def validate_data_conformance_all(
         print(f"   Found {len(result.files_validated)} test files from catalog")
 
         if result.return_code != 0:
+            print("\n📄 SHACL validation report:", flush=True)
+            print(validator.format_result(result), flush=True)
+
             print(
                 f"\n❌ Error during JSON-LD SHACL validation for domain '{domain}'. Aborting.",
                 file=sys.stderr,
@@ -311,6 +296,7 @@ def check_failing_tests_all(
     ontology_domains: List[str],
     resolver: RegistryResolver = None,
     inference_mode: str = "rdfs",
+    allow_online: bool = False,
 ) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
@@ -322,6 +308,7 @@ def check_failing_tests_all(
         ontology_domains: List of domain names to test
         resolver: Optional pre-configured RegistryResolver (with temporary entries)
         inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
+        allow_online: If True, attempt HTTP resolution for unresolved IRIs
 
     Returns:
         0 on success, non-zero on failure
@@ -333,7 +320,7 @@ def check_failing_tests_all(
     catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
 
     # Check if we have data to validate (either from catalog or temporary domains)
-    has_temp_domains = any(d.startswith("custom-path-") for d in ontology_domains)
+    has_temp_domains = any(d.startswith(TEMP_DOMAIN_PREFIX) for d in ontology_domains)
     if not catalog_resolver.is_catalog_loaded() and not has_temp_domains:
         print(
             "❌ Error: No data to validate. Either load catalog or use --data-paths.",
@@ -349,6 +336,7 @@ def check_failing_tests_all(
         inference_mode=inference_mode,
         verbose=True,
         resolver=catalog_resolver,
+        allow_online=allow_online,
     )
 
     for domain in ontology_domains:
@@ -453,7 +441,9 @@ def validate_artifact_coherence_all(
     print("\n=== Checking target classes against OWL classes ===", flush=True)
 
     # Skip coherence check for temporary domains (no artifacts)
-    domains_to_check = [d for d in ontology_domains if not d.startswith("custom-path-")]
+    domains_to_check = [
+        d for d in ontology_domains if not d.startswith(TEMP_DOMAIN_PREFIX)
+    ]
     if not domains_to_check:
         print("📋 Skipping coherence check (no artifact domains)", flush=True)
         return 0
@@ -461,9 +451,20 @@ def validate_artifact_coherence_all(
     for domain in domains_to_check:
         print(f"\n🔍 Checking target classes for domain: {domain}", flush=True)
 
+        # Build known-issues set for this domain from KNOWN_COHERENCE_ISSUES
+        known_set = {
+            cls for (d, cls), url in KNOWN_COHERENCE_ISSUES.items() if d == domain
+        }
+        if known_set:
+            urls = [
+                url for (d, _), url in KNOWN_COHERENCE_ISSUES.items() if d == domain
+            ]
+            for url in urls:
+                print(f"  ⚠️  Known upstream issue: {url}", flush=True)
+
         # Call the validator with resolver
         returncode, output = validate_artifact_coherence(
-            domain, root_dir=ROOT_DIR, resolver=resolver
+            domain, root_dir=ROOT_DIR, resolver=resolver, known_issues=known_set
         )
 
         if output:
@@ -471,12 +472,6 @@ def validate_artifact_coherence_all(
             print(output, file=target, flush=True)
 
         if returncode != 0:
-            if domain in EXPECTED_TARGETCLASS_FAILURES:
-                print(
-                    f"⚠️ Expected target class failure for '{domain}' (ignored).",
-                    flush=True,
-                )
-                continue
             print(
                 f"\n❌ Error {returncode} during target class validation for {domain}. Aborting.",
                 file=sys.stderr,
@@ -489,11 +484,12 @@ def validate_artifact_coherence_all(
     return 0
 
 
-# --- CLI / Main Logic ---
-def main():
-    """Run validation checks based on arguments."""
+def check_environment() -> None:
+    """Enforce Python version and virtual environment requirements.
 
-    # 1. Enforce Python 3.12+
+    Skips virtual-environment check when running in CI (``GITHUB_ACTIONS``
+    env var set) or when ``--skip-env-check`` is passed.
+    """
     if sys.version_info < (3, 12):
         print(
             f"❌ Error: This project requires Python 3.12+. You are running {sys.version.split()[0]}.",
@@ -501,7 +497,6 @@ def main():
         )
         sys.exit(1)
 
-    # 2. Enforce Virtual Environment
     in_venv = (
         (sys.prefix != sys.base_prefix)
         or ("CONDA_DEFAULT_ENV" in os.environ)
@@ -515,7 +510,14 @@ def main():
         )
         sys.exit(1)
 
-    # 3. Argument Parsing
+
+# --- CLI / Main Logic ---
+def main():
+    """Run validation checks based on arguments."""
+
+    check_environment()
+
+    # Argument Parsing
     # Use the module docstring (__doc__) as the description
     parser = argparse.ArgumentParser(
         description=__doc__,  # <--- CHANGED: Uses the detailed docstring from the top of the file
@@ -577,6 +579,20 @@ def main():
         choices=["rdfs", "owlrl", "none", "both"],
         default="rdfs",
         help="Inference mode for SHACL validation (default: rdfs).",
+    )
+
+    target_group.add_argument(
+        "--strict",
+        action="store_true",
+        default=False,
+        help="Strict mode: unresolved IRIs cause validation failure.",
+    )
+
+    target_group.add_argument(
+        "--allow-online",
+        action="store_true",
+        default=False,
+        help="Allow online fallback for unresolved IRIs (disabled by default).",
     )
 
     args = parser.parse_args()
@@ -715,6 +731,8 @@ def main():
     # Both path mode and domain mode use the same catalog-based functions
     # (path mode creates a temporary catalog domain)
     _inference_mode = args.inference_mode
+    _strict = args.strict
+    _allow_online = args.allow_online
 
     # Artifact coherence and failing tests require standard domain structure
     if data_paths and args.run in ["check-artifact-coherence", "check-failing-tests"]:
@@ -747,7 +765,11 @@ def main():
             (
                 "Check Data Conformance",
                 lambda: validate_data_conformance_all(
-                    ontology_domains, catalog_resolver, _inference_mode
+                    ontology_domains,
+                    catalog_resolver,
+                    _inference_mode,
+                    strict=_strict,
+                    allow_online=_allow_online,
                 ),
             )
         ],
@@ -755,7 +777,10 @@ def main():
             (
                 "Check Failing Tests",
                 lambda: check_failing_tests_all(
-                    ontology_domains, catalog_resolver, _inference_mode
+                    ontology_domains,
+                    catalog_resolver,
+                    _inference_mode,
+                    allow_online=_allow_online,
                 ),
             )
         ],
