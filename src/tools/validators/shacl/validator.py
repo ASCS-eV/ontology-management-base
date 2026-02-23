@@ -180,6 +180,7 @@ class ShaclValidator:
         """
         start_time = time.perf_counter()
         self._unresolved_iris: List[str] = []
+        self._unresolved_types: Set[str] = set()
 
         if not PYSHACL_AVAILABLE:
             return ValidationResult(
@@ -211,6 +212,22 @@ class ShaclValidator:
         ontology_graph, shacl_graph = self._load_schemas(
             rdf_types, predicates, datatypes
         )
+
+        # Strict mode: fail on unresolved @type IRIs
+        if self.strict and self._unresolved_types:
+            sorted_types = sorted(self._unresolved_types)
+            unresolved_msg = ", ".join(sorted_types[:5])
+            warnings = [f"Unresolved @type: {t}" for t in sorted_types]
+            return ValidationResult(
+                conforms=False,
+                return_code=210,
+                report_text=(
+                    f"Strict mode: {len(self._unresolved_types)} unresolved "
+                    f"@type IRI(s): {unresolved_msg}"
+                ),
+                files_validated=[self._rel_path(f) for f in jsonld_files],
+                warnings=warnings,
+            )
 
         # Step 3: Apply inference if requested
         self._log(f"Step 3: Applying Inference ({self.inference_mode})...")
@@ -288,9 +305,15 @@ class ShaclValidator:
             self._log(f"    {rdf_type}")
 
         # Discover required schemas
-        ontology_paths, shacl_paths = discover_required_schemas(
+        ontology_paths, shacl_paths, unresolved_types = discover_required_schemas(
             rdf_types, self.resolver
         )
+
+        if unresolved_types:
+            self._unresolved_types = unresolved_types
+            for ut in sorted(unresolved_types):
+                logger.warning("Unresolved @type IRI: %s", ut)
+                self._log(f"  ⚠️  Unresolved @type: {ut}")
 
         # Add base ontologies filtered by actual usage
         used_iris = set(rdf_types) | set(predicates) | set(datatypes)

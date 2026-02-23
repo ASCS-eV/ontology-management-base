@@ -37,6 +37,16 @@ def test_extract_rdf_types_predicates_and_datatypes():
     assert "http://example.org/dt" in schema_discovery.extract_datatype_iris(g)
 
 
+def test_is_well_known_type():
+    assert schema_discovery._is_well_known_type(
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    )
+    assert schema_discovery._is_well_known_type("http://www.w3.org/2002/07/owl#Class")
+    assert not schema_discovery._is_well_known_type(
+        "https://example.org/custom/v1/MyClass"
+    )
+
+
 def test_discover_required_schemas_with_catalog(temp_dir: Path):
     _write_registry(temp_dir)
     artifacts_catalog = """<?xml version="1.0" encoding="UTF-8"?>
@@ -50,8 +60,54 @@ def test_discover_required_schemas_with_catalog(temp_dir: Path):
     _write_artifacts_catalog(temp_dir, artifacts_catalog)
 
     resolver = RegistryResolver(temp_dir)
-    ontology_paths, shacl_paths = schema_discovery.discover_required_schemas(
-        {"http://example.org/demo/v1/Thing"}, resolver
+    ontology_paths, shacl_paths, unresolved = (
+        schema_discovery.discover_required_schemas(
+            {"http://example.org/demo/v1/Thing"}, resolver
+        )
     )
     assert ontology_paths == ["artifacts/demo/demo.owl.ttl"]
     assert shacl_paths == ["artifacts/demo/demo.shacl.ttl"]
+    assert unresolved == set()
+
+
+def test_discover_required_schemas_returns_unresolved_types(temp_dir: Path):
+    """Types not matching any catalog domain are reported as unresolved."""
+    _write_registry(temp_dir)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+    _, _, unresolved = schema_discovery.discover_required_schemas(
+        {"https://unknown.example.org/v1/MyClass"}, resolver
+    )
+    assert unresolved == {"https://unknown.example.org/v1/MyClass"}
+
+
+def test_discover_required_schemas_excludes_well_known_types(temp_dir: Path):
+    """Well-known W3C types (OWL, RDF, etc.) are not flagged as unresolved."""
+    _write_registry(temp_dir)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+    _, _, unresolved = schema_discovery.discover_required_schemas(
+        {
+            "http://www.w3.org/2002/07/owl#Class",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+            "http://www.w3.org/2000/01/rdf-schema#Resource",
+        },
+        resolver,
+    )
+    assert unresolved == set()
