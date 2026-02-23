@@ -5,31 +5,23 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
   },
-  "@id": "did:web:test.example.net:ExampleServiceOffering:test_valid_description_instance",
+  "@id": "did:web:registry.gaia-x.eu:RelatedSelfDescription:123456789",
   "@type": "example_ontology:ExampleServiceOffering",
-  "example_ontology:property1": [
-    {
-      "@value": "value of property 1",
-      "@type": "xsd:string"
-    },
-    {
-      "@value": "another value of property 1",
-      "@type": "xsd:string"
-    }
-  ],
+  "example_ontology:property1": {
+    "@value": "Related service offering property 1",
+    "@type": "xsd:string"
+  },
   "example_ontology:property2": {
-    "@value": "value of property 2",
+    "@value": "Related service offering property 2",
     "@type": "xsd:string"
   },
   "example_ontology:belongsTo": {
     "@id": "did:web:test.example.net:ExampleServiceOffering:test_valid_example_instance"
   },
   "example_ontology:hasJunctionIntersection": {
-    "@id": "openlabel:IntersectionTJunction"
+    "@id": "openlabel:IntersectionCrossroad"
   },
-  "gx:copyrightOwnedBy": {
-    "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-  },
+  "gx:copyrightOwnedBy": "Example Organization",
   "gx:license": "EPL-2.0",
   "gx:resourcePolicy": "allow intent"
 }
