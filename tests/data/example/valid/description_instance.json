@@ -1,12 +1,12 @@
 {
   "@context": {
-    "description_ontology": "https://github.com/ASCS-eV/ontology-management-base/tree/main/example/description_ontology#",
+    "example_ontology": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
   },
   "@id": "did:web:test.example.net:ExampleServiceOffering:test_valid_description_instance",
-  "@type": "description_ontology:ExampleServiceOffering",
-  "description_ontology:property1": [
+  "@type": "example_ontology:ExampleServiceOffering",
+  "example_ontology:property1": [
     {
       "@value": "value of property 1",
       "@type": "xsd:string"
@@ -16,14 +16,14 @@
       "@type": "xsd:string"
     }
   ],
-  "description_ontology:property2": {
+  "example_ontology:property2": {
     "@value": "value of property 2",
     "@type": "xsd:string"
   },
-  "description_ontology:belongsTo": {
+  "example_ontology:belongsTo": {
     "@id": "https://www.example.org/id"
   },
-  "description_ontology:hasJunctionIntersection": {
+  "example_ontology:hasJunctionIntersection": {
     "@id": "openlabel:IntersectionTJunction"
   }
 }
