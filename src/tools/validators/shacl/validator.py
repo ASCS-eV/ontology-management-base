@@ -4,11 +4,34 @@ Main SHACL validation orchestrator.
 
 This module provides the ShaclValidator class which orchestrates the complete
 SHACL validation pipeline using the modular components.
+
+FEATURES:
+=========
+- Catalog-based schema discovery (ontologies, SHACL shapes, contexts)
+- External artifact directory registration for cross-repository validation
+- DID document resolution for linked data with external references:
+  1. Catalog-first: resolve via registered fixtures/DID documents
+  2. Online fallback: attempt HTTP resolution with warning
+  3. Graceful handling: unresolved IRIs log warnings but don't fail validation
+- RDFS inference support for proper type hierarchies
+- Detailed validation reporting with source focus
+
+USAGE:
+======
+    from src.tools.validators.shacl.validator import ShaclValidator
+    from src.tools.utils.registry_resolver import RegistryResolver
+
+    root_dir = Path("/path/to/repo")
+    resolver = RegistryResolver(root_dir)
+    resolver.register_artifact_directory(Path("/path/to/external/artifacts"))
+    validator = ShaclValidator(root_dir=root_dir, resolver=resolver)
+    result = validator.validate([Path("data.json")])
+
+For command-line usage, see: src.tools.validators.validation_suite
 """
 
 import sys
 import time
-from dataclasses import dataclass, field
 from io import StringIO
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -16,6 +39,7 @@ from typing import Dict, List, Optional, Set, Tuple
 from rdflib import Graph
 
 from src.tools.core.logging import get_logger
+from src.tools.core.result import ValidationResult
 from src.tools.utils.graph_loader import (
     FAST_STORE,
     extract_external_iris,
@@ -50,20 +74,6 @@ except ImportError:
     PYSHACL_AVAILABLE = False
 
 
-@dataclass
-class ValidationResult:
-    """Result of a SHACL validation run."""
-
-    conforms: bool
-    return_code: int
-    report_text: str
-    report_graph: Optional[Graph] = None
-    files_validated: List[str] = field(default_factory=list)
-    triples_count: int = 0
-    inferred_count: int = 0
-    duration_seconds: float = 0.0
-
-
 class ShaclValidator:
     """
     SHACL validation orchestrator using registry-based discovery.
@@ -83,6 +93,9 @@ class ShaclValidator:
         root_dir: Path,
         inference_mode: str = "rdfs",
         verbose: bool = True,
+        resolver: Optional["RegistryResolver"] = None,
+        strict: bool = False,
+        allow_online: bool = False,
     ):
         """
         Initialize the SHACL validator.
@@ -91,11 +104,30 @@ class ShaclValidator:
             root_dir: Repository root directory
             inference_mode: Inference mode (rdfs|owlrl|none|both)
             verbose: Whether to print progress messages
+            resolver: Optional pre-configured RegistryResolver. If provided,
+                uses this instead of creating a new one. Artifacts should be
+                registered on the resolver before passing.
+            strict: If True, unresolved IRIs cause validation failure.
+            allow_online: If True, attempt HTTP resolution for unresolved IRIs.
         """
         self.root_dir = Path(root_dir).resolve()
-        self.resolver = RegistryResolver(root_dir)
+        self.resolver = resolver if resolver else RegistryResolver(root_dir)
         self.inference_mode = inference_mode
         self.verbose = verbose
+        self.strict = strict
+        self.allow_online = allow_online
+        self._context_url_map: Optional[Dict[str, "Path"]] = None
+
+        # Build context URL map from resolver's catalog
+        self._build_context_url_map()
+
+    def _build_context_url_map(self) -> None:
+        """Build URL-to-local-file mapping for context inlining."""
+        from src.tools.utils.context_resolver import build_context_url_map
+
+        url_map = build_context_url_map(self.resolver, self.root_dir)
+        if url_map:
+            self._context_url_map = url_map
 
     def _log(self, message: str) -> None:
         """Print verbose progress if enabled (user-facing output)."""
@@ -105,6 +137,36 @@ class ShaclValidator:
     def _rel_path(self, path: Path) -> str:
         """Convert to repository-relative string for display."""
         return normalize_path_for_display(path, self.root_dir)
+
+    def validate_from_catalog(
+        self, domain: str, test_type: str = "valid"
+    ) -> ValidationResult:
+        """
+        Validate files for a domain using catalog-based discovery.
+
+        This is the preferred method for catalog-based workflows. Files are
+        discovered via the resolver's catalog entries.
+
+        Args:
+            domain: Domain name to validate (e.g., "manifest", "hdmap")
+            test_type: Test type filter ("valid", "invalid", or None for all)
+
+        Returns:
+            ValidationResult with validation outcome and details
+        """
+        jsonld_files = self.resolver.get_test_files(domain, test_type=test_type)
+
+        if not jsonld_files:
+            return ValidationResult(
+                conforms=True,
+                return_code=0,
+                report_text=f"No {test_type} test files found for domain '{domain}'",
+                files_validated=[],
+            )
+
+        # Convert string paths to Path objects
+        file_paths = [Path(f) for f in jsonld_files]
+        return self.validate(file_paths)
 
     def validate(self, jsonld_files: List[Path]) -> ValidationResult:
         """
@@ -117,6 +179,8 @@ class ShaclValidator:
             ValidationResult with validation outcome and details
         """
         start_time = time.perf_counter()
+        self._unresolved_iris: List[str] = []
+        self._unresolved_types: Set[str] = set()
 
         if not PYSHACL_AVAILABLE:
             return ValidationResult(
@@ -130,6 +194,16 @@ class ShaclValidator:
         self._log("Step 1: Loading JSON-LD Data Files...")
         data_graph, prefixes = self._load_data(jsonld_files)
 
+        # Strict mode: fail on unresolved IRIs
+        if self.strict and self._unresolved_iris:
+            unresolved_msg = ", ".join(self._unresolved_iris[:5])
+            return ValidationResult(
+                conforms=False,
+                return_code=210,
+                report_text=f"Strict mode: {len(self._unresolved_iris)} unresolved IRI(s): {unresolved_msg}",
+                files_validated=[self._rel_path(f) for f in jsonld_files],
+            )
+
         # Step 2: Extract types and discover schemas
         self._log("Step 2: Discovering Required Schemas...")
         rdf_types = extract_rdf_types(data_graph)
@@ -138,6 +212,22 @@ class ShaclValidator:
         ontology_graph, shacl_graph = self._load_schemas(
             rdf_types, predicates, datatypes
         )
+
+        # Strict mode: fail on unresolved @type IRIs
+        if self.strict and self._unresolved_types:
+            sorted_types = sorted(self._unresolved_types)
+            unresolved_msg = ", ".join(sorted_types[:5])
+            warnings = [f"Unresolved @type: {t}" for t in sorted_types]
+            return ValidationResult(
+                conforms=False,
+                return_code=210,
+                report_text=(
+                    f"Strict mode: {len(self._unresolved_types)} unresolved "
+                    f"@type IRI(s): {unresolved_msg}"
+                ),
+                files_validated=[self._rel_path(f) for f in jsonld_files],
+                warnings=warnings,
+            )
 
         # Step 3: Apply inference if requested
         self._log(f"Step 3: Applying Inference ({self.inference_mode})...")
@@ -166,7 +256,9 @@ class ShaclValidator:
 
     def _load_data(self, jsonld_files: List[Path]) -> Tuple[Graph, Dict[str, str]]:
         """Load JSON-LD files and resolve fixture references."""
-        data_graph, prefixes = load_jsonld_files(jsonld_files, self.root_dir)
+        data_graph, prefixes = load_jsonld_files(
+            jsonld_files, self.root_dir, context_url_map=self._context_url_map
+        )
 
         for i, f in enumerate(jsonld_files, 1):
             self._log(f"  [{i}/{len(jsonld_files)}] Loaded: {self._rel_path(f)}")
@@ -174,16 +266,30 @@ class ShaclValidator:
         self._log(f"  Data triples: {len(data_graph)}")
         self._log(f"  Prefixes discovered: {len(prefixes)}")
 
-        # Load fixtures for external references
+        # Load fixtures for external references (catalog-first, online fallback)
         external_iris = extract_external_iris(data_graph)
         if external_iris:
             self._log(f"\n  Resolving {len(external_iris)} external references...")
-            fixtures_loaded = load_fixtures_for_iris(
-                external_iris, self.resolver, data_graph, self.root_dir
+            fixtures_loaded, unresolved = load_fixtures_for_iris(
+                external_iris,
+                self.resolver,
+                data_graph,
+                self.root_dir,
+                allow_online_fallback=self.allow_online,
+                verbose=self.verbose,
             )
             if fixtures_loaded > 0:
                 self._log(f"  Fixtures loaded: {fixtures_loaded}")
                 self._log(f"  Updated triples: {len(data_graph)}")
+            if unresolved:
+                self._log(
+                    f"  ⚠️  Unresolved IRIs ({len(unresolved)}): {unresolved[:3]}..."
+                )
+                if self.strict:
+                    self._log(
+                        f"  ❌ Strict mode: {len(unresolved)} unresolved IRI(s) cause failure"
+                    )
+                    self._unresolved_iris = unresolved
 
         return data_graph, prefixes
 
@@ -199,9 +305,15 @@ class ShaclValidator:
             self._log(f"    {rdf_type}")
 
         # Discover required schemas
-        ontology_paths, shacl_paths = discover_required_schemas(
+        ontology_paths, shacl_paths, unresolved_types = discover_required_schemas(
             rdf_types, self.resolver
         )
+
+        if unresolved_types:
+            self._unresolved_types = unresolved_types
+            for ut in sorted(unresolved_types):
+                logger.warning("Unresolved @type IRI: %s", ut)
+                self._log(f"  ⚠️  Unresolved @type: {ut}")
 
         # Add base ontologies filtered by actual usage
         used_iris = set(rdf_types) | set(predicates) | set(datatypes)
@@ -213,16 +325,16 @@ class ShaclValidator:
         ontology_files = [self.resolver.to_absolute(p) for p in all_ontology_paths]
         ontology_graph = load_turtle_files(ontology_files, self.root_dir)
 
-        for path in all_ontology_paths:
-            self._log(f"    {path}")
+        for path in ontology_files:
+            self._log(f"    {self._rel_path(path)}")
 
         # Load SHACL shapes
         self._log(f"\n  Loading {len(shacl_paths)} SHACL files:")
         shacl_files = [self.resolver.to_absolute(p) for p in shacl_paths]
         shacl_graph = load_turtle_files(shacl_files, self.root_dir)
 
-        for path in shacl_paths:
-            self._log(f"    {path}")
+        for path in shacl_files:
+            self._log(f"    {self._rel_path(path)}")
 
         self._log(f"\n  Ontology triples: {len(ontology_graph)}")
         self._log(f"  SHACL triples: {len(shacl_graph)}")
@@ -321,6 +433,7 @@ def validate_data_conformance(
     inference_mode: str = "rdfs",
     debug: bool = False,
     logfile: Optional[Path] = None,
+    artifact_dirs: Optional[List[Path]] = None,
 ) -> Tuple[int, str]:
     """
     Main validation entry point (backwards compatible).
@@ -334,10 +447,14 @@ def validate_data_conformance(
         inference_mode: Inference mode for validation
         debug: Enable debug logging
         logfile: Optional log file path
+        artifact_dirs: Additional artifact directories to register
+            for schema discovery and context inlining.
 
     Returns:
         Tuple of (return_code, output_message)
     """
+    root_dir = Path(root_dir).resolve()
+
     # Set up logging level if debug requested
     if debug:
         import logging
@@ -359,9 +476,33 @@ def validate_data_conformance(
         print(error_msg, file=sys.stderr)
         return 99, error_msg
 
+    resolver = RegistryResolver(root_dir)
+    if artifact_dirs:
+        for artifact_dir in artifact_dirs:
+            artifact_path = Path(artifact_dir).resolve()
+            if artifact_path.is_dir():
+                registered = resolver.register_artifact_directory(artifact_path)
+                if registered:
+                    print(
+                        f"📦 Registered artifact domains: {', '.join(registered)}",
+                        flush=True,
+                    )
+            else:
+                path_display = normalize_path_for_display(artifact_path, root_dir)
+                print(
+                    f"⚠️  Warning: Artifact directory does not exist: {path_display}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+
     # Initialize validator
     print(f"\nRepository Root: {root_dir.as_posix()}")
-    validator = ShaclValidator(root_dir, inference_mode=inference_mode, verbose=True)
+    validator = ShaclValidator(
+        root_dir,
+        inference_mode=inference_mode,
+        verbose=True,
+        resolver=resolver,
+    )
 
     info = validator.resolver.get_registry_info()
     print(f"Registry Domains: {info['domains_available']}")

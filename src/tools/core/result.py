@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
         error = ValidationResult.error(ReturnCodes.SYNTAX_ERROR, "Parse error")
         assert error.conforms is False
-        assert error.return_code == 100
+        assert error.return_code == ReturnCodes.SYNTAX_ERROR
         assert error.is_success() is False
         assert error.is_error() is True
 

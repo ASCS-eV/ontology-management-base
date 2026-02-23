@@ -8,6 +8,7 @@ from src.tools.core.iri_utils import (
     get_local_name,
     get_namespace,
     iri_to_domain_hint,
+    iri_variants,
     is_did_web,
     matches_namespace,
     normalize_iri,
@@ -200,6 +201,32 @@ class TestMatchesNamespace:
         assert not matches_namespace(
             "http://ex.org/ontology/Class", "http://ex.org/ont"
         )
+
+
+class TestIriVariants:
+    """Tests for iri_variants function."""
+
+    def test_generates_three_variants(self):
+        """Should generate base, slash, and hash variants."""
+        result = iri_variants("https://w3id.org/gaia-x/development")
+        assert len(result) == 3
+        assert result[0] == "https://w3id.org/gaia-x/development"
+        assert result[1] == "https://w3id.org/gaia-x/development/"
+        assert result[2] == "https://w3id.org/gaia-x/development#"
+
+    def test_strips_existing_trailing_slash(self):
+        """Should strip trailing slash before generating variants."""
+        result = iri_variants("https://example.org/ont/")
+        assert result[0] == "https://example.org/ont"
+        assert result[1] == "https://example.org/ont/"
+        assert result[2] == "https://example.org/ont#"
+
+    def test_strips_existing_trailing_hash(self):
+        """Should strip trailing hash before generating variants."""
+        result = iri_variants("https://example.org/ont#")
+        assert result[0] == "https://example.org/ont"
+        assert result[1] == "https://example.org/ont/"
+        assert result[2] == "https://example.org/ont#"
 
 
 class TestExtractPrefixFromContext:

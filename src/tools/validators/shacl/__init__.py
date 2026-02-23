@@ -21,10 +21,13 @@ Components:
     - validator: Main validation orchestrator
 
 Entry point:
+    from pathlib import Path
+    from src.tools.utils.registry_resolver import RegistryResolver
     from src.tools.validators.shacl.validator import ShaclValidator
 
-    validator = ShaclValidator(domains=["general"])
-    result = validator.validate("data.jsonld")
+    root_dir = Path(".").resolve()
+    resolver = RegistryResolver(root_dir)
+    result = ShaclValidator(root_dir, resolver=resolver).validate([Path("data.jsonld")])
 
     if not result.conforms:
         print(result.report_text)

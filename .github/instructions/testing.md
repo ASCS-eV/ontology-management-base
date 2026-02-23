@@ -78,8 +78,8 @@ Test module interactions:
 ```python
 # tests/integration/test_catalog_workflow.py
 
-def test_path_mode_creates_temp_catalog(temp_dir, sample_jsonld):
-    """Path mode should create temporary catalog and validate."""
+def test_data_paths_mode_creates_temp_catalog(temp_dir, sample_jsonld):
+    """Data paths mode should create temporary catalog and validate."""
     # Setup
     data_file = temp_dir / "test.json"
     data_file.write_text(sample_jsonld)

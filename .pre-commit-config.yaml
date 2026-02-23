@@ -28,24 +28,21 @@ repos:
 
       - id: jsonld-lint
         name: JSON-LD Parser
-        # Cross-platform: uses 'python' which works on Windows and most Unix systems
-        entry: python -m src.tools.validators.syntax_validator --json
+        entry: python3 -m src.tools.validators.syntax_validator --json
         language: system
         types: [json]
         files: \.(json|jsonld)$
 
       - id: turtle-lint
         name: Turtle Parser
-        # Cross-platform: uses 'python' which works on Windows and most Unix systems
-        entry: python -m src.tools.validators.syntax_validator --turtle
+        entry: python3 -m src.tools.validators.syntax_validator --turtle
         language: system
         types: [text]
         files: \.(ttl)$
 
       - id: update-context
         name: Update JSON-LD Contexts
-        # Cross-platform: generates context files from OWL+SHACL
-        entry: python -m src.tools.utils.context_generator --all
+        entry: python3 -m src.tools.utils.context_generator --all
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl)$
@@ -53,8 +50,7 @@ repos:
 
       - id: update-registry
         name: Update Ontology Registry and Catalog
-        # Cross-platform: uses 'python' which works on Windows and most Unix systems
-        entry: python -m src.tools.utils.registry_updater
+        entry: python3 -m src.tools.utils.registry_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
@@ -62,7 +58,7 @@ repos:
 
       - id: update-properties
         name: Update Properties Documentation
-        entry: python -m src.tools.utils.properties_updater
+        entry: python3 -m src.tools.utils.properties_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
@@ -70,7 +66,7 @@ repos:
 
       - id: update-readme
         name: Update README Catalog Table
-        entry: python -m src.tools.utils.readme_updater
+        entry: python3 -m src.tools.utils.readme_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$

@@ -22,11 +22,12 @@ Read these before making changes; they are authoritative for repo workflows.
 
 ## Build, Test, and Development Commands
 
-- `make install-dev` installs dev dependencies and pre-commit hooks.
+- `make setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
+- `make install-dev` reinstalls dev dependencies and pre-commit hooks in the active environment.
 - `make lint` runs `pre-commit`; `make format` runs `black` and `isort` on `src/`.
-- `python3 -m src.tools.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--path ./file.json` for scoped runs.
+- `python3 -m src.tools.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
 - `pytest tests/` runs all tests; `pytest tests/ --cov=src/tools --cov-report=html` generates coverage reports.
-- `make registry-update TAG=vX.Y.Z` updates catalogs for a release; `mkdocs serve` runs docs locally.
+- `make registry-update TAG=vX.Y.Z` updates catalogs for a release; `make docs-serve` runs docs locally.
 
 ## Coding Style & Naming Conventions
 
@@ -51,3 +52,59 @@ Read these before making changes; they are authoritative for repo workflows.
 
 - Recent history favors short, imperative subjects with optional prefixes like `feat:`, `fix:`, `docs:`, or scoped forms like `feat(ontology): ...`.
 - PRs should follow `.github/pull_request_template.md`: clear summary, linked issue, test evidence, and versioning/compatibility checklist items when ontology changes apply.
+- **Always sign commits** with `-s -S` flags (Signed-off-by + GPG signature).
+- **Never include AI attribution** in commits — no `Co-Authored-By` or similar headers mentioning AI assistants.
+- **Never mention AI tools in commit messages** — do not reference that code was AI-generated or AI-assisted.
+- **Author must be a human developer** with their official email address.
+
+### Preparing Commits and Pull Requests
+
+When instructed to prepare a commit or PR, **do not commit directly**. Instead:
+
+1. Create files in the `.playground/` directory (already in `.gitignore`)
+2. Generate two markdown files:
+   - `.playground/commit-message.md` — Conventional commit message(s)
+   - `.playground/pr-description.md` — PR description following `.github/pull_request_template.md`
+
+The human operator will review these files and either:
+- Use them to manually commit/push and create a PR, or
+- Use automated tooling with signed commits (`git commit -s -S`)
+
+#### Commit Message Format
+
+```markdown
+# .playground/commit-message.md
+
+feat(ontology): add vehicle domain ontology
+
+- Define VehicleCredential type with SHACL shapes
+- Add JSON-LD context with proper prefixes
+- Include valid/invalid test instances
+
+Refs: #123
+```
+
+#### PR Description Format
+
+Follow `.github/pull_request_template.md`:
+
+```markdown
+# .playground/pr-description.md
+
+## Summary
+
+Brief description of the changes.
+
+## Changes
+
+- List of specific changes made
+
+## Testing
+
+- [ ] Validation passes (`make test`)
+- [ ] Pre-commit hooks pass (`make lint`)
+
+## Related Issues
+
+Closes #123
+```

@@ -11,7 +11,22 @@ from typing import List, Optional, Set, Tuple
 
 from rdflib import RDF, Graph, Literal
 
+from src.tools.core.constants import Namespaces
 from src.tools.utils.registry_resolver import RegistryResolver
+
+_WELL_KNOWN_PREFIXES = (
+    Namespaces.RDF,
+    Namespaces.RDFS,
+    Namespaces.OWL,
+    Namespaces.XSD,
+    Namespaces.SHACL,
+    Namespaces.SKOS,
+)
+
+
+def _is_well_known_type(rdf_type: str) -> bool:
+    """Check whether an RDF type belongs to a well-known W3C namespace."""
+    return any(rdf_type.startswith(ns) for ns in _WELL_KNOWN_PREFIXES)
 
 
 def extract_rdf_types(graph: Graph) -> Set[str]:
@@ -63,7 +78,7 @@ def extract_datatype_iris(graph: Graph) -> Set[str]:
 def discover_required_schemas(
     rdf_types: Set[str],
     resolver: RegistryResolver,
-) -> Tuple[List[str], List[str]]:
+) -> Tuple[List[str], List[str], Set[str]]:
     """
     Map RDF types to required ontology and SHACL files.
 
@@ -75,11 +90,14 @@ def discover_required_schemas(
         resolver: RegistryResolver instance
 
     Returns:
-        Tuple of (ontology_paths, shacl_paths) as repository-relative strings
+        Tuple of (ontology_paths, shacl_paths, unresolved_types).
+        ``unresolved_types`` contains type IRIs that could not be mapped to
+        any catalog domain, excluding well-known W3C base types.
     """
     ontology_paths = []
     shacl_paths = []
     domains_found = set()
+    unresolved_types: Set[str] = set()
 
     for rdf_type in rdf_types:
         domain = resolver.resolve_type_to_domain(rdf_type)
@@ -91,8 +109,10 @@ def discover_required_schemas(
                 ontology_paths.append(ont_path)
 
             shacl_paths.extend(resolver.get_shacl_paths(domain))
+        elif domain is None and not _is_well_known_type(rdf_type):
+            unresolved_types.add(rdf_type)
 
-    return sorted(set(ontology_paths)), sorted(set(shacl_paths))
+    return sorted(set(ontology_paths)), sorted(set(shacl_paths)), unresolved_types
 
 
 def get_base_ontology_paths(

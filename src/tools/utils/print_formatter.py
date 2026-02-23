@@ -46,13 +46,34 @@ def normalize_path_for_display(path: Union[str, Path], root_dir: Path) -> str:
     except (OSError, ValueError):
         return str(path).replace("\\", "/")
 
+    root_dir = root_dir.resolve()
+
     # Try to make relative to root_dir
     try:
-        rel = path.relative_to(root_dir.resolve())
+        rel = path.relative_to(root_dir)
         return rel.as_posix()
     except ValueError:
-        # Path is not under root_dir, return as-is with forward slashes
-        return str(path).replace("\\", "/")
+        # If path is outside root_dir, keep output deterministic and non-leaky
+        # by expressing it as a relative traversal (e.g. ../../artifacts/...).
+        try:
+            if path.anchor != root_dir.anchor:
+                raise ValueError("Cannot relativize paths on different anchors")
+
+            path_parts = path.parts
+            root_parts = root_dir.parts
+            common_len = 0
+
+            for root_part, path_part in zip(root_parts, path_parts):
+                if root_part != path_part:
+                    break
+                common_len += 1
+
+            rel_parts = [".."] * (len(root_parts) - common_len) + list(
+                path_parts[common_len:]
+            )
+            return Path(*rel_parts).as_posix() if rel_parts else "."
+        except ValueError:
+            return str(path).replace("\\", "/")
 
 
 def _clean(val) -> str:
@@ -114,7 +135,7 @@ def _extract_and_sort_errors(report_graph: Graph):
 
 
 def format_artifact_coherence_result(
-    ontology_file, num_onto, num_shacl, matches, missing, recovered, extra
+    ontology_file, num_onto, num_shacl, matches, missing, extra
 ):
     """Formats validation summary using consistent boxed alignment."""
     width, buf = 150, StringIO()
@@ -125,9 +146,7 @@ def format_artifact_coherence_result(
     _print_boxed_line(f"Ontology File: {_clean(ontology_file)}", width, buf)
     _print_boxed_line(f"🔹 Ontology Classes: {num_onto}", width, buf)
     _print_boxed_line(f"🔹 SHACL Target Classes: {num_shacl}", width, buf)
-    _print_boxed_line(
-        f"✅ Matched Classes: {len(matches) + len(recovered)}", width, buf
-    )
+    _print_boxed_line(f"✅ Matched Classes: {len(matches)}", width, buf)
     _print_boxed_line(f"❌ Missing Classes: {len(missing)}", width, buf)
     _print_boxed_line(f"⚠️  Extra Classes: {len(extra)}", width + 2, buf)
     if missing:

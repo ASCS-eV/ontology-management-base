@@ -12,12 +12,32 @@ FEATURE SET:
 6. load_fixtures_for_iris - Resolve and load fixture files for external IRIs
 7. extract_external_iris - Find did:web: style references in graph
 
+FIXTURE/DID RESOLUTION:
+=======================
+load_fixtures_for_iris implements a catalog-first resolution strategy:
+
+1. Catalog Resolution (Local)
+   - Resolves IRIs via RegistryResolver's fixtures catalog
+   - Includes DID documents registered via register_did_documents()
+   - Fast, offline, deterministic
+
+2. Online Fallback (Optional)
+   - For http:// and https:// IRIs not found in catalog
+   - Logs warning but continues validation
+   - Disabled by default (allow_online_fallback=False)
+   - Enable via --allow-online CLI flag
+
+3. Graceful Handling
+   - Unresolved IRIs are collected and returned
+   - Warnings logged but validation continues
+   - Caller decides how to handle unresolved references
+
 USAGE:
 ======
     from src.tools.utils.graph_loader import (
         load_graph,
         load_jsonld_files,
-        load_turtle_files,
+        load_fixtures_for_iris,
     )
 
     # Load single file
@@ -26,8 +46,11 @@ USAGE:
     # Load multiple JSON-LD files
     graph, prefixes = load_jsonld_files(json_files, root_dir)
 
-    # Load Turtle files
-    graph = load_turtle_files(ttl_files, root_dir)
+    # Resolve external references (e.g., did:web: IRIs)
+    external_iris = extract_external_iris(graph)
+    loaded, unresolved = load_fixtures_for_iris(
+        external_iris, resolver, graph, root_dir
+    )
 
 STANDALONE TESTING:
 ==================
@@ -49,7 +72,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import rdflib
 from rdflib import Graph
@@ -150,14 +173,21 @@ def load_jsonld_files(
     files: List[Path],
     root_dir: Path,
     store: str = None,
+    context_url_map: Optional[Dict[str, Path]] = None,
 ) -> Tuple[Graph, Dict[str, str]]:
     """
     Load JSON-LD files into a graph with prefix extraction.
+
+    When ``context_url_map`` is provided, remote ``@context`` URLs that
+    match entries in the map are inlined from local files before parsing.
+    This avoids network fetches for unpublished or unreachable contexts.
 
     Args:
         files: List of JSON-LD file paths to load
         root_dir: Repository root directory for path normalization
         store: RDF store to use (default: auto-detect oxigraph)
+        context_url_map: Optional mapping of context URL → local file path.
+            When provided, contexts are inlined before rdflib parsing.
 
     Returns:
         Tuple of (graph, prefixes) where prefixes is a dict of prefix->namespace
@@ -178,9 +208,17 @@ def load_jsonld_files(
         except Exception as e:
             logger.debug("Could not extract prefixes from %s: %s", rel_path, e)
 
-        # Parse into graph
+        # Parse into graph, with optional context inlining
         try:
-            graph.parse(str(json_file), format="json-ld")
+            if context_url_map:
+                from src.tools.utils.context_resolver import (
+                    load_jsonld_with_local_contexts,
+                )
+
+                json_str = load_jsonld_with_local_contexts(json_file, context_url_map)
+                graph.parse(data=json_str, format="json-ld")
+            else:
+                graph.parse(str(json_file), format="json-ld")
         except Exception as e:
             logger.error("Failed to load %s: %s", rel_path, e)
             raise
@@ -243,48 +281,73 @@ def load_fixtures_for_iris(
     resolver: "RegistryResolver",  # noqa: F821 - forward reference
     graph: Graph,
     root_dir: Path,
-) -> int:
+    allow_online_fallback: bool = False,
+    verbose: bool = False,
+) -> Tuple[int, List[str]]:
     """
     Load fixture files for external IRI references.
 
-    This resolves did:web: style IRIs to local fixture files and loads
-    them into the provided graph.
+    Resolution strategy (catalog-first):
+    1. Try to resolve via catalog (local fixtures)
+    2. If not found and allow_online_fallback=True, attempt online resolution
+    3. Log warning for unresolved IRIs (not an error)
 
     Args:
         iris: Set of IRIs to resolve
         resolver: RegistryResolver instance
         graph: Graph to load fixtures into
         root_dir: Repository root directory
+        allow_online_fallback: If True, attempt online resolution for
+            unresolved IRIs (with warning). Default False.
+        verbose: If True, print details about each resolved fixture.
 
     Returns:
-        Number of fixtures loaded
+        Tuple of (fixtures_loaded_count, list_of_unresolved_iris)
     """
     fixtures_loaded = 0
+    unresolved_iris: List[str] = []
     existing_subjects = {str(s) for s in graph.subjects()}
 
-    for iri in iris:
+    for iri in sorted(iris):
         # Skip if already in graph
         if iri in existing_subjects:
+            if verbose:
+                print(f"    ✓ Already in graph: {iri}")
             continue
 
-        # Try to resolve fixture
+        # Step 1: Try to resolve via catalog (local fixtures)
         fixture_path = resolver.resolve_fixture_iri(iri)
-        if not fixture_path:
-            continue
+        if fixture_path:
+            abs_path = resolver.to_absolute(fixture_path)
+            if abs_path.exists():
+                try:
+                    graph.parse(str(abs_path), format="json-ld")
+                    rel_path = normalize_path_for_display(abs_path, root_dir)
+                    logger.debug("Loaded fixture: %s for %s", rel_path, iri)
+                    if verbose:
+                        print(f"    ✓ Loaded fixture: {rel_path}")
+                    fixtures_loaded += 1
+                    continue
+                except Exception as e:
+                    logger.warning("Could not load fixture for %s: %s", iri, e)
 
-        abs_path = resolver.to_absolute(fixture_path)
-        if not abs_path.exists():
-            continue
+        # Step 2: Try online resolution if enabled
+        if allow_online_fallback and iri.startswith(("http://", "https://")):
+            try:
+                graph.parse(iri, format="json-ld")
+                logger.info("Resolved online: %s", iri)
+                if verbose:
+                    print(f"    ⚡ Resolved online: {iri}")
+                fixtures_loaded += 1
+                continue
+            except Exception as e:
+                logger.warning("Could not resolve online %s: %s", iri, e)
 
-        try:
-            graph.parse(str(abs_path), format="json-ld")
-            rel_path = normalize_path_for_display(abs_path, root_dir)
-            logger.debug("Loaded fixture: %s for %s", rel_path, iri)
-            fixtures_loaded += 1
-        except Exception as e:
-            logger.warning("Could not load fixture for %s: %s", iri, e)
+        # Step 3: Mark as unresolved (warning, not error)
+        unresolved_iris.append(iri)
+        logger.warning("Unresolved IRI (continuing validation): %s", iri)
 
-    return fixtures_loaded
+    return fixtures_loaded, unresolved_iris
 
 
 def _extract_prefixes_from_jsonld(file_path: Path) -> Dict[str, str]:

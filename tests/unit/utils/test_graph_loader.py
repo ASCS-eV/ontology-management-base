@@ -112,8 +112,9 @@ def test_load_fixtures_for_iris(temp_dir: Path):
 
     resolver = RegistryResolver(temp_dir)
     g = Graph()
-    loaded = graph_loader.load_fixtures_for_iris(
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
         {"did:web:test.fixture:entity"}, resolver, g, temp_dir
     )
     assert loaded == 1
+    assert len(unresolved) == 0
     assert len(g) >= 1

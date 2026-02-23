@@ -74,6 +74,53 @@ ex:Thing a owl:Class .
 """
     owl_file = temp_dir / "demo.owl.ttl"
     owl_file.write_text(ttl)
-    classes, labels = extract_ontology_classes(str(owl_file))
+    classes = extract_ontology_classes(str(owl_file))
     assert "thing" in classes
-    assert labels == {}
+
+
+def _build_coherent_repo(root: Path, extra_shacl_target: str = None) -> None:
+    """Build a minimal repo with OWL + SHACL artifacts for domain 'demo'."""
+    _write_registry(root)
+
+    owl_ttl = """@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <http://example.org/> .
+ex:Thing a owl:Class .
+"""
+    shacl_target = extra_shacl_target or "ex:Thing"
+    shacl_ttl = f"""@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <http://example.org/> .
+ex:ThingShape a sh:NodeShape ;
+  sh:targetClass {shacl_target} .
+"""
+    artifacts = root / "artifacts" / "demo"
+    artifacts.mkdir(parents=True, exist_ok=True)
+    (artifacts / "demo.owl.ttl").write_text(owl_ttl)
+    (artifacts / "demo.shacl.ttl").write_text(shacl_ttl)
+
+    catalog = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="http://example.org/demo/v1" uri="demo/demo.owl.ttl"/>
+  <uri name="http://example.org/demo/v1/shacl" uri="demo/demo.shacl.ttl"/>
+</catalog>
+"""
+    _write_artifacts_catalog(root, catalog)
+
+
+def test_coherence_known_issues_excluded(temp_dir: Path) -> None:
+    """Known upstream issues are excluded from failure and reported as warnings."""
+    _build_coherent_repo(temp_dir, extra_shacl_target="ex:Missing")
+
+    # Without known_issues, this should fail
+    rc_fail, msg_fail = validate_artifact_coherence("demo", root_dir=temp_dir)
+    assert rc_fail == ReturnCodes.COHERENCE_ERROR
+    assert "missing" in msg_fail.lower()
+
+    # With known_issues containing the missing class, it should pass
+    rc_pass, msg_pass = validate_artifact_coherence(
+        "demo", root_dir=temp_dir, known_issues={"missing"}
+    )
+    assert rc_pass == ReturnCodes.SUCCESS
+    assert "Known upstream issue" in msg_pass
+    assert "missing" in msg_pass

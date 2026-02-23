@@ -24,6 +24,8 @@ from src.tools.utils.file_collector import (
     collect_ontology_files,
     collect_test_files,
     collect_turtle_files,
+    discover_data_hierarchy,
+    extract_jsonld_iris,
 )
 
 
@@ -316,3 +318,308 @@ class TestCollectOntologyBundles:
         assert result == {}
         captured = capsys.readouterr()
         assert "Warning" in captured.err
+
+
+class TestExtractJsonldIris:
+    """Tests for extract_jsonld_iris function."""
+
+    def test_extracts_at_id(self, temp_dir):
+        """Test extracting @id from JSON-LD."""
+        file = temp_dir / "test.json"
+        file.write_text('{"@id": "did:web:example.com:test", "@type": "TestClass"}')
+        root_id, refs = extract_jsonld_iris(file)
+        assert root_id == "did:web:example.com:test"
+        assert len(refs) == 0
+
+    def test_extracts_id_without_at(self, temp_dir):
+        """Test extracting id field without @ prefix."""
+        file = temp_dir / "test.json"
+        file.write_text('{"id": "urn:example:123", "@type": "TestClass"}')
+        root_id, refs = extract_jsonld_iris(file)
+        assert root_id == "urn:example:123"
+
+    def test_returns_none_for_no_id(self, temp_dir):
+        """Test returns None when no @id or id field."""
+        file = temp_dir / "test.json"
+        file.write_text('{"@type": "TestClass", "name": "Test"}')
+        root_id, refs = extract_jsonld_iris(file)
+        assert root_id is None
+
+    def test_returns_none_for_invalid_json(self, temp_dir):
+        """Test returns None for invalid JSON."""
+        file = temp_dir / "test.json"
+        file.write_text('{"invalid json')
+        root_id, refs = extract_jsonld_iris(file)
+        assert root_id is None
+        assert len(refs) == 0
+
+    def test_extracts_nested_ids(self, temp_dir):
+        """Test extracting nested @id references."""
+        file = temp_dir / "test.json"
+        file.write_text(
+            """{
+            "@id": "did:web:example.com:main",
+            "@type": "TestClass",
+            "hasReference": {"@id": "did:web:example.com:ref1"},
+            "hasOther": {"@id": "did:web:example.com:ref2"}
+        }"""
+        )
+        root_id, refs = extract_jsonld_iris(file)
+        assert root_id == "did:web:example.com:main"
+        assert "did:web:example.com:ref1" in refs
+        assert "did:web:example.com:ref2" in refs
+        assert "did:web:example.com:main" not in refs  # Root excluded
+
+    def test_excludes_blank_nodes(self, temp_dir):
+        """Test that blank nodes are excluded."""
+        file = temp_dir / "test.json"
+        file.write_text(
+            """{
+            "@id": "did:web:example.com:main",
+            "nested": {"@id": "_:blank1", "value": "test"}
+        }"""
+        )
+        _, refs = extract_jsonld_iris(file)
+        assert "_:blank1" not in refs
+
+    def test_extracts_from_arrays(self, temp_dir):
+        """Test extracting from arrays."""
+        file = temp_dir / "test.json"
+        file.write_text(
+            """{
+            "@id": "did:web:example.com:main",
+            "items": [
+                {"@id": "did:web:example.com:item1"},
+                {"@id": "did:web:example.com:item2"}
+            ]
+        }"""
+        )
+        _, refs = extract_jsonld_iris(file)
+        assert "did:web:example.com:item1" in refs
+        assert "did:web:example.com:item2" in refs
+
+
+class TestDiscoverDataHierarchy:
+    """Tests for discover_data_hierarchy function."""
+
+    def test_single_file_without_refs(self, temp_dir):
+        """Single file with no references is top-level."""
+        file = temp_dir / "standalone.json"
+        file.write_text('{"@id": "urn:uuid:standalone", "@type": "Thing"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy([file])
+
+        assert len(top_level) == 1
+        assert top_level[0] == file
+        assert "urn:uuid:standalone" in iri_map
+
+    def test_file_with_fixture_reference(self, temp_dir):
+        """Non-DID credential referencing DID document - DID becomes fixture."""
+        credential_file = temp_dir / "credential.json"
+        credential_file.write_text(
+            """{
+            "@id": "urn:uuid:test-credential",
+            "@type": "VerifiableCredential",
+            "issuer": {"@id": "did:web:test:issuer"}
+        }"""
+        )
+        did_file = temp_dir / "issuer-did.json"
+        did_file.write_text('{"@id": "did:web:test:issuer", "@type": "DIDDocument"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        # Credential is top-level, referenced DID document is fixture
+        assert len(top_level) == 1
+        assert top_level[0].name == "credential.json"
+        assert "did:web:test:issuer" in iri_map
+        assert iri_map["did:web:test:issuer"].name == "issuer-did.json"
+
+    def test_did_document_always_fixture(self, temp_dir):
+        """All DID documents are fixtures, even without references."""
+        did_file = temp_dir / "standalone-did.json"
+        did_file.write_text(
+            '{"@id": "did:web:test:standalone", "@type": "DIDDocument"}'
+        )
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        # DID document should NOT be top-level (it's a fixture)
+        assert len(top_level) == 0
+        assert "did:web:test:standalone" in iri_map
+
+    def test_non_did_credentials_always_top_level(self, temp_dir):
+        """Credentials referencing other credentials are all top-level."""
+        main_credential = temp_dir / "main-credential.json"
+        main_credential.write_text(
+            """{
+            "@id": "urn:uuid:main-credential",
+            "@type": "VerifiableCredential",
+            "evidence": {"@id": "urn:uuid:base-credential"}
+        }"""
+        )
+        base_credential = temp_dir / "base-credential.json"
+        base_credential.write_text(
+            '{"@id": "urn:uuid:base-credential", "@type": "VerifiableCredential"}'
+        )
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        # Both credentials should be top-level (not treated as fixtures)
+        assert len(top_level) == 2
+        assert any(f.name == "main-credential.json" for f in top_level)
+        assert any(f.name == "base-credential.json" for f in top_level)
+
+    def test_did_scheme_detection(self, temp_dir):
+        """File with did: scheme @id is treated as DID document."""
+        # File without -did suffix but with did: scheme
+        did_file = temp_dir / "issuer.json"
+        did_file.write_text('{"@id": "did:web:example.com:issuer", "@type": "Thing"}')
+        credential = temp_dir / "credential.json"
+        credential.write_text(
+            """{
+            "@id": "urn:uuid:test",
+            "issuer": {"@id": "did:web:example.com:issuer"}
+        }"""
+        )
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        # issuer.json has did: scheme so it's a DID document fixture
+        assert len(top_level) == 1
+        assert top_level[0].name == "credential.json"
+
+    def test_did_suffix_detection(self, temp_dir):
+        """File with -did suffix is treated as DID document."""
+        did_file = temp_dir / "participant-did.json"
+        did_file.write_text(
+            '{"@id": "https://example.com/participant", "@type": "Thing"}'
+        )
+        credential = temp_dir / "credential.json"
+        credential.write_text(
+            """{
+            "@id": "urn:uuid:test",
+            "subject": {"@id": "https://example.com/participant"}
+        }"""
+        )
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        # participant-did.json has -did suffix so it's a DID document fixture
+        assert len(top_level) == 1
+        assert top_level[0].name == "credential.json"
+
+    def test_directory_recursive_scan(self, temp_dir):
+        """Test recursive directory scanning."""
+        subdir = temp_dir / "subdir"
+        subdir.mkdir()
+
+        main_file = temp_dir / "main.json"
+        main_file.write_text('{"@id": "urn:uuid:main", "@type": "TestClass"}')
+        nested_file = subdir / "nested.json"
+        nested_file.write_text('{"@id": "urn:uuid:nested", "@type": "TestClass"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy([temp_dir])
+
+        assert len(top_level) == 2
+        assert len(iri_map) == 2
+
+    def test_explicit_file_always_validated(self, temp_dir):
+        """Explicitly specified DID document is top-level even if referenced."""
+        credential_file = temp_dir / "credential.json"
+        credential_file.write_text(
+            """{
+            "@id": "urn:uuid:credential",
+            "issuer": {"@id": "did:web:test:issuer"}
+        }"""
+        )
+        did_file = temp_dir / "issuer-did.json"
+        did_file.write_text('{"@id": "did:web:test:issuer", "@type": "DIDDocument"}')
+
+        # Explicitly request both files
+        top_level, iri_map, _ = discover_data_hierarchy([credential_file, did_file])
+
+        # Both should be validated since both were explicitly specified
+        assert len(top_level) == 2
+        assert any(f.name == "credential.json" for f in top_level)
+        assert any(f.name == "issuer-did.json" for f in top_level)
+
+    def test_multiple_dirs(self, temp_dir):
+        """Test with multiple directories."""
+        dir1 = temp_dir / "dir1"
+        dir2 = temp_dir / "dir2"
+        dir1.mkdir()
+        dir2.mkdir()
+
+        (dir1 / "file1.json").write_text('{"@id": "urn:uuid:file1"}')
+        (dir2 / "file2.json").write_text('{"@id": "urn:uuid:file2"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy([dir1, dir2])
+
+        assert len(top_level) == 2
+        assert len(iri_map) == 2
+
+    def test_empty_paths(self, temp_dir):
+        """Test with empty input."""
+        top_level, iri_map, _ = discover_data_hierarchy([])
+        assert top_level == []
+        assert iri_map == {}
+
+    def test_nonexistent_path_ignored(self, temp_dir):
+        """Non-existent paths should not cause crash."""
+        valid_file = temp_dir / "valid.json"
+        valid_file.write_text('{"@id": "urn:uuid:valid"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy(
+            [valid_file, temp_dir / "nonexistent.json"]
+        )
+
+        # Should still process valid file
+        assert len(top_level) == 1
+        assert top_level[0].name == "valid.json"
+
+    def test_detects_duplicate_ids(self, temp_dir):
+        """Duplicate IDs across files are reported in metadata."""
+        file1 = temp_dir / "credential-v1.json"
+        file1.write_text('{"@id": "urn:uuid:duplicate-id", "@type": "Credential"}')
+        file2 = temp_dir / "credential-v2.json"
+        file2.write_text('{"@id": "urn:uuid:duplicate-id", "@type": "Credential"}')
+        file3 = temp_dir / "unique.json"
+        file3.write_text('{"@id": "urn:uuid:unique-id", "@type": "Credential"}')
+
+        top_level, iri_map, metadata = discover_data_hierarchy([temp_dir])
+
+        # All 3 files should be top-level
+        assert len(top_level) == 3
+
+        # Should detect the duplicate
+        assert len(metadata["duplicate_ids"]) == 1
+        dup_id, dup_files = metadata["duplicate_ids"][0]
+        assert dup_id == "urn:uuid:duplicate-id"
+        assert len(dup_files) == 2
+        assert any(f.name == "credential-v1.json" for f in dup_files)
+        assert any(f.name == "credential-v2.json" for f in dup_files)
+
+    def test_no_duplicates_returns_empty_list(self, temp_dir):
+        """No duplicate IDs returns empty duplicate list."""
+        file1 = temp_dir / "file1.json"
+        file1.write_text('{"@id": "urn:uuid:id1", "@type": "Thing"}')
+        file2 = temp_dir / "file2.json"
+        file2.write_text('{"@id": "urn:uuid:id2", "@type": "Thing"}')
+
+        top_level, iri_map, metadata = discover_data_hierarchy([temp_dir])
+
+        assert len(metadata["duplicate_ids"]) == 0
+
+    def test_metadata_fixture_count(self, temp_dir):
+        """Metadata includes correct fixture count."""
+        # Create 2 credentials and 3 DID documents
+        (temp_dir / "cred1.json").write_text('{"@id": "urn:uuid:cred1"}')
+        (temp_dir / "cred2.json").write_text('{"@id": "urn:uuid:cred2"}')
+        (temp_dir / "issuer-did.json").write_text('{"@id": "did:web:issuer"}')
+        (temp_dir / "holder-did.json").write_text('{"@id": "did:web:holder"}')
+        (temp_dir / "verifier-did.json").write_text('{"@id": "did:web:verifier"}')
+
+        top_level, iri_map, metadata = discover_data_hierarchy([temp_dir])
+
+        assert len(top_level) == 2  # Only credentials
+        assert metadata["fixture_count"] == 3  # 3 DID documents

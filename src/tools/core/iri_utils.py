@@ -236,6 +236,29 @@ def iri_to_domain_hint(iri: str) -> Optional[str]:
     return None
 
 
+def iri_variants(iri: str) -> list:
+    """
+    Generate IRI variants with different trailing characters.
+
+    Handles the mismatch between ``#``-fragment and ``/``-slash IRIs:
+    ontologies like Gaia-X use ``https://w3id.org/gaia-x/development#`` as
+    their ``@vocab``, but credentials may reference the context URL as
+    ``https://w3id.org/gaia-x/development/``. Both forms should resolve.
+
+    Args:
+        iri: Base IRI string
+
+    Returns:
+        List of IRI variants: [base, base/, base#]
+
+    Examples:
+        >>> iri_variants("https://w3id.org/gaia-x/development")
+        ['https://w3id.org/gaia-x/development', 'https://w3id.org/gaia-x/development/', 'https://w3id.org/gaia-x/development#']
+    """
+    base = iri.rstrip("/#")
+    return [base, base + "/", base + "#"]
+
+
 def matches_namespace(iri: str, namespace: str) -> bool:
     """
     Check if an IRI belongs to a namespace.

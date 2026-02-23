@@ -23,7 +23,7 @@ USAGE:
     code, msg = validate_artifact_coherence("manifest")
 
     # Extract classes from ontology
-    classes, labels = extract_ontology_classes("artifacts/manifest/manifest.owl.ttl")
+    classes = extract_ontology_classes("artifacts/manifest/manifest.owl.ttl")
 
 STANDALONE TESTING:
 ==================
@@ -36,7 +36,6 @@ DEPENDENCIES:
 NOTES:
 ======
 - Case-insensitive class matching (local names converted to lowercase)
-- Missing classes can be recovered via rdfs:label matching
 - Base ontologies from imports/ are included in valid class set
 """
 
@@ -44,14 +43,13 @@ import argparse
 import io
 import sys
 from pathlib import Path
-from typing import Dict, Set, Tuple
+from typing import Set, Tuple
 
 from rdflib import OWL, RDF, RDFS, Graph, Namespace
 
 from src.tools.core.iri_utils import get_local_name
 from src.tools.core.logging import get_logger
 from src.tools.core.result import ReturnCodes
-from src.tools.utils.file_collector import collect_files_by_pattern
 from src.tools.utils.print_formatter import (
     format_artifact_coherence_result,
     normalize_path_for_display,
@@ -63,9 +61,6 @@ logger = get_logger(__name__)
 
 # Define SHACL namespace
 SH = Namespace("http://www.w3.org/ns/shacl#")
-
-# List of folder names allowed to fail validation (configurable)
-EXPECTED_TARGETCLASS_FAILURES: Set[str] = set()
 
 
 def extract_classes_from_graph(graph: Graph) -> Set[str]:
@@ -116,6 +111,10 @@ def extract_shacl_classes(directory: str) -> Set[str]:
     """
     Extract SHACL target classes from all SHACL files in a directory.
 
+    .. deprecated::
+        Use ``resolver.get_shacl_paths(domain)`` with
+        ``extract_shacl_classes_from_file()`` instead.
+
     Args:
         directory: Path to directory containing SHACL files
 
@@ -123,15 +122,13 @@ def extract_shacl_classes(directory: str) -> Set[str]:
         Set of lowercase target class local names
     """
     shacl_classes = set()
-    shacl_files = collect_files_by_pattern([directory], "*shacl.ttl")
-
-    for shacl_file in shacl_files:
-        shacl_classes.update(extract_shacl_classes_from_file(shacl_file))
+    for shacl_file in Path(directory).rglob("*shacl.ttl"):
+        shacl_classes.update(extract_shacl_classes_from_file(str(shacl_file)))
 
     return shacl_classes
 
 
-def extract_ontology_classes(ontology_file: str) -> Tuple[Set[str], Dict[str, str]]:
+def extract_ontology_classes(ontology_file: str) -> Set[str]:
     """
     Extract class definitions from an ontology file.
 
@@ -139,23 +136,12 @@ def extract_ontology_classes(ontology_file: str) -> Tuple[Set[str], Dict[str, st
         ontology_file: Path to OWL ontology file
 
     Returns:
-        Tuple of (classes, label_to_class) where:
-        - classes: Set of lowercase class local names
-        - label_to_class: Dict mapping lowercase rdfs:label to class name
+        Set of lowercase class local names
     """
     ontology_graph = Graph()
     ontology_graph.parse(ontology_file, format="turtle")
 
-    ontology_classes = extract_classes_from_graph(ontology_graph)
-
-    label_to_class = {}
-    for cls, label in ontology_graph.subject_objects(RDFS.label):
-        class_local_name = get_local_name(str(cls), lowercase=True)
-        label_str = str(label).strip().lower()
-        if label_str and class_local_name:
-            label_to_class[label_str] = class_local_name
-
-    return ontology_classes, label_to_class
+    return extract_classes_from_graph(ontology_graph)
 
 
 def get_base_ontology_classes(resolver: RegistryResolver, root_dir: Path) -> Set[str]:
@@ -178,34 +164,33 @@ def get_base_ontology_classes(resolver: RegistryResolver, root_dir: Path) -> Set
             g = Graph()
             g.parse(str(abs_path), format="turtle")
             base_classes.update(extract_classes_from_graph(g))
-        except Exception:
-            # Silently ignore parsing errors in base ontologies
-            pass
+        except Exception as e:
+            logger.warning("Could not parse base ontology %s: %s", abs_path, e)
     return base_classes
 
 
 def validate_artifact_coherence(
     domain: str,
-    owl_dir: str = None,
-    shacl_dir: str = None,
-    imports_dir: str = None,
     root_dir: Path = None,
+    resolver: RegistryResolver = None,
+    known_issues: Set[str] = None,
 ) -> Tuple[int, str]:
     """
     Validate that all target classes in SHACL shapes are defined in ontology.
 
     Args:
         domain: Ontology domain name (e.g., "hdmap", "manifest")
-        owl_dir: Deprecated (catalogs are used for resolution)
-        shacl_dir: Deprecated (catalogs are used for resolution)
-        imports_dir: Deprecated (catalogs are used for resolution)
         root_dir: Repository root directory for path normalization
+        resolver: Optional pre-configured RegistryResolver (with registered artifacts)
+        known_issues: Optional set of lowercase class names to treat as known
+            upstream issues.  These are excluded from the missing-class count
+            and logged as warnings instead of errors.
 
     Returns:
         Tuple of (return_code, message) where return_code is 0 for success
     """
     root_dir = root_dir or Path.cwd()
-    resolver = RegistryResolver(root_dir)
+    resolver = resolver if resolver else RegistryResolver(root_dir)
 
     ontology_rel = resolver.get_ontology_path(domain)
     shacl_rels = resolver.get_shacl_paths(domain)
@@ -255,7 +240,7 @@ def validate_artifact_coherence(
     base_classes = get_base_ontology_classes(resolver, root_dir)
 
     # Extract classes from ontology
-    ontology_classes, label_to_class = extract_ontology_classes(str(ontology_file))
+    ontology_classes = extract_ontology_classes(str(ontology_file))
 
     # Combine local classes with base classes
     valid_classes = ontology_classes.union(base_classes)
@@ -276,24 +261,25 @@ def validate_artifact_coherence(
     local_classes_lower = {cls.lower() for cls in ontology_classes}
     extra_classes = local_classes_lower - shacl_classes_lower
 
-    # Try to recover missing classes using labels
-    recovered_classes = set()
-    for missing in list(missing_classes):
-        if missing in label_to_class:
-            recovered_classes.add(missing)
-    missing_classes -= recovered_classes
+    # Filter known upstream issues from missing classes
+    known = known_issues or set()
+    known_missing = missing_classes & known
+    real_missing = missing_classes - known
 
     summary = format_artifact_coherence_result(
         ont_display,
         len(valid_classes),
         len(shacl_classes),
         matches,
-        missing_classes,
-        recovered_classes,
+        real_missing,
         extra_classes,
     )
 
-    if missing_classes:
+    if known_missing:
+        known_list = ", ".join(sorted(known_missing))
+        summary += f"\n⚠️  Known upstream issue(s) excluded from failure: {known_list}"
+
+    if real_missing:
         return ReturnCodes.COHERENCE_ERROR, summary
 
     return ReturnCodes.SUCCESS, summary
@@ -339,18 +325,12 @@ def _run_tests() -> bool:
 """
         )
 
-        classes, labels = extract_ontology_classes(str(owl_file))
+        classes = extract_ontology_classes(str(owl_file))
         if "myclass" not in classes or "otherclass" not in classes:
             print(f"FAIL: extract_ontology_classes - got {classes}")
             all_passed = False
         else:
             print("PASS: extract_ontology_classes")
-
-        if "my class" not in labels:
-            print(f"FAIL: label extraction - got {labels}")
-            all_passed = False
-        else:
-            print("PASS: label extraction")
 
         # Test 4: Extract SHACL classes
         shacl_file = tmppath / "test.shacl.ttl"
@@ -385,16 +365,10 @@ def main():
     )
     parser.add_argument("domain", nargs="?", help="Ontology domain name")
     parser.add_argument(
-        "owl_dir",
-        nargs="?",
-        default="artifacts",
-        help="Directory containing ontology directories (default: artifacts)",
-    )
-    parser.add_argument(
-        "imports_dir",
-        nargs="?",
-        default="imports",
-        help="Directory containing base ontologies (default: imports)",
+        "--root",
+        type=Path,
+        default=Path.cwd(),
+        help="Repository root directory (default: current directory)",
     )
     parser.add_argument("--test", action="store_true", help="Run self-tests")
 
@@ -408,24 +382,13 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    # Use current working directory as root for path normalization
-    root_dir = Path.cwd()
+    root_dir = args.root.resolve()
 
-    return_code, message = validate_artifact_coherence(
-        args.domain, args.owl_dir, None, args.imports_dir, root_dir
-    )
+    return_code, message = validate_artifact_coherence(args.domain, root_dir=root_dir)
 
     if return_code != 0:
-        if args.domain in EXPECTED_TARGETCLASS_FAILURES:
-            print(
-                f"Expected target class failure for '{args.domain}' (ignored).",
-                flush=True,
-            )
-            print(message, flush=True)
-            sys.exit(0)
-        else:
-            print(message, file=sys.stderr)
-            sys.exit(return_code)
+        print(message, file=sys.stderr)
+        sys.exit(return_code)
     else:
         print(message)
         sys.exit(0)

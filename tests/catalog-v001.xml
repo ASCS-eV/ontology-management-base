@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
   <!--Unified Test Catalog-->
+  <uri name="did:web:registry.gaia-x.eu:RelatedSelfDescription:123456789" uri="tests/fixtures/example_related_self_description_reference.json" domain="fixture" test-type="fixture" category="fixture"/>
   <uri name="did:web:test.automotive-simulator.net:AutomotiveSimulator:test_valid_automotive-simulator_instance" uri="tests/data/automotive-simulator/valid/automotive-simulator_instance.json" domain="automotive-simulator" test-type="valid" category="test-data"/>
   <uri name="did:web:test.environment-model.net:EnvironmentModel:test_valid_environment-model_instance" uri="tests/data/environment-model/valid/environment-model_instance.json" domain="environment-model" test-type="valid" category="test-data"/>
   <uri name="did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_01_missing_has_content_instance" uri="tests/data/envited-x/invalid/fail_01_missing_has_content_instance.json" domain="envited-x" test-type="invalid" category="test-data"/>

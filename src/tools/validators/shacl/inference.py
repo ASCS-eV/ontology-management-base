@@ -24,9 +24,8 @@ logger = get_logger(__name__)
 # Maximum iterations to prevent infinite loops
 MAX_ITERATIONS = 10
 
-# RDFS inference rules using single-step (non-transitive) patterns
-# These are applied iteratively until fixpoint
-RDFS_RULES_ITERATIVE = [
+# Transitive hierarchy rules (need iteration for fixpoint)
+_SUBCLASS_RULES = [
     # Rule: rdfs:subClassOf (single step, iterated for transitivity)
     """
     INSERT { ?x a ?superClass }
@@ -45,6 +44,10 @@ RDFS_RULES_ITERATIVE = [
         FILTER(?property != ?superProperty)
     }
     """,
+]
+
+# Domain/range rules (single-pass, no iteration needed)
+_DOMAIN_RANGE_RULES = [
     # Rule: rdfs:domain
     """
     INSERT { ?subject a ?class }
@@ -64,26 +67,9 @@ RDFS_RULES_ITERATIVE = [
     """,
 ]
 
-# Single-pass rules that don't need iteration (not transitive)
-RDFS_RULES_SINGLE_PASS = [
-    # Rule: rdfs:domain
-    """
-    INSERT { ?subject a ?class }
-    WHERE {
-        ?subject ?property ?object .
-        ?property rdfs:domain ?class .
-    }
-    """,
-    # Rule: rdfs:range (only for IRI objects)
-    """
-    INSERT { ?object a ?class }
-    WHERE {
-        ?subject ?property ?object .
-        ?property rdfs:range ?class .
-        FILTER(isIRI(?object))
-    }
-    """,
-]
+# Combined rule sets
+RDFS_RULES_ITERATIVE = _SUBCLASS_RULES + _DOMAIN_RANGE_RULES
+RDFS_RULES_SINGLE_PASS = _DOMAIN_RANGE_RULES
 
 
 def apply_rdfs_inference(

@@ -2,45 +2,46 @@
 """
 Syntax Validator - Unified JSON-LD and Turtle Syntax Validation
 
-FEATURE SET:
-============
-1. check_json_syntax - Validate JSON/JSON-LD syntax for single file
-2. check_turtle_syntax - Validate Turtle syntax for single file
-3. verify_json_syntax - Batch JSON-LD validation for multiple paths
-4. verify_turtle_syntax - Batch Turtle validation for multiple paths
-5. verify_all_syntax - Combined validation for both formats
+This module validates that files are syntactically well-formed (parseable).
+It does NOT validate logical structure, SHACL compliance, or semantic correctness.
+
+API OVERVIEW:
+=============
+
+    check_json_wellformedness(paths, root_dir) -> (code, [(code, msg), ...])
+    check_turtle_wellformedness(paths, root_dir) -> (code, [(code, msg), ...])
+    check_all_wellformedness(paths, root_dir) -> (code, [(code, msg), ...])
+
+All functions accept either:
+- A single file path (str or Path)
+- A list of file paths and/or directories (recursively searched)
 
 USAGE:
 ======
     from src.tools.validators.syntax_validator import (
-        check_json_syntax,
-        check_turtle_syntax,
-        verify_json_syntax,
-        verify_turtle_syntax,
+        check_json_wellformedness,
+        check_turtle_wellformedness,
+        check_all_wellformedness,
     )
 
-    # Single file validation
-    code, msg = check_json_syntax(Path("data/instance.json"))
-    code, msg = check_turtle_syntax(Path("artifacts/domain/domain.owl.ttl"))
+    # Single file
+    code, results = check_json_wellformedness("data/instance.json")
 
-    # Batch validation
-    ret, results = verify_json_syntax(["data/", "examples/"])
-    ret, results = verify_turtle_syntax(["artifacts/"])
+    # Multiple paths (files and directories)
+    code, results = check_json_wellformedness(["data/", "examples/file.json"])
+    code, results = check_turtle_wellformedness(["artifacts/"])
+
+    # Both formats at once
+    code, results = check_all_wellformedness(["artifacts/", "data/"])
 
 STANDALONE TESTING:
 ==================
     python3 -m src.tools.validators.syntax_validator [--test] [--json] [--turtle] paths...
 
-DEPENDENCIES:
+RETURN CODES:
 =============
-- rdflib: For Turtle parsing
-- json: For JSON parsing (stdlib)
-
-NOTES:
-======
-- This module does NOT validate logical structure or SHACL compliance
-- It only checks that files are syntactically well-formed
-- Return codes: 0 = OK, non-zero = error
+    0 = SUCCESS (all files valid)
+    Non-zero = Error (see src.tools.core.result.ReturnCodes)
 """
 
 import argparse
@@ -54,32 +55,19 @@ from rdflib import Graph
 from rdflib.exceptions import ParserError
 
 from src.tools.core.result import ReturnCodes
-from src.tools.utils.file_collector import collect_jsonld_files, collect_turtle_files
+from src.tools.utils.file_collector import (
+    PathsInput,
+    collect_jsonld_files,
+    collect_turtle_files,
+)
 from src.tools.utils.print_formatter import normalize_path_for_display
 
-# =============================================================================
-# JSON-LD Syntax Validation
-# =============================================================================
 
-
-def check_json_syntax(
+def _check_single_json(
     filename: Union[str, Path],
     root_dir: Optional[Path] = None,
 ) -> Tuple[int, str]:
-    """
-    Check if a single file contains syntactically correct (well-formed) JSON.
-
-    This does NOT validate the JSON-LD structure or SHACL compliance.
-    It merely ensures the file can be parsed by the JSON loader.
-
-    Args:
-        filename: Path to the JSON file to check
-        root_dir: Optional root directory for path normalization in output
-
-    Returns:
-        (return_code, message) tuple where return_code is 0 if OK, non-zero otherwise
-    """
-    # Normalize path for display
+    """Check a single JSON file for well-formedness."""
     if root_dir:
         display_path = normalize_path_for_display(filename, root_dir)
     else:
@@ -100,76 +88,11 @@ def check_json_syntax(
         return ReturnCodes.JSON_SYNTAX_ERROR, msg
 
 
-# Alias for backwards compatibility
-check_json_wellformedness = check_json_syntax
-
-
-def gather_jsonld_files(paths: List[str]) -> List[str]:
-    """
-    Gather all .json / .jsonld files from the given paths.
-
-    Note: This function delegates to the central file_collector utility.
-    """
-    return collect_jsonld_files(paths, warn_on_invalid=True, return_pathlib=False)
-
-
-def verify_json_syntax(
-    paths: List[str],
-    root_dir: Optional[Path] = None,
-) -> Tuple[int, List[Tuple[int, str]]]:
-    """
-    Verify syntax correctness for all JSON/JSON-LD files found in the given paths.
-
-    Args:
-        paths: List of files or directories to check
-        root_dir: Optional root directory for path normalization in output
-
-    Returns:
-        (return_code, results) tuple where:
-        - return_code is 0 if all files are valid, non-zero otherwise
-        - results is a list of (code, message) tuples for each file
-    """
-    results = []
-    files = gather_jsonld_files(paths)
-
-    if not files:
-        msg = "No JSON-LD files found to check."
-        results.append((ReturnCodes.GENERAL_ERROR, msg))
-        return ReturnCodes.GENERAL_ERROR, results
-
-    ret = 0
-    for filename in files:
-        filename = str(Path(filename).resolve())
-        code, msg = check_json_syntax(filename, root_dir)
-        results.append((code, msg))
-        ret |= code
-
-    return ret, results
-
-
-# =============================================================================
-# Turtle Syntax Validation
-# =============================================================================
-
-
-def check_turtle_syntax(
+def _check_single_turtle(
     filename: Union[str, Path],
     root_dir: Optional[Path] = None,
 ) -> Tuple[int, str]:
-    """
-    Check if a single file contains syntactically correct (well-formed) Turtle.
-
-    This does NOT validate logical consistency or SHACL compliance.
-    It merely ensures the file can be parsed by an RDF parser.
-
-    Args:
-        filename: Path to the Turtle file to check
-        root_dir: Optional root directory for path normalization in output
-
-    Returns:
-        (return_code, message) tuple where return_code is 0 if OK, non-zero otherwise
-    """
-    # Normalize path for display
+    """Check a single Turtle file for well-formedness."""
     if root_dir:
         display_path = normalize_path_for_display(filename, root_dir)
     else:
@@ -180,7 +103,6 @@ def check_turtle_syntax(
 
     try:
         g = Graph()
-        # Strictly parse as turtle
         g.parse(filename, format="turtle")
         return ReturnCodes.SUCCESS, f"Syntax OK: {display_path}"
     except ParserError as e:
@@ -191,28 +113,23 @@ def check_turtle_syntax(
         return ReturnCodes.TURTLE_SYNTAX_ERROR, msg
 
 
-# Alias for backwards compatibility
-check_turtle_wellformedness = check_turtle_syntax
+# =============================================================================
+# Public API
+# =============================================================================
 
 
-def gather_turtle_files(paths: List[str]) -> List[str]:
-    """
-    Gather all .ttl files from the given paths.
-
-    Note: This function delegates to the central file_collector utility.
-    """
-    return collect_turtle_files(paths, warn_on_invalid=True, return_pathlib=False)
-
-
-def verify_turtle_syntax(
-    paths: List[str],
+def check_json_wellformedness(
+    paths: PathsInput,
     root_dir: Optional[Path] = None,
 ) -> Tuple[int, List[Tuple[int, str]]]:
     """
-    Verify syntax correctness for all Turtle files found in the given paths.
+    Check JSON/JSON-LD files for syntactic well-formedness.
+
+    Accepts a single file, a list of files, or directories (recursively searched
+    for .json and .jsonld files).
 
     Args:
-        paths: List of files or directories to check
+        paths: File path(s) or directory path(s) to check
         root_dir: Optional root directory for path normalization in output
 
     Returns:
@@ -221,7 +138,44 @@ def verify_turtle_syntax(
         - results is a list of (code, message) tuples for each file
     """
     results = []
-    files = gather_turtle_files(paths)
+    files = collect_jsonld_files(paths, warn_on_invalid=True, return_pathlib=False)
+
+    if not files:
+        msg = "No JSON-LD files found to check."
+        results.append((ReturnCodes.GENERAL_ERROR, msg))
+        return ReturnCodes.GENERAL_ERROR, results
+
+    ret = 0
+    for filename in files:
+        filename = str(Path(filename).resolve())
+        code, msg = _check_single_json(filename, root_dir)
+        results.append((code, msg))
+        ret |= code
+
+    return ret, results
+
+
+def check_turtle_wellformedness(
+    paths: PathsInput,
+    root_dir: Optional[Path] = None,
+) -> Tuple[int, List[Tuple[int, str]]]:
+    """
+    Check Turtle files for syntactic well-formedness.
+
+    Accepts a single file, a list of files, or directories (recursively searched
+    for .ttl files).
+
+    Args:
+        paths: File path(s) or directory path(s) to check
+        root_dir: Optional root directory for path normalization in output
+
+    Returns:
+        (return_code, results) tuple where:
+        - return_code is 0 if all files are valid, non-zero otherwise
+        - results is a list of (code, message) tuples for each file
+    """
+    results = []
+    files = collect_turtle_files(paths, warn_on_invalid=True, return_pathlib=False)
 
     if not files:
         msg = "No Turtle files found to check."
@@ -231,32 +185,27 @@ def verify_turtle_syntax(
     ret = 0
     for filename in files:
         filename = str(Path(filename).resolve())
-        code, msg = check_turtle_syntax(filename, root_dir)
+        code, msg = _check_single_turtle(filename, root_dir)
         results.append((code, msg))
         ret |= code
 
     return ret, results
 
 
-# =============================================================================
-# Combined Validation
-# =============================================================================
-
-
-def verify_all_syntax(
-    paths: List[str],
+def check_all_wellformedness(
+    paths: PathsInput,
     root_dir: Optional[Path] = None,
     check_json: bool = True,
     check_turtle: bool = True,
 ) -> Tuple[int, List[Tuple[int, str]]]:
     """
-    Verify syntax for both JSON-LD and Turtle files.
+    Check both JSON-LD and Turtle files for syntactic well-formedness.
 
     Args:
-        paths: List of files or directories to check
+        paths: File path(s) or directory path(s) to check
         root_dir: Optional root directory for path normalization
-        check_json: Whether to check JSON-LD files
-        check_turtle: Whether to check Turtle files
+        check_json: Whether to check JSON-LD files (default: True)
+        check_turtle: Whether to check Turtle files (default: True)
 
     Returns:
         (return_code, results) tuple
@@ -265,16 +214,27 @@ def verify_all_syntax(
     ret = 0
 
     if check_json:
-        json_ret, json_results = verify_json_syntax(paths, root_dir)
+        json_ret, json_results = check_json_wellformedness(paths, root_dir)
         ret |= json_ret
         all_results.extend(json_results)
 
     if check_turtle:
-        turtle_ret, turtle_results = verify_turtle_syntax(paths, root_dir)
+        turtle_ret, turtle_results = check_turtle_wellformedness(paths, root_dir)
         ret |= turtle_ret
         all_results.extend(turtle_results)
 
     return ret, all_results
+
+
+# =============================================================================
+# Legacy Aliases (backwards compatibility)
+# =============================================================================
+
+check_json_syntax = check_json_wellformedness
+check_turtle_syntax = check_turtle_wellformedness
+verify_json_syntax = check_json_wellformedness
+verify_turtle_syntax = check_turtle_wellformedness
+verify_all_syntax = check_all_wellformedness
 
 
 # =============================================================================
@@ -292,12 +252,12 @@ def _run_tests() -> bool:
     with tempfile.TemporaryDirectory() as tmpdir:
         tmppath = Path(tmpdir)
 
-        # Test 1: Valid JSON
+        # Test 1: Valid JSON (single file)
         valid_json = tmppath / "valid.json"
         valid_json.write_text('{"key": "value"}')
-        code, msg = check_json_syntax(valid_json)
+        code, results = check_json_wellformedness(valid_json)
         if code != 0:
-            print(f"FAIL: Valid JSON should pass: {msg}")
+            print(f"FAIL: Valid JSON should pass: {results}")
             all_passed = False
         else:
             print("PASS: Valid JSON syntax")
@@ -305,23 +265,23 @@ def _run_tests() -> bool:
         # Test 2: Invalid JSON
         invalid_json = tmppath / "invalid.json"
         invalid_json.write_text('{"key": "value",}')
-        code, msg = check_json_syntax(invalid_json)
+        code, results = check_json_wellformedness(invalid_json)
         if code == 0:
             print("FAIL: Invalid JSON should fail")
             all_passed = False
         else:
             print("PASS: Invalid JSON detected")
 
-        # Test 3: Valid Turtle
+        # Test 3: Valid Turtle (single file)
         valid_ttl = tmppath / "valid.ttl"
         valid_ttl.write_text(
             """@prefix ex: <http://example.org/> .
 ex:subject a ex:Thing .
 """
         )
-        code, msg = check_turtle_syntax(valid_ttl)
+        code, results = check_turtle_wellformedness(valid_ttl)
         if code != 0:
-            print(f"FAIL: Valid Turtle should pass: {msg}")
+            print(f"FAIL: Valid Turtle should pass: {results}")
             all_passed = False
         else:
             print("PASS: Valid Turtle syntax")
@@ -333,7 +293,7 @@ ex:subject a ex:Thing .
 ex:subject "unclosed string .
 """
         )
-        code, msg = check_turtle_syntax(invalid_ttl)
+        code, results = check_turtle_wellformedness(invalid_ttl)
         if code == 0:
             print("FAIL: Invalid Turtle should fail")
             all_passed = False
@@ -341,24 +301,35 @@ ex:subject "unclosed string .
             print("PASS: Invalid Turtle detected")
 
         # Test 5: Missing file
-        code, msg = check_json_syntax(tmppath / "nonexistent.json")
+        code, results = check_json_wellformedness(tmppath / "nonexistent.json")
         if code == 0:
             print("FAIL: Missing file should fail")
             all_passed = False
         else:
             print("PASS: Missing file detected")
 
-        # Test 6: Batch validation
+        # Test 6: Batch validation (directory)
         valid_dir = tmppath / "batch"
         valid_dir.mkdir()
         (valid_dir / "file1.json").write_text('{"a": 1}')
         (valid_dir / "file2.json").write_text('{"b": 2}')
-        ret, results = verify_json_syntax([str(valid_dir)])
+        ret, results = check_json_wellformedness([str(valid_dir)])
         if ret != 0:
             print(f"FAIL: Batch validation should pass: {results}")
             all_passed = False
         else:
             print("PASS: Batch JSON validation")
+
+        # Test 7: Multiple paths
+        (valid_dir / "file3.ttl").write_text(
+            "@prefix ex: <http://ex.org/> .\nex:a a ex:B .\n"
+        )
+        ret, results = check_all_wellformedness([str(valid_dir), str(valid_json)])
+        if ret != 0:
+            print(f"FAIL: Multi-path validation should pass: {results}")
+            all_passed = False
+        else:
+            print("PASS: Multi-path validation")
 
     if all_passed:
         print("\nAll tests passed!")
@@ -376,7 +347,7 @@ ex:subject "unclosed string .
 def main(args=None):
     """CLI entry point for syntax_validator."""
     parser = argparse.ArgumentParser(
-        description="Verify syntax correctness of JSON-LD and Turtle files."
+        description="Check JSON-LD and Turtle files for syntactic well-formedness."
     )
     parser.add_argument("paths", nargs="*", help="Files or directories to check")
     parser.add_argument("--test", action="store_true", help="Run self-tests")
@@ -395,19 +366,19 @@ def main(args=None):
         sys.exit(1)
 
     # Determine what to check
-    check_json = not parsed_args.turtle or parsed_args.json
-    check_turtle = not parsed_args.json or parsed_args.turtle
+    do_json = not parsed_args.turtle or parsed_args.json
+    do_turtle = not parsed_args.json or parsed_args.turtle
 
     # If neither specified explicitly, check both
     if not parsed_args.json and not parsed_args.turtle:
-        check_json = True
-        check_turtle = True
+        do_json = True
+        do_turtle = True
 
-    ret, results = verify_all_syntax(
+    ret, results = check_all_wellformedness(
         parsed_args.paths,
         root_dir=Path.cwd(),
-        check_json=check_json,
-        check_turtle=check_turtle,
+        check_json=do_json,
+        check_turtle=do_turtle,
     )
 
     # Print results

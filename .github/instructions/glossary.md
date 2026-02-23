@@ -40,7 +40,7 @@
 | **Artifacts Catalog** | `artifacts/catalog-v001.xml` - maps ontology IRIs to OWL/SHACL files                  |
 | **Imports Catalog**   | `imports/catalog-v001.xml` - maps base ontology IRIs (RDF, RDFS, OWL) to local copies |
 | **Tests Catalog**     | `tests/catalog-v001.xml` - lists test data files with metadata                        |
-| **Temporary Catalog** | In-memory catalog built for `--path` mode validation                                  |
+| **Temporary Catalog** | In-memory catalog built for `--data-paths` mode validation                                  |
 
 ## Validation Terminology
 

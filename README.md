@@ -35,12 +35,14 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 git clone https://github.com/ASCS-eV/ontology-management-base.git
 cd ontology-management-base
 
-# Create and activate virtual environment
-python3 -m venv .venv # Windows: python -m venv .venv
-source .venv/bin/activate # Windows: source .venv/Scripts/activate
+# One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
+make setup
+```
 
-# Install dependencies
-pip install -e .
+Activate the environment in your current shell when needed:
+
+```bash
+source .venv/bin/activate # Windows: source .venv/Scripts/activate
 ```
 
 ## Validation
@@ -53,15 +55,17 @@ make test
 python3 -m src.tools.validators.validation_suite --help
 
 # Validate specific domain
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+make test-domain DOMAIN=hdmap
 ```
 
 ## Local Docs Build
 
 ```bash
-python3 -m pip install -e ".[docs]"
+# Preview locally
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
 
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base mkdocs serve
+# Build static docs site
+make docs-build
 ```
 
 Notes:
