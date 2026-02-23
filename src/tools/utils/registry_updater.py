@@ -518,7 +518,15 @@ def generate_imports_catalog(
                 uri_mappings.append((context_iri, rel))
 
     uri_mappings.sort(key=lambda x: x[0])
+    # Deduplicate: keep only the first mapping for each IRI
+    seen_iris: set = set()
     for iri, path in uri_mappings:
+        if iri in seen_iris:
+            logger.warning(
+                "Duplicate context IRI %s (keeping first), skipping %s", iri, path
+            )
+            continue
+        seen_iris.add(iri)
         uri_elem = ET.SubElement(catalog, "uri")
         uri_elem.set("name", iri)
         uri_elem.set("uri", path)
