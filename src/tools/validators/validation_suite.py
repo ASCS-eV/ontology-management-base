@@ -270,7 +270,7 @@ def validate_data_conformance_all(
         # Use catalog-based validation method
         try:
             result = validator.validate_from_catalog(domain, test_type="valid")
-        except RuntimeError as e:
+        except (RuntimeError, ValueError) as e:
             print(f"\n\u274c {e}", file=sys.stderr, flush=True)
             return 1
 

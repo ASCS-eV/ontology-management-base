@@ -221,12 +221,22 @@ def load_jsonld_files(
                 graph.parse(str(json_file), format="json-ld")
         except Exception as e:
             logger.error("Failed to load %s: %s", rel_path, e)
-            if "HTTP Error" in str(e) or "urlopen error" in str(e):
+            err_str = str(e)
+            if "HTTP Error" in err_str or "urlopen error" in err_str:
                 raise RuntimeError(
                     f"Failed to load {rel_path}: could not fetch remote @context URL.\n"
                     f"  Cause: {e}\n"
                     f"  Hint: Ensure all @context URLs are mapped to local files via "
                     f"--artifacts, or check that the URL is published and reachable."
+                ) from e
+            if "Invalid IRI" in err_str or isinstance(e, ValueError):
+                raise RuntimeError(
+                    f"Failed to load {rel_path}: invalid IRI encountered during "
+                    f"JSON-LD parsing.\n"
+                    f"  Cause: {e}\n"
+                    f"  Hint: Check that all @context URLs are mapped to local files "
+                    f"via --artifacts. A missing context mapping can cause bare terms "
+                    f"to produce invalid IRIs."
                 ) from e
             raise
 
