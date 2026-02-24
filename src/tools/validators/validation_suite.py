@@ -268,7 +268,11 @@ def validate_data_conformance_all(
         )
 
         # Use catalog-based validation method
-        result = validator.validate_from_catalog(domain, test_type="valid")
+        try:
+            result = validator.validate_from_catalog(domain, test_type="valid")
+        except (RuntimeError, ValueError) as e:
+            print(f"\n\u274c {e}", file=sys.stderr, flush=True)
+            return 1
 
         if not result.files_validated:
             print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
