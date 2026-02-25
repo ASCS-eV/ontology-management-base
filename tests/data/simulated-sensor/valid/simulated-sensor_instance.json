@@ -9,10 +9,7 @@
   "@type": "simulated-sensor:SimulatedSensor",
   "simulated-sensor:sensorType": {
     "@type": "simulated-sensor:Radar",
-    "simulated-sensor:numberOfBeams": {
-      "@value": "1500",
-      "@type": "xsd:integer"
-    },
+    "simulated-sensor:numberOfBeams": 1500,
     "simulated-sensor:distance": {
       "@value": "100.0",
       "@type": "xsd:float"

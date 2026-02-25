@@ -64,10 +64,7 @@
         },
         "manifest:cid": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
         "manifest:mimeType": "application/x-xodr",
-        "manifest:fileSize": {
-          "@value": "636673",
-          "@type": "xsd:integer"
-        },
+        "manifest:fileSize": 636673,
         "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample.xodr"
       }
     },
@@ -89,10 +86,7 @@
         },
         "manifest:cid": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
         "manifest:mimeType": "text/markdown",
-        "manifest:fileSize": {
-          "@value": "5120",
-          "@type": "xsd:integer"
-        },
+        "manifest:fileSize": 5120,
         "manifest:filename": "README.md"
       }
     },
@@ -126,10 +120,7 @@
         },
         "manifest:cid": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
         "manifest:mimeType": "application/ld+json",
-        "manifest:fileSize": {
-          "@value": "5678",
-          "@type": "xsd:integer"
-        },
+        "manifest:fileSize": 5678,
         "manifest:filename": "domainMetadata.json"
       }
     },
@@ -151,10 +142,7 @@
         },
         "manifest:cid": "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco",
         "manifest:mimeType": "application/x-geojson",
-        "manifest:fileSize": {
-          "@value": "1500",
-          "@type": "xsd:integer"
-        },
+        "manifest:fileSize": 1500,
         "manifest:filename": "detailRoadNetwork.geojson"
       }
     },
@@ -176,10 +164,7 @@
         },
         "manifest:cid": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
         "manifest:mimeType": "image/png",
-        "manifest:fileSize": {
-          "@value": "2400256",
-          "@type": "xsd:integer"
-        },
+        "manifest:fileSize": 2400256,
         "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
         "manifest:hasDimensions": {
           "@type": "manifest:Dimensions",

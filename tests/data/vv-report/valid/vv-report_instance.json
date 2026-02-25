@@ -87,10 +87,7 @@
             }
           },
           "vv-report:conceptSpecificData": {
-            "modeling-simulation-spice-credibility-level": {
-              "@value": "1",
-              "@type": "xsd:integer"
-            }
+            "modeling-simulation-spice-credibility-level": 1
           }
         },
         {
@@ -135,10 +132,7 @@
             }
           },
           "vv-report:conceptSpecificData": {
-            "modeling-simulation-spice-credibility-level": {
-              "@value": "1",
-              "@type": "xsd:integer"
-            }
+            "modeling-simulation-spice-credibility-level": 1
           }
         }
       ]

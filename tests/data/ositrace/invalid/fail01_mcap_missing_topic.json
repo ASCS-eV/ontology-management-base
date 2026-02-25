@@ -55,10 +55,7 @@
       },
       "ositrace:hasHostMovingObject": {
         "@type": "ositrace:MovingObject",
-        "ositrace:identifier": {
-          "@value": "1",
-          "@type": "xsd:integer"
-        },
+        "ositrace:identifier": 1,
         "ositrace:description": "Ego vehicle"
       }
     },
@@ -67,10 +64,7 @@
     },
     "ositrace:hasQuantity": {
       "@type": "ositrace:Quantity",
-      "ositrace:numberFrames": {
-        "@value": "1448",
-        "@type": "xsd:integer"
-      }
+      "ositrace:numberFrames": 1448
     },
     "ositrace:hasDataSource": {
       "@type": "ositrace:DataSource",

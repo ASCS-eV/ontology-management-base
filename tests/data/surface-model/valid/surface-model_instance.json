@@ -98,10 +98,7 @@
       },
       "georeference:hasGeodeticReferenceSystem": {
         "@type": "georeference:GeodeticReferenceSystem",
-        "georeference:codeEPSG": {
-          "@value": "451989",
-          "@type": "xsd:integer"
-        },
+        "georeference:codeEPSG": 451989,
         "georeference:hasOrigin": {
           "@type": "georeference:LatLonCoordinate",
           "georeference:lat": {

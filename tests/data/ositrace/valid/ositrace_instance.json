@@ -56,18 +56,12 @@
       },
       "ositrace:hasHostMovingObject": {
         "@type": "ositrace:MovingObject",
-        "ositrace:identifier": {
-          "@value": "1",
-          "@type": "xsd:integer"
-        },
+        "ositrace:identifier": 1,
         "ositrace:description": "PMSF MB CLS 500 Host Vehicle"
       },
       "ositrace:hasTargetMovingObject": {
         "@type": "ositrace:MovingObject",
-        "ositrace:identifier": {
-          "@value": "2",
-          "@type": "xsd:integer"
-        },
+        "ositrace:identifier": 2,
         "ositrace:description": "ADC Target Vehicle"
       }
     },
@@ -81,10 +75,7 @@
     },
     "ositrace:hasQuantity": {
       "@type": "ositrace:Quantity",
-      "ositrace:numberFrames": {
-        "@value": "1448",
-        "@type": "xsd:integer"
-      }
+      "ositrace:numberFrames": 1448
     },
     "ositrace:hasDataSource": {
       "@type": "ositrace:DataSource",
@@ -123,10 +114,7 @@
       },
       "georeference:hasGeodeticReferenceSystem": {
         "@type": "georeference:GeodeticReferenceSystem",
-        "georeference:codeEPSG": {
-          "@value": "4326",
-          "@type": "xsd:integer"
-        },
+        "georeference:codeEPSG": 4326,
         "georeference:hasOrigin": {
           "@type": "georeference:LatLonCoordinate",
           "georeference:lat": {

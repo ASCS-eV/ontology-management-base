@@ -8,10 +8,7 @@
   "@type": "tzip21:Asset",
   "tzip21:name": "TestfeldNiedersachsen_ALKS_ODR_sample",
   "tzip21:description": "simple hdmap example file on Testfeld Niedersachsen for ALKS scenario",
-  "tzip21:decimals": {
-    "@value": "0",
-    "@type": "xsd:integer"
-  },
+  "tzip21:decimals": 0,
   "tzip21:isBooleanAmount": {
     "@value": true,
     "@type": "xsd:boolean"
@@ -70,10 +67,7 @@
       },
       "tzip21:hash": "bafybeifo6ve5i6542vi6ruuflxdqtcmcisdtwlqefq2e5a33tljsaqxhpm",
       "tzip21:mimeType": "application/zip",
-      "tzip21:fileSize": {
-        "@value": "7711664",
-        "@type": "xsd:integer"
-      },
+      "tzip21:fileSize": 7711664,
       "tzip21:fileName": "Testfeld_Niedersachsen_ALKS_xodr_sample.zip"
     },
     {
@@ -84,10 +78,7 @@
       },
       "tzip21:hash": "bafkreicuwg3s4uvei2iu2p5eobozghdodtwhwoi6qiawhwqj3nflrk6dxi",
       "tzip21:mimeType": "application/ld+json",
-      "tzip21:fileSize": {
-        "@value": "6574",
-        "@type": "xsd:integer"
-      },
+      "tzip21:fileSize": 6574,
       "tzip21:fileName": "hdmap_instance.json"
     },
     {
@@ -98,10 +89,7 @@
       },
       "tzip21:hash": "bafkreie2yjoudxlayordup63se7wbj6vroaoyqzcuixqcchpmd23ufno6u",
       "tzip21:mimeType": "application/ld+json",
-      "tzip21:fileSize": {
-        "@value": "5572",
-        "@type": "xsd:integer"
-      },
+      "tzip21:fileSize": 5572,
       "tzip21:fileName": "tzip21_manifest.json"
     },
     {
@@ -112,10 +100,7 @@
       },
       "tzip21:hash": "bafybeief5r2xgciehzhx6c4kbooifsnbjpiifjei36lpi3kzcdmpr2wvue",
       "tzip21:mimeType": "image/png",
-      "tzip21:fileSize": {
-        "@value": "2397906",
-        "@type": "xsd:integer"
-      },
+      "tzip21:fileSize": 2397906,
       "tzip21:fileName": "Testfeld_Niedersachsen_ALKS_..._impression-01.png",
       "tzip21:dimensions": {
         "@type": "tzip21:Dimensions",

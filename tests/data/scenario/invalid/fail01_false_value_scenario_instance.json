@@ -133,10 +133,7 @@
       },
       "georeference:hasGeodeticReferenceSystem": {
         "@type": "georeference:GeodeticReferenceSystem",
-        "georeference:codeEPSG": {
-          "@value": "32632",
-          "@type": "xsd:integer"
-        },
+        "georeference:codeEPSG": 32632,
         "georeference:hasOrigin": {
           "@type": "georeference:LatLonCoordinate",
           "georeference:lat": {
