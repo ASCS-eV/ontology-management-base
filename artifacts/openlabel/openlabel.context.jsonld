@@ -1,402 +1,402 @@
 {
-  "comments": {
-    "description": "Auto-generated JSON-LD context for compact instance syntax",
-    "generator": "context_generator.py",
-    "source_owl": "artifacts/openlabel/openlabel.owl.ttl",
-    "source_shacl": "artifacts/openlabel/openlabel.shacl.ttl",
-    "note": "Transitional artifact - will be replaced by LinkML-generated context"
-  },
-  "@context": {
-    "@version": 1.1,
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "ontologies": "https://openlabel.asam.net/V1-0-0/ontologies/",
-    "AdminTag": {
-      "@id": "ontologies:AdminTag",
-      "@type": "@id"
-    },
-    "Behaviour": {
-      "@id": "ontologies:Behaviour",
-      "@type": "@id"
-    },
-    "BehaviourCommunication": {
-      "@id": "ontologies:BehaviourCommunication"
-    },
-    "ConnectivityCommunication": {
-      "@id": "ontologies:ConnectivityCommunication"
-    },
-    "ConnectivityPositioning": {
-      "@id": "ontologies:ConnectivityPositioning"
-    },
-    "DaySunElevation": {
-      "@id": "ontologies:DaySunElevation",
-      "@type": "xsd:boolean"
-    },
-    "DaySunPosition": {
-      "@id": "ontologies:DaySunPosition",
-      "@type": "xsd:boolean"
-    },
-    "DrivableAreaEdge": {
-      "@id": "ontologies:DrivableAreaEdge"
-    },
-    "DrivableAreaSurfaceCondition": {
-      "@id": "ontologies:DrivableAreaSurfaceCondition"
-    },
-    "DrivableAreaSurfaceFeature": {
-      "@id": "ontologies:DrivableAreaSurfaceFeature"
-    },
-    "DrivableAreaSurfaceType": {
-      "@id": "ontologies:DrivableAreaSurfaceType"
-    },
-    "DrivableAreaType": {
-      "@id": "ontologies:DrivableAreaType"
-    },
-    "EnvironmentParticulates": {
-      "@id": "ontologies:EnvironmentParticulates"
-    },
-    "GeometryTransverse": {
-      "@id": "ontologies:GeometryTransverse"
-    },
-    "HorizontalCurves": {
-      "@id": "ontologies:HorizontalCurves",
-      "@type": "xsd:boolean"
-    },
-    "HorizontalStraights": {
-      "@id": "ontologies:HorizontalStraights",
-      "@type": "xsd:boolean"
-    },
-    "IlluminationArtificial": {
-      "@id": "ontologies:IlluminationArtificial"
-    },
-    "IlluminationCloudiness": {
-      "@id": "ontologies:IlluminationCloudiness",
-      "@type": "xsd:boolean"
-    },
-    "IlluminationLowLight": {
-      "@id": "ontologies:IlluminationLowLight"
-    },
-    "JunctionIntersection": {
-      "@id": "ontologies:JunctionIntersection"
-    },
-    "JunctionRoundabout": {
-      "@id": "ontologies:JunctionRoundabout"
-    },
-    "LaneSpecificationDimensions": {
-      "@id": "ontologies:LaneSpecificationDimensions",
-      "@type": "xsd:boolean"
-    },
-    "LaneSpecificationLaneCount": {
-      "@id": "ontologies:LaneSpecificationLaneCount",
-      "@type": "xsd:boolean"
-    },
-    "LaneSpecificationMarking": {
-      "@id": "ontologies:LaneSpecificationMarking",
-      "@type": "xsd:boolean"
-    },
-    "LaneSpecificationTravelDirection": {
-      "@id": "ontologies:LaneSpecificationTravelDirection"
-    },
-    "LaneSpecificationType": {
-      "@id": "ontologies:LaneSpecificationType"
-    },
-    "LongitudinalDownSlope": {
-      "@id": "ontologies:LongitudinalDownSlope",
-      "@type": "xsd:boolean"
-    },
-    "LongitudinalLevelPlane": {
-      "@id": "ontologies:LongitudinalLevelPlane",
-      "@type": "xsd:boolean"
-    },
-    "MotionAccelerate": {
-      "@id": "ontologies:MotionAccelerate",
-      "@type": "xsd:boolean"
-    },
-    "MotionAway": {
-      "@id": "ontologies:MotionAway",
-      "@type": "xsd:boolean"
-    },
-    "MotionCross": {
-      "@id": "ontologies:MotionCross",
-      "@type": "xsd:boolean"
-    },
-    "MotionCutIn": {
-      "@id": "ontologies:MotionCutIn",
-      "@type": "xsd:boolean"
-    },
-    "MotionCutOut": {
-      "@id": "ontologies:MotionCutOut",
-      "@type": "xsd:boolean"
-    },
-    "MotionDecelerate": {
-      "@id": "ontologies:MotionDecelerate",
-      "@type": "xsd:boolean"
-    },
-    "MotionDrive": {
-      "@id": "ontologies:MotionDrive",
-      "@type": "xsd:boolean"
-    },
-    "MotionLaneChangeLeft": {
-      "@id": "ontologies:MotionLaneChangeLeft",
-      "@type": "xsd:boolean"
-    },
-    "MotionLaneChangeRight": {
-      "@id": "ontologies:MotionLaneChangeRight",
-      "@type": "xsd:boolean"
-    },
-    "MotionOvertake": {
-      "@id": "ontologies:MotionOvertake",
-      "@type": "xsd:boolean"
-    },
-    "MotionReverse": {
-      "@id": "ontologies:MotionReverse",
-      "@type": "xsd:boolean"
-    },
-    "MotionRun": {
-      "@id": "ontologies:MotionRun",
-      "@type": "xsd:boolean"
-    },
-    "MotionSlide": {
-      "@id": "ontologies:MotionSlide",
-      "@type": "xsd:boolean"
-    },
-    "MotionStop": {
-      "@id": "ontologies:MotionStop",
-      "@type": "xsd:boolean"
-    },
-    "MotionTowards": {
-      "@id": "ontologies:MotionTowards",
-      "@type": "xsd:boolean"
-    },
-    "MotionTurn": {
-      "@id": "ontologies:MotionTurn",
-      "@type": "xsd:boolean"
-    },
-    "MotionTurnLeft": {
-      "@id": "ontologies:MotionTurnLeft",
-      "@type": "xsd:boolean"
-    },
-    "MotionTurnRight": {
-      "@id": "ontologies:MotionTurnRight",
-      "@type": "xsd:boolean"
-    },
-    "MotionUTurn": {
-      "@id": "ontologies:MotionUTurn",
-      "@type": "xsd:boolean"
-    },
-    "MotionWalk": {
-      "@id": "ontologies:MotionWalk",
-      "@type": "xsd:boolean"
-    },
-    "Odd": {
-      "@id": "ontologies:Odd",
-      "@type": "@id"
-    },
-    "ParticulatesDust": {
-      "@id": "ontologies:ParticulatesDust",
-      "@type": "xsd:boolean"
-    },
-    "ParticulatesMarine": {
-      "@id": "ontologies:ParticulatesMarine",
-      "@type": "xsd:boolean"
-    },
-    "ParticulatesPollution": {
-      "@id": "ontologies:ParticulatesPollution",
-      "@type": "xsd:boolean"
-    },
-    "ParticulatesVolcanic": {
-      "@id": "ontologies:ParticulatesVolcanic",
-      "@type": "xsd:boolean"
-    },
-    "RainType": {
-      "@id": "ontologies:RainType"
-    },
-    "RoadUser": {
-      "@id": "ontologies:RoadUser",
-      "@type": "@id"
-    },
-    "RoadUserAnimal": {
-      "@id": "ontologies:RoadUserAnimal",
-      "@type": "xsd:boolean"
-    },
-    "RoadUserHuman": {
-      "@id": "ontologies:RoadUserHuman",
-      "@type": "xsd:boolean"
-    },
-    "RoadUserVehicle": {
-      "@id": "ontologies:RoadUserVehicle"
-    },
-    "SceneryFixedStructure": {
-      "@id": "ontologies:SceneryFixedStructure"
-    },
-    "ScenerySpecialStructure": {
-      "@id": "ontologies:ScenerySpecialStructure"
-    },
-    "SceneryTemporaryStructure": {
-      "@id": "ontologies:SceneryTemporaryStructure"
-    },
-    "SceneryZone": {
-      "@id": "ontologies:SceneryZone"
-    },
-    "SignsInformation": {
-      "@id": "ontologies:SignsInformation"
-    },
-    "SignsRegulatory": {
-      "@id": "ontologies:SignsRegulatory"
-    },
-    "SignsWarning": {
-      "@id": "ontologies:SignsWarning"
-    },
-    "SubjectVehicleSpeed": {
-      "@id": "ontologies:SubjectVehicleSpeed",
-      "@type": "xsd:boolean"
-    },
-    "TrafficAgentDensity": {
-      "@id": "ontologies:TrafficAgentDensity",
-      "@type": "xsd:boolean"
-    },
-    "TrafficFlowRate": {
-      "@id": "ontologies:TrafficFlowRate",
-      "@type": "xsd:boolean"
-    },
-    "TrafficSpecialVehicle": {
-      "@id": "ontologies:TrafficSpecialVehicle",
-      "@type": "xsd:boolean"
-    },
-    "TrafficVolume": {
-      "@id": "ontologies:TrafficVolume",
-      "@type": "xsd:boolean"
-    },
-    "WeatherRain": {
-      "@id": "ontologies:WeatherRain",
-      "@type": "xsd:boolean"
-    },
-    "WeatherSnow": {
-      "@id": "ontologies:WeatherSnow",
-      "@type": "xsd:boolean"
-    },
-    "WeatherWind": {
-      "@id": "ontologies:WeatherWind",
-      "@type": "xsd:boolean"
-    },
-    "daySunElevationValue": {
-      "@id": "ontologies:daySunElevationValue",
-      "@type": "xsd:decimal"
-    },
-    "horizontalCurvesValue": {
-      "@id": "ontologies:horizontalCurvesValue",
-      "@type": "xsd:decimal"
-    },
-    "illuminationCloudinessValue": {
-      "@id": "ontologies:illuminationCloudinessValue",
-      "@type": "xsd:decimal"
-    },
-    "laneSpecificationDimensionsValue": {
-      "@id": "ontologies:laneSpecificationDimensionsValue",
-      "@type": "@id"
-    },
-    "laneSpecificationLaneCountValue": {
-      "@id": "ontologies:laneSpecificationLaneCountValue",
-      "@type": "@id"
-    },
-    "licenseURI": {
-      "@id": "ontologies:licenseURI",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "longitudinalDownSlopeValue": {
-      "@id": "ontologies:longitudinalDownSlopeValue",
-      "@type": "xsd:decimal"
-    },
-    "motionAccelerateValue": {
-      "@id": "ontologies:motionAccelerateValue",
-      "@type": "@id"
-    },
-    "motionDecelerateValue": {
-      "@id": "ontologies:motionDecelerateValue",
-      "@type": "@id"
-    },
-    "motionDriveValue": {
-      "@id": "ontologies:motionDriveValue",
-      "@type": "@id"
-    },
-    "ownerEmail": {
-      "@id": "ontologies:ownerEmail",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "ownerName": {
-      "@id": "ontologies:ownerName",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "ownerURL": {
-      "@id": "ontologies:ownerURL",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioCreatedDate": {
-      "@id": "ontologies:scenarioCreatedDate",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioDefinition": {
-      "@id": "ontologies:scenarioDefinition",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioDefinitionLanguageURI": {
-      "@id": "ontologies:scenarioDefinitionLanguageURI",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioDescription": {
-      "@id": "ontologies:scenarioDescription",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioName": {
-      "@id": "ontologies:scenarioName",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioParentReference": {
-      "@id": "ontologies:scenarioParentReference",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioUniqueReference": {
-      "@id": "ontologies:scenarioUniqueReference",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioVersion": {
-      "@id": "ontologies:scenarioVersion",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "scenarioVisualisationURL": {
-      "@id": "ontologies:scenarioVisualisationURL",
-      "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
-    },
-    "subjectVehicleSpeedValue": {
-      "@id": "ontologies:subjectVehicleSpeedValue",
-      "@type": "@id"
-    },
-    "trafficAgentDensityValue": {
-      "@id": "ontologies:trafficAgentDensityValue",
-      "@type": "xsd:integer"
-    },
-    "trafficFlowRateValue": {
-      "@id": "ontologies:trafficFlowRateValue",
-      "@type": "xsd:integer"
-    },
-    "trafficVolumeValue": {
-      "@id": "ontologies:trafficVolumeValue",
-      "@type": "xsd:integer"
-    },
-    "weatherRainValue": {
-      "@id": "ontologies:weatherRainValue",
-      "@type": "xsd:decimal"
-    },
-    "weatherSnowValue": {
-      "@id": "ontologies:weatherSnowValue",
-      "@type": "xsd:decimal"
-    },
-    "weatherWindValue": {
-      "@id": "ontologies:weatherWindValue",
-      "@type": "xsd:decimal"
-    }
-  }
+   "comments": {
+      "description": "Auto-generated JSON-LD context for compact instance syntax",
+      "generator": "context_generator.py",
+      "source_owl": "artifacts/openlabel/openlabel.owl.ttl",
+      "source_shacl": "artifacts/openlabel/openlabel.shacl.ttl",
+      "note": "Transitional artifact - will be replaced by LinkML-generated context"
+   },
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "ontologies": "https://openlabel.asam.net/V1-0-0/ontologies/",
+      "AdminTag": {
+         "@id": "ontologies:AdminTag",
+         "@type": "@id"
+      },
+      "Behaviour": {
+         "@id": "ontologies:Behaviour",
+         "@type": "@id"
+      },
+      "BehaviourCommunication": {
+         "@id": "ontologies:BehaviourCommunication"
+      },
+      "ConnectivityCommunication": {
+         "@id": "ontologies:ConnectivityCommunication"
+      },
+      "ConnectivityPositioning": {
+         "@id": "ontologies:ConnectivityPositioning"
+      },
+      "DaySunElevation": {
+         "@id": "ontologies:DaySunElevation",
+         "@type": "xsd:boolean"
+      },
+      "DaySunPosition": {
+         "@id": "ontologies:DaySunPosition",
+         "@type": "xsd:boolean"
+      },
+      "DrivableAreaEdge": {
+         "@id": "ontologies:DrivableAreaEdge"
+      },
+      "DrivableAreaSurfaceCondition": {
+         "@id": "ontologies:DrivableAreaSurfaceCondition"
+      },
+      "DrivableAreaSurfaceFeature": {
+         "@id": "ontologies:DrivableAreaSurfaceFeature"
+      },
+      "DrivableAreaSurfaceType": {
+         "@id": "ontologies:DrivableAreaSurfaceType"
+      },
+      "DrivableAreaType": {
+         "@id": "ontologies:DrivableAreaType"
+      },
+      "EnvironmentParticulates": {
+         "@id": "ontologies:EnvironmentParticulates"
+      },
+      "GeometryTransverse": {
+         "@id": "ontologies:GeometryTransverse"
+      },
+      "HorizontalCurves": {
+         "@id": "ontologies:HorizontalCurves",
+         "@type": "xsd:boolean"
+      },
+      "HorizontalStraights": {
+         "@id": "ontologies:HorizontalStraights",
+         "@type": "xsd:boolean"
+      },
+      "IlluminationArtificial": {
+         "@id": "ontologies:IlluminationArtificial"
+      },
+      "IlluminationCloudiness": {
+         "@id": "ontologies:IlluminationCloudiness",
+         "@type": "xsd:boolean"
+      },
+      "IlluminationLowLight": {
+         "@id": "ontologies:IlluminationLowLight"
+      },
+      "JunctionIntersection": {
+         "@id": "ontologies:JunctionIntersection"
+      },
+      "JunctionRoundabout": {
+         "@id": "ontologies:JunctionRoundabout"
+      },
+      "LaneSpecificationDimensions": {
+         "@id": "ontologies:LaneSpecificationDimensions",
+         "@type": "xsd:boolean"
+      },
+      "LaneSpecificationLaneCount": {
+         "@id": "ontologies:LaneSpecificationLaneCount",
+         "@type": "xsd:boolean"
+      },
+      "LaneSpecificationMarking": {
+         "@id": "ontologies:LaneSpecificationMarking",
+         "@type": "xsd:boolean"
+      },
+      "LaneSpecificationTravelDirection": {
+         "@id": "ontologies:LaneSpecificationTravelDirection"
+      },
+      "LaneSpecificationType": {
+         "@id": "ontologies:LaneSpecificationType"
+      },
+      "LongitudinalDownSlope": {
+         "@id": "ontologies:LongitudinalDownSlope",
+         "@type": "xsd:boolean"
+      },
+      "LongitudinalLevelPlane": {
+         "@id": "ontologies:LongitudinalLevelPlane",
+         "@type": "xsd:boolean"
+      },
+      "MotionAccelerate": {
+         "@id": "ontologies:MotionAccelerate",
+         "@type": "xsd:boolean"
+      },
+      "MotionAway": {
+         "@id": "ontologies:MotionAway",
+         "@type": "xsd:boolean"
+      },
+      "MotionCross": {
+         "@id": "ontologies:MotionCross",
+         "@type": "xsd:boolean"
+      },
+      "MotionCutIn": {
+         "@id": "ontologies:MotionCutIn",
+         "@type": "xsd:boolean"
+      },
+      "MotionCutOut": {
+         "@id": "ontologies:MotionCutOut",
+         "@type": "xsd:boolean"
+      },
+      "MotionDecelerate": {
+         "@id": "ontologies:MotionDecelerate",
+         "@type": "xsd:boolean"
+      },
+      "MotionDrive": {
+         "@id": "ontologies:MotionDrive",
+         "@type": "xsd:boolean"
+      },
+      "MotionLaneChangeLeft": {
+         "@id": "ontologies:MotionLaneChangeLeft",
+         "@type": "xsd:boolean"
+      },
+      "MotionLaneChangeRight": {
+         "@id": "ontologies:MotionLaneChangeRight",
+         "@type": "xsd:boolean"
+      },
+      "MotionOvertake": {
+         "@id": "ontologies:MotionOvertake",
+         "@type": "xsd:boolean"
+      },
+      "MotionReverse": {
+         "@id": "ontologies:MotionReverse",
+         "@type": "xsd:boolean"
+      },
+      "MotionRun": {
+         "@id": "ontologies:MotionRun",
+         "@type": "xsd:boolean"
+      },
+      "MotionSlide": {
+         "@id": "ontologies:MotionSlide",
+         "@type": "xsd:boolean"
+      },
+      "MotionStop": {
+         "@id": "ontologies:MotionStop",
+         "@type": "xsd:boolean"
+      },
+      "MotionTowards": {
+         "@id": "ontologies:MotionTowards",
+         "@type": "xsd:boolean"
+      },
+      "MotionTurn": {
+         "@id": "ontologies:MotionTurn",
+         "@type": "xsd:boolean"
+      },
+      "MotionTurnLeft": {
+         "@id": "ontologies:MotionTurnLeft",
+         "@type": "xsd:boolean"
+      },
+      "MotionTurnRight": {
+         "@id": "ontologies:MotionTurnRight",
+         "@type": "xsd:boolean"
+      },
+      "MotionUTurn": {
+         "@id": "ontologies:MotionUTurn",
+         "@type": "xsd:boolean"
+      },
+      "MotionWalk": {
+         "@id": "ontologies:MotionWalk",
+         "@type": "xsd:boolean"
+      },
+      "Odd": {
+         "@id": "ontologies:Odd",
+         "@type": "@id"
+      },
+      "ParticulatesDust": {
+         "@id": "ontologies:ParticulatesDust",
+         "@type": "xsd:boolean"
+      },
+      "ParticulatesMarine": {
+         "@id": "ontologies:ParticulatesMarine",
+         "@type": "xsd:boolean"
+      },
+      "ParticulatesPollution": {
+         "@id": "ontologies:ParticulatesPollution",
+         "@type": "xsd:boolean"
+      },
+      "ParticulatesVolcanic": {
+         "@id": "ontologies:ParticulatesVolcanic",
+         "@type": "xsd:boolean"
+      },
+      "RainType": {
+         "@id": "ontologies:RainType"
+      },
+      "RoadUser": {
+         "@id": "ontologies:RoadUser",
+         "@type": "@id"
+      },
+      "RoadUserAnimal": {
+         "@id": "ontologies:RoadUserAnimal",
+         "@type": "xsd:boolean"
+      },
+      "RoadUserHuman": {
+         "@id": "ontologies:RoadUserHuman",
+         "@type": "xsd:boolean"
+      },
+      "RoadUserVehicle": {
+         "@id": "ontologies:RoadUserVehicle"
+      },
+      "SceneryFixedStructure": {
+         "@id": "ontologies:SceneryFixedStructure"
+      },
+      "ScenerySpecialStructure": {
+         "@id": "ontologies:ScenerySpecialStructure"
+      },
+      "SceneryTemporaryStructure": {
+         "@id": "ontologies:SceneryTemporaryStructure"
+      },
+      "SceneryZone": {
+         "@id": "ontologies:SceneryZone"
+      },
+      "SignsInformation": {
+         "@id": "ontologies:SignsInformation"
+      },
+      "SignsRegulatory": {
+         "@id": "ontologies:SignsRegulatory"
+      },
+      "SignsWarning": {
+         "@id": "ontologies:SignsWarning"
+      },
+      "SubjectVehicleSpeed": {
+         "@id": "ontologies:SubjectVehicleSpeed",
+         "@type": "xsd:boolean"
+      },
+      "TrafficAgentDensity": {
+         "@id": "ontologies:TrafficAgentDensity",
+         "@type": "xsd:boolean"
+      },
+      "TrafficFlowRate": {
+         "@id": "ontologies:TrafficFlowRate",
+         "@type": "xsd:boolean"
+      },
+      "TrafficSpecialVehicle": {
+         "@id": "ontologies:TrafficSpecialVehicle",
+         "@type": "xsd:boolean"
+      },
+      "TrafficVolume": {
+         "@id": "ontologies:TrafficVolume",
+         "@type": "xsd:boolean"
+      },
+      "WeatherRain": {
+         "@id": "ontologies:WeatherRain",
+         "@type": "xsd:boolean"
+      },
+      "WeatherSnow": {
+         "@id": "ontologies:WeatherSnow",
+         "@type": "xsd:boolean"
+      },
+      "WeatherWind": {
+         "@id": "ontologies:WeatherWind",
+         "@type": "xsd:boolean"
+      },
+      "daySunElevationValue": {
+         "@id": "ontologies:daySunElevationValue",
+         "@type": "xsd:decimal"
+      },
+      "horizontalCurvesValue": {
+         "@id": "ontologies:horizontalCurvesValue",
+         "@type": "xsd:decimal"
+      },
+      "illuminationCloudinessValue": {
+         "@id": "ontologies:illuminationCloudinessValue",
+         "@type": "xsd:decimal"
+      },
+      "laneSpecificationDimensionsValue": {
+         "@id": "ontologies:laneSpecificationDimensionsValue",
+         "@type": "@id"
+      },
+      "laneSpecificationLaneCountValue": {
+         "@id": "ontologies:laneSpecificationLaneCountValue",
+         "@type": "@id"
+      },
+      "licenseURI": {
+         "@id": "ontologies:licenseURI",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "longitudinalDownSlopeValue": {
+         "@id": "ontologies:longitudinalDownSlopeValue",
+         "@type": "xsd:decimal"
+      },
+      "motionAccelerateValue": {
+         "@id": "ontologies:motionAccelerateValue",
+         "@type": "@id"
+      },
+      "motionDecelerateValue": {
+         "@id": "ontologies:motionDecelerateValue",
+         "@type": "@id"
+      },
+      "motionDriveValue": {
+         "@id": "ontologies:motionDriveValue",
+         "@type": "@id"
+      },
+      "ownerEmail": {
+         "@id": "ontologies:ownerEmail",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "ownerName": {
+         "@id": "ontologies:ownerName",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "ownerURL": {
+         "@id": "ontologies:ownerURL",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioCreatedDate": {
+         "@id": "ontologies:scenarioCreatedDate",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioDefinition": {
+         "@id": "ontologies:scenarioDefinition",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioDefinitionLanguageURI": {
+         "@id": "ontologies:scenarioDefinitionLanguageURI",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioDescription": {
+         "@id": "ontologies:scenarioDescription",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioName": {
+         "@id": "ontologies:scenarioName",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioParentReference": {
+         "@id": "ontologies:scenarioParentReference",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioUniqueReference": {
+         "@id": "ontologies:scenarioUniqueReference",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioVersion": {
+         "@id": "ontologies:scenarioVersion",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "scenarioVisualisationURL": {
+         "@id": "ontologies:scenarioVisualisationURL",
+         "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "subjectVehicleSpeedValue": {
+         "@id": "ontologies:subjectVehicleSpeedValue",
+         "@type": "@id"
+      },
+      "trafficAgentDensityValue": {
+         "@id": "ontologies:trafficAgentDensityValue",
+         "@type": "xsd:integer"
+      },
+      "trafficFlowRateValue": {
+         "@id": "ontologies:trafficFlowRateValue",
+         "@type": "xsd:integer"
+      },
+      "trafficVolumeValue": {
+         "@id": "ontologies:trafficVolumeValue",
+         "@type": "xsd:integer"
+      },
+      "weatherRainValue": {
+         "@id": "ontologies:weatherRainValue",
+         "@type": "xsd:decimal"
+      },
+      "weatherSnowValue": {
+         "@id": "ontologies:weatherSnowValue",
+         "@type": "xsd:decimal"
+      },
+      "weatherWindValue": {
+         "@id": "ontologies:weatherWindValue",
+         "@type": "xsd:decimal"
+      }
+   }
 }

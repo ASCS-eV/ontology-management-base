@@ -1,166 +1,166 @@
 {
-  "@context": {
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#"
-  },
-  "@id": "did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance",
-  "@type": "manifest:Manifest",
-  "manifest:hasManifestReference": {
-    "@type": "manifest:Link",
-    "manifest:hasAccessRole": {
-      "@type": "manifest:AccessRole",
-      "@id": "manifest:isPublic"
-    },
-    "manifest:hasCategory": {
-      "@type": "manifest:Category",
-      "@id": "manifest:isManifest"
-    },
-    "manifest:hasFileMetadata": {
-      "@type": "manifest:FileMetadata",
-      "manifest:filePath": {
-        "@value": "./manifest_instance.json",
-        "@type": "xsd:anyURI"
-      },
-      "manifest:mimeType": "application/ld+json"
-    }
-  },
-  "manifest:hasArtifacts": [
-    {
+   "@context": {
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#"
+   },
+   "@id": "did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance",
+   "@type": "manifest:Manifest",
+   "manifest:hasManifestReference": {
       "@type": "manifest:Link",
       "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "manifest:isPublic"
+         "@type": "manifest:AccessRole",
+         "@id": "manifest:isPublic"
       },
       "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "manifest:isMiscellaneous"
+         "@type": "manifest:Category",
+         "@id": "manifest:isManifest"
       },
       "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
-        "manifest:mimeType": "application/x-xodr",
-        "manifest:fileSize": 636673,
-        "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample.xodr"
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "./manifest_instance.json",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": "application/ld+json"
       }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "manifest:isPublic"
+   },
+   "manifest:hasArtifacts": [
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
+            "manifest:mimeType": "application/x-xodr",
+            "manifest:fileSize": 636673,
+            "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample.xodr"
+         }
       },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "manifest:isMiscellaneous"
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
+            "manifest:mimeType": "text/markdown",
+            "manifest:fileSize": 5120,
+            "manifest:filename": "README.md"
+         }
       },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
-        "manifest:mimeType": "text/markdown",
-        "manifest:fileSize": 5120,
-        "manifest:filename": "README.md"
+      {
+         "@type": "manifest:Link",
+         "manifest:iri": {
+            "@id": "did:web:registry.envited-x.net:HdMap:DjHgK5ErTBow1Ya3J05tW9l12skGWgZn6kA9"
+         },
+         "skos:note": "Referenced HD Map Asset.",
+         "sh:conformsTo": [
+            {
+               "@id": "https://w3id.org/ascs-ev/envited-x/hdmap/v2/"
+            },
+            {
+               "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v2/"
+            }
+         ],
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
+            "manifest:mimeType": "application/ld+json",
+            "manifest:fileSize": 5678,
+            "manifest:filename": "domainMetadata.json"
+         }
+      },
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "./visualization/detailRoadNetwork.geojson",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": "bafkreiakpb3ajhljq6cgwizcyirsk6uz322szaxd6ynmovcwuu5jkx5isa",
+            "manifest:mimeType": "application/x-geojson",
+            "manifest:fileSize": 1500,
+            "manifest:filename": "detailRoadNetwork.geojson"
+         }
+      },
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "./visualization/TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
+            "manifest:mimeType": "image/png",
+            "manifest:fileSize": 2400256,
+            "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
+            "manifest:hasDimensions": {
+               "@type": "manifest:Dimensions",
+               "manifest:unit": "pixels",
+               "manifest:width": {
+                  "@value": "1095.0",
+                  "@type": "xsd:float"
+               },
+               "manifest:height": {
+                  "@value": "850.0",
+                  "@type": "xsd:float"
+               }
+            }
+         }
       }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:iri": {
-        "@id": "did:web:registry.envited-x.net:HdMap:DjHgK5ErTBow1Ya3J05tW9l12skGWgZn6kA9"
-      },
-      "skos:note": "Referenced HD Map Asset.",
-      "sh:conformsTo": [
-        {
-          "@id": "https://w3id.org/ascs-ev/envited-x/hdmap/v2/"
-        },
-        {
-          "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v2/"
-        }
-      ],
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "manifest:isPublic"
-      },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "manifest:isMiscellaneous"
-      },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
-        "manifest:mimeType": "application/ld+json",
-        "manifest:fileSize": 5678,
-        "manifest:filename": "domainMetadata.json"
-      }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "manifest:isPublic"
-      },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "manifest:isMiscellaneous"
-      },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "./visualization/detailRoadNetwork.geojson",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": "bafkreiakpb3ajhljq6cgwizcyirsk6uz322szaxd6ynmovcwuu5jkx5isa",
-        "manifest:mimeType": "application/x-geojson",
-        "manifest:fileSize": 1500,
-        "manifest:filename": "detailRoadNetwork.geojson"
-      }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "manifest:isPublic"
-      },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "manifest:isMiscellaneous"
-      },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "./visualization/TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
-        "manifest:mimeType": "image/png",
-        "manifest:fileSize": 2400256,
-        "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
-        "manifest:hasDimensions": {
-          "@type": "manifest:Dimensions",
-          "manifest:unit": "pixels",
-          "manifest:width": {
-            "@value": "1095.0",
-            "@type": "xsd:float"
-          },
-          "manifest:height": {
-            "@value": "850.0",
-            "@type": "xsd:float"
-          }
-        }
-      }
-    }
-  ],
-  "manifest:hasReferencedArtifacts": []
+   ],
+   "manifest:hasReferencedArtifacts": []
 }

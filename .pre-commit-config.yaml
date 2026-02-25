@@ -1,5 +1,14 @@
 ---
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: pretty-format-json
+        args: ["--autofix", "--indent", "3", "--no-ensure-ascii", "--no-sort-keys"]
+        files: \.(json|jsonld)$
+
   - repo: local
     hooks:
       - id: black

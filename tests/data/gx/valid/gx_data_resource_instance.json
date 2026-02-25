@@ -1,95 +1,95 @@
 {
-  "@context": {
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "gx": "https://w3id.org/gaia-x/development#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "vcard": "http://www.w3.org/2006/vcard/ns#",
-    "schema": "https://schema.org/",
-    "dcat": "http://www.w3.org/ns/dcat#"
-  },
-  "@graph": [
-    {
-      "@id": "did:web:test.gx.net:DataProduct:test_valid_gx_data_product",
-      "@type": "gx:DataProduct",
-      "schema:description": "Generated description.",
-      "gx:digitalServiceOfferingName": "Generated Data Product",
-      "gx:digitalServiceOfferingShortDescription": "Generated data product for Gaia-X validation examples.",
-      "gx:digitalServiceOfferingIdentifier": "gx-data-product-001",
-      "gx:digitalServiceOfferingLaunchDate": "2025-03-28T12:29:44Z",
-      "gx:digitalServiceOfferingProvider": {
-        "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "vcard": "http://www.w3.org/2006/vcard/ns#",
+      "schema": "https://schema.org/",
+      "dcat": "http://www.w3.org/ns/dcat#"
+   },
+   "@graph": [
+      {
+         "@id": "did:web:test.gx.net:DataProduct:test_valid_gx_data_product",
+         "@type": "gx:DataProduct",
+         "schema:description": "Generated description.",
+         "gx:digitalServiceOfferingName": "Generated Data Product",
+         "gx:digitalServiceOfferingShortDescription": "Generated data product for Gaia-X validation examples.",
+         "gx:digitalServiceOfferingIdentifier": "gx-data-product-001",
+         "gx:digitalServiceOfferingLaunchDate": "2025-03-28T12:29:44Z",
+         "gx:digitalServiceOfferingProvider": {
+            "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+         },
+         "gx:digitalServiceOfferingTermsAndConditions": {
+            "@type": "gx:ServiceTermsAndConditions",
+            "gx:url": {
+               "@value": "https://example.org/gx/provider-terms",
+               "@type": "xsd:anyURI"
+            },
+            "gx:hash": "8acc4f464f2fbf0b104410f5f9d203df707810a162d4f5d72fcb0aa94af6c8fb"
+         },
+         "gx:digitalServiceUsageTermsAndConditions": {
+            "@type": "gx:UsageTermsAndConditions",
+            "gx:url": {
+               "@value": "https://example.org/gx/usage-terms",
+               "@type": "xsd:anyURI"
+            },
+            "gx:hash": "c286ea0f5f0dbf378d8a72f126407fdf2d772316147f5f6a8f6ae6ce3c73b36c"
+         },
+         "gx:digitalServiceUsageDataPolicy": {
+            "@type": "gx:TermsAndConditions",
+            "gx:url": {
+               "@value": "https://example.org/gx/data-policy",
+               "@type": "xsd:anyURI"
+            },
+            "gx:hash": "2ca8e2abf27608d70590436c9da8bb8286a99d94f356dfefb2b8baadce2b009c"
+         },
+         "gx:digitalServiceLegalDocuments": [
+            {
+               "@type": "gx:LegalDocument",
+               "gx:url": {
+                  "@value": "https://example.org/gx/legal-document",
+                  "@type": "xsd:anyURI"
+               }
+            }
+         ],
+         "gx:dataProductDescription": {
+            "@type": "gx:DataProductDescription",
+            "dcat:Dataset": "urn:uuid:gx-data-product-dataset",
+            "gx:dataProductConfigurationParameters": [
+               {
+                  "@type": "gx:DataProductConfigurationParameter",
+                  "gx:parameterName": "serialization",
+                  "gx:parameterDescription": "Delivery serialization format.",
+                  "gx:parameterAdmissibleValues": "json"
+               }
+            ]
+         }
       },
-      "gx:digitalServiceOfferingTermsAndConditions": {
-        "@type": "gx:ServiceTermsAndConditions",
-        "gx:url": {
-          "@value": "https://example.org/gx/provider-terms",
-          "@type": "xsd:anyURI"
-        },
-        "gx:hash": "8acc4f464f2fbf0b104410f5f9d203df707810a162d4f5d72fcb0aa94af6c8fb"
-      },
-      "gx:digitalServiceUsageTermsAndConditions": {
-        "@type": "gx:UsageTermsAndConditions",
-        "gx:url": {
-          "@value": "https://example.org/gx/usage-terms",
-          "@type": "xsd:anyURI"
-        },
-        "gx:hash": "c286ea0f5f0dbf378d8a72f126407fdf2d772316147f5f6a8f6ae6ce3c73b36c"
-      },
-      "gx:digitalServiceUsageDataPolicy": {
-        "@type": "gx:TermsAndConditions",
-        "gx:url": {
-          "@value": "https://example.org/gx/data-policy",
-          "@type": "xsd:anyURI"
-        },
-        "gx:hash": "2ca8e2abf27608d70590436c9da8bb8286a99d94f356dfefb2b8baadce2b009c"
-      },
-      "gx:digitalServiceLegalDocuments": [
-        {
-          "@type": "gx:LegalDocument",
-          "gx:url": {
-            "@value": "https://example.org/gx/legal-document",
-            "@type": "xsd:anyURI"
-          }
-        }
-      ],
-      "gx:dataProductDescription": {
-        "@type": "gx:DataProductDescription",
-        "dcat:Dataset": "urn:uuid:gx-data-product-dataset",
-        "gx:dataProductConfigurationParameters": [
-          {
-            "@type": "gx:DataProductConfigurationParameter",
-            "gx:parameterName": "serialization",
-            "gx:parameterDescription": "Delivery serialization format.",
-            "gx:parameterAdmissibleValues": "json"
-          }
-        ]
+      {
+         "@id": "did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering",
+         "@type": "gx:ServiceOffering",
+         "gx:providedBy": {
+            "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+         },
+         "gx:servicePolicy": {
+            "@type": "gx:AccessUsagePolicy",
+            "gx:policyLanguage": "Rego",
+            "gx:policyDocument": "allow;"
+         },
+         "gx:serviceOfferingTermsAndConditions": {
+            "@type": "gx:TermsAndConditions",
+            "gx:url": {
+               "@value": "https://www.bmwgroup.com/terms",
+               "@type": "xsd:anyURI"
+            },
+            "gx:hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+         },
+         "gx:dataAccountExport": {
+            "@type": "gx:DataAccountExport",
+            "gx:formatType": "application/json",
+            "gx:requestType": "API",
+            "gx:accessType": "digital"
+         }
       }
-    },
-    {
-      "@id": "did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering",
-      "@type": "gx:ServiceOffering",
-      "gx:providedBy": {
-        "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      },
-      "gx:servicePolicy": {
-        "@type": "gx:AccessUsagePolicy",
-        "gx:policyLanguage": "Rego",
-        "gx:policyDocument": "allow;"
-      },
-      "gx:serviceOfferingTermsAndConditions": {
-        "@type": "gx:TermsAndConditions",
-        "gx:url": {
-          "@value": "https://www.bmwgroup.com/terms",
-          "@type": "xsd:anyURI"
-        },
-        "gx:hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-      },
-      "gx:dataAccountExport": {
-        "@type": "gx:DataAccountExport",
-        "gx:formatType": "application/json",
-        "gx:requestType": "API",
-        "gx:accessType": "digital"
-      }
-    }
-  ]
+   ]
 }
