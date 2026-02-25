@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from src.tools.utils.xsd_enum_extractor import EnumType, EnumValue
 from src.tools.utils.xsd_shacl_sync import (
     EnumComparisonResult,
     SyncReport,
@@ -12,7 +13,6 @@ from src.tools.utils.xsd_shacl_sync import (
     extract_shacl_enums,
     run_sync_check,
 )
-from src.tools.utils.xsd_enum_extractor import EnumType, EnumValue
 
 
 class TestEnumComparisonResult:
@@ -77,30 +77,46 @@ class TestSyncReport:
     """Tests for SyncReport dataclass."""
 
     def test_all_in_sync(self):
-        report = SyncReport(results=[
-            EnumComparisonResult(
-                xsd_enum_name="e1", shacl_property="p1", description="D1",
-                xsd_values={"a"}, shacl_values={"a"},
-            ),
-            EnumComparisonResult(
-                xsd_enum_name="e2", shacl_property="p2", description="D2",
-                xsd_values={"b"}, shacl_values={"b"},
-            ),
-        ])
+        report = SyncReport(
+            results=[
+                EnumComparisonResult(
+                    xsd_enum_name="e1",
+                    shacl_property="p1",
+                    description="D1",
+                    xsd_values={"a"},
+                    shacl_values={"a"},
+                ),
+                EnumComparisonResult(
+                    xsd_enum_name="e2",
+                    shacl_property="p2",
+                    description="D2",
+                    xsd_values={"b"},
+                    shacl_values={"b"},
+                ),
+            ]
+        )
         assert report.all_in_sync is True
 
     def test_not_all_in_sync(self):
-        report = SyncReport(results=[
-            EnumComparisonResult(
-                xsd_enum_name="e1", shacl_property="p1", description="D1",
-                xsd_values={"a"}, shacl_values={"a"},
-            ),
-            EnumComparisonResult(
-                xsd_enum_name="e2", shacl_property="p2", description="D2",
-                xsd_values={"b", "c"}, shacl_values={"b"},
-                missing_in_shacl={"c"},
-            ),
-        ])
+        report = SyncReport(
+            results=[
+                EnumComparisonResult(
+                    xsd_enum_name="e1",
+                    shacl_property="p1",
+                    description="D1",
+                    xsd_values={"a"},
+                    shacl_values={"a"},
+                ),
+                EnumComparisonResult(
+                    xsd_enum_name="e2",
+                    shacl_property="p2",
+                    description="D2",
+                    xsd_values={"b", "c"},
+                    shacl_values={"b"},
+                    missing_in_shacl={"c"},
+                ),
+            ]
+        )
         assert report.all_in_sync is False
 
     def test_empty_report(self):
@@ -113,18 +129,23 @@ class TestCompareEnums:
 
     def test_matching_enums(self):
         xsd_enums = {
-            "e_test": EnumType(name="e_test", values=[
-                EnumValue(value="a"),
-                EnumValue(value="b"),
-            ]),
+            "e_test": EnumType(
+                name="e_test",
+                values=[
+                    EnumValue(value="a"),
+                    EnumValue(value="b"),
+                ],
+            ),
         }
         shacl_enums = {"testProp": {"a", "b"}}
-        mappings = [{
-            "xsd_enum": "e_test",
-            "shacl_property": "testProp",
-            "shacl_prefix": "http://example.org/",
-            "description": "Test mapping",
-        }]
+        mappings = [
+            {
+                "xsd_enum": "e_test",
+                "shacl_property": "testProp",
+                "shacl_prefix": "http://example.org/",
+                "description": "Test mapping",
+            }
+        ]
 
         results = compare_enums(xsd_enums, shacl_enums, mappings)
         assert len(results) == 1
@@ -133,30 +154,37 @@ class TestCompareEnums:
     def test_missing_xsd_enum(self):
         xsd_enums = {}
         shacl_enums = {"testProp": {"a"}}
-        mappings = [{
-            "xsd_enum": "e_nonexistent",
-            "shacl_property": "testProp",
-            "shacl_prefix": "http://example.org/",
-            "description": "Missing mapping",
-        }]
+        mappings = [
+            {
+                "xsd_enum": "e_nonexistent",
+                "shacl_property": "testProp",
+                "shacl_prefix": "http://example.org/",
+                "description": "Missing mapping",
+            }
+        ]
 
         results = compare_enums(xsd_enums, shacl_enums, mappings)
         assert len(results) == 0  # Skipped due to missing XSD enum
 
     def test_deprecated_tracking(self):
         xsd_enums = {
-            "e_test": EnumType(name="e_test", values=[
-                EnumValue(value="active"),
-                EnumValue(value="old", deprecated=True),
-            ]),
+            "e_test": EnumType(
+                name="e_test",
+                values=[
+                    EnumValue(value="active"),
+                    EnumValue(value="old", deprecated=True),
+                ],
+            ),
         }
         shacl_enums = {"testProp": {"active", "old"}}
-        mappings = [{
-            "xsd_enum": "e_test",
-            "shacl_property": "testProp",
-            "shacl_prefix": "http://example.org/",
-            "description": "Deprecated test",
-        }]
+        mappings = [
+            {
+                "xsd_enum": "e_test",
+                "shacl_property": "testProp",
+                "shacl_prefix": "http://example.org/",
+                "description": "Deprecated test",
+            }
+        ]
 
         results = compare_enums(xsd_enums, shacl_enums, mappings)
         assert len(results) == 1
@@ -168,7 +196,8 @@ class TestExtractShaclEnums:
     """Tests for extracting sh:in values from SHACL Turtle files."""
 
     def test_extract_from_turtle(self, tmp_path):
-        ttl_content = textwrap.dedent("""\
+        ttl_content = textwrap.dedent(
+            """\
             @prefix sh: <http://www.w3.org/ns/shacl#> .
             @prefix ex: <http://example.org/> .
 
@@ -177,23 +206,27 @@ class TestExtractShaclEnums:
                     sh:path ex:testProp ;
                     sh:in ("alpha" "beta" "gamma") ;
                 ] .
-        """)
+        """
+        )
         ttl_file = tmp_path / "test.shacl.ttl"
         ttl_file.write_text(ttl_content, encoding="utf-8")
 
-        mappings = [{
-            "xsd_enum": "e_test",
-            "shacl_property": "testProp",
-            "shacl_prefix": "http://example.org/",
-            "description": "Test",
-        }]
+        mappings = [
+            {
+                "xsd_enum": "e_test",
+                "shacl_property": "testProp",
+                "shacl_prefix": "http://example.org/",
+                "description": "Test",
+            }
+        ]
 
         result = extract_shacl_enums(ttl_file, mappings)
         assert "testProp" in result
         assert result["testProp"] == {"alpha", "beta", "gamma"}
 
     def test_no_matching_property(self, tmp_path):
-        ttl_content = textwrap.dedent("""\
+        ttl_content = textwrap.dedent(
+            """\
             @prefix sh: <http://www.w3.org/ns/shacl#> .
             @prefix ex: <http://example.org/> .
 
@@ -202,16 +235,19 @@ class TestExtractShaclEnums:
                     sh:path ex:otherProp ;
                     sh:in ("x" "y") ;
                 ] .
-        """)
+        """
+        )
         ttl_file = tmp_path / "test.shacl.ttl"
         ttl_file.write_text(ttl_content, encoding="utf-8")
 
-        mappings = [{
-            "xsd_enum": "e_test",
-            "shacl_property": "testProp",
-            "shacl_prefix": "http://example.org/",
-            "description": "Test",
-        }]
+        mappings = [
+            {
+                "xsd_enum": "e_test",
+                "shacl_property": "testProp",
+                "shacl_prefix": "http://example.org/",
+                "description": "Test",
+            }
+        ]
 
         result = extract_shacl_enums(ttl_file, mappings)
         assert "testProp" not in result
@@ -234,7 +270,9 @@ class TestActualSyncCheck:
 
     def test_all_in_sync(self, sync_report):
         for result in sync_report.results:
-            assert result.in_sync, f"{result.shacl_property} is not in sync: {result.summary()}"
+            assert (
+                result.in_sync
+            ), f"{result.shacl_property} is not in sync: {result.summary()}"
 
     def test_road_types_sync(self, sync_report):
         road = next(r for r in sync_report.results if r.shacl_property == "roadTypes")
@@ -247,7 +285,9 @@ class TestActualSyncCheck:
         assert lane.in_sync
 
     def test_level_of_detail_sync(self, sync_report):
-        lod = next(r for r in sync_report.results if r.shacl_property == "levelOfDetail")
+        lod = next(
+            r for r in sync_report.results if r.shacl_property == "levelOfDetail"
+        )
         assert len(lod.xsd_values) == 27
         assert lod.in_sync
 

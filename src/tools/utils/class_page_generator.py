@@ -1086,7 +1086,9 @@ def generate_all_class_pages(domains: Optional[List[str]] = None) -> None:
     logger.info("Generated gx redirect page")
 
     # Generate main index
-    (CLASSES_DIR / "index.md").write_text(generate_classes_index(all_domain_names), newline="\n")
+    (CLASSES_DIR / "index.md").write_text(
+        generate_classes_index(all_domain_names), newline="\n"
+    )
     logger.info("Generated classes index")
 
 

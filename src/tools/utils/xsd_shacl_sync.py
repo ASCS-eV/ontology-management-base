@@ -173,14 +173,17 @@ def extract_shacl_enums(
         prop_uri = mapping["shacl_prefix"] + prop_name
 
         # Find property shapes that use this sh:path
-        query = """
+        query = (
+            """
         SELECT ?listItem WHERE {
             ?shape sh:property ?propShape .
             ?propShape sh:path <%s> .
             ?propShape sh:in ?list .
             ?list rdf:rest*/rdf:first ?listItem .
         }
-        """ % prop_uri
+        """
+            % prop_uri
+        )
 
         values = set()
         for row in g.query(query):
@@ -328,10 +331,16 @@ def _run_tests() -> bool:
     if xsd_dir.exists() and shacl_path.exists():
         try:
             report = run_sync_check(xsd_dir, shacl_path)
-            assert len(report.results) == 3, f"Expected 3 results, got {len(report.results)}"
+            assert (
+                len(report.results) == 3
+            ), f"Expected 3 results, got {len(report.results)}"
             for result in report.results:
-                assert len(result.shacl_values) > 0, f"No SHACL values for {result.shacl_property}"
-                assert len(result.xsd_values) > 0, f"No XSD values for {result.xsd_enum_name}"
+                assert (
+                    len(result.shacl_values) > 0
+                ), f"No SHACL values for {result.shacl_property}"
+                assert (
+                    len(result.xsd_values) > 0
+                ), f"No XSD values for {result.xsd_enum_name}"
             print(f"  PASS: Full sync check ({len(report.results)} mappings checked)")
 
             # Report sync status

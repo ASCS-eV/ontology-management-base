@@ -94,7 +94,11 @@ def _is_deprecated(doc_text: Optional[str]) -> bool:
     if not doc_text:
         return False
     lower = doc_text.strip().lower()
-    return lower.startswith("deprecated") or lower.startswith("use ") and "instead" in lower
+    return (
+        lower.startswith("deprecated")
+        or lower.startswith("use ")
+        and "instead" in lower
+    )
 
 
 def extract_enums_from_file(xsd_path: Path) -> dict[str, EnumType]:
@@ -244,11 +248,15 @@ def _run_tests() -> bool:
             road_types = enums["e_roadType"]
             assert "motorway" in road_types.value_strings
             assert "rural" in road_types.value_strings
-            assert len(road_types.values) == 13, f"Expected 13 road types, got {len(road_types.values)}"
+            assert (
+                len(road_types.values) == 13
+            ), f"Expected 13 road types, got {len(road_types.values)}"
 
             # Check e_laneType has deprecated values
             lane_types = enums["e_laneType"]
-            assert len(lane_types.deprecated_values) > 0, "e_laneType should have deprecated values"
+            assert (
+                len(lane_types.deprecated_values) > 0
+            ), "e_laneType should have deprecated values"
             assert "mwyEntry" in lane_types.deprecated_values
 
             # Check e_trafficRule
@@ -264,11 +272,14 @@ def _run_tests() -> bool:
 
     # Test 3: EnumType properties
     try:
-        et = EnumType(name="test", values=[
-            EnumValue(value="b", deprecated=False),
-            EnumValue(value="a", deprecated=False),
-            EnumValue(value="c", deprecated=True, documentation="deprecated"),
-        ])
+        et = EnumType(
+            name="test",
+            values=[
+                EnumValue(value="b", deprecated=False),
+                EnumValue(value="a", deprecated=False),
+                EnumValue(value="c", deprecated=True, documentation="deprecated"),
+            ],
+        )
         assert et.value_strings == ["a", "b", "c"]
         assert et.non_deprecated_values == ["a", "b"]
         assert et.deprecated_values == ["c"]
@@ -297,7 +308,9 @@ def main() -> None:
     for name, enum_type in sorted(enums.items()):
         dep_count = len(enum_type.deprecated_values)
         dep_info = f" ({dep_count} deprecated)" if dep_count else ""
-        print(f"\n{name} [{enum_type.source_file}] - {len(enum_type.values)} values{dep_info}:")
+        print(
+            f"\n{name} [{enum_type.source_file}] - {len(enum_type.values)} values{dep_info}:"
+        )
         for v in enum_type.values:
             dep_marker = " [DEPRECATED]" if v.deprecated else ""
             doc = f" - {v.documentation}" if v.documentation else ""

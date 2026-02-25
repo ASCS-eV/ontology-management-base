@@ -51,7 +51,11 @@ class TestEnumValue:
         assert v.deprecated is False
 
     def test_deprecated_value(self):
-        v = EnumValue(value="mwyEntry", documentation="deprecated, use entry instead", deprecated=True)
+        v = EnumValue(
+            value="mwyEntry",
+            documentation="deprecated, use entry instead",
+            deprecated=True,
+        )
         assert v.deprecated is True
         assert "entry" in v.documentation
 
@@ -60,27 +64,36 @@ class TestEnumType:
     """Tests for the EnumType dataclass."""
 
     def test_value_strings_sorted(self):
-        et = EnumType(name="test", values=[
-            EnumValue(value="c"),
-            EnumValue(value="a"),
-            EnumValue(value="b"),
-        ])
+        et = EnumType(
+            name="test",
+            values=[
+                EnumValue(value="c"),
+                EnumValue(value="a"),
+                EnumValue(value="b"),
+            ],
+        )
         assert et.value_strings == ["a", "b", "c"]
 
     def test_non_deprecated_values(self):
-        et = EnumType(name="test", values=[
-            EnumValue(value="active1", deprecated=False),
-            EnumValue(value="old", deprecated=True),
-            EnumValue(value="active2", deprecated=False),
-        ])
+        et = EnumType(
+            name="test",
+            values=[
+                EnumValue(value="active1", deprecated=False),
+                EnumValue(value="old", deprecated=True),
+                EnumValue(value="active2", deprecated=False),
+            ],
+        )
         assert et.non_deprecated_values == ["active1", "active2"]
 
     def test_deprecated_values(self):
-        et = EnumType(name="test", values=[
-            EnumValue(value="active", deprecated=False),
-            EnumValue(value="old1", deprecated=True),
-            EnumValue(value="old2", deprecated=True),
-        ])
+        et = EnumType(
+            name="test",
+            values=[
+                EnumValue(value="active", deprecated=False),
+                EnumValue(value="old1", deprecated=True),
+                EnumValue(value="old2", deprecated=True),
+            ],
+        )
         assert et.deprecated_values == ["old1", "old2"]
 
     def test_empty_values(self):
@@ -94,7 +107,8 @@ class TestExtractEnumsFromFile:
     """Tests for extracting enums from XSD files."""
 
     def test_valid_xsd_file(self, tmp_path):
-        xsd_content = textwrap.dedent("""\
+        xsd_content = textwrap.dedent(
+            """\
             <?xml version="1.0" encoding="UTF-8"?>
             <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:simpleType name="e_testEnum">
@@ -116,7 +130,8 @@ class TestExtractEnumsFromFile:
                     </xs:restriction>
                 </xs:simpleType>
             </xs:schema>
-        """)
+        """
+        )
         xsd_file = tmp_path / "test.xsd"
         xsd_file.write_text(xsd_content, encoding="utf-8")
 
@@ -134,7 +149,8 @@ class TestExtractEnumsFromFile:
             extract_enums_from_file(tmp_path / "nonexistent.xsd")
 
     def test_no_enums_in_file(self, tmp_path):
-        xsd_content = textwrap.dedent("""\
+        xsd_content = textwrap.dedent(
+            """\
             <?xml version="1.0" encoding="UTF-8"?>
             <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:complexType name="t_something">
@@ -143,7 +159,8 @@ class TestExtractEnumsFromFile:
                     </xs:sequence>
                 </xs:complexType>
             </xs:schema>
-        """)
+        """
+        )
         xsd_file = tmp_path / "no_enums.xsd"
         xsd_file.write_text(xsd_content, encoding="utf-8")
 
@@ -151,7 +168,8 @@ class TestExtractEnumsFromFile:
         assert len(enums) == 0
 
     def test_value_without_annotation(self, tmp_path):
-        xsd_content = textwrap.dedent("""\
+        xsd_content = textwrap.dedent(
+            """\
             <?xml version="1.0" encoding="UTF-8"?>
             <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:simpleType name="e_simple">
@@ -161,7 +179,8 @@ class TestExtractEnumsFromFile:
                     </xs:restriction>
                 </xs:simpleType>
             </xs:schema>
-        """)
+        """
+        )
         xsd_file = tmp_path / "simple.xsd"
         xsd_file.write_text(xsd_content, encoding="utf-8")
 
@@ -186,7 +205,9 @@ class TestExtractEnumsFromDir:
     def test_skip_subdirs(self, tmp_path):
         # Create XSD in root
         root_xsd = tmp_path / "root.xsd"
-        root_xsd.write_text(textwrap.dedent("""\
+        root_xsd.write_text(
+            textwrap.dedent(
+                """\
             <?xml version="1.0" encoding="UTF-8"?>
             <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:simpleType name="e_root">
@@ -195,13 +216,18 @@ class TestExtractEnumsFromDir:
                     </xs:restriction>
                 </xs:simpleType>
             </xs:schema>
-        """), encoding="utf-8")
+        """
+            ),
+            encoding="utf-8",
+        )
 
         # Create XSD in subdir
         subdir = tmp_path / "local_schema"
         subdir.mkdir()
         sub_xsd = subdir / "sub.xsd"
-        sub_xsd.write_text(textwrap.dedent("""\
+        sub_xsd.write_text(
+            textwrap.dedent(
+                """\
             <?xml version="1.0" encoding="UTF-8"?>
             <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:simpleType name="e_sub">
@@ -210,7 +236,10 @@ class TestExtractEnumsFromDir:
                     </xs:restriction>
                 </xs:simpleType>
             </xs:schema>
-        """), encoding="utf-8")
+        """
+            ),
+            encoding="utf-8",
+        )
 
         # skip_subdirs=True: only root
         enums = extract_enums_from_dir(tmp_path, skip_subdirs=True)
@@ -231,6 +260,7 @@ class TestActualXsdFiles:
     @pytest.fixture
     def xsd_enums(self):
         from pathlib import Path
+
         xsd_dir = Path(self.XSD_DIR)
         if not xsd_dir.exists():
             pytest.skip("OpenDRIVE XSD files not available")

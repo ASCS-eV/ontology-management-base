@@ -124,9 +124,9 @@ class Content_or_OpenLabel_OddScenery
 |DomainSpecificationShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-hasquantity"></a>hasQuantity|1|1|Contains properties to describe the quantity of the HD map asset.||hdmap.shacl.ttl|
 |DomainSpecificationShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-hasquality"></a>hasQuality|1|1|Contains properties to describe the accuracy of the HD map asset.||hdmap.shacl.ttl|
 |DomainSpecificationShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-hasdatasource"></a>hasDataSource|1|1|Defines which data resources or measurement systems were used to create the HD map asset.||hdmap.shacl.ttl|
-|DomainSpecificationShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-hasgeoreference"></a>hasGeoreference|1|1|||hdmap.shacl.ttl|
+|DomainSpecificationShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-hasgeoreference"></a>hasGeoreference|0|1|||hdmap.shacl.ttl|
 |ContentShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-roadtypes"></a>roadTypes|||Lists the road types used in the HD map asset.||hdmap.shacl.ttl|
-|ContentShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-lanetypes"></a>laneTypes|||Lists the lanes types used in the HD map asset.||hdmap.shacl.ttl|
+|ContentShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-lanetypes"></a>laneTypes|||Lists the lane types used in the HD map asset.||hdmap.shacl.ttl|
 |ContentShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-levelofdetail"></a>levelOfDetail|||Lists the object types used in the HD map asset.||hdmap.shacl.ttl|
 |ContentShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-trafficdirection"></a>trafficDirection||1|Indicates whether the HD map is designed for left or right-hand traffic.||hdmap.shacl.ttl|
 |DataSourceShape|hdmap|<a id="prop-https---w3id-org-ascs-ev-envited-x-hdmap-v5-measurementsystem"></a>measurementSystem||1|Specifies the name of the primary acquisition device.|<http://www.w3.org/2001/XMLSchema#string>|hdmap.shacl.ttl|
