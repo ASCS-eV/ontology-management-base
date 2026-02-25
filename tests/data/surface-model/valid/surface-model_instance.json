@@ -32,10 +32,7 @@
     "surface-model:hasFormat": {
       "@type": "surface-model:Format",
       "surface-model:formatType": "ASAM OpenCRG",
-      "surface-model:version": {
-        "@value": "1.1",
-        "@type": "xsd:string"
-      }
+      "surface-model:version": "1.1"
     },
     "surface-model:hasContent": {
       "@type": "surface-model:Content",
@@ -74,26 +71,11 @@
       "@type": "georeference:Georeference",
       "georeference:hasProjectLocation": {
         "@type": "georeference:ProjectLocation",
-        "georeference:country": {
-          "@value": "DE",
-          "@type": "xsd:string"
-        },
-        "georeference:state": {
-          "@value": "DE-BY",
-          "@type": "xsd:string"
-        },
-        "georeference:region": {
-          "@value": "Upper Bavaria",
-          "@type": "xsd:string"
-        },
-        "georeference:city": {
-          "@value": "Munich",
-          "@type": "xsd:string"
-        },
-        "georeference:relationOrArea": {
-          "@value": "Autobahn A8, in the greater Ingolstadt area",
-          "@type": "xsd:string"
-        },
+        "georeference:country": "DE",
+        "georeference:state": "DE-BY",
+        "georeference:region": "Upper Bavaria",
+        "georeference:city": "Munich",
+        "georeference:relationOrArea": "Autobahn A8, in the greater Ingolstadt area",
         "georeference:hasBoundingBox": {
           "@type": "georeference:BoundingBox",
           "georeference:xMin": {
@@ -151,10 +133,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_surface-model_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -177,10 +156,7 @@
         "@value": "./base-references/surface-model_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

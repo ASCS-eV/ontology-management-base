@@ -32,10 +32,7 @@
     "@type": "survey:ServiceDomainSpecification",
     "survey:hasContent": {
       "@type": "survey:ServiceContent",
-      "survey:surveyUrl": {
-        "@value": "https://web-mpc.gxfs.gx4fm.org/?session=qrsg5sp6n1cs1172kd8q80q0e8&participationCode=7ab1ch5r8gc7e299zb0psa0t0c",
-        "@type": "xsd:string"
-      },
+      "survey:surveyUrl": "https://web-mpc.gxfs.gx4fm.org/?session=qrsg5sp6n1cs1172kd8q80q0e8&participationCode=7ab1ch5r8gc7e299zb0psa0t0c",
       "survey:surveyCreationTime": {
         "@value": "2023-08-01T15:14:04",
         "@type": "xsd:dateTime"
@@ -55,10 +52,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_survey-service-offering_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Reference to the survey service offering manifest.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Reference to the survey service offering manifest.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -81,10 +75,7 @@
         "@value": "./base-references/survey-service-offering_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

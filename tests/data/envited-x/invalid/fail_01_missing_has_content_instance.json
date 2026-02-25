@@ -36,10 +36,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_envited-x_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Reference to the simulation asset manifest.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Reference to the simulation asset manifest.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -62,10 +59,7 @@
         "@value": "./base-references/envited-x_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

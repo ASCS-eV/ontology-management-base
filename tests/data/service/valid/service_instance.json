@@ -35,10 +35,7 @@
       "service:requiredFile": [
         {
           "@type": "service:RequiredFile",
-          "service:description": {
-            "@value": "A scenario following the ASAM OpenSCENARIO version 2.0.0 standard as a .osc file",
-            "@type": "xsd:string"
-          },
+          "service:description": "A scenario following the ASAM OpenSCENARIO version 2.0.0 standard as a .osc file",
           "service:specification": {
             "@value": "https://www.asam.net/standards/detail/openscenario/v200/",
             "@type": "xsd:anyURI"
@@ -46,10 +43,7 @@
         },
         {
           "@type": "service:RequiredFile",
-          "service:description": {
-            "@value": "A road network following the ASAM OpenDRIVE v1.8.0 standard as a .xodr file",
-            "@type": "xsd:string"
-          },
+          "service:description": "A road network following the ASAM OpenDRIVE v1.8.0 standard as a .xodr file",
           "service:specification": {
             "@value": "https://www.asam.net/standards/detail/opendrive/",
             "@type": "xsd:anyURI"
@@ -58,10 +52,7 @@
       ],
       "service:resultingFile": {
         "@type": "service:ResultingFile",
-        "service:description": {
-          "@value": "The ground-truth data of the executed simulation following the ASAM OSI v3.7.0 standard as a .osi file",
-          "@type": "xsd:string"
-        },
+        "service:description": "The ground-truth data of the executed simulation following the ASAM OSI v3.7.0 standard as a .osi file",
         "service:specification": {
           "@value": "https://www.asam.net/standards/detail/osi/",
           "@type": "xsd:anyURI"
@@ -74,10 +65,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_service_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Reference to the service manifest.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Reference to the service manifest.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -100,10 +88,7 @@
         "@value": "./base-references/service_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

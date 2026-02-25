@@ -32,10 +32,7 @@
     "hdmap:hasFormat": {
       "@type": "hdmap:Format",
       "hdmap:formatType": "ASAM OpenDRIVE",
-      "hdmap:version": {
-        "@value": "1.6",
-        "@type": "xsd:string"
-      }
+      "hdmap:version": "1.6"
     },
     "hdmap:hasContent": {
       "@type": "hdmap:Content",
@@ -118,40 +115,19 @@
     },
     "hdmap:hasDataSource": {
       "@type": "hdmap:DataSource",
-      "hdmap:usedDataSources": {
-        "@value": "scanner",
-        "@type": "xsd:string"
-      },
-      "hdmap:measurementSystem": {
-        "@value": "3DMS system",
-        "@type": "xsd:string"
-      }
+      "hdmap:usedDataSources": "scanner",
+      "hdmap:measurementSystem": "3DMS system"
     },
     "hdmap:hasGeoreference": {
       "@type": "georeference:Georeference",
       "@id": "did:web:registry.envited-x.net:Georeference:wDgNY3gZAxMe3LjhdAZ9TbPiYnQ-yybNhCu8",
       "georeference:hasProjectLocation": {
         "@type": "georeference:ProjectLocation",
-        "georeference:country": {
-          "@value": "DE",
-          "@type": "xsd:string"
-        },
-        "georeference:state": {
-          "@value": "DE-BY",
-          "@type": "xsd:string"
-        },
-        "georeference:region": {
-          "@value": "Upper Bavaria",
-          "@type": "xsd:string"
-        },
-        "georeference:city": {
-          "@value": "Grafing",
-          "@type": "xsd:string"
-        },
-        "georeference:relationOrArea": {
-          "@value": "Town of Grafing",
-          "@type": "xsd:string"
-        },
+        "georeference:country": "DE",
+        "georeference:state": "DE-BY",
+        "georeference:region": "Upper Bavaria",
+        "georeference:city": "Grafing",
+        "georeference:relationOrArea": "Town of Grafing",
         "georeference:hasBoundingBox": {
           "@type": "georeference:BoundingBox",
           "georeference:xMin": {
@@ -209,10 +185,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -235,10 +208,7 @@
         "@value": "./base-references/hdmap_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

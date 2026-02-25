@@ -27,89 +27,32 @@
     "simulation-model:hasContent": {
       "@type": "simulation-model:Content",
       "simulation-model:modelType": "sensor",
-      "simulation-model:modelManufacturer": {
-        "@value": "OpenMSL Project Group",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelFamily": {
-        "@value": "Sensor Family X4000",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelName": {
-        "@value": "X4101",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelVersion": {
-        "@value": "1.2.2",
-        "@type": "xsd:string"
-      },
+      "simulation-model:modelManufacturer": "OpenMSL Project Group",
+      "simulation-model:modelFamily": "Sensor Family X4000",
+      "simulation-model:modelName": "X4101",
+      "simulation-model:modelVersion": "1.2.2",
       "simulation-model:modelReleasedate": {
         "@value": "2024-11-26T12:37:15",
         "@type": "xsd:dateTime"
       },
-      "simulation-model:modelReleasestatus": {
-        "@value": "Released",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelGuid": {
-        "@value": "7ae4-210f-dead-beef-042",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelPurpose": {
-        "@value": "HAD function validation in OEM environment at object-list level",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelModellingApproach": {
-        "@value": "model is purely object-list driven, weather effects are not modelled.",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorManufacturer": {
-        "@value": "Sample company.",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorFamily": {
-        "@value": "ARS5XX",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorName": {
-        "@value": "ARS548",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorVersion": {
-        "@value": "1.0.0",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorManufacturerPartnumber": {
-        "@value": "A123",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorType": {
-        "@value": "object-output",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorTechnology": {
-        "@value": "radar",
-        "@type": "xsd:string"
-      },
-      "simulation-model:sensorTechnologyVariant": {
-        "@value": "long-range",
-        "@type": "xsd:string"
-      }
+      "simulation-model:modelReleasestatus": "Released",
+      "simulation-model:modelGuid": "7ae4-210f-dead-beef-042",
+      "simulation-model:modelPurpose": "HAD function validation in OEM environment at object-list level",
+      "simulation-model:modelModellingApproach": "model is purely object-list driven, weather effects are not modelled.",
+      "simulation-model:sensorManufacturer": "Sample company.",
+      "simulation-model:sensorFamily": "ARS5XX",
+      "simulation-model:sensorName": "ARS548",
+      "simulation-model:sensorVersion": "1.0.0",
+      "simulation-model:sensorManufacturerPartnumber": "A123",
+      "simulation-model:sensorType": "object-output",
+      "simulation-model:sensorTechnology": "radar",
+      "simulation-model:sensorTechnologyVariant": "long-range"
     },
     "simulation-model:hasFormat": {
       "@type": "simulation-model:Format",
-      "simulation-model:modelImplementationFormat": {
-        "@value": "OSMP 1.0/OSI 3.1.2/FMI 2.0",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelPreconditions": {
-        "@value": "Object-list input contains accurate bounding box values",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelImplementationPreconditions": {
-        "@value": "Model needs Windows 10 1809 or newer with nVidia Drivers version 389.12 or newer and OpenCL 2.0 capable GPU",
-        "@type": "xsd:string"
-      },
+      "simulation-model:modelImplementationFormat": "OSMP 1.0/OSI 3.1.2/FMI 2.0",
+      "simulation-model:modelPreconditions": "Object-list input contains accurate bounding box values",
+      "simulation-model:modelImplementationPreconditions": "Model needs Windows 10 1809 or newer with nVidia Drivers version 389.12 or newer and OpenCL 2.0 capable GPU",
       "simulation-model:modelIntegrationRequirements": {
         "@value": "http://mywebsite.de/Requirements.pdf",
         "@type": "xsd:anyURI"
@@ -117,24 +60,15 @@
     },
     "simulation-model:hasQuality": {
       "@type": "simulation-model:Quality",
-      "simulation-model:modelLimitations": {
-        "@value": "This delivery is a pre-release and the model is intended to be used for checking the interfaces of the simulation toolchain. The model is not validated; thus it is not intended to be used for validation or verification of any sensor, especially not for ARS810 or ARS840. In particular, the existence of this model shall not be used to imply the existence of sensors ARS810 nor ARS840 nor their properties. This delivery is not developed according to process defined in ISO 26262 (Standard for Functional Safety).",
-        "@type": "xsd:string"
-      },
-      "simulation-model:modelValidityRange": {
-        "@value": "Sensor model is only accurate up to sensor/vehicle speeds of less than 150km/h",
-        "@type": "xsd:string"
-      },
+      "simulation-model:modelLimitations": "This delivery is a pre-release and the model is intended to be used for checking the interfaces of the simulation toolchain. The model is not validated; thus it is not intended to be used for validation or verification of any sensor, especially not for ARS810 or ARS840. In particular, the existence of this model shall not be used to imply the existence of sensors ARS810 nor ARS840 nor their properties. This delivery is not developed according to process defined in ISO 26262 (Standard for Functional Safety).",
+      "simulation-model:modelValidityRange": "Sensor model is only accurate up to sensor/vehicle speeds of less than 150km/h",
       "simulation-model:modelVerificationStatus": true,
       "simulation-model:modelVerificationReport": {
         "@value": "http://mywebsite.de/VerficiationReport.pdf",
         "@type": "xsd:anyURI"
       },
       "simulation-model:modelValidationStatus": true,
-      "simulation-model:modelValidationPlatform": {
-        "@value": "PMSF FMIBench 1.9.9.4 using osi3test 0.6.0 on Windows 10 1809",
-        "@type": "xsd:string"
-      },
+      "simulation-model:modelValidationPlatform": "PMSF FMIBench 1.9.9.4 using osi3test 0.6.0 on Windows 10 1809",
       "simulation-model:modelValidationReport": {
         "@value": "did:web:registry.gaia-x.eu:Validation:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
         "@type": "xsd:anyURI"
@@ -143,10 +77,7 @@
         "@value": "http://mywebsite.de/ValidationConcept.md",
         "@type": "xsd:anyURI"
       },
-      "simulation-model:modelImplementationPerformanceCharacteristics": {
-        "@value": "Potentially real-time capable, if less than 100 objects in object list input at any one time",
-        "@type": "xsd:string"
-      }
+      "simulation-model:modelImplementationPerformanceCharacteristics": "Potentially real-time capable, if less than 100 objects in object list input at any one time"
     },
     "simulation-model:hasQuantity": {
       "@type": "simulation-model:Quantity",
@@ -172,10 +103,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_simulation-model_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Reference to the simulation model manifest.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Reference to the simulation model manifest.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -198,10 +126,7 @@
         "@value": "./base-references/simulation-model_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

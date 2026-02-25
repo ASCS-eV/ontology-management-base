@@ -31,10 +31,7 @@
     "hdmap:hasFormat": {
       "@type": "hdmap:Format",
       "hdmap:formatType": "ASAM OpenDRIVE",
-      "hdmap:version": {
-        "@value": "1.8",
-        "@type": "xsd:string"
-      }
+      "hdmap:version": "1.8"
     },
     "hdmap:hasContent": {
       "@type": "hdmap:Content",
@@ -97,10 +94,7 @@
     },
     "hdmap:hasDataSource": {
       "@type": "hdmap:DataSource",
-      "hdmap:usedDataSources": {
-        "@value": "procedural generation",
-        "@type": "xsd:string"
-      }
+      "hdmap:usedDataSources": "procedural generation"
     }
   },
   "hdmap:hasManifest": {
@@ -108,10 +102,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -134,10 +125,7 @@
         "@value": "./base-references/hdmap_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

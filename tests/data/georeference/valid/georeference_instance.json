@@ -7,26 +7,11 @@
   "@type": "georeference:Georeference",
   "georeference:hasProjectLocation": {
     "@type": "georeference:ProjectLocation",
-    "georeference:country": {
-      "@value": "DE",
-      "@type": "xsd:string"
-    },
-    "georeference:state": {
-      "@value": "DE-BY",
-      "@type": "xsd:string"
-    },
-    "georeference:region": {
-      "@value": "Upper Bavaria",
-      "@type": "xsd:string"
-    },
-    "georeference:city": {
-      "@value": "Munich",
-      "@type": "xsd:string"
-    },
-    "georeference:relationOrArea": {
-      "@value": "motorway A8, Greater Area of Ingolstadt",
-      "@type": "xsd:string"
-    },
+    "georeference:country": "DE",
+    "georeference:state": "DE-BY",
+    "georeference:region": "Upper Bavaria",
+    "georeference:city": "Munich",
+    "georeference:relationOrArea": "motorway A8, Greater Area of Ingolstadt",
     "georeference:hasBoundingBox": {
       "@type": "georeference:BoundingBox",
       "georeference:xMin": {

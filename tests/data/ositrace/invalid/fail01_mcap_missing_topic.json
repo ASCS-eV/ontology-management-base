@@ -35,10 +35,7 @@
       "ositrace:hasChannel": {
         "@type": "ositrace:Channel",
         "ositrace:messageType": "SensorData",
-        "ositrace:osiVersion": {
-          "@value": "3.7.0",
-          "@type": "xsd:string"
-        }
+        "ositrace:osiVersion": "3.7.0"
       }
     },
     "ositrace:hasContent": {
@@ -62,10 +59,7 @@
           "@value": "1",
           "@type": "xsd:integer"
         },
-        "ositrace:description": {
-          "@value": "Ego vehicle",
-          "@type": "xsd:string"
-        }
+        "ositrace:description": "Ego vehicle"
       }
     },
     "ositrace:hasQuality": {
@@ -80,10 +74,7 @@
     },
     "ositrace:hasDataSource": {
       "@type": "ositrace:DataSource",
-      "ositrace:usedDataSources": {
-        "@value": "Simulated sensor recording",
-        "@type": "xsd:string"
-      }
+      "ositrace:usedDataSources": "Simulated sensor recording"
     }
   },
   "ositrace:hasManifest": {
@@ -91,10 +82,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -117,10 +105,7 @@
         "@value": "./base-references/ositrace_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

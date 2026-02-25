@@ -33,94 +33,46 @@
       "@type": "ositrace:Format",
       "ositrace:fileFormat": "MCAP",
       "ositrace:compression": "zstd",
-      "ositrace:osiTraceFormatVersion": {
-        "@value": "net.asam.osi.trace",
-        "@type": "xsd:string"
-      },
-      "ositrace:minOsiVersion": {
-        "@value": "3.6.0",
-        "@type": "xsd:string"
-      },
-      "ositrace:maxOsiVersion": {
-        "@value": "3.7.0",
-        "@type": "xsd:string"
-      },
-      "ositrace:minProtobufVersion": {
-        "@value": "3.20.0",
-        "@type": "xsd:string"
-      },
-      "ositrace:maxProtobufVersion": {
-        "@value": "3.21.0",
-        "@type": "xsd:string"
-      },
+      "ositrace:osiTraceFormatVersion": "net.asam.osi.trace",
+      "ositrace:minOsiVersion": "3.6.0",
+      "ositrace:maxOsiVersion": "3.7.0",
+      "ositrace:minProtobufVersion": "3.20.0",
+      "ositrace:maxProtobufVersion": "3.21.0",
       "ositrace:hasChannel": [
         {
           "@type": "ositrace:Channel",
-          "ositrace:topic": {
-            "@value": "RadarSensorFL.OSMPSensorDataOut",
-            "@type": "xsd:string"
-          },
+          "ositrace:topic": "RadarSensorFL.OSMPSensorDataOut",
           "ositrace:messageType": "SensorData",
-          "ositrace:osiVersion": {
-            "@value": "3.7.0",
-            "@type": "xsd:string"
-          },
-          "ositrace:protobufVersion": {
-            "@value": "3.21.0",
-            "@type": "xsd:string"
-          },
+          "ositrace:osiVersion": "3.7.0",
+          "ositrace:protobufVersion": "3.21.0",
           "ositrace:numberOfMessages": {
             "@value": "1448",
             "@type": "xsd:integer"
           },
-          "ositrace:description": {
-            "@value": "Front-left radar sensor data output",
-            "@type": "xsd:string"
-          }
+          "ositrace:description": "Front-left radar sensor data output"
         },
         {
           "@type": "ositrace:Channel",
-          "ositrace:topic": {
-            "@value": "CameraFront.OSMPSensorViewOut",
-            "@type": "xsd:string"
-          },
+          "ositrace:topic": "CameraFront.OSMPSensorViewOut",
           "ositrace:messageType": "SensorView",
-          "ositrace:osiVersion": {
-            "@value": "3.6.0",
-            "@type": "xsd:string"
-          },
-          "ositrace:protobufVersion": {
-            "@value": "3.20.0",
-            "@type": "xsd:string"
-          },
+          "ositrace:osiVersion": "3.6.0",
+          "ositrace:protobufVersion": "3.20.0",
           "ositrace:numberOfMessages": {
             "@value": "3200",
             "@type": "xsd:integer"
           },
-          "ositrace:description": {
-            "@value": "Front camera sensor view output",
-            "@type": "xsd:string"
-          }
+          "ositrace:description": "Front camera sensor view output"
         },
         {
           "@type": "ositrace:Channel",
-          "ositrace:topic": {
-            "@value": "Simulation.OSMPGroundTruthOut",
-            "@type": "xsd:string"
-          },
+          "ositrace:topic": "Simulation.OSMPGroundTruthOut",
           "ositrace:messageType": "GroundTruth",
-          "ositrace:osiVersion": {
-            "@value": "3.7.0",
-            "@type": "xsd:string"
-          },
+          "ositrace:osiVersion": "3.7.0",
           "ositrace:numberOfMessages": {
             "@value": "3200",
             "@type": "xsd:integer"
           },
-          "ositrace:description": {
-            "@value": "Simulation ground truth output",
-            "@type": "xsd:string"
-          }
+          "ositrace:description": "Simulation ground truth output"
         }
       ]
     },
@@ -151,10 +103,7 @@
           "@value": "1",
           "@type": "xsd:integer"
         },
-        "ositrace:description": {
-          "@value": "Ego vehicle in highway scenario",
-          "@type": "xsd:string"
-        }
+        "ositrace:description": "Ego vehicle in highway scenario"
       },
       "ositrace:hasTargetMovingObject": [
         {
@@ -163,10 +112,7 @@
             "@value": "2",
             "@type": "xsd:integer"
           },
-          "ositrace:description": {
-            "@value": "Lead vehicle",
-            "@type": "xsd:string"
-          }
+          "ositrace:description": "Lead vehicle"
         },
         {
           "@type": "ositrace:MovingObject",
@@ -174,10 +120,7 @@
             "@value": "3",
             "@type": "xsd:integer"
           },
-          "ositrace:description": {
-            "@value": "Adjacent lane vehicle",
-            "@type": "xsd:string"
-          }
+          "ositrace:description": "Adjacent lane vehicle"
         }
       ]
     },
@@ -201,40 +144,19 @@
     },
     "ositrace:hasDataSource": {
       "@type": "ositrace:DataSource",
-      "ositrace:usedDataSources": {
-        "@value": "Co-simulation recording with OSMP-compliant sensor models",
-        "@type": "xsd:string"
-      },
-      "ositrace:measurementSystem": {
-        "@value": "esmini v2.37.4 with OSI trace recording",
-        "@type": "xsd:string"
-      }
+      "ositrace:usedDataSources": "Co-simulation recording with OSMP-compliant sensor models",
+      "ositrace:measurementSystem": "esmini v2.37.4 with OSI trace recording"
     },
     "ositrace:hasGeoreference": {
       "@type": "georeference:Georeference",
       "@id": "did:web:registry.envited-x.net:Georeference:Mcap3ChHighwayRecording",
       "georeference:hasProjectLocation": {
         "@type": "georeference:ProjectLocation",
-        "georeference:country": {
-          "@value": "DE",
-          "@type": "xsd:string"
-        },
-        "georeference:state": {
-          "@value": "DE-BY",
-          "@type": "xsd:string"
-        },
-        "georeference:region": {
-          "@value": "Upper Bavaria",
-          "@type": "xsd:string"
-        },
-        "georeference:city": {
-          "@value": "Munich",
-          "@type": "xsd:string"
-        },
-        "georeference:relationOrArea": {
-          "@value": "A9 motorway near Munich",
-          "@type": "xsd:string"
-        },
+        "georeference:country": "DE",
+        "georeference:state": "DE-BY",
+        "georeference:region": "Upper Bavaria",
+        "georeference:city": "Munich",
+        "georeference:relationOrArea": "A9 motorway near Munich",
         "georeference:hasBoundingBox": {
           "@type": "georeference:BoundingBox",
           "georeference:xMin": {
@@ -292,10 +214,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -318,10 +237,7 @@
         "@value": "./base-references/ositrace_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

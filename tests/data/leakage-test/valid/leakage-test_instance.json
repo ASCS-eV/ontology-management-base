@@ -83,10 +83,7 @@
     "manifest:iri": {
       "@id": "did:web:test.fixture.net:Manifest:test_leakage-test_manifest_reference"
     },
-    "skos:note": {
-      "@value": "Reference to the leakage test manifest.",
-      "@type": "xsd:string"
-    },
+    "skos:note": "Reference to the leakage test manifest.",
     "sh:conformsTo": [
       {
         "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
@@ -109,10 +106,7 @@
         "@value": "./base-references/leakage-test_manifest_reference.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   }
 }

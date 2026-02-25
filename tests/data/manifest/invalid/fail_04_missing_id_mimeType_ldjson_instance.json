@@ -23,10 +23,7 @@
         "@value": "./manifest_instance.json",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "application/ld+json"
     }
   },
   "manifest:hasLicense": {
@@ -45,10 +42,7 @@
         "@value": "https://opensource.org/license/EPL-2.0",
         "@type": "xsd:anyURI"
       },
-      "manifest:mimeType": {
-        "@value": "text/html",
-        "@type": "xsd:string"
-      }
+      "manifest:mimeType": "text/html"
     }
   },
   "manifest:hasArtifacts": [
@@ -68,22 +62,13 @@
           "@value": "ipfs://bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
           "@type": "xsd:anyURI"
         },
-        "manifest:cid": {
-          "@value": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "application/x-xodr",
-          "@type": "xsd:string"
-        },
+        "manifest:cid": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
+        "manifest:mimeType": "application/x-xodr",
         "manifest:fileSize": {
           "@value": "636673",
           "@type": "xsd:integer"
         },
-        "manifest:filename": {
-          "@value": "TestfeldNiedersachsen_ALKS_ODR_sample.xodr",
-          "@type": "xsd:string"
-        }
+        "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample.xodr"
       }
     },
     {
@@ -102,30 +87,18 @@
           "@value": "ipfs://bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
           "@type": "xsd:anyURI"
         },
-        "manifest:cid": {
-          "@value": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "text/markdown",
-          "@type": "xsd:string"
-        },
+        "manifest:cid": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
+        "manifest:mimeType": "text/markdown",
         "manifest:fileSize": {
           "@value": "5120",
           "@type": "xsd:integer"
         },
-        "manifest:filename": {
-          "@value": "README.md",
-          "@type": "xsd:string"
-        }
+        "manifest:filename": "README.md"
       }
     },
     {
       "@type": "manifest:Link",
-      "skos:note": {
-        "@value": "Referenced HD Map Asset.",
-        "@type": "xsd:string"
-      },
+      "skos:note": "Referenced HD Map Asset.",
       "sh:conformsTo": [
         {
           "@id": "https://w3id.org/ascs-ev/envited-x/hdmap/v2/"
@@ -148,22 +121,13 @@
           "@value": "ipfs://bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
           "@type": "xsd:anyURI"
         },
-        "manifest:cid": {
-          "@value": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "application/ld+json",
-          "@type": "xsd:string"
-        },
+        "manifest:cid": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
+        "manifest:mimeType": "application/ld+json",
         "manifest:fileSize": {
           "@value": "5678",
           "@type": "xsd:integer"
         },
-        "manifest:filename": {
-          "@value": "domainMetadata.json",
-          "@type": "xsd:string"
-        }
+        "manifest:filename": "domainMetadata.json"
       }
     },
     {
@@ -182,22 +146,13 @@
           "@value": "./visualization/detailRoadNetwork.geojson",
           "@type": "xsd:anyURI"
         },
-        "manifest:cid": {
-          "@value": "bafkreiakpb3ajhljq6cgwizcyirsk6uz322szaxd6ynmovcwuu5jkx5isa",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "application/x-geojson",
-          "@type": "xsd:string"
-        },
+        "manifest:cid": "bafkreiakpb3ajhljq6cgwizcyirsk6uz322szaxd6ynmovcwuu5jkx5isa",
+        "manifest:mimeType": "application/x-geojson",
         "manifest:fileSize": {
           "@value": "1500",
           "@type": "xsd:integer"
         },
-        "manifest:filename": {
-          "@value": "detailRoadNetwork.geojson",
-          "@type": "xsd:string"
-        }
+        "manifest:filename": "detailRoadNetwork.geojson"
       }
     },
     {
@@ -216,22 +171,13 @@
           "@value": "./visualization/TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
           "@type": "xsd:anyURI"
         },
-        "manifest:cid": {
-          "@value": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "image/png",
-          "@type": "xsd:string"
-        },
+        "manifest:cid": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
+        "manifest:mimeType": "image/png",
         "manifest:fileSize": {
           "@value": "2400256",
           "@type": "xsd:integer"
         },
-        "manifest:filename": {
-          "@value": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
-          "@type": "xsd:string"
-        },
+        "manifest:filename": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png",
         "manifest:hasDimensions": {
           "@type": "manifest:Dimensions",
           "manifest:unit": "pixels",
