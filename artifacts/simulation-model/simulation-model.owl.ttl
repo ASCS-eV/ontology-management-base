@@ -276,12 +276,12 @@ simulation-model:sensorTechnologyVariant a owl:DatatypeProperty ;
 simulation-model:maxDetections a owl:DatatypeProperty ;
     rdfs:label "maximum number of detections"@en ;
     rdfs:domain simulation-model:Quantity ;
-    rdfs:range xsd:unsignedInt .
+    rdfs:range xsd:integer .
 
 simulation-model:maxObjects a owl:DatatypeProperty ;
     rdfs:label "maximum number of detected objects"@en ;
     rdfs:domain simulation-model:Quantity ;
-    rdfs:range xsd:unsignedInt .
+    rdfs:range xsd:integer .
 
 # Quality properties
 simulation-model:modelLimitations a owl:DatatypeProperty ;
