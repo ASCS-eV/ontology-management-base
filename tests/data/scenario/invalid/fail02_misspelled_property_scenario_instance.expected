@@ -1,0 +1,13 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                 ['tests/data/scenario/invalid/fail02_misspelled_property_scenario_instance.json']                                  =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail02_misspelled_property_scenario_instance                                  =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
+======================================================================================================================================================

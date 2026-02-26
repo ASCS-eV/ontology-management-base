@@ -168,8 +168,7 @@ scenario:ContentOrTagShape a sh:NodeShape ;
 
 ### Detailed Shapes (Expanded based on Instance Data)
 scenario:FormatShape a sh:NodeShape ;
-    sh:closed false;
-    sh:ignoredProperties ( rdf:type ) ;
+    sh:closed false ;
     sh:property [ skos:example "ASAM OpenSCENARIO" ;
             sh:description "Defines the type of data format used for the scenario asset."@en ;
             sh:in ("ASAM OpenSCENARIO") ;
@@ -189,8 +188,7 @@ scenario:FormatShape a sh:NodeShape ;
     sh:targetClass scenario:Format .
 
 scenario:ContentShape a sh:NodeShape ;
-    sh:closed false;
-    sh:ignoredProperties ( rdf:type ) ;
+    sh:closed false ;
     sh:property [ skos:example "Functional, Logical, Concrete" ;
             sh:description "Specifies the abstraction level (as defined in the Pegasus project) of the scenario asset."@en ;
             sh:in ("Functional" "Logical" "Concrete") ;
@@ -284,8 +282,7 @@ scenario:ContentShape a sh:NodeShape ;
     sh:targetClass scenario:Content .
 
 scenario:QuantityShape a sh:NodeShape ;
-    sh:closed false;
-    sh:ignoredProperties ( rdf:type ) ;
+    sh:closed false ;
     sh:property [ skos:example "2" ;
             sh:datatype xsd:integer ;
             sh:minInclusive 0 ;
@@ -324,8 +321,7 @@ scenario:QuantityShape a sh:NodeShape ;
     sh:targetClass scenario:Quantity .
 
 scenario:QualityShape a sh:NodeShape ;
-    sh:closed false;
-    sh:ignoredProperties ( rdf:type ) ;
+    sh:closed false ;
     sh:property [ skos:example "0.1" ;
             sh:datatype xsd:float ;
             sh:description "Defines the accuracy of moving objects in the scenario asset (only applicable for scenarios based on real measurements)."@en ;
@@ -347,8 +343,7 @@ scenario:QualityShape a sh:NodeShape ;
     sh:targetClass scenario:Quality .
 
 scenario:DataSourceShape a sh:NodeShape ;
-    sh:closed false;
-    sh:ignoredProperties ( rdf:type ) ;
+    sh:closed false ;
     sh:property [ skos:example "Real World Data" ;
             sh:description "Specifies the category of source data used to create the scenario."@en ;
             sh:maxCount 1 ;
