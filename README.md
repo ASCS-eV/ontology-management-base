@@ -9,18 +9,18 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 
 ## Getting Started
 
-**New to this project?** Start with the [install, test, build guide](docs/getting-started/install-test-build.md).
+**New to this project?** Start with the [install, test, build guide](https://ascs-ev.github.io/ontology-management-base/getting-started/install-test-build/).
 
-**Looking for ontologies?** Browse the [ontology catalog](docs/ontologies/catalog.md).
+**Looking for ontologies?** Browse the [ontology catalog](https://ascs-ev.github.io/ontology-management-base/ontologies/catalog/).
 
-**Need technical details?** See [concepts](docs/ontologies/concepts.md) and [validation strategy](docs/validation/strategy.md).
+**Need technical details?** See [concepts](https://ascs-ev.github.io/ontology-management-base/ontologies/concepts/) and [validation strategy](https://ascs-ev.github.io/ontology-management-base/validation/strategy/).
 
 ## Quick Links
 
-- **[Full Documentation](docs/)** - Complete guides and references
-- **[Validation](docs/validation/strategy.md)** - Run checks on your data
-- **[Contributing](docs/getting-started/contribute.md)** - How to add or modify ontologies
-- **[Gaia-X 4 PLC-AAD](docs/gaiax/gaiax4plc-aad.md)** - Federated catalog upload flow
+- **[Full Documentation](https://ascs-ev.github.io/ontology-management-base/)** - Complete guides and references
+- **[Validation](https://ascs-ev.github.io/ontology-management-base/validation/strategy/)** - Run checks on your data
+- **[Contributing](https://ascs-ev.github.io/ontology-management-base/getting-started/contribute/)** - How to add or modify ontologies
+- **[Gaia-X 4 PLC-AAD](https://ascs-ev.github.io/ontology-management-base/gaiax/gaiax4plc-aad/)** - Federated catalog upload flow
 
 ## What's in This Repository
 
