@@ -73,15 +73,15 @@
       "@type": "environment-model:Quantity",
       "environment-model:textureMaterialCount": {
         "@value": "179",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "environment-model:triangleCount": {
         "@value": "12456",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "environment-model:geometryCount": {
         "@value": "5000",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       }
     },
     "environment-model:hasQuality": {
