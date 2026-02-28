@@ -76,7 +76,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: pretty-format-json
-        args: ["--autofix", "--indent", "3", "--no-ensure-ascii", "--no-sort-keys"]
+        args: ["--autofix", "--indent", "3", "--no-sort-keys"]
         files: \.(json|jsonld)$
       - id: mixed-line-ending
         args: ["--fix=lf"]

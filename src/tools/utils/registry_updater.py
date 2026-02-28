@@ -366,7 +366,7 @@ def load_existing_registry() -> dict:
 
 def write_registry(registry: dict) -> None:
     """Write registry to file only if content has changed."""
-    new_content = json.dumps(registry, indent=2, sort_keys=False) + "\n"
+    new_content = json.dumps(registry, indent=3, sort_keys=False) + "\n"
 
     if write_if_changed(REGISTRY_PATH, new_content):
         logger.info("Registry updated: %s", REGISTRY_PATH.as_posix())
@@ -750,7 +750,7 @@ def main():
     test_catalog_xml = generate_test_catalog(test_data, fixtures)
 
     if args.dry_run:
-        print(json.dumps(registry, indent=2))
+        print(json.dumps(registry, indent=3))
         print(artifacts_xml)
         print(imports_xml)
         print(test_catalog_xml[:500] + "...")
