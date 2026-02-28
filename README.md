@@ -29,6 +29,12 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 - **Test Data** - Examples and regression tests
 - **Documentation** - Guides, APIs, and specifications
 
+## Requirements
+
+- **Python ≥ 3.12** (required — older versions will fail with syntax errors)
+- **Git**
+- **Make** (included with Git Bash on Windows; install via `choco install make` or `scoop install make` for PowerShell)
+
 ## Installation
 
 ```bash
@@ -42,7 +48,14 @@ make setup
 Activate the environment in your current shell when needed:
 
 ```bash
-source .venv/bin/activate # Windows: source .venv/Scripts/activate
+# Linux / macOS / Git Bash
+source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# Windows CMD
+.venv\Scripts\activate.bat
 ```
 
 ## Validation

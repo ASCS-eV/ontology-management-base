@@ -4,8 +4,9 @@ This page covers the full setup flow for users and contributors.
 
 ## Requirements
 
-- Python 3.12
-- Git
+- **Python ≥ 3.12** (required — older versions will fail with syntax errors)
+- **Git**
+- **Make** (included with Git Bash on Windows; install via `choco install make` or `scoop install make` for PowerShell)
 
 ## Install
 
@@ -22,7 +23,14 @@ make setup
 Activate the environment in your current shell when needed:
 
 ```bash
+# Linux / macOS / Git Bash
 source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
+# Windows CMD
+.venv\Scripts\activate.bat
 ```
 
 ## VS Code: Auto-activate virtual environment
