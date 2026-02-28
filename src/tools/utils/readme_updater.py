@@ -75,7 +75,7 @@ def update_readme():
     # Build new content
     new_content = content[:start_index] + "\n" + new_table + "\n" + content[end_index:]
 
-    with open(README_FILE, "w", encoding="utf-8") as f:
+    with open(README_FILE, "w", encoding="utf-8", newline="\n") as f:
         f.write(new_content)
     print("README updated successfully.")
 
