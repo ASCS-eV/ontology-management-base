@@ -575,7 +575,7 @@ def generate_properties_docs() -> None:
         )
 
         properties_file = domain_dir / "PROPERTIES.md"
-        properties_file.write_text(properties_content, encoding="utf-8")
+        properties_file.write_text(properties_content, encoding="utf-8", newline="\n")
         logger.info("Updated PROPERTIES.md for %s", domain)
 
 
@@ -647,7 +647,7 @@ def update_catalog_table(catalog_path: Path, table_markdown: str) -> None:
     _, after = rest.split(END_MARKER, 1)
     updated = f"{before}{START_MARKER}\n{table_markdown}\n{END_MARKER}{after}"
 
-    catalog_path.write_text(updated, encoding="utf-8")
+    catalog_path.write_text(updated, encoding="utf-8", newline="\n")
     logger.info("Updated catalog table in %s", catalog_path)
 
 
@@ -717,7 +717,7 @@ def _generate_properties_page(
         f'--8<-- "{snippet_path}"',
         "",
     ]
-    page_path.write_text("\n".join(page_content), encoding="utf-8")
+    page_path.write_text("\n".join(page_content), encoding="utf-8", newline="\n")
 
 
 def update_properties_pages(registry: dict) -> None:
@@ -856,7 +856,7 @@ def update_properties_overview(registry: dict) -> None:
         )
 
     content = "\n".join(overview_lines + [""])
-    PROPERTIES_OVERVIEW.write_text(content, encoding="utf-8")
+    PROPERTIES_OVERVIEW.write_text(content, encoding="utf-8", newline="\n")
     logger.info("Updated domains overview: %s", PROPERTIES_OVERVIEW)
 
 
