@@ -1,214 +1,214 @@
 {
-  "@context": {
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "gx": "https://w3id.org/gaia-x/development#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "skos": "http://www.w3.org/2004/02/skos/core#"
-  },
-  "@id": "did:web:test.fixture.net:Manifest:test_simulation-model_manifest_reference",
-  "@type": "envited-x:Manifest",
-  "manifest:hasManifestReference": {
-    "@type": "manifest:Link",
-    "manifest:hasAccessRole": {
-      "@type": "manifest:AccessRole",
-      "@id": "envited-x:isPublic"
-    },
-    "manifest:hasCategory": {
-      "@type": "manifest:Category",
-      "@id": "envited-x:isManifest"
-    },
-    "manifest:hasFileMetadata": {
-      "@type": "manifest:FileMetadata",
-      "manifest:filePath": {
-        "@value": "./simulation-model_manifest_reference.json",
-        "@type": "xsd:anyURI"
-      },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
-      }
-    }
-  },
-  "manifest:hasLicense": {
-    "@type": "manifest:Link",
-    "manifest:iri": {
-      "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:simulation-model-example-001"
-    },
-    "manifest:hasAccessRole": {
-      "@type": "manifest:AccessRole",
-      "@id": "envited-x:isPublic"
-    },
-    "manifest:hasCategory": {
-      "@type": "manifest:Category",
-      "@id": "envited-x:isLicense"
-    },
-    "manifest:hasFileMetadata": {
-      "@type": "manifest:FileMetadata",
-      "manifest:filePath": {
-        "@value": "https://opensource.org/license/EPL-2.0",
-        "@type": "xsd:anyURI"
-      },
-      "manifest:mimeType": {
-        "@value": "text/html",
-        "@type": "xsd:string"
-      }
-    }
-  },
-  "manifest:hasArtifacts": [
-    {
+   "@context": {
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "skos": "http://www.w3.org/2004/02/skos/core#"
+   },
+   "@id": "did:web:test.fixture.net:Manifest:test_simulation-model_manifest_reference",
+   "@type": "envited-x:Manifest",
+   "manifest:hasManifestReference": {
       "@type": "manifest:Link",
       "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "envited-x:isOwner"
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
       },
       "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "envited-x:isSimulationData"
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
       },
       "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafybeifc3wqg5bslmeukv4qsyzrluhmztizyp7hbevxcfxajdwkqxarwza",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": {
-          "@value": "bafybeifc3wqg5bslmeukv4qsyzrluhmztizyp7hbevxcfxajdwkqxarwza",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "application/zip",
-          "@type": "xsd:string"
-        },
-        "manifest:fileSize": {
-          "@value": "534634",
-          "@type": "xsd:integer"
-        },
-        "manifest:filename": {
-          "@value": "simulation-model-data.zip",
-          "@type": "xsd:string"
-        },
-        "manifest:timestamp": {
-          "@value": "2024-06-26T09:00:00",
-          "@type": "xsd:dateTime"
-        }
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "./simulation-model_manifest_reference.json",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": {
+            "@value": "application/ld+json",
+            "@type": "xsd:string"
+         }
       }
-    },
-    {
+   },
+   "manifest:hasLicense": {
       "@type": "manifest:Link",
+      "manifest:iri": {
+         "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:simulation-model-example-001"
+      },
       "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "envited-x:isPublic"
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
       },
       "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "envited-x:isDocumentation"
+         "@type": "manifest:Category",
+         "@id": "envited-x:isLicense"
       },
       "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": {
-          "@value": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "text/markdown",
-          "@type": "xsd:string"
-        },
-        "manifest:fileSize": {
-          "@value": "4096",
-          "@type": "xsd:integer"
-        },
-        "manifest:filename": {
-          "@value": "README.md",
-          "@type": "xsd:string"
-        }
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "https://opensource.org/license/EPL-2.0",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": {
+            "@value": "text/html",
+            "@type": "xsd:string"
+         }
       }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "envited-x:isPublic"
+   },
+   "manifest:hasArtifacts": [
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "envited-x:isOwner"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "envited-x:isSimulationData"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafybeifc3wqg5bslmeukv4qsyzrluhmztizyp7hbevxcfxajdwkqxarwza",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": {
+               "@value": "bafybeifc3wqg5bslmeukv4qsyzrluhmztizyp7hbevxcfxajdwkqxarwza",
+               "@type": "xsd:string"
+            },
+            "manifest:mimeType": {
+               "@value": "application/zip",
+               "@type": "xsd:string"
+            },
+            "manifest:fileSize": {
+               "@value": "534634",
+               "@type": "xsd:integer"
+            },
+            "manifest:filename": {
+               "@value": "simulation-model-data.zip",
+               "@type": "xsd:string"
+            },
+            "manifest:timestamp": {
+               "@value": "2024-06-26T09:00:00",
+               "@type": "xsd:dateTime"
+            }
+         }
       },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "envited-x:isMetadata"
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "envited-x:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "envited-x:isDocumentation"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": {
+               "@value": "bafkreidjcjbxlyeft6wasxkuerwxvo3acmranffkmv5iy2tiewl2k5z6fe",
+               "@type": "xsd:string"
+            },
+            "manifest:mimeType": {
+               "@value": "text/markdown",
+               "@type": "xsd:string"
+            },
+            "manifest:fileSize": {
+               "@value": "4096",
+               "@type": "xsd:integer"
+            },
+            "manifest:filename": {
+               "@value": "README.md",
+               "@type": "xsd:string"
+            }
+         }
       },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "ipfs://bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": {
-          "@value": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "application/json",
-          "@type": "xsd:string"
-        },
-        "manifest:fileSize": {
-          "@value": "2048",
-          "@type": "xsd:integer"
-        },
-        "manifest:filename": {
-          "@value": "domainMetadata.json",
-          "@type": "xsd:string"
-        }
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "envited-x:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "envited-x:isMetadata"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "ipfs://bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": {
+               "@value": "bafkreifsu25wkyq7oecmtam3mguuoov2zmjp6xi3chuf5plajagdjfoule",
+               "@type": "xsd:string"
+            },
+            "manifest:mimeType": {
+               "@value": "application/json",
+               "@type": "xsd:string"
+            },
+            "manifest:fileSize": {
+               "@value": "2048",
+               "@type": "xsd:integer"
+            },
+            "manifest:filename": {
+               "@value": "domainMetadata.json",
+               "@type": "xsd:string"
+            }
+         }
+      },
+      {
+         "@type": "manifest:Link",
+         "manifest:hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "envited-x:isPublic"
+         },
+         "manifest:hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "envited-x:isMedia"
+         },
+         "manifest:hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "manifest:filePath": {
+               "@value": "./visualization/simulation_model_screenshot.png",
+               "@type": "xsd:anyURI"
+            },
+            "manifest:cid": {
+               "@value": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
+               "@type": "xsd:string"
+            },
+            "manifest:mimeType": {
+               "@value": "image/png",
+               "@type": "xsd:string"
+            },
+            "manifest:fileSize": {
+               "@value": "1500000",
+               "@type": "xsd:integer"
+            },
+            "manifest:filename": {
+               "@value": "simulation_model_screenshot.png",
+               "@type": "xsd:string"
+            },
+            "manifest:hasDimensions": {
+               "@type": "manifest:Dimensions",
+               "manifest:unit": "pixels",
+               "manifest:width": {
+                  "@value": "1920.0",
+                  "@type": "xsd:float"
+               },
+               "manifest:height": {
+                  "@value": "1080.0",
+                  "@type": "xsd:float"
+               }
+            }
+         }
       }
-    },
-    {
-      "@type": "manifest:Link",
-      "manifest:hasAccessRole": {
-        "@type": "manifest:AccessRole",
-        "@id": "envited-x:isPublic"
-      },
-      "manifest:hasCategory": {
-        "@type": "manifest:Category",
-        "@id": "envited-x:isMedia"
-      },
-      "manifest:hasFileMetadata": {
-        "@type": "manifest:FileMetadata",
-        "manifest:filePath": {
-          "@value": "./visualization/simulation_model_screenshot.png",
-          "@type": "xsd:anyURI"
-        },
-        "manifest:cid": {
-          "@value": "bafybeiakegwcrpeuylnurqns2pwim67tni6td4jdqosblhwu7kvgvuncqi",
-          "@type": "xsd:string"
-        },
-        "manifest:mimeType": {
-          "@value": "image/png",
-          "@type": "xsd:string"
-        },
-        "manifest:fileSize": {
-          "@value": "1500000",
-          "@type": "xsd:integer"
-        },
-        "manifest:filename": {
-          "@value": "simulation_model_screenshot.png",
-          "@type": "xsd:string"
-        },
-        "manifest:hasDimensions": {
-          "@type": "manifest:Dimensions",
-          "manifest:unit": "pixels",
-          "manifest:width": {
-            "@value": "1920.0",
-            "@type": "xsd:float"
-          },
-          "manifest:height": {
-            "@value": "1080.0",
-            "@type": "xsd:float"
-          }
-        }
-      }
-    }
-  ],
-  "manifest:hasReferencedArtifacts": []
+   ],
+   "manifest:hasReferencedArtifacts": []
 }

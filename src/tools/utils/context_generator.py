@@ -422,7 +422,7 @@ def _write_context(
         Path if file was written, None if unchanged or dry_run
     """
     output_path = ARTIFACTS_DIR / domain / f"{domain}{Extensions.CONTEXT}"
-    new_content = json.dumps(context_doc, indent=2, ensure_ascii=False) + "\n"
+    new_content = json.dumps(context_doc, indent=3) + "\n"
 
     if dry_run:
         return None
@@ -697,7 +697,7 @@ def main() -> int:
         context_doc = generate_context(args.domain)
         if context_doc:
             if args.dry_run:
-                print(json.dumps(context_doc, indent=2))
+                print(json.dumps(context_doc, indent=3))
             else:
                 _write_context(args.domain, context_doc)
             return 0

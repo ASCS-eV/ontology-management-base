@@ -1,76 +1,76 @@
 {
-  "comments": {
-    "description": "Auto-generated JSON-LD context for compact instance syntax",
-    "generator": "context_generator.py",
-    "source_owl": "artifacts/survey/survey.owl.ttl",
-    "source_shacl": [
-      "artifacts/survey/survey-result-data-offering.shacl.ttl",
-      "artifacts/survey/survey-service-offering.shacl.ttl"
-    ],
-    "note": "Transitional artifact - will be replaced by LinkML-generated context"
-  },
-  "@context": {
-    "@version": 1.1,
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "survey": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "belongsTo": {
-      "@id": "survey:belongsTo",
-      "@type": "@id"
-    },
-    "dataSize": {
-      "@id": "survey:dataSize",
-      "@type": "xsd:float"
-    },
-    "hasContent": {
-      "@id": "survey:hasContent",
-      "@type": "@id"
-    },
-    "hasDomainSpecification": {
-      "@id": "survey:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "survey:hasManifest",
-      "@type": "@id"
-    },
-    "hasResourceDescription": {
-      "@id": "survey:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasServiceOffering": {
-      "@id": "survey:hasServiceOffering",
-      "@type": "@id"
-    },
-    "surveyCloseTime": {
-      "@id": "survey:surveyCloseTime",
-      "@type": "xsd:dateTime"
-    },
-    "surveyCreationTime": {
-      "@id": "survey:surveyCreationTime",
-      "@type": "xsd:dateTime"
-    },
-    "surveyEndTime": {
-      "@id": "survey:surveyEndTime",
-      "@type": "xsd:dateTime"
-    },
-    "surveyStartTime": {
-      "@id": "survey:surveyStartTime",
-      "@type": "xsd:dateTime"
-    },
-    "surveyUrl": {
-      "@id": "survey:surveyUrl"
-    },
-    "ResultContent": "survey:ResultContent",
-    "ResultDomainSpecification": "survey:ResultDomainSpecification",
-    "ServiceContent": "survey:ServiceContent",
-    "ServiceDomainSpecification": "survey:ServiceDomainSpecification",
-    "SurveyResultDataOffering": "survey:SurveyResultDataOffering",
-    "SurveyServiceOffering": "survey:SurveyServiceOffering"
-  }
+   "comments": {
+      "description": "Auto-generated JSON-LD context for compact instance syntax",
+      "generator": "context_generator.py",
+      "source_owl": "artifacts/survey/survey.owl.ttl",
+      "source_shacl": [
+         "artifacts/survey/survey-result-data-offering.shacl.ttl",
+         "artifacts/survey/survey-service-offering.shacl.ttl"
+      ],
+      "note": "Transitional artifact - will be replaced by LinkML-generated context"
+   },
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "survey": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "belongsTo": {
+         "@id": "survey:belongsTo",
+         "@type": "@id"
+      },
+      "dataSize": {
+         "@id": "survey:dataSize",
+         "@type": "xsd:float"
+      },
+      "hasContent": {
+         "@id": "survey:hasContent",
+         "@type": "@id"
+      },
+      "hasDomainSpecification": {
+         "@id": "survey:hasDomainSpecification",
+         "@type": "@id"
+      },
+      "hasManifest": {
+         "@id": "survey:hasManifest",
+         "@type": "@id"
+      },
+      "hasResourceDescription": {
+         "@id": "survey:hasResourceDescription",
+         "@type": "@id"
+      },
+      "hasServiceOffering": {
+         "@id": "survey:hasServiceOffering",
+         "@type": "@id"
+      },
+      "surveyCloseTime": {
+         "@id": "survey:surveyCloseTime",
+         "@type": "xsd:dateTime"
+      },
+      "surveyCreationTime": {
+         "@id": "survey:surveyCreationTime",
+         "@type": "xsd:dateTime"
+      },
+      "surveyEndTime": {
+         "@id": "survey:surveyEndTime",
+         "@type": "xsd:dateTime"
+      },
+      "surveyStartTime": {
+         "@id": "survey:surveyStartTime",
+         "@type": "xsd:dateTime"
+      },
+      "surveyUrl": {
+         "@id": "survey:surveyUrl"
+      },
+      "ResultContent": "survey:ResultContent",
+      "ResultDomainSpecification": "survey:ResultDomainSpecification",
+      "ServiceContent": "survey:ServiceContent",
+      "ServiceDomainSpecification": "survey:ServiceDomainSpecification",
+      "SurveyResultDataOffering": "survey:SurveyResultDataOffering",
+      "SurveyServiceOffering": "survey:SurveyServiceOffering"
+   }
 }

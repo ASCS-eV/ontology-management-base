@@ -1,90 +1,81 @@
 {
-  "@context": {
-    "survey": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "gx": "https://w3id.org/gaia-x/development#",
-    "schema": "https://schema.org/",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#"
-  },
-  "@id": "did:web:test.survey.net:Survey:test_valid_survey-service-offering_instance",
-  "@type": "survey:SurveyServiceOffering",
-  "survey:hasServiceOffering": {
-    "@id": "did:web:registry.envited-x.net::ServiceOfferingBase:survey-service-001",
-    "@type": "envited-x:ServiceOfferingBase",
-    "schema:name": "Semiconductor True Demand Survey",
-    "schema:description": "End to end supply chain survey on important leading and lagging indicators for semiconductor supply chains such as demand & sales development and inventory metrics to forecast market development",
-    "gx:providedBy": {
-      "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-    },
-    "gx:serviceOfferingTermsAndConditions": {
-      "@type": "gx:TermsAndConditions",
-      "gx:url": {
-        "@value": "https://example.org/survey/service-terms",
-        "@type": "xsd:anyURI"
+   "@context": {
+      "survey": "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "schema": "https://schema.org/",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#"
+   },
+   "@id": "did:web:test.survey.net:Survey:test_valid_survey-service-offering_instance",
+   "@type": "survey:SurveyServiceOffering",
+   "survey:hasServiceOffering": {
+      "@id": "did:web:registry.envited-x.net::ServiceOfferingBase:survey-service-001",
+      "@type": "envited-x:ServiceOfferingBase",
+      "schema:name": "Semiconductor True Demand Survey",
+      "schema:description": "End to end supply chain survey on important leading and lagging indicators for semiconductor supply chains such as demand & sales development and inventory metrics to forecast market development",
+      "gx:providedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:hash": "6e829211c85f4dd01cf8d1239db95aafcce84f13bf1ac473d4f8f6f74b4f98c4"
-    }
-  },
-  "survey:hasDomainSpecification": {
-    "@type": "survey:ServiceDomainSpecification",
-    "survey:hasContent": {
-      "@type": "survey:ServiceContent",
-      "survey:surveyUrl": {
-        "@value": "https://web-mpc.gxfs.gx4fm.org/?session=qrsg5sp6n1cs1172kd8q80q0e8&participationCode=7ab1ch5r8gc7e299zb0psa0t0c",
-        "@type": "xsd:string"
-      },
-      "survey:surveyCreationTime": {
-        "@value": "2023-08-01T15:14:04",
-        "@type": "xsd:dateTime"
-      },
-      "survey:surveyEndTime": {
-        "@value": "2023-08-02T17:14:00",
-        "@type": "xsd:dateTime"
-      },
-      "survey:dataSize": {
-        "@value": "5.8",
-        "@type": "xsd:float"
+      "gx:serviceOfferingTermsAndConditions": {
+         "@type": "gx:TermsAndConditions",
+         "gx:url": {
+            "@value": "https://example.org/survey/service-terms",
+            "@type": "xsd:anyURI"
+         },
+         "gx:hash": "6e829211c85f4dd01cf8d1239db95aafcce84f13bf1ac473d4f8f6f74b4f98c4"
       }
-    }
-  },
-  "survey:hasManifest": {
-    "@type": "manifest:Link",
-    "manifest:iri": {
-      "@id": "did:web:test.fixture.net:Manifest:test_survey-service-offering_manifest_reference"
-    },
-    "skos:note": {
-      "@value": "Reference to the survey service offering manifest.",
-      "@type": "xsd:string"
-    },
-    "sh:conformsTo": [
-      {
-        "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-      },
-      {
-        "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+   },
+   "survey:hasDomainSpecification": {
+      "@type": "survey:ServiceDomainSpecification",
+      "survey:hasContent": {
+         "@type": "survey:ServiceContent",
+         "survey:surveyUrl": "https://web-mpc.gxfs.gx4fm.org/?session=qrsg5sp6n1cs1172kd8q80q0e8&participationCode=7ab1ch5r8gc7e299zb0psa0t0c",
+         "survey:surveyCreationTime": {
+            "@value": "2023-08-01T15:14:04",
+            "@type": "xsd:dateTime"
+         },
+         "survey:surveyEndTime": {
+            "@value": "2023-08-02T17:14:00",
+            "@type": "xsd:dateTime"
+         },
+         "survey:dataSize": {
+            "@value": "5.8",
+            "@type": "xsd:float"
+         }
       }
-    ],
-    "manifest:hasAccessRole": {
-      "@type": "manifest:AccessRole",
-      "@id": "envited-x:isPublic"
-    },
-    "manifest:hasCategory": {
-      "@type": "manifest:Category",
-      "@id": "envited-x:isManifest"
-    },
-    "manifest:hasFileMetadata": {
-      "@type": "manifest:FileMetadata",
-      "manifest:filePath": {
-        "@value": "./base-references/survey-service-offering_manifest_reference.json",
-        "@type": "xsd:anyURI"
+   },
+   "survey:hasManifest": {
+      "@type": "manifest:Link",
+      "manifest:iri": {
+         "@id": "did:web:test.fixture.net:Manifest:test_survey-service-offering_manifest_reference"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
+      "skos:note": "Reference to the survey service offering manifest.",
+      "sh:conformsTo": [
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         }
+      ],
+      "manifest:hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
+      },
+      "manifest:hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
+      },
+      "manifest:hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "./base-references/survey-service-offering_manifest_reference.json",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": "application/ld+json"
       }
-    }
-  }
+   }
 }

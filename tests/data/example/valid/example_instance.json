@@ -1,23 +1,23 @@
 {
-  "@context": {
-    "example_ontology": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
-    "gx": "https://w3id.org/gaia-x/development#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
-  },
-  "@id": "did:web:test.example.net:ExampleServiceOffering:test_valid_example_instance",
-  "@type": "example_ontology:ExampleServiceOffering",
-  "example_ontology:property1": "Property 1 Value",
-  "example_ontology:property2": "Property 2 Value",
-  "example_ontology:belongsTo": {
-    "@id": "did:web:registry.gaia-x.eu:RelatedSelfDescription:123456789"
-  },
-  "example_ontology:hasJunctionIntersection": {
-    "@id": "https://openlabel.asam.net/V1-0-0/ontologies/IntersectionStaggered"
-  },
-  "gx:copyrightOwnedBy": {
-    "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-  },
-  "gx:license": "EPL-2.0",
-  "gx:resourcePolicy": "allow intent"
+   "@context": {
+      "example_ontology": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
+   },
+   "@id": "did:web:test.example.net:ExampleServiceOffering:test_valid_example_instance",
+   "@type": "example_ontology:ExampleServiceOffering",
+   "example_ontology:property1": "Property 1 Value",
+   "example_ontology:property2": "Property 2 Value",
+   "example_ontology:belongsTo": {
+      "@id": "did:web:registry.gaia-x.eu:RelatedSelfDescription:123456789"
+   },
+   "example_ontology:hasJunctionIntersection": {
+      "@id": "https://openlabel.asam.net/V1-0-0/ontologies/IntersectionStaggered"
+   },
+   "gx:copyrightOwnedBy": {
+      "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+   },
+   "gx:license": "EPL-2.0",
+   "gx:resourcePolicy": "allow intent"
 }

@@ -1,131 +1,131 @@
 {
-  "comments": {
-    "description": "Auto-generated JSON-LD context for compact instance syntax",
-    "generator": "context_generator.py",
-    "source_owl": "artifacts/scenario/scenario.owl.ttl",
-    "source_shacl": "artifacts/scenario/scenario.shacl.ttl",
-    "note": "Transitional artifact - will be replaced by LinkML-generated context"
-  },
-  "@context": {
-    "@version": 1.1,
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-    "abstractionLevel": {
-      "@id": "scenario:abstractionLevel"
-    },
-    "accuracyObjects": {
-      "@id": "scenario:accuracyObjects",
-      "@type": "xsd:float"
-    },
-    "aim": {
-      "@id": "scenario:aim"
-    },
-    "calibration": {
-      "@id": "scenario:calibration"
-    },
-    "controllers": {
-      "@id": "scenario:controllers"
-    },
-    "country": {
-      "@id": "scenario:country"
-    },
-    "countrySpecificSign": {
-      "@id": "scenario:countrySpecificSign"
-    },
-    "countrySpecificTrafficParticipants": {
-      "@id": "scenario:countrySpecificTrafficParticipants"
-    },
-    "customCommands": {
-      "@id": "scenario:customCommands"
-    },
-    "formatType": {
-      "@id": "scenario:formatType"
-    },
-    "hasContent": {
-      "@id": "scenario:hasContent",
-      "@type": "@id"
-    },
-    "hasDataSource": {
-      "@id": "scenario:hasDataSource",
-      "@type": "@id"
-    },
-    "hasDomainSpecification": {
-      "@id": "scenario:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "scenario:hasFormat",
-      "@type": "@id"
-    },
-    "hasGeoreference": {
-      "@id": "scenario:hasGeoreference",
-      "@type": "@id"
-    },
-    "hasManifest": {
-      "@id": "scenario:hasManifest",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "scenario:hasQuality",
-      "@type": "@id"
-    },
-    "hasQuantity": {
-      "@id": "scenario:hasQuantity",
-      "@type": "@id"
-    },
-    "hasResourceDescription": {
-      "@id": "scenario:hasResourceDescription",
-      "@type": "@id"
-    },
-    "movementDescription": {
-      "@id": "scenario:movementDescription"
-    },
-    "numberTrafficObjects": {
-      "@id": "scenario:numberTrafficObjects",
-      "@type": "xsd:integer"
-    },
-    "permanentTrafficObjects": {
-      "@id": "scenario:permanentTrafficObjects",
-      "@type": "xsd:integer"
-    },
-    "sourceDescription": {
-      "@id": "scenario:sourceDescription"
-    },
-    "sourceType": {
-      "@id": "scenario:sourceType"
-    },
-    "sunAzimuth": {
-      "@id": "scenario:sunAzimuth",
-      "@type": "xsd:float"
-    },
-    "temporaryTrafficObjects": {
-      "@id": "scenario:temporaryTrafficObjects",
-      "@type": "xsd:integer"
-    },
-    "timeDate": {
-      "@id": "scenario:timeDate",
-      "@type": "xsd:dateTime"
-    },
-    "usedStandardFunctions": {
-      "@id": "scenario:usedStandardFunctions"
-    },
-    "version": {
-      "@id": "scenario:version"
-    },
-    "Content": "scenario:Content",
-    "ContentOrTag": "scenario:ContentOrTag",
-    "DataSource": "scenario:DataSource",
-    "DomainSpecification": "scenario:DomainSpecification",
-    "Format": "scenario:Format",
-    "Quality": "scenario:Quality",
-    "Quantity": "scenario:Quantity",
-    "Scenario": "scenario:Scenario"
-  }
+   "comments": {
+      "description": "Auto-generated JSON-LD context for compact instance syntax",
+      "generator": "context_generator.py",
+      "source_owl": "artifacts/scenario/scenario.owl.ttl",
+      "source_shacl": "artifacts/scenario/scenario.shacl.ttl",
+      "note": "Transitional artifact - will be replaced by LinkML-generated context"
+   },
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "abstractionLevel": {
+         "@id": "scenario:abstractionLevel"
+      },
+      "accuracyObjects": {
+         "@id": "scenario:accuracyObjects",
+         "@type": "xsd:float"
+      },
+      "aim": {
+         "@id": "scenario:aim"
+      },
+      "calibration": {
+         "@id": "scenario:calibration"
+      },
+      "controllers": {
+         "@id": "scenario:controllers"
+      },
+      "country": {
+         "@id": "scenario:country"
+      },
+      "countrySpecificSign": {
+         "@id": "scenario:countrySpecificSign"
+      },
+      "countrySpecificTrafficParticipants": {
+         "@id": "scenario:countrySpecificTrafficParticipants"
+      },
+      "customCommands": {
+         "@id": "scenario:customCommands"
+      },
+      "formatType": {
+         "@id": "scenario:formatType"
+      },
+      "hasContent": {
+         "@id": "scenario:hasContent",
+         "@type": "@id"
+      },
+      "hasDataSource": {
+         "@id": "scenario:hasDataSource",
+         "@type": "@id"
+      },
+      "hasDomainSpecification": {
+         "@id": "scenario:hasDomainSpecification",
+         "@type": "@id"
+      },
+      "hasFormat": {
+         "@id": "scenario:hasFormat",
+         "@type": "@id"
+      },
+      "hasGeoreference": {
+         "@id": "scenario:hasGeoreference",
+         "@type": "@id"
+      },
+      "hasManifest": {
+         "@id": "scenario:hasManifest",
+         "@type": "@id"
+      },
+      "hasQuality": {
+         "@id": "scenario:hasQuality",
+         "@type": "@id"
+      },
+      "hasQuantity": {
+         "@id": "scenario:hasQuantity",
+         "@type": "@id"
+      },
+      "hasResourceDescription": {
+         "@id": "scenario:hasResourceDescription",
+         "@type": "@id"
+      },
+      "movementDescription": {
+         "@id": "scenario:movementDescription"
+      },
+      "numberTrafficObjects": {
+         "@id": "scenario:numberTrafficObjects",
+         "@type": "xsd:integer"
+      },
+      "permanentTrafficObjects": {
+         "@id": "scenario:permanentTrafficObjects",
+         "@type": "xsd:integer"
+      },
+      "sourceDescription": {
+         "@id": "scenario:sourceDescription"
+      },
+      "sourceType": {
+         "@id": "scenario:sourceType"
+      },
+      "sunAzimuth": {
+         "@id": "scenario:sunAzimuth",
+         "@type": "xsd:float"
+      },
+      "temporaryTrafficObjects": {
+         "@id": "scenario:temporaryTrafficObjects",
+         "@type": "xsd:integer"
+      },
+      "timeDate": {
+         "@id": "scenario:timeDate",
+         "@type": "xsd:dateTime"
+      },
+      "usedStandardFunctions": {
+         "@id": "scenario:usedStandardFunctions"
+      },
+      "version": {
+         "@id": "scenario:version"
+      },
+      "Content": "scenario:Content",
+      "ContentOrTag": "scenario:ContentOrTag",
+      "DataSource": "scenario:DataSource",
+      "DomainSpecification": "scenario:DomainSpecification",
+      "Format": "scenario:Format",
+      "Quality": "scenario:Quality",
+      "Quantity": "scenario:Quantity",
+      "Scenario": "scenario:Scenario"
+   }
 }

@@ -71,3 +71,12 @@ repos:
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
         stages: [pre-commit]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: pretty-format-json
+        args: ["--autofix", "--indent", "3", "--no-sort-keys"]
+        files: \.(json|jsonld)$
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
