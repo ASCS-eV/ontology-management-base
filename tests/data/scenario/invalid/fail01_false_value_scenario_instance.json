@@ -109,15 +109,15 @@
       "@type": "scenario:Quantity",
       "scenario:numberTrafficObjects": {
         "@value": "1",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "scenario:temporaryTrafficObjects": {
         "@value": "0",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "scenario:permanentTrafficObjects": {
         "@value": "1",
-        "@type": "xsd:unsignedInt"
+        "@type": "xsd:integer"
       },
       "scenario:controllers": {
         "@value": "SampleController1",

@@ -110,7 +110,7 @@ hdmap:DomainSpecification a owl:Class ;
     ] , [
         a owl:Restriction ;
         owl:onProperty hdmap:hasGeoreference ;
-        owl:cardinality 1
+        owl:minCardinality 0
     ] .
 
 hdmap:Content a owl:Class ;

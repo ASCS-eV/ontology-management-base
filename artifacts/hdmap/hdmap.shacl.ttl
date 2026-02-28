@@ -37,7 +37,7 @@ hdmap:HdMapShape a sh:NodeShape ;
         sh:node hdmap:DomainSpecificationShape ; 
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:message "Each HD map must have one associated DomainSpecification object with format, content, quantity, quality, dataSource, and georeference."@en ;
+        sh:message "Each HD map must have one associated DomainSpecification object with format, content, quantity, quality, and dataSource."@en ;
     ] ;
 
     # 3) hasManifest
@@ -107,7 +107,7 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
         ],
         [
             sh:maxCount 1 ;
-            sh:minCount 1 ;
+            sh:minCount 0 ;
             sh:node georeference:GeoreferenceShape ;
             sh:name "has georeference"@en ; 
             sh:message "Each HD map must link to a georeference dataset defining the location/projection of the HD map asset."@en ;
@@ -136,16 +136,16 @@ hdmap:ContentShape a sh:NodeShape ;
             sh:name "road types"@en ;
             sh:order 0 ;
             sh:path hdmap:roadTypes ],
-        [ skos:example "shoulder, curb, ..." ;
-            sh:description "Lists the lanes types used in the HD map asset."@en ;
-            sh:in ("biking" "border" "connectingRamp" "curb" "driving" "entry" "exit" "median" "none" "offRamp" "onRamp" "parking" "restricted" "shoulder" "slipLane" "stop" "walking") ;
+        [ skos:example "driving, shoulder, parking, walking" ;
+            sh:description "Lists the lane types used in the HD map asset."@en ;
+            sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
             sh:message "Validation of laneTypes failed!"@en ;
             sh:name "lane types"@en ;
             sh:order 1 ;
             sh:path hdmap:laneTypes ],
-        [ skos:example "trees, street lamps, road patches, ..." ;
+        [ skos:example "tree, pole, roadSurface, barrier, ..." ;
             sh:description "Lists the object types used in the HD map asset."@en ;
-            sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike") ;
+            sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "van" "vegetation" "wind") ;
             sh:message "Validation of levelOfDetail failed!"@en ;
             sh:name "level of detail"@en ;
             sh:order 2 ;

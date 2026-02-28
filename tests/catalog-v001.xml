@@ -30,6 +30,7 @@
   <uri name="did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_invalid_fail01_false_value_hdmap_instance" uri="tests/data/hdmap/invalid/fail01_false_value_hdmap_instance.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance" uri="tests/data/hdmap/valid/hdmap_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_no_georeference" uri="tests/data/hdmap/valid/hdmap_no_georeference_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
   <uri name="did:web:test.leakage-test.net:LeakageTest:test_valid_leakage-test_instance" uri="tests/data/leakage-test/valid/leakage-test_instance.json" domain="leakage-test" test-type="valid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_compact_manifest_instance" uri="tests/data/manifest/valid/manifest_compact_instance.json" domain="manifest" test-type="valid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance" uri="tests/data/manifest/invalid/fail_01_missing_license_instance.json" domain="manifest" test-type="invalid" category="test-data"/>

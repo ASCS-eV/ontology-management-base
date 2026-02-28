@@ -1062,7 +1062,7 @@ def generate_all_class_pages(domains: Optional[List[str]] = None) -> None:
         index_content = generate_domain_index(
             domain, classes, domain_versions.get(domain, "unknown")
         )
-        (domain_dir / "index.md").write_text(index_content)
+        (domain_dir / "index.md").write_text(index_content, newline="\n")
 
         # Generate class pages
         for class_iri, class_info in classes.items():
@@ -1075,18 +1075,20 @@ def generate_all_class_pages(domains: Optional[List[str]] = None) -> None:
                 domain_versions.get(domain, "unknown"),
                 property_paths_by_domain,
             )
-            (domain_dir / filename).write_text(content)
+            (domain_dir / filename).write_text(content, newline="\n")
 
         logger.info("Generated %d class pages for %s", len(classes), domain)
 
     # Generate gx redirect
     gx_dir = CLASSES_DIR / "gx"
     gx_dir.mkdir(exist_ok=True)
-    (gx_dir / "index.md").write_text(generate_gx_redirect_page())
+    (gx_dir / "index.md").write_text(generate_gx_redirect_page(), newline="\n")
     logger.info("Generated gx redirect page")
 
     # Generate main index
-    (CLASSES_DIR / "index.md").write_text(generate_classes_index(all_domain_names))
+    (CLASSES_DIR / "index.md").write_text(
+        generate_classes_index(all_domain_names), newline="\n"
+    )
     logger.info("Generated classes index")
 
 
