@@ -1,164 +1,164 @@
 {
-  "comments": {
-    "description": "Auto-generated JSON-LD context for compact instance syntax",
-    "generator": "context_generator.py",
-    "source_owl": "artifacts/tzip21/tzip21.owl.ttl",
-    "source_shacl": "artifacts/tzip21/tzip21.shacl.ttl",
-    "note": "Transitional artifact - will be replaced by LinkML-generated context"
-  },
-  "@context": {
-    "@version": 1.1,
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "tzip21": "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "development": "https://w3id.org/gaia-x/development#",
-    "artifactUri": {
-      "@id": "tzip21:artifactUri",
-      "@type": "xsd:anyURI"
-    },
-    "assets": {
-      "@id": "tzip21:assets",
-      "@type": "@id"
-    },
-    "attributes": {
-      "@id": "tzip21:attributes",
-      "@type": "@id"
-    },
-    "blockLevel": {
-      "@id": "tzip21:blockLevel",
-      "@type": "xsd:integer"
-    },
-    "contributors": {
-      "@id": "tzip21:contributors"
-    },
-    "creators": {
-      "@id": "tzip21:creators"
-    },
-    "dataRate": {
-      "@id": "tzip21:dataRate",
-      "@type": "@id"
-    },
-    "date": {
-      "@id": "tzip21:date",
-      "@type": "xsd:dateTime"
-    },
-    "decimals": {
-      "@id": "tzip21:decimals",
-      "@type": "xsd:integer"
-    },
-    "description": {
-      "@id": "tzip21:description"
-    },
-    "dimensions": {
-      "@id": "tzip21:dimensions",
-      "@type": "@id"
-    },
-    "displayUri": {
-      "@id": "tzip21:displayUri",
-      "@type": "xsd:anyURI"
-    },
-    "duration": {
-      "@id": "tzip21:duration",
-      "@type": "xsd:time"
-    },
-    "externalUri": {
-      "@id": "tzip21:externalUri",
-      "@type": "xsd:anyURI"
-    },
-    "fileName": {
-      "@id": "tzip21:fileName"
-    },
-    "fileSize": {
-      "@id": "tzip21:fileSize",
-      "@type": "xsd:integer"
-    },
-    "formats": {
-      "@id": "tzip21:formats",
-      "@type": "@id"
-    },
-    "genres": {
-      "@id": "tzip21:genres"
-    },
-    "hash": {
-      "@id": "tzip21:hash"
-    },
-    "identifier": {
-      "@id": "tzip21:identifier",
-      "@type": "@id"
-    },
-    "isBooleanAmount": {
-      "@id": "tzip21:isBooleanAmount",
-      "@type": "xsd:boolean"
-    },
-    "isTransferable": {
-      "@id": "tzip21:isTransferable",
-      "@type": "xsd:boolean"
-    },
-    "language": {
-      "@id": "tzip21:language",
-      "@type": "http://www.w3.org/2001/XMLSchema#language"
-    },
-    "mimeType": {
-      "@id": "tzip21:mimeType"
-    },
-    "minter": {
-      "@id": "tzip21:minter"
-    },
-    "name": {
-      "@id": "tzip21:name"
-    },
-    "publishers": {
-      "@id": "tzip21:publishers"
-    },
-    "rights": {
-      "@id": "tzip21:rights"
-    },
-    "rightsUri": {
-      "@id": "tzip21:rightsUri",
-      "@type": "xsd:anyURI"
-    },
-    "shouldPreferSymbol": {
-      "@id": "tzip21:shouldPreferSymbol",
-      "@type": "xsd:boolean"
-    },
-    "symbol": {
-      "@id": "tzip21:symbol"
-    },
-    "tags": {
-      "@id": "tzip21:tags"
-    },
-    "thumbnailUri": {
-      "@id": "tzip21:thumbnailUri",
-      "@type": "xsd:anyURI"
-    },
-    "ttl": {
-      "@id": "tzip21:ttl",
-      "@type": "xsd:integer"
-    },
-    "type": {
-      "@id": "tzip21:type"
-    },
-    "unit": {
-      "@id": "tzip21:unit"
-    },
-    "uri": {
-      "@id": "tzip21:uri",
-      "@type": "xsd:anyURI"
-    },
-    "value": {
-      "@id": "tzip21:value",
-      "@type": "xsd:integer"
-    },
-    "Asset": "tzip21:Asset",
-    "Attribute": "tzip21:Attribute",
-    "DataRate": "tzip21:DataRate",
-    "Dimensions": "tzip21:Dimensions",
-    "Format": "tzip21:Format",
-    "OntologyConformanceAttribute": "tzip21:OntologyConformanceAttribute"
-  }
+   "comments": {
+      "description": "Auto-generated JSON-LD context for compact instance syntax",
+      "generator": "context_generator.py",
+      "source_owl": "artifacts/tzip21/tzip21.owl.ttl",
+      "source_shacl": "artifacts/tzip21/tzip21.shacl.ttl",
+      "note": "Transitional artifact - will be replaced by LinkML-generated context"
+   },
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "tzip21": "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "development": "https://w3id.org/gaia-x/development#",
+      "artifactUri": {
+         "@id": "tzip21:artifactUri",
+         "@type": "xsd:anyURI"
+      },
+      "assets": {
+         "@id": "tzip21:assets",
+         "@type": "@id"
+      },
+      "attributes": {
+         "@id": "tzip21:attributes",
+         "@type": "@id"
+      },
+      "blockLevel": {
+         "@id": "tzip21:blockLevel",
+         "@type": "xsd:integer"
+      },
+      "contributors": {
+         "@id": "tzip21:contributors"
+      },
+      "creators": {
+         "@id": "tzip21:creators"
+      },
+      "dataRate": {
+         "@id": "tzip21:dataRate",
+         "@type": "@id"
+      },
+      "date": {
+         "@id": "tzip21:date",
+         "@type": "xsd:dateTime"
+      },
+      "decimals": {
+         "@id": "tzip21:decimals",
+         "@type": "xsd:integer"
+      },
+      "description": {
+         "@id": "tzip21:description"
+      },
+      "dimensions": {
+         "@id": "tzip21:dimensions",
+         "@type": "@id"
+      },
+      "displayUri": {
+         "@id": "tzip21:displayUri",
+         "@type": "xsd:anyURI"
+      },
+      "duration": {
+         "@id": "tzip21:duration",
+         "@type": "xsd:time"
+      },
+      "externalUri": {
+         "@id": "tzip21:externalUri",
+         "@type": "xsd:anyURI"
+      },
+      "fileName": {
+         "@id": "tzip21:fileName"
+      },
+      "fileSize": {
+         "@id": "tzip21:fileSize",
+         "@type": "xsd:integer"
+      },
+      "formats": {
+         "@id": "tzip21:formats",
+         "@type": "@id"
+      },
+      "genres": {
+         "@id": "tzip21:genres"
+      },
+      "hash": {
+         "@id": "tzip21:hash"
+      },
+      "identifier": {
+         "@id": "tzip21:identifier",
+         "@type": "@id"
+      },
+      "isBooleanAmount": {
+         "@id": "tzip21:isBooleanAmount",
+         "@type": "xsd:boolean"
+      },
+      "isTransferable": {
+         "@id": "tzip21:isTransferable",
+         "@type": "xsd:boolean"
+      },
+      "language": {
+         "@id": "tzip21:language",
+         "@type": "http://www.w3.org/2001/XMLSchema#language"
+      },
+      "mimeType": {
+         "@id": "tzip21:mimeType"
+      },
+      "minter": {
+         "@id": "tzip21:minter"
+      },
+      "name": {
+         "@id": "tzip21:name"
+      },
+      "publishers": {
+         "@id": "tzip21:publishers"
+      },
+      "rights": {
+         "@id": "tzip21:rights"
+      },
+      "rightsUri": {
+         "@id": "tzip21:rightsUri",
+         "@type": "xsd:anyURI"
+      },
+      "shouldPreferSymbol": {
+         "@id": "tzip21:shouldPreferSymbol",
+         "@type": "xsd:boolean"
+      },
+      "symbol": {
+         "@id": "tzip21:symbol"
+      },
+      "tags": {
+         "@id": "tzip21:tags"
+      },
+      "thumbnailUri": {
+         "@id": "tzip21:thumbnailUri",
+         "@type": "xsd:anyURI"
+      },
+      "ttl": {
+         "@id": "tzip21:ttl",
+         "@type": "xsd:integer"
+      },
+      "type": {
+         "@id": "tzip21:type"
+      },
+      "unit": {
+         "@id": "tzip21:unit"
+      },
+      "uri": {
+         "@id": "tzip21:uri",
+         "@type": "xsd:anyURI"
+      },
+      "value": {
+         "@id": "tzip21:value",
+         "@type": "xsd:integer"
+      },
+      "Asset": "tzip21:Asset",
+      "Attribute": "tzip21:Attribute",
+      "DataRate": "tzip21:DataRate",
+      "Dimensions": "tzip21:Dimensions",
+      "Format": "tzip21:Format",
+      "OntologyConformanceAttribute": "tzip21:OntologyConformanceAttribute"
+   }
 }

@@ -1,217 +1,172 @@
 {
-  "@context": {
-    "vv-report": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "gx": "https://w3id.org/gaia-x/development#",
-    "schema": "https://schema.org/",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#"
-  },
-  "@id": "did:web:test.vv-report.net:VVReport:test_valid_vv-report_instance",
-  "@type": "vv-report:VvReport",
-  "vv-report:hasCodeArtifact": {
-    "@id": "did:web:registry.envited-x.net::CodeArtifactBase:vv-report-001",
-    "@type": "envited-x:CodeArtifactBase",
-    "schema:name": "ARS548 simulation model V&V report",
-    "schema:description": "V&V Report of the radar sensor simulation model of the Continental ARS548 radar sensor",
-    "gx:license": "EPL-2.0",
-    "gx:copyrightOwnedBy": {
-      "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-    },
-    "gx:resourcePolicy": "allow intent"
-  },
-  "vv-report:hasDomainSpecification": {
-    "@type": "vv-report:DomainSpecification",
-    "vv-report:hasFormat": {
-      "@type": "vv-report:Format",
-      "vv-report:reportFormat": "JSON-LD"
-    },
-    "vv-report:hasContent": {
-      "@type": "vv-report:Content",
-      "vv-report:systemUnderTest": {
-        "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
-        "@type": "xsd:anyURI"
+   "@context": {
+      "vv-report": "https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "schema": "https://schema.org/",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#"
+   },
+   "@id": "did:web:test.vv-report.net:VVReport:test_valid_vv-report_instance",
+   "@type": "vv-report:VvReport",
+   "vv-report:hasCodeArtifact": {
+      "@id": "did:web:registry.envited-x.net::CodeArtifactBase:vv-report-001",
+      "@type": "envited-x:CodeArtifactBase",
+      "schema:name": "ARS548 simulation model V&V report",
+      "schema:description": "V&V Report of the radar sensor simulation model of the Continental ARS548 radar sensor",
+      "gx:license": "EPL-2.0",
+      "gx:copyrightOwnedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "vv-report:evaluations": [
-        {
-          "@type": "vv-report:Evaluation",
-          "vv-report:metric": {
-            "@type": "vv-report:Metric",
-            "vv-report:metricTitle": {
-              "@value": "Model output OSI validation",
-              "@type": "xsd:string"
-            },
-            "vv-report:metricDescription": {
-              "@value": "Running the model open-loop with a defined OSI SensorView input and checking the compliance of the OSI SensorData output with predefined rules",
-              "@type": "xsd:string"
-            },
-            "vv-report:metricReference": {
-              "@value": "https://github.com/OpenSimulationInterface/osi-validation",
-              "@type": "xsd:anyURI"
-            }
-          },
-          "vv-report:inputData": [
-            {
-              "@type": "vv-report:InputData",
-              "vv-report:inputDescription": {
-                "@value": "The FMU as the system under test",
-                "@type": "xsd:string"
-              },
-              "vv-report:inputReference": {
-                "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
-                "@type": "xsd:anyURI"
-              }
-            },
-            {
-              "@type": "vv-report:InputData",
-              "vv-report:inputDescription": {
-                "@value": "The OSI SensorView that will be used as input to the FMU",
-                "@type": "xsd:string"
-              },
-              "vv-report:inputReference": {
-                "@value": "https://github.com/OpenSimulationInterface/osi-validation/raw/refs/heads/master/data/20240221T141700Z_sv_300_2112_10_one_moving_object.osi",
-                "@type": "xsd:anyURI"
-              }
-            }
-          ],
-          "vv-report:parameters": [
-            {
-              "@type": "vv-report:Parameter",
-              "vv-report:parameterName": {
-                "@value": "verbose",
-                "@type": "xsd:string"
-              },
-              "vv-report:parameterDescription": {
-                "@value": "If set to true, extensive checks, according to XY, will be carried out",
-                "@type": "xsd:string"
-              },
-              "vv-report:parameterValue": {
-                "@value": false,
-                "@type": "xsd:boolean"
-              }
-            }
-          ],
-          "vv-report:result": {
-            "@type": "vv-report:Result",
-            "vv-report:resultTestPassed": {
-              "@value": true,
-              "@type": "xsd:boolean"
-            },
-            "vv-report:resultVerifiable": {
-              "@value": false,
-              "@type": "xsd:boolean"
-            }
-          },
-          "vv-report:conceptSpecificData": {
-            "modeling-simulation-spice-credibility-level": {
-              "@value": "1",
-              "@type": "xsd:integer"
-            }
-          }
-        },
-        {
-          "@type": "vv-report:Evaluation",
-          "vv-report:metric": {
-            "@type": "vv-report:Metric",
-            "vv-report:metricTitle": {
-              "@value": "FMU modelDescription check",
-              "@type": "xsd:string"
-            },
-            "vv-report:metricDescription": {
-              "@value": "Checking the modelDescription.xml of an FMU: Validation against the XML schema, uniqueness and validity of variable names, completeness and integrity of the ModelStructure, required start values, combinations of causality and variability, units",
-              "@type": "xsd:string"
-            },
-            "vv-report:metricReference": {
-              "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:bffa3d7670fc3ac3a49a257de0d4b44fdfbc12d9bd7aa329647cf73018f529f4",
-              "@type": "xsd:anyURI"
-            }
-          },
-          "vv-report:inputData": [
-            {
-              "@type": "vv-report:InputData",
-              "vv-report:inputDescription": {
-                "@value": "The FMU as the system under test",
-                "@type": "xsd:string"
-              },
-              "vv-report:inputReference": {
-                "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
-                "@type": "xsd:anyURI"
-              }
-            }
-          ],
-          "vv-report:result": {
-            "@type": "vv-report:Result",
-            "vv-report:resultTestPassed": {
-              "@value": false,
-              "@type": "xsd:boolean"
-            },
-            "vv-report:resultLog": {
-              "@value": "The attribute timestamp is missing in the SensorData output",
-              "@type": "xsd:string"
-            },
-            "vv-report:resultVerifiable": {
-              "@value": true,
-              "@type": "xsd:boolean"
-            },
-            "vv-report:resultVerification": {
-              "@type": "vv-report:ResultVerification",
-              "vv-report:resultVerificationDescription": {
-                "@value": "The log of the according compute job in the OVAL ecosystem with the given metric and input data",
-                "@type": "xsd:string"
-              },
-              "vv-report:resultVerificationReference": {
-                "@value": "https://gaiax4plcaad.dlr.de/history/4HGk8794tHFJDG3kiuvdf2fdGD4q6",
-                "@type": "xsd:anyURI"
-              }
-            }
-          },
-          "vv-report:conceptSpecificData": {
-            "modeling-simulation-spice-credibility-level": {
-              "@value": "1",
-              "@type": "xsd:integer"
-            }
-          }
-        }
-      ]
-    }
-  },
-  "vv-report:hasManifest": {
-    "@type": "manifest:Link",
-    "manifest:iri": {
-      "@id": "did:web:test.fixture.net:Manifest:test_vv-report_manifest_reference"
-    },
-    "skos:note": {
-      "@value": "Reference to the V&V report manifest.",
-      "@type": "xsd:string"
-    },
-    "sh:conformsTo": [
-      {
-        "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+      "gx:resourcePolicy": "allow intent"
+   },
+   "vv-report:hasDomainSpecification": {
+      "@type": "vv-report:DomainSpecification",
+      "vv-report:hasFormat": {
+         "@type": "vv-report:Format",
+         "vv-report:reportFormat": "JSON-LD"
       },
-      {
-        "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+      "vv-report:hasContent": {
+         "@type": "vv-report:Content",
+         "vv-report:systemUnderTest": {
+            "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
+            "@type": "xsd:anyURI"
+         },
+         "vv-report:evaluations": [
+            {
+               "@type": "vv-report:Evaluation",
+               "vv-report:metric": {
+                  "@type": "vv-report:Metric",
+                  "vv-report:metricTitle": "Model output OSI validation",
+                  "vv-report:metricDescription": "Running the model open-loop with a defined OSI SensorView input and checking the compliance of the OSI SensorData output with predefined rules",
+                  "vv-report:metricReference": {
+                     "@value": "https://github.com/OpenSimulationInterface/osi-validation",
+                     "@type": "xsd:anyURI"
+                  }
+               },
+               "vv-report:inputData": [
+                  {
+                     "@type": "vv-report:InputData",
+                     "vv-report:inputDescription": "The FMU as the system under test",
+                     "vv-report:inputReference": {
+                        "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
+                        "@type": "xsd:anyURI"
+                     }
+                  },
+                  {
+                     "@type": "vv-report:InputData",
+                     "vv-report:inputDescription": "The OSI SensorView that will be used as input to the FMU",
+                     "vv-report:inputReference": {
+                        "@value": "https://github.com/OpenSimulationInterface/osi-validation/raw/refs/heads/master/data/20240221T141700Z_sv_300_2112_10_one_moving_object.osi",
+                        "@type": "xsd:anyURI"
+                     }
+                  }
+               ],
+               "vv-report:parameters": [
+                  {
+                     "@type": "vv-report:Parameter",
+                     "vv-report:parameterName": "verbose",
+                     "vv-report:parameterDescription": "If set to true, extensive checks, according to XY, will be carried out",
+                     "vv-report:parameterValue": {
+                        "@value": false,
+                        "@type": "xsd:boolean"
+                     }
+                  }
+               ],
+               "vv-report:result": {
+                  "@type": "vv-report:Result",
+                  "vv-report:resultTestPassed": {
+                     "@value": true,
+                     "@type": "xsd:boolean"
+                  },
+                  "vv-report:resultVerifiable": {
+                     "@value": false,
+                     "@type": "xsd:boolean"
+                  }
+               },
+               "vv-report:conceptSpecificData": {
+                  "modeling-simulation-spice-credibility-level": 1
+               }
+            },
+            {
+               "@type": "vv-report:Evaluation",
+               "vv-report:metric": {
+                  "@type": "vv-report:Metric",
+                  "vv-report:metricTitle": "FMU modelDescription check",
+                  "vv-report:metricDescription": "Checking the modelDescription.xml of an FMU: Validation against the XML schema, uniqueness and validity of variable names, completeness and integrity of the ModelStructure, required start values, combinations of causality and variability, units",
+                  "vv-report:metricReference": {
+                     "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:bffa3d7670fc3ac3a49a257de0d4b44fdfbc12d9bd7aa329647cf73018f529f4",
+                     "@type": "xsd:anyURI"
+                  }
+               },
+               "vv-report:inputData": [
+                  {
+                     "@type": "vv-report:InputData",
+                     "vv-report:inputDescription": "The FMU as the system under test",
+                     "vv-report:inputReference": {
+                        "@value": "https://gaiax4plcaad.dlr.de/asset/did:op:gADlioH767wrmg4t6uUTj0wgADlioH534hrhSF",
+                        "@type": "xsd:anyURI"
+                     }
+                  }
+               ],
+               "vv-report:result": {
+                  "@type": "vv-report:Result",
+                  "vv-report:resultTestPassed": {
+                     "@value": false,
+                     "@type": "xsd:boolean"
+                  },
+                  "vv-report:resultLog": "The attribute timestamp is missing in the SensorData output",
+                  "vv-report:resultVerifiable": {
+                     "@value": true,
+                     "@type": "xsd:boolean"
+                  },
+                  "vv-report:resultVerification": {
+                     "@type": "vv-report:ResultVerification",
+                     "vv-report:resultVerificationDescription": "The log of the according compute job in the OVAL ecosystem with the given metric and input data",
+                     "vv-report:resultVerificationReference": {
+                        "@value": "https://gaiax4plcaad.dlr.de/history/4HGk8794tHFJDG3kiuvdf2fdGD4q6",
+                        "@type": "xsd:anyURI"
+                     }
+                  }
+               },
+               "vv-report:conceptSpecificData": {
+                  "modeling-simulation-spice-credibility-level": 1
+               }
+            }
+         ]
       }
-    ],
-    "manifest:hasAccessRole": {
-      "@type": "manifest:AccessRole",
-      "@id": "envited-x:isPublic"
-    },
-    "manifest:hasCategory": {
-      "@type": "manifest:Category",
-      "@id": "envited-x:isManifest"
-    },
-    "manifest:hasFileMetadata": {
-      "@type": "manifest:FileMetadata",
-      "manifest:filePath": {
-        "@value": "./base-references/vv-report_manifest_reference.json",
-        "@type": "xsd:anyURI"
+   },
+   "vv-report:hasManifest": {
+      "@type": "manifest:Link",
+      "manifest:iri": {
+         "@id": "did:web:test.fixture.net:Manifest:test_vv-report_manifest_reference"
       },
-      "manifest:mimeType": {
-        "@value": "application/ld+json",
-        "@type": "xsd:string"
+      "skos:note": "Reference to the V&V report manifest.",
+      "sh:conformsTo": [
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         }
+      ],
+      "manifest:hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
+      },
+      "manifest:hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
+      },
+      "manifest:hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "./base-references/vv-report_manifest_reference.json",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": "application/ld+json"
       }
-    }
-  }
+   }
 }

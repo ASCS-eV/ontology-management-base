@@ -1,75 +1,75 @@
 {
-  "comments": {
-    "description": "Auto-generated JSON-LD context for compact instance syntax",
-    "generator": "context_generator.py",
-    "source_owl": "artifacts/envited-x/envited-x.owl.ttl",
-    "source_shacl": "artifacts/envited-x/envited-x.shacl.ttl",
-    "note": "Transitional artifact - will be replaced by LinkML-generated context"
-  },
-  "@context": {
-    "@version": 1.1,
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "sh": "http://www.w3.org/ns/shacl#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-    "development": "https://w3id.org/gaia-x/development#",
-    "hasCodeArtifact": {
-      "@id": "envited-x:hasCodeArtifact",
-      "@type": "@id"
-    },
-    "hasContent": {
-      "@id": "envited-x:hasContent"
-    },
-    "hasDataSource": {
-      "@id": "envited-x:hasDataSource"
-    },
-    "hasDomainSpecification": {
-      "@id": "envited-x:hasDomainSpecification",
-      "@type": "@id"
-    },
-    "hasFormat": {
-      "@id": "envited-x:hasFormat"
-    },
-    "hasManifest": {
-      "@id": "envited-x:hasManifest",
-      "@type": "@id"
-    },
-    "hasQuality": {
-      "@id": "envited-x:hasQuality"
-    },
-    "hasQuantity": {
-      "@id": "envited-x:hasQuantity"
-    },
-    "hasResourceDescription": {
-      "@id": "envited-x:hasResourceDescription",
-      "@type": "@id"
-    },
-    "hasServiceOffering": {
-      "@id": "envited-x:hasServiceOffering",
-      "@type": "@id"
-    },
-    "hasSoftwareResource": {
-      "@id": "envited-x:hasSoftwareResource",
-      "@type": "@id"
-    },
-    "CodeArtifactBase": "envited-x:CodeArtifactBase",
-    "CodeAsset": "envited-x:CodeAsset",
-    "Content": "envited-x:Content",
-    "DataSource": "envited-x:DataSource",
-    "DomainSpecification": "envited-x:DomainSpecification",
-    "Format": "envited-x:Format",
-    "Manifest": "envited-x:Manifest",
-    "Quality": "envited-x:Quality",
-    "Quantity": "envited-x:Quantity",
-    "ResourceDescription": "envited-x:ResourceDescription",
-    "ServiceAsset": "envited-x:ServiceAsset",
-    "ServiceOfferingBase": "envited-x:ServiceOfferingBase",
-    "SimulationAsset": "envited-x:SimulationAsset",
-    "SoftwareAsset": "envited-x:SoftwareAsset",
-    "SoftwareResourceBase": "envited-x:SoftwareResourceBase"
-  }
+   "comments": {
+      "description": "Auto-generated JSON-LD context for compact instance syntax",
+      "generator": "context_generator.py",
+      "source_owl": "artifacts/envited-x/envited-x.owl.ttl",
+      "source_shacl": "artifacts/envited-x/envited-x.shacl.ttl",
+      "note": "Transitional artifact - will be replaced by LinkML-generated context"
+   },
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "development": "https://w3id.org/gaia-x/development#",
+      "hasCodeArtifact": {
+         "@id": "envited-x:hasCodeArtifact",
+         "@type": "@id"
+      },
+      "hasContent": {
+         "@id": "envited-x:hasContent"
+      },
+      "hasDataSource": {
+         "@id": "envited-x:hasDataSource"
+      },
+      "hasDomainSpecification": {
+         "@id": "envited-x:hasDomainSpecification",
+         "@type": "@id"
+      },
+      "hasFormat": {
+         "@id": "envited-x:hasFormat"
+      },
+      "hasManifest": {
+         "@id": "envited-x:hasManifest",
+         "@type": "@id"
+      },
+      "hasQuality": {
+         "@id": "envited-x:hasQuality"
+      },
+      "hasQuantity": {
+         "@id": "envited-x:hasQuantity"
+      },
+      "hasResourceDescription": {
+         "@id": "envited-x:hasResourceDescription",
+         "@type": "@id"
+      },
+      "hasServiceOffering": {
+         "@id": "envited-x:hasServiceOffering",
+         "@type": "@id"
+      },
+      "hasSoftwareResource": {
+         "@id": "envited-x:hasSoftwareResource",
+         "@type": "@id"
+      },
+      "CodeArtifactBase": "envited-x:CodeArtifactBase",
+      "CodeAsset": "envited-x:CodeAsset",
+      "Content": "envited-x:Content",
+      "DataSource": "envited-x:DataSource",
+      "DomainSpecification": "envited-x:DomainSpecification",
+      "Format": "envited-x:Format",
+      "Manifest": "envited-x:Manifest",
+      "Quality": "envited-x:Quality",
+      "Quantity": "envited-x:Quantity",
+      "ResourceDescription": "envited-x:ResourceDescription",
+      "ServiceAsset": "envited-x:ServiceAsset",
+      "ServiceOfferingBase": "envited-x:ServiceOfferingBase",
+      "SimulationAsset": "envited-x:SimulationAsset",
+      "SoftwareAsset": "envited-x:SoftwareAsset",
+      "SoftwareResourceBase": "envited-x:SoftwareResourceBase"
+   }
 }

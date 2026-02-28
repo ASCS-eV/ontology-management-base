@@ -1,30 +1,30 @@
 {
-  "@context": {
-    "gx": "https://w3id.org/gaia-x/development#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "schema": "https://schema.org/",
-    "vcard": "http://www.w3.org/2006/vcard/ns#"
-  },
-  "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",
-  "@type": "gx:LegalPerson",
-  "gx:registrationNumber": {
-    "@type": "gx:RegistrationNumber",
-    "schema:taxID": "1234567890"
-  },
-  "gx:headquartersAddress": {
-    "@type": "gx:Address",
-    "gx:countryCode": "DE",
-    "vcard:region": "DE30",
-    "vcard:locality": "Berlin",
-    "vcard:street-address": "Sample Street 1",
-    "vcard:postal-code": "10115"
-  },
-  "gx:legalAddress": {
-    "@type": "gx:Address",
-    "gx:countryCode": "DE",
-    "vcard:region": "DE30",
-    "vcard:locality": "Berlin",
-    "vcard:street-address": "Sample Street 1",
-    "vcard:postal-code": "10115"
-  }
+   "@context": {
+      "gx": "https://w3id.org/gaia-x/development#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "schema": "https://schema.org/",
+      "vcard": "http://www.w3.org/2006/vcard/ns#"
+   },
+   "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",
+   "@type": "gx:LegalPerson",
+   "gx:registrationNumber": {
+      "@type": "gx:RegistrationNumber",
+      "schema:taxID": "1234567890"
+   },
+   "gx:headquartersAddress": {
+      "@type": "gx:Address",
+      "gx:countryCode": "DE",
+      "vcard:region": "DE30",
+      "vcard:locality": "Berlin",
+      "vcard:street-address": "Sample Street 1",
+      "vcard:postal-code": "10115"
+   },
+   "gx:legalAddress": {
+      "@type": "gx:Address",
+      "gx:countryCode": "DE",
+      "vcard:region": "DE30",
+      "vcard:locality": "Berlin",
+      "vcard:street-address": "Sample Street 1",
+      "vcard:postal-code": "10115"
+   }
 }
