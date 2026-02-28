@@ -46,6 +46,7 @@
   <uri name="did:web:test.ositrace.net:OSITrace:test_valid_ositrace_instance" uri="tests/data/ositrace/valid/ositrace_instance.json" domain="ositrace" test-type="valid" category="test-data"/>
   <uri name="did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance" uri="tests/data/ositrace/valid/ositrace_mcap_instance.json" domain="ositrace" test-type="valid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail01_false_value_scenario_instance" uri="tests/data/scenario/invalid/fail01_false_value_scenario_instance.json" domain="scenario" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail02_misspelled_property_scenario_instance" uri="tests/data/scenario/invalid/fail02_misspelled_property_scenario_instance.json" domain="scenario" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_valid_scenario_instance" uri="tests/data/scenario/valid/scenario_instance.json" domain="scenario" test-type="valid" category="test-data"/>
   <uri name="did:web:test.service.net:Service:test_valid_service_instance" uri="tests/data/service/valid/service_instance.json" domain="service" test-type="valid" category="test-data"/>
   <uri name="did:web:test.simulated-sensor.net:SimulatedSensor:test_valid_simulated-sensor_instance" uri="tests/data/simulated-sensor/valid/simulated-sensor_instance.json" domain="simulated-sensor" test-type="valid" category="test-data"/>
