@@ -1,0 +1,88 @@
+{
+   "@context": {
+      "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "skos": "http://www.w3.org/2004/02/skos/core#"
+   },
+   "@id": "did:web:test.scenario.net:Scenario:test_minimal_scenario_instance",
+   "@type": "scenario:Scenario",
+   "scenario:hasResourceDescription": {
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:minimalScenario001",
+      "@type": "envited-x:ResourceDescription",
+      "gx:name": "Minimal Scenario",
+      "gx:description": "A minimal scenario without optional sub-shapes (hasQuality, hasDataSource, hasGeoreference).",
+      "gx:version": "1.0.0",
+      "gx:license": "EPL-2.0",
+      "gx:resourcePolicy": "allow",
+      "gx:containsPII": false,
+      "gx:copyrightOwnedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+      },
+      "gx:producedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+      }
+   },
+   "scenario:hasDomainSpecification": {
+      "@type": "scenario:DomainSpecification",
+      "scenario:hasFormat": {
+         "@type": "scenario:Format",
+         "scenario:formatType": "ASAM OpenSCENARIO",
+         "scenario:version": "1.3"
+      },
+      "scenario:hasContent": {
+         "@type": "scenario:Content",
+         "scenario:abstractionLevel": "Concrete",
+         "scenario:entityTypes": [
+            "car",
+            "pedestrian"
+         ],
+         "scenario:scenarioCategory": "cut-in",
+         "scenario:weatherSummary": "clear"
+      },
+      "scenario:hasQuantity": {
+         "@type": "scenario:Quantity",
+         "scenario:numberTrafficObjects": 2,
+         "scenario:temporaryTrafficObjects": 0,
+         "scenario:permanentTrafficObjects": 2
+      }
+   },
+   "scenario:hasManifest": {
+      "@type": "manifest:Link",
+      "manifest:iri": {
+         "@id": "did:web:test.fixture.net:Manifest:test_scenario_manifest_reference"
+      },
+      "skos:note": "Reference to the scenario manifest.",
+      "sh:conformsTo": [
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/scenario/v5/"
+         }
+      ],
+      "manifest:hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
+      },
+      "manifest:hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
+      },
+      "manifest:hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "manifest:filePath": {
+            "@value": "./base-references/scenario_manifest_reference.json",
+            "@type": "xsd:anyURI"
+         },
+         "manifest:mimeType": "application/ld+json"
+      }
+   }
+}

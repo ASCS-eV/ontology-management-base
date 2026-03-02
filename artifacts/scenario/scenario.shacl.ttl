@@ -120,7 +120,7 @@ scenario:DomainSpecificationShape a sh:NodeShape ;
         ],
         [ 
           sh:maxCount 1 ;
-          sh:minCount 1 ;
+          sh:minCount 0 ;
           sh:node scenario:QualityShape ;
           sh:name "quality"@en ;
           sh:description "Quality metrics of the scenario."@en ;
@@ -138,7 +138,7 @@ scenario:DomainSpecificationShape a sh:NodeShape ;
         ],
         [
           sh:maxCount 1 ;
-          sh:minCount 1 ;
+          sh:minCount 0 ;
           sh:node scenario:DataSourceShape ;
           sh:name "data source"@en ;
           sh:description "Data sources used to create the scenario."@en ;
@@ -147,7 +147,7 @@ scenario:DomainSpecificationShape a sh:NodeShape ;
         ],
         [
           sh:maxCount 1 ;
-          sh:minCount 1 ;
+          sh:minCount 0 ;
           sh:node georeference:GeoreferenceShape ;
           sh:name "georeference"@en ;
           sh:description "Georeferencing information for the scenario."@en ;
@@ -171,7 +171,7 @@ scenario:FormatShape a sh:NodeShape ;
     sh:closed false ;
     sh:property [ skos:example "ASAM OpenSCENARIO" ;
             sh:description "Defines the type of data format used for the scenario asset."@en ;
-            sh:in ("ASAM OpenSCENARIO") ;
+            sh:in ("ASAM OpenSCENARIO" "ASAM OpenSCENARIO DSL" "Other") ;
             sh:maxCount 1 ;
             sh:message "Validation of type failed!"@en ;
             sh:name "type"@en ;
@@ -190,8 +190,8 @@ scenario:FormatShape a sh:NodeShape ;
 scenario:ContentShape a sh:NodeShape ;
     sh:closed false ;
     sh:property [ skos:example "Functional, Logical, Concrete" ;
-            sh:description "Specifies the abstraction level (as defined in the Pegasus project) of the scenario asset."@en ;
-            sh:in ("Functional" "Logical" "Concrete") ;
+            sh:description "Specifies the abstraction level (as defined in the Pegasus project and extended by ASAM OpenSCENARIO DSL v2.2.0 §3.2) of the scenario asset."@en ;
+            sh:in ("Abstract" "Functional" "Logical" "Concrete") ;
             sh:maxCount 1 ;
             sh:message "Validation of type failed!"@en ;
             sh:name "abstraction level"@en ;
@@ -278,7 +278,41 @@ scenario:ContentShape a sh:NodeShape ;
             sh:minCount 0 ;
             sh:name "country"@en ;
             sh:order 13 ;
-            sh:path scenario:country ] ;
+            sh:path scenario:country ],
+        [ skos:example "car, truck, pedestrian, bicycle" ;
+            sh:description "Specifies the types of traffic entities present in the scenario. Values aligned with ASAM OpenSCENARIO XML v1.3.1 VehicleCategory, PedestrianCategory, and MiscObjectCategory enumerations (https://publications.pages.asam.net/standards/ASAM_OpenSCENARIO/ASAM_OpenSCENARIO_XML/latest/index.html)."@en ;
+            sh:in ("animal" "barrier" "bicycle" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "semitrailer" "soundBarrier" "streetLamp" "trailer" "trafficIsland" "train" "tram" "tree" "truck" "van" "vegetation" "wheelchair" "wind") ;
+            sh:message "Validation of entityTypes failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "entity types"@en ;
+            sh:order 14 ;
+            sh:path scenario:entityTypes ],
+        [ skos:example "cut-in, lane-change, intersection-crossing" ;
+            sh:description "Classifies the scenario by maneuver type. Derived from CRUISE scenario concepts (Zipfl et al. 2023) and VVM Deliverable D13 (Scholtes et al. 2023, §5.2)."@en ;
+            sh:in ("cut-in" "lane-change" "intersection-crossing" "following" "overtaking" "pedestrian-crossing" "emergency-braking" "free-driving" "turning" "parking" "merging" "other") ;
+            sh:maxCount 1 ;
+            sh:message "Validation of scenarioCategory failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "scenario category"@en ;
+            sh:order 15 ;
+            sh:path scenario:scenarioCategory ],
+        [ skos:example "clear, rain, fog" ;
+            sh:description "Coarse weather/environment classification. Harmonized with ASAM OpenSCENARIO XML v1.3.1 (PrecipitationType, FractionalCloudCover) and ASAM OSI v3 EnvironmentalConditions (Precipitation, Fog, AmbientIllumination enums)."@en ;
+            sh:in ("clear" "rain" "snow" "fog" "icy_conditions" "night" "windy" "mixed" "not_specified") ;
+            sh:maxCount 1 ;
+            sh:message "Validation of weatherSummary failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "weather summary"@en ;
+            sh:order 16 ;
+            sh:path scenario:weatherSummary ],
+        [ skos:example "occlusion, VRU_interaction" ;
+            sh:description "Safety-relevant factors present in the scenario. Derived from criticality phenomena catalog (Westhofen et al. 2022, IEEE OJITS, §IV.A, Table 3)."@en ;
+            sh:in ("occlusion" "high_relative_speed" "VRU_interaction" "adverse_weather" "infrastructure_violation" "near_miss") ;
+            sh:message "Validation of criticalityFactors failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "criticality factors"@en ;
+            sh:order 17 ;
+            sh:path scenario:criticalityFactors ] ;
     sh:targetClass scenario:Content .
 
 scenario:QuantityShape a sh:NodeShape ;
@@ -348,7 +382,7 @@ scenario:DataSourceShape a sh:NodeShape ;
             sh:description "Specifies the category of source data used to create the scenario."@en ;
             sh:maxCount 1 ;
             sh:message "Validation of source type failed!"@en ;
-            sh:in ("Accident Database" "Real World Data" "Analytical Hazard Based Approach" "Formal Verification" "Operational Design Domain" "Ontology" "Standards, Regulations, Guidelines" "Real-world Deployment and Trials") ;
+            sh:in ("Accident Database" "Real World Data" "Analytical Hazard Based Approach" "Formal Verification" "Operational Design Domain" "Ontology" "Standards, Regulations, Guidelines" "Real-world Deployment and Trials" "Manual Authoring" "Synthetic Generation" "Simulation Recording" "Staged Recording" "Drone Recording") ;
             sh:minCount 0 ;
             sh:name "source type"@en ;
             sh:order 1 ;

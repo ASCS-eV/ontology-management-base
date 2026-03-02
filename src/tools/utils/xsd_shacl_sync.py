@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-XSD-SHACL Sync Checker - Compare OpenDRIVE XSD enums against hdmap SHACL shapes.
+XSD-SHACL Sync Checker - Compare XSD enums against SHACL shapes.
 
-Validates that the sh:in enum lists in hdmap.shacl.ttl stay synchronised
-with the authoritative OpenDRIVE XSD schema definitions. Reports missing,
-extra, and deprecated values.
+Validates that the sh:in enum lists in SHACL Turtle files stay synchronised
+with the authoritative XSD schema definitions. Reports missing, extra, and
+deprecated values. Supports both OpenDRIVE (hdmap) and OpenSCENARIO
+(scenario) mappings.
 
 FEATURE SET:
 ============
@@ -18,10 +19,17 @@ USAGE:
     from src.tools.utils.xsd_shacl_sync import run_sync_check
     from pathlib import Path
 
-    # Run full sync check
+    # Run hdmap sync check (default)
     report = run_sync_check(
         xsd_dir=Path("imports/OpenDrive/xsd_schema"),
         shacl_path=Path("artifacts/hdmap/hdmap.shacl.ttl"),
+    )
+
+    # Run scenario sync check
+    report = run_sync_check(
+        xsd_dir=Path("imports/OpenScenario/OpenSCENARIO.xsd"),
+        shacl_path=Path("artifacts/scenario/scenario.shacl.ttl"),
+        mappings=SCENARIO_ENUM_MAPPINGS,
     )
     report.print_report()
 
@@ -51,7 +59,11 @@ from rdflib import Graph, Namespace
 from rdflib.term import Literal
 
 from src.tools.core.logging import get_logger
-from src.tools.utils.xsd_enum_extractor import EnumType, extract_enums_from_dir
+from src.tools.utils.xsd_enum_extractor import (
+    EnumType,
+    extract_enums_from_dir,
+    extract_enums_from_file,
+)
 
 logger = get_logger(__name__)
 
@@ -77,6 +89,27 @@ HDMAP_ENUM_MAPPINGS: list[dict[str, str]] = [
         "shacl_property": "levelOfDetail",
         "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
         "description": "Object types / level of detail (OpenDRIVE -> hdmap:levelOfDetail)",
+    },
+]
+
+SCENARIO_ENUM_MAPPINGS: list[dict[str, str]] = [
+    {
+        "xsd_enum": "VehicleCategory",
+        "shacl_property": "entityTypes",
+        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "description": "Vehicle categories (OpenSCENARIO -> scenario:entityTypes)",
+    },
+    {
+        "xsd_enum": "PedestrianCategory",
+        "shacl_property": "entityTypes",
+        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "description": "Pedestrian categories (OpenSCENARIO -> scenario:entityTypes)",
+    },
+    {
+        "xsd_enum": "MiscObjectCategory",
+        "shacl_property": "entityTypes",
+        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "description": "Misc object categories (OpenSCENARIO -> scenario:entityTypes)",
     },
 ]
 
@@ -258,8 +291,8 @@ def run_sync_check(
     """Run a full XSD-to-SHACL enum sync check.
 
     Args:
-        xsd_dir: Path to directory containing OpenDRIVE XSD files.
-        shacl_path: Path to hdmap.shacl.ttl file.
+        xsd_dir: Path to directory containing XSD files, or a single XSD file.
+        shacl_path: Path to the .shacl.ttl file.
         mappings: Optional custom mapping configuration.
 
     Returns:
@@ -269,10 +302,13 @@ def run_sync_check(
         mappings = HDMAP_ENUM_MAPPINGS
 
     logger.info("Running XSD-SHACL sync check...")
-    logger.info("  XSD dir:  %s", xsd_dir)
+    logger.info("  XSD:      %s", xsd_dir)
     logger.info("  SHACL:    %s", shacl_path)
 
-    xsd_enums = extract_enums_from_dir(xsd_dir)
+    if xsd_dir.is_file():
+        xsd_enums = extract_enums_from_file(xsd_dir)
+    else:
+        xsd_enums = extract_enums_from_dir(xsd_dir)
     shacl_enums = extract_shacl_enums(shacl_path, mappings)
     results = compare_enums(xsd_enums, shacl_enums, mappings)
 

@@ -89,7 +89,9 @@ class Content_or_OpenLabel_Tag
 #### scenario:country {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-country .property-anchor }
 #### scenario:countrySpecificSign {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-countryspecificsign .property-anchor }
 #### scenario:countrySpecificTrafficParticipants {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-countryspecifictrafficparticipants .property-anchor }
+#### scenario:criticalityFactors {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-criticalityfactors .property-anchor }
 #### scenario:customCommands {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-customcommands .property-anchor }
+#### scenario:entityTypes {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-entitytypes .property-anchor }
 #### scenario:formatType {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-formattype .property-anchor }
 #### scenario:hasContent {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hascontent .property-anchor }
 #### scenario:hasDataSource {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasdatasource .property-anchor }
@@ -103,6 +105,7 @@ class Content_or_OpenLabel_Tag
 #### scenario:movementDescription {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-movementdescription .property-anchor }
 #### scenario:numberTrafficObjects {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-numbertrafficobjects .property-anchor }
 #### scenario:permanentTrafficObjects {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-permanenttrafficobjects .property-anchor }
+#### scenario:scenarioCategory {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-scenariocategory .property-anchor }
 #### scenario:sourceDescription {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-sourcedescription .property-anchor }
 #### scenario:sourceType {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-sourcetype .property-anchor }
 #### scenario:sunAzimuth {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-sunazimuth .property-anchor }
@@ -110,6 +113,7 @@ class Content_or_OpenLabel_Tag
 #### scenario:timeDate {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-timedate .property-anchor }
 #### scenario:usedStandardFunctions {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-usedstandardfunctions .property-anchor }
 #### scenario:version {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-version .property-anchor }
+#### scenario:weatherSummary {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-weathersummary .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
@@ -119,13 +123,13 @@ class Content_or_OpenLabel_Tag
 |ScenarioManifestConstraints|manifest|<a id="prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts"></a>hasReferencedArtifacts|||||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hascontent"></a>hasContent|1||Attributes describing the content of the scenario.||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasformat"></a>hasFormat|1|1|File format details of the scenario.||scenario.shacl.ttl|
-|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasquality"></a>hasQuality|1|1|Quality metrics of the scenario.||scenario.shacl.ttl|
+|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasquality"></a>hasQuality|0|1|Quality metrics of the scenario.||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasquantity"></a>hasQuantity|1|1|Quantitative metrics describing the scenario.||scenario.shacl.ttl|
-|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasdatasource"></a>hasDataSource|1|1|Data sources used to create the scenario.||scenario.shacl.ttl|
-|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasgeoreference"></a>hasGeoreference|1|1|Georeferencing information for the scenario.||scenario.shacl.ttl|
+|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasdatasource"></a>hasDataSource|0|1|Data sources used to create the scenario.||scenario.shacl.ttl|
+|DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-hasgeoreference"></a>hasGeoreference|0|1|Georeferencing information for the scenario.||scenario.shacl.ttl|
 |FormatShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-formattype"></a>formatType||1|Defines the type of data format used for the scenario asset.||scenario.shacl.ttl|
 |FormatShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-version"></a>version||1|Defines the version of the data format used for the scenario asset.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
-|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-abstractionlevel"></a>abstractionLevel||1|Specifies the abstraction level (as defined in the Pegasus project) of the scenario asset.||scenario.shacl.ttl|
+|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-abstractionlevel"></a>abstractionLevel||1|Specifies the abstraction level (as defined in the Pegasus project and extended by ASAM OpenSCENARIO DSL v2.2.0 §3.2) of the scenario asset.||scenario.shacl.ttl|
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-timedate"></a>timeDate|0|1|Optionally specifies the time associated with the scenario asset (e.g., time of recording or time of event for a synthetic scenario).|<http://www.w3.org/2001/XMLSchema#dateTime>|scenario.shacl.ttl|
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-aim"></a>aim|0|1|Defines the purpose of the scenario asset.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-usedstandardfunctions"></a>usedStandardFunctions|0|1|Specifies which functions (e.g., actions) from the standard are utilized.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
@@ -135,6 +139,10 @@ class Content_or_OpenLabel_Tag
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-countryspecificsign"></a>countrySpecificSign|0|1|Indicates which country-specific traffic signs are used in the scenario asset.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-countryspecifictrafficparticipants"></a>countrySpecificTrafficParticipants|0|1|Indicates which country-specific participants are used in the scenario asset.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
 |ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-country"></a>country|0|1|Indicates the country of origin for the scenario asset.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
+|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-entitytypes"></a>entityTypes|0||Specifies the types of traffic entities present in the scenario. Values aligned with ASAM OpenSCENARIO XML v1.3.1 VehicleCategory, PedestrianCategory, and MiscObjectCategory enumerations (https://publications.pages.asam.net/standards/ASAM_OpenSCENARIO/ASAM_OpenSCENARIO_XML/latest/index.html).||scenario.shacl.ttl|
+|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-scenariocategory"></a>scenarioCategory|0|1|Classifies the scenario by maneuver type. Derived from CRUISE scenario concepts (Zipfl et al. 2023) and VVM Deliverable D13 (Scholtes et al. 2023, §5.2).||scenario.shacl.ttl|
+|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-weathersummary"></a>weatherSummary|0|1|Coarse weather/environment classification. Harmonized with ASAM OpenSCENARIO XML v1.3.1 (PrecipitationType, FractionalCloudCover) and ASAM OSI v3 EnvironmentalConditions (Precipitation, Fog, AmbientIllumination enums).||scenario.shacl.ttl|
+|ContentShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-criticalityfactors"></a>criticalityFactors|0||Safety-relevant factors present in the scenario. Derived from criticality phenomena catalog (Westhofen et al. 2022, IEEE OJITS, §IV.A, Table 3).||scenario.shacl.ttl|
 |QuantityShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-temporarytrafficobjects"></a>temporaryTrafficObjects||1|Specifies the total number of temporary traffic objects defined in the scenario asset.|<http://www.w3.org/2001/XMLSchema#integer>|scenario.shacl.ttl|
 |QuantityShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-numbertrafficobjects"></a>numberTrafficObjects||1|Specifies the total number of traffic objects defined in the scenario asset.|<http://www.w3.org/2001/XMLSchema#integer>|scenario.shacl.ttl|
 |QuantityShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v5-controllers"></a>controllers|0||Specifies the simulation core controllers (internal or external) used in the scenario.|<http://www.w3.org/2001/XMLSchema#string>|scenario.shacl.ttl|
