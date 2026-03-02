@@ -81,14 +81,8 @@
       },
       "simulation-model:hasQuantity": {
          "@type": "simulation-model:Quantity",
-         "simulation-model:maxDetections": {
-            "@value": "800",
-            "@type": "xsd:unsignedInt"
-         },
-         "simulation-model:maxObjects": {
-            "@value": "50",
-            "@type": "xsd:unsignedInt"
-         }
+         "simulation-model:maxDetections": 800,
+         "simulation-model:maxObjects": 50
       },
       "simulation-model:hasDataSource": {
          "@type": "simulation-model:DataSource",

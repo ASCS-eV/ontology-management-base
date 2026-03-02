@@ -82,18 +82,9 @@
       },
       "scenario:hasQuantity": {
          "@type": "scenario:Quantity",
-         "scenario:numberTrafficObjects": {
-            "@value": 1,
-            "@type": "xsd:unsignedInt"
-         },
-         "scenario:temporaryTrafficObjects": {
-            "@value": 0,
-            "@type": "xsd:unsignedInt"
-         },
-         "scenario:permanentTrafficObjects": {
-            "@value": 1,
-            "@type": "xsd:unsignedInt"
-         },
+         "scenario:numberTrafficObjects": 1,
+         "scenario:temporaryTrafficObjects": 0,
+         "scenario:permanentTrafficObjects": 1,
          "scenario:controllers": "SampleController1"
       },
       "scenario:hasDataSource": {
