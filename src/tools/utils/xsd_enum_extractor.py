@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-XSD Enumeration Extractor - Parse OpenDRIVE XSD schemas for enum definitions.
+XSD Enumeration Extractor - Parse XSD schemas for enum definitions.
 
 Extracts all xs:simpleType enumerations from XSD schema files, including
 their values, documentation annotations, and deprecation status. Designed
-as the machine-readable bridge between OpenDRIVE XSD schemas and the
-hdmap ontology's SHACL sh:in constraints.
+as the machine-readable bridge between XSD schemas (e.g. OpenDRIVE,
+OpenSCENARIO) and SHACL sh:in constraints.
+
+Supports two XSD enum patterns:
+- Direct:  simpleType > restriction > enumeration  (OpenDRIVE style)
+- Union:   simpleType > union > simpleType > restriction > enumeration
+           (OpenSCENARIO style)
 
 FEATURE SET:
 ============
@@ -18,8 +23,11 @@ USAGE:
 ======
     from src.tools.utils.xsd_enum_extractor import extract_enums_from_dir
 
-    # Extract all enums from XSD directory
+    # Extract all enums from an XSD directory
     enums = extract_enums_from_dir(Path("imports/OpenDrive/xsd_schema"))
+
+    # Extract from a single XSD file
+    enums = extract_enums_from_file(Path("imports/OpenScenario/OpenSCENARIO.xsd"))
 
     # Access specific enum
     lane_types = enums["e_laneType"]
@@ -101,8 +109,39 @@ def _is_deprecated(doc_text: Optional[str]) -> bool:
     )
 
 
+def _find_enum_elements(simple_type: ET.Element) -> list[ET.Element]:
+    """Find enumeration elements in a simpleType, handling both patterns.
+
+    Supports:
+    - Direct:  simpleType > restriction > enumeration  (OpenDRIVE)
+    - Union:   simpleType > union > simpleType > restriction > enumeration
+               (OpenSCENARIO)
+    """
+    # Pattern 1: direct restriction
+    restriction = simple_type.find("xs:restriction", NS)
+    if restriction is not None:
+        enums = restriction.findall("xs:enumeration", NS)
+        if enums:
+            return enums
+
+    # Pattern 2: union wrapping an inner simpleType with restriction
+    union = simple_type.find("xs:union", NS)
+    if union is not None:
+        for inner_st in union.findall("xs:simpleType", NS):
+            inner_restriction = inner_st.find("xs:restriction", NS)
+            if inner_restriction is not None:
+                enums = inner_restriction.findall("xs:enumeration", NS)
+                if enums:
+                    return enums
+
+    return []
+
+
 def extract_enums_from_file(xsd_path: Path) -> dict[str, EnumType]:
     """Extract all xs:simpleType enumerations from a single XSD file.
+
+    Handles both direct restriction patterns (OpenDRIVE) and union-wrapped
+    restriction patterns (OpenSCENARIO).
 
     Args:
         xsd_path: Path to the XSD schema file.
@@ -126,11 +165,7 @@ def extract_enums_from_file(xsd_path: Path) -> dict[str, EnumType]:
         if not name:
             continue
 
-        restriction = simple_type.find("xs:restriction", NS)
-        if restriction is None:
-            continue
-
-        enum_elements = restriction.findall("xs:enumeration", NS)
+        enum_elements = _find_enum_elements(simple_type)
         if not enum_elements:
             continue
 
@@ -231,7 +266,7 @@ def _run_tests() -> bool:
         print(f"  FAIL: _is_deprecated detection - {e}")
         all_passed = False
 
-    # Test 2: Extract from actual XSD files if available
+    # Test 2: Extract from OpenDRIVE XSD files (direct restriction pattern)
     xsd_dir = Path("imports/OpenDrive/xsd_schema")
     if xsd_dir.exists():
         try:
@@ -263,14 +298,54 @@ def _run_tests() -> bool:
             traffic = enums["e_trafficRule"]
             assert set(traffic.value_strings) == {"LHT", "RHT"}
 
-            print(f"  PASS: XSD extraction ({len(enums)} enum types found)")
+            print(f"  PASS: OpenDRIVE extraction ({len(enums)} enum types found)")
         except (AssertionError, Exception) as e:
-            print(f"  FAIL: XSD extraction - {e}")
+            print(f"  FAIL: OpenDRIVE extraction - {e}")
             all_passed = False
     else:
-        print("  SKIP: XSD files not found at imports/OpenDrive/xsd_schema")
+        print("  SKIP: OpenDRIVE XSD files not found at imports/OpenDrive/xsd_schema")
 
-    # Test 3: EnumType properties
+    # Test 3: Extract from OpenSCENARIO XSD file (union pattern)
+    xsd_file = Path("imports/OpenScenario/OpenSCENARIO.xsd")
+    if xsd_file.exists():
+        try:
+            enums = extract_enums_from_file(xsd_file)
+            assert len(enums) > 0, "Should extract at least one enum"
+
+            # Check known enums exist
+            assert "VehicleCategory" in enums, "VehicleCategory should be extracted"
+            assert "ObjectType" in enums, "ObjectType should be extracted"
+            assert (
+                "PedestrianCategory" in enums
+            ), "PedestrianCategory should be extracted"
+            assert "PrecipitationType" in enums, "PrecipitationType should be extracted"
+            assert (
+                "MiscObjectCategory" in enums
+            ), "MiscObjectCategory should be extracted"
+
+            # Check VehicleCategory values
+            vehicles = enums["VehicleCategory"]
+            assert "car" in vehicles.value_strings
+            assert "truck" in vehicles.value_strings
+            assert "bicycle" in vehicles.value_strings
+            assert (
+                len(vehicles.values) == 10
+            ), f"Expected 10 vehicle categories, got {len(vehicles.values)}"
+
+            # Check PrecipitationType
+            precip = enums["PrecipitationType"]
+            assert set(precip.value_strings) == {"dry", "rain", "snow"}
+
+            print(f"  PASS: OpenSCENARIO extraction ({len(enums)} enum types found)")
+        except (AssertionError, Exception) as e:
+            print(f"  FAIL: OpenSCENARIO extraction - {e}")
+            all_passed = False
+    else:
+        print(
+            "  SKIP: OpenSCENARIO XSD not found at imports/OpenScenario/OpenSCENARIO.xsd"
+        )
+
+    # Test 4: EnumType properties
     try:
         et = EnumType(
             name="test",
@@ -298,13 +373,21 @@ def main() -> None:
         success = _run_tests()
         sys.exit(0 if success else 1)
 
-    # Default: extract and display all enums
-    xsd_dir = Path("imports/OpenDrive/xsd_schema")
-    if not xsd_dir.exists():
-        print(f"XSD directory not found: {xsd_dir}")
+    # Default: extract and display all enums from specified or default path
+    xsd_path = Path(sys.argv[1]) if len(sys.argv) > 1 else None
+
+    if xsd_path is None:
+        xsd_path = Path("imports/OpenDrive/xsd_schema")
+
+    if not xsd_path.exists():
+        print(f"XSD path not found: {xsd_path}")
         sys.exit(1)
 
-    enums = extract_enums_from_dir(xsd_dir)
+    if xsd_path.is_file():
+        enums = extract_enums_from_file(xsd_path)
+    else:
+        enums = extract_enums_from_dir(xsd_path)
+
     for name, enum_type in sorted(enums.items()):
         dep_count = len(enum_type.deprecated_values)
         dep_info = f" ({dep_count} deprecated)" if dep_count else ""

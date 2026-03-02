@@ -42,8 +42,14 @@
       "countrySpecificTrafficParticipants": {
          "@id": "scenario:countrySpecificTrafficParticipants"
       },
+      "criticalityFactors": {
+         "@id": "scenario:criticalityFactors"
+      },
       "customCommands": {
          "@id": "scenario:customCommands"
+      },
+      "entityTypes": {
+         "@id": "scenario:entityTypes"
       },
       "formatType": {
          "@id": "scenario:formatType"
@@ -95,6 +101,9 @@
          "@id": "scenario:permanentTrafficObjects",
          "@type": "xsd:integer"
       },
+      "scenarioCategory": {
+         "@id": "scenario:scenarioCategory"
+      },
       "sourceDescription": {
          "@id": "scenario:sourceDescription"
       },
@@ -118,6 +127,9 @@
       },
       "version": {
          "@id": "scenario:version"
+      },
+      "weatherSummary": {
+         "@id": "scenario:weatherSummary"
       },
       "Content": "scenario:Content",
       "ContentOrTag": "scenario:ContentOrTag",
