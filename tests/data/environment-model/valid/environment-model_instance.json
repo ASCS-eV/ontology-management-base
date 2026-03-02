@@ -50,18 +50,9 @@
       },
       "environment-model:hasQuantity": {
          "@type": "environment-model:Quantity",
-         "environment-model:textureMaterialCount": {
-            "@value": "179",
-            "@type": "xsd:unsignedInt"
-         },
-         "environment-model:triangleCount": {
-            "@value": "12456",
-            "@type": "xsd:unsignedInt"
-         },
-         "environment-model:geometryCount": {
-            "@value": "5000",
-            "@type": "xsd:unsignedInt"
-         }
+         "environment-model:textureMaterialCount": 179,
+         "environment-model:triangleCount": 12456,
+         "environment-model:geometryCount": 5000
       },
       "environment-model:hasQuality": {
          "@type": "environment-model:Quality",

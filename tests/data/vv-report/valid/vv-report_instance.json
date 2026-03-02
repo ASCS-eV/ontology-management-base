@@ -69,22 +69,13 @@
                      "@type": "vv-report:Parameter",
                      "vv-report:parameterName": "verbose",
                      "vv-report:parameterDescription": "If set to true, extensive checks, according to XY, will be carried out",
-                     "vv-report:parameterValue": {
-                        "@value": false,
-                        "@type": "xsd:boolean"
-                     }
+                     "vv-report:parameterValue": false
                   }
                ],
                "vv-report:result": {
                   "@type": "vv-report:Result",
-                  "vv-report:resultTestPassed": {
-                     "@value": true,
-                     "@type": "xsd:boolean"
-                  },
-                  "vv-report:resultVerifiable": {
-                     "@value": false,
-                     "@type": "xsd:boolean"
-                  }
+                  "vv-report:resultTestPassed": true,
+                  "vv-report:resultVerifiable": false
                },
                "vv-report:conceptSpecificData": {
                   "modeling-simulation-spice-credibility-level": 1
@@ -113,15 +104,9 @@
                ],
                "vv-report:result": {
                   "@type": "vv-report:Result",
-                  "vv-report:resultTestPassed": {
-                     "@value": false,
-                     "@type": "xsd:boolean"
-                  },
+                  "vv-report:resultTestPassed": false,
                   "vv-report:resultLog": "The attribute timestamp is missing in the SensorData output",
-                  "vv-report:resultVerifiable": {
-                     "@value": true,
-                     "@type": "xsd:boolean"
-                  },
+                  "vv-report:resultVerifiable": true,
                   "vv-report:resultVerification": {
                      "@type": "vv-report:ResultVerification",
                      "vv-report:resultVerificationDescription": "The log of the according compute job in the OVAL ecosystem with the given metric and input data",

@@ -9,10 +9,7 @@
    "tzip21:name": "TestfeldNiedersachsen_ALKS_ODR_sample",
    "tzip21:description": "simple hdmap example file on Testfeld Niedersachsen for ALKS scenario",
    "tzip21:decimals": 0,
-   "tzip21:isBooleanAmount": {
-      "@value": true,
-      "@type": "xsd:boolean"
-   },
+   "tzip21:isBooleanAmount": true,
    "tzip21:minter": "tz1cZaiTjNSN7x4VZjTQGYBVz4p8eEcVcYkz",
    "tzip21:creators": [
       "Automotive Solution Center for Simulation e.V."

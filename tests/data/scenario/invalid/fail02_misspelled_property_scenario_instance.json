@@ -100,18 +100,9 @@
       },
       "scenario:hasQuantity": {
          "@type": "scenario:Quantity",
-         "scenario:numberTrafficObjects": {
-            "@value": 1,
-            "@type": "xsd:unsignedInt"
-         },
-         "scenario:temporaryTrafficObjects": {
-            "@value": 0,
-            "@type": "xsd:unsignedInt"
-         },
-         "scenario:permanentTrafficObjects": {
-            "@value": 1,
-            "@type": "xsd:unsignedInt"
-         },
+         "scenario:numberTrafficObjects": 1,
+         "scenario:temporaryTrafficObjects": 0,
+         "scenario:permanentTrafficObjects": 1,
          "scenario:controllers": {
             "@value": "SampleController1",
             "@type": "xsd:string"
@@ -171,10 +162,7 @@
          },
          "georeference:hasGeodeticReferenceSystem": {
             "@type": "georeference:GeodeticReferenceSystem",
-            "georeference:codeEPSG": {
-               "@value": "32632",
-               "@type": "xsd:integer"
-            },
+            "georeference:codeEPSG": 32632,
             "georeference:hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
                "georeference:lat": {

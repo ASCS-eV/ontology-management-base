@@ -53,26 +53,11 @@
             "@value": "0.0",
             "@type": "xsd:float"
          },
-         "hdmap:numberIntersections": {
-            "@value": "0",
-            "@type": "xsd:unsignedInt"
-         },
-         "hdmap:numberTrafficLights": {
-            "@value": "0",
-            "@type": "xsd:unsignedInt"
-         },
-         "hdmap:numberTrafficSigns": {
-            "@value": "0",
-            "@type": "xsd:unsignedInt"
-         },
-         "hdmap:numberObjects": {
-            "@value": "2",
-            "@type": "xsd:unsignedInt"
-         },
-         "hdmap:numberOutlines": {
-            "@value": "0",
-            "@type": "xsd:unsignedInt"
-         },
+         "hdmap:numberIntersections": 0,
+         "hdmap:numberTrafficLights": 0,
+         "hdmap:numberTrafficSigns": 0,
+         "hdmap:numberObjects": 2,
+         "hdmap:numberOutlines": 0,
          "hdmap:speedLimit": {
             "@type": "hdmap:Range2D",
             "hdmap:min": {
