@@ -1,14 +1,15 @@
 {
-   "@context": {
-      "service": "https://w3id.org/gaia-x4plcaad/ontologies/service/v2/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "schema": "https://schema.org/",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#"
-   },
+   "@context": [
+      "https://w3id.org/gaia-x4plcaad/ontologies/service/v2/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "gx": "https://w3id.org/gaia-x/development#",
+         "schema": "https://schema.org/",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.service.net:Service:test_valid_service_instance",
    "@type": "service:Service",
    "service:hasServiceOffering": {
@@ -36,43 +37,28 @@
             {
                "@type": "service:RequiredFile",
                "service:description": "A scenario following the ASAM OpenSCENARIO version 2.0.0 standard as a .osc file",
-               "service:specification": {
-                  "@value": "https://www.asam.net/standards/detail/openscenario/v200/",
-                  "@type": "xsd:anyURI"
-               }
+               "specification": "https://www.asam.net/standards/detail/openscenario/v200/"
             },
             {
                "@type": "service:RequiredFile",
                "service:description": "A road network following the ASAM OpenDRIVE v1.8.0 standard as a .xodr file",
-               "service:specification": {
-                  "@value": "https://www.asam.net/standards/detail/opendrive/",
-                  "@type": "xsd:anyURI"
-               }
+               "specification": "https://www.asam.net/standards/detail/opendrive/"
             }
          ],
          "service:resultingFile": {
             "@type": "service:ResultingFile",
             "service:description": "The ground-truth data of the executed simulation following the ASAM OSI v3.7.0 standard as a .osi file",
-            "service:specification": {
-               "@value": "https://www.asam.net/standards/detail/osi/",
-               "@type": "xsd:anyURI"
-            }
+            "specification": "https://www.asam.net/standards/detail/osi/"
          }
       }
    },
    "service:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_service_manifest_reference"
-      },
+      "iri": "did:web:test.fixture.net:Manifest:test_service_manifest_reference",
       "skos:note": "Reference to the service manifest.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
       "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
@@ -84,10 +70,7 @@
       },
       "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/service_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
+         "filePath": "./base-references/service_manifest_reference.json",
          "manifest:mimeType": "application/ld+json"
       }
    }

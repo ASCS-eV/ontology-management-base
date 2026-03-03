@@ -1,15 +1,13 @@
 {
-   "@context": {
-      "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
-      "@vocab": "https://openlabel.asam.net/V1-0-0/ontologies/",
-      "owl": "http://www.w3.org/2002/07/owl#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "skos": "http://www.w3.org/2004/02/skos/core#",
-      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-      "schema": "https://schema.org/"
-   },
+   "@context": [
+      "https://openlabel.asam.net/V1-0-0/ontologies/",
+      {
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+         "schema": "https://schema.org/"
+      }
+   ],
    "@id": "did:web:test.openlabel.net:Tag:test_valid_openlabel_instance",
    "@type": "openlabel:Tag",
    "openlabel:AdminTag": {
@@ -159,16 +157,10 @@
       ],
       "openlabel:HorizontalStraights": true,
       "openlabel:HorizontalCurves": true,
-      "openlabel:horizontalCurvesValue": {
-         "@type": "xsd:decimal",
-         "@value": "250.0"
-      },
+      "horizontalCurvesValue": 250.0,
       "openlabel:LongitudinalLevelPlane": false,
       "openlabel:LongitudinalDownSlope": true,
-      "openlabel:longitudinalDownSlopeValue": {
-         "@type": "xsd:decimal",
-         "@value": "2.5"
-      },
+      "longitudinalDownSlopeValue": 2.5,
       "openlabel:LongitudinalUpSlope": false,
       "openlabel:SceneryFixedStructure": {
          "@id": "openlabel:FixedStructureStreetlight"
@@ -210,27 +202,15 @@
          "@id": "openlabel:LowLightNight"
       },
       "openlabel:IlluminationCloudiness": true,
-      "openlabel:illuminationCloudinessValue": {
-         "@type": "xsd:decimal",
-         "@value": "6"
-      },
+      "illuminationCloudinessValue": 6.0,
       "openlabel:DaySunPosition": true,
       "openlabel:DaySunElevation": true,
-      "openlabel:daySunElevationValue": {
-         "@type": "xsd:decimal",
-         "@value": "45.0"
-      },
+      "daySunElevationValue": 45.0,
       "openlabel:WeatherRain": true,
-      "openlabel:weatherRainValue": {
-         "@type": "xsd:decimal",
-         "@value": "5.2"
-      },
+      "weatherRainValue": 5.2,
       "openlabel:WeatherSnow": false,
       "openlabel:WeatherWind": true,
-      "openlabel:weatherWindValue": {
-         "@type": "xsd:decimal",
-         "@value": "12.5"
-      },
+      "weatherWindValue": 12.5,
       "openlabel:RainType": {
          "@id": "openlabel:RainTypeDynamic"
       },

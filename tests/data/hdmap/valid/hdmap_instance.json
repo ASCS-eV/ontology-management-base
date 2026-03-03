@@ -1,14 +1,14 @@
 {
-   "@context": {
-      "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#",
-      "xsd": "http://www.w3.org/2001/XMLSchema#"
-   },
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "gx": "https://w3id.org/gaia-x/development#",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
@@ -46,14 +46,8 @@
       },
       "hdmap:hasQuantity": {
          "@type": "hdmap:Quantity",
-         "hdmap:length": {
-            "@value": "1.46",
-            "@type": "xsd:float"
-         },
-         "hdmap:elevationRange": {
-            "@value": "2.22",
-            "@type": "xsd:float"
-         },
+         "length": 1.46,
+         "elevationRange": 2.22,
          "hdmap:numberIntersections": 5,
          "hdmap:numberTrafficLights": 0,
          "hdmap:numberTrafficSigns": 155,
@@ -61,42 +55,18 @@
          "hdmap:numberOutlines": 100,
          "hdmap:speedLimit": {
             "@type": "hdmap:Range2D",
-            "hdmap:min": {
-               "@value": "10",
-               "@type": "xsd:float"
-            },
-            "hdmap:max": {
-               "@value": "50",
-               "@type": "xsd:float"
-            }
+            "min": 10.0,
+            "max": 50.0
          },
-         "hdmap:rangeOfModeling": {
-            "@value": "20",
-            "@type": "xsd:float"
-         }
+         "rangeOfModeling": 20.0
       },
       "hdmap:hasQuality": {
          "@type": "hdmap:Quality",
-         "hdmap:precision": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         },
-         "hdmap:accuracyLaneModel2d": {
-            "@value": "0.1",
-            "@type": "xsd:float"
-         },
-         "hdmap:accuracyLaneModelHeight": {
-            "@value": "0.1",
-            "@type": "xsd:float"
-         },
-         "hdmap:accuracySignals": {
-            "@value": "0.1",
-            "@type": "xsd:float"
-         },
-         "hdmap:accuracyObjects": {
-            "@value": "0.1",
-            "@type": "xsd:float"
-         }
+         "precision": 0.01,
+         "accuracyLaneModel2d": 0.1,
+         "accuracyLaneModelHeight": 0.1,
+         "accuracySignals": 0.1,
+         "accuracyObjects": 0.1
       },
       "hdmap:hasDataSource": {
          "@type": "hdmap:DataSource",
@@ -115,22 +85,10 @@
             "georeference:relationOrArea": "Town of Grafing",
             "georeference:hasBoundingBox": {
                "@type": "georeference:BoundingBox",
-               "georeference:xMin": {
-                  "@value": "11.964",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMin": {
-                  "@value": "48.043",
-                  "@type": "xsd:float"
-               },
-               "georeference:xMax": {
-                  "@value": "11.968274",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMax": {
-                  "@value": "48.046836",
-                  "@type": "xsd:float"
-               }
+               "xMin": 11.964,
+               "yMin": 48.043,
+               "xMax": 11.968274,
+               "yMax": 48.046836
             }
          },
          "georeference:hasGeodeticReferenceSystem": {
@@ -138,25 +96,13 @@
             "georeference:codeEPSG": 32632,
             "georeference:hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.045414",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.966206",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.045414,
+               "lon": 11.966206
             },
             "georeference:hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.046",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.967",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.046,
+               "lon": 11.967
             },
             "georeference:heightSystem": "Ellipsoidal height"
          }
@@ -164,17 +110,11 @@
    },
    "hdmap:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference"
-      },
+      "iri": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference",
       "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
       "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
@@ -186,10 +126,7 @@
       },
       "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/hdmap_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
+         "filePath": "./base-references/hdmap_manifest_reference.json",
          "manifest:mimeType": "application/ld+json"
       }
    }

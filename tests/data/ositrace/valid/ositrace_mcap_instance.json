@@ -1,14 +1,14 @@
 {
-   "@context": {
-      "ositrace": "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#"
-   },
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "gx": "https://w3id.org/gaia-x/development#",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance",
    "@type": "ositrace:OSITrace",
    "ositrace:hasResourceDescription": {
@@ -80,14 +80,8 @@
             "object list",
             "detection list"
          ],
-         "ositrace:startTime": {
-            "@value": "2024-06-03T14:37:10.000000Z",
-            "@type": "xsd:dateTime"
-         },
-         "ositrace:stopTime": {
-            "@value": "2024-06-03T14:38:42.000000Z",
-            "@type": "xsd:dateTime"
-         },
+         "startTime": "2024-06-03T14:37:10.000000Z",
+         "stopTime": "2024-06-03T14:38:42.000000Z",
          "ositrace:hasHostMovingObject": {
             "@type": "ositrace:MovingObject",
             "ositrace:identifier": 1,
@@ -108,10 +102,7 @@
       },
       "ositrace:hasQuality": {
          "@type": "ositrace:Quality",
-         "ositrace:precision": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         }
+         "precision": 0.01
       },
       "ositrace:hasQuantity": {
          "@type": "ositrace:Quantity",
@@ -135,22 +126,10 @@
             "georeference:relationOrArea": "A9 motorway near Munich",
             "georeference:hasBoundingBox": {
                "@type": "georeference:BoundingBox",
-               "georeference:xMin": {
-                  "@value": "11.5500",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMin": {
-                  "@value": "48.1200",
-                  "@type": "xsd:float"
-               },
-               "georeference:xMax": {
-                  "@value": "11.5800",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMax": {
-                  "@value": "48.1500",
-                  "@type": "xsd:float"
-               }
+               "xMin": 11.55,
+               "yMin": 48.12,
+               "xMax": 11.58,
+               "yMax": 48.15
             }
          },
          "georeference:hasGeodeticReferenceSystem": {
@@ -158,25 +137,13 @@
             "georeference:codeEPSG": 4326,
             "georeference:hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.1200",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.5500",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.12,
+               "lon": 11.55
             },
             "georeference:hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.1350",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.5650",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.135,
+               "lon": 11.565
             },
             "georeference:heightSystem": "Ellipsoidal height"
          }
@@ -184,17 +151,11 @@
    },
    "ositrace:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference"
-      },
+      "iri": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference",
       "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
       "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
@@ -206,10 +167,7 @@
       },
       "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/ositrace_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
+         "filePath": "./base-references/ositrace_manifest_reference.json",
          "manifest:mimeType": "application/ld+json"
       }
    }

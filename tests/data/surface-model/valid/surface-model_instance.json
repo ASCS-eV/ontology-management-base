@@ -1,14 +1,14 @@
 {
-   "@context": {
-      "surface-model": "https://w3id.org/ascs-ev/envited-x/surface-model/v6/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#"
-   },
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/surface-model/v6/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      {
+         "gx": "https://w3id.org/gaia-x/development#",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.surface-model.net:SurfaceModel:test_valid_surface-model_instance",
    "@type": "surface-model:SurfaceModel",
    "surface-model:hasResourceDescription": {
@@ -40,31 +40,16 @@
       },
       "surface-model:hasQuality": {
          "@type": "surface-model:Quality",
-         "surface-model:resolutionLongitudinal": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         },
-         "surface-model:resolutionLateral": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         },
-         "surface-model:orientation": {
-            "@value": "-3.14159",
-            "@type": "xsd:float"
-         },
+         "resolutionLongitudinal": 0.01,
+         "resolutionLateral": 0.01,
+         "orientation": -3.14159,
          "surface-model:platformExists": true,
          "surface-model:rampExists": true
       },
       "surface-model:hasQuantity": {
          "@type": "surface-model:Quantity",
-         "surface-model:length": {
-            "@value": "1.46",
-            "@type": "xsd:float"
-         },
-         "surface-model:elevationRange": {
-            "@value": "25.00",
-            "@type": "xsd:float"
-         },
+         "length": 1.46,
+         "elevationRange": 25.0,
          "surface-model:mapDataField": true
       },
       "surface-model:hasGeoreference": {
@@ -78,22 +63,10 @@
             "georeference:relationOrArea": "Autobahn A8, in the greater Ingolstadt area",
             "georeference:hasBoundingBox": {
                "@type": "georeference:BoundingBox",
-               "georeference:xMin": {
-                  "@value": "11.608111",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMin": {
-                  "@value": "48.331035",
-                  "@type": "xsd:float"
-               },
-               "georeference:xMax": {
-                  "@value": "11.610954",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMax": {
-                  "@value": "48.341742",
-                  "@type": "xsd:float"
-               }
+               "xMin": 11.608111,
+               "yMin": 48.331035,
+               "xMax": 11.610954,
+               "yMax": 48.341742
             }
          },
          "georeference:hasGeodeticReferenceSystem": {
@@ -101,25 +74,13 @@
             "georeference:codeEPSG": 451989,
             "georeference:hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.045414",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.966206",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.045414,
+               "lon": 11.966206
             },
             "georeference:hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.045414",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.966206",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.045414,
+               "lon": 11.966206
             },
             "georeference:heightSystem": "Ellipsoidal height"
          }
@@ -127,17 +88,11 @@
    },
    "surface-model:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_surface-model_manifest_reference"
-      },
+      "iri": "did:web:test.fixture.net:Manifest:test_surface-model_manifest_reference",
       "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
       "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
@@ -149,10 +104,7 @@
       },
       "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/surface-model_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
+         "filePath": "./base-references/surface-model_manifest_reference.json",
          "manifest:mimeType": "application/ld+json"
       }
    }

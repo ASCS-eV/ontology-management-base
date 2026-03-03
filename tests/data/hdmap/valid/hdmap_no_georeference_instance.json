@@ -1,13 +1,13 @@
 {
-   "@context": {
-      "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#",
-      "xsd": "http://www.w3.org/2001/XMLSchema#"
-   },
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "gx": "https://w3id.org/gaia-x/development#",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.hdmap.net:HdMap:test_valid_hdmap_no_georeference",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
@@ -45,14 +45,8 @@
       },
       "hdmap:hasQuantity": {
          "@type": "hdmap:Quantity",
-         "hdmap:length": {
-            "@value": "0.5",
-            "@type": "xsd:float"
-         },
-         "hdmap:elevationRange": {
-            "@value": "0.0",
-            "@type": "xsd:float"
-         },
+         "length": 0.5,
+         "elevationRange": 0.0,
          "hdmap:numberIntersections": 0,
          "hdmap:numberTrafficLights": 0,
          "hdmap:numberTrafficSigns": 0,
@@ -60,22 +54,13 @@
          "hdmap:numberOutlines": 0,
          "hdmap:speedLimit": {
             "@type": "hdmap:Range2D",
-            "hdmap:min": {
-               "@value": "0",
-               "@type": "xsd:float"
-            },
-            "hdmap:max": {
-               "@value": "130",
-               "@type": "xsd:float"
-            }
+            "min": 0.0,
+            "max": 130.0
          }
       },
       "hdmap:hasQuality": {
          "@type": "hdmap:Quality",
-         "hdmap:precision": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         }
+         "precision": 0.01
       },
       "hdmap:hasDataSource": {
          "@type": "hdmap:DataSource",
@@ -84,17 +69,11 @@
    },
    "hdmap:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference"
-      },
+      "iri": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference",
       "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
       "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
@@ -106,10 +85,7 @@
       },
       "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/hdmap_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
+         "filePath": "./base-references/hdmap_manifest_reference.json",
          "manifest:mimeType": "application/ld+json"
       }
    }
