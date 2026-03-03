@@ -1,0 +1,17 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                          ['tests/data/general/invalid/fail01_wrong_recording_time.json']                                           =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.general.net:General:test_invalid_fail01_wrong_recording_time                                                     =
+=    Property:         https://w3id.org/gaia-x4plcaad/ontologies/general/v3/data                                                                     =
+=    Error:            Value does not conform to Shape general:DataShape. See details for more information.                                          =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/gaia-x4plcaad/ontologies/general/v3/recordingTime                                                            =
+=    Error:            Validation of recording time failed!                                                                                          =
+======================================================================================================================================================

@@ -26,48 +26,48 @@
       "@type": "simulation-model:DomainSpecification",
       "simulation-model:hasContent": {
          "@type": "simulation-model:Content",
-         "simulation-model:modelType": "sensor",
-         "simulation-model:modelManufacturer": "OpenMSL Project Group",
-         "simulation-model:modelFamily": "Sensor Family X4000",
-         "simulation-model:modelName": "X4101",
-         "simulation-model:modelVersion": "1.2.2",
+         "modelType": "sensor",
+         "modelManufacturer": "OpenMSL Project Group",
+         "modelFamily": "Sensor Family X4000",
+         "modelName": "X4101",
+         "modelVersion": "1.2.2",
          "modelReleasedate": "2024-11-26T12:37:15",
-         "simulation-model:modelReleasestatus": "Released",
-         "simulation-model:modelGuid": "7ae4-210f-dead-beef-042",
-         "simulation-model:modelPurpose": "HAD function validation in OEM environment at object-list level",
-         "simulation-model:modelModellingApproach": "model is purely object-list driven, weather effects are not modelled.",
-         "simulation-model:sensorManufacturer": "Sample company.",
-         "simulation-model:sensorFamily": "ARS5XX",
-         "simulation-model:sensorName": "ARS548",
-         "simulation-model:sensorVersion": "1.0.0",
-         "simulation-model:sensorManufacturerPartnumber": "A123",
-         "simulation-model:sensorType": "object-output",
-         "simulation-model:sensorTechnology": "radar",
-         "simulation-model:sensorTechnologyVariant": "long-range"
+         "modelReleasestatus": "Released",
+         "modelGuid": "7ae4-210f-dead-beef-042",
+         "modelPurpose": "HAD function validation in OEM environment at object-list level",
+         "modelModellingApproach": "model is purely object-list driven, weather effects are not modelled.",
+         "sensorManufacturer": "Sample company.",
+         "sensorFamily": "ARS5XX",
+         "sensorName": "ARS548",
+         "sensorVersion": "1.0.0",
+         "sensorManufacturerPartnumber": "A123",
+         "sensorType": "object-output",
+         "sensorTechnology": "radar",
+         "sensorTechnologyVariant": "long-range"
       },
       "simulation-model:hasFormat": {
          "@type": "simulation-model:Format",
-         "simulation-model:modelImplementationFormat": "OSMP 1.0/OSI 3.1.2/FMI 2.0",
-         "simulation-model:modelPreconditions": "Object-list input contains accurate bounding box values",
-         "simulation-model:modelImplementationPreconditions": "Model needs Windows 10 1809 or newer with nVidia Drivers version 389.12 or newer and OpenCL 2.0 capable GPU",
+         "modelImplementationFormat": "OSMP 1.0/OSI 3.1.2/FMI 2.0",
+         "modelPreconditions": "Object-list input contains accurate bounding box values",
+         "modelImplementationPreconditions": "Model needs Windows 10 1809 or newer with nVidia Drivers version 389.12 or newer and OpenCL 2.0 capable GPU",
          "modelIntegrationRequirements": "http://mywebsite.de/Requirements.pdf"
       },
       "simulation-model:hasQuality": {
          "@type": "simulation-model:Quality",
-         "simulation-model:modelLimitations": "This delivery is a pre-release and the model is intended to be used for checking the interfaces of the simulation toolchain. The model is not validated; thus it is not intended to be used for validation or verification of any sensor, especially not for ARS810 or ARS840. In particular, the existence of this model shall not be used to imply the existence of sensors ARS810 nor ARS840 nor their properties. This delivery is not developed according to process defined in ISO 26262 (Standard for Functional Safety).",
-         "simulation-model:modelValidityRange": "Sensor model is only accurate up to sensor/vehicle speeds of less than 150km/h",
-         "simulation-model:modelVerificationStatus": true,
+         "modelLimitations": "This delivery is a pre-release and the model is intended to be used for checking the interfaces of the simulation toolchain. The model is not validated; thus it is not intended to be used for validation or verification of any sensor, especially not for ARS810 or ARS840. In particular, the existence of this model shall not be used to imply the existence of sensors ARS810 nor ARS840 nor their properties. This delivery is not developed according to process defined in ISO 26262 (Standard for Functional Safety).",
+         "modelValidityRange": "Sensor model is only accurate up to sensor/vehicle speeds of less than 150km/h",
+         "modelVerificationStatus": true,
          "modelVerificationReport": "http://mywebsite.de/VerficiationReport.pdf",
-         "simulation-model:modelValidationStatus": true,
-         "simulation-model:modelValidationPlatform": "PMSF FMIBench 1.9.9.4 using osi3test 0.6.0 on Windows 10 1809",
+         "modelValidationStatus": true,
+         "modelValidationPlatform": "PMSF FMIBench 1.9.9.4 using osi3test 0.6.0 on Windows 10 1809",
          "modelValidationReport": "did:web:registry.gaia-x.eu:Validation:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
          "modelValidationConcept": "http://mywebsite.de/ValidationConcept.md",
-         "simulation-model:modelImplementationPerformanceCharacteristics": "Potentially real-time capable, if less than 100 objects in object list input at any one time"
+         "modelImplementationPerformanceCharacteristics": "Potentially real-time capable, if less than 100 objects in object list input at any one time"
       },
       "simulation-model:hasQuantity": {
          "@type": "simulation-model:Quantity",
-         "simulation-model:maxDetections": 800,
-         "simulation-model:maxObjects": 50
+         "maxDetections": 800,
+         "maxObjects": 50
       },
       "simulation-model:hasDataSource": {
          "@type": "simulation-model:DataSource",
@@ -77,23 +77,23 @@
    "simulation-model:hasManifest": {
       "@type": "manifest:Link",
       "iri": "did:web:test.fixture.net:Manifest:test_simulation-model_manifest_reference",
-      "skos:note": "Reference to the simulation model manifest.",
+      "note": "Reference to the simulation model manifest.",
       "conformsTo": [
          "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
          "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
-      "manifest:hasAccessRole": {
+      "hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "manifest:hasCategory": {
+      "hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "manifest:hasFileMetadata": {
+      "hasFileMetadata": {
          "@type": "manifest:FileMetadata",
          "filePath": "./base-references/simulation-model_manifest_reference.json",
-         "manifest:mimeType": "application/ld+json"
+         "mimeType": "application/ld+json"
       }
    }
 }

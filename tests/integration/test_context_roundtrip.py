@@ -57,22 +57,15 @@ class TestManifestContextRoundtrip:
         """Path to verbose manifest instance."""
         return TESTS_DATA_DIR / "manifest" / "valid" / "manifest_instance.json"
 
-    @pytest.fixture
-    def compact_instance(self) -> Path:
-        """Path to compact manifest instance."""
-        return TESTS_DATA_DIR / "manifest" / "valid" / "manifest_compact_instance.json"
-
     def test_manifest_context_file_exists(self, manifest_context):
         """Context file should exist."""
         assert manifest_context.exists(), f"Context file not found: {manifest_context}"
 
-    def test_compact_instance_parses_with_inline_context(
-        self, compact_instance, manifest_context
+    def test_instance_parses_with_inline_context(
+        self, verbose_instance, manifest_context
     ):
-        """Compact instance should parse successfully with inline context."""
-        assert compact_instance.exists(), "Compact instance not found"
-
-        instance = load_context_inline(compact_instance, manifest_context)
+        """Instance should parse successfully with inline context."""
+        instance = load_context_inline(verbose_instance, manifest_context)
 
         g = Graph()
         g.parse(data=json.dumps(instance), format="json-ld")
@@ -80,13 +73,9 @@ class TestManifestContextRoundtrip:
         # Should have parsed some triples
         assert len(g) > 0, "Graph should contain triples"
 
-    def test_compact_instance_has_manifest_rdf_type(
-        self, compact_instance, manifest_context
-    ):
-        """Compact instance should have correct RDF types after parsing."""
-        assert compact_instance.exists(), "Compact instance not found"
-
-        instance = load_context_inline(compact_instance, manifest_context)
+    def test_instance_has_manifest_rdf_type(self, verbose_instance, manifest_context):
+        """Instance should have correct RDF types after parsing."""
+        instance = load_context_inline(verbose_instance, manifest_context)
 
         g = Graph()
         g.parse(data=json.dumps(instance), format="json-ld")
@@ -100,12 +89,10 @@ class TestManifestContextRoundtrip:
         ), f"Expected Manifest type not found. Found: {types}"
 
     def test_datatype_coercion_integer_filesize(
-        self, compact_instance, manifest_context
+        self, verbose_instance, manifest_context
     ):
         """Integer values should be correctly typed in RDF."""
-        assert compact_instance.exists(), "Compact instance not found"
-
-        instance = load_context_inline(compact_instance, manifest_context)
+        instance = load_context_inline(verbose_instance, manifest_context)
 
         g = Graph()
         g.parse(data=json.dumps(instance), format="json-ld")
@@ -124,11 +111,9 @@ class TestManifestContextRoundtrip:
         # fileSize should exist in the graph
         pytest.fail("No fileSize triple found in graph")
 
-    def test_datatype_coercion_float_width(self, compact_instance, manifest_context):
+    def test_datatype_coercion_float_width(self, verbose_instance, manifest_context):
         """Float values should be correctly typed in RDF."""
-        assert compact_instance.exists(), "Compact instance not found"
-
-        instance = load_context_inline(compact_instance, manifest_context)
+        instance = load_context_inline(verbose_instance, manifest_context)
 
         g = Graph()
         g.parse(data=json.dumps(instance), format="json-ld")

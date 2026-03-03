@@ -1,0 +1,15 @@
+{
+   "@context": "https://w3id.org/gaia-x4plcaad/ontologies/general/v3/",
+   "@id": "did:web:test.general.net:General:test_invalid_fail01_wrong_recording_time",
+   "@type": "general:General",
+   "general:description": {
+      "@type": "general:Description",
+      "general:name": "3D Model in Grafing",
+      "general:description": "town district, with traffic signs"
+   },
+   "general:data": {
+      "@type": "general:Data",
+      "size": 5.8,
+      "recordingTime": "01-04-2024"
+   }
+}

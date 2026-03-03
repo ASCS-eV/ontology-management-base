@@ -8,18 +8,18 @@
    ],
    "@id": "did:web:test.simulated-sensor.net:SimulatedSensor:test_valid_simulated-sensor_instance",
    "@type": "simulated-sensor:SimulatedSensor",
-   "simulated-sensor:sensorType": {
+   "sensorType": {
       "@type": "simulated-sensor:Radar",
-      "simulated-sensor:numberOfBeams": 1500,
+      "numberOfBeams": 1500,
       "distance": 100.0,
-      "simulated-sensor:fieldOfView": {
+      "fieldOfView": {
          "@type": "simulated-sensor:FieldOfView",
          "fovAngle1": 60.0,
          "fovAngle2": 30.0
       }
    },
-   "simulated-sensor:sensorIdentifier": "sensor.other.radar",
-   "simulated-sensor:mountingPosition": "Front-mid",
+   "sensorIdentifier": "sensor.other.radar",
+   "mountingPosition": "Front-mid",
    "gx:producedBy": {
       "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },

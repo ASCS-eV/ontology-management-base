@@ -31,72 +31,72 @@
       "@type": "ositrace:DomainSpecification",
       "ositrace:hasFormat": {
          "@type": "ositrace:Format",
-         "ositrace:fileFormat": "MCAP",
-         "ositrace:compression": "zstd",
-         "ositrace:osiTraceFormatVersion": "net.asam.osi.trace",
-         "ositrace:minOsiVersion": "3.6.0",
-         "ositrace:maxOsiVersion": "3.7.0",
-         "ositrace:minProtobufVersion": "3.20.0",
-         "ositrace:maxProtobufVersion": "3.21.0",
-         "ositrace:hasChannel": [
+         "fileFormat": "MCAP",
+         "compression": "zstd",
+         "osiTraceFormatVersion": "net.asam.osi.trace",
+         "minOsiVersion": "3.6.0",
+         "maxOsiVersion": "3.7.0",
+         "minProtobufVersion": "3.20.0",
+         "maxProtobufVersion": "3.21.0",
+         "hasChannel": [
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "RadarSensorFL.OSMPSensorDataOut",
-               "ositrace:messageType": "SensorData",
-               "ositrace:osiVersion": "3.7.0",
-               "ositrace:protobufVersion": "3.21.0",
-               "ositrace:numberOfMessages": 1448,
-               "ositrace:description": "Front-left radar sensor data output"
+               "topic": "RadarSensorFL.OSMPSensorDataOut",
+               "messageType": "SensorData",
+               "osiVersion": "3.7.0",
+               "protobufVersion": "3.21.0",
+               "numberOfMessages": 1448,
+               "description": "Front-left radar sensor data output"
             },
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "CameraFront.OSMPSensorViewOut",
-               "ositrace:messageType": "SensorView",
-               "ositrace:osiVersion": "3.6.0",
-               "ositrace:protobufVersion": "3.20.0",
-               "ositrace:numberOfMessages": 3200,
-               "ositrace:description": "Front camera sensor view output"
+               "topic": "CameraFront.OSMPSensorViewOut",
+               "messageType": "SensorView",
+               "osiVersion": "3.6.0",
+               "protobufVersion": "3.20.0",
+               "numberOfMessages": 3200,
+               "description": "Front camera sensor view output"
             },
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "Simulation.OSMPGroundTruthOut",
-               "ositrace:messageType": "GroundTruth",
-               "ositrace:osiVersion": "3.7.0",
-               "ositrace:numberOfMessages": 3200,
-               "ositrace:description": "Simulation ground truth output"
+               "topic": "Simulation.OSMPGroundTruthOut",
+               "messageType": "GroundTruth",
+               "osiVersion": "3.7.0",
+               "numberOfMessages": 3200,
+               "description": "Simulation ground truth output"
             }
          ]
       },
       "ositrace:hasContent": {
          "@type": "ositrace:Content",
-         "ositrace:roadTypes": "motorway",
-         "ositrace:laneTypes": [
+         "roadTypes": "motorway",
+         "laneTypes": [
             "driving",
             "shoulder"
          ],
-         "ositrace:levelOfDetail": "car",
-         "ositrace:trafficDirection": "right-hand",
-         "ositrace:granularity": [
+         "levelOfDetail": "car",
+         "trafficDirection": "right-hand",
+         "granularity": [
             "object list",
             "detection list"
          ],
          "startTime": "2024-06-03T14:37:10.000000Z",
          "stopTime": "2024-06-03T14:38:42.000000Z",
-         "ositrace:hasHostMovingObject": {
+         "hasHostMovingObject": {
             "@type": "ositrace:MovingObject",
-            "ositrace:identifier": 1,
-            "ositrace:description": "Ego vehicle in highway scenario"
+            "identifier": 1,
+            "description": "Ego vehicle in highway scenario"
          },
-         "ositrace:hasTargetMovingObject": [
+         "hasTargetMovingObject": [
             {
                "@type": "ositrace:MovingObject",
-               "ositrace:identifier": 2,
-               "ositrace:description": "Lead vehicle"
+               "identifier": 2,
+               "description": "Lead vehicle"
             },
             {
                "@type": "ositrace:MovingObject",
-               "ositrace:identifier": 3,
-               "ositrace:description": "Adjacent lane vehicle"
+               "identifier": 3,
+               "description": "Adjacent lane vehicle"
             }
          ]
       },
@@ -106,25 +106,25 @@
       },
       "ositrace:hasQuantity": {
          "@type": "ositrace:Quantity",
-         "ositrace:numberFrames": 7848,
-         "ositrace:numberOfChannels": 3
+         "numberFrames": 7848,
+         "numberOfChannels": 3
       },
       "ositrace:hasDataSource": {
          "@type": "ositrace:DataSource",
-         "ositrace:usedDataSources": "Co-simulation recording with OSMP-compliant sensor models",
-         "ositrace:measurementSystem": "esmini v2.37.4 with OSI trace recording"
+         "usedDataSources": "Co-simulation recording with OSMP-compliant sensor models",
+         "measurementSystem": "esmini v2.37.4 with OSI trace recording"
       },
-      "ositrace:hasGeoreference": {
+      "hasGeoreference": {
          "@type": "georeference:Georeference",
          "@id": "did:web:registry.envited-x.net:Georeference:Mcap3ChHighwayRecording",
-         "georeference:hasProjectLocation": {
+         "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
-            "georeference:country": "DE",
-            "georeference:state": "DE-BY",
-            "georeference:region": "Upper Bavaria",
-            "georeference:city": "Munich",
-            "georeference:relationOrArea": "A9 motorway near Munich",
-            "georeference:hasBoundingBox": {
+            "country": "DE",
+            "state": "DE-BY",
+            "region": "Upper Bavaria",
+            "city": "Munich",
+            "relationOrArea": "A9 motorway near Munich",
+            "hasBoundingBox": {
                "@type": "georeference:BoundingBox",
                "xMin": 11.55,
                "yMin": 48.12,
@@ -132,43 +132,43 @@
                "yMax": 48.15
             }
          },
-         "georeference:hasGeodeticReferenceSystem": {
+         "hasGeodeticReferenceSystem": {
             "@type": "georeference:GeodeticReferenceSystem",
-            "georeference:codeEPSG": 4326,
-            "georeference:hasOrigin": {
+            "codeEPSG": 4326,
+            "hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 48.12,
                "lon": 11.55
             },
-            "georeference:hasViewPoint": {
+            "hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 48.135,
                "lon": 11.565
             },
-            "georeference:heightSystem": "Ellipsoidal height"
+            "heightSystem": "Ellipsoidal height"
          }
       }
    },
    "ositrace:hasManifest": {
       "@type": "manifest:Link",
       "iri": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference",
-      "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
+      "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
       "conformsTo": [
          "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
          "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
-      "manifest:hasAccessRole": {
+      "hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "manifest:hasCategory": {
+      "hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "manifest:hasFileMetadata": {
+      "hasFileMetadata": {
          "@type": "manifest:FileMetadata",
          "filePath": "./base-references/ositrace_manifest_reference.json",
-         "manifest:mimeType": "application/ld+json"
+         "mimeType": "application/ld+json"
       }
    }
 }

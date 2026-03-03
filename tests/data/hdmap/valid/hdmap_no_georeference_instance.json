@@ -30,29 +30,29 @@
       "@type": "hdmap:DomainSpecification",
       "hdmap:hasFormat": {
          "@type": "hdmap:Format",
-         "hdmap:formatType": "ASAM OpenDRIVE",
-         "hdmap:version": "1.8"
+         "formatType": "ASAM OpenDRIVE",
+         "version": "1.8"
       },
       "hdmap:hasContent": {
          "@type": "hdmap:Content",
-         "hdmap:roadTypes": "rural",
-         "hdmap:laneTypes": [
+         "roadTypes": "rural",
+         "laneTypes": [
             "driving",
             "shoulder"
          ],
-         "hdmap:levelOfDetail": "pole",
-         "hdmap:trafficDirection": "right-hand"
+         "levelOfDetail": "pole",
+         "trafficDirection": "right-hand"
       },
       "hdmap:hasQuantity": {
          "@type": "hdmap:Quantity",
          "length": 0.5,
          "elevationRange": 0.0,
-         "hdmap:numberIntersections": 0,
-         "hdmap:numberTrafficLights": 0,
-         "hdmap:numberTrafficSigns": 0,
-         "hdmap:numberObjects": 2,
-         "hdmap:numberOutlines": 0,
-         "hdmap:speedLimit": {
+         "numberIntersections": 0,
+         "numberTrafficLights": 0,
+         "numberTrafficSigns": 0,
+         "numberObjects": 2,
+         "numberOutlines": 0,
+         "speedLimit": {
             "@type": "hdmap:Range2D",
             "min": 0.0,
             "max": 130.0
@@ -64,29 +64,29 @@
       },
       "hdmap:hasDataSource": {
          "@type": "hdmap:DataSource",
-         "hdmap:usedDataSources": "procedural generation"
+         "usedDataSources": "procedural generation"
       }
    },
    "hdmap:hasManifest": {
       "@type": "manifest:Link",
       "iri": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference",
-      "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
+      "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
       "conformsTo": [
          "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
          "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
-      "manifest:hasAccessRole": {
+      "hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "manifest:hasCategory": {
+      "hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "manifest:hasFileMetadata": {
+      "hasFileMetadata": {
          "@type": "manifest:FileMetadata",
          "filePath": "./base-references/hdmap_manifest_reference.json",
-         "manifest:mimeType": "application/ld+json"
+         "mimeType": "application/ld+json"
       }
    }
 }

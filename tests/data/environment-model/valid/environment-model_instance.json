@@ -29,46 +29,46 @@
    },
    "environment-model:hasDomainSpecification": {
       "@type": "environment-model:DomainSpecification",
-      "environment-model:hasProject": {
+      "hasProject": {
          "@type": "environment-model:Project",
-         "environment-model:visualisationToolName": "Unreal",
-         "environment-model:visualisationToolVendor": "Epic Games",
-         "environment-model:visualisationToolVersion": "4.27",
-         "environment-model:creationToolName": "Triangle3DBuilder",
-         "environment-model:creationToolVendor": "TriangleGraphics GmbH",
-         "environment-model:creationToolVersion": "7.7"
+         "visualisationToolName": "Unreal",
+         "visualisationToolVendor": "Epic Games",
+         "visualisationToolVersion": "4.27",
+         "creationToolName": "Triangle3DBuilder",
+         "creationToolVendor": "TriangleGraphics GmbH",
+         "creationToolVersion": "7.7"
       },
       "environment-model:hasFormat": {
          "@type": "environment-model:Format",
-         "environment-model:formatType": "Unreal Datasmith",
-         "environment-model:version": "SDK 4.25"
+         "formatType": "Unreal Datasmith",
+         "version": "SDK 4.25"
       },
       "environment-model:hasContent": {
          "@type": "environment-model:Content",
-         "environment-model:elements": "profile roads, extruded buildings, powerlines",
-         "environment-model:useCase": "driving"
+         "elements": "profile roads, extruded buildings, powerlines",
+         "useCase": "driving"
       },
       "environment-model:hasQuantity": {
          "@type": "environment-model:Quantity",
-         "environment-model:textureMaterialCount": 179,
-         "environment-model:triangleCount": 12456,
-         "environment-model:geometryCount": 5000
+         "textureMaterialCount": 179,
+         "triangleCount": 12456,
+         "geometryCount": 5000
       },
       "environment-model:hasQuality": {
          "@type": "environment-model:Quality",
-         "environment-model:detailLevel": "High",
+         "detailLevel": "High",
          "textureResolution": 0.1
       },
-      "environment-model:hasGeoreference": {
+      "hasGeoreference": {
          "@type": "georeference:Georeference",
-         "georeference:hasProjectLocation": {
+         "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
-            "georeference:country": "DE",
-            "georeference:state": "DE-BY",
-            "georeference:region": "Upper Bavaria",
-            "georeference:city": "Grafing",
-            "georeference:relationOrArea": "Town of Grafing",
-            "georeference:hasBoundingBox": {
+            "country": "DE",
+            "state": "DE-BY",
+            "region": "Upper Bavaria",
+            "city": "Grafing",
+            "relationOrArea": "Town of Grafing",
+            "hasBoundingBox": {
                "@type": "georeference:BoundingBox",
                "xMin": 10.720740862799195,
                "yMin": 52.29672229543727,
@@ -76,43 +76,43 @@
                "yMax": 52.31580272353997
             }
          },
-         "georeference:hasGeodeticReferenceSystem": {
+         "hasGeodeticReferenceSystem": {
             "@type": "georeference:GeodeticReferenceSystem",
-            "georeference:coordinateSystemName": "UTM",
-            "georeference:hasOrigin": {
+            "coordinateSystemName": "UTM",
+            "hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 52.3,
                "lon": 10.725
             },
-            "georeference:hasViewPoint": {
+            "hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 52.30626250948862,
                "lon": 10.72558653623446
             },
-            "georeference:heightSystem": "Ellipsoidal height"
+            "heightSystem": "Ellipsoidal height"
          }
       }
    },
    "environment-model:hasManifest": {
       "@type": "manifest:Link",
       "iri": "did:web:test.fixture.net:Manifest:test_environment-model_manifest_reference",
-      "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
+      "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
       "conformsTo": [
          "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
          "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
-      "manifest:hasAccessRole": {
+      "hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "manifest:hasCategory": {
+      "hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "manifest:hasFileMetadata": {
+      "hasFileMetadata": {
          "@type": "manifest:FileMetadata",
          "filePath": "./base-references/environment-model_manifest_reference.json",
-         "manifest:mimeType": "application/ld+json"
+         "mimeType": "application/ld+json"
       }
    }
 }

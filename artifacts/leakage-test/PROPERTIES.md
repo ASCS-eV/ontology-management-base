@@ -119,6 +119,6 @@ class Class_definition_for_ProcessParameter
 |MinimumPressureShape|leakage-test|upperTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
 |MinimumPressureShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
 |MinimumPressureShape|leakage-test|lowerTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
-|CodingDownholderShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#integer>|leakage-test.shacl.ttl|
-|CodingTestAdapterShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#integer>|leakage-test.shacl.ttl|
-|CodingRFIDShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#integer>|leakage-test.shacl.ttl|
+|CodingDownholderShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
+|CodingTestAdapterShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
+|CodingRFIDShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|

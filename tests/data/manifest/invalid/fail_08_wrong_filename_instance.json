@@ -1,0 +1,64 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
+   "@id": "did:web:test.manifest.net:Manifest:test_invalid_fail_08_wrong_filename_instance",
+   "@type": "manifest:Manifest",
+   "hasManifestReference": {
+      "@type": "manifest:Link",
+      "hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "manifest:isPublic"
+      },
+      "hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "manifest:isManifest"
+      },
+      "hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "filePath": "./manifest_instance.json",
+         "mimeType": "application/ld+json"
+      }
+   },
+   "hasLicense": {
+      "@type": "manifest:Link",
+      "hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "manifest:isPublic"
+      },
+      "hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "manifest:isLicense"
+      },
+      "hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "filePath": "https://opensource.org/license/EPL-2.0",
+         "mimeType": "text/html"
+      }
+   },
+   "hasArtifacts": [
+      {
+         "@type": "manifest:Link",
+         "hasAccessRole": {
+            "@type": "manifest:AccessRole",
+            "@id": "manifest:isPublic"
+         },
+         "hasCategory": {
+            "@type": "manifest:Category",
+            "@id": "manifest:isMiscellaneous"
+         },
+         "hasFileMetadata": {
+            "@type": "manifest:FileMetadata",
+            "filePath": "ipfs://bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
+            "cid": "bafybeiavkhiuq44adcxpuve5eic3tu4ilivuuykzrsyudoivwh3zc2piqy",
+            "mimeType": "application/x-xodr",
+            "fileSize": 636673,
+            "filename": "README"
+         }
+      }
+   ],
+   "hasReferencedArtifacts": []
+}
