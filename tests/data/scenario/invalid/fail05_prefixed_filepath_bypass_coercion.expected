@@ -1,0 +1,26 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                   ['tests/data/scenario/invalid/fail05_prefixed_filepath_bypass_coercion.json']                                    =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail05_prefixed_filepath_bypass_coercion                                      =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasManifest                                                                   =
+=    Error:            Each SimulationAsset must have exactly one manifest. If linked, it MUST be of category envited-x:isManifest and include a     =
+=                      manifest:iri.                                                                                                                 =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/filePath                                                                       =
+=    Error:            Validation of URI failed!                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasFileMetadata                                                                =
+=    Error:            Value does not conform to Shape manifest:FileMetadataShape. See details for more information.                                 =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail05_prefixed_filepath_bypass_coercion                                      =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasManifest                                                                    =
+=    Error:            Each Scenario must have exactly one manifest (Inline or Linked).                                                              =
+======================================================================================================================================================

@@ -24,6 +24,12 @@ def _write_artifacts_catalog(root: Path, content: str) -> None:
     catalog_path.write_text(content)
 
 
+def _write_imports_catalog(root: Path, content: str) -> None:
+    catalog_path = root / "imports" / "catalog-v001.xml"
+    catalog_path.parent.mkdir(parents=True, exist_ok=True)
+    catalog_path.write_text(content)
+
+
 def test_extract_rdf_types_predicates_and_datatypes():
     g = Graph()
     s = URIRef("http://example.org/s")
@@ -37,14 +43,40 @@ def test_extract_rdf_types_predicates_and_datatypes():
     assert "http://example.org/dt" in schema_discovery.extract_datatype_iris(g)
 
 
-def test_is_well_known_type():
-    assert schema_discovery._is_well_known_type(
-        "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+def test_discover_required_schemas_excludes_imported_namespace_types(temp_dir: Path):
+    """Types from imported namespaces (imports catalog) are not flagged as unresolved."""
+    _write_registry(temp_dir)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
     )
-    assert schema_discovery._is_well_known_type("http://www.w3.org/2002/07/owl#Class")
-    assert not schema_discovery._is_well_known_type(
-        "https://example.org/custom/v1/MyClass"
+    _write_imports_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="http://www.w3.org/1999/02/22-rdf-syntax-ns#" uri="rdf/rdf.owl.ttl"/>
+  <uri name="http://www.w3.org/2000/01/rdf-schema#" uri="rdfs/rdfs.owl.ttl"/>
+  <uri name="http://www.w3.org/2002/07/owl" uri="owl/owl.owl.ttl"/>
+  <uri name="http://schema.org/" uri="schema/schema.owl.ttl"/>
+</catalog>
+""",
     )
+
+    resolver = RegistryResolver(temp_dir)
+    _, _, unresolved = schema_discovery.discover_required_schemas(
+        {
+            "http://www.w3.org/2002/07/owl#Class",
+            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
+            "http://www.w3.org/2000/01/rdf-schema#Resource",
+            "https://schema.org/QuantitativeValue",
+        },
+        resolver,
+    )
+    assert unresolved == set()
 
 
 def test_discover_required_schemas_with_catalog(temp_dir: Path):
@@ -87,27 +119,3 @@ def test_discover_required_schemas_returns_unresolved_types(temp_dir: Path):
         {"https://unknown.example.org/v1/MyClass"}, resolver
     )
     assert unresolved == {"https://unknown.example.org/v1/MyClass"}
-
-
-def test_discover_required_schemas_excludes_well_known_types(temp_dir: Path):
-    """Well-known W3C types (OWL, RDF, etc.) are not flagged as unresolved."""
-    _write_registry(temp_dir)
-    _write_artifacts_catalog(
-        temp_dir,
-        """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
-  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
-""",
-    )
-
-    resolver = RegistryResolver(temp_dir)
-    _, _, unresolved = schema_discovery.discover_required_schemas(
-        {
-            "http://www.w3.org/2002/07/owl#Class",
-            "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",
-            "http://www.w3.org/2000/01/rdf-schema#Resource",
-        },
-        resolver,
-    )
-    assert unresolved == set()

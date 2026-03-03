@@ -1,33 +1,25 @@
 {
-   "@context": {
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "simulated-sensor": "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "dcterms": "http://purl.org/dc/terms/"
-   },
+   "@context": [
+      "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
+      {
+         "dcterms": "http://purl.org/dc/terms/",
+         "gx": "https://w3id.org/gaia-x/development#"
+      }
+   ],
    "@id": "did:web:test.simulated-sensor.net:SimulatedSensor:test_valid_simulated-sensor_instance",
    "@type": "simulated-sensor:SimulatedSensor",
-   "simulated-sensor:sensorType": {
+   "sensorType": {
       "@type": "simulated-sensor:Radar",
-      "simulated-sensor:numberOfBeams": 1500,
-      "simulated-sensor:distance": {
-         "@value": "100.0",
-         "@type": "xsd:float"
-      },
-      "simulated-sensor:fieldOfView": {
+      "numberOfBeams": 1500,
+      "distance": 100.0,
+      "fieldOfView": {
          "@type": "simulated-sensor:FieldOfView",
-         "simulated-sensor:fovAngle1": {
-            "@value": "60",
-            "@type": "xsd:float"
-         },
-         "simulated-sensor:fovAngle2": {
-            "@value": "30",
-            "@type": "xsd:float"
-         }
+         "fovAngle1": 60.0,
+         "fovAngle2": 30.0
       }
    },
-   "simulated-sensor:sensorIdentifier": "sensor.other.radar",
-   "simulated-sensor:mountingPosition": "Front-mid",
+   "sensorIdentifier": "sensor.other.radar",
+   "mountingPosition": "Front-mid",
    "gx:producedBy": {
       "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },

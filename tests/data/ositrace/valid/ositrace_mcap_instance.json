@@ -1,14 +1,14 @@
 {
-   "@context": {
-      "ositrace": "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#"
-   },
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "gx": "https://w3id.org/gaia-x/development#",
+         "skos": "http://www.w3.org/2004/02/skos/core#"
+      }
+   ],
    "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance",
    "@type": "ositrace:OSITrace",
    "ositrace:hasResourceDescription": {
@@ -31,186 +31,144 @@
       "@type": "ositrace:DomainSpecification",
       "ositrace:hasFormat": {
          "@type": "ositrace:Format",
-         "ositrace:fileFormat": "MCAP",
-         "ositrace:compression": "zstd",
-         "ositrace:osiTraceFormatVersion": "net.asam.osi.trace",
-         "ositrace:minOsiVersion": "3.6.0",
-         "ositrace:maxOsiVersion": "3.7.0",
-         "ositrace:minProtobufVersion": "3.20.0",
-         "ositrace:maxProtobufVersion": "3.21.0",
-         "ositrace:hasChannel": [
+         "fileFormat": "MCAP",
+         "compression": "zstd",
+         "osiTraceFormatVersion": "net.asam.osi.trace",
+         "minOsiVersion": "3.6.0",
+         "maxOsiVersion": "3.7.0",
+         "minProtobufVersion": "3.20.0",
+         "maxProtobufVersion": "3.21.0",
+         "hasChannel": [
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "RadarSensorFL.OSMPSensorDataOut",
-               "ositrace:messageType": "SensorData",
-               "ositrace:osiVersion": "3.7.0",
-               "ositrace:protobufVersion": "3.21.0",
-               "ositrace:numberOfMessages": 1448,
-               "ositrace:description": "Front-left radar sensor data output"
+               "topic": "RadarSensorFL.OSMPSensorDataOut",
+               "messageType": "SensorData",
+               "osiVersion": "3.7.0",
+               "protobufVersion": "3.21.0",
+               "numberOfMessages": 1448,
+               "description": "Front-left radar sensor data output"
             },
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "CameraFront.OSMPSensorViewOut",
-               "ositrace:messageType": "SensorView",
-               "ositrace:osiVersion": "3.6.0",
-               "ositrace:protobufVersion": "3.20.0",
-               "ositrace:numberOfMessages": 3200,
-               "ositrace:description": "Front camera sensor view output"
+               "topic": "CameraFront.OSMPSensorViewOut",
+               "messageType": "SensorView",
+               "osiVersion": "3.6.0",
+               "protobufVersion": "3.20.0",
+               "numberOfMessages": 3200,
+               "description": "Front camera sensor view output"
             },
             {
                "@type": "ositrace:Channel",
-               "ositrace:topic": "Simulation.OSMPGroundTruthOut",
-               "ositrace:messageType": "GroundTruth",
-               "ositrace:osiVersion": "3.7.0",
-               "ositrace:numberOfMessages": 3200,
-               "ositrace:description": "Simulation ground truth output"
+               "topic": "Simulation.OSMPGroundTruthOut",
+               "messageType": "GroundTruth",
+               "osiVersion": "3.7.0",
+               "numberOfMessages": 3200,
+               "description": "Simulation ground truth output"
             }
          ]
       },
       "ositrace:hasContent": {
          "@type": "ositrace:Content",
-         "ositrace:roadTypes": "motorway",
-         "ositrace:laneTypes": [
+         "roadTypes": "motorway",
+         "laneTypes": [
             "driving",
             "shoulder"
          ],
-         "ositrace:levelOfDetail": "car",
-         "ositrace:trafficDirection": "right-hand",
-         "ositrace:granularity": [
+         "levelOfDetail": "car",
+         "trafficDirection": "right-hand",
+         "granularity": [
             "object list",
             "detection list"
          ],
-         "ositrace:startTime": {
-            "@value": "2024-06-03T14:37:10.000000Z",
-            "@type": "xsd:dateTime"
-         },
-         "ositrace:stopTime": {
-            "@value": "2024-06-03T14:38:42.000000Z",
-            "@type": "xsd:dateTime"
-         },
-         "ositrace:hasHostMovingObject": {
+         "startTime": "2024-06-03T14:37:10.000000Z",
+         "stopTime": "2024-06-03T14:38:42.000000Z",
+         "hasHostMovingObject": {
             "@type": "ositrace:MovingObject",
-            "ositrace:identifier": 1,
-            "ositrace:description": "Ego vehicle in highway scenario"
+            "identifier": 1,
+            "description": "Ego vehicle in highway scenario"
          },
-         "ositrace:hasTargetMovingObject": [
+         "hasTargetMovingObject": [
             {
                "@type": "ositrace:MovingObject",
-               "ositrace:identifier": 2,
-               "ositrace:description": "Lead vehicle"
+               "identifier": 2,
+               "description": "Lead vehicle"
             },
             {
                "@type": "ositrace:MovingObject",
-               "ositrace:identifier": 3,
-               "ositrace:description": "Adjacent lane vehicle"
+               "identifier": 3,
+               "description": "Adjacent lane vehicle"
             }
          ]
       },
       "ositrace:hasQuality": {
          "@type": "ositrace:Quality",
-         "ositrace:precision": {
-            "@value": "0.01",
-            "@type": "xsd:float"
-         }
+         "precision": 0.01
       },
       "ositrace:hasQuantity": {
          "@type": "ositrace:Quantity",
-         "ositrace:numberFrames": 7848,
-         "ositrace:numberOfChannels": 3
+         "numberFrames": 7848,
+         "numberOfChannels": 3
       },
       "ositrace:hasDataSource": {
          "@type": "ositrace:DataSource",
-         "ositrace:usedDataSources": "Co-simulation recording with OSMP-compliant sensor models",
-         "ositrace:measurementSystem": "esmini v2.37.4 with OSI trace recording"
+         "usedDataSources": "Co-simulation recording with OSMP-compliant sensor models",
+         "measurementSystem": "esmini v2.37.4 with OSI trace recording"
       },
-      "ositrace:hasGeoreference": {
+      "hasGeoreference": {
          "@type": "georeference:Georeference",
          "@id": "did:web:registry.envited-x.net:Georeference:Mcap3ChHighwayRecording",
-         "georeference:hasProjectLocation": {
+         "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
-            "georeference:country": "DE",
-            "georeference:state": "DE-BY",
-            "georeference:region": "Upper Bavaria",
-            "georeference:city": "Munich",
-            "georeference:relationOrArea": "A9 motorway near Munich",
-            "georeference:hasBoundingBox": {
+            "country": "DE",
+            "state": "DE-BY",
+            "region": "Upper Bavaria",
+            "city": "Munich",
+            "relationOrArea": "A9 motorway near Munich",
+            "hasBoundingBox": {
                "@type": "georeference:BoundingBox",
-               "georeference:xMin": {
-                  "@value": "11.5500",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMin": {
-                  "@value": "48.1200",
-                  "@type": "xsd:float"
-               },
-               "georeference:xMax": {
-                  "@value": "11.5800",
-                  "@type": "xsd:float"
-               },
-               "georeference:yMax": {
-                  "@value": "48.1500",
-                  "@type": "xsd:float"
-               }
+               "xMin": 11.55,
+               "yMin": 48.12,
+               "xMax": 11.58,
+               "yMax": 48.15
             }
          },
-         "georeference:hasGeodeticReferenceSystem": {
+         "hasGeodeticReferenceSystem": {
             "@type": "georeference:GeodeticReferenceSystem",
-            "georeference:codeEPSG": 4326,
-            "georeference:hasOrigin": {
+            "codeEPSG": 4326,
+            "hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.1200",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.5500",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.12,
+               "lon": 11.55
             },
-            "georeference:hasViewPoint": {
+            "hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
-               "georeference:lat": {
-                  "@value": "48.1350",
-                  "@type": "xsd:float"
-               },
-               "georeference:lon": {
-                  "@value": "11.5650",
-                  "@type": "xsd:float"
-               }
+               "lat": 48.135,
+               "lon": 11.565
             },
-            "georeference:heightSystem": "Ellipsoidal height"
+            "heightSystem": "Ellipsoidal height"
          }
       }
    },
    "ositrace:hasManifest": {
       "@type": "manifest:Link",
-      "manifest:iri": {
-         "@id": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference"
-      },
-      "skos:note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
-      "sh:conformsTo": [
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
-         },
-         {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
-         }
+      "iri": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference",
+      "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
       ],
-      "manifest:hasAccessRole": {
+      "hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "manifest:hasCategory": {
+      "hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "manifest:hasFileMetadata": {
+      "hasFileMetadata": {
          "@type": "manifest:FileMetadata",
-         "manifest:filePath": {
-            "@value": "./base-references/ositrace_manifest_reference.json",
-            "@type": "xsd:anyURI"
-         },
-         "manifest:mimeType": "application/ld+json"
+         "filePath": "./base-references/ositrace_manifest_reference.json",
+         "mimeType": "application/ld+json"
       }
    }
 }

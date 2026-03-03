@@ -53,6 +53,9 @@ def build_context_url_map(resolver, root_dir: Path) -> Dict[str, Path]:
             abs_path = (root_dir / context_rel).resolve()
             if abs_path.exists():
                 _add_url_variants(url_map, iri, abs_path)
+                # Also map the {iri}/context URL used in JSON-LD @context arrays
+                context_iri = iri.rstrip("/#") + "/context"
+                url_map[context_iri] = abs_path
     # Import contexts are resolved from imports/catalog-v001.xml
     for iri, context_rel in resolver.get_import_context_mappings().items():
         abs_path = (root_dir / context_rel).resolve()

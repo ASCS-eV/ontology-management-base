@@ -172,7 +172,7 @@ leakage-test:MinimumPressureShape a sh:NodeShape ;
 
 leakage-test:CodingDownholderShape a sh:NodeShape ;
     sh:property [ skos:example "1" ;
-            sh:datatype xsd:integer ;
+            sh:datatype xsd:float ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:message "Validation of setpoint failed!"@en ;
@@ -182,7 +182,7 @@ leakage-test:CodingDownholderShape a sh:NodeShape ;
 
 leakage-test:CodingTestAdapterShape a sh:NodeShape ;
     sh:property [ skos:example "1" ;
-            sh:datatype xsd:integer ;
+            sh:datatype xsd:float ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:message "Validation of setpoint failed!"@en ;
@@ -192,7 +192,7 @@ leakage-test:CodingTestAdapterShape a sh:NodeShape ;
 
 leakage-test:CodingRFIDShape a sh:NodeShape ;
     sh:property [ skos:example "16" ;
-            sh:datatype xsd:integer ;
+            sh:datatype xsd:float ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:message "Validation of setpoint failed!"@en ;

@@ -11,7 +11,7 @@
          "schema": "https://schema.org/"
       }
    ],
-   "@id": "did:web:test.scenario.net:Scenario:test_valid_scenario_instance",
+   "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail03_prefixed_float_bypass_coercion",
    "@type": "scenario:Scenario",
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
@@ -33,17 +33,17 @@
       "@type": "scenario:DomainSpecification",
       "scenario:hasFormat": {
          "@type": "scenario:Format",
-         "formatType": "ASAM OpenSCENARIO",
-         "version": "1.2"
+         "scenario:formatType": "ASAM OpenSCENARIO",
+         "scenario:version": "1.2"
       },
       "scenario:hasContent": [
          {
             "@type": "scenario:Content",
-            "abstractionLevel": "Logical",
+            "scenario:abstractionLevel": "Logical",
             "scenario:country": "Germany",
-            "aim": "Test sensor perception range.",
-            "movementDescription": "FollowTrajectory",
-            "customCommands": "UserDefinedAction: TurnAround"
+            "scenario:aim": "Test sensor perception range.",
+            "scenario:movementDescription": "FollowTrajectory",
+            "scenario:customCommands": "UserDefinedAction: TurnAround"
          },
          {
             "@type": "openlabel:Odd",
@@ -74,31 +74,31 @@
       ],
       "scenario:hasQuality": {
          "@type": "scenario:Quality",
-         "accuracyObjects": 0.02,
-         "calibration": "Static calibration using GNSS/RTK on XYZ."
+         "scenario:accuracyObjects": 0.02,
+         "scenario:calibration": "Static calibration using GNSS/RTK on XYZ."
       },
       "scenario:hasQuantity": {
          "@type": "scenario:Quantity",
-         "numberTrafficObjects": 1,
-         "temporaryTrafficObjects": 0,
-         "permanentTrafficObjects": 1,
-         "controllers": "SampleController1"
+         "scenario:numberTrafficObjects": 1,
+         "scenario:temporaryTrafficObjects": 0,
+         "scenario:permanentTrafficObjects": 1,
+         "scenario:controllers": "SampleController1"
       },
       "scenario:hasDataSource": {
          "@type": "scenario:DataSource",
-         "sourceType": "Real World Data",
-         "sourceDescription": "Sensor capture using detection system of the testbed Lower Saxony."
+         "scenario:sourceType": "Real World Data",
+         "scenario:sourceDescription": "Sensor capture using detection system of the testbed Lower Saxony."
       },
-      "hasGeoreference": {
+      "scenario:hasGeoreference": {
          "@type": "georeference:Georeference",
-         "hasProjectLocation": {
+         "georeference:hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
             "georeference:country": "DE",
-            "state": "DE-NDS",
-            "region": "Lower Saxony",
-            "city": "Brunswick",
-            "relationOrArea": "A 39",
-            "hasBoundingBox": {
+            "georeference:state": "DE-NDS",
+            "georeference:region": "Lower Saxony",
+            "georeference:city": "Brunswick",
+            "georeference:relationOrArea": "A 39",
+            "georeference:hasBoundingBox": {
                "@type": "georeference:BoundingBox",
                "xMin": 10.720740862799195,
                "yMin": 52.29672229543727,
@@ -106,44 +106,52 @@
                "yMax": 52.31580272353997
             }
          },
-         "hasGeodeticReferenceSystem": {
+         "georeference:hasGeodeticReferenceSystem": {
             "@type": "georeference:GeodeticReferenceSystem",
-            "codeEPSG": 32632,
-            "hasOrigin": {
+            "georeference:codeEPSG": 32632,
+            "georeference:hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 52.27532946399296,
                "lon": 10.685571633942278
             },
-            "hasViewPoint": {
+            "georeference:hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
                "lat": 52.30626250948862,
                "lon": 10.72558653623446
             },
-            "heightSystem": "Ellipsoidal height"
+            "georeference:heightSystem": "Ellipsoidal height"
          }
       }
    },
    "scenario:hasManifest": {
       "@type": "manifest:Link",
-      "iri": "did:web:test.fixture.net:Manifest:test_scenario_manifest_reference",
-      "note": "Reference to the scenario manifest.",
-      "conformsTo": [
-         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-         "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-         "https://w3id.org/ascs-ev/envited-x/scenario/v5/"
+      "manifest:iri": {
+         "@id": "did:web:test.fixture.net:Manifest:test_scenario_manifest_reference"
+      },
+      "skos:note": "Reference to the scenario manifest.",
+      "sh:conformsTo": [
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         },
+         {
+            "@id": "https://w3id.org/ascs-ev/envited-x/scenario/v5/"
+         }
       ],
-      "hasAccessRole": {
+      "manifest:hasAccessRole": {
          "@type": "manifest:AccessRole",
          "@id": "envited-x:isPublic"
       },
-      "hasCategory": {
+      "manifest:hasCategory": {
          "@type": "manifest:Category",
          "@id": "envited-x:isManifest"
       },
-      "hasFileMetadata": {
+      "manifest:hasFileMetadata": {
          "@type": "manifest:FileMetadata",
          "filePath": "./base-references/scenario_manifest_reference.json",
-         "mimeType": "application/ld+json"
+         "manifest:mimeType": "application/ld+json"
       }
    }
 }

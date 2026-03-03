@@ -11,7 +11,7 @@
          "schema": "https://schema.org/"
       }
    ],
-   "@id": "did:web:test.scenario.net:Scenario:test_valid_scenario_instance",
+   "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail11_object_value_for_literal",
    "@type": "scenario:Scenario",
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
@@ -74,7 +74,9 @@
       ],
       "scenario:hasQuality": {
          "@type": "scenario:Quality",
-         "accuracyObjects": 0.02,
+         "accuracyObjects": {
+            "value": 0.02
+         },
          "calibration": "Static calibration using GNSS/RTK on XYZ."
       },
       "scenario:hasQuantity": {

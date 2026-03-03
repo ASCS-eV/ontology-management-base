@@ -479,21 +479,41 @@ class RegistryResolver:
 
         return sorted(set(matches))
 
-    @staticmethod
-    def _iri_matches_base(iris: Set[str], base_iri: str) -> bool:
-        candidates = {base_iri}
-        if base_iri.startswith("http://"):
-            candidates.add("https://" + base_iri[len("http://") :])
-        elif base_iri.startswith("https://"):
-            candidates.add("http://" + base_iri[len("https://") :])
+    def is_imported_namespace(self, iri: str) -> bool:
+        """
+        Check whether an IRI belongs to a namespace in the imports catalog.
 
-        for candidate in candidates:
-            base = candidate.rstrip("#/")
-            for iri in iris:
-                if iri == candidate or iri.startswith(candidate):
-                    return True
-                if iri.startswith(base + "/") or iri.startswith(base + "#"):
-                    return True
+        Args:
+            iri: IRI to check (e.g., "https://schema.org/QuantitativeValue")
+
+        Returns:
+            True if the IRI's namespace is covered by imports/catalog-v001.xml
+        """
+        if self._imports_catalog_entries is None:
+            self._imports_catalog_entries = self._load_imports_catalog_entries()
+        if not self._imports_catalog_entries:
+            return False
+        return self._iri_matches_base({iri}, list(self._imports_catalog_entries.keys()))
+
+    @staticmethod
+    def _iri_matches_base(iris: Set[str], base_iris) -> bool:
+        """Check if any IRI matches any base IRI (single or collection)."""
+        if isinstance(base_iris, str):
+            base_iris = [base_iris]
+        for base_iri in base_iris:
+            candidates = {base_iri}
+            if base_iri.startswith("http://"):
+                candidates.add("https://" + base_iri[len("http://") :])
+            elif base_iri.startswith("https://"):
+                candidates.add("http://" + base_iri[len("https://") :])
+
+            for candidate in candidates:
+                base = candidate.rstrip("#/")
+                for iri in iris:
+                    if iri == candidate or iri.startswith(candidate):
+                        return True
+                    if iri.startswith(base + "/") or iri.startswith(base + "#"):
+                        return True
         return False
 
     # =========================================================================

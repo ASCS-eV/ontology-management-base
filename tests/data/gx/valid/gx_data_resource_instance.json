@@ -1,12 +1,13 @@
 {
-   "@context": {
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "vcard": "http://www.w3.org/2006/vcard/ns#",
-      "schema": "https://schema.org/",
-      "dcat": "http://www.w3.org/ns/dcat#"
-   },
+   "@context": [
+      "http://www.w3.org/2006/vcard/ns#",
+      "http://www.w3.org/ns/dcat#",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "gx": "https://w3id.org/gaia-x/development#",
+         "schema": "https://schema.org/"
+      }
+   ],
    "@graph": [
       {
          "@id": "did:web:test.gx.net:DataProduct:test_valid_gx_data_product",

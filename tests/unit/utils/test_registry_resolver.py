@@ -237,3 +237,34 @@ def test_get_all_cataloged_files_filters_by_domain(temp_dir):
     )
     assert len(domain2_files.get(".json", [])) == 1
     assert all("domain2" in str(f) for f in domain2_files.get(".json", []))
+
+
+def test_is_imported_namespace_matches_imports_catalog(temp_dir):
+    """is_imported_namespace returns True for IRIs whose namespace is in the imports catalog."""
+    registry = {"version": "1.0.0", "ontologies": {}}
+    _write_registry(temp_dir, registry)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+    _write_imports_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="http://www.w3.org/2002/07/owl" uri="owl/owl.owl.ttl"/>
+  <uri name="http://schema.org/" uri="schema/schema.owl.ttl"/>
+</catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+
+    # Matches via imports catalog
+    assert resolver.is_imported_namespace("http://www.w3.org/2002/07/owl#Class")
+    assert resolver.is_imported_namespace("http://schema.org/Person")
+    # http/https normalization
+    assert resolver.is_imported_namespace("https://schema.org/QuantitativeValue")
+    # Not in imports catalog
+    assert not resolver.is_imported_namespace("https://unknown.example.org/v1/Thing")

@@ -1,0 +1,21 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                        ['tests/data/scenario/invalid/fail11_object_value_for_literal.json']                                        =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/accuracyObjects                                                                =
+=    Error:            Validation of accuracyObjects failed!                                                                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail11_object_value_for_literal                                               =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasQuality                                                                     =
+=    Error:            Value does not conform to Shape scenario:QualityShape. See details for more information.                                      =
+======================================================================================================================================================

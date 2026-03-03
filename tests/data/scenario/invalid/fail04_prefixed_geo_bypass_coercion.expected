@@ -1,0 +1,69 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                      ['tests/data/scenario/invalid/fail04_prefixed_geo_bypass_coercion.json']                                      =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasBoundingBox                                                             =
+=    Error:            Validation of boundingBox failed!                                                                                             =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasGeodeticReferenceSystem                                                 =
+=    Error:            Value does not conform to Shape georeference:GeodeticReferenceSystemShape. See details for more information.                  =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasOrigin                                                                  =
+=    Error:            Validation of origin failed!                                                                                                  =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasProjectLocation                                                         =
+=    Error:            Value does not conform to Shape georeference:ProjectLocationShape. See details for more information.                          =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasViewPoint                                                               =
+=    Error:            Validation of view point failed!                                                                                              =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lat                                                                        =
+=    Error:            Validation of lat failed!                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lat                                                                        =
+=    Error:            Validation of lat failed!                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lon                                                                        =
+=    Error:            Validation of lon failed!                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lon                                                                        =
+=    Error:            Validation of lon failed!                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/xMax                                                                       =
+=    Error:            Validation of xMax failed!                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/xMin                                                                       =
+=    Error:            Validation of xMin failed!                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/yMax                                                                       =
+=    Error:            Validation of yMax failed!                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/yMin                                                                       =
+=    Error:            Validation of yMin failed!                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail04_prefixed_geo_bypass_coercion                                           =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasGeoreference                                                                =
+=    Error:            Value does not conform to Shape georeference:GeoreferenceShape. See details for more information.                             =
+======================================================================================================================================================

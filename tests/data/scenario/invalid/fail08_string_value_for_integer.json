@@ -11,7 +11,7 @@
          "schema": "https://schema.org/"
       }
    ],
-   "@id": "did:web:test.scenario.net:Scenario:test_valid_scenario_instance",
+   "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail08_string_value_for_integer",
    "@type": "scenario:Scenario",
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
@@ -79,7 +79,7 @@
       },
       "scenario:hasQuantity": {
          "@type": "scenario:Quantity",
-         "numberTrafficObjects": 1,
+         "numberTrafficObjects": "five",
          "temporaryTrafficObjects": 0,
          "permanentTrafficObjects": 1,
          "controllers": "SampleController1"
