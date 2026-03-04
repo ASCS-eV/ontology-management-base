@@ -1,0 +1,173 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "http://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_valid_openlabel-v2_instance",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@bmw.de",
+      "ownerName": "BMW AG",
+      "ownerURL": "https://www.bmw.com",
+      "scenarioCreatedDate": "2024-01-15T10:00:00",
+      "scenarioDefinition": "Scenario Definition Content",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "Highway merge scenario with rain",
+      "scenarioName": "Highway_Merge_Rain_v2",
+      "scenarioParentReference": "UUID-PARENT-1234",
+      "scenarioUniqueReference": "UUID-UNIQUE-5678",
+      "scenarioVersion": "2.0.0",
+      "scenarioVisualisationURL": "https://example.com/visualization.png"
+   },
+   "Behaviour": {
+      "@type": "Behaviour",
+      "BehaviourCommunication": {
+         "@id": "openlabel_v2:CommunicationSignalLeft"
+      },
+      "MotionAccelerate": true,
+      "motionAccelerateValue": 2.5,
+      "MotionDecelerate": false,
+      "MotionDrive": true,
+      "motionDriveValue": 50.0,
+      "MotionAway": false,
+      "MotionCross": false,
+      "MotionCutIn": false,
+      "MotionCutOut": false,
+      "MotionLaneChangeLeft": true,
+      "MotionLaneChangeRight": false,
+      "MotionOvertake": false,
+      "MotionReverse": false,
+      "MotionRun": false,
+      "MotionSlide": false,
+      "MotionStop": false,
+      "MotionTowards": false,
+      "MotionTurn": false,
+      "MotionTurnLeft": false,
+      "MotionTurnRight": false,
+      "MotionUTurn": false,
+      "MotionWalk": false
+   },
+   "Odd": {
+      "@type": "Odd",
+      "DrivableAreaEdge": {
+         "@id": "openlabel_v2:EdgeShoulderPavedOrGravel"
+      },
+      "DrivableAreaType": {
+         "@id": "openlabel_v2:MotorwayManaged"
+      },
+      "DrivableAreaSurfaceType": {
+         "@id": "openlabel_v2:SurfaceTypeUniform"
+      },
+      "DrivableAreaSurfaceCondition": {
+         "@id": "openlabel_v2:SurfaceConditionWet"
+      },
+      "GeometryTransverse": {
+         "@id": "openlabel_v2:TransverseDivided"
+      },
+      "LaneSpecificationDimensions": true,
+      "laneSpecificationDimensionsValue": 3.5,
+      "LaneSpecificationLaneCount": true,
+      "laneSpecificationLaneCountValue": 3,
+      "LaneSpecificationMarking": true,
+      "LaneSpecificationTravelDirection": {
+         "@id": "openlabel_v2:TravelDirectionRight"
+      },
+      "LaneSpecificationType": {
+         "@id": "openlabel_v2:LaneTypeTraffic"
+      },
+      "HorizontalStraights": true,
+      "HorizontalCurves": true,
+      "horizontalCurvesValue": 250.0,
+      "LongitudinalLevelPlane": false,
+      "LongitudinalDownSlope": true,
+      "longitudinalDownSlopeValue": 2.5,
+      "LongitudinalUpSlope": false,
+      "SceneryFixedStructure": {
+         "@id": "openlabel_v2:FixedStructureStreetlight"
+      },
+      "ScenerySpecialStructure": {
+         "@id": "openlabel_v2:SpecialStructureBridge"
+      },
+      "SceneryTemporaryStructure": {
+         "@id": "openlabel_v2:TemporaryStructureRoadWorks"
+      },
+      "SceneryZone": {
+         "@id": "openlabel_v2:ZoneTrafficManagement"
+      },
+      "JunctionIntersection": {
+         "@id": "openlabel_v2:IntersectionTJunction"
+      },
+      "JunctionRoundabout": {
+         "@id": "openlabel_v2:RoundaboutNormalSignal"
+      },
+      "SignsInformation": {
+         "@id": "openlabel_v2:InformationSignsUniformFullTime"
+      },
+      "SignsRegulatory": {
+         "@id": "openlabel_v2:RegulatorySignsUniformFullTime"
+      },
+      "SignsWarning": {
+         "@id": "openlabel_v2:WarningSignsUniform"
+      },
+      "ConnectivityCommunication": {
+         "@id": "openlabel_v2:V2vCellular"
+      },
+      "ConnectivityPositioning": {
+         "@id": "openlabel_v2:PositioningGps"
+      },
+      "IlluminationArtificial": {
+         "@id": "openlabel_v2:ArtificialStreetLighting"
+      },
+      "IlluminationLowLight": {
+         "@id": "openlabel_v2:LowLightNight"
+      },
+      "IlluminationCloudiness": true,
+      "illuminationCloudinessValue": 6.0,
+      "DaySunPosition": {
+         "@id": "openlabel_v2:SunPositionFront"
+      },
+      "DaySunElevation": true,
+      "daySunElevationValue": 45.0,
+      "WeatherRain": true,
+      "weatherRainValue": 5.2,
+      "WeatherSnow": false,
+      "WeatherWind": true,
+      "weatherWindValue": 12.5,
+      "RainType": {
+         "@id": "openlabel_v2:RainTypeDynamic"
+      },
+      "EnvironmentParticulates": {
+         "@id": "openlabel_v2:ParticulatesWater"
+      },
+      "particulatesWaterValue": 500.0,
+      "ParticulatesDust": false,
+      "ParticulatesMarine": false,
+      "ParticulatesPollution": false,
+      "ParticulatesVolcanic": false,
+      "SubjectVehicleSpeed": true,
+      "subjectVehicleSpeedValue": 80,
+      "TrafficAgentDensity": true,
+      "trafficAgentDensityValue": 15,
+      "TrafficFlowRate": true,
+      "trafficFlowRateValue": 1200,
+      "TrafficVolume": true,
+      "trafficVolumeValue": 5000,
+      "TrafficSpecialVehicle": false
+   },
+   "RoadUser": {
+      "@type": "RoadUser",
+      "RoadUserVehicle": {
+         "@id": "openlabel_v2:VehicleCar"
+      },
+      "RoadUserAnimal": false,
+      "RoadUserHuman": {
+         "@id": "openlabel_v2:HumanDriver"
+      },
+      "motionDriveValue": 50.0
+   }
+}

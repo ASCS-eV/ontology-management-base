@@ -31,12 +31,13 @@ except ImportError:  # pragma: no cover - fallback for older Pythons
 # Import RDFLib
 import rdflib
 from rdflib import OWL, RDF, URIRef
-from rdflib.namespace import RDFS, SKOS
+from rdflib.namespace import RDFS, SKOS, Namespace
 
-# Import from core
-from src.tools.core.constants import FAST_STORE
-from src.tools.core.logging import get_logger
-from src.tools.utils.file_collector import (
+PAV = Namespace("http://purl.org/pav/")
+
+from src.tools.core.constants import FAST_STORE  # noqa: E402
+from src.tools.core.logging import get_logger  # noqa: E402
+from src.tools.utils.file_collector import (  # noqa: E402
     collect_jsonld_files,
     collect_ontology_bundles,
     extract_jsonld_iris,
@@ -214,6 +215,11 @@ def extract_ontology_info(owl_file: Path) -> Dict[str, Optional[str]]:
         for obj in g.objects(URIRef(raw_iri), OWL.versionInfo):
             version_info = _normalize_version_info(str(obj))
             break
+
+        if not version_info:
+            for obj in g.objects(URIRef(raw_iri), PAV.version):
+                version_info = _normalize_version_info(str(obj))
+                break
 
         label = _extract_label_from_graph(g, raw_iri)
 
