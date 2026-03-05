@@ -1,6 +1,6 @@
-[submodule "service-characteristics"]
+[submodule "submodules/service-characteristics"]
 	path = submodules/service-characteristics
 	url = git@gitlab.com:ascs-ev/service-characteristics.git
-[submodule "w3id.org"]
+[submodule "submodules/w3id.org"]
 	path = submodules/w3id.org
 	url = git@github.com:ASCS-eV/w3id.org.git
