@@ -1,4 +1,4 @@
-@prefix leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/> .
+@prefix leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
 @prefix gx: <https://w3id.org/gaia-x/development#> .
@@ -8,9 +8,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/shapes>
+<https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/shapes>
     a owl:Ontology ;
-    owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2> .
+    owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3> .
 
 leakage-test:LeakageTestShape a sh:NodeShape ;
     sh:closed false ;

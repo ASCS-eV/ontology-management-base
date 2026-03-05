@@ -18,31 +18,31 @@ class Class_definition_for_ProcessParameter
 
 ### Class Hierarchy
 
-- Class definition for CodingDownholder (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingDownholder)
-- Class definition for CodingRFID (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingRFID)
-- Class definition for CodingTestAdapter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingTestAdapter)
-- Class definition for Content (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/Content)
-- Class definition for DomainSpecification (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/DomainSpecification)
-- Class definition for LeakageTest (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/LeakageTest)
-- Class definition for MachineParameter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MachineParameter)
-- Class definition for MaximumPressure (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MaximumPressure)
-- Class definition for MinimumPressure (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MinimumPressure)
-- Class definition for ProcessParameter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/ProcessParameter)
+- Class definition for CodingDownholder (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingDownholder)
+- Class definition for CodingRFID (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingRFID)
+- Class definition for CodingTestAdapter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingTestAdapter)
+- Class definition for Content (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/Content)
+- Class definition for DomainSpecification (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/DomainSpecification)
+- Class definition for LeakageTest (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/LeakageTest)
+- Class definition for MachineParameter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MachineParameter)
+- Class definition for MaximumPressure (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MaximumPressure)
+- Class definition for MinimumPressure (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MinimumPressure)
+- Class definition for ProcessParameter (https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/ProcessParameter)
 
 ### Class Definitions
 
 |Class|IRI|Description|Parents|
 |---|---|---|---|
-|Class definition for CodingDownholder|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingDownholder|Attributes for coding downholder of a leakage test.||
-|Class definition for CodingRFID|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingRFID|Attributes for coding RFID of a leakage test.||
-|Class definition for CodingTestAdapter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/CodingTestAdapter|Attributes for coding test adapter of a leakage test.||
-|Class definition for Content|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/Content|Describes the content properties of a leakage test (machine and process parameters).|Content|
-|Class definition for DomainSpecification|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/DomainSpecification|Domain-specific metadata extension for leakage test assets.|DomainSpecification|
-|Class definition for LeakageTest|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/LeakageTest|Describes a leakage test.|CodeAsset|
-|Class definition for MachineParameter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MachineParameter|Attributes for machine parameter of a leakage test.||
-|Class definition for MaximumPressure|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MaximumPressure|Attributes for maximum pressure of a leakage test.||
-|Class definition for MinimumPressure|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/MinimumPressure|Attributes for minimum pressure of a leakage test.||
-|Class definition for ProcessParameter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/ProcessParameter|Attributes for process parameter of a leakage test.||
+|Class definition for CodingDownholder|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingDownholder|Attributes for coding downholder of a leakage test.||
+|Class definition for CodingRFID|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingRFID|Attributes for coding RFID of a leakage test.||
+|Class definition for CodingTestAdapter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/CodingTestAdapter|Attributes for coding test adapter of a leakage test.||
+|Class definition for Content|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/Content|Describes the content properties of a leakage test (machine and process parameters).|Content|
+|Class definition for DomainSpecification|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/DomainSpecification|Domain-specific metadata extension for leakage test assets.|DomainSpecification|
+|Class definition for LeakageTest|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/LeakageTest|Describes a leakage test.|CodeAsset|
+|Class definition for MachineParameter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MachineParameter|Attributes for machine parameter of a leakage test.||
+|Class definition for MaximumPressure|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MaximumPressure|Attributes for maximum pressure of a leakage test.||
+|Class definition for MinimumPressure|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/MinimumPressure|Attributes for minimum pressure of a leakage test.||
+|Class definition for ProcessParameter|https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/ProcessParameter|Attributes for process parameter of a leakage test.||
 
 ## Prefixes
 
@@ -58,7 +58,7 @@ class Class_definition_for_ProcessParameter
 - foaf: <http://xmlns.com/foaf/0.1/>
 - geo: <http://www.opengis.net/ont/geosparql#>
 - gx: <https://w3id.org/gaia-x/development#>
-- leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/>
+- leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/>
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
 - odrl: <http://www.w3.org/ns/odrl/2/>
 - org: <http://www.w3.org/ns/org#>
@@ -82,39 +82,39 @@ class Class_definition_for_ProcessParameter
 
 ### SHACL Properties
 
-#### leakage-test:codingDownholder {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingdownholder .property-anchor }
-#### leakage-test:codingRFID {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingrfid .property-anchor }
-#### leakage-test:codingTestAdapter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingtestadapter .property-anchor }
-#### leakage-test:hasCodeArtifact {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hascodeartifact .property-anchor }
-#### leakage-test:hasContent {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hascontent .property-anchor }
-#### leakage-test:hasDomainSpecification {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hasdomainspecification .property-anchor }
-#### leakage-test:hasManifest {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hasmanifest .property-anchor }
-#### leakage-test:lowerTolerance {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-lowertolerance .property-anchor }
-#### leakage-test:machineParameter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-machineparameter .property-anchor }
-#### leakage-test:maximumPressure {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-maximumpressure .property-anchor }
-#### leakage-test:minimumPressure {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-minimumpressure .property-anchor }
-#### leakage-test:processParameter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-processparameter .property-anchor }
-#### leakage-test:setpoint {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-setpoint .property-anchor }
-#### leakage-test:unit {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-unit .property-anchor }
-#### leakage-test:upperTolerance {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-uppertolerance .property-anchor }
+#### leakage-test:codingDownholder {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingdownholder .property-anchor }
+#### leakage-test:codingRFID {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingrfid .property-anchor }
+#### leakage-test:codingTestAdapter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingtestadapter .property-anchor }
+#### leakage-test:hasCodeArtifact {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hascodeartifact .property-anchor }
+#### leakage-test:hasContent {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hascontent .property-anchor }
+#### leakage-test:hasDomainSpecification {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hasdomainspecification .property-anchor }
+#### leakage-test:hasManifest {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hasmanifest .property-anchor }
+#### leakage-test:lowerTolerance {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-lowertolerance .property-anchor }
+#### leakage-test:machineParameter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-machineparameter .property-anchor }
+#### leakage-test:maximumPressure {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-maximumpressure .property-anchor }
+#### leakage-test:minimumPressure {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-minimumpressure .property-anchor }
+#### leakage-test:processParameter {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-processparameter .property-anchor }
+#### leakage-test:setpoint {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-setpoint .property-anchor }
+#### leakage-test:unit {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-unit .property-anchor }
+#### leakage-test:upperTolerance {: #prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-uppertolerance .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
-|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hascodeartifact"></a>hasCodeArtifact|1|1|||leakage-test.shacl.ttl|
-|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hasdomainspecification"></a>hasDomainSpecification|1|1|||leakage-test.shacl.ttl|
-|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hasmanifest"></a>hasManifest|1|1|||leakage-test.shacl.ttl|
-|DomainSpecificationShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-hascontent"></a>hasContent|1|1|||leakage-test.shacl.ttl|
-|ContentShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-machineparameter"></a>machineParameter|1|1|||leakage-test.shacl.ttl|
-|ContentShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-processparameter"></a>processParameter|1|1|||leakage-test.shacl.ttl|
-|MachineParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-maximumpressure"></a>maximumPressure|1|1|||leakage-test.shacl.ttl|
-|MachineParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-minimumpressure"></a>minimumPressure|1|1|||leakage-test.shacl.ttl|
-|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingdownholder"></a>codingDownholder|1|1|||leakage-test.shacl.ttl|
-|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingtestadapter"></a>codingTestAdapter|1|1|||leakage-test.shacl.ttl|
-|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-codingrfid"></a>codingRFID|1|1|||leakage-test.shacl.ttl|
-|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-unit"></a>unit|1|1||<http://www.w3.org/2001/XMLSchema#string>|leakage-test.shacl.ttl|
-|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-uppertolerance"></a>upperTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
-|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-setpoint"></a>setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
-|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v2-lowertolerance"></a>lowerTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
+|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hascodeartifact"></a>hasCodeArtifact|1|1|||leakage-test.shacl.ttl|
+|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hasdomainspecification"></a>hasDomainSpecification|1|1|||leakage-test.shacl.ttl|
+|LeakageTestShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hasmanifest"></a>hasManifest|1|1|||leakage-test.shacl.ttl|
+|DomainSpecificationShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-hascontent"></a>hasContent|1|1|||leakage-test.shacl.ttl|
+|ContentShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-machineparameter"></a>machineParameter|1|1|||leakage-test.shacl.ttl|
+|ContentShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-processparameter"></a>processParameter|1|1|||leakage-test.shacl.ttl|
+|MachineParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-maximumpressure"></a>maximumPressure|1|1|||leakage-test.shacl.ttl|
+|MachineParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-minimumpressure"></a>minimumPressure|1|1|||leakage-test.shacl.ttl|
+|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingdownholder"></a>codingDownholder|1|1|||leakage-test.shacl.ttl|
+|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingtestadapter"></a>codingTestAdapter|1|1|||leakage-test.shacl.ttl|
+|ProcessParameterShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-codingrfid"></a>codingRFID|1|1|||leakage-test.shacl.ttl|
+|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-unit"></a>unit|1|1||<http://www.w3.org/2001/XMLSchema#string>|leakage-test.shacl.ttl|
+|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-uppertolerance"></a>upperTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
+|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-setpoint"></a>setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
+|MaximumPressureShape|leakage-test|<a id="prop-https---w3id-org-gaia-x4plcaad-ontologies-leakage-test-v3-lowertolerance"></a>lowerTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
 |MinimumPressureShape|leakage-test|unit|1|1||<http://www.w3.org/2001/XMLSchema#string>|leakage-test.shacl.ttl|
 |MinimumPressureShape|leakage-test|upperTolerance|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|
 |MinimumPressureShape|leakage-test|setpoint|1|1||<http://www.w3.org/2001/XMLSchema#float>|leakage-test.shacl.ttl|

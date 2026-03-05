@@ -1,6 +1,6 @@
 {
    "@context": [
-      "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+      "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {

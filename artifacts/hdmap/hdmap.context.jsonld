@@ -14,7 +14,7 @@
       "owl": "http://www.w3.org/2002/07/owl#",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+      "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
       "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       "accuracyLaneModel2d": {

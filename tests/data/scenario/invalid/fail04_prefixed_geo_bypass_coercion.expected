@@ -60,10 +60,10 @@
 =    Error:            Validation of yMin failed!                                                                                                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail04_prefixed_geo_bypass_coercion                                           =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasDomainSpecification                                                         =
 =    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasGeoreference                                                                =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasGeoreference                                                                =
 =    Error:            Value does not conform to Shape georeference:GeoreferenceShape. See details for more information.                             =
 ======================================================================================================================================================
