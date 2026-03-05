@@ -8,14 +8,14 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/accuracyObjects                                                                =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/accuracyObjects                                                                =
 =    Error:            Validation of accuracyObjects failed!                                                                                         =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail11_object_value_for_literal                                               =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasDomainSpecification                                                         =
 =    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasQuality                                                                     =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasQuality                                                                     =
 =    Error:            Value does not conform to Shape scenario:QualityShape. See details for more information.                                      =
 ======================================================================================================================================================

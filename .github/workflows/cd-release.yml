@@ -17,6 +17,8 @@ jobs:
   release:
     name: 📦 Create Release
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     permissions:
       contents: write
 
@@ -92,7 +94,11 @@ jobs:
     needs: release
     uses: ./.github/workflows/cd-docs.yml
     with:
-      ref: main
+      # Build w3id artifacts from the immutable release tag, not main.
+      # This ensures versioned IRIs (e.g. /manifest/v5/shapes) serve
+      # exactly the content that was tagged, not unreleased main changes.
+      ref: ${{ needs.release.outputs.tag }}
+      build_w3id: true
     permissions:
       contents: read
       pages: write

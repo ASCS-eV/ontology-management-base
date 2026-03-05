@@ -1,4 +1,4 @@
-@prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v5/> .
+@prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/> .
 @prefix environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/> .
 @prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v5/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
@@ -13,10 +13,10 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 # The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/scenario/v5/shapes>
+<https://w3id.org/ascs-ev/envited-x/scenario/v6/shapes>
     a owl:Ontology ;
     # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/scenario/v5> .
+    owl:imports <https://w3id.org/ascs-ev/envited-x/scenario/v6> .
 
 ### Scenario SHACL Shape
 scenario:ScenarioShape a sh:NodeShape ;

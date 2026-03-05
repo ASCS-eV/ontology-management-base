@@ -69,25 +69,27 @@ logger = get_logger(__name__)
 
 SH = Namespace("http://www.w3.org/ns/shacl#")
 
-# Default mapping: XSD enum type name -> (SHACL namespace, property local name)
+# Default mapping: XSD enum type name -> (SHACL prefix name, property local name)
 # Only enums that have a direct 1:1 value mapping are included.
+# The shacl_prefix_name corresponds to the @prefix declared in the SHACL file
+# (e.g. "hdmap" resolves to whatever versioned IRI hdmap: is bound to).
 HDMAP_ENUM_MAPPINGS: list[dict[str, str]] = [
     {
         "xsd_enum": "e_roadType",
         "shacl_property": "roadTypes",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+        "shacl_prefix_name": "hdmap",
         "description": "Road types (OpenDRIVE -> hdmap:roadTypes)",
     },
     {
         "xsd_enum": "e_laneType",
         "shacl_property": "laneTypes",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+        "shacl_prefix_name": "hdmap",
         "description": "Lane types (OpenDRIVE -> hdmap:laneTypes)",
     },
     {
         "xsd_enum": "e_objectType",
         "shacl_property": "levelOfDetail",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+        "shacl_prefix_name": "hdmap",
         "description": "Object types / level of detail (OpenDRIVE -> hdmap:levelOfDetail)",
     },
 ]
@@ -96,19 +98,19 @@ SCENARIO_ENUM_MAPPINGS: list[dict[str, str]] = [
     {
         "xsd_enum": "VehicleCategory",
         "shacl_property": "entityTypes",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "shacl_prefix_name": "scenario",
         "description": "Vehicle categories (OpenSCENARIO -> scenario:entityTypes)",
     },
     {
         "xsd_enum": "PedestrianCategory",
         "shacl_property": "entityTypes",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "shacl_prefix_name": "scenario",
         "description": "Pedestrian categories (OpenSCENARIO -> scenario:entityTypes)",
     },
     {
         "xsd_enum": "MiscObjectCategory",
         "shacl_property": "entityTypes",
-        "shacl_prefix": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+        "shacl_prefix_name": "scenario",
         "description": "Misc object categories (OpenSCENARIO -> scenario:entityTypes)",
     },
 ]
@@ -180,6 +182,22 @@ class SyncReport:
         print(f"{'=' * 70}\n")
 
 
+def _resolve_prefix(graph: Graph, prefix_name: str) -> str | None:
+    """Resolve a prefix name to its namespace IRI from a parsed graph.
+
+    Args:
+        graph: Parsed RDF graph with namespace bindings.
+        prefix_name: Short prefix name (e.g. "hdmap", "scenario").
+
+    Returns:
+        Namespace IRI string, or None if not found.
+    """
+    for pfx, ns in graph.namespaces():
+        if pfx == prefix_name:
+            return str(ns)
+    return None
+
+
 def extract_shacl_enums(
     shacl_path: Path,
     mappings: list[dict[str, str]] | None = None,
@@ -188,7 +206,8 @@ def extract_shacl_enums(
 
     Args:
         shacl_path: Path to the .shacl.ttl file.
-        mappings: List of mapping dicts with 'shacl_property' and 'shacl_prefix'.
+        mappings: List of mapping dicts with 'shacl_property' and either
+                  'shacl_prefix_name' (resolved from graph) or 'shacl_prefix' (full IRI).
 
     Returns:
         Dictionary mapping property local names to sets of string values.
@@ -199,11 +218,27 @@ def extract_shacl_enums(
     g = Graph()
     g.parse(shacl_path, format="turtle")
 
+    # Build a cache of resolved prefix names
+    prefix_cache: dict[str, str] = {}
+
     result: dict[str, set[str]] = {}
 
     for mapping in mappings:
         prop_name = mapping["shacl_property"]
-        prop_uri = mapping["shacl_prefix"] + prop_name
+
+        # Resolve prefix: prefer dynamic lookup via shacl_prefix_name,
+        # fall back to explicit shacl_prefix for backward compatibility
+        if "shacl_prefix_name" in mapping:
+            pfx_name = mapping["shacl_prefix_name"]
+            if pfx_name not in prefix_cache:
+                resolved = _resolve_prefix(g, pfx_name)
+                if resolved is None:
+                    logger.warning("Prefix '%s' not found in %s", pfx_name, shacl_path)
+                    continue
+                prefix_cache[pfx_name] = resolved
+            prop_uri = prefix_cache[pfx_name] + prop_name
+        else:
+            prop_uri = mapping["shacl_prefix"] + prop_name
 
         # Find property shapes that use this sh:path
         query = (

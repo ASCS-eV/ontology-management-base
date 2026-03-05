@@ -4,7 +4,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       "https://openlabel.asam.net/V1-0-0/ontologies/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+      "https://w3id.org/ascs-ev/envited-x/scenario/v6/",
       {
          "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
          "gx": "https://w3id.org/gaia-x/development#",
@@ -132,7 +132,7 @@
       "conformsTo": [
          "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
          "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-         "https://w3id.org/ascs-ev/envited-x/scenario/v5/"
+         "https://w3id.org/ascs-ev/envited-x/scenario/v6/"
       ],
       "hasAccessRole": {
          "@type": "manifest:AccessRole",

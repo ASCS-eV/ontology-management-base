@@ -10,8 +10,19 @@ on:
       - 'mkdocs.yml'
       - '.github/workflows/cd-docs.yml'
 
-  # 1. Allows manual runs
+  # 1. Allows manual runs (use to republish w3id artifacts from a specific tag)
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to checkout (tag, branch, or SHA). Leave empty for default branch."
+        required: false
+        type: string
+        default: ''
+      build_w3id:
+        description: "Build versioned W3ID artifacts (only true for releases)"
+        required: false
+        type: boolean
+        default: false
 
   # 2. Allows being called from release workflow
   workflow_call:
@@ -21,6 +32,11 @@ on:
         required: false
         type: string
         default: ''
+      build_w3id:
+        description: "Build versioned W3ID artifacts (only true for releases)"
+        required: false
+        type: boolean
+        default: false
 
 # Sets permissions of the GITHUB_TOKEN
 permissions:
@@ -74,8 +90,10 @@ jobs:
             mkdir -p site
             cp -r docs/* site/
           fi
+          touch site/.nojekyll
 
       - name: Build W3ID artifacts
+        if: ${{ inputs.build_w3id }}
         run: |
           python3 - <<'PY'
           from __future__ import annotations
@@ -93,7 +111,6 @@ jobs:
           W3ID_DIR = SITE_DIR / "w3id"
 
           W3ID_DIR.mkdir(parents=True, exist_ok=True)
-          (SITE_DIR / ".nojekyll").write_text("")
 
           def w3id_path(version_iri: str) -> str | None:
             parsed = urlparse(version_iri)
@@ -164,8 +181,11 @@ jobs:
       - name: Preserve W3ID artifacts
         run: |
           if [ -d gh-pages/w3id ]; then
-            # Preserve previously-published versions that are not in the fresh build.
-            # Fresh build takes precedence (don't overwrite with stale artifacts).
+            # Restore all previously-published W3ID artifacts from gh-pages.
+            # During releases (build_w3id=true): fresh build takes precedence
+            # for the newly released version; old versions are preserved.
+            # During main pushes (build_w3id=false): no fresh w3id artifacts
+            # exist, so everything is restored from gh-pages unchanged.
             find gh-pages/w3id -type f | while read -r src; do
               rel="${src#gh-pages/w3id/}"
               dest="site/w3id/$rel"
