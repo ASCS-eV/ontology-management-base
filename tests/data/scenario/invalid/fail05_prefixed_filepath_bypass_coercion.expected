@@ -21,6 +21,6 @@
 =    Error:            Value does not conform to Shape manifest:FileMetadataShape. See details for more information.                                 =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail05_prefixed_filepath_bypass_coercion                                      =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasManifest                                                                    =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasManifest                                                                    =
 =    Error:            Each Scenario must have exactly one manifest (Inline or Linked).                                                              =
 ======================================================================================================================================================

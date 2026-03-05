@@ -1,6 +1,6 @@
 {
    "@context": [
-      "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2/",
+      "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {

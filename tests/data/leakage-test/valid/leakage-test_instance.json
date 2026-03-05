@@ -1,6 +1,6 @@
 {
    "@context": [
-      "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2/",
+      "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {

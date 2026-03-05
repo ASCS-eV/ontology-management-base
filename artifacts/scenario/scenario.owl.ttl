@@ -1,4 +1,4 @@
-@prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v5/> .
+@prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/> .
 @prefix openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/> .
 @prefix environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/> .
 @prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v5/> .
@@ -14,7 +14,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix gx: <https://w3id.org/gaia-x/development#> .
 
-<https://w3id.org/ascs-ev/envited-x/scenario/v5> a owl:Ontology ;
+<https://w3id.org/ascs-ev/envited-x/scenario/v6> a owl:Ontology ;
     rdfs:label "Ontology definition for scenario"@en ;
     rdfs:comment "An ontology with common classes to describe a scenario asset."@en ;
 
@@ -44,18 +44,19 @@
     dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 
     # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.3> ;
 
     # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/scenario/v5> ;
-    owl:versionInfo "v5" ;
+    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/scenario/v6> ;
+    owl:versionInfo "v6" ;
+    owl:priorVersion <https://w3id.org/ascs-ev/envited-x/scenario/v5> ;
 
     # Imports strict dependencies
     owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
                 <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
 
     # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/scenario/v5/shapes> ;
+    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/scenario/v6/shapes> ;
 
     # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies/specifications
     dcterms:references <https://www.asam.net/standards/detail/openscenario/> ;

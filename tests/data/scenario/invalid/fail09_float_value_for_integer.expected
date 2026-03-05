@@ -8,14 +8,14 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail09_float_value_for_integer                                                =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasDomainSpecification                                                         =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasDomainSpecification                                                         =
 =    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/hasQuantity                                                                    =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasQuantity                                                                    =
 =    Error:            Value does not conform to Shape scenario:QuantityShape. See details for more information.                                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v5/numberTrafficObjects                                                           =
+=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/numberTrafficObjects                                                           =
 =    Error:            Validation of numberTrafficObjects failed!                                                                                    =
 ======================================================================================================================================================

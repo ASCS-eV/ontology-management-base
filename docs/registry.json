@@ -150,13 +150,13 @@
       },
       "hdmap": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v5",
-         "latest": "v5",
+         "iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6",
+         "latest": "v6",
          "versions": {
-            "v5": {
+            "v6": {
                "releaseTag": "v0.1.3",
-               "versionInfo": "v5",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/hdmap/v5",
+               "versionInfo": "v6",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6",
                "files": {
                   "ontology": "artifacts/hdmap/hdmap.owl.ttl",
                   "shacl": [
@@ -171,13 +171,13 @@
       },
       "leakage-test": {
          "namespace": "gaia-x4plcaad",
-         "iri": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2",
-         "latest": "v2",
+         "iri": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3",
+         "latest": "v3",
          "versions": {
-            "v2": {
+            "v3": {
                "releaseTag": "v0.1.3",
-               "versionInfo": "v2",
-               "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v2",
+               "versionInfo": "v3",
+               "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3",
                "files": {
                   "ontology": "artifacts/leakage-test/leakage-test.owl.ttl",
                   "shacl": [
@@ -255,13 +255,13 @@
       },
       "scenario": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/scenario/v5",
-         "latest": "v5",
+         "iri": "https://w3id.org/ascs-ev/envited-x/scenario/v6",
+         "latest": "v6",
          "versions": {
-            "v5": {
+            "v6": {
                "releaseTag": "v0.1.3",
-               "versionInfo": "v5",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/scenario/v5",
+               "versionInfo": "v6",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/scenario/v6",
                "files": {
                   "ontology": "artifacts/scenario/scenario.owl.ttl",
                   "shacl": [
@@ -318,13 +318,13 @@
       },
       "simulation-model": {
          "namespace": "gaia-x4plcaad",
-         "iri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2",
-         "latest": "v2",
+         "iri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3",
+         "latest": "v3",
          "versions": {
-            "v2": {
+            "v3": {
                "releaseTag": "v0.1.3",
-               "versionInfo": "v2",
-               "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2",
+               "versionInfo": "v3",
+               "versionIri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3",
                "files": {
                   "ontology": "artifacts/simulation-model/simulation-model.owl.ttl",
                   "shacl": [

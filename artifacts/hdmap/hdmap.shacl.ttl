@@ -1,4 +1,4 @@
-@prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v5/> .
+@prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
 @prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
@@ -10,10 +10,10 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 # The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/hdmap/v5/shapes>
+<https://w3id.org/ascs-ev/envited-x/hdmap/v6/shapes>
     a owl:Ontology ;
     # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/hdmap/v5> .
+    owl:imports <https://w3id.org/ascs-ev/envited-x/hdmap/v6> .
 
 hdmap:HdMapShape a sh:NodeShape ;
     sh:closed false ;

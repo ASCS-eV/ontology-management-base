@@ -1,6 +1,6 @@
 {
    "@context": {
-      "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v5/",
+      "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v6/",
       "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       "gx": "https://w3id.org/gaia-x/development#",
@@ -127,7 +127,7 @@
                "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
             },
             {
-               "@id": "https://w3id.org/ascs-ev/envited-x/scenario/v5/"
+               "@id": "https://w3id.org/ascs-ev/envited-x/scenario/v6/"
             }
          ],
          "manifest:hasAccessRole": {
