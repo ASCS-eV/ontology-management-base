@@ -9,40 +9,16 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-openlabel_v2:QuantitativeValue a owl:Class ;
-    rdfs:label "QuantitativeValue" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:minValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:maxValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:maxValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty openlabel_v2:maxValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:minValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty openlabel_v2:minValue ] ;
-    skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
-    skos:exactMatch schema1:QuantitativeValue ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
 openlabel_v2:Scenario a owl:Class ;
     rdfs:label "Scenario" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:Tag ;
+            owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:hasTag ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:hasTag ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:allValuesFrom openlabel_v2:Tag ;
             owl:onProperty openlabel_v2:hasTag ] ;
     skos:definition "A scenario that can be tagged with OpenLABEL tags." ;
     skos:exactMatch openlabel_v2:Scenario ;
@@ -933,11 +909,17 @@ openlabel_v2:SubjectVehicleSpeed a owl:DatatypeProperty ;
 openlabel_v2:Tag a owl:Class ;
     rdfs:label "Tag" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:Odd ],
-        [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:Behaviour ;
             owl:onProperty openlabel_v2:Behaviour ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:Behaviour ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUser ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:AdminTag ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:Behaviour ],
@@ -945,29 +927,23 @@ openlabel_v2:Tag a owl:Class ;
             owl:allValuesFrom openlabel_v2:RoadUser ;
             owl:onProperty openlabel_v2:RoadUser ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:Behaviour ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:RoadUser ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:RoadUser ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:AdminTag ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:AdminTag ;
             owl:onProperty openlabel_v2:AdminTag ],
         [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:Odd ;
             owl:onProperty openlabel_v2:Odd ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:AdminTag ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUser ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:Odd ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:Odd ] ;
+            owl:onProperty openlabel_v2:Odd ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:AdminTag ;
+            owl:onProperty openlabel_v2:AdminTag ] ;
     skos:definition "The base tag." ;
     skos:exactMatch openlabel_v2:Tag ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -1040,16 +1016,16 @@ openlabel_v2:illuminationCloudinessValue a owl:DatatypeProperty ;
 
 openlabel_v2:laneSpecificationDimensionsValue a owl:DatatypeProperty ;
     rdfs:label "laneSpecificationDimensionsValue" ;
-    rdfs:range xsd:decimal ;
+    rdfs:range [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:laneSpecificationLaneCountValue a owl:DatatypeProperty ;
     rdfs:label "laneSpecificationLaneCountValue" ;
-    rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                        owl:onDatatype xsd:integer ;
-                        owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+    rdfs:range [ owl:unionOf ( [ a rdfs:Datatype ;
+                        owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                    owl:onDatatype xsd:integer ;
+                                    owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
@@ -1085,13 +1061,13 @@ openlabel_v2:minValue a owl:DatatypeProperty ;
 
 openlabel_v2:motionAccelerateValue a owl:DatatypeProperty ;
     rdfs:label "motionAccelerateValue" ;
-    rdfs:range xsd:decimal ;
+    rdfs:range [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Rate of acceleration (ms-2)." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:motionDecelerateValue a owl:DatatypeProperty ;
     rdfs:label "motionDecelerateValue" ;
-    rdfs:range xsd:decimal ;
+    rdfs:range [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Rate of deceleration (ms-2)." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
@@ -1175,10 +1151,10 @@ openlabel_v2:scenarioVisualisationURL a owl:DatatypeProperty ;
 
 openlabel_v2:subjectVehicleSpeedValue a owl:DatatypeProperty ;
     rdfs:label "subjectVehicleSpeedValue" ;
-    rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                        owl:onDatatype xsd:integer ;
-                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    rdfs:range [ owl:unionOf ( [ a rdfs:Datatype ;
+                        owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                    owl:onDatatype xsd:integer ;
+                                    owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
@@ -1268,119 +1244,119 @@ openlabel_v2:AdminTag a owl:Class,
     rdfs:label "AdminTag" ;
     rdfs:range openlabel_v2:AdminTag ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioVersion ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioName ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioCreatedDate ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioDefinition ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioDescription ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:scenarioName ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ownerURL ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioParentReference ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioName ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ownerEmail ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioParentReference ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:ownerEmail ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioName ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioUniqueReference ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioVersion ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:ownerName ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioUniqueReference ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:licenseURI ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ownerName ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioDefinition ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ownerEmail ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:licenseURI ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioDescription ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:scenarioCreatedDate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:ownerURL ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioDefinition ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioParentReference ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:dateTime ;
             owl:onProperty openlabel_v2:scenarioCreatedDate ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ownerName ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty openlabel_v2:scenarioVersion ],
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioCreatedDate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:scenarioUniqueReference ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:licenseURI ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioCreatedDate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:licenseURI ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioUniqueReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:licenseURI ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDescription ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioUniqueReference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDescription ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:scenarioDescription ] ;
@@ -1395,217 +1371,217 @@ openlabel_v2:Behaviour a owl:Class,
     rdfs:range openlabel_v2:Behaviour ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionSlide ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionRun ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionStop ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionOvertake ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:motionAccelerateValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionCutOut ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionCutIn ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionTurnLeft ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionSlide ],
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionDrive ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionAccelerate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionRun ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionUTurn ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionReverse ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionTurn ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionAway ],
+            owl:onProperty openlabel_v2:MotionWalk ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionCross ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionUTurn ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionSlide ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionAccelerate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionStop ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionTurnLeft ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:motionAccelerateValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:motionDecelerateValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionAway ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionStop ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionTurnRight ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionReverse ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionTowards ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionOvertake ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionAccelerate ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionTurnRight ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionCutOut ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:motionDecelerateValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionAway ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:motionAccelerateValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionDecelerate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionReverse ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionTurn ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionTowards ],
+            owl:onProperty openlabel_v2:MotionAccelerate ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionCutIn ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionCross ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionDrive ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionWalk ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionStop ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionDecelerate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCross ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionRun ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionDecelerate ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionDrive ],
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCutOut ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:BehaviourCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionAccelerate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionStop ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionWalk ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionUTurn ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionTurn ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:motionDecelerateValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionCutOut ],
+            owl:onProperty openlabel_v2:MotionDecelerate ],
         [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:BehaviourCommunication ;
             owl:onProperty openlabel_v2:BehaviourCommunication ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionCutOut ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCutIn ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionStop ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionCutIn ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionTurnLeft ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:BehaviourCommunication ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionTowards ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionTurnRight ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionWalk ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionCross ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionDrive ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:MotionRun ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:MotionCross ],
+            owl:allValuesFrom [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:MotionWalk ] ;
+            owl:onProperty openlabel_v2:MotionCutOut ] ;
     skos:definition "An activity performed by a road user.",
         "Behaviour tag." ;
     skos:exactMatch openlabel_v2:Behaviour ;
@@ -1616,254 +1592,107 @@ openlabel_v2:Odd a owl:Class,
     rdfs:label "Odd" ;
     rdfs:range openlabel_v2:Odd ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DrivableAreaType ;
-            owl:onProperty openlabel_v2:DrivableAreaType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:WeatherSnow ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceFeature ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:WeatherRain ],
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:SignsRegulatory ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:HorizontalStraights ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:trafficVolumeValue ],
+            owl:onProperty openlabel_v2:DrivableAreaType ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:weatherWindValue ],
+            owl:onProperty openlabel_v2:ParticulatesDust ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:EnvironmentParticulates ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:IlluminationLowLight ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:JunctionIntersection ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:EnvironmentParticulates ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:trafficVolumeValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:HorizontalCurves ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:particulatesWaterValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SignsRegulatory ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SignsInformation ;
-            owl:onProperty openlabel_v2:SignsInformation ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:daySunElevationValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:HorizontalStraights ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ParticulatesDust ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:trafficVolumeValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DrivableAreaEdge ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:weatherSnowValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:WeatherWind ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:IlluminationLowLight ],
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:WeatherRain ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:IlluminationCloudiness ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:HorizontalCurves ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:ConnectivityCommunication ;
-            owl:onProperty openlabel_v2:ConnectivityCommunication ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:GeometryTransverse ;
-            owl:onProperty openlabel_v2:GeometryTransverse ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DrivableAreaType ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ParticulatesPollution ],
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ParticulatesDust ],
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:daySunElevationValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SceneryTemporaryStructure ;
-            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:IlluminationLowLight ],
+            owl:allValuesFrom openlabel_v2:RainType ;
+            owl:onProperty openlabel_v2:RainType ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:GeometryTransverse ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:GeometryTransverse ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ConnectivityCommunication ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceCondition ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:JunctionIntersection ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+            owl:onProperty openlabel_v2:WeatherSnow ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:SignsWarning ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
         [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SceneryFixedStructure ;
-            owl:onProperty openlabel_v2:SceneryFixedStructure ],
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:HorizontalCurves ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:ScenerySpecialStructure ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:TrafficFlowRate ],
+            owl:onProperty openlabel_v2:JunctionIntersection ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:IlluminationArtificial ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:ParticulatesPollution ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:TrafficFlowRate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DaySunElevation ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:weatherWindValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DaySunElevation ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:WeatherWind ],
+            owl:onProperty openlabel_v2:TrafficVolume ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:weatherWindValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceType ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DrivableAreaType ],
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+            owl:onProperty openlabel_v2:SignsInformation ],
         [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
@@ -1871,308 +1700,455 @@ openlabel_v2:Odd a owl:Class,
                                 owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
             owl:onProperty openlabel_v2:trafficFlowRateValue ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ConnectivityCommunication ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:SignsInformation ],
-        [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:TrafficAgentDensity ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:JunctionRoundabout ;
-            owl:onProperty openlabel_v2:JunctionRoundabout ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:ParticulatesPollution ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:WeatherWind ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:particulatesWaterValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:weatherRainValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:RainType ;
-            owl:onProperty openlabel_v2:RainType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:TrafficVolume ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:SceneryFixedStructure ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:ScenerySpecialStructure ;
-            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SignsWarning ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ParticulatesMarine ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:trafficFlowRateValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:ParticulatesMarine ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:JunctionRoundabout ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:ParticulatesDust ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SceneryZone ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:JunctionIntersection ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SignsRegulatory ;
-            owl:onProperty openlabel_v2:SignsRegulatory ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LaneSpecificationType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:IlluminationCloudiness ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:JunctionRoundabout ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:IlluminationArtificial ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SceneryZone ;
-            owl:onProperty openlabel_v2:SceneryZone ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DrivableAreaEdge ;
-            owl:onProperty openlabel_v2:DrivableAreaEdge ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:ParticulatesMarine ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:WeatherSnow ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:TrafficAgentDensity ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:weatherSnowValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:SignsWarning ;
-            owl:onProperty openlabel_v2:SignsWarning ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:horizontalCurvesValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:trafficFlowRateValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:TrafficVolume ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:LaneSpecificationTravelDirection ;
-            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:horizontalCurvesValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:particulatesWaterValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DaySunPosition ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:LaneSpecificationType ;
-            owl:onProperty openlabel_v2:LaneSpecificationType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:horizontalCurvesValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:ConnectivityPositioning ;
-            owl:onProperty openlabel_v2:ConnectivityPositioning ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:TrafficFlowRate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:HorizontalStraights ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:daySunElevationValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:JunctionIntersection ;
-            owl:onProperty openlabel_v2:JunctionIntersection ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:ConnectivityPositioning ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:weatherRainValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:DaySunPosition ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
         [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:IlluminationArtificial ;
             owl:onProperty openlabel_v2:IlluminationArtificial ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:SceneryFixedStructure ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesDust ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:weatherRainValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:IlluminationLowLight ;
-            owl:onProperty openlabel_v2:IlluminationLowLight ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:WeatherSnow ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:IlluminationCloudiness ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:EnvironmentParticulates ;
-            owl:onProperty openlabel_v2:EnvironmentParticulates ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom openlabel_v2:DaySunPosition ;
-            owl:onProperty openlabel_v2:DaySunPosition ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:DaySunElevation ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:SceneryZone ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:RainType ],
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:WeatherRain ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:RainType ],
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:allValuesFrom openlabel_v2:EnvironmentParticulates ;
             owl:onProperty openlabel_v2:EnvironmentParticulates ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DaySunPosition ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RainType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:TrafficVolume ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+            owl:allValuesFrom openlabel_v2:SignsRegulatory ;
+            owl:onProperty openlabel_v2:SignsRegulatory ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SignsInformation ;
+            owl:onProperty openlabel_v2:SignsInformation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryZone ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:SignsInformation ],
+            owl:onProperty openlabel_v2:LaneSpecificationType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:trafficFlowRateValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RainType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:JunctionIntersection ;
+            owl:onProperty openlabel_v2:JunctionIntersection ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaEdge ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ConnectivityPositioning ;
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationArtificial ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:weatherSnowValue ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+            owl:onProperty openlabel_v2:ParticulatesDust ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:illuminationCloudinessValue ] ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceFeature ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaEdge ;
+            owl:onProperty openlabel_v2:DrivableAreaEdge ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SignsWarning ;
+            owl:onProperty openlabel_v2:SignsWarning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:LaneSpecificationType ;
+            owl:onProperty openlabel_v2:LaneSpecificationType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:LaneSpecificationTravelDirection ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaType ;
+            owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:WeatherSnow ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryTemporaryStructure ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationArtificial ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesPollution ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsWarning ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficFlowRateValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesPollution ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsInformation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherRain ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ConnectivityCommunication ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:GeometryTransverse ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryFixedStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsRegulatory ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherSnowValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:weatherSnowValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ScenerySpecialStructure ;
+            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherSnow ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficVolume ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceType ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceCondition ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:JunctionRoundabout ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryFixedStructure ;
+            owl:onProperty openlabel_v2:SceneryFixedStructure ] ;
     skos:definition "Operational Design Domain tag.",
         "Operational Design Domain. Refer to BSI PAS-1883 Section 5." ;
     skos:exactMatch openlabel_v2:Odd ;
@@ -2183,41 +2159,41 @@ openlabel_v2:RoadUser a owl:Class,
     rdfs:label "RoadUser" ;
     rdfs:range openlabel_v2:RoadUser ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
+        [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:RoadUserVehicle ;
             owl:onProperty openlabel_v2:RoadUserVehicle ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUserVehicle ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
         [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:RoadUserHuman ;
             owl:onProperty openlabel_v2:RoadUserHuman ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:RoadUserHuman ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty openlabel_v2:RoadUserAnimal ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:RoadUserAnimal ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:RoadUserAnimal ],
+            owl:onProperty openlabel_v2:RoadUserHuman ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:motionDriveValue ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:RoadUserVehicle ],
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:RoadUserVehicle ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:RoadUserHuman ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:motionDriveValue ] ;
+            owl:onProperty openlabel_v2:RoadUserVehicle ] ;
     skos:definition "Road user tag.",
         "Something which uses a road to travel." ;
     skos:exactMatch openlabel_v2:RoadUser ;
@@ -2225,7 +2201,7 @@ openlabel_v2:RoadUser a owl:Class,
 
 openlabel_v2:motionDriveValue a owl:DatatypeProperty ;
     rdfs:label "motionDriveValue" ;
-    rdfs:range xsd:decimal ;
+    rdfs:range [ owl:unionOf ( xsd:decimal openlabel_v2:QuantitativeValue ) ] ;
     skos:definition "Speed (km/h)." ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
@@ -2579,6 +2555,30 @@ openlabel_v2:ConnectivityCommunication a owl:Class,
         openlabel_v2:V2vCellular,
         openlabel_v2:V2vSatellite,
         openlabel_v2:V2vWifi .
+
+openlabel_v2:QuantitativeValue a owl:Class ;
+    rdfs:label "QuantitativeValue" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:maxValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:maxValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty openlabel_v2:maxValue ] ;
+    skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
+    skos:exactMatch schema1:QuantitativeValue ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:DrivableAreaType a owl:Class,
         owl:ObjectProperty ;

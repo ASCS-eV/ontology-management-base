@@ -207,7 +207,7 @@ generators produce. Per project rules, no pre/post-processing is applied.
 **Impact:** None. `owl:Class` and typed properties are valid OWL2 and more
 semantically precise. This is an improvement.
 
-### C2. No `sh:or` for QuantitativeValue ranges
+### C2. ~~No `sh:or` for QuantitativeValue ranges~~ ✅ RESOLVED
 
 v1 SHACL uses `sh:or` on 6 properties to accept **either** a scalar
 (`xsd:decimal`) **or** a `schema:QuantitativeValue` range:
@@ -216,13 +216,11 @@ v1 SHACL uses `sh:or` on 6 properties to accept **either** a scalar
 - `subjectVehicleSpeedValue`, `laneSpecificationDimensionsValue`,
   `laneSpecificationLaneCountValue`
 
-LinkML's `gen-shacl` cannot generate `sh:or` with polymorphic types.
-
-**Impact:** Range values (min/max intervals) cannot be expressed via SHACL in
-v2. The `QuantitativeValue` class IS defined in v2 OWL for manual/future use.
-
-**Mitigation:** Document as known limitation. Investigate LinkML `any_of` for
-future support.
+**Resolution:** LinkML v1.10.0 supports `any_of` → `sh:or` generation. The v2
+schema now uses `any_of` on all 6 slots, and `gen-shacl` produces correct
+`sh:or ( [ sh:datatype xsd:decimal ] [ sh:class schema:QuantitativeValue ] )`
+constraints — matching v1 SHACL behaviour. The `QuantitativeValue` class with
+required `minValue`/`maxValue` is also fully defined as a SHACL NodeShape.
 
 ### C3. No `sh:sparql` conditional constraints
 

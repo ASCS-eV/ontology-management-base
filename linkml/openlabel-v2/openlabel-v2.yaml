@@ -433,17 +433,23 @@ slots:
   motionAccelerateValue:
     description: Rate of acceleration (ms-2).
     slot_uri: openlabel_v2:motionAccelerateValue
-    range: decimal
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
 
   motionDecelerateValue:
     description: Rate of deceleration (ms-2).
     slot_uri: openlabel_v2:motionDecelerateValue
-    range: decimal
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
 
   motionDriveValue:
     description: Speed (km/h).
     slot_uri: openlabel_v2:motionDriveValue
-    range: decimal
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
 
   # ---------------------------------------------------------------------------
   # ODD enum slots
@@ -714,13 +720,17 @@ slots:
   laneSpecificationDimensionsValue:
     description: Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.
     slot_uri: openlabel_v2:laneSpecificationDimensionsValue
-    range: decimal
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
 
   laneSpecificationLaneCountValue:
     description: Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.
     slot_uri: openlabel_v2:laneSpecificationLaneCountValue
-    range: integer
-    minimum_value: 1
+    any_of:
+      - range: integer
+        minimum_value: 1
+      - range: QuantitativeValue
 
   longitudinalDownSlopeValue:
     description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.
@@ -730,8 +740,10 @@ slots:
   subjectVehicleSpeedValue:
     description: Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.
     slot_uri: openlabel_v2:subjectVehicleSpeedValue
-    range: integer
-    minimum_value: 0
+    any_of:
+      - range: integer
+        minimum_value: 0
+      - range: QuantitativeValue
 
   trafficAgentDensityValue:
     description: Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.
