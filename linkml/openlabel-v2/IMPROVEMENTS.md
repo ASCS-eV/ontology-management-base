@@ -12,7 +12,7 @@ v1 was assembled from three independent sources:
 - **SHACL** — handcrafted by a third party, independently of the OWL
 - **JSON-LD context** — auto-generated from OWL+SHACL by `context_generator.py`
 
-This led to inconsistencies (see GAP_ANALYSIS.md §F1–F6). In v2, a single
+This led to inconsistencies (see the improvement sections below). In v2, a single
 LinkML schema generates all three artifacts coherently. OWL, SHACL, and
 context are always in sync by construction.
 
@@ -109,3 +109,27 @@ validates it on `OddShape`).
 v1 defines `QuantitativeValueShape` in SHACL but `schema:QuantitativeValue` is
 not declared in the OWL ontology. v2 properly declares `QuantitativeValue` as
 a class with `minValue` and `maxValue` slots, visible in both OWL and SHACL.
+
+## BSI PAS-1883 Cross-References
+
+v1 and v2 both carry `rdfs:seeAlso` links to the BSI PAS-1883 standard on all
+BSI-referenced classes and properties (64 total). In v1 these were manually
+maintained; in v2 they are generated from the LinkML `see_also` field, ensuring
+they stay in sync with the schema.
+
+## Conditional Constraint Rules
+
+v1 uses 16 `sh:sparql` constraints to enforce "if boolean flag is not true,
+value must be absent." v2 models the same logic as LinkML `rules:` blocks with
+`value_presence` / `equals_string` postconditions on the `Odd` and `Behaviour`
+classes. This is more maintainable than raw SPARQL and will automatically
+generate SHACL constraints when `gen-shacl` gains `rules:` support
+([linkml/linkml#2464](https://github.com/linkml/linkml/issues/2464)).
+
+## Deterministic Artifact Generation
+
+v1 artifacts are manually maintained, making diffs noisy and reviews hard. v2
+uses `--no-metadata` on all LinkML generators plus Turtle blank-node
+canonicalization (`hooks/normalize_linkml_output.py`), ensuring `make generate`
+produces byte-identical output across runs. This enables reliable pre-commit
+hooks and CI diffing.

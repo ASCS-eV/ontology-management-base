@@ -79,6 +79,8 @@ classes:
   # ---------------------------------------------------------------------------
   Behaviour:
     description: An activity performed by a road user.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     class_uri: openlabel_v2:Behaviour
     slots:
       - BehaviourCommunication
@@ -105,6 +107,40 @@ classes:
       - MotionTurnRight
       - MotionUTurn
       - MotionWalk
+    rules:
+      - description: >-
+          If motionAccelerateValue is provided, MotionAccelerate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionAccelerateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionAccelerate:
+              equals_string: "true"
+      - description: >-
+          If motionDecelerateValue is provided, MotionDecelerate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionDecelerateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionDecelerate:
+              equals_string: "true"
+      - description: >-
+          If motionDriveValue is provided, MotionDrive must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionDriveValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionDrive:
+              equals_string: "true"
 
   # ---------------------------------------------------------------------------
   # Odd (Operational Design Domain)
@@ -112,6 +148,8 @@ classes:
   Odd:
     description: >-
       Operational Design Domain. Refer to BSI PAS-1883 Section 5.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     class_uri: openlabel_v2:Odd
     slots:
       - ConnectivityCommunication
@@ -175,12 +213,158 @@ classes:
       - weatherSnowValue
       - WeatherWind
       - weatherWindValue
+    rules:
+      - description: >-
+          If weatherWindValue is provided, WeatherWind must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherWindValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherWind:
+              equals_string: "true"
+      - description: >-
+          If weatherRainValue is provided, WeatherRain must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherRainValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherRain:
+              equals_string: "true"
+      - description: >-
+          If weatherSnowValue is provided, WeatherSnow must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherSnowValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherSnow:
+              equals_string: "true"
+      - description: >-
+          If illuminationCloudinessValue is provided, IlluminationCloudiness must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            illuminationCloudinessValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            IlluminationCloudiness:
+              equals_string: "true"
+      - description: >-
+          If daySunElevationValue is provided, DaySunElevation must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            daySunElevationValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            DaySunElevation:
+              equals_string: "true"
+      - description: >-
+          If trafficAgentDensityValue is provided, TrafficAgentDensity must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficAgentDensityValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficAgentDensity:
+              equals_string: "true"
+      - description: >-
+          If trafficFlowRateValue is provided, TrafficFlowRate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficFlowRateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficFlowRate:
+              equals_string: "true"
+      - description: >-
+          If trafficVolumeValue is provided, TrafficVolume must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficVolumeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficVolume:
+              equals_string: "true"
+      - description: >-
+          If laneSpecificationDimensionsValue is provided, LaneSpecificationDimensions must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            laneSpecificationDimensionsValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LaneSpecificationDimensions:
+              equals_string: "true"
+      - description: >-
+          If laneSpecificationLaneCountValue is provided, LaneSpecificationLaneCount must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            laneSpecificationLaneCountValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LaneSpecificationLaneCount:
+              equals_string: "true"
+      - description: >-
+          If horizontalCurvesValue is provided, HorizontalCurves must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            horizontalCurvesValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            HorizontalCurves:
+              equals_string: "true"
+      - description: >-
+          If longitudinalDownSlopeValue is provided, LongitudinalDownSlope must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            longitudinalDownSlopeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LongitudinalDownSlope:
+              equals_string: "true"
+      - description: >-
+          If longitudinalUpSlopeValue is provided, LongitudinalUpSlope must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            longitudinalUpSlopeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LongitudinalUpSlope:
+              equals_string: "true"
 
   # ---------------------------------------------------------------------------
   # RoadUser
   # ---------------------------------------------------------------------------
   RoadUser:
     description: Something which uses a road to travel.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     class_uri: openlabel_v2:RoadUser
     slots:
       - RoadUserAnimal
@@ -456,118 +640,164 @@ slots:
   # ---------------------------------------------------------------------------
   ConnectivityCommunication:
     description: Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ConnectivityCommunication
     range: ConnectivityCommunicationEnum
 
   ConnectivityPositioning:
     description: Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ConnectivityPositioning
     range: ConnectivityPositioningEnum
 
   DrivableAreaEdge:
     description: Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DrivableAreaEdge
     range: DrivableAreaEdgeEnum
     multivalued: true
 
   DrivableAreaSurfaceCondition:
     description: Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DrivableAreaSurfaceCondition
     range: DrivableAreaSurfaceConditionEnum
 
   DrivableAreaSurfaceFeature:
     description: Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DrivableAreaSurfaceFeature
     range: DrivableAreaSurfaceFeatureEnum
 
   DrivableAreaSurfaceType:
     description: Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DrivableAreaSurfaceType
     range: DrivableAreaSurfaceTypeEnum
 
   DrivableAreaType:
     description: Road type. Refer to BSI PAS-1883 Section 5.2.3.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DrivableAreaType
     range: DrivableAreaTypeEnum
 
   EnvironmentParticulates:
     description: Particulate type. Refer to BSI PAS-1883 Section 5.3.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:EnvironmentParticulates
     range: EnvironmentParticulatesEnum
 
   GeometryTransverse:
     description: Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:GeometryTransverse
     range: GeometryTransverseEnum
 
   IlluminationArtificial:
     description: Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:IlluminationArtificial
     range: IlluminationArtificialEnum
 
   IlluminationLowLight:
     description: Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:IlluminationLowLight
     range: IlluminationLowLightEnum
 
   JunctionIntersection:
     description: Intersection type. Refer to BSI PAS-1883 Section 5.2.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:JunctionIntersection
     range: JunctionIntersectionEnum
 
   JunctionRoundabout:
     description: Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:JunctionRoundabout
     range: JunctionRoundaboutEnum
 
   LaneSpecificationTravelDirection:
     description: Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LaneSpecificationTravelDirection
     range: LaneSpecificationTravelDirectionEnum
 
   LaneSpecificationType:
     description: Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LaneSpecificationType
     range: LaneSpecificationTypeEnum
     multivalued: true
 
   RainType:
     description: Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:RainType
     range: RainTypeEnum
 
   SceneryFixedStructure:
     description: Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SceneryFixedStructure
     range: SceneryFixedStructureEnum
 
   ScenerySpecialStructure:
     description: Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ScenerySpecialStructure
     range: ScenerySpecialStructureEnum
 
   SceneryTemporaryStructure:
     description: Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SceneryTemporaryStructure
     range: SceneryTemporaryStructureEnum
 
   SceneryZone:
     description: Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SceneryZone
     range: SceneryZoneEnum
 
   SignsInformation:
     description: Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SignsInformation
     range: SignsInformationEnum
 
   SignsRegulatory:
     description: Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SignsRegulatory
     range: SignsRegulatoryEnum
 
   SignsWarning:
     description: Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SignsWarning
     range: SignsWarningEnum
 
@@ -576,126 +806,176 @@ slots:
   # ---------------------------------------------------------------------------
   DaySunElevation:
     description: Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DaySunElevation
     range: boolean
 
   DaySunPosition:
     description: Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:DaySunPosition
     range: DaySunPositionEnum
 
   HorizontalCurves:
     description: Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:HorizontalCurves
     range: boolean
 
   HorizontalStraights:
     description: Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:HorizontalStraights
     range: boolean
 
   IlluminationCloudiness:
     description: Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:IlluminationCloudiness
     range: boolean
 
   LaneSpecificationDimensions:
     description: Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LaneSpecificationDimensions
     range: boolean
 
   LaneSpecificationLaneCount:
     description: Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LaneSpecificationLaneCount
     range: boolean
 
   LaneSpecificationMarking:
     description: Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LaneSpecificationMarking
     range: boolean
 
   LongitudinalDownSlope:
     description: Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LongitudinalDownSlope
     range: boolean
 
   LongitudinalLevelPlane:
     description: Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LongitudinalLevelPlane
     range: boolean
 
   LongitudinalUpSlope:
     description: Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:LongitudinalUpSlope
     range: boolean
 
   longitudinalUpSlopeValue:
     description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:longitudinalUpSlopeValue
     range: decimal
 
   ParticulatesDust:
     description: Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ParticulatesDust
     range: boolean
 
   ParticulatesMarine:
     description: Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ParticulatesMarine
     range: boolean
 
   ParticulatesPollution:
     description: Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ParticulatesPollution
     range: boolean
 
   ParticulatesVolcanic:
     description: Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ParticulatesVolcanic
     range: boolean
 
   particulatesWaterValue:
     description: Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:particulatesWaterValue
     range: decimal
 
   SubjectVehicleSpeed:
     description: Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:SubjectVehicleSpeed
     range: boolean
 
   TrafficAgentDensity:
     description: Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:TrafficAgentDensity
     range: boolean
 
   TrafficFlowRate:
     description: Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:TrafficFlowRate
     range: boolean
 
   TrafficSpecialVehicle:
     description: Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:TrafficSpecialVehicle
     range: boolean
 
   TrafficVolume:
     description: Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:TrafficVolume
     range: boolean
 
   WeatherRain:
     description: Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:WeatherRain
     range: boolean
 
   WeatherSnow:
     description: Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:WeatherSnow
     range: boolean
 
   WeatherWind:
     description: Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:WeatherWind
     range: boolean
 
@@ -704,21 +984,29 @@ slots:
   # ---------------------------------------------------------------------------
   daySunElevationValue:
     description: Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:daySunElevationValue
     range: decimal
 
   horizontalCurvesValue:
     description: Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:horizontalCurvesValue
     range: decimal
 
   illuminationCloudinessValue:
     description: Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:illuminationCloudinessValue
     range: decimal
 
   laneSpecificationDimensionsValue:
     description: Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:laneSpecificationDimensionsValue
     any_of:
       - range: decimal
@@ -726,6 +1014,8 @@ slots:
 
   laneSpecificationLaneCountValue:
     description: Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:laneSpecificationLaneCountValue
     any_of:
       - range: integer
@@ -734,11 +1024,15 @@ slots:
 
   longitudinalDownSlopeValue:
     description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:longitudinalDownSlopeValue
     range: decimal
 
   subjectVehicleSpeedValue:
     description: Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:subjectVehicleSpeedValue
     any_of:
       - range: integer
@@ -747,34 +1041,46 @@ slots:
 
   trafficAgentDensityValue:
     description: Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:trafficAgentDensityValue
     range: integer
     minimum_value: 0
 
   trafficFlowRateValue:
     description: Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:trafficFlowRateValue
     range: integer
     minimum_value: 0
 
   trafficVolumeValue:
     description: Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:trafficVolumeValue
     range: integer
     minimum_value: 0
 
   weatherRainValue:
     description: Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:weatherRainValue
     range: decimal
 
   weatherSnowValue:
     description: Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:weatherSnowValue
     range: decimal
 
   weatherWindValue:
     description: Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:weatherWindValue
     range: decimal
 
