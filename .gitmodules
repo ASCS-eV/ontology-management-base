@@ -4,3 +4,6 @@
 [submodule "submodules/w3id.org"]
 	path = submodules/w3id.org
 	url = git@github.com:ASCS-eV/w3id.org.git
+[submodule "submodules/sunrise_ontology"]
+	path = submodules/sunrise_ontology
+	url = git@github.com:ika-rwth-aachen/sunrise_ontology.git
