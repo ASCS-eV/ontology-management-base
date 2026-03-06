@@ -568,6 +568,8 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 #### openlabel:LongitudinalDownSlope {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinaldownslope .property-anchor }
 #### openlabel:longitudinalDownSlopeValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinaldownslopevalue .property-anchor }
 #### openlabel:LongitudinalLevelPlane {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinallevelplane .property-anchor }
+#### openlabel:LongitudinalUpSlope {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslope .property-anchor }
+#### openlabel:longitudinalUpSlopeValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslopevalue .property-anchor }
 #### openlabel:MotionAccelerate {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-motionaccelerate .property-anchor }
 #### openlabel:motionAccelerateValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-motionacceleratevalue .property-anchor }
 #### openlabel:MotionAway {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-motionaway .property-anchor }
@@ -599,6 +601,7 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 #### openlabel:ParticulatesMarine {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatesmarine .property-anchor }
 #### openlabel:ParticulatesPollution {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatespollution .property-anchor }
 #### openlabel:ParticulatesVolcanic {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatesvolcanic .property-anchor }
+#### openlabel:particulatesWaterValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-particulateswatervalue .property-anchor }
 #### openlabel:RainType {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-raintype .property-anchor }
 #### openlabel:RoadUser {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduser .property-anchor }
 #### openlabel:RoadUserAnimal {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduseranimal .property-anchor }
@@ -659,7 +662,7 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 |AdminTagShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-scenariovisualisationurl"></a>scenarioVisualisationURL|||Scenario visualization|<http://www.w3.org/2000/01/rdf-schema#Literal>|openlabel.shacl.ttl|
 |RoadUserShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-motiondrivevalue"></a>motionDriveValue|||Speed (km/h).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
 |RoadUserShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduservehicle"></a>RoadUserVehicle|||Validation class for RoadUserVehicle||openlabel.shacl.ttl|
-|RoadUserShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduserhuman"></a>RoadUserHuman|||Validation class for RoadUserHuman|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
+|RoadUserShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduserhuman"></a>RoadUserHuman|||Validation class for RoadUserHuman||openlabel.shacl.ttl|
 |RoadUserShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-roaduseranimal"></a>RoadUserAnimal|||Validation class for RoadUserAnimal|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |BehaviourShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-behaviourcommunication"></a>BehaviourCommunication|||Validation class for BehaviourCommunication||openlabel.shacl.ttl|
 |BehaviourShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-motionaway"></a>MotionAway|||Validation class for MotionAway|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
@@ -711,7 +714,7 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-lanespecificationmarking"></a>LaneSpecificationMarking|||Validation class for LaneSpecificationMarking|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-horizontalstraights"></a>HorizontalStraights|||Validation class for HorizontalStraights|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinallevelplane"></a>LongitudinalLevelPlane|||Validation class for LongitudinalLevelPlane|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
-|OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-daysunposition"></a>DaySunPosition|||Validation class for DaySunPosition|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
+|OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-daysunposition"></a>DaySunPosition|||Validation class for DaySunPosition||openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatesdust"></a>ParticulatesDust|||Validation class for ParticulatesDust|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatesmarine"></a>ParticulatesMarine|||Validation class for ParticulatesMarine|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-particulatespollution"></a>ParticulatesPollution|||Validation class for ParticulatesPollution|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
@@ -743,5 +746,8 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-horizontalcurvesvalue"></a>horizontalCurvesValue|||Curve Radius (m) (Refer to BSI PAS-1883 Section 5.2.3.3).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinaldownslope"></a>LongitudinalDownSlope|||Validation class for longitudinalDownSlope|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinaldownslopevalue"></a>longitudinalDownSlopeValue|||Gradient (%) (Refer to BSI PAS-1883 Section 5.2.3.3.ii).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
+|OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslope"></a>LongitudinalUpSlope|||Validation class for longitudinalUpSlope|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
+|OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslopevalue"></a>longitudinalUpSlopeValue|||Gradient (%) (Refer to BSI PAS-1883 Section 5.2.3.3.i).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
+|OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-particulateswatervalue"></a>particulatesWaterValue|||Meteorological Optical Range (MOR) (m) (Refer to BSI PAS-1883 Section 5.3.2.b).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
 |QuantitativeValueShape|schema|<a id="prop-https---schema-org-minvalue"></a>minValue|1||||openlabel.shacl.ttl|
 |QuantitativeValueShape|schema|<a id="prop-https---schema-org-maxvalue"></a>maxValue|1||||openlabel.shacl.ttl|

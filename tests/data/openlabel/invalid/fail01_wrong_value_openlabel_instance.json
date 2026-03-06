@@ -214,7 +214,9 @@
          "@type": "xsd:decimal",
          "@value": "6"
       },
-      "openlabel:DaySunPosition": true,
+      "openlabel:DaySunPosition": {
+         "@id": "openlabel:SunPositionFront"
+      },
       "openlabel:DaySunElevation": true,
       "openlabel:daySunElevationValue": {
          "@type": "xsd:decimal",
@@ -269,7 +271,9 @@
          "@id": "openlabel:VehicleCar"
       },
       "openlabel:RoadUserAnimal": false,
-      "openlabel:RoadUserHuman": false,
+      "openlabel:RoadUserHuman": {
+         "@id": "openlabel:HumanPedestrian"
+      },
       "openlabel:MotionDrive": true,
       "openlabel:motionDriveValue": {
          "@type": "xsd:decimal",

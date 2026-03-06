@@ -113,6 +113,9 @@ Hook flow (via `hooks/copy_artifacts.py`):
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5` | [manifest/manifest.owl.ttl](artifacts\manifest\manifest.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/context` | [manifest/manifest.context.jsonld](artifacts\manifest\manifest.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes` | [manifest/manifest.shacl.ttl](artifacts\manifest\manifest.shacl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/openlabel/v2` | [openlabel-v2/openlabel-v2.owl.ttl](artifacts\openlabel-v2\openlabel-v2.owl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/openlabel/v2/context` | [openlabel-v2/openlabel-v2.context.jsonld](artifacts\openlabel-v2\openlabel-v2.context.jsonld) |
+| `https://w3id.org/ascs-ev/envited-x/openlabel/v2/shapes` | [openlabel-v2/openlabel-v2.shacl.ttl](artifacts\openlabel-v2\openlabel-v2.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/ositrace/v6` | [ositrace/ositrace.owl.ttl](artifacts\ositrace\ositrace.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/ositrace/v6/context` | [ositrace/ositrace.context.jsonld](artifacts\ositrace\ositrace.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes` | [ositrace/ositrace.shacl.ttl](artifacts\ositrace\ositrace.shacl.ttl) |

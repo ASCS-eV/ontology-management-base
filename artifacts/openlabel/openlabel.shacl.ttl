@@ -160,16 +160,19 @@ openlabel:RoadUserShape a sh:NodeShape ;
           sh:path openlabel:motionDriveValue ] ,
 
         # FIXED: Use URIs for class checking, not strings
+        # FIXED: Added missing VehicleAgricultural (present in OWL, was omitted)
         [ sh:description "Validation class for RoadUserVehicle"@en ;
-          sh:in (openlabel:VehicleBus openlabel:VehicleCar openlabel:VehicleConstruction openlabel:VehicleCycle openlabel:VehicleEmergency openlabel:VehicleMotorcycle openlabel:VehicleTrailer openlabel:VehicleTruck openlabel:VehicleVan openlabel:VehicleWheelchair) ;
+          sh:in (openlabel:VehicleAgricultural openlabel:VehicleBus openlabel:VehicleCar openlabel:VehicleConstruction openlabel:VehicleCycle openlabel:VehicleEmergency openlabel:VehicleMotorcycle openlabel:VehicleTrailer openlabel:VehicleTruck openlabel:VehicleVan openlabel:VehicleWheelchair) ;
           sh:message "Validation of RoadUserVehicle failed!"@en ;
           sh:name "RoadUserVehicle"@en ;
           sh:order 1 ;
           sh:path openlabel:RoadUserVehicle ] ,
 
-        [ sh:datatype xsd:boolean ; # Assumed boolean based on context, though likely checks existence
-          sh:description "Validation class for RoadUserHuman"@en ;
-          sh:message "Validation of boolean failed!"@en ;
+        # FIXED: Changed from xsd:boolean to sh:in enum — OWL defines 7 subclasses of RoadUserHuman,
+        # structurally identical to RoadUserVehicle (which was correctly modeled as sh:in)
+        [ sh:description "Validation class for RoadUserHuman"@en ;
+          sh:in (openlabel:HumanAnimalRider openlabel:HumanCyclist openlabel:HumanDriver openlabel:HumanMotorcyclist openlabel:HumanPassenger openlabel:HumanPedestrian openlabel:HumanWheelchairUser) ;
+          sh:message "Validation of RoadUserHuman failed!"@en ;
           sh:name "RoadUserHuman"@en ;
           sh:order 2 ;
           sh:path openlabel:RoadUserHuman ] ,
@@ -519,7 +522,8 @@ openlabel:OddShape a sh:NodeShape ;
           sh:path openlabel:DrivableAreaSurfaceType ] ,
 
         [ sh:description "Validation class for DrivableAreaType"@en ;
-          sh:in (openlabel:RoadTypeDistributor openlabel:RoadTypeMinor openlabel:RoadTypeMotorway openlabel:RoadTypeParking openlabel:RoadTypeRadial openlabel:RoadTypeShared openlabel:RoadTypeSlip) ;
+          # FIXED: Added MotorwayManaged and MotorwayUnmanaged — OWL defines them as subclasses of RoadTypeMotorway
+          sh:in (openlabel:RoadTypeDistributor openlabel:RoadTypeMinor openlabel:RoadTypeMotorway openlabel:MotorwayManaged openlabel:MotorwayUnmanaged openlabel:RoadTypeParking openlabel:RoadTypeRadial openlabel:RoadTypeShared openlabel:RoadTypeSlip) ;
           sh:message "Validation of DrivableAreaType failed!"@en ;
           sh:name "DrivableAreaType"@en ;
           sh:order 10 ;
@@ -568,7 +572,8 @@ openlabel:OddShape a sh:NodeShape ;
           sh:path openlabel:SceneryZone ] ,
 
         [ sh:description "Validation class for ConnectivityCommunication"@en ;
-          sh:in (openlabel:CommunicationV2i openlabel:CommunicationV2v) ;
+          # FIXED: Added V2v/V2i technology subtypes — OWL defines Cellular, Satellite, Wifi under each
+          sh:in (openlabel:CommunicationV2i openlabel:CommunicationV2v openlabel:V2iCellular openlabel:V2iSatellite openlabel:V2iWifi openlabel:V2vCellular openlabel:V2vSatellite openlabel:V2vWifi) ;
           sh:message "Validation of ConnectivityCommunication failed!"@en ;
           sh:name "ConnectivityCommunication"@en ;
           sh:order 17 ;
@@ -632,8 +637,10 @@ openlabel:OddShape a sh:NodeShape ;
           sh:order 26 ;
           sh:path openlabel:LongitudinalLevelPlane ] ,
 
-        [ sh:datatype xsd:boolean ;
-          sh:description "Validation class for DaySunPosition"@en ;
+        # FIXED: Changed from xsd:boolean to sh:in enum — OWL defines 4 subclasses of DaySunPosition
+        # (Front, Left, Right, Behind), structurally identical to other enum properties
+        [ sh:description "Validation class for DaySunPosition"@en ;
+          sh:in (openlabel:SunPositionBehind openlabel:SunPositionFront openlabel:SunPositionLeft openlabel:SunPositionRight) ;
           sh:message "Validation of DaySunPosition failed!"@en ;
           sh:name "DaySunPosition"@en ;
           sh:order 27 ;
@@ -902,7 +909,32 @@ openlabel:OddShape a sh:NodeShape ;
           sh:message "Validation of longitudinalDownSlopeValue failed!"@en ;
           sh:name "longitudinalDownSlopeValue"@en ;
           sh:order 58 ;
-          sh:path openlabel:longitudinalDownSlopeValue ] ;
+          sh:path openlabel:longitudinalDownSlopeValue ] ,
+
+        # FIXED: Added missing LongitudinalUpSlope boolean — OWL defines it alongside LongitudinalDownSlope,
+        # and the SPARQL constraint references it, but no sh:property entry existed
+        [ sh:datatype xsd:boolean ;
+          sh:description "Validation class for longitudinalUpSlope"@en ;
+          sh:message "Validation of longitudinalUpSlope failed!"@en ;
+          sh:name "longitudinalUpSlope"@en ;
+          sh:order 59 ;
+          sh:path openlabel:LongitudinalUpSlope ] ,
+
+        [ sh:datatype xsd:decimal ;
+          sh:description "Gradient (%) (Refer to BSI PAS-1883 Section 5.2.3.3.i)."@en ;
+          sh:message "Validation of longitudinalUpSlopeValue failed!"@en ;
+          sh:name "longitudinalUpSlopeValue"@en ;
+          sh:order 60 ;
+          sh:path openlabel:longitudinalUpSlopeValue ] ,
+
+        # FIXED: Added missing particulatesWaterValue — OWL defines it (MOR in meters, xsd:decimal)
+        # but SHACL had no constraint despite validating all other *Value properties
+        [ sh:datatype xsd:decimal ;
+          sh:description "Meteorological Optical Range (MOR) (m) (Refer to BSI PAS-1883 Section 5.3.2.b)."@en ;
+          sh:message "Validation of particulatesWaterValue failed!"@en ;
+          sh:name "particulatesWaterValue"@en ;
+          sh:order 61 ;
+          sh:path openlabel:particulatesWaterValue ] ;
 
     sh:sparql
         [ a sh:SPARQLConstraint ;

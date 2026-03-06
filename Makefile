@@ -41,7 +41,15 @@ define check_dev_setup
 	fi
 endef
 
-.PHONY: all setup install install-dev lint format test test-check-syntax test-check-artifact-coherence test-check-data-conformance test-failing test-cov test-domain docs-generate docs-serve docs-build registry-update clean clean-cache help
+# LinkML generators
+GEN_OWL := $(VENV_BIN)/gen-owl
+GEN_SHACL := $(VENV_BIN)/gen-shacl
+GEN_JSONLD_CONTEXT := $(VENV_BIN)/gen-jsonld-context
+
+# LinkML domains — add new domains here
+LINKML_DOMAINS := openlabel-v2
+
+.PHONY: all setup install install-dev lint format test test-check-syntax test-check-artifact-coherence test-check-data-conformance test-failing test-cov test-domain generate docs-generate docs-serve docs-build registry-update clean clean-cache help
 
 # Default target
 all: lint test
@@ -97,6 +105,27 @@ format:
 	@"$(PYTHON)" -m black src/
 	@"$(PYTHON)" -m isort src/
 	@echo "[OK] Python formatting complete"
+
+# LinkML generation targets
+generate:
+	$(call check_dev_setup)
+	@echo "[INFO] Generating artifacts from LinkML schemas..."
+	@if [ -n "$(DOMAIN)" ]; then \
+		DOMAINS_TO_BUILD="$(DOMAIN)"; \
+	else \
+		DOMAINS_TO_BUILD="$(LINKML_DOMAINS)"; \
+	fi; \
+	for domain in $$DOMAINS_TO_BUILD; do \
+		echo "  Processing $$domain..."; \
+		mkdir -p artifacts/$$domain; \
+		"$(GEN_OWL)" --no-metadata --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.owl.ttl 2>/dev/null; \
+		"$(GEN_SHACL)" --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.shacl.ttl 2>/dev/null; \
+		"$(GEN_JSONLD_CONTEXT)" --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.context.jsonld 2>/dev/null; \
+		"$(PYTHON)" -m hooks.normalize_linkml_output \
+			artifacts/$$domain/$$domain.owl.ttl \
+			artifacts/$$domain/$$domain.shacl.ttl; \
+	done
+	@echo "[OK] Artifacts generated"
 
 # Testing targets
 test:
@@ -202,6 +231,10 @@ help:
 	@echo "Linting:"
 	@echo "  make lint           - Run pre-commit checks"
 	@echo "  make format         - Format code with black/isort"
+	@echo ""
+	@echo "LinkML:"
+	@echo "  make generate                    - Generate OWL/SHACL/context from all LinkML schemas"
+	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific domain"
 	@echo ""
 	@echo "Testing:"
 	@echo "  make test           - Run all validation tests"
