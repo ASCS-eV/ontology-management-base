@@ -68,6 +68,17 @@ jobs:
           git commit -s -m "chore: update registry for ${{ steps.tag.outputs.tag }} [skip ci]" || echo "No changes to commit"
           git push origin main || echo "Push failed - may need manual intervention"
 
+      - name: Ensure release tag exists for changelog generation
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+            git tag "$TAG"
+            echo "Created temporary tag $TAG at $(git rev-parse HEAD)"
+          else
+            echo "Tag $TAG already exists"
+          fi
+
       - name: Generate changelog
         id: changelog
         uses: orhun/git-cliff-action@v4
