@@ -239,7 +239,7 @@
                "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
             },
             {
-               "@id": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/"
+               "@id": "https://w3id.org/ascs-ev/envited-x/hdmap/v6/"
             }
          ],
          "manifest:hasAccessRole": {
