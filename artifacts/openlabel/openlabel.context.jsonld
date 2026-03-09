@@ -37,8 +37,7 @@
          "@type": "xsd:boolean"
       },
       "DaySunPosition": {
-         "@id": "ontologies:DaySunPosition",
-         "@type": "xsd:boolean"
+         "@id": "ontologies:DaySunPosition"
       },
       "DrivableAreaEdge": {
          "@id": "ontologies:DrivableAreaEdge"
@@ -109,6 +108,10 @@
       },
       "LongitudinalLevelPlane": {
          "@id": "ontologies:LongitudinalLevelPlane",
+         "@type": "xsd:boolean"
+      },
+      "LongitudinalUpSlope": {
+         "@id": "ontologies:LongitudinalUpSlope",
          "@type": "xsd:boolean"
       },
       "MotionAccelerate": {
@@ -223,8 +226,7 @@
          "@type": "xsd:boolean"
       },
       "RoadUserHuman": {
-         "@id": "ontologies:RoadUserHuman",
-         "@type": "xsd:boolean"
+         "@id": "ontologies:RoadUserHuman"
       },
       "RoadUserVehicle": {
          "@id": "ontologies:RoadUserVehicle"
@@ -310,6 +312,10 @@
          "@id": "ontologies:longitudinalDownSlopeValue",
          "@type": "xsd:decimal"
       },
+      "longitudinalUpSlopeValue": {
+         "@id": "ontologies:longitudinalUpSlopeValue",
+         "@type": "xsd:decimal"
+      },
       "motionAccelerateValue": {
          "@id": "ontologies:motionAccelerateValue",
          "@type": "@id"
@@ -333,6 +339,10 @@
       "ownerURL": {
          "@id": "ontologies:ownerURL",
          "@type": "http://www.w3.org/2000/01/rdf-schema#Literal"
+      },
+      "particulatesWaterValue": {
+         "@id": "ontologies:particulatesWaterValue",
+         "@type": "xsd:decimal"
       },
       "scenarioCreatedDate": {
          "@id": "ontologies:scenarioCreatedDate",

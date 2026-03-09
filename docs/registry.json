@@ -232,6 +232,27 @@
             }
          }
       },
+      "openlabel-v2": {
+         "namespace": "ascs-ev",
+         "iri": "https://w3id.org/ascs-ev/envited-x/openlabel/v2",
+         "latest": "v2.0.0",
+         "versions": {
+            "v2.0.0": {
+               "releaseTag": "v0.1.3",
+               "versionInfo": "v2.0.0",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/openlabel/v2",
+               "files": {
+                  "ontology": "artifacts/openlabel-v2/openlabel-v2.owl.ttl",
+                  "shacl": [
+                     "artifacts/openlabel-v2/openlabel-v2.shacl.ttl"
+                  ],
+                  "jsonld": "artifacts/openlabel-v2/openlabel-v2.context.jsonld",
+                  "properties": "artifacts/openlabel-v2/PROPERTIES.md",
+                  "instance": "tests/data/openlabel-v2/valid/openlabel-v2_instance.json"
+               }
+            }
+         }
+      },
       "ositrace": {
          "namespace": "ascs-ev",
          "iri": "https://w3id.org/ascs-ev/envited-x/ositrace/v6",

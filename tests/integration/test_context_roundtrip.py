@@ -32,6 +32,12 @@ def load_context_inline(instance_path: Path, context_path: Path) -> dict:
     return instance
 
 
+def _is_linkml_domain(domain: str) -> bool:
+    """Check if a domain has a LinkML schema (LinkML-managed)."""
+    linkml_dir = ROOT_DIR / "linkml" / domain
+    return (linkml_dir / f"{domain}.yaml").exists()
+
+
 # Collect all domains that have generated context files
 def _context_domains():
     """Return list of domains with .context.jsonld files."""
@@ -148,13 +154,18 @@ class TestContextRoundtripGeneric:
         assert "@context" in doc, "Document should have @context key"
         ctx = doc["@context"]
 
-        # Should declare JSON-LD 1.1 for @container support
-        assert ctx.get("@version") == 1.1, "Context should declare @version 1.1"
+        # LinkML-generated contexts don't include @version 1.1
+        if not _is_linkml_domain(domain):
+            assert ctx.get("@version") == 1.1, "Context should declare @version 1.1"
 
         # Should have standard prefixes
         assert "xsd" in ctx, "Context should define xsd prefix"
-        assert domain in ctx or any(
-            isinstance(v, str) and domain in v for v in ctx.values()
+        # LinkML uses underscores in prefix names (e.g., openlabel_v2)
+        domain_key = domain.replace("-", "_")
+        assert (
+            domain in ctx
+            or domain_key in ctx
+            or any(isinstance(v, str) and domain in v for v in ctx.values())
         ), f"Context should define {domain} prefix"
 
     @pytest.mark.parametrize("domain", _context_domains())

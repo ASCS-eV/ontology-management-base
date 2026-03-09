@@ -26,6 +26,14 @@ repos:
         args: ["--config=.flake8"]
         pass_filenames: true
 
+      - id: generate-linkml
+        name: Generate LinkML Artifacts
+        entry: make generate
+        language: system
+        pass_filenames: false
+        files: ^linkml/.*\.yaml$
+        stages: [pre-commit]
+
       - id: jsonld-lint
         name: JSON-LD Parser
         entry: python -m src.tools.validators.syntax_validator --json

@@ -203,7 +203,9 @@
       },
       "openlabel:IlluminationCloudiness": true,
       "illuminationCloudinessValue": 6.0,
-      "openlabel:DaySunPosition": true,
+      "openlabel:DaySunPosition": {
+         "@id": "openlabel:SunPositionFront"
+      },
       "openlabel:DaySunElevation": true,
       "daySunElevationValue": 45.0,
       "openlabel:WeatherRain": true,
@@ -249,7 +251,9 @@
          "@id": "openlabel:VehicleCar"
       },
       "openlabel:RoadUserAnimal": false,
-      "openlabel:RoadUserHuman": false,
+      "openlabel:RoadUserHuman": {
+         "@id": "openlabel:HumanPedestrian"
+      },
       "openlabel:MotionDrive": true,
       "openlabel:motionDriveValue": {
          "@type": "xsd:decimal",

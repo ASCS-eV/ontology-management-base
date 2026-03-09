@@ -1,0 +1,1766 @@
+# ASAM OpenLABEL Scenario Tagging Ontology v2
+# Modeled in LinkML as single source of truth.
+# Generates: OWL ontology, SHACL shapes, JSON-LD context.
+#
+# Based on ASAM OpenLABEL V1.0.0 (BSI PAS-1883) with ASCS-eV namespace.
+# For details, see https://www.asam.net/project-detail/asam-openlabel-v100
+
+id: https://w3id.org/ascs-ev/envited-x/openlabel/v2
+name: openlabel-v2
+title: ASAM OpenLABEL Scenario Tagging Ontology
+description: >-
+  Ontology for scenario tagging based on the ASAM OpenLABEL standard
+  and BSI PAS-1883 Operational Design Domain taxonomy.
+version: "2.0.0"
+license: https://creativecommons.org/licenses/by/4.0/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  openlabel_v2: https://w3id.org/ascs-ev/envited-x/openlabel/v2/
+  schema: http://schema.org/
+
+default_prefix: openlabel_v2
+default_range: string
+
+imports:
+  - linkml:types
+
+# =============================================================================
+# Classes
+# =============================================================================
+classes:
+
+  # ---------------------------------------------------------------------------
+  # Scenario (top-level container)
+  # ---------------------------------------------------------------------------
+  Scenario:
+    description: >-
+      A scenario that can be tagged with OpenLABEL tags.
+    class_uri: openlabel_v2:Scenario
+    slots:
+      - hasTag
+
+  # ---------------------------------------------------------------------------
+  # Tag (base tag - main entry point for SHACL validation)
+  # ---------------------------------------------------------------------------
+  Tag:
+    description: The base tag.
+    class_uri: openlabel_v2:Tag
+    slots:
+      - AdminTag
+      - Behaviour
+      - Odd
+      - RoadUser
+
+  # ---------------------------------------------------------------------------
+  # AdminTag
+  # ---------------------------------------------------------------------------
+  AdminTag:
+    description: >-
+      The base tag to use when extending the Administration tags with new classes.
+    class_uri: openlabel_v2:AdminTag
+    slots:
+      - licenseURI
+      - ownerEmail
+      - ownerName
+      - ownerURL
+      - scenarioCreatedDate
+      - scenarioDefinition
+      - scenarioDefinitionLanguageURI
+      - scenarioDescription
+      - scenarioName
+      - scenarioParentReference
+      - scenarioUniqueReference
+      - scenarioVersion
+      - scenarioVisualisationURL
+
+  # ---------------------------------------------------------------------------
+  # Behaviour
+  # ---------------------------------------------------------------------------
+  Behaviour:
+    description: An activity performed by a road user.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    class_uri: openlabel_v2:Behaviour
+    slots:
+      - BehaviourCommunication
+      - MotionAccelerate
+      - motionAccelerateValue
+      - MotionAway
+      - MotionCross
+      - MotionCutIn
+      - MotionCutOut
+      - MotionDecelerate
+      - motionDecelerateValue
+      - MotionDrive
+      - motionDriveValue
+      - MotionLaneChangeLeft
+      - MotionLaneChangeRight
+      - MotionOvertake
+      - MotionReverse
+      - MotionRun
+      - MotionSlide
+      - MotionStop
+      - MotionTowards
+      - MotionTurn
+      - MotionTurnLeft
+      - MotionTurnRight
+      - MotionUTurn
+      - MotionWalk
+    rules:
+      - description: >-
+          If motionAccelerateValue is provided, MotionAccelerate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionAccelerateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionAccelerate:
+              equals_string: "true"
+      - description: >-
+          If motionDecelerateValue is provided, MotionDecelerate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionDecelerateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionDecelerate:
+              equals_string: "true"
+      - description: >-
+          If motionDriveValue is provided, MotionDrive must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            motionDriveValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionDrive:
+              equals_string: "true"
+
+  # ---------------------------------------------------------------------------
+  # Odd (Operational Design Domain)
+  # ---------------------------------------------------------------------------
+  Odd:
+    description: >-
+      Operational Design Domain. Refer to BSI PAS-1883 Section 5.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    class_uri: openlabel_v2:Odd
+    slots:
+      - ConnectivityCommunication
+      - ConnectivityPositioning
+      - DaySunElevation
+      - daySunElevationValue
+      - DaySunPosition
+      - DrivableAreaEdge
+      - DrivableAreaSurfaceCondition
+      - DrivableAreaSurfaceFeature
+      - DrivableAreaSurfaceType
+      - DrivableAreaType
+      - EnvironmentParticulates
+      - GeometryTransverse
+      - HorizontalCurves
+      - horizontalCurvesValue
+      - HorizontalStraights
+      - IlluminationArtificial
+      - IlluminationCloudiness
+      - illuminationCloudinessValue
+      - IlluminationLowLight
+      - JunctionIntersection
+      - JunctionRoundabout
+      - LaneSpecificationDimensions
+      - laneSpecificationDimensionsValue
+      - LaneSpecificationLaneCount
+      - laneSpecificationLaneCountValue
+      - LaneSpecificationMarking
+      - LaneSpecificationTravelDirection
+      - LaneSpecificationType
+      - LongitudinalDownSlope
+      - longitudinalDownSlopeValue
+      - LongitudinalLevelPlane
+      - LongitudinalUpSlope
+      - longitudinalUpSlopeValue
+      - ParticulatesDust
+      - ParticulatesMarine
+      - ParticulatesPollution
+      - ParticulatesVolcanic
+      - particulatesWaterValue
+      - RainType
+      - SceneryFixedStructure
+      - ScenerySpecialStructure
+      - SceneryTemporaryStructure
+      - SceneryZone
+      - SignsInformation
+      - SignsRegulatory
+      - SignsWarning
+      - SubjectVehicleSpeed
+      - subjectVehicleSpeedValue
+      - TrafficAgentDensity
+      - trafficAgentDensityValue
+      - TrafficFlowRate
+      - trafficFlowRateValue
+      - TrafficSpecialVehicle
+      - TrafficVolume
+      - trafficVolumeValue
+      - WeatherRain
+      - weatherRainValue
+      - WeatherSnow
+      - weatherSnowValue
+      - WeatherWind
+      - weatherWindValue
+    rules:
+      - description: >-
+          If weatherWindValue is provided, WeatherWind must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherWindValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherWind:
+              equals_string: "true"
+      - description: >-
+          If weatherRainValue is provided, WeatherRain must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherRainValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherRain:
+              equals_string: "true"
+      - description: >-
+          If weatherSnowValue is provided, WeatherSnow must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            weatherSnowValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            WeatherSnow:
+              equals_string: "true"
+      - description: >-
+          If illuminationCloudinessValue is provided, IlluminationCloudiness must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            illuminationCloudinessValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            IlluminationCloudiness:
+              equals_string: "true"
+      - description: >-
+          If daySunElevationValue is provided, DaySunElevation must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            daySunElevationValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            DaySunElevation:
+              equals_string: "true"
+      - description: >-
+          If trafficAgentDensityValue is provided, TrafficAgentDensity must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficAgentDensityValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficAgentDensity:
+              equals_string: "true"
+      - description: >-
+          If trafficFlowRateValue is provided, TrafficFlowRate must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficFlowRateValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficFlowRate:
+              equals_string: "true"
+      - description: >-
+          If trafficVolumeValue is provided, TrafficVolume must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficVolumeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficVolume:
+              equals_string: "true"
+      - description: >-
+          If laneSpecificationDimensionsValue is provided, LaneSpecificationDimensions must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            laneSpecificationDimensionsValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LaneSpecificationDimensions:
+              equals_string: "true"
+      - description: >-
+          If laneSpecificationLaneCountValue is provided, LaneSpecificationLaneCount must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            laneSpecificationLaneCountValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LaneSpecificationLaneCount:
+              equals_string: "true"
+      - description: >-
+          If horizontalCurvesValue is provided, HorizontalCurves must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            horizontalCurvesValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            HorizontalCurves:
+              equals_string: "true"
+      - description: >-
+          If longitudinalDownSlopeValue is provided, LongitudinalDownSlope must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            longitudinalDownSlopeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LongitudinalDownSlope:
+              equals_string: "true"
+      - description: >-
+          If longitudinalUpSlopeValue is provided, LongitudinalUpSlope must be true.
+          Corresponds to BSI PAS-1883 conditional constraint.
+        preconditions:
+          slot_conditions:
+            longitudinalUpSlopeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LongitudinalUpSlope:
+              equals_string: "true"
+
+  # ---------------------------------------------------------------------------
+  # RoadUser
+  # ---------------------------------------------------------------------------
+  RoadUser:
+    description: Something which uses a road to travel.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    class_uri: openlabel_v2:RoadUser
+    slots:
+      - RoadUserAnimal
+      - RoadUserHuman
+      - RoadUserVehicle
+      - motionDriveValue
+
+  # ---------------------------------------------------------------------------
+  # QuantitativeValue (from schema.org, used for range values)
+  # ---------------------------------------------------------------------------
+  QuantitativeValue:
+    description: >-
+      A point value or interval for quantitative measurements.
+      Requires minValue and maxValue.
+    class_uri: schema:QuantitativeValue
+    slots:
+      - minValue
+      - maxValue
+
+
+# =============================================================================
+# Slots (properties)
+# =============================================================================
+slots:
+
+  # ---------------------------------------------------------------------------
+  # Scenario slots
+  # ---------------------------------------------------------------------------
+  hasTag:
+    description: A tag associated with a scenario.
+    slot_uri: openlabel_v2:hasTag
+    range: Tag
+
+  # ---------------------------------------------------------------------------
+  # Tag composition slots (references to sub-shapes)
+  # ---------------------------------------------------------------------------
+  AdminTag:
+    description: Administration tag.
+    slot_uri: openlabel_v2:AdminTag
+    range: AdminTag
+    inlined: true
+
+  Behaviour:
+    description: Behaviour tag.
+    slot_uri: openlabel_v2:Behaviour
+    range: Behaviour
+    inlined: true
+
+  Odd:
+    description: Operational Design Domain tag.
+    slot_uri: openlabel_v2:Odd
+    range: Odd
+    inlined: true
+
+  RoadUser:
+    description: Road user tag.
+    slot_uri: openlabel_v2:RoadUser
+    range: RoadUser
+    inlined: true
+
+  # ---------------------------------------------------------------------------
+  # AdminTag slots (all rdfs:Literal in v1)
+  # ---------------------------------------------------------------------------
+  licenseURI:
+    description: The type of license which governs usage of the scenario.
+    slot_uri: openlabel_v2:licenseURI
+    range: string
+
+  ownerEmail:
+    description: The email address of the legal entity who owns the rights to the scenario.
+    slot_uri: openlabel_v2:ownerEmail
+    range: string
+
+  ownerName:
+    description: The name of the legal entity who owns the rights to the scenario.
+    slot_uri: openlabel_v2:ownerName
+    range: string
+
+  ownerURL:
+    description: The URL of the legal entity who owns the rights to the scenario.
+    slot_uri: openlabel_v2:ownerURL
+    range: string
+
+  scenarioCreatedDate:
+    description: The date that the scenario was created/published.
+    slot_uri: openlabel_v2:scenarioCreatedDate
+    range: datetime
+
+  scenarioDefinition:
+    description: SDL definition of the scenario.
+    slot_uri: openlabel_v2:scenarioDefinition
+    range: string
+
+  scenarioDefinitionLanguageURI:
+    description: URI of SDL language used for the definition of the scenario.
+    slot_uri: openlabel_v2:scenarioDefinitionLanguageURI
+    range: string
+
+  scenarioDescription:
+    description: A description of the scenario.
+    slot_uri: openlabel_v2:scenarioDescription
+    range: string
+
+  scenarioName:
+    description: The name of the scenario.
+    slot_uri: openlabel_v2:scenarioName
+    range: string
+
+  scenarioParentReference:
+    description: >-
+      Universally unique identifier (UUID) which identifies the scenario
+      which this one has been derived from.
+    slot_uri: openlabel_v2:scenarioParentReference
+    range: string
+
+  scenarioUniqueReference:
+    description: >-
+      Universally unique identifier (UUID) assigned to the scenario which
+      allows the scenario to be identified.
+    slot_uri: openlabel_v2:scenarioUniqueReference
+    range: string
+
+  scenarioVersion:
+    description: The version number of the scenario.
+    slot_uri: openlabel_v2:scenarioVersion
+    range: string
+
+  scenarioVisualisationURL:
+    description: >-
+      Relative or absolute URL of a static image or animation of the scenario
+      to allow users to easily see what the scenario represents.
+    slot_uri: openlabel_v2:scenarioVisualisationURL
+    range: string
+
+  # ---------------------------------------------------------------------------
+  # Behaviour enum slots
+  # ---------------------------------------------------------------------------
+  BehaviourCommunication:
+    description: Communication type of road user behaviour.
+    slot_uri: openlabel_v2:BehaviourCommunication
+    range: BehaviourCommunicationEnum
+    multivalued: true
+
+  # ---------------------------------------------------------------------------
+  # Behaviour boolean slots (motion flags)
+  # ---------------------------------------------------------------------------
+  MotionAccelerate:
+    description: An activity where the road user increases their velocity.
+    slot_uri: openlabel_v2:MotionAccelerate
+    range: boolean
+
+  MotionAway:
+    description: An activity where the road user is further away from the object by the end.
+    slot_uri: openlabel_v2:MotionAway
+    range: boolean
+
+  MotionCross:
+    description: An activity where the trajectory of the road user crosses the trajectory of the object.
+    slot_uri: openlabel_v2:MotionCross
+    range: boolean
+
+  MotionCutIn:
+    description: An activity where the subject vehicle ends up directly in front of the object vehicle.
+    slot_uri: openlabel_v2:MotionCutIn
+    range: boolean
+
+  MotionCutOut:
+    description: An activity where the object vehicle suddenly moves out of the lane.
+    slot_uri: openlabel_v2:MotionCutOut
+    range: boolean
+
+  MotionDecelerate:
+    description: An activity where the road user decreases their velocity.
+    slot_uri: openlabel_v2:MotionDecelerate
+    range: boolean
+
+  MotionDrive:
+    description: An activity where the subject vehicle is moving in the direction it is facing.
+    slot_uri: openlabel_v2:MotionDrive
+    range: boolean
+
+  MotionLaneChangeLeft:
+    description: An activity where the subject vehicle is in a lane left of the original.
+    slot_uri: openlabel_v2:MotionLaneChangeLeft
+    range: boolean
+
+  MotionLaneChangeRight:
+    description: An activity where the subject vehicle is in a lane right of the original.
+    slot_uri: openlabel_v2:MotionLaneChangeRight
+    range: boolean
+
+  MotionOvertake:
+    description: An activity where the subject starts behind and ends up in front by changing lanes.
+    slot_uri: openlabel_v2:MotionOvertake
+    range: boolean
+
+  MotionReverse:
+    description: An activity where the subject vehicle is moving in the opposite direction to which it is facing.
+    slot_uri: openlabel_v2:MotionReverse
+    range: boolean
+
+  MotionRun:
+    description: Locomotion mode where at a specific point no foot touches the ground.
+    slot_uri: openlabel_v2:MotionRun
+    range: boolean
+
+  MotionSlide:
+    description: An activity where a pedestrian is slipping/sliding on the road.
+    slot_uri: openlabel_v2:MotionSlide
+    range: boolean
+
+  MotionStop:
+    description: An activity where the road user is stationary.
+    slot_uri: openlabel_v2:MotionStop
+    range: boolean
+
+  MotionTowards:
+    description: An activity where the road user is closer to the object by the end.
+    slot_uri: openlabel_v2:MotionTowards
+    range: boolean
+
+  MotionTurn:
+    description: An activity where the road user changes their heading.
+    slot_uri: openlabel_v2:MotionTurn
+    range: boolean
+
+  MotionTurnLeft:
+    description: Subject exits the intersection on a road to the left of the original.
+    slot_uri: openlabel_v2:MotionTurnLeft
+    range: boolean
+
+  MotionTurnRight:
+    description: Subject exits the intersection on a road to the right of the original.
+    slot_uri: openlabel_v2:MotionTurnRight
+    range: boolean
+
+  MotionUTurn:
+    description: Subject performs a turn resulting in heading in the opposite direction.
+    slot_uri: openlabel_v2:MotionUTurn
+    range: boolean
+
+  MotionWalk:
+    description: Locomotion mode where at least one foot is always on the ground.
+    slot_uri: openlabel_v2:MotionWalk
+    range: boolean
+
+  # ---------------------------------------------------------------------------
+  # Behaviour value slots (decimal measurements)
+  # ---------------------------------------------------------------------------
+  motionAccelerateValue:
+    description: Rate of acceleration (ms-2).
+    slot_uri: openlabel_v2:motionAccelerateValue
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
+
+  motionDecelerateValue:
+    description: Rate of deceleration (ms-2).
+    slot_uri: openlabel_v2:motionDecelerateValue
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
+
+  motionDriveValue:
+    description: Speed (km/h).
+    slot_uri: openlabel_v2:motionDriveValue
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
+
+  # ---------------------------------------------------------------------------
+  # ODD enum slots
+  # ---------------------------------------------------------------------------
+  ConnectivityCommunication:
+    description: Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ConnectivityCommunication
+    range: ConnectivityCommunicationEnum
+
+  ConnectivityPositioning:
+    description: Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ConnectivityPositioning
+    range: ConnectivityPositioningEnum
+
+  DrivableAreaEdge:
+    description: Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DrivableAreaEdge
+    range: DrivableAreaEdgeEnum
+    multivalued: true
+
+  DrivableAreaSurfaceCondition:
+    description: Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DrivableAreaSurfaceCondition
+    range: DrivableAreaSurfaceConditionEnum
+
+  DrivableAreaSurfaceFeature:
+    description: Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DrivableAreaSurfaceFeature
+    range: DrivableAreaSurfaceFeatureEnum
+
+  DrivableAreaSurfaceType:
+    description: Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DrivableAreaSurfaceType
+    range: DrivableAreaSurfaceTypeEnum
+
+  DrivableAreaType:
+    description: Road type. Refer to BSI PAS-1883 Section 5.2.3.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DrivableAreaType
+    range: DrivableAreaTypeEnum
+
+  EnvironmentParticulates:
+    description: Particulate type. Refer to BSI PAS-1883 Section 5.3.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:EnvironmentParticulates
+    range: EnvironmentParticulatesEnum
+
+  GeometryTransverse:
+    description: Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:GeometryTransverse
+    range: GeometryTransverseEnum
+
+  IlluminationArtificial:
+    description: Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:IlluminationArtificial
+    range: IlluminationArtificialEnum
+
+  IlluminationLowLight:
+    description: Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:IlluminationLowLight
+    range: IlluminationLowLightEnum
+
+  JunctionIntersection:
+    description: Intersection type. Refer to BSI PAS-1883 Section 5.2.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:JunctionIntersection
+    range: JunctionIntersectionEnum
+
+  JunctionRoundabout:
+    description: Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:JunctionRoundabout
+    range: JunctionRoundaboutEnum
+
+  LaneSpecificationTravelDirection:
+    description: Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LaneSpecificationTravelDirection
+    range: LaneSpecificationTravelDirectionEnum
+
+  LaneSpecificationType:
+    description: Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LaneSpecificationType
+    range: LaneSpecificationTypeEnum
+    multivalued: true
+
+  RainType:
+    description: Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:RainType
+    range: RainTypeEnum
+
+  SceneryFixedStructure:
+    description: Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SceneryFixedStructure
+    range: SceneryFixedStructureEnum
+
+  ScenerySpecialStructure:
+    description: Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ScenerySpecialStructure
+    range: ScenerySpecialStructureEnum
+
+  SceneryTemporaryStructure:
+    description: Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SceneryTemporaryStructure
+    range: SceneryTemporaryStructureEnum
+
+  SceneryZone:
+    description: Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SceneryZone
+    range: SceneryZoneEnum
+
+  SignsInformation:
+    description: Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SignsInformation
+    range: SignsInformationEnum
+
+  SignsRegulatory:
+    description: Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SignsRegulatory
+    range: SignsRegulatoryEnum
+
+  SignsWarning:
+    description: Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SignsWarning
+    range: SignsWarningEnum
+
+  # ---------------------------------------------------------------------------
+  # ODD boolean slots
+  # ---------------------------------------------------------------------------
+  DaySunElevation:
+    description: Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DaySunElevation
+    range: boolean
+
+  DaySunPosition:
+    description: Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:DaySunPosition
+    range: DaySunPositionEnum
+
+  HorizontalCurves:
+    description: Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:HorizontalCurves
+    range: boolean
+
+  HorizontalStraights:
+    description: Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:HorizontalStraights
+    range: boolean
+
+  IlluminationCloudiness:
+    description: Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:IlluminationCloudiness
+    range: boolean
+
+  LaneSpecificationDimensions:
+    description: Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LaneSpecificationDimensions
+    range: boolean
+
+  LaneSpecificationLaneCount:
+    description: Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LaneSpecificationLaneCount
+    range: boolean
+
+  LaneSpecificationMarking:
+    description: Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LaneSpecificationMarking
+    range: boolean
+
+  LongitudinalDownSlope:
+    description: Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LongitudinalDownSlope
+    range: boolean
+
+  LongitudinalLevelPlane:
+    description: Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LongitudinalLevelPlane
+    range: boolean
+
+  LongitudinalUpSlope:
+    description: Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:LongitudinalUpSlope
+    range: boolean
+
+  longitudinalUpSlopeValue:
+    description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:longitudinalUpSlopeValue
+    range: decimal
+
+  ParticulatesDust:
+    description: Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ParticulatesDust
+    range: boolean
+
+  ParticulatesMarine:
+    description: Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ParticulatesMarine
+    range: boolean
+
+  ParticulatesPollution:
+    description: Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ParticulatesPollution
+    range: boolean
+
+  ParticulatesVolcanic:
+    description: Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ParticulatesVolcanic
+    range: boolean
+
+  particulatesWaterValue:
+    description: Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:particulatesWaterValue
+    range: decimal
+
+  SubjectVehicleSpeed:
+    description: Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:SubjectVehicleSpeed
+    range: boolean
+
+  TrafficAgentDensity:
+    description: Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:TrafficAgentDensity
+    range: boolean
+
+  TrafficFlowRate:
+    description: Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:TrafficFlowRate
+    range: boolean
+
+  TrafficSpecialVehicle:
+    description: Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:TrafficSpecialVehicle
+    range: boolean
+
+  TrafficVolume:
+    description: Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:TrafficVolume
+    range: boolean
+
+  WeatherRain:
+    description: Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:WeatherRain
+    range: boolean
+
+  WeatherSnow:
+    description: Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:WeatherSnow
+    range: boolean
+
+  WeatherWind:
+    description: Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:WeatherWind
+    range: boolean
+
+  # ---------------------------------------------------------------------------
+  # ODD value slots (decimal/integer measurements)
+  # ---------------------------------------------------------------------------
+  daySunElevationValue:
+    description: Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:daySunElevationValue
+    range: decimal
+
+  horizontalCurvesValue:
+    description: Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:horizontalCurvesValue
+    range: decimal
+
+  illuminationCloudinessValue:
+    description: Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:illuminationCloudinessValue
+    range: decimal
+
+  laneSpecificationDimensionsValue:
+    description: Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:laneSpecificationDimensionsValue
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
+
+  laneSpecificationLaneCountValue:
+    description: Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:laneSpecificationLaneCountValue
+    any_of:
+      - range: integer
+        minimum_value: 1
+      - range: QuantitativeValue
+
+  longitudinalDownSlopeValue:
+    description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:longitudinalDownSlopeValue
+    range: decimal
+
+  subjectVehicleSpeedValue:
+    description: Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:subjectVehicleSpeedValue
+    any_of:
+      - range: integer
+        minimum_value: 0
+      - range: QuantitativeValue
+
+  trafficAgentDensityValue:
+    description: Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:trafficAgentDensityValue
+    range: integer
+    minimum_value: 0
+
+  trafficFlowRateValue:
+    description: Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:trafficFlowRateValue
+    range: integer
+    minimum_value: 0
+
+  trafficVolumeValue:
+    description: Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:trafficVolumeValue
+    range: integer
+    minimum_value: 0
+
+  weatherRainValue:
+    description: Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:weatherRainValue
+    range: decimal
+
+  weatherSnowValue:
+    description: Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:weatherSnowValue
+    range: decimal
+
+  weatherWindValue:
+    description: Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:weatherWindValue
+    range: decimal
+
+  # ---------------------------------------------------------------------------
+  # RoadUser slots
+  # ---------------------------------------------------------------------------
+  RoadUserAnimal:
+    description: Animal road user flag.
+    slot_uri: openlabel_v2:RoadUserAnimal
+    range: boolean
+
+  RoadUserHuman:
+    description: Human road user type.
+    slot_uri: openlabel_v2:RoadUserHuman
+    range: RoadUserHumanEnum
+
+  RoadUserVehicle:
+    description: Vehicle type.
+    slot_uri: openlabel_v2:RoadUserVehicle
+    range: RoadUserVehicleEnum
+
+  # ---------------------------------------------------------------------------
+  # QuantitativeValue slots (schema.org)
+  # ---------------------------------------------------------------------------
+  minValue:
+    description: Minimum value of the range.
+    slot_uri: schema:minValue
+    range: decimal
+    required: true
+
+  maxValue:
+    description: Maximum value of the range.
+    slot_uri: schema:maxValue
+    range: decimal
+    required: true
+
+
+# =============================================================================
+# Enums
+# =============================================================================
+enums:
+
+  # ---------------------------------------------------------------------------
+  # Behaviour Communication
+  # ---------------------------------------------------------------------------
+  BehaviourCommunicationEnum:
+    description: Types of communication behaviours by road users.
+    enum_uri: openlabel_v2:BehaviourCommunication
+    permissible_values:
+      CommunicationHeadlightFlash:
+        description: Flash headlight.
+        meaning: openlabel_v2:CommunicationHeadlightFlash
+      CommunicationHorn:
+        description: Sound horn.
+        meaning: openlabel_v2:CommunicationHorn
+      CommunicationSignalEmergency:
+        description: Signal emergency.
+        meaning: openlabel_v2:CommunicationSignalEmergency
+      CommunicationSignalHazard:
+        description: Signal hazard.
+        meaning: openlabel_v2:CommunicationSignalHazard
+      CommunicationSignalLeft:
+        description: Signal left.
+        meaning: openlabel_v2:CommunicationSignalLeft
+      CommunicationSignalRight:
+        description: Signal right.
+        meaning: openlabel_v2:CommunicationSignalRight
+      CommunicationSignalSlowing:
+        description: Signal slowing.
+        meaning: openlabel_v2:CommunicationSignalSlowing
+      CommunicationWave:
+        description: Wave.
+        meaning: openlabel_v2:CommunicationWave
+
+  # ---------------------------------------------------------------------------
+  # Road User Vehicle
+  # ---------------------------------------------------------------------------
+  RoadUserVehicleEnum:
+    description: Types of vehicles.
+    enum_uri: openlabel_v2:RoadUserVehicle
+    permissible_values:
+      VehicleAgricultural:
+        description: Agricultural vehicle.
+        meaning: openlabel_v2:VehicleAgricultural
+      VehicleBus:
+        description: Bus.
+        meaning: openlabel_v2:VehicleBus
+      VehicleCar:
+        description: Car.
+        meaning: openlabel_v2:VehicleCar
+      VehicleConstruction:
+        description: Construction vehicle.
+        meaning: openlabel_v2:VehicleConstruction
+      VehicleCycle:
+        description: Cycle.
+        meaning: openlabel_v2:VehicleCycle
+      VehicleEmergency:
+        description: Emergency vehicle.
+        meaning: openlabel_v2:VehicleEmergency
+      VehicleMotorcycle:
+        description: Motorcycle.
+        meaning: openlabel_v2:VehicleMotorcycle
+      VehicleTrailer:
+        description: Trailer.
+        meaning: openlabel_v2:VehicleTrailer
+      VehicleTruck:
+        description: Truck.
+        meaning: openlabel_v2:VehicleTruck
+      VehicleVan:
+        description: Van.
+        meaning: openlabel_v2:VehicleVan
+      VehicleWheelchair:
+        description: Wheelchair.
+        meaning: openlabel_v2:VehicleWheelchair
+
+  # ---------------------------------------------------------------------------
+  # Road User Human
+  # ---------------------------------------------------------------------------
+  RoadUserHumanEnum:
+    description: Types of human road users.
+    enum_uri: openlabel_v2:RoadUserHuman
+    permissible_values:
+      HumanAnimalRider:
+        description: Animal rider (e.g. horse rider).
+        meaning: openlabel_v2:HumanAnimalRider
+      HumanCyclist:
+        description: Cyclist.
+        meaning: openlabel_v2:HumanCyclist
+      HumanDriver:
+        description: Driver.
+        meaning: openlabel_v2:HumanDriver
+      HumanMotorcyclist:
+        description: Motorcyclist.
+        meaning: openlabel_v2:HumanMotorcyclist
+      HumanPassenger:
+        description: Passenger.
+        meaning: openlabel_v2:HumanPassenger
+      HumanPedestrian:
+        description: Pedestrian.
+        meaning: openlabel_v2:HumanPedestrian
+      HumanWheelchairUser:
+        description: Wheelchair user.
+        meaning: openlabel_v2:HumanWheelchairUser
+
+  # ---------------------------------------------------------------------------
+  # Drivable Area Edge
+  # ---------------------------------------------------------------------------
+  DrivableAreaEdgeEnum:
+    description: Types of drivable area edges. Refer to BSI PAS-1883 Section 5.2.3.6.
+    enum_uri: openlabel_v2:DrivableAreaEdge
+    permissible_values:
+      EdgeLineMarkers:
+        description: Line markers.
+        meaning: openlabel_v2:EdgeLineMarkers
+      EdgeNone:
+        description: None.
+        meaning: openlabel_v2:EdgeNone
+      EdgeShoulderGrass:
+        description: Shoulder (grass).
+        meaning: openlabel_v2:EdgeShoulderGrass
+      EdgeShoulderPavedOrGravel:
+        description: Shoulder (paved or gravel).
+        meaning: openlabel_v2:EdgeShoulderPavedOrGravel
+      EdgeSolidBarriers:
+        description: Solid barriers (e.g. grating, rails, curb, cones).
+        meaning: openlabel_v2:EdgeSolidBarriers
+      EdgeTemporaryLineMarkers:
+        description: Temporary line markers.
+        meaning: openlabel_v2:EdgeTemporaryLineMarkers
+
+  # ---------------------------------------------------------------------------
+  # Geometry Transverse
+  # ---------------------------------------------------------------------------
+  GeometryTransverseEnum:
+    description: Types of transverse geometry. Refer to BSI PAS-1883 Section 5.2.3.3.b.
+    enum_uri: openlabel_v2:GeometryTransverse
+    permissible_values:
+      TransverseBarriers:
+        description: Barriers on edges.
+        meaning: openlabel_v2:TransverseBarriers
+      TransverseDivided:
+        description: Divided.
+        meaning: openlabel_v2:TransverseDivided
+      TransverseLanesTogether:
+        description: Types of lanes together.
+        meaning: openlabel_v2:TransverseLanesTogether
+      TransversePavements:
+        description: Pavements.
+        meaning: openlabel_v2:TransversePavements
+      TransverseUndivided:
+        description: Undivided.
+        meaning: openlabel_v2:TransverseUndivided
+
+  # ---------------------------------------------------------------------------
+  # Lane Specification Travel Direction
+  # ---------------------------------------------------------------------------
+  LaneSpecificationTravelDirectionEnum:
+    description: Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.
+    enum_uri: openlabel_v2:LaneSpecificationTravelDirection
+    permissible_values:
+      TravelDirectionLeft:
+        description: Left.
+        meaning: openlabel_v2:TravelDirectionLeft
+      TravelDirectionRight:
+        description: Right.
+        meaning: openlabel_v2:TravelDirectionRight
+
+  # ---------------------------------------------------------------------------
+  # Lane Specification Type
+  # ---------------------------------------------------------------------------
+  LaneSpecificationTypeEnum:
+    description: Types of lanes. Refer to BSI PAS-1883 Section 5.2.3.4.c.
+    enum_uri: openlabel_v2:LaneSpecificationType
+    permissible_values:
+      LaneTypeBus:
+        description: Bus lane.
+        meaning: openlabel_v2:LaneTypeBus
+      LaneTypeCycle:
+        description: Cycle lane.
+        meaning: openlabel_v2:LaneTypeCycle
+      LaneTypeEmergency:
+        description: Emergency lane.
+        meaning: openlabel_v2:LaneTypeEmergency
+      LaneTypeSpecial:
+        description: Special purpose lane.
+        meaning: openlabel_v2:LaneTypeSpecial
+      LaneTypeTraffic:
+        description: Traffic lane.
+        meaning: openlabel_v2:LaneTypeTraffic
+      LaneTypeTram:
+        description: Tram lane.
+        meaning: openlabel_v2:LaneTypeTram
+
+  # ---------------------------------------------------------------------------
+  # Signs Information
+  # ---------------------------------------------------------------------------
+  SignsInformationEnum:
+    description: Types of information signs. Refer to BSI PAS-1883 Section 5.2.3.5.a.
+    enum_uri: openlabel_v2:SignsInformation
+    permissible_values:
+      InformationSignsUniformFullTime:
+        description: Uniform full-time.
+        meaning: openlabel_v2:InformationSignsUniformFullTime
+      InformationSignsUniformTemporary:
+        description: Uniform temporary.
+        meaning: openlabel_v2:InformationSignsUniformTemporary
+      InformationSignsVariableFullTime:
+        description: Variable full-time.
+        meaning: openlabel_v2:InformationSignsVariableFullTime
+      InformationSignsVariableTemporary:
+        description: Variable temporary.
+        meaning: openlabel_v2:InformationSignsVariableTemporary
+
+  # ---------------------------------------------------------------------------
+  # Signs Regulatory
+  # ---------------------------------------------------------------------------
+  SignsRegulatoryEnum:
+    description: Types of regulatory signs. Refer to BSI PAS-1883 Section 5.2.3.5.b.
+    enum_uri: openlabel_v2:SignsRegulatory
+    permissible_values:
+      RegulatorySignsUniformFullTime:
+        description: Uniform full-time.
+        meaning: openlabel_v2:RegulatorySignsUniformFullTime
+      RegulatorySignsUniformTemporary:
+        description: Uniform temporary.
+        meaning: openlabel_v2:RegulatorySignsUniformTemporary
+      RegulatorySignsVariableFullTime:
+        description: Variable full-time.
+        meaning: openlabel_v2:RegulatorySignsVariableFullTime
+      RegulatorySignsVariableTemporary:
+        description: Variable temporary.
+        meaning: openlabel_v2:RegulatorySignsVariableTemporary
+
+  # ---------------------------------------------------------------------------
+  # Signs Warning
+  # ---------------------------------------------------------------------------
+  SignsWarningEnum:
+    description: Types of warning signs. Refer to BSI PAS-1883 Section 5.2.3.5.c.
+    enum_uri: openlabel_v2:SignsWarning
+    permissible_values:
+      WarningSignsUniform:
+        description: Uniform.
+        meaning: openlabel_v2:WarningSignsUniform
+      WarningSignsUniformFullTime:
+        description: Uniform full-time.
+        meaning: openlabel_v2:WarningSignsUniformFullTime
+      WarningSignsUniformTemporary:
+        description: Uniform temporary.
+        meaning: openlabel_v2:WarningSignsUniformTemporary
+      WarningSignsVariableFullTime:
+        description: Variable full-time.
+        meaning: openlabel_v2:WarningSignsVariableFullTime
+      WarningSignsVariableTemporary:
+        description: Variable temporary.
+        meaning: openlabel_v2:WarningSignsVariableTemporary
+
+  # ---------------------------------------------------------------------------
+  # Drivable Area Surface Condition
+  # ---------------------------------------------------------------------------
+  DrivableAreaSurfaceConditionEnum:
+    description: Road surface conditions. Refer to BSI PAS-1883 Section 5.2.3.7.c.
+    enum_uri: openlabel_v2:DrivableAreaSurfaceCondition
+    permissible_values:
+      SurfaceConditionContamination:
+        description: Surface contamination.
+        meaning: openlabel_v2:SurfaceConditionContamination
+      SurfaceConditionFlooded:
+        description: Flooded roadways.
+        meaning: openlabel_v2:SurfaceConditionFlooded
+      SurfaceConditionIcy:
+        description: Icy.
+        meaning: openlabel_v2:SurfaceConditionIcy
+      SurfaceConditionMirage:
+        description: Mirage.
+        meaning: openlabel_v2:SurfaceConditionMirage
+      SurfaceConditionSnow:
+        description: Snow on drivable area.
+        meaning: openlabel_v2:SurfaceConditionSnow
+      SurfaceConditionStandingWater:
+        description: Standing water.
+        meaning: openlabel_v2:SurfaceConditionStandingWater
+      SurfaceConditionWet:
+        description: Wet road.
+        meaning: openlabel_v2:SurfaceConditionWet
+
+  # ---------------------------------------------------------------------------
+  # Drivable Area Surface Feature
+  # ---------------------------------------------------------------------------
+  DrivableAreaSurfaceFeatureEnum:
+    description: Road surface features. Refer to BSI PAS-1883 Section 5.2.3.7.b.
+    enum_uri: openlabel_v2:DrivableAreaSurfaceFeature
+    permissible_values:
+      SurfaceFeatureCrack:
+        description: Cracks.
+        meaning: openlabel_v2:SurfaceFeatureCrack
+      SurfaceFeaturePothole:
+        description: Potholes.
+        meaning: openlabel_v2:SurfaceFeaturePothole
+      SurfaceFeatureRut:
+        description: Ruts.
+        meaning: openlabel_v2:SurfaceFeatureRut
+      SurfaceFeatureSwell:
+        description: Swells.
+        meaning: openlabel_v2:SurfaceFeatureSwell
+
+  # ---------------------------------------------------------------------------
+  # Drivable Area Surface Type
+  # ---------------------------------------------------------------------------
+  DrivableAreaSurfaceTypeEnum:
+    description: Road surface types. Refer to BSI PAS-1883 Section 5.2.3.7.a.
+    enum_uri: openlabel_v2:DrivableAreaSurfaceType
+    permissible_values:
+      SurfaceTypeLoose:
+        description: Loose (e.g. gravel, earth, sand).
+        meaning: openlabel_v2:SurfaceTypeLoose
+      SurfaceTypeSegmented:
+        description: Segmented (e.g. concrete slabs, granite setts, cobblestones).
+        meaning: openlabel_v2:SurfaceTypeSegmented
+      SurfaceTypeUniform:
+        description: Uniform (e.g. asphalt).
+        meaning: openlabel_v2:SurfaceTypeUniform
+
+  # ---------------------------------------------------------------------------
+  # Drivable Area Type (Road Types)
+  # ---------------------------------------------------------------------------
+  DrivableAreaTypeEnum:
+    description: Road types. Refer to BSI PAS-1883 Section 5.2.3.2.
+    enum_uri: openlabel_v2:DrivableAreaType
+    permissible_values:
+      RoadTypeDistributor:
+        description: Distributor roads.
+        meaning: openlabel_v2:RoadTypeDistributor
+      RoadTypeMinor:
+        description: Minor roads.
+        meaning: openlabel_v2:RoadTypeMinor
+      RoadTypeMotorway:
+        description: Motorways.
+        meaning: openlabel_v2:RoadTypeMotorway
+      MotorwayManaged:
+        description: Managed motorways.
+        meaning: openlabel_v2:MotorwayManaged
+      MotorwayUnmanaged:
+        description: Unmanaged motorways.
+        meaning: openlabel_v2:MotorwayUnmanaged
+      RoadTypeParking:
+        description: Parking.
+        meaning: openlabel_v2:RoadTypeParking
+      RoadTypeRadial:
+        description: Radial roads.
+        meaning: openlabel_v2:RoadTypeRadial
+      RoadTypeShared:
+        description: Shared space.
+        meaning: openlabel_v2:RoadTypeShared
+      RoadTypeSlip:
+        description: Slip roads.
+        meaning: openlabel_v2:RoadTypeSlip
+
+  # ---------------------------------------------------------------------------
+  # Scenery Fixed Structure
+  # ---------------------------------------------------------------------------
+  SceneryFixedStructureEnum:
+    description: Types of fixed road structures. Refer to BSI PAS-1883 Section 5.2.6.
+    enum_uri: openlabel_v2:SceneryFixedStructure
+    permissible_values:
+      FixedStructureBuilding:
+        description: Buildings.
+        meaning: openlabel_v2:FixedStructureBuilding
+      FixedStructureStreetFurniture:
+        description: Street furniture (e.g. bollards).
+        meaning: openlabel_v2:FixedStructureStreetFurniture
+      FixedStructureStreetlight:
+        description: Street lights.
+        meaning: openlabel_v2:FixedStructureStreetlight
+      FixedStructureVegetation:
+        description: Vegetation.
+        meaning: openlabel_v2:FixedStructureVegetation
+
+  # ---------------------------------------------------------------------------
+  # Junction Intersection
+  # ---------------------------------------------------------------------------
+  JunctionIntersectionEnum:
+    description: Types of intersections. Refer to BSI PAS-1883 Section 5.2.4.
+    enum_uri: openlabel_v2:JunctionIntersection
+    permissible_values:
+      IntersectionCrossroad:
+        description: Crossroads.
+        meaning: openlabel_v2:IntersectionCrossroad
+      IntersectionGradeSeperated:
+        description: Grade separated.
+        meaning: openlabel_v2:IntersectionGradeSeperated
+      IntersectionStaggered:
+        description: Staggered.
+        meaning: openlabel_v2:IntersectionStaggered
+      IntersectionTJunction:
+        description: T-Junctions.
+        meaning: openlabel_v2:IntersectionTJunction
+      IntersectionYJunction:
+        description: Y-Junction.
+        meaning: openlabel_v2:IntersectionYJunction
+
+  # ---------------------------------------------------------------------------
+  # Junction Roundabout
+  # ---------------------------------------------------------------------------
+  JunctionRoundaboutEnum:
+    description: Types of roundabouts. Refer to BSI PAS-1883 Section 5.2.4.
+    enum_uri: openlabel_v2:JunctionRoundabout
+    permissible_values:
+      RoundaboutCompactNosignal:
+        description: Compact non-signalised.
+        meaning: openlabel_v2:RoundaboutCompactNosignal
+      RoundaboutCompactSignal:
+        description: Compact signalised.
+        meaning: openlabel_v2:RoundaboutCompactSignal
+      RoundaboutDoubleNosignal:
+        description: Double non-signalised.
+        meaning: openlabel_v2:RoundaboutDoubleNosignal
+      RoundaboutDoubleSignal:
+        description: Double signalised.
+        meaning: openlabel_v2:RoundaboutDoubleSignal
+      RoundaboutLargeNosignal:
+        description: Large non-signalised.
+        meaning: openlabel_v2:RoundaboutLargeNosignal
+      RoundaboutLargeSignal:
+        description: Large signalised.
+        meaning: openlabel_v2:RoundaboutLargeSignal
+      RoundaboutMiniNosignal:
+        description: Mini non-signalised.
+        meaning: openlabel_v2:RoundaboutMiniNosignal
+      RoundaboutMiniSignal:
+        description: Mini signalised.
+        meaning: openlabel_v2:RoundaboutMiniSignal
+      RoundaboutNormalNosignal:
+        description: Normal non-signalised.
+        meaning: openlabel_v2:RoundaboutNormalNosignal
+      RoundaboutNormalSignal:
+        description: Normal signalised.
+        meaning: openlabel_v2:RoundaboutNormalSignal
+
+  # ---------------------------------------------------------------------------
+  # Scenery Special Structure
+  # ---------------------------------------------------------------------------
+  ScenerySpecialStructureEnum:
+    description: Types of special road structures. Refer to BSI PAS-1883 Section 5.2.5.
+    enum_uri: openlabel_v2:ScenerySpecialStructure
+    permissible_values:
+      SpecialStructureAutoAccess:
+        description: Automatic access control.
+        meaning: openlabel_v2:SpecialStructureAutoAccess
+      SpecialStructureBridge:
+        description: Bridges.
+        meaning: openlabel_v2:SpecialStructureBridge
+      SpecialStructurePedestrianCrossing:
+        description: Pedestrian crossings.
+        meaning: openlabel_v2:SpecialStructurePedestrianCrossing
+      SpecialStructureRailCrossing:
+        description: Rail crossings.
+        meaning: openlabel_v2:SpecialStructureRailCrossing
+      SpecialStructureTollPlaza:
+        description: Toll plaza.
+        meaning: openlabel_v2:SpecialStructureTollPlaza
+      SpecialStructureTunnel:
+        description: Tunnels.
+        meaning: openlabel_v2:SpecialStructureTunnel
+
+  # ---------------------------------------------------------------------------
+  # Scenery Temporary Structure
+  # ---------------------------------------------------------------------------
+  SceneryTemporaryStructureEnum:
+    description: Types of temporary road structures. Refer to BSI PAS-1883 Section 5.2.7.
+    enum_uri: openlabel_v2:SceneryTemporaryStructure
+    permissible_values:
+      TemporaryStructureConstructionDetour:
+        description: Construction site detours.
+        meaning: openlabel_v2:TemporaryStructureConstructionDetour
+      TemporaryStructureRefuseCollection:
+        description: Refuse collection.
+        meaning: openlabel_v2:TemporaryStructureRefuseCollection
+      TemporaryStructureRoadSignage:
+        description: Road signage.
+        meaning: openlabel_v2:TemporaryStructureRoadSignage
+      TemporaryStructureRoadWorks:
+        description: Road works.
+        meaning: openlabel_v2:TemporaryStructureRoadWorks
+
+  # ---------------------------------------------------------------------------
+  # Scenery Zone
+  # ---------------------------------------------------------------------------
+  SceneryZoneEnum:
+    description: Types of zones. Refer to BSI PAS-1883 Section 5.2.2.
+    enum_uri: openlabel_v2:SceneryZone
+    permissible_values:
+      ZoneGeoFenced:
+        description: GeoFenced areas.
+        meaning: openlabel_v2:ZoneGeoFenced
+      ZoneInterference:
+        description: Interference zones.
+        meaning: openlabel_v2:ZoneInterference
+      ZoneRegion:
+        description: Regions or states.
+        meaning: openlabel_v2:ZoneRegion
+      ZoneSchool:
+        description: School zones.
+        meaning: openlabel_v2:ZoneSchool
+      ZoneTrafficManagement:
+        description: Traffic management zones.
+        meaning: openlabel_v2:ZoneTrafficManagement
+
+  # ---------------------------------------------------------------------------
+  # Connectivity Communication
+  # ---------------------------------------------------------------------------
+  ConnectivityCommunicationEnum:
+    description: Types of communication connectivity. Refer to BSI PAS-1883 Section 5.3.4.a.
+    enum_uri: openlabel_v2:ConnectivityCommunication
+    permissible_values:
+      CommunicationV2i:
+        description: Vehicle to infrastructure communication (V2I).
+        meaning: openlabel_v2:CommunicationV2i
+      V2iCellular:
+        description: V2I via cellular network.
+        meaning: openlabel_v2:V2iCellular
+      V2iSatellite:
+        description: V2I via satellite.
+        meaning: openlabel_v2:V2iSatellite
+      V2iWifi:
+        description: V2I via WiFi.
+        meaning: openlabel_v2:V2iWifi
+      CommunicationV2v:
+        description: Vehicle to vehicle communication (V2V).
+        meaning: openlabel_v2:CommunicationV2v
+      V2vCellular:
+        description: V2V via cellular network.
+        meaning: openlabel_v2:V2vCellular
+      V2vSatellite:
+        description: V2V via satellite.
+        meaning: openlabel_v2:V2vSatellite
+      V2vWifi:
+        description: V2V via WiFi.
+        meaning: openlabel_v2:V2vWifi
+
+  # ---------------------------------------------------------------------------
+  # Connectivity Positioning
+  # ---------------------------------------------------------------------------
+  ConnectivityPositioningEnum:
+    description: Types of positioning systems. Refer to BSI PAS-1883 Section 5.3.4.b.
+    enum_uri: openlabel_v2:ConnectivityPositioning
+    permissible_values:
+      PositioningGalileo:
+        description: Galileo.
+        meaning: openlabel_v2:PositioningGalileo
+      PositioningGlonass:
+        description: GLObal NAvigation Satellite System (GLONASS).
+        meaning: openlabel_v2:PositioningGlonass
+      PositioningGps:
+        description: Global Positioning System (GPS).
+        meaning: openlabel_v2:PositioningGps
+
+  # ---------------------------------------------------------------------------
+  # Day Sun Position
+  # ---------------------------------------------------------------------------
+  DaySunPositionEnum:
+    description: Position of the sun relative to direction of travel. Refer to BSI PAS-1883 Section 5.3.3.a.2.
+    enum_uri: openlabel_v2:DaySunPosition
+    permissible_values:
+      SunPositionBehind:
+        description: Sun behind.
+        meaning: openlabel_v2:SunPositionBehind
+      SunPositionFront:
+        description: Sun in front.
+        meaning: openlabel_v2:SunPositionFront
+      SunPositionLeft:
+        description: Sun on the left.
+        meaning: openlabel_v2:SunPositionLeft
+      SunPositionRight:
+        description: Sun on the right.
+        meaning: openlabel_v2:SunPositionRight
+
+  # ---------------------------------------------------------------------------
+  # Illumination Artificial
+  # ---------------------------------------------------------------------------
+  IlluminationArtificialEnum:
+    description: Types of artificial illumination. Refer to BSI PAS-1883 Section 5.3.3.d.
+    enum_uri: openlabel_v2:IlluminationArtificial
+    permissible_values:
+      ArtificialStreetLighting:
+        description: Streetlights.
+        meaning: openlabel_v2:ArtificialStreetLighting
+      ArtificialVehicleLighting:
+        description: Oncoming vehicle lights.
+        meaning: openlabel_v2:ArtificialVehicleLighting
+
+  # ---------------------------------------------------------------------------
+  # Illumination Low Light
+  # ---------------------------------------------------------------------------
+  IlluminationLowLightEnum:
+    description: Types of low light conditions. Refer to BSI PAS-1883 Section 5.3.3.b.
+    enum_uri: openlabel_v2:IlluminationLowLight
+    permissible_values:
+      LowLightAmbient:
+        description: Low ambient lighting.
+        meaning: openlabel_v2:LowLightAmbient
+      LowLightNight:
+        description: Night.
+        meaning: openlabel_v2:LowLightNight
+
+  # ---------------------------------------------------------------------------
+  # Rain Type
+  # ---------------------------------------------------------------------------
+  RainTypeEnum:
+    description: Types of rainfall. Refer to BSI PAS-1883 Section 5.3.1.2.
+    enum_uri: openlabel_v2:RainType
+    permissible_values:
+      RainTypeConvective:
+        description: Convective.
+        meaning: openlabel_v2:RainTypeConvective
+      RainTypeDynamic:
+        description: Dynamic.
+        meaning: openlabel_v2:RainTypeDynamic
+      RainTypeOrographic:
+        description: Orographic.
+        meaning: openlabel_v2:RainTypeOrographic
+
+  # ---------------------------------------------------------------------------
+  # Environment Particulates
+  # ---------------------------------------------------------------------------
+  EnvironmentParticulatesEnum:
+    description: Types of particulates. Refer to BSI PAS-1883 Section 5.3.2.
+    enum_uri: openlabel_v2:EnvironmentParticulates
+    permissible_values:
+      ParticulatesDust:
+        description: Sand and dust.
+        meaning: openlabel_v2:ParticulatesDust
+      ParticulatesMarine:
+        description: Marine (coastal areas only).
+        meaning: openlabel_v2:ParticulatesMarine
+      ParticulatesPollution:
+        description: Smoke and pollution.
+        meaning: openlabel_v2:ParticulatesPollution
+      ParticulatesVolcanic:
+        description: Volcanic ash.
+        meaning: openlabel_v2:ParticulatesVolcanic
+      ParticulatesWater:
+        description: Non-precipitating water droplets or ice crystals (i.e. mist/fog).
+        meaning: openlabel_v2:ParticulatesWater
