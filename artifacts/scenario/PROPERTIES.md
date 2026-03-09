@@ -54,7 +54,7 @@ class Content_or_OpenLabel_Tag
 - geo: <http://www.opengis.net/ont/geosparql#>
 - georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/>
 - gx: <https://w3id.org/gaia-x/development#>
-- hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v5/>
+- hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/>
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
 - odrl: <http://www.w3.org/ns/odrl/2/>
 - openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/>

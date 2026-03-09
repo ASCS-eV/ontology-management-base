@@ -382,7 +382,7 @@ tzip21:OntologyConformanceAttributeShape
       sh:datatype xsd:string ;
       sh:pattern "^https://w3id\\.org/" ;
       rdfs:label "Ontology URI" ;
-      sh:description "The w3id.org URI of the ontology that the simulation asset conforms to (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v5/')." ;
+      sh:description "The w3id.org URI of the ontology that the simulation asset conforms to (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v6/')." ;
       sh:minCount 1 ;
       sh:maxCount 1 ;
   ],

@@ -44,7 +44,7 @@ Each item under this property may be **either**:
 ```json
 {
   "@context": {
-    "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+    "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
     "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
