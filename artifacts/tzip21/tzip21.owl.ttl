@@ -67,7 +67,7 @@ tzip21:OntologyConformanceAttribute a owl:Class ;
                     conformance relationships in the ENVITED-X ecosystem. The 'name' field contains the reverse
                     domain notation identifier (e.g., 'com.github.ascs-ev.ontology-management-base.hdmap.ontology'),
                     and the 'value' field contains the w3id.org ontology URI
-                    (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v5/')."""@en .
+                    (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v6/')."""@en .
 
 tzip21:DataRate a owl:Class ;
     rdfs:label "Class definition for DataRate"@en ;

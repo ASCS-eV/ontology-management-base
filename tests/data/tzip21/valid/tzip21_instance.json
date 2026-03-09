@@ -112,7 +112,7 @@
       {
          "@type": "tzip21:OntologyConformanceAttribute",
          "tzip21:name": "com.github.ascs-ev.ontology-management-base.hdmap.ontology",
-         "tzip21:value": "https://w3id.org/ascs-ev/envited-x/hdmap/v5/",
+         "tzip21:value": "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
          "tzip21:type": "uri"
       },
       {

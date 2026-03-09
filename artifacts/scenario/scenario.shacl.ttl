@@ -1,6 +1,6 @@
 @prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/> .
 @prefix environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/> .
-@prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v5/> .
+@prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> .
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
 @prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .

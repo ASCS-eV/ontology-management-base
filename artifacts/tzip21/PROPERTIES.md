@@ -36,7 +36,7 @@ Class_definition_for_Attribute <|-- Class_definition_for_OntologyConformanceAttr
                     conformance relationships in the ENVITED-X ecosystem. The 'name' field contains the reverse
                     domain notation identifier (e.g., 'com.github.ascs-ev.ontology-management-base.hdmap.ontology'),
                     and the 'value' field contains the w3id.org ontology URI
-                    (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v5/').|Attribute|
+                    (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v6/').|Attribute|
 
 ## Prefixes
 
@@ -155,7 +155,7 @@ Class_definition_for_Attribute <|-- Class_definition_for_OntologyConformanceAttr
 |AttributeShape|tzip21|<a id="prop-https---w3id-org-ascs-ev-envited-x-tzip21-v1-value"></a>value|1|1|Value of the attribute.|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
 |AttributeShape|tzip21|type|0|1|Type of the attribute value (e.g. number, integer, percentage) for display purposes. (Optional)|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
 |OntologyConformanceAttributeShape|tzip21|name|1|1|Reverse domain notation identifier for the ontology (e.g., 'com.github.ascs-ev.ontology-management-base.hdmap.ontology').|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
-|OntologyConformanceAttributeShape|tzip21|value|1|1|The w3id.org URI of the ontology that the simulation asset conforms to (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v5/').|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
+|OntologyConformanceAttributeShape|tzip21|value|1|1|The w3id.org URI of the ontology that the simulation asset conforms to (e.g., 'https://w3id.org/ascs-ev/envited-x/hdmap/v6/').|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
 |OntologyConformanceAttributeShape|tzip21|type|1|1|Must be 'uri' for ontology conformance attributes.|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
 |DataRateShape|tzip21|value|1|1|Numeric value of the data rate.|<http://www.w3.org/2001/XMLSchema#integer>|tzip21.shacl.ttl|
 |DataRateShape|tzip21|<a id="prop-https---w3id-org-ascs-ev-envited-x-tzip21-v1-unit"></a>unit|1|1|Unit for the data rate (e.g. 'kbps').|<http://www.w3.org/2001/XMLSchema#string>|tzip21.shacl.ttl|
