@@ -141,6 +141,7 @@ nav:
       - Domain Migration Guide: gaiax/gx-domain-migration.md
   - ENVITED Ecosystem:
       - ENVITED-X Data Space: ecosystem/envited-x.md
+      - Release Process: ecosystem/release-process.md
       - Long-Term Maintenance: ecosystem/maintenance.md
   - Future:
       - LinkML Migration: future/linkml.md

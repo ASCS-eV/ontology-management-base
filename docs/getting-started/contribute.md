@@ -49,6 +49,11 @@ Hook flow (via `hooks/copy_artifacts.py`):
 4. The hook copies `artifacts/<domain>/` into `docs/artifacts/<domain>/<versionInfo>/` and adds example instances from `tests/data/`.
 5. Generated folders (`docs/artifacts/`, `docs/ontologies/classes/`, `docs/ontologies/properties/`) are ignored by git.
 
+## Releasing
+
+See the [Release Process](../ecosystem/release-process.md) guide for how maintainers
+create tagged releases and publish documentation.
+
 ## Review Checklist
 
 - Ontology IRI and version are consistent
