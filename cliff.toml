@@ -30,6 +30,11 @@ conventional_commits = true
 filter_unconventional = false
 # process each line of a commit as an individual commit
 split_commits = false
+# strip trailing PR references from commit messages to avoid duplicates
+# (the template already adds a linked PR reference via commit.remote.pr_number)
+commit_preprocessors = [
+    { pattern = ' *\(#\d+\)$', replace = "" },
+]
 # sort the tags topologically
 topo_order = false
 # sort the commits inside sections by oldest/newest order
