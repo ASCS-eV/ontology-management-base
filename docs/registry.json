@@ -238,7 +238,7 @@
          "latest": "v2.0.0",
          "versions": {
             "v2.0.0": {
-               "releaseTag": "v0.1.3",
+               "releaseTag": "v0.1.4",
                "versionInfo": "v2.0.0",
                "versionIri": "https://w3id.org/ascs-ev/envited-x/openlabel/v2",
                "files": {
