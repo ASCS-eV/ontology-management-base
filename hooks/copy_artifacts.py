@@ -19,7 +19,9 @@ import sys
 from pathlib import Path
 
 import rdflib
-from rdflib import OWL, RDF, URIRef
+from rdflib import OWL, RDF, Namespace, URIRef
+
+PAV = Namespace("http://purl.org/pav/")
 
 ROOT_DIR = Path(__file__).parent.parent.resolve()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
@@ -49,6 +51,8 @@ def _extract_version_info(owl_file: Path) -> str:
         return "unknown"
 
     version_info = graph.value(ontology, OWL.versionInfo)
+    if version_info is None:
+        version_info = graph.value(ontology, PAV.version)
     if version_info is not None:
         return _safe_path_segment(_normalize_version_info(str(version_info)))
 

@@ -99,7 +99,7 @@ Configuration lives in [`cliff.toml`](https://github.com/ASCS-eV/ontology-manage
 
 After the workflow completes, verify:
 
-- [ ] [GitHub Release](https://github.com/ASCS-eV/ontology-management-base/releases) exists with correct notes
-- [ ] `docs/registry.json` on `main` reflects the new tag
-- [ ] [Documentation site](https://ascs-ev.github.io/ontology-management-base/) is updated
-- [ ] W3ID IRIs resolve (e.g., `https://w3id.org/ascs-ev/envited-x/{domain}/v{n}`)
+- [GitHub Release](https://github.com/ASCS-eV/ontology-management-base/releases) exists with correct notes
+- `docs/registry.json` on `main` reflects the new tag
+- [Documentation site](https://ascs-ev.github.io/ontology-management-base/) is updated
+- W3ID IRIs resolve (e.g., `https://w3id.org/ascs-ev/envited-x/{domain}/v{n}`)
