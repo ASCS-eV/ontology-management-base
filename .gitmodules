@@ -1,9 +1,9 @@
 [submodule "submodules/service-characteristics"]
 	path = submodules/service-characteristics
-	url = git@gitlab.com:ascs-ev/service-characteristics.git
+	url = https://gitlab.com/ascs-ev/service-characteristics.git
 [submodule "submodules/w3id.org"]
 	path = submodules/w3id.org
-	url = git@github.com:ASCS-eV/w3id.org.git
+	url = https://github.com/ASCS-eV/w3id.org.git
 [submodule "submodules/sunrise_ontology"]
 	path = submodules/sunrise_ontology
-	url = git@github.com:ika-rwth-aachen/sunrise_ontology.git
+	url = https://github.com/ika-rwth-aachen/sunrise_ontology.git
