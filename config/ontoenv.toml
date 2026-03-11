@@ -17,6 +17,10 @@ local = "imports/cs/cs.owl.ttl"
 uri = "http://purl.org/dc/terms/"
 local = "imports/dcterms/dcterms.owl.ttl"
 
+[dependencies.did]
+uri = "https://www.w3.org/ns/did#"
+local = "imports/did/did.owl.ttl"
+
 [dependencies.foaf]
 uri = "http://xmlns.com/foaf/0.1/"
 local = "imports/foaf/foaf.owl.ttl"
@@ -46,6 +50,10 @@ local = "imports/rdfs/rdfs.owl.ttl"
 [dependencies.schema]
 uri = "http://schema.org/"
 local = "imports/schema/schema.owl.ttl"
+
+[dependencies.sec]
+uri = "https://w3id.org/security#"
+local = "imports/sec/sec.owl.ttl"
 
 [dependencies.sh]
 uri = "http://www.w3.org/ns/shacl#"
