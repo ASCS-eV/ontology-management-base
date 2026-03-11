@@ -40,7 +40,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN
 permissions:
-  contents: read
+  contents: write   # Required to persist W3ID artifacts to w3id-content branch
   pages: write
   id-token: write
 
@@ -170,24 +170,22 @@ jobs:
               shutil.copy2(version_dir / "context.jsonld", latest_dir / "context.jsonld")
           PY
 
-      - name: Fetch existing W3ID artifacts (gh-pages)
+      - name: Fetch cached W3ID artifacts
         uses: actions/checkout@v4
         with:
-          ref: gh-pages
-          path: gh-pages
+          ref: w3id-content
+          path: w3id-cache
           fetch-depth: 1
         continue-on-error: true
 
       - name: Preserve W3ID artifacts
         run: |
-          if [ -d gh-pages/w3id ]; then
-            # Restore all previously-published W3ID artifacts from gh-pages.
-            # During releases (build_w3id=true): fresh build takes precedence
-            # for the newly released version; old versions are preserved.
-            # During main pushes (build_w3id=false): no fresh w3id artifacts
-            # exist, so everything is restored from gh-pages unchanged.
-            find gh-pages/w3id -type f | while read -r src; do
-              rel="${src#gh-pages/w3id/}"
+          # Merge cached W3ID artifacts into the site.
+          # Previously-published versions that are NOT in the fresh build
+          # are preserved; freshly-built versions take precedence.
+          if [ -d w3id-cache ] && [ ! -f w3id-cache/.empty ]; then
+            find w3id-cache -type f -not -path '*/\.git/*' | while read -r src; do
+              rel="${src#w3id-cache/}"
               dest="site/w3id/$rel"
               if [ ! -f "$dest" ]; then
                 mkdir -p "$(dirname "$dest")"
@@ -200,6 +198,27 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
+
+      - name: Persist W3ID artifacts to cache branch
+        run: |
+          # Push the merged W3ID directory to the w3id-content branch so
+          # future deploys can restore all previously-released versions.
+          if [ ! -d site/w3id ] || [ -z "$(find site/w3id -type f -print -quit 2>/dev/null)" ]; then
+            echo "No W3ID artifacts to persist — skipping."
+            exit 0
+          fi
+          TMPDIR=$(mktemp -d)
+          cp -r site/w3id/* "$TMPDIR/"
+          cd "$TMPDIR"
+          git init -b w3id-content
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update W3ID artifacts cache [skip ci]"
+          git remote add origin \
+            "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          git push --force origin w3id-content
+          rm -rf "$TMPDIR"
 
   deploy:
     name: 🚀 Deploy to GitHub Pages
