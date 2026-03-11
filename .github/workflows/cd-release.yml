@@ -111,6 +111,6 @@ jobs:
       ref: ${{ needs.release.outputs.tag }}
       build_w3id: true
     permissions:
-      contents: read
+      contents: write  # Required for W3ID artifact cache branch
       pages: write
       id-token: write
