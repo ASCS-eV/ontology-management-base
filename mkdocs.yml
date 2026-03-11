@@ -90,6 +90,7 @@ nav:
         - leakage-test: ontologies/properties/leakage-test.md
         - manifest: ontologies/properties/manifest.md
         - openlabel: ontologies/properties/openlabel.md
+        - openlabel-v2: ontologies/properties/openlabel-v2.md
         - ositrace: ontologies/properties/ositrace.md
         - scenario: ontologies/properties/scenario.md
         - service: ontologies/properties/service.md
@@ -113,6 +114,7 @@ nav:
         - leakage-test: ontologies/classes/leakage-test/index.md
         - manifest: ontologies/classes/manifest/index.md
         - openlabel: ontologies/classes/openlabel/index.md
+        - openlabel-v2: ontologies/classes/openlabel-v2/index.md
         - ositrace: ontologies/classes/ositrace/index.md
         - scenario: ontologies/classes/scenario/index.md
         - service: ontologies/classes/service/index.md

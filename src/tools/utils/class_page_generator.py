@@ -47,10 +47,11 @@ from typing import Dict, List, Optional, Set
 from urllib.parse import quote
 
 import rdflib
-from rdflib import OWL, RDF, RDFS, URIRef
+from rdflib import OWL, RDF, RDFS, Namespace, URIRef
 
 from src.tools.core.logging import get_logger
 
+PAV = Namespace("http://purl.org/pav/")
 logger = get_logger(__name__)
 
 ROOT_DIR = Path(__file__).parent.parent.parent.parent.resolve()
@@ -197,6 +198,8 @@ def _extract_version_info(owl_graph: rdflib.Graph) -> str:
         return "unknown"
 
     version_info = owl_graph.value(ontology, OWL.versionInfo)
+    if version_info is None:
+        version_info = owl_graph.value(ontology, PAV.version)
     if version_info is not None:
         return _normalize_version_info(str(version_info))
 
