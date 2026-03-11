@@ -175,7 +175,7 @@ def format_data_conformance_result(
     _print_boxed_line(header.center(inner_width - 1), width, file=file)
     if onto_files:
         _print_boxed_line(" ", width, file=file)
-        formatted_files = f"[{', '.join(f'\'{_clean(f)}\'' for f in onto_files)}]"
+        formatted_files = f"[{', '.join(f"'{_clean(f)}'" for f in onto_files)}]"
         for line in textwrap.wrap(formatted_files, width=inner_width):
             _print_boxed_line(line.center(inner_width), width, file=file)
         _print_boxed_line(" ", width, file=file)

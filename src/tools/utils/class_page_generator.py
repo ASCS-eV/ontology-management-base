@@ -894,16 +894,16 @@ and references the official Gaia-X types.
 For complete class definitions, interactive visualizations, and the latest
 specifications, please visit the official documentation:
 
-**[{ext['url']}]({ext['url']}){{ .md-button .md-button--primary target=_blank }}**
+**[{ext["url"]}]({ext["url"]}){{ .md-button .md-button--primary target=_blank }}**
 
 ## Common Classes Referenced
 
 The following Gaia-X classes are commonly referenced by ENVITED-X ontologies:
 
-- [LegalPerson]({ext['class_url'].format(**{'class': 'LegalPerson'})}){{ target=_blank }}
-- [ServiceOffering]({ext['class_url'].format(**{'class': 'ServiceOffering'})}){{ target=_blank }}
-- [DataResource]({ext['class_url'].format(**{'class': 'DataResource'})}){{ target=_blank }}
-- [Participant]({ext['class_url'].format(**{'class': 'Participant'})}){{ target=_blank }}
+- [LegalPerson]({ext["class_url"].format(**{"class": "LegalPerson"})}){{ target=_blank }}
+- [ServiceOffering]({ext["class_url"].format(**{"class": "ServiceOffering"})}){{ target=_blank }}
+- [DataResource]({ext["class_url"].format(**{"class": "DataResource"})}){{ target=_blank }}
+- [Participant]({ext["class_url"].format(**{"class": "Participant"})}){{ target=_blank }}
 """
 
 

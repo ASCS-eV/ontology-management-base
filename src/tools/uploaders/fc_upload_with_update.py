@@ -404,8 +404,7 @@ def put_to_catalogue(
         response = requests.put(endpoint, headers=auth_header, data=request_body)
         if response.status_code not in [200, 201]:
             raise requests.exceptions.RequestException(
-                f"Failed to PUT data to {endpoint}. Status code: "
-                f"{response.status_code}"
+                f"Failed to PUT data to {endpoint}. Status code: {response.status_code}"
             )
         print(f"Successfully updated {endpoint}: {response.status_code}")
         return response

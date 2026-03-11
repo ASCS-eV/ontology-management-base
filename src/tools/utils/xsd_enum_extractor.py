@@ -283,15 +283,15 @@ def _run_tests() -> bool:
             road_types = enums["e_roadType"]
             assert "motorway" in road_types.value_strings
             assert "rural" in road_types.value_strings
-            assert (
-                len(road_types.values) == 13
-            ), f"Expected 13 road types, got {len(road_types.values)}"
+            assert len(road_types.values) == 13, (
+                f"Expected 13 road types, got {len(road_types.values)}"
+            )
 
             # Check e_laneType has deprecated values
             lane_types = enums["e_laneType"]
-            assert (
-                len(lane_types.deprecated_values) > 0
-            ), "e_laneType should have deprecated values"
+            assert len(lane_types.deprecated_values) > 0, (
+                "e_laneType should have deprecated values"
+            )
             assert "mwyEntry" in lane_types.deprecated_values
 
             # Check e_trafficRule
@@ -315,22 +315,22 @@ def _run_tests() -> bool:
             # Check known enums exist
             assert "VehicleCategory" in enums, "VehicleCategory should be extracted"
             assert "ObjectType" in enums, "ObjectType should be extracted"
-            assert (
-                "PedestrianCategory" in enums
-            ), "PedestrianCategory should be extracted"
+            assert "PedestrianCategory" in enums, (
+                "PedestrianCategory should be extracted"
+            )
             assert "PrecipitationType" in enums, "PrecipitationType should be extracted"
-            assert (
-                "MiscObjectCategory" in enums
-            ), "MiscObjectCategory should be extracted"
+            assert "MiscObjectCategory" in enums, (
+                "MiscObjectCategory should be extracted"
+            )
 
             # Check VehicleCategory values
             vehicles = enums["VehicleCategory"]
             assert "car" in vehicles.value_strings
             assert "truck" in vehicles.value_strings
             assert "bicycle" in vehicles.value_strings
-            assert (
-                len(vehicles.values) == 10
-            ), f"Expected 10 vehicle categories, got {len(vehicles.values)}"
+            assert len(vehicles.values) == 10, (
+                f"Expected 10 vehicle categories, got {len(vehicles.values)}"
+            )
 
             # Check PrecipitationType
             precip = enums["PrecipitationType"]

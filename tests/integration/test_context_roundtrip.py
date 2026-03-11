@@ -90,9 +90,9 @@ class TestManifestContextRoundtrip:
         manifest_type = "https://w3id.org/ascs-ev/envited-x/manifest/v5/Manifest"
         types = [str(o) for s, p, o in g.triples((None, RDF.type, None))]
 
-        assert (
-            manifest_type in types
-        ), f"Expected Manifest type not found. Found: {types}"
+        assert manifest_type in types, (
+            f"Expected Manifest type not found. Found: {types}"
+        )
 
     def test_datatype_coercion_integer_filesize(
         self, verbose_instance, manifest_context
@@ -109,9 +109,9 @@ class TestManifestContextRoundtrip:
 
         for s, p, o in g:
             if str(p) == file_size_uri:
-                assert (
-                    str(o.datatype) == xsd_integer
-                ), f"fileSize should be xsd:integer, got {o.datatype}"
+                assert str(o.datatype) == xsd_integer, (
+                    f"fileSize should be xsd:integer, got {o.datatype}"
+                )
                 return
 
         # fileSize should exist in the graph
@@ -130,9 +130,9 @@ class TestManifestContextRoundtrip:
 
         for s, p, o in g:
             if str(p) == width_uri:
-                assert (
-                    str(o.datatype) == xsd_float
-                ), f"width should be xsd:float, got {o.datatype}"
+                assert str(o.datatype) == xsd_float, (
+                    f"width should be xsd:float, got {o.datatype}"
+                )
                 return
 
         # width should exist in the graph
@@ -181,6 +181,6 @@ class TestContextRoundtripGeneric:
         # Find the domain prefix (may differ from domain name for legacy domains)
         domain_prefix_value = ctx.get(domain)
         if domain_prefix_value:
-            assert domain_prefix_value.startswith(
-                "http"
-            ), f"Prefix should be IRI: {domain_prefix_value}"
+            assert domain_prefix_value.startswith("http"), (
+                f"Prefix should be IRI: {domain_prefix_value}"
+            )

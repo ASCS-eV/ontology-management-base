@@ -102,8 +102,8 @@ lint:
 format:
 	$(call check_dev_setup)
 	@echo "[INFO] Formatting Python code..."
-	@"$(PYTHON)" -m black src/
-	@"$(PYTHON)" -m isort src/
+	@"$(PYTHON)" -m ruff check --fix src/
+	@"$(PYTHON)" -m ruff format src/
 	@echo "[OK] Python formatting complete"
 
 # LinkML generation targets
@@ -230,7 +230,7 @@ help:
 	@echo ""
 	@echo "Linting:"
 	@echo "  make lint           - Run pre-commit checks"
-	@echo "  make format         - Format code with black/isort"
+	@echo "  make format         - Format code with ruff"
 	@echo ""
 	@echo "LinkML:"
 	@echo "  make generate                    - Generate OWL/SHACL/context from all LinkML schemas"
