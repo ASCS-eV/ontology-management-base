@@ -173,9 +173,7 @@ def test_check_syntax_all_domain_filter(repo_with_test_data: Path):
     )
     (
         repo_with_test_data / "tests" / "data" / "other-domain" / "valid" / "other.json"
-    ).write_text(
-        '{"invalid": json}'
-    )  # Invalid but shouldn't be checked
+    ).write_text('{"invalid": json}')  # Invalid but shouldn't be checked
 
     result = validation_suite.check_syntax_all(["test-domain"], resolver=resolver)
     assert result == 0  # Only test-domain is checked

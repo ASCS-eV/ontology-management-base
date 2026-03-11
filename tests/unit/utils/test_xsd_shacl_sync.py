@@ -270,9 +270,9 @@ class TestActualSyncCheck:
 
     def test_all_in_sync(self, sync_report):
         for result in sync_report.results:
-            assert (
-                result.in_sync
-            ), f"{result.shacl_property} is not in sync: {result.summary()}"
+            assert result.in_sync, (
+                f"{result.shacl_property} is not in sync: {result.summary()}"
+            )
 
     def test_road_types_sync(self, sync_report):
         road = next(r for r in sync_report.results if r.shacl_property == "roadTypes")
