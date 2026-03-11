@@ -52,7 +52,7 @@ pytest tests/ --cov=src/tools --cov-report=html
 
 # Lint and format
 make lint       # pre-commit on all files
-make format     # black + isort on src/
+make format     # ruff check --fix + ruff format on src/
 
 # Run module self-tests
 python3 -m src.tools.utils.file_collector --test
@@ -127,7 +127,7 @@ W3ID redirect rules live in the `submodules/w3id.org/` submodule (`gaia-x4plcaad
 ### Pre-commit Hooks
 
 Auto-triggered on relevant file changes (configured in `.pre-commit-config.yaml`):
-- **black / isort / flake8** — Python formatting and linting
+- **ruff** — Python linting and formatting
 - **jsonld-lint / turtle-lint** — Syntax validation for `.json`/`.jsonld`/`.ttl` files
 - **update-registry** — Regenerates `artifacts/catalog-v001.xml` when artifact files change
 - **update-properties** — Regenerates `PROPERTIES.md` documentation

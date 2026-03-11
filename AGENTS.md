@@ -24,7 +24,7 @@ Read these before making changes; they are authoritative for repo workflows.
 
 - `make setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
 - `make install-dev` reinstalls dev dependencies and pre-commit hooks in the active environment.
-- `make lint` runs `pre-commit`; `make format` runs `black` and `isort` on `src/`.
+- `make lint` runs `pre-commit`; `make format` runs `ruff check --fix` and `ruff format` on `src/`.
 - `python3 -m src.tools.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
 - `pytest tests/` runs all tests; `pytest tests/ --cov=src/tools --cov-report=html` generates coverage reports.
 - `make registry-update TAG=vX.Y.Z` updates catalogs for a release; `make docs-serve` runs docs locally.

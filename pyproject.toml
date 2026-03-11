@@ -32,9 +32,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "black==25.12.0",
-    "flake8==7.1.2",
-    "isort==7.0.0",
+    "ruff",
     "linkml>=1.10.0",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
@@ -68,23 +66,24 @@ onto-generate-context = "src.tools.utils.context_generator:main"
 where = ["."]
 include = ["src*"]
 
-[tool.black]
+[tool.ruff]
 line-length = 88
-target-version = ["py312"]
-exclude = '''
-/(
-    \.git
-  | \.venv
-  | build
-  | dist
-  | node_modules
-)/
-'''
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "node_modules",
+]
 
-[tool.isort]
-profile = "black"
-line_length = 88
-skip = [".git", ".venv", "build", "dist", "node_modules"]
+[tool.ruff.lint]
+ignore = [
+    "E501",   # line too long (formatter handles it)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
