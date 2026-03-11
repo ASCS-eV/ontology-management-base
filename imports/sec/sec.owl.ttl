@@ -1,0 +1,17 @@
+@prefix sec: <https://w3id.org/security#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix jsonld: <http://www.w3.org/ns/json-ld#> .
+
+# Ontology definition
+sec: a owl:Ontology ;
+    dc:title "Security Vocabulary"@en ;
+    dc:description "W3C Security vocabulary including EcdsaSecp256k1RecoveryMethod2020."@en ;
+    rdfs:seeAlso <https://w3c-ccg.github.io/security-vocab/> ;
+.
+
+# Context files and their mentions
+<https://w3id.org/security/suites/secp256k1recovery-2020/v2> a jsonld:Context .

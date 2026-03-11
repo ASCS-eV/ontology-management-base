@@ -1,0 +1,17 @@
+@prefix did: <https://www.w3.org/ns/did#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix jsonld: <http://www.w3.org/ns/json-ld#> .
+
+# Ontology definition
+did: a owl:Ontology ;
+    dc:title "DID Core Vocabulary"@en ;
+    dc:description "W3C DID Core v1.0 vocabulary for Decentralized Identifiers."@en ;
+    rdfs:seeAlso <https://www.w3.org/TR/did-core/> ;
+.
+
+# Context files and their mentions
+<https://www.w3.org/ns/did/v1> a jsonld:Context .

@@ -41,6 +41,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sarif: <http://sarif.info/> .
+@prefix jsonld: <http://www.w3.org/ns/json-ld#> .
 @prefix schema: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix snomed: <http://purl.bioontology.org/ontology/SNOMEDCT/> .
@@ -21560,3 +21561,6 @@ schema:identifier a rdf:Property ;
         schema:Text,
         schema:URL .
 
+
+# Context files and their mentions
+<https://schema.org> a jsonld:Context .
