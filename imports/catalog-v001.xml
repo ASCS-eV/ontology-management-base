@@ -16,4 +16,7 @@
   <uri name="https://www.w3.org/ns/credentials/status#" uri="cs/cs.owl.ttl"/>
   <uri name="https://www.w3.org/ns/credentials/status/v1" uri="cs/cs.context.jsonld"/>
   <uri name="https://www.w3.org/ns/credentials/v2" uri="cred/cred.context.jsonld"/>
+  <uri name="https://www.w3.org/ns/did/v1" uri="did/did.context.jsonld"/>
+  <uri name="https://w3id.org/security/suites/secp256k1recovery-2020/v2" uri="sec/sec.context.jsonld"/>
+  <uri name="https://schema.org" uri="schema/schema.context.jsonld"/>
 </catalog>
