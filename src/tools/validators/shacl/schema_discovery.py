@@ -63,38 +63,39 @@ def extract_datatype_iris(graph: Graph) -> Set[str]:
 def discover_required_schemas(
     rdf_types: Set[str],
     resolver: RegistryResolver,
+    used_iris: Optional[Set[str]] = None,
 ) -> Tuple[List[str], List[str], Set[str]]:
     """
     Map RDF types to required ontology and SHACL files.
 
-    Uses the registry resolver to find the ontology domains that define
-    the given RDF types, then returns paths to their ontology and SHACL files.
+    Uses the registry resolver to discover artifact and import resources for the
+    IRIs actually present in the data graph. Unresolved type reporting remains
+    based on ``rdf:type`` values, but ontology/SHACL discovery can also be
+    triggered by predicates and datatypes from referenced fixtures.
 
     Args:
         rdf_types: Set of rdf:type IRIs found in the data
         resolver: RegistryResolver instance
+        used_iris: Optional set of all IRIs used in the graph (types,
+            predicates, datatypes). When omitted, discovery falls back to
+            ``rdf_types`` only.
 
     Returns:
         Tuple of (ontology_paths, shacl_paths, unresolved_types).
         ``unresolved_types`` contains type IRIs that could not be mapped to
         any catalog domain or imported namespace.
     """
-    ontology_paths = []
-    shacl_paths = []
-    domains_found = set()
+    discovery_iris = set(rdf_types)
+    if used_iris:
+        discovery_iris.update(used_iris)
+
+    ontology_paths, shacl_paths = resolver.get_artifact_paths_for_iris(discovery_iris)
+    shacl_paths.extend(resolver.get_import_shacl_paths_for_iris(discovery_iris))
     unresolved_types: Set[str] = set()
 
     for rdf_type in rdf_types:
         domain = resolver.resolve_type_to_domain(rdf_type)
-        if domain and domain not in domains_found:
-            domains_found.add(domain)
-
-            ont_path = resolver.get_ontology_path(domain)
-            if ont_path:
-                ontology_paths.append(ont_path)
-
-            shacl_paths.extend(resolver.get_shacl_paths(domain))
-        elif domain is None and not resolver.is_imported_namespace(rdf_type):
+        if domain is None and not resolver.is_imported_namespace(rdf_type):
             unresolved_types.add(rdf_type)
 
     return sorted(set(ontology_paths)), sorted(set(shacl_paths)), unresolved_types

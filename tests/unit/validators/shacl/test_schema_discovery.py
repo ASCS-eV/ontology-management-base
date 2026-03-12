@@ -102,6 +102,70 @@ def test_discover_required_schemas_with_catalog(temp_dir: Path):
     assert unresolved == set()
 
 
+def test_discover_required_schemas_uses_all_used_iris_for_artifacts(temp_dir: Path):
+    _write_registry(temp_dir)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="http://example.org/demo/v1" uri="demo/demo.owl.ttl"/>
+  <uri name="http://example.org/demo/v1/shapes" uri="demo/demo.shacl.ttl"/>
+</catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+    ontology_paths, shacl_paths, unresolved = (
+        schema_discovery.discover_required_schemas(
+            set(),
+            resolver,
+            used_iris={"http://example.org/demo/v1/hasThing"},
+        )
+    )
+
+    assert ontology_paths == ["artifacts/demo/demo.owl.ttl"]
+    assert shacl_paths == ["artifacts/demo/demo.shacl.ttl"]
+    assert unresolved == set()
+
+
+def test_discover_required_schemas_includes_import_shacl_for_used_iris(
+    temp_dir: Path,
+):
+    _write_registry(temp_dir)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+    _write_imports_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="https://www.w3.org/ns/did#" uri="did/did.owl.ttl"/>
+  <uri name="https://www.w3.org/ns/did#shapes" uri="did/did.shacl.ttl"/>
+</catalog>
+""",
+    )
+
+    resolver = RegistryResolver(temp_dir)
+    ontology_paths, shacl_paths, unresolved = (
+        schema_discovery.discover_required_schemas(
+            set(),
+            resolver,
+            used_iris={"https://www.w3.org/ns/did#serviceEndpoint"},
+        )
+    )
+
+    assert ontology_paths == []
+    assert shacl_paths == ["imports/did/did.shacl.ttl"]
+    assert unresolved == set()
+
+
 def test_discover_required_schemas_returns_unresolved_types(temp_dir: Path):
     """Types not matching any catalog domain are reported as unresolved."""
     _write_registry(temp_dir)

@@ -238,8 +238,12 @@ When making changes to the codebase, always create/update these files in `.playg
 | `.playground/commit-message.md` | Conventional commit message with bullet points, ready for copy-paste into `git commit -s -S` |
 | `.playground/pr-description.md` | PR description following `.github/pull_request_template.md` |
 
-**When instructed to prepare a commit or PR, do not commit directly.** Instead, create these files for human review. The operator will either:
-- Use them to manually commit/push and create a PR, or
+**When instructed to prepare a commit or PR, default to updating these files first.**
+After explicit human confirmation in the current session, the agent may use
+them to create the signed commit, push the branch, and open the PR directly.
+Otherwise, create these files for human review. The operator will either:
+- Use them to manually commit/push and create a PR,
+- Ask the agent to perform the signed commit/push/PR flow directly after explicit confirmation, or
 - Use automated tooling with signed commits (`git commit -s -S`)
 
 Update both files **before** presenting the final result to the user. If a session involves multiple rounds of changes, keep these files in sync with the cumulative state.

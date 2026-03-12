@@ -9,8 +9,8 @@ FEATURE SET:
 3. load_jsonld_files - Load JSON-LD files with prefix extraction
 4. load_turtle_files - Load Turtle files into graph
 5. load_jsonld_with_context - Load JSON-LD with prefix extraction
-6. load_fixtures_for_iris - Resolve and load fixture files for external IRIs
-7. extract_external_iris - Find did:web: style references in graph
+6. load_fixtures_for_iris - Resolve and load fixture files for referenced IRIs
+7. extract_external_iris - Find referenced IRIs that should be fixture-loaded
 
 FIXTURE/DID RESOLUTION:
 =======================
@@ -46,7 +46,7 @@ USAGE:
     # Load multiple JSON-LD files
     graph, prefixes = load_jsonld_files(json_files, root_dir)
 
-    # Resolve external references (e.g., did:web: IRIs)
+    # Resolve external references (e.g., did:web: IRIs or locally mapped fixtures)
     external_iris = extract_external_iris(graph)
     loaded, unresolved = load_fixtures_for_iris(
         external_iris, resolver, graph, root_dir
@@ -298,6 +298,7 @@ def load_fixtures_for_iris(
     resolver: "RegistryResolver",  # noqa: F821 - forward reference
     graph: Graph,
     root_dir: Path,
+    context_url_map: Optional[Dict[str, Path]] = None,
     allow_online_fallback: bool = False,
     verbose: bool = False,
 ) -> Tuple[int, List[str]]:
@@ -314,6 +315,9 @@ def load_fixtures_for_iris(
         resolver: RegistryResolver instance
         graph: Graph to load fixtures into
         root_dir: Repository root directory
+        context_url_map: Optional mapping of context URL → local file path.
+            When provided, fixture JSON-LD is loaded with the same local
+            context inlining used for top-level data files.
         allow_online_fallback: If True, attempt online resolution for
             unresolved IRIs (with warning). Default False.
         verbose: If True, print details about each resolved fixture.
@@ -338,7 +342,17 @@ def load_fixtures_for_iris(
             abs_path = resolver.to_absolute(fixture_path)
             if abs_path.exists():
                 try:
-                    graph.parse(str(abs_path), format="json-ld")
+                    if context_url_map:
+                        from src.tools.utils.context_resolver import (
+                            load_jsonld_with_local_contexts,
+                        )
+
+                        json_str = load_jsonld_with_local_contexts(
+                            abs_path, context_url_map
+                        )
+                        graph.parse(data=json_str, format="json-ld")
+                    else:
+                        graph.parse(str(abs_path), format="json-ld")
                     rel_path = normalize_path_for_display(abs_path, root_dir)
                     logger.debug("Loaded fixture: %s for %s", rel_path, iri)
                     if verbose:
@@ -399,23 +413,39 @@ def _extract_prefixes_from_jsonld(file_path: Path) -> Dict[str, str]:
     return prefixes
 
 
-def extract_external_iris(graph: Graph) -> Set[str]:
+def extract_external_iris(
+    graph: Graph,
+    resolver: Optional["RegistryResolver"] = None,  # noqa: F821 - forward reference
+) -> Set[str]:
     """
-    Extract external IRI references (did:web: style) from a graph.
+    Extract referenced IRIs that should trigger fixture loading.
+
+    By default this preserves the historical behaviour of collecting
+    ``did:web:`` IRIs. When a ``resolver`` is provided, the function also
+    collects any URIRef that resolves to a locally registered fixture path.
+    This allows validation to load referenced local data such as ``did:ethr``
+    documents or other fixture resources whose identifiers are present in the
+    data graph.
 
     Args:
         graph: RDF graph to scan
+        resolver: Optional registry resolver used to detect locally resolvable
+            fixture IRIs beyond ``did:web:``.
 
     Returns:
-        Set of external IRIs
+        Set of referenced IRIs eligible for fixture loading
     """
     external_iris = set()
 
     for s, p, o in graph:
-        if isinstance(s, rdflib.URIRef) and is_did_web(str(s)):
-            external_iris.add(str(s))
-        if isinstance(o, rdflib.URIRef) and is_did_web(str(o)):
-            external_iris.add(str(o))
+        if isinstance(s, rdflib.URIRef):
+            subj = str(s)
+            if is_did_web(subj) or (resolver and resolver.resolve_fixture_iri(subj)):
+                external_iris.add(subj)
+        if isinstance(o, rdflib.URIRef):
+            obj = str(o)
+            if is_did_web(obj) or (resolver and resolver.resolve_fixture_iri(obj)):
+                external_iris.add(obj)
 
     return external_iris
 
