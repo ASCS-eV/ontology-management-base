@@ -574,7 +574,9 @@ def discover_data_hierarchy(
     for f, fid in file_ids.items():
         # Only non-DID documents found under explicitly provided directories are
         # auto-promoted to top-level validation inputs.
-        if f not in did_documents and any(root in f.parents or f == root for root in validation_dirs):
+        if f not in did_documents and any(
+            root in f.parents or f == root for root in validation_dirs
+        ):
             top_level.add(f)
 
     # Find duplicate IDs
