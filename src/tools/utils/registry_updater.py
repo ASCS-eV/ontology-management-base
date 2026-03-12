@@ -61,6 +61,7 @@ ONTOENV_PATH = ROOT_DIR / "config" / "ontoenv.toml"
 
 REGISTRY_VERSION = "2.1.0"
 JSONLD_CONTEXT_CLASS = URIRef("http://www.w3.org/ns/json-ld#Context")
+CATALOG_HINTS_SUFFIX = ".catalog-hints.ttl"
 
 # Known IRIs for standard ontologies that might fail auto-detection
 KNOWN_IRIS = {
@@ -259,6 +260,36 @@ def extract_context_iris(owl_file: Path) -> List[str]:
     g = parse_graph(owl_file)
     if not g:
         return []
+
+    iris = {
+        str(subject)
+        for subject in g.subjects(RDF.type, JSONLD_CONTEXT_CLASS)
+        if isinstance(subject, URIRef)
+    }
+    return sorted(iris)
+
+
+def extract_catalog_hints(owl_file: Path) -> Optional[List[str]]:
+    """
+    Extract context IRIs from a .catalog-hints.ttl file alongside an OWL file.
+
+    Upstream OWL files may declare cross-domain jsonld:Context references that
+    don't correspond to the local context file.  A ``{domain}.catalog-hints.ttl``
+    file in the same directory provides an explicit override: when present, only
+    its jsonld:Context declarations are used for the domain's context mapping.
+
+    Returns:
+        Sorted list of context IRIs if a hints file exists, None otherwise.
+    """
+    domain = owl_file.stem.replace(".owl", "")
+    hints_path = owl_file.parent / f"{domain}{CATALOG_HINTS_SUFFIX}"
+    if not hints_path.is_file():
+        return None
+
+    g = parse_graph(hints_path)
+    if not g:
+        logger.warning("Could not parse catalog hints %s", hints_path.name)
+        return None
 
     iris = {
         str(subject)
@@ -515,7 +546,12 @@ def generate_imports_catalog(
         jsonld_path = files.get("jsonld")
         if jsonld_path:
             rel = to_posix_relative(Path(jsonld_path), catalog_base)
-            context_iris = extract_context_iris(Path(owl_path))
+            # Prefer explicit catalog hints over OWL-embedded context declarations
+            hints = extract_catalog_hints(Path(owl_path))
+            if hints is not None:
+                context_iris = hints
+            else:
+                context_iris = extract_context_iris(Path(owl_path))
             if context_iris:
                 for context_iri in context_iris:
                     uri_mappings.append((context_iri, rel))

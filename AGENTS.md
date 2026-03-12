@@ -59,7 +59,10 @@ Read these before making changes; they are authoritative for repo workflows.
 
 ### Preparing Commits and Pull Requests
 
-When instructed to prepare a commit or PR, **do not commit directly**. Instead:
+When instructed to prepare a commit or PR, default to preparing the `.playground`
+files first. After **explicit human confirmation in the current session**, the
+agent may directly create the signed commit, push the branch, and open the PR
+using the prepared `.playground` content. Otherwise:
 
 1. Create files in the `.playground/` directory (already in `.gitignore`)
 2. Generate two markdown files:
@@ -67,7 +70,8 @@ When instructed to prepare a commit or PR, **do not commit directly**. Instead:
    - `.playground/pr-description.md` — PR description following `.github/pull_request_template.md`
 
 The human operator will review these files and either:
-- Use them to manually commit/push and create a PR, or
+- Use them to manually commit/push and create a PR,
+- Ask the agent to perform the signed commit/push/PR flow directly after explicit confirmation, or
 - Use automated tooling with signed commits (`git commit -s -S`)
 
 #### Commit Message Format

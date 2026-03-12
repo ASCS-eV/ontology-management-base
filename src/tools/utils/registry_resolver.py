@@ -45,6 +45,7 @@ See also:
 """
 
 import json
+import re
 import warnings
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -81,6 +82,7 @@ class RegistryResolver:
         self._iri_to_domain: Dict[str, str] = {}
         self._imports_catalog_entries: Optional[Dict[str, str]] = None
         self._imports_context_entries: Optional[Dict[str, str]] = None
+        self._imports_shacl_entries: Optional[Dict[str, List[str]]] = None
 
         self._load_registry()
         self._load_catalog()  # Replaces _load_fixtures_catalog
@@ -258,25 +260,45 @@ class RegistryResolver:
         for info in self._artifact_domains.values():
             info["shacl"] = sorted(set(info["shacl"]))
 
-    def _parse_imports_catalog_entries(self) -> Tuple[Dict[str, str], Dict[str, str]]:
+    @staticmethod
+    def _catalog_resource_base_iri(iri: str) -> str:
         """
-        Parse imports/catalog-v001.xml into ontology and context mappings.
+        Normalize a catalog resource IRI to its schema namespace/base IRI.
+
+        Catalogs commonly register auxiliary resources using IRIs like:
+        - ``.../context``
+        - ``...#context``
+        - ``.../shapes``
+        - ``...#shapes``
+        - ``.../shapes/<variant>``
+
+        For discovery we want these to count as resources for the underlying
+        ontology namespace/base IRI.
+        """
+        return re.sub(r"([/#])(context|shapes)(?:[/#].*)?$", "", iri)
+
+    def _parse_imports_catalog_entries(
+        self,
+    ) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, List[str]]]:
+        """
+        Parse imports/catalog-v001.xml into ontology, context, and SHACL mappings.
 
         Returns:
             Tuple of:
               - ontology IRI -> repository-relative ontology path
               - context URL -> repository-relative context path
+              - base IRI -> repository-relative SHACL paths
         """
         catalog_path = self.root_dir / "imports" / "catalog-v001.xml"
         if not catalog_path.exists():
-            return {}, {}
+            return {}, {}, {}
 
         try:
             tree = ET.parse(catalog_path)
             root = tree.getroot()
         except Exception as e:
             warnings.warn(f"Could not parse imports catalog: {e}")
-            return {}, {}
+            return {}, {}, {}
 
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
         uri_elems = root.findall("cat:uri", ns)
@@ -285,6 +307,7 @@ class RegistryResolver:
 
         ontology_entries: Dict[str, str] = {}
         context_entries: Dict[str, str] = {}
+        shacl_entries: Dict[str, List[str]] = {}
 
         for uri_elem in uri_elems:
             iri = uri_elem.get("name")
@@ -296,10 +319,18 @@ class RegistryResolver:
             if self._is_context_path(rel_path):
                 context_entries[iri] = rel_path.as_posix()
                 continue
+            if self._is_shacl_path(rel_path):
+                base_iri = self._catalog_resource_base_iri(iri)
+                shacl_entries.setdefault(base_iri, []).append(rel_path.as_posix())
+                continue
             if self._is_ontology_file(rel_path):
                 ontology_entries[iri] = rel_path.as_posix()
 
-        return ontology_entries, context_entries
+        return (
+            ontology_entries,
+            context_entries,
+            {base_iri: sorted(set(paths)) for base_iri, paths in shacl_entries.items()},
+        )
 
     def _load_imports_catalog_entries(self) -> Dict[str, str]:
         """
@@ -308,8 +339,11 @@ class RegistryResolver:
         Returns:
             Mapping of base ontology IRI to repository-relative path
         """
-        ontology_entries, context_entries = self._parse_imports_catalog_entries()
+        ontology_entries, context_entries, shacl_entries = (
+            self._parse_imports_catalog_entries()
+        )
         self._imports_context_entries = context_entries
+        self._imports_shacl_entries = shacl_entries
         return ontology_entries
 
     def _load_imports_context_entries(self) -> Dict[str, str]:
@@ -319,9 +353,26 @@ class RegistryResolver:
         Returns:
             Mapping of context URL to repository-relative context file path
         """
-        ontology_entries, context_entries = self._parse_imports_catalog_entries()
+        ontology_entries, context_entries, shacl_entries = (
+            self._parse_imports_catalog_entries()
+        )
         self._imports_catalog_entries = ontology_entries
+        self._imports_shacl_entries = shacl_entries
         return context_entries
+
+    def _load_imports_shacl_entries(self) -> Dict[str, List[str]]:
+        """
+        Load SHACL entries from imports/catalog-v001.xml.
+
+        Returns:
+            Mapping of base IRI -> repository-relative SHACL file paths
+        """
+        ontology_entries, context_entries, shacl_entries = (
+            self._parse_imports_catalog_entries()
+        )
+        self._imports_catalog_entries = ontology_entries
+        self._imports_context_entries = context_entries
+        return shacl_entries
 
     @staticmethod
     def _is_context_path(path: Path) -> bool:
@@ -476,6 +527,28 @@ class RegistryResolver:
         for base_iri, path in self._imports_catalog_entries.items():
             if self._iri_matches_base(iris, base_iri):
                 matches.append(path)
+
+        return sorted(set(matches))
+
+    def get_import_shacl_paths_for_iris(self, iris: Set[str]) -> List[str]:
+        """
+        Get SHACL paths from imports/catalog-v001.xml filtered by actual IRI usage.
+
+        Args:
+            iris: Set of IRIs referenced in the data graph
+
+        Returns:
+            List of repository-relative SHACL paths
+        """
+        if self._imports_shacl_entries is None:
+            self._imports_shacl_entries = self._load_imports_shacl_entries()
+        if not self._imports_shacl_entries:
+            return []
+
+        matches: List[str] = []
+        for base_iri, paths in self._imports_shacl_entries.items():
+            if self._iri_matches_base(iris, base_iri):
+                matches.extend(paths)
 
         return sorted(set(matches))
 
@@ -918,6 +991,36 @@ class RegistryResolver:
             Repository-relative path to the fixture file, or None if not found
         """
         return self._fixtures_catalog.get(iri)
+
+    def get_artifact_paths_for_iris(
+        self, iris: Set[str]
+    ) -> Tuple[List[str], List[str]]:
+        """
+        Discover artifact ontologies and SHACL files by matching used IRIs.
+
+        Args:
+            iris: Set of IRIs referenced in the data graph
+
+        Returns:
+            Tuple of (ontology_paths, shacl_paths) as repository-relative strings
+        """
+        ontology_paths: List[str] = []
+        shacl_paths: List[str] = []
+        domains_found = set()
+
+        for iri in iris:
+            domain = self.resolve_type_to_domain(iri)
+            if not domain or domain in domains_found:
+                continue
+            domains_found.add(domain)
+
+            ont_path = self.get_ontology_path(domain)
+            if ont_path:
+                ontology_paths.append(ont_path)
+
+            shacl_paths.extend(self.get_shacl_paths(domain))
+
+        return sorted(set(ontology_paths)), sorted(set(shacl_paths))
 
     # =========================================================================
     # Path Helpers

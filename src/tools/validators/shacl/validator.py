@@ -267,7 +267,7 @@ class ShaclValidator:
         self._log(f"  Prefixes discovered: {len(prefixes)}")
 
         # Load fixtures for external references (catalog-first, online fallback)
-        external_iris = extract_external_iris(data_graph)
+        external_iris = extract_external_iris(data_graph, resolver=self.resolver)
         if external_iris:
             self._log(f"\n  Resolving {len(external_iris)} external references...")
             fixtures_loaded, unresolved = load_fixtures_for_iris(
@@ -275,6 +275,7 @@ class ShaclValidator:
                 self.resolver,
                 data_graph,
                 self.root_dir,
+                context_url_map=self._context_url_map,
                 allow_online_fallback=self.allow_online,
                 verbose=self.verbose,
             )
@@ -304,9 +305,11 @@ class ShaclValidator:
         for rdf_type in sorted(rdf_types):
             self._log(f"    {rdf_type}")
 
+        used_iris = set(rdf_types) | set(predicates) | set(datatypes)
+
         # Discover required schemas
         ontology_paths, shacl_paths, unresolved_types = discover_required_schemas(
-            rdf_types, self.resolver
+            rdf_types, self.resolver, used_iris=used_iris
         )
 
         if unresolved_types:
@@ -316,7 +319,6 @@ class ShaclValidator:
                 self._log(f"  ⚠️  Unresolved @type: {ut}")
 
         # Add base ontologies filtered by actual usage
-        used_iris = set(rdf_types) | set(predicates) | set(datatypes)
         base_paths = get_base_ontology_paths(self.root_dir, used_iris=used_iris)
         all_ontology_paths = sorted(set(ontology_paths + base_paths))
 

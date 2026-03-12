@@ -82,6 +82,40 @@ def test_extract_external_iris_detects_did_web(temp_dir: Path):
     assert "did:web:test.example:obj" in iris
 
 
+def test_extract_external_iris_detects_resolver_mapped_fixture_iri(temp_dir: Path):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+
+    (temp_dir / "tests").mkdir()
+    catalog = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="did:ethr:test.fixture:entity" uri="tests/fixtures/entity.json" domain="fixture" test-type="fixture" category="fixture"/>
+</catalog>
+"""
+    (temp_dir / "tests" / "catalog-v001.xml").write_text(catalog)
+    fixtures_dir = temp_dir / "tests" / "fixtures"
+    fixtures_dir.mkdir()
+    (fixtures_dir / "entity.json").write_text(
+        json.dumps({"@id": "did:ethr:test.fixture:entity", "@type": "Fixture"})
+    )
+
+    ttl_file = temp_dir / "data.ttl"
+    ttl_file.write_text(
+        "<urn:test:credential> <http://example.org/issuer> <did:ethr:test.fixture:entity> ."
+    )
+    g = Graph()
+    g.parse(str(ttl_file), format="turtle")
+
+    resolver = RegistryResolver(temp_dir)
+    iris = graph_loader.extract_external_iris(g, resolver=resolver)
+
+    assert "did:ethr:test.fixture:entity" in iris
+
+
 def test_load_fixtures_for_iris(temp_dir: Path):
     # Create minimal registry and catalog
     (temp_dir / "docs").mkdir()
@@ -115,6 +149,63 @@ def test_load_fixtures_for_iris(temp_dir: Path):
     loaded, unresolved = graph_loader.load_fixtures_for_iris(
         {"did:web:test.fixture:entity"}, resolver, g, temp_dir
     )
+    assert loaded == 1
+    assert len(unresolved) == 0
+    assert len(g) >= 1
+
+
+def test_load_fixtures_for_iris_uses_context_url_map(temp_dir: Path):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+
+    (temp_dir / "tests").mkdir()
+    catalog = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+  "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="did:ethr:test.fixture:entity" uri="tests/fixtures/entity.json" domain="fixture" test-type="fixture" category="fixture"/>
+</catalog>
+"""
+    (temp_dir / "tests" / "catalog-v001.xml").write_text(catalog)
+    fixtures_dir = temp_dir / "tests" / "fixtures"
+    fixtures_dir.mkdir()
+    fixture_file = fixtures_dir / "entity.json"
+    fixture_file.write_text(
+        json.dumps(
+            {
+                "@context": "https://example.org/test-context",
+                "@id": "did:ethr:test.fixture:entity",
+                "name": "Fixture Entity",
+            }
+        )
+    )
+
+    contexts_dir = temp_dir / "contexts"
+    contexts_dir.mkdir()
+    local_context = contexts_dir / "test-context.jsonld"
+    local_context.write_text(
+        json.dumps(
+            {
+                "@context": {
+                    "name": "http://example.org/name",
+                    "@vocab": "http://example.org/",
+                }
+            }
+        )
+    )
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:ethr:test.fixture:entity"},
+        resolver,
+        g,
+        temp_dir,
+        context_url_map={"https://example.org/test-context": local_context},
+    )
+
     assert loaded == 1
     assert len(unresolved) == 0
     assert len(g) >= 1
