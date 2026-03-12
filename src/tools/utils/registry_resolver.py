@@ -298,7 +298,7 @@ class RegistryResolver:
             root = tree.getroot()
         except Exception as e:
             warnings.warn(f"Could not parse imports catalog: {e}")
-            return {}, {}
+            return {}, {}, {}
 
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
         uri_elems = root.findall("cat:uri", ns)
@@ -329,10 +329,7 @@ class RegistryResolver:
         return (
             ontology_entries,
             context_entries,
-            {
-                base_iri: sorted(set(paths))
-                for base_iri, paths in shacl_entries.items()
-            },
+            {base_iri: sorted(set(paths)) for base_iri, paths in shacl_entries.items()},
         )
 
     def _load_imports_catalog_entries(self) -> Dict[str, str]:
@@ -995,7 +992,9 @@ class RegistryResolver:
         """
         return self._fixtures_catalog.get(iri)
 
-    def get_artifact_paths_for_iris(self, iris: Set[str]) -> Tuple[List[str], List[str]]:
+    def get_artifact_paths_for_iris(
+        self, iris: Set[str]
+    ) -> Tuple[List[str], List[str]]:
         """
         Discover artifact ontologies and SHACL files by matching used IRIs.
 
