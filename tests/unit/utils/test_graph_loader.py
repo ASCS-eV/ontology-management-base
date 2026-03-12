@@ -187,7 +187,12 @@ def test_load_fixtures_for_iris_uses_context_url_map(temp_dir: Path):
     local_context = contexts_dir / "test-context.jsonld"
     local_context.write_text(
         json.dumps(
-            {"@context": {"name": "http://example.org/name", "@vocab": "http://example.org/"}}
+            {
+                "@context": {
+                    "name": "http://example.org/name",
+                    "@vocab": "http://example.org/",
+                }
+            }
         )
     )
 
