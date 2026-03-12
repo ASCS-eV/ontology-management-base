@@ -543,6 +543,26 @@ class TestDiscoverDataHierarchy:
         assert any(f.name == "credential.json" for f in top_level)
         assert any(f.name == "issuer-did.json" for f in top_level)
 
+    def test_explicit_file_does_not_promote_sibling_non_did_files(self, temp_dir):
+        """Explicit files should not auto-validate sibling generated artifacts."""
+        credential_file = temp_dir / "credential.json"
+        credential_file.write_text(
+            '{"@id": "urn:uuid:credential", "@type": "VerifiableCredential"}'
+        )
+        decoded_file = temp_dir / "credential.decoded.json"
+        decoded_file.write_text(
+            '{"@id": "urn:uuid:decoded", "@type": "DecodedCredential"}'
+        )
+        did_file = temp_dir / "issuer-did.json"
+        did_file.write_text('{"@id": "did:web:test:issuer", "@type": "DIDDocument"}')
+
+        top_level, iri_map, _ = discover_data_hierarchy([credential_file])
+
+        assert top_level == [credential_file]
+        assert "urn:uuid:credential" in iri_map
+        assert "urn:uuid:decoded" in iri_map
+        assert "did:web:test:issuer" in iri_map
+
     def test_multiple_dirs(self, temp_dir):
         """Test with multiple directories."""
         dir1 = temp_dir / "dir1"
