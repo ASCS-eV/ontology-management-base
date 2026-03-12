@@ -1,0 +1,3 @@
+@prefix jsonld: <http://www.w3.org/ns/json-ld#> .
+
+<https://w3id.org/security/suites/secp256k1recovery-2020/v2> a jsonld:Context .

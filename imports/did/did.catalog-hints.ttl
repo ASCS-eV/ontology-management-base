@@ -1,0 +1,3 @@
+@prefix jsonld: <http://www.w3.org/ns/json-ld#> .
+
+<https://www.w3.org/ns/did/v1> a jsonld:Context .

@@ -14,7 +14,6 @@
   <uri name="http://xmlns.com/foaf/0.1/" uri="foaf/foaf.owl.ttl"/>
   <uri name="https://schema.org" uri="schema/schema.context.jsonld"/>
   <uri name="https://w3id.org/security#" uri="sec/sec.owl.ttl"/>
-  <uri name="https://identity.foundation/EcdsaSecp256k1RecoverySignature2020#" uri="sec/sec.owl.ttl"/>
   <uri name="https://w3id.org/security/suites/secp256k1recovery-2020/v2" uri="sec/sec.context.jsonld"/>
   <uri name="https://www.w3.org/2018/credentials#" uri="cred/cred.owl.ttl"/>
   <uri name="https://www.w3.org/ns/credentials/status#" uri="cs/cs.owl.ttl"/>
