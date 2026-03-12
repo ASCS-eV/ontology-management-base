@@ -4,6 +4,7 @@ Unit tests for src.tools.utils.registry_resolver catalog resolution.
 """
 
 import json
+import logging
 from pathlib import Path
 
 from src.tools.utils.registry_resolver import RegistryResolver
@@ -268,3 +269,34 @@ def test_is_imported_namespace_matches_imports_catalog(temp_dir):
     assert resolver.is_imported_namespace("https://schema.org/QuantitativeValue")
     # Not in imports catalog
     assert not resolver.is_imported_namespace("https://unknown.example.org/v1/Thing")
+
+
+def test_register_artifact_directory_logs_invalid_context_warning(temp_dir, caplog):
+    registry = {"version": "1.0.0", "ontologies": {}}
+    _write_registry(temp_dir, registry)
+    _write_artifacts_catalog(
+        temp_dir,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+
+    ext_artifacts = temp_dir / "external-artifacts"
+    bad_domain = ext_artifacts / "bad-domain"
+    bad_domain.mkdir(parents=True)
+    (bad_domain / "bad-domain.owl.ttl").write_text(
+        """@prefix owl: <http://www.w3.org/2002/07/owl#> .
+<https://example.org/bad-domain/v1> a owl:Ontology ."""
+    )
+    (bad_domain / "bad-domain.context.jsonld").write_text("{ invalid json }")
+
+    caplog.set_level(logging.WARNING)
+    resolver = RegistryResolver(temp_dir)
+
+    registered = resolver.register_artifact_directory(ext_artifacts)
+
+    assert "bad-domain" in registered
+    assert any(
+        "Could not extract IRI from context" in record.message
+        for record in caplog.records
+    )

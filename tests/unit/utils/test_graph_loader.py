@@ -4,8 +4,10 @@ Unit tests for src.tools.utils.graph_loader.
 """
 
 import json
+import os
 from pathlib import Path
 
+import pytest
 from rdflib import Graph
 
 from src.tools.utils import graph_loader
@@ -68,6 +70,63 @@ def test_load_turtle_files(temp_dir: Path):
 
     g = graph_loader.load_turtle_files([ttl_file], temp_dir)
     assert len(g) == 1
+
+
+def test_load_turtle_files_missing_file_raises_file_not_found(temp_dir: Path):
+    missing_file = temp_dir / "missing.ttl"
+
+    with pytest.raises(FileNotFoundError, match="missing.ttl"):
+        graph_loader.load_turtle_files([missing_file], temp_dir)
+
+
+def test_load_turtle_files_invalid_turtle_raises_runtime_error(temp_dir: Path):
+    ttl_file = temp_dir / "broken.ttl"
+    ttl_file.write_text('@prefix ex: <http://example.org/> .\nex:subject "broken .\n')
+
+    with pytest.raises(RuntimeError, match="broken.ttl"):
+        graph_loader.load_turtle_files([ttl_file], temp_dir)
+
+
+def test_load_jsonld_files_with_context_map_uses_public_id_when_cwd_unavailable(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    context_url = "https://example.org/test-context"
+    jsonld_file = temp_dir / "data.json"
+    context_file = temp_dir / "context.jsonld"
+
+    context_file.write_text(
+        json.dumps(
+            {
+                "@context": {
+                    "@vocab": "http://example.org/",
+                    "iri": {"@id": "http://example.org/iri", "@type": "@id"},
+                }
+            }
+        )
+    )
+    jsonld_file.write_text(
+        json.dumps(
+            {
+                "@context": context_url,
+                "@id": "#thing",
+                "iri": "./related.json",
+            }
+        )
+    )
+
+    def fail_getcwd() -> str:
+        raise FileNotFoundError("cwd unavailable")
+
+    monkeypatch.setattr(os, "getcwd", fail_getcwd)
+
+    graph, prefixes = graph_loader.load_jsonld_files(
+        [jsonld_file],
+        temp_dir,
+        context_url_map={context_url: context_file},
+    )
+
+    assert len(graph) >= 1
+    assert prefixes == {}
 
 
 def test_extract_external_iris_detects_did_web(temp_dir: Path):

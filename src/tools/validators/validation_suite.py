@@ -138,6 +138,12 @@ KNOWN_COHERENCE_ISSUES = {
 }
 
 
+def get_resolver_root_dir(resolver: RegistryResolver | None) -> Path:
+    """Return the active repository root for a resolver, falling back to ROOT_DIR."""
+    candidate = getattr(resolver, "root_dir", ROOT_DIR) if resolver else ROOT_DIR
+    return Path(candidate) if candidate is not None else ROOT_DIR
+
+
 def check_syntax_all(
     ontology_domains: List[str],
     resolver: RegistryResolver = None,
@@ -160,6 +166,7 @@ def check_syntax_all(
 
     # Use provided resolver or create new one
     catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+    root_dir = get_resolver_root_dir(catalog_resolver)
 
     print("\n=== Checking JSON-LD syntax ===", flush=True)
 
@@ -187,7 +194,7 @@ def check_syntax_all(
 
     # Check JSON-LD files
     for json_file in sorted(set(json_files_to_check)):
-        code, results = check_json_wellformedness(json_file, ROOT_DIR)
+        code, results = check_json_wellformedness(json_file, root_dir)
         for c, msg in results:
             if c != 0:
                 print(msg, file=sys.stderr)
@@ -199,7 +206,7 @@ def check_syntax_all(
     # Check TTL files
     if ttl_files_to_check:
         for ttl_file in sorted(set(ttl_files_to_check)):
-            code, results = check_turtle_wellformedness(ttl_file, ROOT_DIR)
+            code, results = check_turtle_wellformedness(ttl_file, root_dir)
             for c, msg in results:
                 if c != 0:
                     print(msg, file=sys.stderr)
@@ -240,6 +247,7 @@ def validate_data_conformance_all(
     print("\n=== Checking JSON-LD against SHACL ===", flush=True)
 
     catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+    root_dir = get_resolver_root_dir(catalog_resolver)
 
     # Check if we have data to validate (either from catalog or temporary domains)
     has_temp_domains = any(d.startswith(TEMP_DOMAIN_PREFIX) for d in ontology_domains)
@@ -254,7 +262,7 @@ def validate_data_conformance_all(
 
     # Create validator with shared resolver
     validator = ShaclValidator(
-        ROOT_DIR,
+        root_dir,
         inference_mode=inference_mode,
         verbose=True,
         resolver=catalog_resolver,
@@ -322,6 +330,7 @@ def check_failing_tests_all(
     print("\n=== Running failing tests ===", flush=True)
 
     catalog_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+    root_dir = get_resolver_root_dir(catalog_resolver)
 
     # Check if we have data to validate (either from catalog or temporary domains)
     has_temp_domains = any(d.startswith(TEMP_DOMAIN_PREFIX) for d in ontology_domains)
@@ -336,7 +345,7 @@ def check_failing_tests_all(
 
     # Create validator with shared resolver
     validator = ShaclValidator(
-        ROOT_DIR,
+        root_dir,
         inference_mode=inference_mode,
         verbose=True,
         resolver=catalog_resolver,
@@ -354,14 +363,14 @@ def check_failing_tests_all(
 
         for test_abs_path in invalid_test_files:
             test_abs_path = Path(test_abs_path)
-            test_path = normalize_path_for_display(test_abs_path, ROOT_DIR)
+            test_path = normalize_path_for_display(test_abs_path, root_dir)
             expected_output_path = test_abs_path.with_suffix("").with_suffix(
                 ".expected"
             )
 
             if not expected_output_path.exists():
                 expected_path_display = normalize_path_for_display(
-                    expected_output_path, ROOT_DIR
+                    expected_output_path, root_dir
                 )
                 print(
                     f"⚠️ No expected output file found: {expected_path_display}",
@@ -452,6 +461,9 @@ def validate_artifact_coherence_all(
         print("📋 Skipping coherence check (no artifact domains)", flush=True)
         return 0
 
+    active_resolver = resolver if resolver else RegistryResolver(ROOT_DIR)
+    root_dir = get_resolver_root_dir(active_resolver)
+
     for domain in domains_to_check:
         print(f"\n🔍 Checking target classes for domain: {domain}", flush=True)
 
@@ -468,7 +480,10 @@ def validate_artifact_coherence_all(
 
         # Call the validator with resolver
         returncode, output = validate_artifact_coherence(
-            domain, root_dir=ROOT_DIR, resolver=resolver, known_issues=known_set
+            domain,
+            root_dir=root_dir,
+            resolver=active_resolver,
+            known_issues=known_set,
         )
 
         if output:
@@ -669,9 +684,7 @@ def main():
                     )
 
         # Create temporary domain with top-level files only
-        temp_domain = catalog_resolver.create_temporary_domain(
-            [str(f) for f in top_level_files]
-        )
+        temp_domain = catalog_resolver.create_temporary_domain(top_level_files)
 
         if not temp_domain:
             print("❌ Error: Failed to create temporary domain.", file=sys.stderr)

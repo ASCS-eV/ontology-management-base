@@ -5,10 +5,13 @@ Unit tests for coherence_validator behavior.
 
 from pathlib import Path
 
+import pytest
+
 from src.tools.core.iri_utils import get_local_name
 from src.tools.core.result import ReturnCodes
 from src.tools.validators.coherence_validator import (
     extract_ontology_classes,
+    extract_shacl_classes,
     extract_shacl_classes_from_file,
     validate_artifact_coherence,
 )
@@ -65,6 +68,11 @@ ex:Shape a sh:NodeShape ;
     shacl_file.write_text(ttl)
     classes = extract_shacl_classes_from_file(str(shacl_file))
     assert "thing" in classes
+
+
+def test_extract_shacl_classes_raises_not_implemented():
+    with pytest.raises(NotImplementedError, match="catalog-driven discovery"):
+        extract_shacl_classes("unused")
 
 
 def test_extract_ontology_classes(temp_dir: Path):
