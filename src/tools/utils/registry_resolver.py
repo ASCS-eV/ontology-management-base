@@ -51,8 +51,11 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
+from src.tools.core.logging import get_logger
+
 # Prefix for temporary domains created by --data-paths mode.
 TEMP_DOMAIN_PREFIX = "custom-path-"
+logger = get_logger(__name__)
 
 
 class RegistryResolver:
@@ -771,40 +774,44 @@ class RegistryResolver:
                 "category": "test-data",
             }
 
-    def create_temporary_domain(self, paths: List[str]) -> Optional[str]:
+    def create_temporary_domain(self, paths: List[Path | str]) -> Optional[str]:
         """
-        Create a temporary domain from file paths for validation.
+        Create a temporary domain from already-discovered JSON-LD files.
 
-        Collects JSON-LD files from paths and adds them as temporary catalog entries.
+        The caller is responsible for expanding directories and determining which
+        files should be validated. This keeps catalog mutation separate from any
+        ad-hoc filesystem discovery.
 
         Args:
-            paths: List of file or directory paths
+            paths: List of JSON-LD file paths
 
         Returns:
             Temporary domain name, or None if no files found
         """
         import hashlib
 
-        from src.tools.utils.file_collector import collect_jsonld_files
+        file_paths = []
+        for path in paths:
+            resolved = Path(path).resolve()
+            if resolved.is_file() and resolved.suffix.lower() in {".json", ".jsonld"}:
+                file_paths.append(resolved)
 
-        # Generate unique domain name from paths
-        path_hash = hashlib.md5("|".join(sorted(paths)).encode()).hexdigest()[:8]
-        temp_domain = f"{TEMP_DOMAIN_PREFIX}{path_hash}"
-
-        # Collect all JSON-LD files from provided paths
-        jsonld_files = collect_jsonld_files(paths)
-
-        if not jsonld_files:
+        if not file_paths:
             return None
 
-        # Convert to Path objects
-        file_paths = [Path(f) for f in jsonld_files]
+        unique_file_paths = sorted(set(file_paths))
+        path_hash = hashlib.md5(
+            "|".join(str(path) for path in unique_file_paths).encode()
+        ).hexdigest()[:8]
+        temp_domain = f"{TEMP_DOMAIN_PREFIX}{path_hash}"
 
         # Add temporary entries to catalog
-        self.add_temporary_test_entries(temp_domain, file_paths, test_type="valid")
+        self.add_temporary_test_entries(
+            temp_domain, unique_file_paths, test_type="valid"
+        )
 
         print(
-            f"📋 Created temporary domain '{temp_domain}' with {len(file_paths)} file(s)",
+            f"📋 Created temporary domain '{temp_domain}' with {len(unique_file_paths)} file(s)",
             flush=True,
         )
 
@@ -887,8 +894,10 @@ class RegistryResolver:
                                 break
                     if vocab:
                         self._domain_iris[domain] = vocab
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.warning(
+                        "Could not extract IRI from context %s: %s", context_path, e
+                    )
 
             registered.append(domain)
 

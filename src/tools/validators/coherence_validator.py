@@ -121,11 +121,11 @@ def extract_shacl_classes(directory: str) -> Set[str]:
     Returns:
         Set of lowercase target class local names
     """
-    shacl_classes = set()
-    for shacl_file in Path(directory).rglob("*shacl.ttl"):
-        shacl_classes.update(extract_shacl_classes_from_file(str(shacl_file)))
-
-    return shacl_classes
+    raise NotImplementedError(
+        "extract_shacl_classes() bypasses catalog-driven discovery and is no longer "
+        "supported. Use RegistryResolver.get_shacl_paths(domain) together with "
+        "extract_shacl_classes_from_file()."
+    )
 
 
 def extract_ontology_classes(ontology_file: str) -> Set[str]:

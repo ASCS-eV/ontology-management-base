@@ -502,7 +502,7 @@ def discover_data_hierarchy(
     Discover top-level files and fixture mappings from paths.
 
     This function implements smart path expansion:
-    - FILE: Added to validate list, parent directory scanned for fixtures
+    - FILE: Added to validate list, parent directory scanned for fixtures only
     - DIRECTORY: Scanned recursively, auto-detects top-level vs fixtures
 
     Top-level files: All non-DID document files (credentials, etc.)
@@ -524,22 +524,27 @@ def discover_data_hierarchy(
             - duplicate_ids: List of (id, [file1, file2, ...]) for duplicate IDs
     """
     explicit_files: List[Path] = []
-    scan_dirs: Set[Path] = set()
+    fixture_scan_dirs: Set[Path] = set()
+    validation_dirs: Set[Path] = set()
 
-    # Expand paths: files → validate + scan parent, dirs → scan
+    # Expand paths:
+    # - explicit files are validated directly and only contribute their parent
+    #   directory for fixture discovery
+    # - directories are scanned recursively and contribute top-level files
     for p in paths:
         p = Path(p).resolve()
         if p.is_file():
             explicit_files.append(p)
-            scan_dirs.add(p.parent)
+            fixture_scan_dirs.add(p.parent)
         elif p.is_dir():
-            scan_dirs.add(p)
+            fixture_scan_dirs.add(p)
+            validation_dirs.add(p)
 
     # Collect all JSON-LD files from directories
     all_files: List[Path] = []
-    if scan_dirs:
+    if fixture_scan_dirs:
         all_files = collect_jsonld_files(
-            list(scan_dirs), return_pathlib=True, sort_and_deduplicate=True
+            list(fixture_scan_dirs), return_pathlib=True, sort_and_deduplicate=True
         )
 
     # Single pass: build IRI→file mapping and track DID documents
@@ -562,12 +567,16 @@ def discover_data_hierarchy(
         if _is_did_document(f, root_id):
             did_documents.add(f)
 
-    # Top-level = explicit files + non-DID files only
-    # All DID documents are fixtures (for IRI resolution), not validated
+    # Top-level = explicit files + non-DID files discovered from explicit
+    # directory arguments only. All DID documents are fixtures (for IRI
+    # resolution), not validated.
     top_level: Set[Path] = set(explicit_files)
     for f, fid in file_ids.items():
-        # Only non-DID documents are top-level (unless explicitly specified)
-        if f not in did_documents:
+        # Only non-DID documents found under explicitly provided directories are
+        # auto-promoted to top-level validation inputs.
+        if f not in did_documents and any(
+            root in f.parents or f == root for root in validation_dirs
+        ):
             top_level.add(f)
 
     # Find duplicate IDs

@@ -160,11 +160,15 @@ def load_graphs(
     combined = Graph(store=store)
 
     for path in file_paths:
+        if not path.exists():
+            logger.error("Graph file not found: %s", path)
+            raise FileNotFoundError(f"Graph file not found: {path}")
         try:
             temp_graph = load_graph(path, format=format, store="default")
             combined += temp_graph
         except Exception as e:
-            logger.warning("Could not load %s: %s", path, e)
+            logger.error("Failed to load %s: %s", path, e)
+            raise RuntimeError(f"Failed to load graph file {path}: {e}") from e
 
     return combined
 
@@ -216,7 +220,12 @@ def load_jsonld_files(
                 )
 
                 json_str = load_jsonld_with_local_contexts(json_file, context_url_map)
-                graph.parse(data=json_str, format="json-ld")
+                graph.parse(
+                    data=json_str,
+                    format="json-ld",
+                    base=json_file.resolve().as_uri(),
+                    publicID=json_file.resolve().as_uri(),
+                )
             else:
                 graph.parse(str(json_file), format="json-ld")
         except Exception as e:
@@ -267,10 +276,15 @@ def load_turtle_files(
     for ttl_file in files:
         rel_path = normalize_path_for_display(ttl_file, root_dir)
 
+        if not ttl_file.exists():
+            logger.error("Turtle file not found: %s", rel_path)
+            raise FileNotFoundError(f"Turtle file not found: {rel_path}")
+
         try:
             graph.parse(str(ttl_file), format="turtle")
         except Exception as e:
-            logger.warning("Could not load %s: %s", rel_path, e)
+            logger.error("Failed to load %s: %s", rel_path, e)
+            raise RuntimeError(f"Failed to load {rel_path}: {e}") from e
 
     return graph
 

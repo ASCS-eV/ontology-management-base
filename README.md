@@ -68,17 +68,20 @@ make test
 python3 -m src.tools.validators.validation_suite --help
 
 # Validate specific domain
-make test-domain DOMAIN=hdmap
+make test domain DOMAIN=hdmap
+
+# See grouped test subcommands
+make test help
 ```
 
 ## Local Docs Build
 
 ```bash
 # Preview locally
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
 
 # Build static docs site
-make docs-build
+make docs build
 ```
 
 Notes:

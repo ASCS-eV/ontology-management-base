@@ -83,6 +83,10 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: python3 -m pip install -e ".[dev]"
+      - name: Configure make environment
+        run: |
+          echo "VENV=$(python3 -c 'import sys; print(sys.prefix)')" >> "$GITHUB_ENV"
+          echo "PYTHON=$(python3 -c 'import sys; print(sys.executable)')" >> "$GITHUB_ENV"
       - name: Run pre-commit
         run: |
           # Hooks like update-registry and update-properties may regenerate

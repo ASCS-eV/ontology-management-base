@@ -49,7 +49,26 @@ GEN_JSONLD_CONTEXT := $(VENV_BIN)/gen-jsonld-context
 # LinkML domains — add new domains here
 LINKML_DOMAINS := openlabel-v2
 
-.PHONY: all setup install install-dev lint format test test-check-syntax test-check-artifact-coherence test-check-data-conformance test-failing test-cov test-domain generate docs-generate docs-serve docs-build registry-update clean clean-cache help
+.PHONY: all setup install lint format test generate docs registry clean help \
+	_help_general _help_install _help_test _help_docs _help_registry _help_clean \
+	_install_default _install_dev \
+	_test_default _test_syntax _test_artifact_coherence _test_data_conformance _test_failing _test_cov _test_domain \
+	_docs_generate _docs_serve _docs_build \
+	_registry_update _clean_default _clean_cache
+
+GROUPED_COMMANDS := install test docs registry clean
+PRIMARY_GOAL := $(firstword $(MAKECMDGOALS))
+
+ifneq ($(filter $(PRIMARY_GOAL),$(GROUPED_COMMANDS)),)
+help:
+	@:
+
+%:
+	@:
+else
+help:
+	@$(MAKE) --no-print-directory _help_general
+endif
 
 # Default target
 all: lint test
@@ -81,12 +100,27 @@ $(ACTIVATE_SCRIPT): $(PYTHON)
 	@echo "[OK] Python dependencies installed"
 
 # Installation targets
-install: $(PYTHON)
+install:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-default}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make install': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make install help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		default) $(MAKE) --no-print-directory _install_default ;; \
+		dev) $(MAKE) --no-print-directory _install_dev ;; \
+		help) $(MAKE) --no-print-directory _help_install ;; \
+		*) echo "ERROR: Unknown install subcommand '$$subcommand'"; echo "Run 'make install help' for available options."; exit 1 ;; \
+	esac
+
+_install_default: $(PYTHON)
 	@echo "[INFO] Installing ontology-management-base package..."
 	@"$(PYTHON)" -m pip install -e .
 	@echo "[OK] Package installation complete"
 
-install-dev: $(PYTHON)
+_install_dev: $(PYTHON)
 	@echo "[INFO] Installing ontology-management-base development dependencies..."
 	@"$(PYTHON)" -m pip install -e ".[dev]"
 	@"$(PYTHON)" -m pre_commit install
@@ -123,51 +157,72 @@ generate:
 		"$(GEN_JSONLD_CONTEXT)" --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.context.jsonld 2>/dev/null; \
 		"$(PYTHON)" -m hooks.normalize_linkml_output \
 			artifacts/$$domain/$$domain.owl.ttl \
-			artifacts/$$domain/$$domain.shacl.ttl; \
+			artifacts/$$domain/$$domain.shacl.ttl \
+			artifacts/$$domain/$$domain.context.jsonld; \
 	done
 	@echo "[OK] Artifacts generated"
 
 # Testing targets
 test:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-default}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make test': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make test help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		default) $(MAKE) --no-print-directory _test_default ;; \
+		syntax) $(MAKE) --no-print-directory _test_syntax ;; \
+		artifact-coherence) $(MAKE) --no-print-directory _test_artifact_coherence ;; \
+		data-conformance) $(MAKE) --no-print-directory _test_data_conformance ;; \
+		failing) $(MAKE) --no-print-directory _test_failing ;; \
+		cov) $(MAKE) --no-print-directory _test_cov ;; \
+		domain) $(MAKE) --no-print-directory _test_domain ;; \
+		help) $(MAKE) --no-print-directory _help_test ;; \
+		*) echo "ERROR: Unknown test subcommand '$$subcommand'"; echo "Run 'make test help' for available options."; exit 1 ;; \
+	esac
+
+_test_default:
 	$(call check_dev_setup)
 	@echo "[INFO] Running ontology-management-base validation test suite..."
-	@"$(MAKE)" --no-print-directory test-check-syntax
-	@"$(MAKE)" --no-print-directory test-check-artifact-coherence
-	@"$(MAKE)" --no-print-directory test-check-data-conformance
-	@"$(MAKE)" --no-print-directory test-failing
+	@"$(MAKE)" --no-print-directory _test_syntax
+	@"$(MAKE)" --no-print-directory _test_artifact_coherence
+	@"$(MAKE)" --no-print-directory _test_data_conformance
+	@"$(MAKE)" --no-print-directory _test_failing
 	@echo "[OK] Validation test suite complete"
 
-test-check-syntax:
+_test_syntax:
 	@echo "[INFO] Running check-syntax..."
 	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-syntax
 	@echo "[OK] check-syntax complete"
 
-test-check-artifact-coherence:
+_test_artifact_coherence:
 	@echo "[INFO] Running check-artifact-coherence..."
 	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-artifact-coherence
 	@echo "[OK] check-artifact-coherence complete"
 
-test-check-data-conformance:
+_test_data_conformance:
 	@echo "[INFO] Running check-data-conformance..."
 	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-data-conformance
 	@echo "[OK] check-data-conformance complete"
 
-test-failing:
+_test_failing:
 	@echo "[INFO] Running check-failing-tests..."
 	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-failing-tests
 	@echo "[OK] check-failing-tests complete"
 
-test-cov:
+_test_cov:
 	$(call check_dev_setup)
 	@echo "[INFO] Running unit tests with coverage..."
 	@"$(PYTHON)" -m pytest tests/ --cov=src --cov-report=html --cov-report=term
 	@echo "[OK] Coverage run complete"
 
 # Test specific domain
-test-domain:
+_test_domain:
 	$(call check_dev_setup)
 	@if [ -z "$(DOMAIN)" ]; then \
-		echo "Usage: make test-domain DOMAIN=hdmap"; \
+		echo "Usage: make test domain DOMAIN=hdmap"; \
 		exit 1; \
 	fi
 	@echo "[INFO] Running full validation suite for domain: $(DOMAIN)..."
@@ -175,25 +230,55 @@ test-domain:
 	@echo "[OK] Domain validation complete"
 
 # Documentation targets
-docs-generate:
+docs:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-help}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make docs': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make docs help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		generate) $(MAKE) --no-print-directory _docs_generate ;; \
+		serve) $(MAKE) --no-print-directory _docs_serve ;; \
+		build) $(MAKE) --no-print-directory _docs_build ;; \
+		help|default) $(MAKE) --no-print-directory _help_docs ;; \
+		*) echo "ERROR: Unknown docs subcommand '$$subcommand'"; echo "Run 'make docs help' for available options."; exit 1 ;; \
+	esac
+
+_docs_generate:
 	$(call check_dev_setup)
 	@echo "[INFO] Generating documentation assets..."
 	@"$(PYTHON)" -m src.tools.utils.properties_updater
 	@echo "[OK] Documentation assets generated"
 
-docs-serve:
+_docs_serve:
 	$(call check_dev_setup)
 	@echo "[INFO] Starting MkDocs development server..."
 	@"$(PYTHON)" -m mkdocs serve
 
-docs-build:
+_docs_build:
 	$(call check_dev_setup)
 	@echo "[INFO] Building MkDocs site..."
 	@"$(PYTHON)" -m mkdocs build
 	@echo "[OK] Documentation build complete"
 
 # Registry management
-registry-update:
+registry:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-help}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make registry': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make registry help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		update) $(MAKE) --no-print-directory _registry_update TAG="$(TAG)" ;; \
+		help|default) $(MAKE) --no-print-directory _help_registry ;; \
+		*) echo "ERROR: Unknown registry subcommand '$$subcommand'"; echo "Run 'make registry help' for available options."; exit 1 ;; \
+	esac
+
+_registry_update:
 	$(call check_dev_setup)
 	@TAG_VALUE="$(TAG)"; \
 	if [ -z "$$TAG_VALUE" ]; then \
@@ -205,6 +290,21 @@ registry-update:
 
 # Cleaning
 clean:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-default}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make clean': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make clean help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		default) $(MAKE) --no-print-directory _clean_default ;; \
+		cache) $(MAKE) --no-print-directory _clean_cache ;; \
+		help) $(MAKE) --no-print-directory _help_clean ;; \
+		*) echo "ERROR: Unknown clean subcommand '$$subcommand'"; echo "Run 'make clean help' for available options."; exit 1 ;; \
+	esac
+
+_clean_default:
 	@echo "[INFO] Cleaning generated files and caches..."
 	@rm -rf build/ dist/ *.egg-info/
 	@rm -rf .pytest_cache/ .mypy_cache/
@@ -212,46 +312,71 @@ clean:
 	@find . -type f -name "*.pyc" -delete
 	@echo "[OK] Cleaned"
 
-clean-cache:
+_clean_cache:
 	@echo "[INFO] Clearing local cache files..."
 	@rm -f .ontology_iri_cache.json
 	@rm -f .repo_registry_cache.json
 	@echo "[OK] Cache cleared"
 
 # Help
-help:
+_help_general:
 	@echo "[INFO] Showing available commands..."
 	@echo "Ontology Management Base - Available Commands"
 	@echo ""
 	@echo "Installation:"
 	@echo "  make setup          - Create venv and install dev dependencies"
 	@echo "  make install        - Install package (user mode)"
-	@echo "  make install-dev    - Install with dev dependencies + pre-commit"
+	@echo "  make install help   - Show install subcommands"
 	@echo ""
 	@echo "Linting:"
 	@echo "  make lint           - Run pre-commit checks"
 	@echo "  make format         - Format code with ruff"
 	@echo ""
 	@echo "LinkML:"
-	@echo "  make generate                    - Generate OWL/SHACL/context from all LinkML schemas"
+	@echo "  make generate                     - Generate OWL/SHACL/context from all LinkML schemas"
 	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific domain"
 	@echo ""
 	@echo "Testing:"
-	@echo "  make test           - Run all validation tests"
-	@echo "  make test-cov       - Run unit tests with coverage report"
-	@echo "  make test-check-syntax           - Run syntax checks only"
-	@echo "  make test-check-data-conformance - Run SHACL validation only"
-	@echo "  make test-domain DOMAIN=hdmap   - Test specific domain"
+	@echo "  make test          - Run all validation tests"
+	@echo "  make test help     - Show test subcommands"
 	@echo ""
 	@echo "Documentation:"
-	@echo "  make docs-generate  - Generate PROPERTIES.md files"
-	@echo "  make docs-serve     - Start local docs server"
-	@echo "  make docs-build     - Build static docs site"
+	@echo "  make docs help     - Show docs subcommands"
 	@echo ""
 	@echo "Registry:"
-	@echo "  make registry-update         - Update registry (tag from pyproject.toml)"
-	@echo "  make registry-update TAG=v1  - Update registry with custom tag"
+	@echo "  make registry help - Show registry subcommands"
 	@echo ""
 	@echo "Cleaning:"
-	@echo "  make clean          - Remove build artifacts and caches"
-	@echo "  make clean-cache    - Remove cache files"
+	@echo "  make clean         - Remove build artifacts and caches"
+	@echo "  make clean help    - Show clean subcommands"
+
+_help_install:
+	@echo "Install subcommands:"
+	@echo "  make install      - Install package (user mode)"
+	@echo "  make install dev  - Install with dev dependencies + pre-commit"
+
+_help_test:
+	@echo "Test subcommands:"
+	@echo "  make test                     - Run all validation tests"
+	@echo "  make test syntax              - Run syntax checks only"
+	@echo "  make test artifact-coherence  - Run artifact coherence checks"
+	@echo "  make test data-conformance    - Run SHACL validation only"
+	@echo "  make test failing             - Run failing-tests checks"
+	@echo "  make test cov                 - Run unit tests with coverage report"
+	@echo "  make test domain DOMAIN=hdmap - Test a specific domain"
+
+_help_docs:
+	@echo "Docs subcommands:"
+	@echo "  make docs generate  - Generate PROPERTIES.md files"
+	@echo "  make docs serve     - Start local docs server"
+	@echo "  make docs build     - Build static docs site"
+
+_help_registry:
+	@echo "Registry subcommands:"
+	@echo "  make registry update         - Update registry (tag from pyproject.toml)"
+	@echo "  make registry update TAG=v1  - Update registry with custom tag"
+
+_help_clean:
+	@echo "Clean subcommands:"
+	@echo "  make clean        - Remove build artifacts and caches"
+	@echo "  make clean cache  - Remove cache files"
