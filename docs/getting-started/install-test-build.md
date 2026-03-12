@@ -58,7 +58,7 @@ make test
 Run a single domain:
 
 ```bash
-make test-domain DOMAIN=hdmap
+make test domain DOMAIN=hdmap
 ```
 
 ## Build Documentation
@@ -66,13 +66,13 @@ make test-domain DOMAIN=hdmap
 Build the site:
 
 ```bash
-make docs-build
+make docs build
 ```
 
 To preview locally (auto-generates docs assets):
 
 ```bash
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
 ```
 
 Notes:

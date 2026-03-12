@@ -9,7 +9,7 @@ This repository contains a validation suite for ontology artifacts (OWL, SHACL, 
 make setup
 
 # Reinstall dev dependencies + pre-commit hooks in active environment
-make install-dev
+make install dev
 
 # Lint and format
 make lint
@@ -51,7 +51,7 @@ pytest tests/ --cov=src/tools --cov-report=html
 make test
 
 # Run a single domain via Make
-make test-domain DOMAIN=hdmap
+make test domain DOMAIN=hdmap
 
 # Run module self-tests
 python3 -m src.tools.validators.syntax_validator --test

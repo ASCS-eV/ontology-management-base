@@ -58,7 +58,7 @@ make format     # ruff check --fix + ruff format on src/
 python3 -m src.tools.utils.file_collector --test
 
 # Local docs server
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs-serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
 
 # Update catalogs after artifact changes
 python3 -m src.tools.utils.registry_updater
