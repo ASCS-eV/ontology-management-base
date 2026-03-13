@@ -74,38 +74,14 @@ class Class_definition_for_SoftwareResourceBase
 
 ## Prefixes
 
-- brick: <https://brickschema.org/schema/Brick#>
-- csvw: <http://www.w3.org/ns/csvw#>
-- dc: <http://purl.org/dc/elements/1.1/>
-- dcam: <http://purl.org/dc/dcam/>
-- dcat: <http://www.w3.org/ns/dcat#>
-- dcmitype: <http://purl.org/dc/dcmitype/>
-- dcterms: <http://purl.org/dc/terms/>
-- doap: <http://usefulinc.com/ns/doap#>
 - envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- foaf: <http://xmlns.com/foaf/0.1/>
-- geo: <http://www.opengis.net/ont/geosparql#>
 - gx: <https://w3id.org/gaia-x/development#>
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
-- odrl: <http://www.w3.org/ns/odrl/2/>
-- org: <http://www.w3.org/ns/org#>
 - owl: <http://www.w3.org/2002/07/owl#>
-- prof: <http://www.w3.org/ns/dx/prof/>
-- prov: <http://www.w3.org/ns/prov#>
-- qb: <http://purl.org/linked-data/cube#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-- rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-- schema: <https://schema.org/>
-- schema1: <http://schema.org/>
+- schema: <http://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
 - skos: <http://www.w3.org/2004/02/skos/core#>
-- sosa: <http://www.w3.org/ns/sosa/>
-- ssn: <http://www.w3.org/ns/ssn/>
-- time: <http://www.w3.org/2006/time#>
-- vann: <http://purl.org/vocab/vann/>
-- void: <http://rdfs.org/ns/void#>
-- wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
-- xml: <http://www.w3.org/XML/1998/namespace>
 - xsd: <http://www.w3.org/2001/XMLSchema#>
 
 ### SHACL Properties
@@ -136,8 +112,8 @@ class Class_definition_for_SoftwareResourceBase
 #### manifest:hasReferencedArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts .property-anchor }
 #### manifest:iri {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-iri .property-anchor }
 #### rdf:type {: #prop-http---www-w3-org-1999-02-22-rdf-syntax-ns-type .property-anchor }
-#### schema1:description {: #prop-http---schema-org-description .property-anchor }
-#### schema1:name {: #prop-http---schema-org-name .property-anchor }
+#### schema:description {: #prop-http---schema-org-description .property-anchor }
+#### schema:name {: #prop-http---schema-org-name .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
@@ -171,17 +147,17 @@ class Class_definition_for_SoftwareResourceBase
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-description"></a>description|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-license"></a>license||1|Allows custom commercial identifiers in addition to Gaia-X standard SPDX checks.||envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema1|<a id="prop-http---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema1|<a id="prop-http---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|<a id="prop-http---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|<a id="prop-http---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|license||1|||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-resourcepolicy"></a>resourcePolicy|1|||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|ServiceOfferingBaseShape|schema1|name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|ServiceOfferingBaseShape|schema1|description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|ServiceOfferingBaseShape|schema|name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|ServiceOfferingBaseShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ServiceOfferingBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-providedby"></a>providedBy|1|1|||envited-x.shacl.ttl|
 |ServiceOfferingBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-serviceofferingtermsandconditions"></a>serviceOfferingTermsAndConditions|1||||envited-x.shacl.ttl|
-|CodeArtifactBaseShape|schema1|name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|CodeArtifactBaseShape|schema1|description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|CodeArtifactBaseShape|schema|name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|CodeArtifactBaseShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |CodeArtifactBaseShape|gx|license||1|||envited-x.shacl.ttl|
 |CodeArtifactBaseShape|gx|copyrightOwnedBy|1||||envited-x.shacl.ttl|
 |CodeArtifactBaseShape|gx|resourcePolicy|1|||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
