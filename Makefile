@@ -48,15 +48,19 @@ GEN_JSONLD_CONTEXT := $(VENV_BIN)/gen-jsonld-context
 
 # LinkML domains — add new domains here
 LINKML_DOMAINS := openlabel-v2
+GX_SUBMODULE_DIR := submodules/service-characteristics
+GX_ARTIFACTS_DIR := artifacts/gx
+GX_UPDATE_SCRIPT := $(GX_ARTIFACTS_DIR)/update-from-submodule.sh
 
 .PHONY: all setup install lint format test generate docs registry clean help \
 	_help_general _help_install _help_test _help_docs _help_registry _help_clean \
-	_install_default _install_dev \
+	_help_generate _install_default _install_dev \
+	_generate_default _generate_gx \
 	_test_default _test_syntax _test_artifact_coherence _test_data_conformance _test_failing _test_cov _test_domain \
 	_docs_generate _docs_serve _docs_build \
 	_registry_update _clean_default _clean_cache
 
-GROUPED_COMMANDS := install test docs registry clean
+GROUPED_COMMANDS := install generate test docs registry clean
 PRIMARY_GOAL := $(firstword $(MAKECMDGOALS))
 
 ifneq ($(filter $(PRIMARY_GOAL),$(GROUPED_COMMANDS)),)
@@ -140,8 +144,23 @@ format:
 	@"$(PYTHON)" -m ruff format src/
 	@echo "[OK] Python formatting complete"
 
-# LinkML generation targets
 generate:
+	@set -- $(filter-out $@,$(MAKECMDGOALS)); \
+	subcommand="$${1:-default}"; \
+	if [ "$$#" -gt 1 ]; then \
+		echo "ERROR: Too many subcommands for 'make generate': $(filter-out $@,$(MAKECMDGOALS))"; \
+		echo "Run 'make generate help' for available options."; \
+		exit 1; \
+	fi; \
+	case "$$subcommand" in \
+		default) $(MAKE) --no-print-directory _generate_default DOMAIN="$(DOMAIN)" ;; \
+		gx) $(MAKE) --no-print-directory _generate_gx GX_REF="$(GX_REF)" ;; \
+		help) $(MAKE) --no-print-directory _help_generate ;; \
+		*) echo "ERROR: Unknown generate subcommand '$$subcommand'"; echo "Run 'make generate help' for available options."; exit 1 ;; \
+	esac
+
+# LinkML generation targets
+_generate_default:
 	$(call check_dev_setup)
 	@echo "[INFO] Generating artifacts from LinkML schemas..."
 	@if [ -n "$(DOMAIN)" ]; then \
@@ -161,6 +180,21 @@ generate:
 			artifacts/$$domain/$$domain.context.jsonld; \
 	done
 	@echo "[OK] Artifacts generated"
+
+_generate_gx:
+	$(call check_dev_setup)
+	@if [ ! -d "$(GX_SUBMODULE_DIR)" ]; then \
+		echo "[ERR] Gaia-X submodule not found at $(GX_SUBMODULE_DIR)"; \
+		echo "Run: git submodule update --init --recursive"; \
+		exit 1; \
+	fi
+	@echo "[INFO] Regenerating Gaia-X artifacts from $(GX_SUBMODULE_DIR)..."
+	@if [ -n "$(GX_REF)" ]; then \
+		PATH="$(abspath $(VENV_BIN)):$$PATH" bash "$(GX_UPDATE_SCRIPT)" "$(GX_REF)"; \
+	else \
+		PATH="$(abspath $(VENV_BIN)):$$PATH" bash "$(GX_UPDATE_SCRIPT)"; \
+	fi
+	@echo "[OK] Gaia-X artifacts refreshed"
 
 # Testing targets
 test:
@@ -333,8 +367,10 @@ _help_general:
 	@echo "  make format         - Format code with ruff"
 	@echo ""
 	@echo "LinkML:"
-	@echo "  make generate                     - Generate OWL/SHACL/context from all LinkML schemas"
-	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific domain"
+	@echo "  make generate                     - Generate OWL/SHACL/context from all OMB LinkML schemas"
+	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific OMB domain"
+	@echo "  make generate gx                  - Build and sync Gaia-X artifacts from service-characteristics"
+	@echo "  make generate help                - Show generate subcommands"
 	@echo ""
 	@echo "Testing:"
 	@echo "  make test          - Run all validation tests"
@@ -354,6 +390,13 @@ _help_install:
 	@echo "Install subcommands:"
 	@echo "  make install      - Install package (user mode)"
 	@echo "  make install dev  - Install with dev dependencies + pre-commit"
+
+_help_generate:
+	@echo "Generate subcommands:"
+	@echo "  make generate                     - Generate OWL/SHACL/context from all OMB LinkML schemas"
+	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific OMB domain"
+	@echo "  make generate gx                  - Build and sync Gaia-X artifacts from service-characteristics"
+	@echo "  make generate gx GX_REF=25.12     - Check out a specific Gaia-X ref before generating"
 
 _help_test:
 	@echo "Test subcommands:"

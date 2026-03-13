@@ -106,7 +106,9 @@ def parse_graph(file_path: Path, fmt: str) -> rdflib.Graph:
     Returns:
         Parsed graph
     """
-    graph = rdflib.Graph()
+    # Preserve prefixes authored in the source graph instead of inheriting
+    # RDFLib's pre-bound namespace aliases (e.g. schema -> https://schema.org/).
+    graph = rdflib.Graph(bind_namespaces="none")
     graph.parse(str(file_path), format=fmt)
     return graph
 

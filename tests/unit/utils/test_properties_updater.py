@@ -49,3 +49,19 @@ def test_prefix_helpers(temp_dir: Path):
         uri, {"http://example.org/": "ex"}
     )
     assert replaced == ("ex", "Thing")
+
+
+def test_parse_graph_preserves_authored_schema_prefix(temp_dir: Path):
+    ttl = """@prefix schema: <http://schema.org/> .
+@prefix ex: <http://example.org/> .
+
+ex:Thing schema:name "Example" .
+"""
+    file_path = temp_dir / "data.ttl"
+    file_path.write_text(ttl)
+
+    graph = properties_updater.parse_graph(file_path, "turtle")
+    prefixes = properties_updater.extract_prefixes(graph)
+
+    assert prefixes["http://schema.org/"] == "schema"
+    assert "https://schema.org/" not in prefixes
