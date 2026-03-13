@@ -40,42 +40,18 @@ class Content_or_OpenLabel_Tag
 
 ## Prefixes
 
-- brick: <https://brickschema.org/schema/Brick#>
-- csvw: <http://www.w3.org/ns/csvw#>
-- dc: <http://purl.org/dc/elements/1.1/>
-- dcam: <http://purl.org/dc/dcam/>
-- dcat: <http://www.w3.org/ns/dcat#>
-- dcmitype: <http://purl.org/dc/dcmitype/>
-- dcterms: <http://purl.org/dc/terms/>
-- doap: <http://usefulinc.com/ns/doap#>
 - environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/>
 - envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- foaf: <http://xmlns.com/foaf/0.1/>
-- geo: <http://www.opengis.net/ont/geosparql#>
 - georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/>
 - gx: <https://w3id.org/gaia-x/development#>
 - hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/>
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
-- odrl: <http://www.w3.org/ns/odrl/2/>
 - openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/>
-- org: <http://www.w3.org/ns/org#>
 - owl: <http://www.w3.org/2002/07/owl#>
-- prof: <http://www.w3.org/ns/dx/prof/>
-- prov: <http://www.w3.org/ns/prov#>
-- qb: <http://purl.org/linked-data/cube#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-- rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 - scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/>
-- schema: <https://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
 - skos: <http://www.w3.org/2004/02/skos/core#>
-- sosa: <http://www.w3.org/ns/sosa/>
-- ssn: <http://www.w3.org/ns/ssn/>
-- time: <http://www.w3.org/2006/time#>
-- vann: <http://purl.org/vocab/vann/>
-- void: <http://rdfs.org/ns/void#>
-- wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#>
-- xml: <http://www.w3.org/XML/1998/namespace>
 - xsd: <http://www.w3.org/2001/XMLSchema#>
 
 ### SHACL Properties
