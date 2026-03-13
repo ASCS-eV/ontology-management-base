@@ -520,6 +520,7 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 - schema: <https://schema.org/>
+- schema1: <http://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
 - skos: <http://www.w3.org/2004/02/skos/core#>
 - sosa: <http://www.w3.org/ns/sosa/>
@@ -638,8 +639,8 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 #### openlabel:weatherSnowValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-weathersnowvalue .property-anchor }
 #### openlabel:WeatherWind {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-weatherwind .property-anchor }
 #### openlabel:weatherWindValue {: #prop-https---openlabel-asam-net-v1-0-0-ontologies-weatherwindvalue .property-anchor }
-#### schema:maxValue {: #prop-https---schema-org-maxvalue .property-anchor }
-#### schema:minValue {: #prop-https---schema-org-minvalue .property-anchor }
+#### schema1:maxValue {: #prop-http---schema-org-maxvalue .property-anchor }
+#### schema1:minValue {: #prop-http---schema-org-minvalue .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
@@ -749,5 +750,5 @@ _Class diagram omitted for size (243 classes). See class hierarchy and definitio
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslope"></a>LongitudinalUpSlope|||Validation class for longitudinalUpSlope|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-longitudinalupslopevalue"></a>longitudinalUpSlopeValue|||Gradient (%) (Refer to BSI PAS-1883 Section 5.2.3.3.i).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
 |OddShape|openlabel|<a id="prop-https---openlabel-asam-net-v1-0-0-ontologies-particulateswatervalue"></a>particulatesWaterValue|||Meteorological Optical Range (MOR) (m) (Refer to BSI PAS-1883 Section 5.3.2.b).|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel.shacl.ttl|
-|QuantitativeValueShape|schema|<a id="prop-https---schema-org-minvalue"></a>minValue|1||||openlabel.shacl.ttl|
-|QuantitativeValueShape|schema|<a id="prop-https---schema-org-maxvalue"></a>maxValue|1||||openlabel.shacl.ttl|
+|QuantitativeValueShape|schema1|<a id="prop-http---schema-org-minvalue"></a>minValue|1||||openlabel.shacl.ttl|
+|QuantitativeValueShape|schema1|<a id="prop-http---schema-org-maxvalue"></a>maxValue|1||||openlabel.shacl.ttl|

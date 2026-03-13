@@ -8,7 +8,7 @@
       {
          "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "https://schema.org/"
+         "schema": "http://schema.org/"
       }
    ],
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail04_prefixed_geo_bypass_coercion",
