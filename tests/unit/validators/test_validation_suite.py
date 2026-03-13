@@ -228,7 +228,7 @@ def test_validate_data_conformance_all_prints_formatted_report(
             verbose: bool = True,
             resolver: RegistryResolver = None,
             strict: bool = False,
-            allow_online: bool = False,
+            allow_online: bool = True,
         ):
             self._resolver = resolver
 

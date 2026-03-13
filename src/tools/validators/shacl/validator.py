@@ -95,7 +95,7 @@ class ShaclValidator:
         verbose: bool = True,
         resolver: Optional["RegistryResolver"] = None,
         strict: bool = False,
-        allow_online: bool = False,
+        allow_online: bool = True,
     ):
         """
         Initialize the SHACL validator.

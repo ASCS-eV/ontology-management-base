@@ -4,6 +4,7 @@ Unit tests for src.tools.core.iri_utils module.
 """
 
 from src.tools.core.iri_utils import (
+    did_web_to_url,
     extract_prefix_from_context,
     get_local_name,
     get_namespace,
@@ -132,6 +133,82 @@ class TestParseDidWeb:
         result = parse_did_web("did:web:example%2Eorg")
         assert result is not None
         assert result["host"] == "example.org"
+
+
+class TestDidWebToUrl:
+    """Tests for did_web_to_url function."""
+
+    def test_converts_host_only_identifier(self):
+        """Host-only did:web resolves to .well-known/did.json."""
+        assert (
+            did_web_to_url("did:web:example.org")
+            == "https://example.org/.well-known/did.json"
+        )
+
+    def test_converts_path_segments(self):
+        """Colon-delimited path segments become URL path segments."""
+        assert (
+            did_web_to_url("did:web:example.org:user:alice")
+            == "https://example.org/user/alice/did.json"
+        )
+
+    def test_decodes_percent_encoded_port(self):
+        """Percent-encoded ports are restored in the HTTPS URL."""
+        assert (
+            did_web_to_url("did:web:example.org%3A3000")
+            == "https://example.org:3000/.well-known/did.json"
+        )
+
+    def test_strips_fragment_from_did_url(self):
+        """Fragments do not change the DID document URL."""
+        assert (
+            did_web_to_url("did:web:example.org:user:alice#key-1")
+            == "https://example.org/user/alice/did.json"
+        )
+
+    def test_rejects_url_injection_in_host(self):
+        """Userinfo-style host injection is rejected."""
+        assert did_web_to_url("did:web:victim.com%40attacker.com") is None
+
+    def test_rejects_dangerous_path_segments(self):
+        """Dangerous decoded path delimiters are rejected."""
+        assert did_web_to_url("did:web:example.org:user%2Falice") is None
+
+    def test_rejects_path_traversal_segments(self):
+        """Dot-dot path traversal segments are rejected."""
+        assert did_web_to_url("did:web:example.org:..") is None
+        assert did_web_to_url("did:web:example.org:..:etc:passwd") is None
+        assert did_web_to_url("did:web:example.org:user:..") is None
+        assert did_web_to_url("did:web:example.org:.") is None
+
+    def test_rejects_localhost(self):
+        """Localhost hostnames are rejected to prevent SSRF."""
+        assert did_web_to_url("did:web:localhost") is None
+        assert did_web_to_url("did:web:localhost.localdomain") is None
+
+    def test_rejects_loopback_ip(self):
+        """Loopback IP addresses are rejected to prevent SSRF."""
+        assert did_web_to_url("did:web:127.0.0.1") is None
+        assert did_web_to_url("did:web:127.0.0.1%3A8080") is None
+
+    def test_rejects_private_ip(self):
+        """Private IP ranges are rejected to prevent SSRF."""
+        assert did_web_to_url("did:web:10.0.0.1") is None
+        assert did_web_to_url("did:web:192.168.1.1") is None
+        assert did_web_to_url("did:web:172.16.0.1") is None
+
+    def test_rejects_link_local_ip(self):
+        """Link-local / cloud metadata IPs are rejected to prevent SSRF."""
+        assert did_web_to_url("did:web:169.254.169.254") is None
+
+    def test_rejects_single_label_hostname(self):
+        """Single-label hostnames (no dots) are rejected."""
+        assert did_web_to_url("did:web:intranet") is None
+        assert did_web_to_url("did:web:metadata") is None
+
+    def test_returns_none_for_non_did_web(self):
+        """Non did:web identifiers do not produce URLs."""
+        assert did_web_to_url("https://example.org/resource") is None
 
 
 class TestNormalizeIri:
