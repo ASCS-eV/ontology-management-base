@@ -224,7 +224,7 @@ def validate_data_conformance_all(
     resolver: RegistryResolver = None,
     inference_mode: str = "rdfs",
     strict: bool = False,
-    allow_online: bool = False,
+    allow_online: bool = True,
 ) -> int:
     """
     Validate JSON-LD files against SHACL schemas.
@@ -308,7 +308,7 @@ def check_failing_tests_all(
     ontology_domains: List[str],
     resolver: RegistryResolver = None,
     inference_mode: str = "rdfs",
-    allow_online: bool = False,
+    allow_online: bool = True,
 ) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
@@ -610,8 +610,15 @@ def main():
     target_group.add_argument(
         "--allow-online",
         action="store_true",
-        default=False,
-        help="Allow online fallback for unresolved IRIs (disabled by default).",
+        default=True,
+        help="Allow online fallback for unresolved IRIs (enabled by default).",
+    )
+
+    target_group.add_argument(
+        "--offline",
+        dest="allow_online",
+        action="store_false",
+        help="Disable online fallback for unresolved IRIs.",
     )
 
     args = parser.parse_args()

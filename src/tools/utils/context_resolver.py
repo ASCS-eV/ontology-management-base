@@ -196,6 +196,45 @@ def _collect_unresolved_context_urls(
     return sorted(unresolved)
 
 
+def inline_jsonld_with_local_contexts(
+    data: Union[dict, list],
+    url_map: Optional[Dict[str, Path]],
+    uri_tweaks: Optional[Dict[str, str]] = None,
+    source_name: Optional[Union[str, Path]] = None,
+) -> str:
+    """
+    Inline known local contexts into already-loaded JSON-LD content.
+
+    Args:
+        data: Parsed JSON-LD document content
+        url_map: Context URL -> local file mapping (None to skip)
+        uri_tweaks: IRI replacements. Defaults to ``DEFAULT_URI_TWEAKS``.
+        source_name: Optional name used in unresolved-context warnings
+
+    Returns:
+        JSON string ready for rdflib parsing
+    """
+    if uri_tweaks is None:
+        uri_tweaks = DEFAULT_URI_TWEAKS
+
+    if url_map:
+        data = _inline_contexts_recursive(data, url_map, uri_tweaks)
+        unresolved = _collect_unresolved_context_urls(data, url_map)
+        if unresolved:
+            logger.warning(
+                "Unresolved @context URL(s) in %s (rdflib will fetch remotely): %s",
+                source_name or "<json-ld>",
+                ", ".join(unresolved),
+            )
+
+    result = json.dumps(data)
+
+    for old, new in uri_tweaks.items():
+        result = result.replace(old, new)
+
+    return result
+
+
 def load_jsonld_with_local_contexts(
     file_path: Path,
     url_map: Optional[Dict[str, Path]],
@@ -223,20 +262,9 @@ def load_jsonld_with_local_contexts(
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    if url_map:
-        data = _inline_contexts_recursive(data, url_map, uri_tweaks)
-        unresolved = _collect_unresolved_context_urls(data, url_map)
-        if unresolved:
-            logger.warning(
-                "Unresolved @context URL(s) in %s (rdflib will fetch remotely): %s",
-                file_path,
-                ", ".join(unresolved),
-            )
-
-    result = json.dumps(data)
-
-    # Also apply URI tweaks to the main document content
-    for old, new in uri_tweaks.items():
-        result = result.replace(old, new)
-
-    return result
+    return inline_jsonld_with_local_contexts(
+        data,
+        url_map,
+        uri_tweaks=uri_tweaks,
+        source_name=file_path,
+    )
