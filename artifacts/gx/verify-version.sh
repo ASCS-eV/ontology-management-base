@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verify that GX VERSION file matches the submodule tag
+# Verify that GX upstream provenance matches the submodule checkout
 # Usage: ./verify-version.sh
 #
 # Exit code 0 = synchronized
@@ -11,6 +11,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 SUBMODULE_DIR="$ROOT_DIR/submodules/service-characteristics"
 VERSION_FILE="$SCRIPT_DIR/VERSION"
+UPSTREAM_COMMIT_FILE="$SCRIPT_DIR/UPSTREAM_COMMIT"
+UPSTREAM_REF_FILE="$SCRIPT_DIR/UPSTREAM_REF"
 
 if [ ! -d "$SUBMODULE_DIR" ]; then
     echo "⚠️  Warning: Submodule not initialized"
@@ -23,38 +25,47 @@ if [ ! -f "$VERSION_FILE" ]; then
     exit 1
 fi
 
+if [ ! -f "$UPSTREAM_COMMIT_FILE" ]; then
+    echo "❌ Error: UPSTREAM_COMMIT file not found at $UPSTREAM_COMMIT_FILE"
+    echo "Run: make generate gx"
+    exit 1
+fi
+
 cd "$SUBMODULE_DIR"
-SUBMODULE_TAG=$(git describe --tags --exact-match 2>/dev/null || git describe --tags)
-SUBMODULE_VERSION="${SUBMODULE_TAG#v}"
-SUBMODULE_VERSION="${SUBMODULE_VERSION%%-*}"
-SUBMODULE_COMMIT=$(git rev-parse --short HEAD)
+SUBMODULE_REF=$(git describe --tags --always --dirty 2>/dev/null || git rev-parse --short HEAD)
+SUBMODULE_COMMIT=$(git rev-parse HEAD)
+SUBMODULE_SHORT_COMMIT=$(git rev-parse --short HEAD)
 
-VERSION_FILE_CONTENT=$(cat "$VERSION_FILE" | tr -d '[:space:]')
-# Strip post-release suffix for base version comparison
-VERSION_BASE="${VERSION_FILE_CONTENT%%+*}"
+VERSION_FILE_CONTENT=$(tr -d '[:space:]' < "$VERSION_FILE")
+RECORDED_UPSTREAM_COMMIT=$(tr -d '[:space:]' < "$UPSTREAM_COMMIT_FILE")
+if [ -f "$UPSTREAM_REF_FILE" ]; then
+    RECORDED_UPSTREAM_REF=$(tr -d '\r' < "$UPSTREAM_REF_FILE")
+else
+    RECORDED_UPSTREAM_REF="(not recorded)"
+fi
 
-echo "Submodule version: $SUBMODULE_VERSION (tag: $SUBMODULE_TAG)"
-echo "Submodule commit:  $SUBMODULE_COMMIT"
-echo "VERSION file:      $VERSION_FILE_CONTENT"
+echo "Gaia-X label:          $VERSION_FILE_CONTENT"
+echo "Recorded upstream ref: $RECORDED_UPSTREAM_REF"
+echo "Recorded commit:       $RECORDED_UPSTREAM_COMMIT"
+echo "Submodule ref:         $SUBMODULE_REF"
+echo "Submodule commit:      $SUBMODULE_COMMIT"
 echo ""
 
-if [ "$VERSION_FILE_CONTENT" = "$SUBMODULE_VERSION" ]; then
-    echo "✓ Versions match exactly (official release)"
-    exit 0
-elif [ "$VERSION_BASE" = "$SUBMODULE_VERSION" ] && [[ "$VERSION_FILE_CONTENT" == *"+"* ]]; then
-    echo "✓ Version OK (post-release patch: $VERSION_FILE_CONTENT)"
+if [ "$RECORDED_UPSTREAM_COMMIT" = "$SUBMODULE_COMMIT" ]; then
+    echo "✓ Upstream metadata matches the checked-out submodule."
     echo ""
-    echo "Using version with additional fixes on top of $SUBMODULE_VERSION."
-    echo "Submodule is at commit $SUBMODULE_COMMIT."
+    echo "The VERSION file is a Gaia-X release label for OMB docs."
+    echo "The recorded commit is the source of truth for submodule synchronization."
     exit 0
 else
-    echo "❌ Version mismatch!"
+    echo "❌ Upstream sync mismatch!"
     echo ""
-    echo "Expected base version: $SUBMODULE_VERSION"
-    echo "VERSION file shows:    $VERSION_FILE_CONTENT"
+    echo "Recorded commit:  $RECORDED_UPSTREAM_COMMIT"
+    echo "Submodule commit: $SUBMODULE_COMMIT"
     echo ""
     echo "To update, run:"
-    echo "  cd $SCRIPT_DIR"
-    echo "  ./update-from-submodule.sh"
+    echo "  make generate gx"
+    echo ""
+    echo "Current submodule short SHA: $SUBMODULE_SHORT_COMMIT"
     exit 1
 fi
