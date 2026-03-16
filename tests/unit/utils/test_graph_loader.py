@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 import pytest
-from rdflib import Graph
+from rdflib import Graph, URIRef
 
 from src.tools.utils import graph_loader
 from src.tools.utils.registry_resolver import RegistryResolver
@@ -268,3 +268,271 @@ def test_load_fixtures_for_iris_uses_context_url_map(temp_dir: Path):
     assert loaded == 1
     assert len(unresolved) == 0
     assert len(g) >= 1
+
+
+class _FakeUrlopenResponse:
+    def __init__(self, payload: str):
+        self._payload = payload.encode("utf-8")
+
+    def read(self) -> bytes:
+        return self._payload
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+
+class _FakeOpener:
+    """Fake opener returned by monkeypatched build_opener."""
+
+    def __init__(self, open_fn):
+        self._open_fn = open_fn
+
+    def open(self, request, timeout=10):
+        return self._open_fn(request, timeout=timeout)
+
+
+def _patch_opener(monkeypatch, open_fn):
+    """Replace graph_loader.build_opener so it returns a _FakeOpener."""
+
+    def fake_build_opener(*handlers):
+        return _FakeOpener(open_fn)
+
+    monkeypatch.setattr(graph_loader, "build_opener", fake_build_opener)
+
+
+def test_load_fixtures_for_iris_resolves_did_web_online(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    def fake_urlopen(request, timeout=10):
+        assert request.full_url == "https://test.example/.well-known/did.json"
+        return _FakeUrlopenResponse(
+            json.dumps(
+                {
+                    "@context": {
+                        "id": "@id",
+                        "name": "http://example.org/name",
+                    },
+                    "id": "did:web:test.example",
+                    "name": "Test Entity",
+                }
+            )
+        )
+
+    _patch_opener(monkeypatch, fake_urlopen)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:test.example"},
+        resolver,
+        g,
+        temp_dir,
+        allow_online_fallback=True,
+    )
+
+    assert loaded == 1
+    assert unresolved == []
+    assert (URIRef("did:web:test.example"), None, None) in g
+
+
+def test_load_fixtures_for_iris_resolves_did_web_online_with_context_url_map(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    contexts_dir = temp_dir / "contexts"
+    contexts_dir.mkdir()
+    local_context = contexts_dir / "did-context.jsonld"
+    local_context.write_text(
+        json.dumps(
+            {
+                "@context": {
+                    "id": "@id",
+                    "name": "http://example.org/name",
+                }
+            }
+        )
+    )
+
+    def fake_urlopen(request, timeout=10):
+        assert request.full_url == "https://test.example/user/alice/did.json"
+        return _FakeUrlopenResponse(
+            json.dumps(
+                {
+                    "@context": "https://example.org/did-context",
+                    "id": "did:web:test.example:user:alice",
+                    "name": "Alice",
+                }
+            )
+        )
+
+    _patch_opener(monkeypatch, fake_urlopen)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:test.example:user:alice"},
+        resolver,
+        g,
+        temp_dir,
+        context_url_map={"https://example.org/did-context": local_context},
+        allow_online_fallback=True,
+    )
+
+    assert loaded == 1
+    assert unresolved == []
+    assert (URIRef("did:web:test.example:user:alice"), None, None) in g
+
+
+def test_load_fixtures_for_iris_rejects_mismatched_did_document_id(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    def fake_urlopen(request, timeout=10):
+        assert request.full_url == "https://test.example/.well-known/did.json"
+        return _FakeUrlopenResponse(
+            json.dumps(
+                {
+                    "@context": {"id": "@id"},
+                    "id": "did:web:other.example",
+                }
+            )
+        )
+
+    _patch_opener(monkeypatch, fake_urlopen)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:test.example"},
+        resolver,
+        g,
+        temp_dir,
+    )
+
+    assert loaded == 0
+    assert unresolved == ["did:web:test.example"]
+    assert len(g) == 0
+
+
+def test_load_fixtures_for_iris_rejects_plain_did_json_without_context(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    def fake_urlopen(request, timeout=10):
+        assert request.full_url == "https://test.example/.well-known/did.json"
+        return _FakeUrlopenResponse(json.dumps({"id": "did:web:test.example"}))
+
+    _patch_opener(monkeypatch, fake_urlopen)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:test.example"},
+        resolver,
+        g,
+        temp_dir,
+    )
+
+    assert loaded == 0
+    assert unresolved == ["did:web:test.example"]
+    assert len(g) == 0
+
+
+def test_load_fixtures_for_iris_rejects_ssrf_localhost(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Localhost did:web must never reach the network — did_web_to_url rejects it."""
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    def should_not_be_called(request, timeout=10):
+        raise AssertionError(f"SSRF: network call attempted to {request.full_url}")
+
+    _patch_opener(monkeypatch, should_not_be_called)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:localhost", "did:web:127.0.0.1", "did:web:169.254.169.254"},
+        resolver,
+        g,
+        temp_dir,
+    )
+
+    assert loaded == 0
+    assert len(unresolved) == 3
+    assert len(g) == 0
+
+
+def test_load_fixtures_for_iris_rejects_ssrf_private_ip(
+    temp_dir: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Private IP did:web must never reach the network."""
+    (temp_dir / "docs").mkdir()
+    (temp_dir / "docs" / "registry.json").write_text(
+        '{"version":"1.0.0","ontologies":{}}'
+    )
+    (temp_dir / "artifacts").mkdir()
+    (temp_dir / "artifacts" / "catalog-v001.xml").write_text(
+        '<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>'
+    )
+
+    def should_not_be_called(request, timeout=10):
+        raise AssertionError(f"SSRF: network call attempted to {request.full_url}")
+
+    _patch_opener(monkeypatch, should_not_be_called)
+
+    resolver = RegistryResolver(temp_dir)
+    g = Graph()
+    loaded, unresolved = graph_loader.load_fixtures_for_iris(
+        {"did:web:10.0.0.1", "did:web:192.168.1.1", "did:web:172.16.0.1"},
+        resolver,
+        g,
+        temp_dir,
+    )
+
+    assert loaded == 0
+    assert len(unresolved) == 3
+    assert len(g) == 0

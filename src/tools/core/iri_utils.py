@@ -12,8 +12,9 @@ FEATURE SET:
 2. get_namespace - Extract namespace from URI (before # or last /)
 3. is_did_web - Check if IRI is a did:web: decentralized identifier
 4. parse_did_web - Parse did:web: IRI into components
-5. normalize_iri - Normalize IRI for comparison (trailing slash handling)
-6. iri_to_domain - Extract domain hint from ontology IRI
+5. did_web_to_url - Convert did:web identifiers to HTTPS did.json URLs
+6. normalize_iri - Normalize IRI for comparison (trailing slash handling)
+7. iri_to_domain - Extract domain hint from ontology IRI
 
 USAGE:
 ======
@@ -146,13 +147,13 @@ def parse_did_web(iri: str) -> Optional[Dict[str, str]]:
     if not is_did_web(iri):
         return None
 
-    # Remove "did:web:" prefix
-    remainder = iri[8:]
+    # Strip DID URL path/query/fragment so we operate on the DID itself.
+    remainder = re.split(r"[/?#]", iri[8:], maxsplit=1)[0]
 
     # Split into parts (: separated in did:web)
     parts = remainder.split(":")
 
-    if len(parts) < 1:
+    if len(parts) < 1 or any(part == "" for part in parts):
         return None
 
     host = unquote(parts[0])
@@ -169,6 +170,91 @@ def parse_did_web(iri: str) -> Optional[Dict[str, str]]:
         "type": type_name,
         "id": resource_id,
     }
+
+
+def did_web_to_url(iri: str) -> Optional[str]:
+    """
+    Convert a did:web identifier to its HTTPS ``did.json`` document URL.
+
+    Args:
+        iri: did:web: IRI string
+
+    Returns:
+        HTTPS URL for the DID document, or None if the input is not did:web
+
+    Examples:
+        >>> did_web_to_url("did:web:example.com")
+        'https://example.com/.well-known/did.json'
+        >>> did_web_to_url("did:web:example.com:user:alice")
+        'https://example.com/user/alice/did.json'
+        >>> did_web_to_url("did:web:example.com%3A3000")
+        'https://example.com:3000/.well-known/did.json'
+    """
+    if not is_did_web(iri):
+        return None
+
+    remainder = re.split(r"[/?#]", iri[8:], maxsplit=1)[0]
+    raw_parts = remainder.split(":")
+    if not raw_parts or any(part == "" for part in raw_parts):
+        return None
+
+    host, *path_segments = [unquote(part) for part in raw_parts]
+
+    if any(ch.isspace() or ch in "@/\\?#[]" for ch in host):
+        return None
+    if host.count(":") > 1:
+        return None
+
+    host_name = host
+    if ":" in host:
+        host_name, port = host.rsplit(":", 1)
+        if not port.isdigit():
+            return None
+        port_num = int(port)
+        if port_num < 1 or port_num > 65535:
+            return None
+
+    labels = host_name.split(".")
+    if not host_name or any(
+        not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?", label)
+        for label in labels
+    ):
+        return None
+
+    # Reject single-label hostnames (no dots) — they are ambiguous and
+    # typically resolve to internal services (e.g. "localhost", "metadata").
+    if len(labels) < 2:
+        return None
+
+    # Reject localhost and private/link-local IP addresses to prevent SSRF.
+    _lower = host_name.lower()
+    if _lower in ("localhost", "localhost.localdomain"):
+        return None
+    try:
+        import ipaddress
+
+        addr = ipaddress.ip_address(_lower)
+        if (
+            addr.is_loopback
+            or addr.is_private
+            or addr.is_link_local
+            or addr.is_reserved
+        ):
+            return None
+    except ValueError:
+        pass  # not an IP literal — good
+
+    for segment in path_segments:
+        if (
+            not segment
+            or segment in (".", "..")
+            or any(ch.isspace() or ch in "/\\?#@" for ch in segment)
+        ):
+            return None
+
+    if path_segments:
+        return f"https://{host}/{'/'.join(path_segments)}/did.json"
+    return f"https://{host}/.well-known/did.json"
 
 
 def normalize_iri(iri: str, trailing_slash: bool = True) -> str:
@@ -424,6 +510,15 @@ def _run_tests() -> bool:
         print("PASS: matches_namespace")
     except AssertionError as e:
         print(f"FAIL: matches_namespace - {e}")
+        all_passed = False
+
+    # Test 13: did_web_to_url
+    try:
+        result = did_web_to_url("did:web:example.com:user:alice")
+        assert result == "https://example.com/user/alice/did.json"
+        print("PASS: did_web_to_url")
+    except AssertionError as e:
+        print(f"FAIL: did_web_to_url - {e}")
         all_passed = False
 
     print()

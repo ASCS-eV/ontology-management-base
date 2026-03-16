@@ -22,10 +22,10 @@ load_fixtures_for_iris implements a catalog-first resolution strategy:
    - Fast, offline, deterministic
 
 2. Online Fallback (Optional)
-   - For http:// and https:// IRIs not found in catalog
+   - For did:web, http://, and https:// IRIs not found in catalog
    - Logs warning but continues validation
-   - Disabled by default (allow_online_fallback=False)
-   - Enable via --allow-online CLI flag
+   - Enabled by default in the validation pipeline
+   - Disable via --offline when fully local-only behavior is required
 
 3. Graceful Handling
    - Unresolved IRIs are collected and returned
@@ -70,15 +70,17 @@ NOTES:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
+from urllib.request import Request, build_opener, HTTPSHandler
 
 import rdflib
 from rdflib import Graph
 
 from src.tools.core.constants import FAST_STORE
-from src.tools.core.iri_utils import is_did_web
+from src.tools.core.iri_utils import did_web_to_url, is_did_web
 from src.tools.core.logging import get_logger
 from src.tools.utils.print_formatter import normalize_path_for_display
 
@@ -307,13 +309,75 @@ def load_jsonld_with_context(file_path: Path) -> Tuple[Graph, Dict[str, str]]:
     return graph, prefixes
 
 
+def _load_online_did_web_document(
+    iri: str,
+    graph: Graph,
+    context_url_map: Optional[Dict[str, Path]] = None,
+) -> str:
+    """Fetch and load a did:web document into the graph."""
+    requested_did = re.split(r"[/?#]", iri, maxsplit=1)[0]
+    document_url = did_web_to_url(iri)
+    if not document_url:
+        raise ValueError(f"Not a did:web identifier: {iri}")
+
+    request = Request(
+        document_url,
+        headers={
+            "Accept": (
+                "application/did+ld+json, application/did+json, "
+                "application/ld+json, application/json"
+            )
+        },
+    )
+
+    # Use a custom opener that does NOT follow redirects to prevent SSRF
+    # via attacker-controlled 3xx responses targeting internal services.
+    _no_redirect_opener = build_opener(HTTPSHandler)
+
+    with _no_redirect_opener.open(request, timeout=10) as response:
+        payload = response.read().decode("utf-8")
+
+    did_document = json.loads(payload)
+    if not isinstance(did_document, dict):
+        raise ValueError(f"Resolved did:web document is not a JSON object: {iri}")
+    if did_document.get("id") != requested_did:
+        raise ValueError(
+            f"Resolved did:web document id mismatch for {iri}: {did_document.get('id')}"
+        )
+    if context_url_map:
+        from src.tools.utils.context_resolver import inline_jsonld_with_local_contexts
+
+        json_str = inline_jsonld_with_local_contexts(
+            did_document,
+            context_url_map,
+            source_name=document_url,
+        )
+    else:
+        json_str = json.dumps(did_document)
+
+    did_graph = Graph(store=FAST_STORE)
+    did_graph.parse(
+        data=json_str,
+        format="json-ld",
+        base=document_url,
+        publicID=document_url,
+    )
+    if len(did_graph) == 0:
+        raise ValueError(
+            f"Resolved did:web document produced no RDF triples for {iri}; "
+            "plain DID JSON without JSON-LD context is not supported by OMB graph loading"
+        )
+    graph += did_graph
+    return document_url
+
+
 def load_fixtures_for_iris(
     iris: Set[str],
     resolver: "RegistryResolver",  # noqa: F821 - forward reference
     graph: Graph,
     root_dir: Path,
     context_url_map: Optional[Dict[str, Path]] = None,
-    allow_online_fallback: bool = False,
+    allow_online_fallback: bool = True,
     verbose: bool = False,
 ) -> Tuple[int, List[str]]:
     """
@@ -333,7 +397,7 @@ def load_fixtures_for_iris(
             When provided, fixture JSON-LD is loaded with the same local
             context inlining used for top-level data files.
         allow_online_fallback: If True, attempt online resolution for
-            unresolved IRIs (with warning). Default False.
+            unresolved IRIs, including ``did:web`` documents. Default True.
         verbose: If True, print details about each resolved fixture.
 
     Returns:
@@ -376,7 +440,23 @@ def load_fixtures_for_iris(
                 except Exception as e:
                     logger.warning("Could not load fixture for %s: %s", iri, e)
 
-        # Step 2: Try online resolution if enabled
+        # Step 2: Try online did:web resolution if enabled
+        if allow_online_fallback and is_did_web(iri):
+            try:
+                document_url = _load_online_did_web_document(
+                    iri,
+                    graph,
+                    context_url_map=context_url_map,
+                )
+                logger.info("Resolved did:web online: %s via %s", iri, document_url)
+                if verbose:
+                    print(f"    ⚡ Resolved did:web: {iri} -> {document_url}")
+                fixtures_loaded += 1
+                continue
+            except Exception as e:
+                logger.warning("Could not resolve did:web %s online: %s", iri, e)
+
+        # Step 3: Try online HTTP(S) resolution if enabled
         if allow_online_fallback and iri.startswith(("http://", "https://")):
             try:
                 graph.parse(iri, format="json-ld")
@@ -388,7 +468,7 @@ def load_fixtures_for_iris(
             except Exception as e:
                 logger.warning("Could not resolve online %s: %s", iri, e)
 
-        # Step 3: Mark as unresolved (warning, not error)
+        # Step 4: Mark as unresolved (warning, not error)
         unresolved_iris.append(iri)
         logger.warning("Unresolved IRI (continuing validation): %s", iri)
 
