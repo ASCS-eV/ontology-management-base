@@ -1,0 +1,18 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                        ['tests/data/openlabel-v2/invalid/fail04_wrong_literal_types.json']                                         =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue                                                      =
+=    Error:            Node Literal("eighty", datatype=xsd:integer) must conform to one or more shapes in [ sh:datatype xsd:integer ; sh:nodeKind    =
+=                      sh:Literal ] , [ sh:class schema1:QuantitativeValue ]                                                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
+=    Error:            Value is not Literal with datatype xsd:decimal                                                                                =
+======================================================================================================================================================

@@ -23,8 +23,7 @@
       "gx:serviceOfferingTermsAndConditions": {
          "@type": "gx:TermsAndConditions",
          "gx:url": {
-            "@value": "https://example.org/survey/service-terms",
-            "@type": "xsd:anyURI"
+            "@id": "https://example.org/survey/service-terms"
          },
          "gx:hash": "6e829211c85f4dd01cf8d1239db95aafcce84f13bf1ac473d4f8f6f74b4f98c4"
       }

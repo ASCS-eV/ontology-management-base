@@ -1,0 +1,25 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                          ['tests/data/openlabel/invalid/fail03_string_for_boolean.json']                                           =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.openlabel.net:Tag:test_invalid_fail03_string_for_boolean                                                         =
+=    Property:         https://openlabel.asam.net/V1-0-0/ontologies/Odd                                                                              =
+=    Error:            Value does not conform to Shape openlabel:OddShape. See details for more information.                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://openlabel.asam.net/V1-0-0/ontologies/WeatherRain                                                                      =
+=    Error:            Validation of weatherRain failed!                                                                                             =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://openlabel.asam.net/V1-0-0/ontologies/WeatherSnow                                                                      =
+=    Error:            Validation of weatherSnow failed!                                                                                             =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://openlabel.asam.net/V1-0-0/ontologies/WeatherWind                                                                      =
+=    Error:            Validation of weatherWind failed!                                                                                             =
+======================================================================================================================================================

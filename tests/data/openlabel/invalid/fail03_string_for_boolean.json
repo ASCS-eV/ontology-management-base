@@ -1,0 +1,62 @@
+{
+   "@context": [
+      "https://openlabel.asam.net/V1-0-0/ontologies/",
+      {
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+         "schema": "http://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel.net:Tag:test_invalid_fail03_string_for_boolean",
+   "@type": "openlabel:Tag",
+   "openlabel:AdminTag": {
+      "@type": "AdminTag",
+      "openlabel:licenseURI": {
+         "@type": "rdfs:Literal",
+         "@value": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "openlabel:ownerEmail": {
+         "@type": "rdfs:Literal",
+         "@value": "contact@bmw.de"
+      },
+      "openlabel:ownerName": {
+         "@type": "rdfs:Literal",
+         "@value": "BMW AG"
+      },
+      "openlabel:ownerURL": {
+         "@type": "rdfs:Literal",
+         "@value": "https://www.bmw.com"
+      },
+      "openlabel:scenarioCreatedDate": {
+         "@type": "rdfs:Literal",
+         "@value": "2021-07-09T10:00:00"
+      },
+      "openlabel:scenarioDescription": {
+         "@type": "xsd:literal",
+         "@value": "Invalid: string values for boolean properties"
+      },
+      "openlabel:scenarioName": {
+         "@type": "xsd:literal",
+         "@value": "Invalid_String_For_Boolean"
+      },
+      "openlabel:scenarioParentReference": {
+         "@type": "rdfs:Literal",
+         "@value": "UUID-PARENT-1234"
+      },
+      "openlabel:scenarioUniqueReference": {
+         "@type": "rdfs:Literal",
+         "@value": "UUID-UNIQUE-5678"
+      },
+      "openlabel:scenarioVersion": {
+         "@type": "rdfs:Literal",
+         "@value": "1.0.0"
+      }
+   },
+   "openlabel:Odd": {
+      "@type": "Odd",
+      "openlabel:WeatherWind": "yes",
+      "openlabel:WeatherRain": "true",
+      "openlabel:WeatherSnow": 1
+   }
+}

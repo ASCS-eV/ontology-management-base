@@ -10,64 +10,25 @@
    ],
    "@id": "did:web:test.openlabel.net:Tag:test_valid_openlabel_instance",
    "@type": "openlabel:Tag",
-   "openlabel:AdminTag": {
+   "AdminTag": {
       "@type": "AdminTag",
-      "openlabel:licenseURI": {
-         "@type": "rdfs:Literal",
-         "@value": "https://creativecommons.org/licenses/by/4.0/"
-      },
-      "openlabel:ownerEmail": {
-         "@type": "rdfs:Literal",
-         "@value": "contact@bmw.de"
-      },
-      "openlabel:ownerName": {
-         "@type": "rdfs:Literal",
-         "@value": "BMW AG"
-      },
-      "openlabel:ownerURL": {
-         "@type": "rdfs:Literal",
-         "@value": "https://www.bmw.com"
-      },
-      "openlabel:scenarioCreatedDate": {
-         "@type": "rdfs:Literal",
-         "@value": "2021-07-09T10:00:00"
-      },
-      "openlabel:scenarioDefinition": {
-         "@type": "rdfs:Literal",
-         "@value": "Scenario Definition Content"
-      },
-      "openlabel:scenarioDefinitionLanguageURI": {
-         "@type": "rdfs:Literal",
-         "@value": "https://www.asam.net/standards/detail/openscenario/"
-      },
-      "openlabel:scenarioDescription": {
-         "@type": "xsd:literal",
-         "@value": "ALKS Scenario 4.2_1 FullyBlockingTarget Template"
-      },
-      "openlabel:scenarioName": {
-         "@type": "xsd:literal",
-         "@value": "ALKS_Scenario_4.2_1_FullyBlockingTarget_TEMPLATE.xosc"
-      },
-      "openlabel:scenarioParentReference": {
-         "@type": "rdfs:Literal",
-         "@value": "UUID-PARENT-1234"
-      },
-      "openlabel:scenarioUniqueReference": {
-         "@type": "rdfs:Literal",
-         "@value": "UUID-UNIQUE-5678"
-      },
-      "openlabel:scenarioVersion": {
-         "@type": "rdfs:Literal",
-         "@value": "1.0.0"
-      },
-      "openlabel:scenarioVisualisationURL": {
-         "@type": "rdfs:Literal",
-         "@value": "https://example.com/visualization.png"
-      }
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@bmw.de",
+      "ownerName": "BMW AG",
+      "ownerURL": "https://www.bmw.com",
+      "scenarioCreatedDate": "2021-07-09T10:00:00",
+      "scenarioDefinition": "Scenario Definition Content",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "ALKS Scenario 4.2_1 FullyBlockingTarget Template",
+      "scenarioName": "ALKS_Scenario_4.2_1_FullyBlockingTarget_TEMPLATE.xosc",
+      "scenarioParentReference": "UUID-PARENT-1234",
+      "scenarioUniqueReference": "UUID-UNIQUE-5678",
+      "scenarioVersion": "1.0.0",
+      "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
-   "openlabel:Behaviour": {
+   "Behaviour": {
       "@type": "Behaviour",
-      "openlabel:BehaviourCommunication": [
+      "BehaviourCommunication": [
          {
             "@id": "openlabel:CommunicationHeadlightFlash"
          },
@@ -75,45 +36,45 @@
             "@id": "openlabel:CommunicationSignalLeft"
          }
       ],
-      "openlabel:MotionAccelerate": true,
-      "openlabel:motionAccelerateValue": {
+      "MotionAccelerate": true,
+      "motionAccelerateValue": {
          "@type": "schema:QuantitativeValue",
          "schema:maxValue": "2.5",
          "schema:minValue": "0.5"
       },
-      "openlabel:MotionDecelerate": true,
-      "openlabel:motionDecelerateValue": {
+      "MotionDecelerate": true,
+      "motionDecelerateValue": {
          "@type": "schema:QuantitativeValue",
          "schema:maxValue": "4.444",
          "schema:minValue": "0.053"
       },
-      "openlabel:MotionDrive": true,
-      "openlabel:motionDriveValue": {
+      "MotionDrive": true,
+      "motionDriveValue": {
          "@type": "schema:QuantitativeValue",
          "schema:maxValue": "60.001",
          "schema:minValue": "0.0"
       },
-      "openlabel:MotionAway": true,
-      "openlabel:MotionCross": false,
-      "openlabel:MotionCutIn": false,
-      "openlabel:MotionCutOut": false,
-      "openlabel:MotionLaneChangeLeft": false,
-      "openlabel:MotionLaneChangeRight": true,
-      "openlabel:MotionOvertake": false,
-      "openlabel:MotionReverse": false,
-      "openlabel:MotionRun": false,
-      "openlabel:MotionSlide": false,
-      "openlabel:MotionStop": false,
-      "openlabel:MotionTowards": false,
-      "openlabel:MotionTurn": true,
-      "openlabel:MotionTurnLeft": false,
-      "openlabel:MotionTurnRight": true,
-      "openlabel:MotionUTurn": false,
-      "openlabel:MotionWalk": false
+      "MotionAway": true,
+      "MotionCross": false,
+      "MotionCutIn": false,
+      "MotionCutOut": false,
+      "MotionLaneChangeLeft": false,
+      "MotionLaneChangeRight": true,
+      "MotionOvertake": false,
+      "MotionReverse": false,
+      "MotionRun": false,
+      "MotionSlide": false,
+      "MotionStop": false,
+      "MotionTowards": false,
+      "MotionTurn": true,
+      "MotionTurnLeft": false,
+      "MotionTurnRight": true,
+      "MotionUTurn": false,
+      "MotionWalk": false
    },
-   "openlabel:Odd": {
+   "Odd": {
       "@type": "Odd",
-      "openlabel:DrivableAreaEdge": [
+      "DrivableAreaEdge": [
          {
             "@id": "openlabel:EdgeShoulderPavedOrGravel"
          },
@@ -121,143 +82,122 @@
             "@id": "openlabel:EdgeLineMarkers"
          }
       ],
-      "openlabel:DrivableAreaType": {
+      "DrivableAreaType": {
          "@id": "openlabel:RoadTypeMotorway"
       },
-      "openlabel:DrivableAreaSurfaceType": {
+      "DrivableAreaSurfaceType": {
          "@id": "openlabel:SurfaceTypeUniform"
       },
-      "openlabel:DrivableAreaSurfaceCondition": {
+      "DrivableAreaSurfaceCondition": {
          "@id": "openlabel:SurfaceConditionWet"
       },
-      "openlabel:DrivableAreaSurfaceFeature": {
+      "DrivableAreaSurfaceFeature": {
          "@id": "openlabel:SurfaceFeatureRut"
       },
-      "openlabel:GeometryTransverse": {
+      "GeometryTransverse": {
          "@id": "openlabel:TransverseDivided"
       },
-      "openlabel:LaneSpecificationDimensions": true,
-      "openlabel:laneSpecificationDimensionsValue": {
-         "@type": "xsd:decimal",
-         "@value": "3.5"
-      },
-      "openlabel:LaneSpecificationLaneCount": true,
-      "openlabel:laneSpecificationLaneCountValue": {
-         "@type": "xsd:positiveInteger",
-         "@value": "3"
-      },
-      "openlabel:LaneSpecificationMarking": true,
-      "openlabel:LaneSpecificationTravelDirection": {
+      "LaneSpecificationDimensions": true,
+      "laneSpecificationDimensionsValue": "3.5",
+      "LaneSpecificationLaneCount": true,
+      "laneSpecificationLaneCountValue": "3",
+      "LaneSpecificationMarking": true,
+      "LaneSpecificationTravelDirection": {
          "@id": "openlabel:TravelDirectionRight"
       },
-      "openlabel:LaneSpecificationType": [
+      "LaneSpecificationType": [
          {
             "@id": "openlabel:LaneTypeTraffic"
          }
       ],
-      "openlabel:HorizontalStraights": true,
-      "openlabel:HorizontalCurves": true,
+      "HorizontalStraights": true,
+      "HorizontalCurves": true,
       "horizontalCurvesValue": 250.0,
-      "openlabel:LongitudinalLevelPlane": false,
-      "openlabel:LongitudinalDownSlope": true,
+      "LongitudinalLevelPlane": false,
+      "LongitudinalDownSlope": true,
       "longitudinalDownSlopeValue": 2.5,
-      "openlabel:LongitudinalUpSlope": false,
-      "openlabel:SceneryFixedStructure": {
+      "LongitudinalUpSlope": false,
+      "SceneryFixedStructure": {
          "@id": "openlabel:FixedStructureStreetlight"
       },
-      "openlabel:ScenerySpecialStructure": {
+      "ScenerySpecialStructure": {
          "@id": "openlabel:SpecialStructureBridge"
       },
-      "openlabel:SceneryTemporaryStructure": {
+      "SceneryTemporaryStructure": {
          "@id": "openlabel:TemporaryStructureRoadWorks"
       },
-      "openlabel:SceneryZone": {
+      "SceneryZone": {
          "@id": "openlabel:ZoneTrafficManagement"
       },
-      "openlabel:JunctionIntersection": {
+      "JunctionIntersection": {
          "@id": "openlabel:IntersectionTJunction"
       },
-      "openlabel:JunctionRoundabout": {
+      "JunctionRoundabout": {
          "@id": "openlabel:RoundaboutNormalSignal"
       },
-      "openlabel:SignsInformation": {
+      "SignsInformation": {
          "@id": "openlabel:InformationSignsUniformFullTime"
       },
-      "openlabel:SignsRegulatory": {
+      "SignsRegulatory": {
          "@id": "openlabel:RegulatorySignsUniformFullTime"
       },
-      "openlabel:SignsWarning": {
+      "SignsWarning": {
          "@id": "openlabel:WarningSignsUniform"
       },
-      "openlabel:ConnectivityCommunication": {
+      "ConnectivityCommunication": {
          "@id": "openlabel:CommunicationV2v"
       },
-      "openlabel:ConnectivityPositioning": {
+      "ConnectivityPositioning": {
          "@id": "openlabel:PositioningGps"
       },
-      "openlabel:IlluminationArtificial": {
+      "IlluminationArtificial": {
          "@id": "openlabel:ArtificialStreetLighting"
       },
-      "openlabel:IlluminationLowLight": {
+      "IlluminationLowLight": {
          "@id": "openlabel:LowLightNight"
       },
-      "openlabel:IlluminationCloudiness": true,
+      "IlluminationCloudiness": true,
       "illuminationCloudinessValue": 6.0,
-      "openlabel:DaySunPosition": {
+      "DaySunPosition": {
          "@id": "openlabel:SunPositionFront"
       },
-      "openlabel:DaySunElevation": true,
+      "DaySunElevation": true,
       "daySunElevationValue": 45.0,
-      "openlabel:WeatherRain": true,
+      "WeatherRain": true,
       "weatherRainValue": 5.2,
-      "openlabel:WeatherSnow": false,
-      "openlabel:WeatherWind": true,
+      "WeatherSnow": false,
+      "WeatherWind": true,
       "weatherWindValue": 12.5,
-      "openlabel:RainType": {
+      "RainType": {
          "@id": "openlabel:RainTypeDynamic"
       },
-      "openlabel:EnvironmentParticulates": {
+      "EnvironmentParticulates": {
          "@id": "openlabel:ParticulatesWater"
       },
-      "openlabel:ParticulatesDust": false,
-      "openlabel:ParticulatesMarine": false,
-      "openlabel:ParticulatesPollution": false,
-      "openlabel:ParticulatesVolcanic": false,
-      "openlabel:SubjectVehicleSpeed": true,
-      "openlabel:subjectVehicleSpeedValue": {
-         "@type": "xsd:nonNegativeInteger",
-         "@value": "80"
-      },
-      "openlabel:TrafficAgentDensity": true,
-      "openlabel:trafficAgentDensityValue": {
-         "@type": "xsd:nonNegativeInteger",
-         "@value": "15"
-      },
-      "openlabel:TrafficFlowRate": true,
-      "openlabel:trafficFlowRateValue": {
-         "@type": "xsd:nonNegativeInteger",
-         "@value": "1200"
-      },
-      "openlabel:TrafficVolume": true,
-      "openlabel:trafficVolumeValue": {
-         "@type": "xsd:nonNegativeInteger",
-         "@value": "5000"
-      },
-      "openlabel:TrafficSpecialVehicle": false
+      "ParticulatesDust": false,
+      "ParticulatesMarine": false,
+      "ParticulatesPollution": false,
+      "ParticulatesVolcanic": false,
+      "SubjectVehicleSpeed": true,
+      "subjectVehicleSpeedValue": "80",
+      "TrafficAgentDensity": true,
+      "trafficAgentDensityValue": "15",
+      "TrafficFlowRate": true,
+      "trafficFlowRateValue": "1200",
+      "TrafficVolume": true,
+      "trafficVolumeValue": "5000",
+      "TrafficSpecialVehicle": false
    },
-   "openlabel:RoadUser": {
+   "RoadUser": {
       "@type": "RoadUser",
-      "openlabel:RoadUserVehicle": {
+      "RoadUserVehicle": {
          "@id": "openlabel:VehicleCar"
       },
-      "openlabel:RoadUserAnimal": false,
-      "openlabel:RoadUserHuman": {
+      "RoadUserAnimal": false,
+      "RoadUserHuman": {
          "@id": "openlabel:HumanPedestrian"
       },
-      "openlabel:MotionDrive": true,
-      "openlabel:motionDriveValue": {
-         "@type": "xsd:decimal",
-         "@value": "50.0"
-      }
+      "MotionDrive": true,
+      "motionDriveValue": "50.0"
    }
 }

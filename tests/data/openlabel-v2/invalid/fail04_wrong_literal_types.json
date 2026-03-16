@@ -1,0 +1,37 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "http://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail04_integer_for_decimal",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@bmw.de",
+      "ownerName": "BMW AG",
+      "ownerURL": "https://www.bmw.com",
+      "scenarioCreatedDate": "2024-01-15T10:00:00",
+      "scenarioDefinition": "Scenario Definition Content",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "Invalid: integer for decimal and string for integer",
+      "scenarioName": "Invalid_Type_Mismatches",
+      "scenarioParentReference": "UUID-PARENT-1234",
+      "scenarioUniqueReference": "UUID-UNIQUE-5678",
+      "scenarioVersion": "2.0.0",
+      "scenarioVisualisationURL": "https://example.com/visualization.png"
+   },
+   "Odd": {
+      "@type": "Odd",
+      "WeatherWind": true,
+      "weatherWindValue": "strong",
+      "SubjectVehicleSpeed": true,
+      "subjectVehicleSpeedValue": {
+         "@type": "xsd:integer",
+         "@value": "eighty"
+      }
+   }
+}
