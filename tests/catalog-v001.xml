@@ -27,7 +27,9 @@
   <uri name="did:web:test.general.net:General:test_invalid_fail01_wrong_recording_time" uri="tests/data/general/invalid/fail01_wrong_recording_time.json" domain="general" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.general.net:General:test_valid_general_instance" uri="tests/data/general/valid/general_instance.json" domain="general" test-type="valid" category="test-data"/>
   <uri name="did:web:test.georeference.net:Georeference:test_valid_georeference_instance" uri="tests/data/georeference/valid/georeference_instance.json" domain="georeference" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type" uri="tests/data/gx/invalid/fail01_wrong_url_type.json" domain="gx" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.gx.net:DataProduct:test_valid_gx_data_product" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.gx.net:ServiceOffering:test_invalid_fail01_gx_service_offering" uri="tests/data/gx/invalid/fail01_wrong_url_type.json" domain="gx" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_invalid_fail01_false_value_hdmap_instance" uri="tests/data/hdmap/invalid/fail01_false_value_hdmap_instance.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance" uri="tests/data/hdmap/valid/hdmap_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
@@ -42,9 +44,14 @@
   <uri name="did:web:test.manifest.net:Manifest:test_invalid_fail_07_wrong_filesize_instance" uri="tests/data/manifest/invalid/fail_07_wrong_filesize_instance.json" domain="manifest" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_invalid_fail_08_wrong_filename_instance" uri="tests/data/manifest/invalid/fail_08_wrong_filename_instance.json" domain="manifest" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_valid_manifest_instance" uri="tests/data/manifest/valid/manifest_instance.json" domain="manifest" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.openlabel-v2.net:Tag:test_invalid_fail02_decimal_for_integer" uri="tests/data/openlabel-v2/invalid/fail02_decimal_for_integer.json" domain="openlabel-v2" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.openlabel-v2.net:Tag:test_invalid_fail03_prefixed_bypass_coercion" uri="tests/data/openlabel-v2/invalid/fail03_string_for_boolean.json" domain="openlabel-v2" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.openlabel-v2.net:Tag:test_invalid_fail04_integer_for_decimal" uri="tests/data/openlabel-v2/invalid/fail04_wrong_literal_types.json" domain="openlabel-v2" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.openlabel-v2.net:Tag:test_invalid_openlabel-v2_instance" uri="tests/data/openlabel-v2/invalid/fail01_wrong_value_openlabel-v2_instance.json" domain="openlabel-v2" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.openlabel-v2.net:Tag:test_valid_openlabel-v2_instance" uri="tests/data/openlabel-v2/valid/openlabel-v2_instance.json" domain="openlabel-v2" test-type="valid" category="test-data"/>
   <uri name="did:web:test.openlabel.net:Tag:test_invalid_fail01_wrong_value_openlabel_instance" uri="tests/data/openlabel/invalid/fail01_wrong_value_openlabel_instance.json" domain="openlabel" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.openlabel.net:Tag:test_invalid_fail02_decimal_for_integer" uri="tests/data/openlabel/invalid/fail02_decimal_for_integer.json" domain="openlabel" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.openlabel.net:Tag:test_invalid_fail03_string_for_boolean" uri="tests/data/openlabel/invalid/fail03_string_for_boolean.json" domain="openlabel" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.openlabel.net:Tag:test_valid_openlabel_instance" uri="tests/data/openlabel/valid/openlabel_instance.json" domain="openlabel" test-type="valid" category="test-data"/>
   <uri name="did:web:test.ositrace.net:OSITrace:test_invalid_fail01_mcap_missing_topic" uri="tests/data/ositrace/invalid/fail01_mcap_missing_topic.json" domain="ositrace" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.ositrace.net:OSITrace:test_valid_ositrace_instance" uri="tests/data/ositrace/valid/ositrace_instance.json" domain="ositrace" test-type="valid" category="test-data"/>

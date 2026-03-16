@@ -1,0 +1,29 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                                ['tests/data/gx/invalid/fail01_wrong_url_type.json']                                                =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type                                                            =
+=    Property:         https://w3id.org/gaia-x/development#digitalServiceLegalDocuments                                                              =
+=    Error:            Less than 1 values on <did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type>->gx:digitalServiceLegalDocuments   =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/gaia-x/development#url                                                                                       =
+=    Error:            Value is not of Node Kind sh:IRI                                                                                              =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/gaia-x/development#url                                                                                       =
+=    Error:            Value is not of Node Kind sh:IRI                                                                                              =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/gaia-x/development#url                                                                                       =
+=    Error:            Value is not of Node Kind sh:IRI                                                                                              =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/gaia-x/development#url                                                                                       =
+=    Error:            Value is not of Node Kind sh:IRI                                                                                              =
+======================================================================================================================================================

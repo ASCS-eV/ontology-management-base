@@ -10,12 +10,12 @@
    ],
    "@graph": [
       {
-         "@id": "did:web:test.gx.net:DataProduct:test_valid_gx_data_product",
+         "@id": "did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type",
          "@type": "gx:DataProduct",
-         "schema:description": "Generated description.",
-         "gx:digitalServiceOfferingName": "Generated Data Product",
-         "gx:digitalServiceOfferingShortDescription": "Generated data product for Gaia-X validation examples.",
-         "gx:digitalServiceOfferingIdentifier": "gx-data-product-001",
+         "schema:description": "Invalid: gx:url uses xsd:string instead of xsd:anyURI.",
+         "gx:digitalServiceOfferingName": "Invalid URL Type Test",
+         "gx:digitalServiceOfferingShortDescription": "Tests wrong datatype on gx:url.",
+         "gx:digitalServiceOfferingIdentifier": "gx-invalid-url-001",
          "gx:digitalServiceOfferingLaunchDate": "2025-03-28T12:29:44Z",
          "gx:digitalServiceOfferingProvider": {
             "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
@@ -23,32 +23,27 @@
          "gx:digitalServiceOfferingTermsAndConditions": {
             "@type": "gx:ServiceTermsAndConditions",
             "gx:url": {
-               "@id": "https://example.org/gx/provider-terms"
+               "@value": "https://example.org/gx/provider-terms",
+               "@type": "xsd:string"
             },
             "gx:hash": "8acc4f464f2fbf0b104410f5f9d203df707810a162d4f5d72fcb0aa94af6c8fb"
          },
          "gx:digitalServiceUsageTermsAndConditions": {
             "@type": "gx:UsageTermsAndConditions",
             "gx:url": {
-               "@id": "https://example.org/gx/usage-terms"
+               "@value": "not-a-valid-uri",
+               "@type": "xsd:anyURI"
             },
             "gx:hash": "c286ea0f5f0dbf378d8a72f126407fdf2d772316147f5f6a8f6ae6ce3c73b36c"
          },
          "gx:digitalServiceUsageDataPolicy": {
             "@type": "gx:TermsAndConditions",
             "gx:url": {
-               "@id": "https://example.org/gx/data-policy"
+               "@value": "https://example.org/gx/data-policy",
+               "@type": "xsd:anyURI"
             },
             "gx:hash": "2ca8e2abf27608d70590436c9da8bb8286a99d94f356dfefb2b8baadce2b009c"
          },
-         "gx:digitalServiceLegalDocuments": [
-            {
-               "@type": "gx:LegalDocument",
-               "gx:url": {
-                  "@id": "https://example.org/gx/legal-document"
-               }
-            }
-         ],
          "gx:dataProductDescription": {
             "@type": "gx:DataProductDescription",
             "dcat:Dataset": "urn:uuid:gx-data-product-dataset",
@@ -63,7 +58,7 @@
          }
       },
       {
-         "@id": "did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering",
+         "@id": "did:web:test.gx.net:ServiceOffering:test_invalid_fail01_gx_service_offering",
          "@type": "gx:ServiceOffering",
          "gx:providedBy": {
             "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
@@ -76,7 +71,8 @@
          "gx:serviceOfferingTermsAndConditions": {
             "@type": "gx:TermsAndConditions",
             "gx:url": {
-               "@id": "https://www.bmwgroup.com/terms"
+               "@value": "https://www.bmwgroup.com/terms",
+               "@type": "xsd:anyURI"
             },
             "gx:hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
          },
