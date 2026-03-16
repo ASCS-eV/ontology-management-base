@@ -32,21 +32,12 @@
       "MotionAccelerate": true,
       "motionAccelerateValue": {
          "@type": "schema:QuantitativeValue",
-         "schema:minValue": {
-            "@type": "xsd:decimal",
-            "@value": "0.5"
-         },
-         "schema:maxValue": {
-            "@type": "xsd:decimal",
-            "@value": "2.5"
-         }
+         "minValue": "0.5",
+         "maxValue": "2.5"
       },
       "MotionDecelerate": false,
       "MotionDrive": true,
-      "motionDriveValue": {
-         "@type": "xsd:decimal",
-         "@value": "50.0"
-      },
+      "motionDriveValue": "50.0",
       "MotionAway": false,
       "MotionCross": false,
       "MotionCutIn": false,
@@ -83,15 +74,9 @@
          "@id": "openlabel_v2:TransverseDivided"
       },
       "LaneSpecificationDimensions": true,
-      "laneSpecificationDimensionsValue": {
-         "@type": "xsd:decimal",
-         "@value": "3.5"
-      },
+      "laneSpecificationDimensionsValue": "3.5",
       "LaneSpecificationLaneCount": true,
-      "laneSpecificationLaneCountValue": {
-         "@type": "xsd:integer",
-         "@value": "3"
-      },
+      "laneSpecificationLaneCountValue": "3",
       "LaneSpecificationMarking": true,
       "LaneSpecificationTravelDirection": {
          "@id": "openlabel_v2:TravelDirectionRight"
@@ -169,10 +154,7 @@
       "ParticulatesPollution": false,
       "ParticulatesVolcanic": false,
       "SubjectVehicleSpeed": true,
-      "subjectVehicleSpeedValue": {
-         "@type": "xsd:integer",
-         "@value": "80"
-      },
+      "subjectVehicleSpeedValue": "80",
       "TrafficAgentDensity": true,
       "trafficAgentDensityValue": 15,
       "TrafficFlowRate": true,
@@ -190,9 +172,6 @@
       "RoadUserHuman": {
          "@id": "openlabel_v2:HumanDriver"
       },
-      "motionDriveValue": {
-         "@type": "xsd:decimal",
-         "@value": "50.0"
-      }
+      "motionDriveValue": "50.0"
    }
 }
