@@ -169,7 +169,7 @@
          "@id": "LaneSpecificationDimensions"
       },
       "laneSpecificationDimensionsValue": {
-         "@type": "@id",
+         "@type": "xsd:decimal",
          "@id": "laneSpecificationDimensionsValue"
       },
       "LaneSpecificationLaneCount": {
@@ -177,7 +177,7 @@
          "@id": "LaneSpecificationLaneCount"
       },
       "laneSpecificationLaneCountValue": {
-         "@type": "@id",
+         "@type": "xsd:integer",
          "@id": "laneSpecificationLaneCountValue"
       },
       "LaneSpecificationMarking": {
@@ -236,7 +236,7 @@
          "@id": "MotionAccelerate"
       },
       "motionAccelerateValue": {
-         "@type": "@id",
+         "@type": "xsd:decimal",
          "@id": "motionAccelerateValue"
       },
       "MotionAway": {
@@ -260,7 +260,7 @@
          "@id": "MotionDecelerate"
       },
       "motionDecelerateValue": {
-         "@type": "@id",
+         "@type": "xsd:decimal",
          "@id": "motionDecelerateValue"
       },
       "MotionDrive": {
@@ -268,7 +268,7 @@
          "@id": "MotionDrive"
       },
       "motionDriveValue": {
-         "@type": "@id",
+         "@type": "xsd:decimal",
          "@id": "motionDriveValue"
       },
       "MotionLaneChangeLeft": {
@@ -475,7 +475,7 @@
          "@id": "SubjectVehicleSpeed"
       },
       "subjectVehicleSpeedValue": {
-         "@type": "@id",
+         "@type": "xsd:integer",
          "@id": "subjectVehicleSpeedValue"
       },
       "TrafficAgentDensity": {

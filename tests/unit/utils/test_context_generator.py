@@ -14,7 +14,7 @@ from rdflib.namespace import OWL, RDF, XSD
 
 from src.tools.core.iri_utils import iri_to_domain_hint
 from src.tools.utils.context_generator import (
-    _has_object_type_in_or_branches,
+    _analyze_or_branches,
     extract_classes,
     extract_ontology_iri,
     extract_property_datatypes,
@@ -308,17 +308,19 @@ class TestExtractClasses:
         assert len(result) == 0
 
 
-class TestHasObjectTypeInOrBranches:
-    """Tests for _has_object_type_in_or_branches function."""
+class TestAnalyzeOrBranches:
+    """Tests for _analyze_or_branches function."""
 
-    def test_no_or_returns_false(self):
-        """Should return False when no sh:or is present."""
+    def test_no_or_returns_none_false(self):
+        """Should return (None, False) when no sh:or is present."""
         g = Graph()
         prop_node = BNode()
-        assert _has_object_type_in_or_branches(g, prop_node) is False
+        datatype, has_object = _analyze_or_branches(g, prop_node)
+        assert datatype is None
+        assert has_object is False
 
-    def test_or_with_node_returns_true(self):
-        """Should return True when sh:or branch has sh:node."""
+    def test_or_with_node_returns_object(self):
+        """Should detect object branch when sh:or branch has sh:node."""
         g = Graph()
         prop_node = BNode()
 
@@ -331,7 +333,39 @@ class TestHasObjectTypeInOrBranches:
 
         g.add((prop_node, SH["or"], list_node))
 
-        assert _has_object_type_in_or_branches(g, prop_node) is True
+        datatype, has_object = _analyze_or_branches(g, prop_node)
+        assert datatype is None
+        assert has_object is True
+
+    def test_or_with_mixed_literal_and_object(self):
+        """Should extract literal datatype when sh:or has both literal and object branches."""
+        g = Graph()
+        prop_node = BNode()
+
+        # Branch 1: literal (xsd:decimal)
+        literal_branch = BNode()
+        g.add((literal_branch, SH.datatype, XSD.decimal))
+
+        # Branch 2: object (sh:class)
+        object_branch = BNode()
+        g.add(
+            (object_branch, SH["class"], URIRef("http://schema.org/QuantitativeValue"))
+        )
+
+        # Build RDF list: [literal_branch, object_branch]
+        list_node2 = BNode()
+        g.add((list_node2, RDF.first, object_branch))
+        g.add((list_node2, RDF.rest, RDF.nil))
+
+        list_node1 = BNode()
+        g.add((list_node1, RDF.first, literal_branch))
+        g.add((list_node1, RDF.rest, list_node2))
+
+        g.add((prop_node, SH["or"], list_node1))
+
+        datatype, has_object = _analyze_or_branches(g, prop_node)
+        assert datatype == str(XSD.decimal)
+        assert has_object is True
 
 
 class TestGenerateContext:

@@ -298,11 +298,11 @@
       },
       "laneSpecificationDimensionsValue": {
          "@id": "ontologies:laneSpecificationDimensionsValue",
-         "@type": "@id"
+         "@type": "xsd:decimal"
       },
       "laneSpecificationLaneCountValue": {
          "@id": "ontologies:laneSpecificationLaneCountValue",
-         "@type": "@id"
+         "@type": "xsd:integer"
       },
       "licenseURI": {
          "@id": "ontologies:licenseURI",
@@ -318,15 +318,15 @@
       },
       "motionAccelerateValue": {
          "@id": "ontologies:motionAccelerateValue",
-         "@type": "@id"
+         "@type": "xsd:decimal"
       },
       "motionDecelerateValue": {
          "@id": "ontologies:motionDecelerateValue",
-         "@type": "@id"
+         "@type": "xsd:decimal"
       },
       "motionDriveValue": {
          "@id": "ontologies:motionDriveValue",
-         "@type": "@id"
+         "@type": "xsd:decimal"
       },
       "ownerEmail": {
          "@id": "ontologies:ownerEmail",
@@ -382,7 +382,7 @@
       },
       "subjectVehicleSpeedValue": {
          "@id": "ontologies:subjectVehicleSpeedValue",
-         "@type": "@id"
+         "@type": "xsd:integer"
       },
       "trafficAgentDensityValue": {
          "@id": "ontologies:trafficAgentDensityValue",

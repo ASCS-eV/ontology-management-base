@@ -151,8 +151,7 @@
          "@type": "xsd:anyURI"
       },
       "value": {
-         "@id": "tzip21:value",
-         "@type": "xsd:integer"
+         "@id": "tzip21:value"
       },
       "Asset": "tzip21:Asset",
       "Attribute": "tzip21:Attribute",

@@ -95,45 +95,60 @@ def extract_ontology_iri(owl_graph: Graph) -> Optional[str]:
     return None
 
 
-def _has_object_type_in_or_branches(shacl_graph: Graph, prop_node: URIRef) -> bool:
-    """Check if sh:or branches contain sh:node, sh:class, or sh:and with node shapes.
+def _walk_rdf_list(graph: Graph, list_head):
+    """Yield each item from an RDF list (rdf:first / rdf:rest chain)."""
+    current = list_head
+    while current and current != RDF.nil:
+        item = graph.value(current, RDF.first)
+        if item:
+            yield item
+        current = graph.value(current, RDF.rest)
 
-    This handles the polymorphic SHACL pattern where a property uses sh:or
-    with nested sh:node/sh:and branches, indicating an object property.
+
+def _analyze_or_branches(
+    shacl_graph: Graph, prop_node: URIRef
+) -> tuple[Optional[str], bool]:
+    """Analyze sh:or branches and return (literal_datatype, has_object_branch).
+
+    For polymorphic SHACL properties using sh:or, this inspects each branch to
+    determine whether it constrains a literal datatype, an object reference, or
+    both.  Returns the first literal datatype found (as a full IRI string) and
+    whether any object-type branch exists.
     """
     or_list = shacl_graph.value(prop_node, SH["or"])
     if or_list is None:
-        return False
+        return None, False
 
-    # Walk the RDF list
-    from rdflib import RDF as RDF_NS
+    literal_datatype: Optional[str] = None
+    has_object = False
 
-    current = or_list
-    while current and current != RDF_NS.nil:
-        item = shacl_graph.value(current, RDF_NS.first)
-        if item:
-            # Check if this branch has sh:node or sh:class
-            if shacl_graph.value(item, SH.node) is not None:
-                return True
-            if shacl_graph.value(item, SH["class"]) is not None:
-                return True
-            if shacl_graph.value(item, SH.nodeKind) == SH.IRI:
-                return True
+    for item in _walk_rdf_list(shacl_graph, or_list):
+        # Check for literal datatype branch
+        dt = shacl_graph.value(item, SH.datatype)
+        if dt is not None and literal_datatype is None:
+            literal_datatype = str(dt)
+            continue
+
+        # Check for object branch (sh:node, sh:class, sh:nodeKind IRI)
+        if shacl_graph.value(item, SH.node) is not None:
+            has_object = True
+        elif shacl_graph.value(item, SH["class"]) is not None:
+            has_object = True
+        elif shacl_graph.value(item, SH.nodeKind) == SH.IRI:
+            has_object = True
+        else:
             # Check sh:and branches inside sh:or
             and_list = shacl_graph.value(item, SH["and"])
             if and_list is not None:
-                and_current = and_list
-                while and_current and and_current != RDF_NS.nil:
-                    and_item = shacl_graph.value(and_current, RDF_NS.first)
-                    if and_item:
-                        if shacl_graph.value(and_item, SH.node) is not None:
-                            return True
-                        if shacl_graph.value(and_item, SH["class"]) is not None:
-                            return True
-                    and_current = shacl_graph.value(and_current, RDF_NS.rest)
-        current = shacl_graph.value(current, RDF_NS.rest)
+                for and_item in _walk_rdf_list(shacl_graph, and_list):
+                    if shacl_graph.value(and_item, SH.node) is not None:
+                        has_object = True
+                        break
+                    if shacl_graph.value(and_item, SH["class"]) is not None:
+                        has_object = True
+                        break
 
-    return False
+    return literal_datatype, has_object
 
 
 def extract_property_datatypes(
@@ -206,43 +221,92 @@ def extract_property_datatypes(
                 # Object property - reference to another node
                 prop_def["@type"] = "@id"
 
-            elif _has_object_type_in_or_branches(shacl_graph, prop_node):
-                # Object property via sh:or branches (polymorphic pattern)
-                prop_def["@type"] = "@id"
+            else:
+                # Polymorphic: sh:or may mix literal datatypes and object refs.
+                # Prefer the literal datatype so JSON-LD coercion produces
+                # typed literals; object branches still work via explicit
+                # {"@type": "ClassName"} syntax in instance data.
+                or_datatype, has_object_branch = _analyze_or_branches(
+                    shacl_graph, prop_node
+                )
+                if or_datatype:
+                    if or_datatype in XSD_TYPE_MAP:
+                        mapped = XSD_TYPE_MAP[or_datatype]
+                        if mapped:
+                            prop_def["@type"] = mapped
+                    else:
+                        prop_def["@type"] = or_datatype
+                elif has_object_branch:
+                    prop_def["@type"] = "@id"
 
             # Deterministic conflict resolution: when the same property appears
-            # in multiple SHACL shapes with different datatypes, use a stable
-            # tiebreaker instead of depending on graph iteration order.
+            # in multiple SHACL shapes with different datatypes, pick the
+            # safest coercion.  "No @type" means the shape declared
+            # xsd:string (or had no type info) — that is a legitimate type
+            # signal, not merely "unknown".
             if local_name in properties:
                 existing = properties[local_name]
                 if existing != prop_def:
                     existing_type = existing.get("@type")
                     new_type = prop_def.get("@type")
 
-                    # Prefer definition that has @type over one without
-                    if new_type and not existing_type:
-                        logger.debug(
-                            "Property '%s': preferring typed definition (%s) over untyped",
+                    if existing_type == new_type:
+                        pass  # identical coercion — keep existing
+
+                    elif existing_type == "@id" and not new_type:
+                        # Object ref vs. plain literal — drop @id so plain
+                        # string values are not coerced into IRIs.
+                        logger.warning(
+                            "Property '%s': conflicting @id vs untyped — "
+                            "dropping coercion",
+                            local_name,
+                        )
+                        properties[local_name] = prop_def  # no @type
+
+                    elif not existing_type and new_type == "@id":
+                        pass  # keep existing (no coercion is safer)
+
+                    elif existing_type == "@id" and new_type and new_type != "@id":
+                        # Object ref vs. concrete literal — prefer literal.
+                        logger.warning(
+                            "Property '%s': conflicting @id vs %s — using literal type",
                             local_name,
                             new_type,
                         )
                         properties[local_name] = prop_def
-                    elif existing_type and not new_type:
-                        pass  # keep existing (already typed)
-                    elif existing_type and new_type and existing_type != new_type:
-                        # Both typed differently — use lexicographic order for stability
-                        winner = min(existing_type, new_type)
+
+                    elif new_type == "@id" and existing_type and existing_type != "@id":
+                        pass  # keep existing literal type
+
+                    elif (existing_type and not new_type) or (
+                        not existing_type and new_type
+                    ):
+                        # One shape typed, the other string/default — drop
+                        # coercion so both variants can pass through.
                         logger.warning(
-                            "Property '%s' has conflicting datatypes: %s vs %s — using %s",
+                            "Property '%s' has conflicting datatypes: "
+                            "%s vs %s — dropping coercion",
+                            local_name,
+                            existing_type or "(string)",
+                            new_type or "(string)",
+                        )
+                        properties[local_name] = {
+                            k: v for k, v in existing.items() if k != "@type"
+                        }
+
+                    elif existing_type and new_type and existing_type != new_type:
+                        # Two different literal types — drop coercion to
+                        # avoid forcing a wrong cast on either shape.
+                        logger.warning(
+                            "Property '%s' has conflicting datatypes: "
+                            "%s vs %s — dropping coercion",
                             local_name,
                             existing_type,
                             new_type,
-                            winner,
                         )
-                        if winner == new_type:
-                            properties[local_name] = prop_def
-                        # else keep existing
-                    # else: identical definitions or both untyped — keep existing
+                        properties[local_name] = {
+                            k: v for k, v in existing.items() if k != "@type"
+                        }
             else:
                 properties[local_name] = prop_def
 
