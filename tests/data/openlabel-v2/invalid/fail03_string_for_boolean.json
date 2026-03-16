@@ -1,0 +1,34 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "http://schema.org/",
+         "openlabel_v2": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail03_prefixed_bypass_coercion",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@bmw.de",
+      "ownerName": "BMW AG",
+      "ownerURL": "https://www.bmw.com",
+      "scenarioCreatedDate": "2024-01-15T10:00:00",
+      "scenarioDefinition": "Scenario Definition Content",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "Invalid: prefixed properties bypass type coercion",
+      "scenarioName": "Invalid_Prefixed_Bypass",
+      "scenarioParentReference": "UUID-PARENT-1234",
+      "scenarioUniqueReference": "UUID-UNIQUE-5678",
+      "scenarioVersion": "2.0.0",
+      "scenarioVisualisationURL": "https://example.com/visualization.png"
+   },
+   "Odd": {
+      "@type": "Odd",
+      "openlabel_v2:WeatherWind": "yes",
+      "openlabel_v2:WeatherRain": "true",
+      "openlabel_v2:weatherWindValue": "strong"
+   }
+}

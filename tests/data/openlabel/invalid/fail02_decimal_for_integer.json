@@ -1,0 +1,74 @@
+{
+   "@context": [
+      "https://openlabel.asam.net/V1-0-0/ontologies/",
+      {
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+         "schema": "http://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel.net:Tag:test_invalid_fail02_decimal_for_integer",
+   "@type": "openlabel:Tag",
+   "openlabel:AdminTag": {
+      "@type": "AdminTag",
+      "openlabel:licenseURI": {
+         "@type": "rdfs:Literal",
+         "@value": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "openlabel:ownerEmail": {
+         "@type": "rdfs:Literal",
+         "@value": "contact@bmw.de"
+      },
+      "openlabel:ownerName": {
+         "@type": "rdfs:Literal",
+         "@value": "BMW AG"
+      },
+      "openlabel:ownerURL": {
+         "@type": "rdfs:Literal",
+         "@value": "https://www.bmw.com"
+      },
+      "openlabel:scenarioCreatedDate": {
+         "@type": "rdfs:Literal",
+         "@value": "2021-07-09T10:00:00"
+      },
+      "openlabel:scenarioDescription": {
+         "@type": "xsd:literal",
+         "@value": "Invalid: decimal value for integer property"
+      },
+      "openlabel:scenarioName": {
+         "@type": "xsd:literal",
+         "@value": "Invalid_Decimal_For_Integer"
+      },
+      "openlabel:scenarioParentReference": {
+         "@type": "rdfs:Literal",
+         "@value": "UUID-PARENT-1234"
+      },
+      "openlabel:scenarioUniqueReference": {
+         "@type": "rdfs:Literal",
+         "@value": "UUID-UNIQUE-5678"
+      },
+      "openlabel:scenarioVersion": {
+         "@type": "rdfs:Literal",
+         "@value": "1.0.0"
+      }
+   },
+   "openlabel:Odd": {
+      "@type": "Odd",
+      "openlabel:LaneSpecificationLaneCount": true,
+      "openlabel:laneSpecificationLaneCountValue": {
+         "@type": "xsd:decimal",
+         "@value": "3.5"
+      },
+      "openlabel:LaneSpecificationDimensions": true,
+      "openlabel:laneSpecificationDimensionsValue": {
+         "@type": "xsd:decimal",
+         "@value": "3.5"
+      },
+      "openlabel:TrafficAgentDensity": true,
+      "openlabel:trafficAgentDensityValue": {
+         "@type": "xsd:decimal",
+         "@value": "15.7"
+      }
+   }
+}
