@@ -7,3 +7,6 @@
 [submodule "submodules/sunrise_ontology"]
 	path = submodules/sunrise_ontology
 	url = https://github.com/ika-rwth-aachen/sunrise_ontology.git
+[submodule "submodules/linkml"]
+	path = submodules/linkml
+	url = https://github.com/ASCS-eV/linkml.git

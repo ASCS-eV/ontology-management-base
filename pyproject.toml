@@ -33,7 +33,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ruff",
-    "linkml>=1.10.0",
+    "linkml @ git+https://github.com/ASCS-eV/linkml.git@main#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
     "mkdocs-awesome-pages-plugin>=2.9.3",
