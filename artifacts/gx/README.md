@@ -4,7 +4,7 @@
 
 ## Overview
 
-This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (version 25.11+fix.2).
+This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (version 25.11+fix.5).
 
 - The **Gaia-X model** (ontology) defines concepts for the Gaia-X Trust Framework including Participants, Services, Credentials, and Compliance.
 - The **SHACL shapes** automatically verify that Gaia-X instances conform to the Trust Framework specifications.
@@ -12,14 +12,17 @@ This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (v
 - The **VERSION file** in this directory tracks the Gaia-X release label used in OMB tooling and documentation.
 - The **UPSTREAM_REF** and **UPSTREAM_COMMIT** files record the exact `service-characteristics` checkout used to generate the copied artifacts.
 
-### Current Version: 25.11+fix.2
+### Current Version: 25.11+fix.5
 
 This version is based on the official **25.11 release** with the following additional fixes:
 
-- **Commit c41d423**: Fix double hash fragments in IRIs (fixes enum IRI generation)
-- **Commit 711b6d4**: Replace the non-standard `httpsschema` prefix with LinkML-compatible `schema` mappings
+- **Commit eea7ae71**: Fix double hash fragments in IRIs (fixes enum IRI generation)
+- **Commit 32394e25**: fix(linkml): rename httpsschema using LinkML-compatible schema URI
+- **Commit 33e9e75c**: fix(ci): use patched LinkML for correct any_of type coercion
+- **Commit 74e03101**: fix(linkml): rename waterUsageEffectiveness value slot to avoid collision
+- **Commit bfb9c620**: chore: switch to ASCS-eV/linkml.git@main
 
-The `+fix.2` suffix indicates this is a post-release patch on top of 25.11. When the upstream releases a later version that includes these fixes, we will update to the official release tag.
+The `+fix.5` suffix indicates this is a post-release patch on top of 25.11. When the upstream releases a later version that includes these fixes, we will update to the official release tag.
 
 ## IRI Notes (Enum Values)
 
@@ -51,7 +54,7 @@ keeps IRIs valid.
 - **`gx.shacl.ttl`** – SHACL validation shapes for Gaia-X instances.
 - **`gx.context.jsonld`** – JSON-LD context for GX terms.
 - **`PROPERTIES.md`** – An auto-generated summary of SHACL properties.
-- **`VERSION`** – Current Gaia-X release label (e.g., `25.11+fix.2`).
+- **`VERSION`** – Current Gaia-X release label (e.g., `25.11+fix.5`).
 - **`UPSTREAM_REF`** – Human-readable `service-characteristics` ref used for generation.
 - **`UPSTREAM_COMMIT`** – Exact `service-characteristics` commit used for generation.
 - **`VERSIONING.md`** – Detailed versioning scheme and post-release patch documentation.
@@ -66,7 +69,7 @@ keeps IRIs valid.
 The core Gaia-X ontologies are maintained in an upstream GitLab repository:
 
 - **Upstream Source:** [Gaia-X Service Characteristics](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics)
-- **Current Gaia-X Label:** `25.11+fix.2`
+- **Current Gaia-X Label:** `25.11+fix.5`
 - **Submodule Location:** `submodules/service-characteristics`
 
 > **Note:** The `gx/` directory contains copies of the ontology and shapes for local examples and validation. The actual submodule is located at `submodules/service-characteristics`.
@@ -119,6 +122,7 @@ make generate gx GX_REF=25.12
 ```
 
 This command invokes `artifacts/gx/update-from-submodule.sh`, which will:
+
 1. Check out the specified submodule ref (if provided)
 2. Rebuild GX artifacts using the `service-characteristics` build commands
 3. Copy artifacts (OWL, SHACL, context) from the submodule to `artifacts/gx/`
@@ -199,7 +203,7 @@ cd artifacts/gx
 ```
 
 !!! warning "VERSION and provenance metadata matter"
-    The `VERSION` file is used as the Gaia-X release label in OMB documentation, while `UPSTREAM_COMMIT` is the source of truth for submodule synchronization. Keep both up to date when refreshing `artifacts/gx/`.
+The `VERSION` file is used as the Gaia-X release label in OMB documentation, while `UPSTREAM_COMMIT` is the source of truth for submodule synchronization. Keep both up to date when refreshing `artifacts/gx/`.
 
 ---
 
