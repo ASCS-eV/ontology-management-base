@@ -35,7 +35,7 @@ def generate_table():
     # 3. Build the table rows from the sorted list
     for name, uri in entries:
         # Build the link relative to root (prepending artifacts/)
-        local_link = f"[{(uri)}]({Path('artifacts') / uri})"
+        local_link = f"[{(uri)}]({(Path('artifacts') / uri).as_posix()})"
         table_lines.append(f"| `{name}` | {local_link} |")
 
     return "\n".join(table_lines)

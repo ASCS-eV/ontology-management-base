@@ -8,6 +8,12 @@
 
 set -euo pipefail
 
+# Prevent MSYS / Git Bash from converting "/" CLI arguments to Windows paths.
+# Without this, --enum-iri-separator "/" becomes "C:/Program Files/PortableGit/"
+# which corrupts all enum IRIs in the generated OWL ontology.
+export MSYS_NO_PATHCONV=1
+export MSYS2_ARG_CONV_EXCL="*"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 SUBMODULE_DIR="$ROOT_DIR/submodules/service-characteristics"
@@ -47,10 +53,30 @@ for cmd in gen-owl gen-shacl gen-jsonld-context rdfpipe; do
     fi
 done
 
+# Log file for generator warnings/trace output.
+# merge_schemas.sh uses set -ex which produces verbose trace output on stderr;
+# when invoked through deep process chains (PowerShell → make → sh → bash → bash)
+# the stderr/stdout pipe buffers can deadlock on Windows. Redirecting stderr to a
+# log file avoids the deadlock while still capturing diagnostics.
+GX_LOG="$ARTIFACTS_DIR/.generate-gx.log"
+: > "$GX_LOG"
+
 echo "Generating artifacts from service-characteristics..."
-bash ./merge_schemas.sh shacl
-bash ./merge_schemas.sh owl
-gen-jsonld-context linkml/gaia-x.yaml --no-mergeimports > context.jsonld
+echo "  Generating SHACL shapes..."
+bash ./merge_schemas.sh shacl 2>>"$GX_LOG"
+echo "  Generating OWL ontology..."
+bash ./merge_schemas.sh owl 2>>"$GX_LOG"
+echo "  Generating JSON-LD context..."
+gen-jsonld-context linkml/gaia-x.yaml --no-mergeimports > context.jsonld 2>>"$GX_LOG"
+
+# Normalize Turtle output: rdfpipe on Windows inserts literal \r escapes inside
+# triple-quoted strings ("""...\r\n...""") that don't appear on Linux/macOS.
+# Strip them for deterministic cross-platform output.
+for f in shapes.shacl.ttl ontology.owl.ttl; do
+    if [ -f "$f" ]; then
+        sed -i 's/\\r$//' "$f"
+    fi
+done
 
 echo "Copying artifacts from submodule..."
 cp -v "$SUBMODULE_DIR/ontology.owl.ttl" "$ARTIFACTS_DIR/gx.owl.ttl"

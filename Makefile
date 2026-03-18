@@ -71,7 +71,7 @@ help:
 	@:
 else
 help:
-	@$(MAKE) --no-print-directory _help_general
+	@"$(MAKE)" --no-print-directory _help_general
 endif
 
 # Default target
@@ -113,9 +113,9 @@ install:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		default) $(MAKE) --no-print-directory _install_default ;; \
-		dev) $(MAKE) --no-print-directory _install_dev ;; \
-		help) $(MAKE) --no-print-directory _help_install ;; \
+		default) "$(MAKE)" --no-print-directory _install_default ;; \
+		dev) "$(MAKE)" --no-print-directory _install_dev ;; \
+		help) "$(MAKE)" --no-print-directory _help_install ;; \
 		*) echo "ERROR: Unknown install subcommand '$$subcommand'"; echo "Run 'make install help' for available options."; exit 1 ;; \
 	esac
 
@@ -153,9 +153,9 @@ generate:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		default) $(MAKE) --no-print-directory _generate_default DOMAIN="$(DOMAIN)" ;; \
-		gx) $(MAKE) --no-print-directory _generate_gx GX_REF="$(GX_REF)" ;; \
-		help) $(MAKE) --no-print-directory _help_generate ;; \
+		default) "$(MAKE)" --no-print-directory _generate_default DOMAIN="$(DOMAIN)" ;; \
+		gx) "$(MAKE)" --no-print-directory _generate_gx GX_REF="$(GX_REF)" ;; \
+		help) "$(MAKE)" --no-print-directory _help_generate ;; \
 		*) echo "ERROR: Unknown generate subcommand '$$subcommand'"; echo "Run 'make generate help' for available options."; exit 1 ;; \
 	esac
 
@@ -206,14 +206,14 @@ test:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		default) $(MAKE) --no-print-directory _test_default ;; \
-		syntax) $(MAKE) --no-print-directory _test_syntax ;; \
-		artifact-coherence) $(MAKE) --no-print-directory _test_artifact_coherence ;; \
-		data-conformance) $(MAKE) --no-print-directory _test_data_conformance ;; \
-		failing) $(MAKE) --no-print-directory _test_failing ;; \
-		cov) $(MAKE) --no-print-directory _test_cov ;; \
-		domain) $(MAKE) --no-print-directory _test_domain ;; \
-		help) $(MAKE) --no-print-directory _help_test ;; \
+		default) "$(MAKE)" --no-print-directory _test_default ;; \
+		syntax) "$(MAKE)" --no-print-directory _test_syntax ;; \
+		artifact-coherence) "$(MAKE)" --no-print-directory _test_artifact_coherence ;; \
+		data-conformance) "$(MAKE)" --no-print-directory _test_data_conformance ;; \
+		failing) "$(MAKE)" --no-print-directory _test_failing ;; \
+		cov) "$(MAKE)" --no-print-directory _test_cov ;; \
+		domain) "$(MAKE)" --no-print-directory _test_domain ;; \
+		help) "$(MAKE)" --no-print-directory _help_test ;; \
 		*) echo "ERROR: Unknown test subcommand '$$subcommand'"; echo "Run 'make test help' for available options."; exit 1 ;; \
 	esac
 
@@ -260,7 +260,7 @@ _test_domain:
 		exit 1; \
 	fi
 	@echo "[INFO] Running full validation suite for domain: $(DOMAIN)..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run all --domain $(DOMAIN)
+	@"$(PYTHON)" -m src.tools.validators.validation_suite --run all --domain "$(DOMAIN)"
 	@echo "[OK] Domain validation complete"
 
 # Documentation targets
@@ -273,10 +273,10 @@ docs:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		generate) $(MAKE) --no-print-directory _docs_generate ;; \
-		serve) $(MAKE) --no-print-directory _docs_serve ;; \
-		build) $(MAKE) --no-print-directory _docs_build ;; \
-		help|default) $(MAKE) --no-print-directory _help_docs ;; \
+		generate) "$(MAKE)" --no-print-directory _docs_generate ;; \
+		serve) "$(MAKE)" --no-print-directory _docs_serve ;; \
+		build) "$(MAKE)" --no-print-directory _docs_build ;; \
+		help|default) "$(MAKE)" --no-print-directory _help_docs ;; \
 		*) echo "ERROR: Unknown docs subcommand '$$subcommand'"; echo "Run 'make docs help' for available options."; exit 1 ;; \
 	esac
 
@@ -307,8 +307,8 @@ registry:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		update) $(MAKE) --no-print-directory _registry_update TAG="$(TAG)" ;; \
-		help|default) $(MAKE) --no-print-directory _help_registry ;; \
+		update) "$(MAKE)" --no-print-directory _registry_update TAG="$(TAG)" ;; \
+		help|default) "$(MAKE)" --no-print-directory _help_registry ;; \
 		*) echo "ERROR: Unknown registry subcommand '$$subcommand'"; echo "Run 'make registry help' for available options."; exit 1 ;; \
 	esac
 
@@ -332,9 +332,9 @@ clean:
 		exit 1; \
 	fi; \
 	case "$$subcommand" in \
-		default) $(MAKE) --no-print-directory _clean_default ;; \
-		cache) $(MAKE) --no-print-directory _clean_cache ;; \
-		help) $(MAKE) --no-print-directory _help_clean ;; \
+		default) "$(MAKE)" --no-print-directory _clean_default ;; \
+		cache) "$(MAKE)" --no-print-directory _clean_cache ;; \
+		help) "$(MAKE)" --no-print-directory _help_clean ;; \
 		*) echo "ERROR: Unknown clean subcommand '$$subcommand'"; echo "Run 'make clean help' for available options."; exit 1 ;; \
 	esac
 
