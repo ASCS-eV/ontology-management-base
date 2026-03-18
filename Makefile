@@ -171,9 +171,9 @@ _generate_default:
 	for domain in $$DOMAINS_TO_BUILD; do \
 		echo "  Processing $$domain..."; \
 		mkdir -p artifacts/$$domain; \
-		"$(GEN_OWL)" --no-metadata --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.owl.ttl 2>/dev/null; \
-		"$(GEN_SHACL)" --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.shacl.ttl 2>/dev/null; \
-		"$(GEN_JSONLD_CONTEXT)" --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.context.jsonld 2>/dev/null; \
+		"$(GEN_OWL)" --deterministic --no-metadata --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.owl.ttl 2>/dev/null; \
+		"$(GEN_SHACL)" --deterministic --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.shacl.ttl 2>/dev/null; \
+		"$(GEN_JSONLD_CONTEXT)" --deterministic --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.context.jsonld 2>/dev/null; \
 		"$(PYTHON)" -m hooks.normalize_linkml_output \
 			artifacts/$$domain/$$domain.owl.ttl \
 			artifacts/$$domain/$$domain.shacl.ttl \
