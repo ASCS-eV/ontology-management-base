@@ -129,7 +129,7 @@ generate SHACL constraints when `gen-shacl` gains `rules:` support
 ## Deterministic Artifact Generation
 
 v1 artifacts are manually maintained, making diffs noisy and reviews hard. v2
-uses `--no-metadata` on all LinkML generators plus Turtle blank-node
-canonicalization (`hooks/normalize_linkml_output.py`), ensuring `make generate`
-produces byte-identical output across runs. This enables reliable pre-commit
-hooks and CI diffing.
+uses `--deterministic --no-metadata` on all LinkML generators, which applies
+Weisfeiler-Lehman blank-node signatures for stable Turtle serialization. This
+ensures `make generate` produces byte-identical output across runs, enabling
+reliable pre-commit hooks and CI diffing.
