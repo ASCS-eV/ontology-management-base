@@ -45,7 +45,7 @@ else
     echo "Using current submodule checkout: $(git rev-parse --short HEAD)"
 fi
 
-for cmd in gen-owl gen-shacl gen-jsonld-context rdfpipe; do
+for cmd in gen-owl gen-shacl gen-jsonld-context; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "Error: Required command '$cmd' not found in PATH."
         echo "Run this script via 'make generate gx' or ensure the OMB virtualenv tools are available."
@@ -54,29 +54,69 @@ for cmd in gen-owl gen-shacl gen-jsonld-context rdfpipe; do
 done
 
 # Log file for generator warnings/trace output.
-# merge_schemas.sh uses set -ex which produces verbose trace output on stderr;
-# when invoked through deep process chains (PowerShell → make → sh → bash → bash)
-# the stderr/stdout pipe buffers can deadlock on Windows. Redirecting stderr to a
-# log file avoids the deadlock while still capturing diagnostics.
 GX_LOG="$ARTIFACTS_DIR/.generate-gx.log"
 : > "$GX_LOG"
 
 echo "Generating artifacts from service-characteristics..."
-echo "  Generating SHACL shapes..."
-bash ./merge_schemas.sh shacl 2>>"$GX_LOG"
-echo "  Generating OWL ontology..."
-bash ./merge_schemas.sh owl 2>>"$GX_LOG"
-echo "  Generating JSON-LD context..."
-gen-jsonld-context linkml/gaia-x.yaml --no-mergeimports > context.jsonld 2>>"$GX_LOG"
+echo "  Generating and merging deterministic artifacts..."
+python -c "
+import glob, json, sys
+from pathlib import Path
+from rdflib import Graph
+from linkml.utils.generator import deterministic_turtle
 
-# Normalize Turtle output: rdfpipe on Windows inserts literal \r escapes inside
-# triple-quoted strings ("""...\r\n...""") that don't appear on Linux/macOS.
-# Strip them for deterministic cross-platform output.
-for f in shapes.shacl.ttl ontology.owl.ttl; do
-    if [ -f "$f" ]; then
-        sed -i 's/\\r$//' "$f"
-    fi
-done
+def generate_and_merge(gen_cmd, hand_written_glob, output_path):
+    \"\"\"Run a LinkML generator, merge with hand-written Turtle, serialize deterministically.\"\"\"
+    import subprocess
+    # Generate from LinkML with --deterministic
+    result = subprocess.run(gen_cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(result.stderr, file=sys.stderr)
+        sys.exit(result.returncode)
+
+    # Parse generated output + any hand-written supplements into one graph
+    merged = Graph()
+    merged.parse(data=result.stdout, format='turtle')
+    for extra in sorted(glob.glob(hand_written_glob)):
+        merged.parse(extra, format='turtle')
+
+    output_path.write_text(deterministic_turtle(merged), encoding='utf-8', newline='\n')
+
+# SHACL: gen-shacl + hand-written linkml/*.shacl.ttl
+generate_and_merge(
+    ['gen-shacl', '--deterministic', '--no-mergeimports', '--closed', '--suffix', 'Shape',
+     'linkml/gaia-x.yaml'],
+    'linkml/*.shacl.ttl',
+    Path('shapes.shacl.ttl'),
+)
+print('    SHACL done')
+
+# OWL: gen-owl + hand-written linkml/*.owl.ttl
+generate_and_merge(
+    ['gen-owl', '--deterministic', '--no-use-native-uris', '--assert-equivalent-classes',
+     '--enum-iri-separator', '/', 'linkml/gaia-x.yaml'],
+    'linkml/*.owl.ttl',
+    Path('ontology.owl.ttl'),
+)
+print('    OWL done')
+
+# JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top)
+import subprocess
+result = subprocess.run(
+    ['gen-jsonld-context', '--deterministic', '--no-mergeimports', 'linkml/gaia-x.yaml'],
+    capture_output=True, text=True,
+)
+if result.returncode != 0:
+    print(result.stderr, file=sys.stderr)
+    sys.exit(result.returncode)
+
+# Re-indent to 3 spaces for consistency with upstream Gaia-X formatting
+data = json.loads(result.stdout)
+Path('context.jsonld').write_text(
+    json.dumps(data, indent=3, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n',
+)
+print('    JSON-LD context done')
+" 2>>"$GX_LOG"
 
 echo "Copying artifacts from submodule..."
 cp -v "$SUBMODULE_DIR/ontology.owl.ttl" "$ARTIFACTS_DIR/gx.owl.ttl"
