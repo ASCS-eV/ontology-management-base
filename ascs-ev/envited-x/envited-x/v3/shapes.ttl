@@ -1,0 +1,315 @@
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix gx: <https://w3id.org/gaia-x/development#> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+envited-x:CodeAssetShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "envited-x:hasCodeArtifact must be either (a) an inline envited-x:CodeArtifactBase, or (b) a valid manifest:Link (LinkShape + ExtendedLinkShape)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:CodeArtifactBaseShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path envited-x:hasCodeArtifact ],
+        [ sh:message "A CodeAsset may have one or more DomainSpecifications to provide additional structured metadata. Each extension MUST conform to envited-x:DomainSpecificationShape."@en ;
+            sh:minCount 0 ;
+            sh:node envited-x:DomainSpecificationShape ;
+            sh:path envited-x:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each CodeAsset must have exactly one manifest."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path envited-x:hasManifest ] ;
+    sh:targetClass envited-x:CodeAsset .
+
+envited-x:ContentShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:message "Node must be of type envited-x:Content." ;
+    sh:targetClass envited-x:Content .
+
+envited-x:DataSourceShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:message "Node must be of type envited-x:DataSource." ;
+    sh:targetClass envited-x:DataSource .
+
+envited-x:FormatShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:message "Node must be of type envited-x:Format." ;
+    sh:targetClass envited-x:Format .
+
+envited-x:QualityShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:message "Node must be of type envited-x:Quality." ;
+    sh:targetClass envited-x:Quality .
+
+envited-x:QuantityShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:message "Node must be of type envited-x:Quantity." ;
+    sh:targetClass envited-x:Quantity .
+
+envited-x:ServiceAssetShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "envited-x:hasServiceOffering must be either (a) an inline envited-x:ServiceOfferingBase, or (b) a valid manifest:Link (LinkShape + ExtendedLinkShape)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:ServiceOfferingBaseShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path envited-x:hasServiceOffering ],
+        [ sh:message "A ServiceAsset may have one or more DomainSpecifications to provide additional structured metadata. Each extension MUST conform to envited-x:DomainSpecificationShape."@en ;
+            sh:minCount 0 ;
+            sh:node envited-x:DomainSpecificationShape ;
+            sh:path envited-x:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each ServiceAsset must have exactly one manifest."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path envited-x:hasManifest ] ;
+    sh:targetClass envited-x:ServiceAsset .
+
+envited-x:SimulationAssetShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "envited-x:hasResourceDescription must be either (a) an inline envited-x:ResourceDescription, or (b) a valid manifest:Link (LinkShape + ExtendedLinkShape)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:ResourceDescriptionShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path envited-x:hasResourceDescription ],
+        [ sh:message "A SimulationAsset may have one or more DomainSpecifications (e.g. georeference metadata, sensor calibration) to provide additional structured metadata. Each extension MUST conform to envited-x:DomainSpecificationShape (at least one envited-x:hasContent and one envited-x:hasFormat)."@en ;
+            sh:minCount 0 ;
+            sh:node envited-x:DomainSpecificationShape ;
+            sh:path envited-x:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each SimulationAsset must have exactly one manifest. If linked, it MUST be of category envited-x:isManifest and include a manifest:iri."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path envited-x:hasManifest ] ;
+    sh:targetClass envited-x:SimulationAsset .
+
+envited-x:SoftwareAssetShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "envited-x:hasSoftwareResource must be either (a) an inline envited-x:SoftwareResourceBase, or (b) a valid manifest:Link (LinkShape + ExtendedLinkShape)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:SoftwareResourceBaseShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path envited-x:hasSoftwareResource ],
+        [ sh:message "A SoftwareAsset may have one or more DomainSpecifications to provide additional structured metadata. Each extension MUST conform to envited-x:DomainSpecificationShape."@en ;
+            sh:minCount 0 ;
+            sh:node envited-x:DomainSpecificationShape ;
+            sh:path envited-x:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each SoftwareAsset must have exactly one manifest."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path envited-x:hasManifest ] ;
+    sh:targetClass envited-x:SoftwareAsset .
+
+envited-x:shapes a owl:Ontology ;
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> .
+
+envited-x:CodeArtifactBaseShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each CodeArtifactBase must have a human-readable name (schema:name)."@en ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:name ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each CodeArtifactBase may have a textual description (schema:description)."@en ;
+            sh:order 1 ;
+            sh:path schema:description ],
+        [ sh:maxCount 1 ;
+            sh:message "The gx:license must be either a standard SPDX identifier or one of the ENVITED-X custom commercial identifiers."@en ;
+            sh:name "license identifier"@en ;
+            sh:or ( [ sh:in ( "LicenseRef-Custom-Commercial-Agreement" "LicenseRef-Policy-Smart-Contract" ) ] [ sh:datatype xsd:string ] ) ;
+            sh:order 2 ;
+            sh:path gx:license ],
+        [ sh:message "Each CodeArtifactBase must specify a copyright owner."@en ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path gx:copyrightOwnedBy ],
+        [ sh:datatype xsd:string ;
+            sh:message "Each CodeArtifactBase must have a resource policy."@en ;
+            sh:minCount 1 ;
+            sh:order 4 ;
+            sh:path gx:resourcePolicy ] ;
+    sh:targetClass envited-x:CodeArtifactBase .
+
+envited-x:LicenseLinkReferenceShape a sh:NodeShape ;
+    sh:node envited-x:ExtendedLinkShape,
+        manifest:LinkShape ;
+    sh:property [ sh:hasValue envited-x:isLicense ;
+            sh:message "A link used in hasLicense must have the category envited-x:isLicense."@en ;
+            sh:path manifest:hasCategory ],
+        [ sh:message "A linked license reference must specify a license:iri (e.g., a DID)."@en ;
+            sh:minCount 1 ;
+            sh:path manifest:iri ] .
+
+envited-x:ResourceDescriptionShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ skos:example "3D Model of Grafing"@en ;
+            sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each ResourceDescription must have a human-readable name of the entity."@en ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path gx:name ],
+        [ skos:example "Town district with traffic signs."@en ;
+            sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each ResourceDescription must have a textual description of the entity."@en ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path gx:description ],
+        [ sh:description "Allows custom commercial identifiers in addition to Gaia-X standard SPDX checks."@en ;
+            sh:maxCount 1 ;
+            sh:message "The gx:license must be either a standard SPDX identifier (validated by Gaia-X) or one of the ENVITED-X custom commercial identifiers."@en ;
+            sh:name "license identifier"@en ;
+            sh:or ( [ sh:in ( "LicenseRef-Custom-Commercial-Agreement" "LicenseRef-Policy-Smart-Contract" ) ] [ sh:datatype xsd:string ] ) ;
+            sh:order 2 ;
+            sh:path gx:license ] ;
+    sh:targetClass envited-x:ResourceDescription .
+
+envited-x:ServiceOfferingBaseShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each ServiceOfferingBase must have a human-readable name (schema:name)."@en ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:name ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each ServiceOfferingBase may have a textual description (schema:description)."@en ;
+            sh:order 1 ;
+            sh:path schema:description ],
+        [ sh:maxCount 1 ;
+            sh:message "Each ServiceOfferingBase must specify a provider (gx:providedBy)."@en ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path gx:providedBy ],
+        [ sh:message "Each ServiceOfferingBase must have at least one terms and conditions."@en ;
+            sh:minCount 1 ;
+            sh:order 4 ;
+            sh:path gx:serviceOfferingTermsAndConditions ] ;
+    sh:targetClass envited-x:ServiceOfferingBase .
+
+envited-x:SoftwareResourceBaseShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each SoftwareResourceBase must have a human-readable name (schema:name)."@en ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:name ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:message "Each SoftwareResourceBase may have a textual description (schema:description)."@en ;
+            sh:order 1 ;
+            sh:path schema:description ],
+        [ sh:maxCount 1 ;
+            sh:message "The gx:license must be either a standard SPDX identifier or one of the ENVITED-X custom commercial identifiers."@en ;
+            sh:name "license identifier"@en ;
+            sh:or ( [ sh:in ( "LicenseRef-Custom-Commercial-Agreement" "LicenseRef-Policy-Smart-Contract" ) ] [ sh:datatype xsd:string ] ) ;
+            sh:order 2 ;
+            sh:path gx:license ],
+        [ sh:message "Each SoftwareResourceBase must specify a copyright owner."@en ;
+            sh:minCount 1 ;
+            sh:order 3 ;
+            sh:path gx:copyrightOwnedBy ],
+        [ sh:datatype xsd:string ;
+            sh:message "Each SoftwareResourceBase must have a resource policy."@en ;
+            sh:minCount 1 ;
+            sh:order 4 ;
+            sh:path gx:resourcePolicy ] ;
+    sh:targetClass envited-x:SoftwareResourceBase .
+
+envited-x:DomainSpecificationShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:message "Each DomainSpecification must link to at least one envited-x:Content via envited-x:hasContent."@en ;
+            sh:minCount 1 ;
+            sh:path envited-x:hasContent ],
+        [ sh:message "A DomainSpecification may link to envited-x:Format via envited-x:hasFormat."@en ;
+            sh:minCount 0 ;
+            sh:path envited-x:hasFormat ],
+        [ sh:message "Optional: a DomainSpecification may specify how the asset was created via envited-x:hasDataSource."@en ;
+            sh:minCount 0 ;
+            sh:path envited-x:hasDataSource ],
+        [ sh:message "Optional: a DomainSpecification may specify quality information via envited-x:hasQuality."@en ;
+            sh:minCount 0 ;
+            sh:path envited-x:hasQuality ],
+        [ sh:message "Optional: a DomainSpecification may specify quantity-related information via envited-x:hasQuantity."@en ;
+            sh:minCount 0 ;
+            sh:path envited-x:hasQuantity ] ;
+    sh:targetClass envited-x:DomainSpecification .
+
+envited-x:ManifestLinkReferenceShape a sh:NodeShape ;
+    sh:node envited-x:ExtendedLinkShape,
+        manifest:LinkShape ;
+    sh:property [ sh:hasValue envited-x:isManifest ;
+            sh:message "A link used in hasManifest must have the category envited-x:isManifest."@en ;
+            sh:path manifest:hasCategory ],
+        [ sh:message "A linked manifest reference must specify a manifest:iri (e.g., a DID)."@en ;
+            sh:minCount 1 ;
+            sh:path manifest:iri ] .
+
+envited-x:ManifestShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:message "The envited-x:Manifest must contain at least 1 manifest:Link with category 'Media'."@en ;
+            sh:path manifest:hasArtifacts ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:node manifest:LinkShape ;
+                    sh:property [ sh:hasValue envited-x:isMedia ;
+                            sh:path manifest:hasCategory ] ] ],
+        [ sh:hasValue envited-x:Manifest ;
+            sh:message "The manifest node must be explicitly typed as envited-x:Manifest."@en ;
+            sh:path rdf:type ],
+        [ sh:message "An envited-x manifest must contain exactly one manifest reference link with an envited-x access role and category."@en ;
+            sh:path manifest:hasManifestReference ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ],
+        [ sh:maxCount 1 ;
+            sh:message "An envited-x manifest must contain exactly one license link with an envited-x access role and category envited-x:isLicense."@en ;
+            sh:minCount 1 ;
+            sh:node envited-x:LicenseLinkReferenceShape ;
+            sh:path manifest:hasLicense ],
+        [ sh:message "An envited-x manifest must contain at least one artifact link with an envited-x access role and category."@en ;
+            sh:path manifest:hasArtifacts ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ],
+        [ sh:message "If provided, referenced artifact links must have an envited-x access role and category."@en ;
+            sh:path manifest:hasReferencedArtifacts ;
+            sh:qualifiedMinCount 0 ;
+            sh:qualifiedValueShape [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ],
+        [ sh:message "The envited-x:Manifest must contain at least 1 manifest:Link with category 'Simulation Data'."@en ;
+            sh:path manifest:hasArtifacts ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:node manifest:LinkShape ;
+                    sh:property [ sh:hasValue envited-x:isSimulationData ;
+                            sh:path manifest:hasCategory ] ] ],
+        [ sh:message "The envited-x:Manifest must contain at least 1 manifest:Link with category 'Documentation'."@en ;
+            sh:path manifest:hasArtifacts ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:node manifest:LinkShape ;
+                    sh:property [ sh:hasValue envited-x:isDocumentation ;
+                            sh:path manifest:hasCategory ] ] ],
+        [ sh:message "The envited-x:Manifest must contain at least 1 manifest:Link with category 'Metadata'."@en ;
+            sh:path manifest:hasArtifacts ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:node manifest:LinkShape ;
+                    sh:property [ sh:hasValue envited-x:isMetadata ;
+                            sh:path manifest:hasCategory ] ] ] ;
+    sh:targetClass envited-x:Manifest .
+
+envited-x:ExtendedLinkShape a sh:NodeShape ;
+    sh:property [ sh:in ( envited-x:isPublic envited-x:isOwner envited-x:isRegistered ) ;
+            sh:message "Access role must be one of the envited-x defined access roles." ;
+            sh:path manifest:hasAccessRole ],
+        [ sh:in ( envited-x:isManifest envited-x:isLicense envited-x:isMiscellaneous envited-x:isSimulationData envited-x:isDocumentation envited-x:isMedia envited-x:isMetadata envited-x:isValidationReport ) ;
+            sh:message "Category must be one of the envited-x defined categories." ;
+            sh:path manifest:hasCategory ] .
+
