@@ -676,3 +676,4 @@ schema1:QuantitativeValue a sh:NodeShape ;
             sh:path schema1:minValue ] ;
     sh:targetClass schema1:QuantitativeValue .
 
+
