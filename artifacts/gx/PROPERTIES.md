@@ -18082,6 +18082,7 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 - odrl: <http://www.w3.org/ns/odrl/2/>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+- schema: <https://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
 - xsd: <http://www.w3.org/2001/XMLSchema#>
 
@@ -18090,7 +18091,6 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 #### applicableUnit {: #prop-http---qudt-org-schema-qudt-applicableunit .property-anchor }
 #### dcat:Dataset {: #prop-http---www-w3-org-ns-dcat-dataset .property-anchor }
 #### dcterms:title {: #prop-http---purl-org-dc-terms-title .property-anchor }
-#### description {: #prop-http---schema-org-description .property-anchor }
 #### digestSRI {: #prop-https---www-w3-org-2018-credentials-digestsri .property-anchor }
 #### gx:acceptedIssuers {: #prop-https---w3id-org-gaia-x-development-acceptedissuers .property-anchor }
 #### gx:accessAttributes {: #prop-https---w3id-org-gaia-x-development-accessattributes .property-anchor }
@@ -18433,15 +18433,16 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 #### gx:watchDogAction {: #prop-https---w3id-org-gaia-x-development-watchdogaction .property-anchor }
 #### gx:waterUsageEffectiveness {: #prop-https---w3id-org-gaia-x-development-waterusageeffectiveness .property-anchor }
 #### gx:waterUsageEffectivenessValue {: #prop-https---w3id-org-gaia-x-development-waterusageeffectivenessvalue .property-anchor }
-#### leiCode {: #prop-http---schema-org-leicode .property-anchor }
 #### locality {: #prop-http---www-w3-org-2006-vcard-ns-locality .property-anchor }
-#### name {: #prop-http---schema-org-name .property-anchor }
 #### odrl:profile {: #prop-http---www-w3-org-ns-odrl-2-profile .property-anchor }
 #### postal-code {: #prop-http---www-w3-org-2006-vcard-ns-postal-code .property-anchor }
 #### quantityValue {: #prop-http---qudt-org-schema-qudt-quantityvalue .property-anchor }
 #### region {: #prop-http---www-w3-org-2006-vcard-ns-region .property-anchor }
+#### schema:description {: #prop-https---schema-org-description .property-anchor }
+#### schema:leiCode {: #prop-https---schema-org-leicode .property-anchor }
+#### schema:name {: #prop-https---schema-org-name .property-anchor }
+#### schema:taxID {: #prop-https---schema-org-taxid .property-anchor }
 #### street-address {: #prop-http---www-w3-org-2006-vcard-ns-street-address .property-anchor }
-#### taxID {: #prop-http---schema-org-taxid .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
@@ -18475,8 +18476,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |AvailabilityShape|gx|<a id="prop-https---w3id-org-gaia-x-development-metric"></a>metric|1|1|Availability expressed as time.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |AvailabilityShape|gx|<a id="prop-https---w3id-org-gaia-x-development-guaranteed"></a>guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
 |AvailabilityZoneShape|gx|<a id="prop-https---w3id-org-gaia-x-development-address"></a>address||1|The physical address associated with the availability zone|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|AvailabilityZoneShape||<a id="prop-http---schema-org-name"></a>http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|AvailabilityZoneShape||<a id="prop-http---schema-org-description"></a>http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|AvailabilityZoneShape|schema|<a id="prop-https---schema-org-name"></a>name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|AvailabilityZoneShape|schema|<a id="prop-https---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |AvailabilityZoneShape|gx|<a id="prop-https---w3id-org-gaia-x-development-aggregationofresources"></a>aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |BackupPolicyShape|gx|<a id="prop-https---w3id-org-gaia-x-development-backupreplication"></a>backupReplication|||Backups replication policy, if any|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BackupPolicyShape|gx|<a id="prop-https---w3id-org-gaia-x-development-backuplocation"></a>backupLocation|1||Where are located data backups|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18500,10 +18501,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dependson"></a>dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-subcontractors"></a>subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-serviceofferingtermsandconditions"></a>serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|BareMetalServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BareMetalServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-keyword"></a>keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-servicescope"></a>serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|BareMetalServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BareMetalServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-tenantseparation"></a>tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hostedon"></a>hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -18516,8 +18517,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storageencryption"></a>storageEncryption|1||Available encryption features.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-blocksize"></a>blockSize|||Available block size to be used.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storageqos"></a>storageQoS|||Available QoS class for storage service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|BlockStorageConfigurationShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|BlockStorageConfigurationShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BlockStorageConfigurationShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BlockStorageConfigurationShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storagecompression"></a>storageCompression|||Available compression features.||gx.shacl.ttl|
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storagededuplication"></a>storageDeduplication|||Deduplication features available for the storage service, such as inline or post-processing.||gx.shacl.ttl|
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storageredundancymechanism"></a>storageRedundancyMechanism|||Underlying data protection mechanism (such as RAID levels or Erasure Codes).||gx.shacl.ttl|
@@ -18543,10 +18544,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dataviews"></a>dataViews||1|Capability to compose logical data views and present the subset of the data as a logical data entity|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-versioning"></a>versioning||1|Whether versioning is available on this storage service.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-lifetimemanagement"></a>lifetimeManagement||1|Lifetime (in hours) of data (since last access), before it is moved externally, archived or deleted and will not be accessible through the storage service.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|BlockStorageServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BlockStorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|BlockStorageServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BlockStorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storageconsistency"></a>storageConsistency||1|Consistency model provided. See https://en.wikipedia.org/wiki/Consistency_model||gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -18580,10 +18581,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-signature"></a>signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-builddate"></a>buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-resourcepolicy"></a>resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|CodeArtifactShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|CodeArtifactShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-patchlevel"></a>patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-version"></a>version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|CodeArtifactShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|CodeArtifactShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-license"></a>license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |CodeArtifactShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -18599,8 +18600,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ComputeFunctionConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionlibrary"></a>computeFunctionLibrary|||Library of compute function templates available|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctiontrigger"></a>computeFunctionTrigger|||Available trigger for starting function execution|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-confidentialcomputingtechnology"></a>confidentialComputingTechnology||1|Details with respect to confidential computing requirements|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ComputeFunctionConfigurationShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ComputeFunctionConfigurationShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionConfigurationShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionConfigurationShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctiondeploymentmethod"></a>computeFunctionDeploymentMethod|||Supported methods for importing/deploying compute function code||gx.shacl.ttl|
 |ComputeFunctionQuotasShape|gx|<a id="prop-https---w3id-org-gaia-x-development-functiontimelimit"></a>functionTimeLimit||1|Maximum execution time for a function|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionQuotasShape|gx|<a id="prop-https---w3id-org-gaia-x-development-functionmemorylimit"></a>functionMemoryLimit||1|Maximum amount of memory usable by a function|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18633,10 +18634,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctiondebugtools"></a>computeFunctionDebugTools||1|Indicates whether the service includes debugging tools|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionallowautoscaling"></a>computeFunctionAllowAutoScaling||1|Indicates whether the service supports auto-scaling of functions|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionallowfsmount"></a>computeFunctionAllowFSMount||1|Indicates whether the service supports mounting and using external file systems in functions|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
-|ComputeFunctionServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ComputeFunctionServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -18648,12 +18649,12 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ComputeFunctionTemplateShape|gx|signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ComputeFunctionTemplateShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionTemplateShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctiondescription"></a>computeFunctionDescription|1|1|Description of what the function template does|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionname"></a>computeFunctionName|1|1|Name of this function template|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ComputeFunctionTemplateShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionTemplateShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -18672,10 +18673,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ComputeServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ComputeServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ComputeServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -18684,8 +18685,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ComputeServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |ConfidentialComputingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-technology"></a>technology|1|1|Particular confidential computing technology used by flavors as defined in...|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ConfidentialComputingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-attestationserviceuri"></a>attestationServiceURI||1|indicates whether confidential server has an associated attestation service.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
-|ConnectivityConfigurationShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ConnectivityConfigurationShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ConnectivityConfigurationShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ConnectivityConfigurationShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ConnectivityConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-destinationidentifierz"></a>destinationIdentifierZ||1|InterconnectionPointIdentifier reference of the destination service access point.||gx.shacl.ttl|
 |ConnectivityConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-sourceidentifiera"></a>sourceIdentifierA||1|InterconnectionPointIdentifier reference of the source service access point.||gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18703,10 +18704,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ConnectivityServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ConnectivityServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ConnectivityServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ConnectivityServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ConnectivityServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -18734,10 +18735,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ContainerImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-licenseincluded"></a>licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ContainerImageShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |ContainerImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerImageShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerImageShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerImageShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerImageShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ContainerImageShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |ContainerImageShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -18751,8 +18752,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ContainerResourceLimitsShape|gx|<a id="prop-https---w3id-org-gaia-x-development-confidential"></a>confidential|1|1|indicates whether container is of confidential nature|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ContainerResourceLimitsShape|gx|<a id="prop-https---w3id-org-gaia-x-development-gpulimit"></a>gpuLimit||1|GPU number limit|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
 |ContainerResourceLimitsShape|gx|<a id="prop-https---w3id-org-gaia-x-development-numberofcoreslimit"></a>numberOfCoresLimit||1|limit to the number of cores usable by a container (expressed in milicore)|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|ContainerResourceLimitsShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerResourceLimitsShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerResourceLimitsShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerResourceLimitsShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|codeArtifact|1||All possible provided container images for this service offering.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18768,10 +18769,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ContainerServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ContainerServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ContainerServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -18836,10 +18837,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |DataProductCatalogueShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|DataProductCatalogueShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DataProductCatalogueShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|DataProductCatalogueShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DataProductCatalogueShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |DataProductCatalogueShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |DataProductCatalogueShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -18859,14 +18860,14 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferingtermsandconditions"></a>digitalServiceOfferingTermsAndConditions|1|1|the terms and conditions that apply to the provider (SLA, ...)|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceusagedatapolicy"></a>digitalServiceUsageDataPolicy|1|1|define how the supplier can use the data related to the customer usage of the service offering|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceusagetermsandconditions"></a>digitalServiceUsageTermsAndConditions|1|1|the terms and conditions that apply to the consumer (payment, no-resell, ...)|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|DataProductShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DataProductShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferingname"></a>digitalServiceOfferingName|1|1|A human redable name of the service offering|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferingenddate"></a>digitalServiceOfferingEndDate||1|Date and time when the service instances will be stopped|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferinglaunchdate"></a>digitalServiceOfferingLaunchDate|1|1|Date and time when the service offering can be instanciated (the service can be ordered before)|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferingshortdescription"></a>digitalServiceOfferingShortDescription|1|1|a short textual description (not contractual)|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductShape|gx|<a id="prop-https---w3id-org-gaia-x-development-digitalserviceofferingidentifier"></a>digitalServiceOfferingIdentifier|1|1|a unique UUIDIdentifier4|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|DataProductShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DataProductShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProtectionPolicyShape|gx|protectionRetention|1|1|How long captured/protected data are kept available.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProtectionPolicyShape|gx|protectionFrequency|1|1|Frequency at which data are captured/protected.||gx.shacl.ttl|
 |DataProtectionPolicyShape|gx|protectionMethod||1|Method used to protect data, can be be full copy, incremental,...||gx.shacl.ttl|
@@ -18899,8 +18900,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |DatacenterShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ownedby"></a>ownedBy|||A list of resolvable links to Gaia-X Credentials of participant owning the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DatacenterShape|gx|<a id="prop-https---w3id-org-gaia-x-development-maintainedby"></a>maintainedBy|1||A list of resolvable links to Gaia-X Credentials of participants maintaining the resource in operational condition and thus having physical access to it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DatacenterShape|gx|<a id="prop-https---w3id-org-gaia-x-development-waterusageeffectiveness"></a>waterUsageEffectiveness||1|Information regarding the water usage effectiveness of the resource, including certifications and effectiveness measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|DatacenterShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|DatacenterShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DatacenterShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DatacenterShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DatacenterShape|gx|aggregationOfResources|1||References those availability zones (at least one must exist) out of which a datacenter is aggregated.||gx.shacl.ttl|
 |DevelopmentCycleSecurityShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DevelopmentCycleSecurityShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
@@ -18916,14 +18917,14 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingTermsAndConditions|1|1|the terms and conditions that apply to the provider (SLA, ...)|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceUsageDataPolicy|1|1|define how the supplier can use the data related to the customer usage of the service offering|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceUsageTermsAndConditions|1|1|the terms and conditions that apply to the consumer (payment, no-resell, ...)|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|DigitalServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DigitalServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingName|1|1|A human redable name of the service offering|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingEndDate||1|Date and time when the service instances will be stopped|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingLaunchDate|1|1|Date and time when the service offering can be instanciated (the service can be ordered before)|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingShortDescription|1|1|a short textual description (not contractual)|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DigitalServiceOfferingShape|gx|digitalServiceOfferingIdentifier|1|1|a unique UUIDIdentifier4|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|DigitalServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|DigitalServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DiskShape|gx|<a id="prop-https---w3id-org-gaia-x-development-disksize"></a>diskSize|1|1|The size of the hard drive.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DiskShape|gx|defaultOversubscriptionRatio||1|Over-subscription means assigning more capacity to virtual machines that the physical device has. Default over-subscription ratio defines the amount of default over-subscription as a value larger or equal to 1.0. 1.0 means no over-subscription.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
 |DiskShape|gx|supportedOversubscriptionRatio||1|Over-subscription means assigning more capacity to virtual machines that the physical device has. Supported over-subscription ratio defines the amount of supported over-subscription as a value larger or equal to 1.0. 1.0 means no over-subscription.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
@@ -18938,17 +18939,17 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |EORIShape|gx|<a id="prop-https---w3id-org-gaia-x-development-eori"></a>eori|1|1|The Economic Operators Registration and Identification number (EORI).|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EORIShape|gx|<a id="prop-https---w3id-org-gaia-x-development-country"></a>country||1|The country where the EORI is registered written in plain english.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EUIDShape|gx|<a id="prop-https---w3id-org-gaia-x-development-euid"></a>euid|1|1|The European Unique Identifier (EUID) for business located in the European Economic Area, Iceland, Liechtenstein or Norway and registered in the Business Registers Interconnection System (BRIS). This number can be found via the EU Business registers portal.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|EcoTSPShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcoTSPShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EcoTSPShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ecoissuescredentialsoftype"></a>ecoIssuesCredentialsOfType|1||Type(s) of credentials issued by an Ecosystem TSP and recognized for a particular TSP for a given trust scope.  This is used in the same way as the "type" information in the Verifiable Credentials Data Model 2.0 (https://www.w3.org/TR/vc-data-model-2.0/#types).|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EcoTSPShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ecotspid"></a>ecoTSPId|1|1|a DID, where it is up to the compliance engine supplied by the respective ecosystem to be able to resolve this DID properly.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|EcoTSPShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcoTSPShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EcoTSPShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ecotspendpoint"></a>ecoTSPEndPoint||||<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |EcoTrustScopeShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ecotrustserviceprovider"></a>ecoTrustServiceProvider|1|||<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|EcoTrustScopeShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|EcoTrustScopeShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcoTrustScopeShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcoTrustScopeShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EcosystemShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ecotrustscope"></a>ecoTrustScope|1|||<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|EcosystemShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|EcosystemShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcosystemShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|EcosystemShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |EmployeeResponsibilitiesShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |EmployeeResponsibilitiesShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |EmployeeResponsibilitiesShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
@@ -18973,8 +18974,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |FileStorageConfigurationShape|gx|storageEncryption|1||Available encryption features.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageConfigurationShape|gx|blockSize|||Available block size to be used.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageConfigurationShape|gx|storageQoS|||Available QoS class for storage service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|FileStorageConfigurationShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|FileStorageConfigurationShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|FileStorageConfigurationShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|FileStorageConfigurationShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageConfigurationShape|gx|storageCompression|||Available compression features.||gx.shacl.ttl|
 |FileStorageConfigurationShape|gx|storageDeduplication|||Deduplication features available for the storage service, such as inline or post-processing.||gx.shacl.ttl|
 |FileStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-filesystemtype"></a>fileSystemType|||Filesystem Type  for storage  partition. Ref:https://opensource.com/article/18/4/ext4-filesystem||gx.shacl.ttl|
@@ -19001,10 +19002,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |FileStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-accesssemantics"></a>accessSemantics||1|Does I/O conform to the POSIX standard? See https://en.wikipedia.org/wiki/POSIX.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|versioning||1|Whether versioning is available on this storage service.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|lifetimeManagement||1|Lifetime (in hours) of data (since last access), before it is moved externally, archived or deleted and will not be accessible through the storage service.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|FileStorageServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|FileStorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|FileStorageServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|FileStorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|storageConsistency||1|Consistency model provided. See https://en.wikipedia.org/wiki/Consistency_model||gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19028,8 +19029,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |GPUShape|gx|vendor||1|Vendor of the device.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |GPUShape|gx|generation||1|Vendor specific generation of the device.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |GPUShape|gx|<a id="prop-https---w3id-org-gaia-x-development-gpuinterconnection"></a>gpuInterconnection||1|Interconnection of multiple GPUs within a server system||gx.shacl.ttl|
-|GaiaXEntityShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|GaiaXEntityShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|GaiaXEntityShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|GaiaXEntityShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |GovernmentInvestigationManagementShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |GovernmentInvestigationManagementShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |GovernmentInvestigationManagementShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
@@ -19038,10 +19039,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |HypervisorShape|gx|signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |HypervisorShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |HypervisorShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|HypervisorShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|HypervisorShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |HypervisorShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |HypervisorShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|HypervisorShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|HypervisorShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |HypervisorShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |HypervisorShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |HypervisorShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -19065,10 +19066,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ImageShape|gx|licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ImageShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |ImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ImageShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ImageShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ImageShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ImageShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ImageShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |ImageShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -19098,17 +19099,17 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |InfrastructureServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|InfrastructureServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InfrastructureServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InfrastructureServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InfrastructureServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
-|InstantiationRequirementShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InstantiationRequirementShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InstantiationRequirementShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InstantiationRequirementShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionPointIdentifierShape|gx|<a id="prop-https---w3id-org-gaia-x-development-datacenterallocation"></a>datacenterAllocation||1|Details specific situation within the datacenter where the service can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionPointIdentifierShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ipaddress"></a>ipAddress||1|The IP address required for L3 connectivity setup.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionPointIdentifierShape|gx|<a id="prop-https---w3id-org-gaia-x-development-ipiprovider"></a>ipiProvider||1|The Provider of the IPI.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19134,7 +19135,7 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-vlanconfiguration"></a>vlanConfiguration||1|VLAN configuration.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-connectednetworka"></a>connectedNetworkA|||Autonomous system (AS) number (ASN) of the side A.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-connectednetworkz"></a>connectedNetworkZ|||Autonomous system (AS) number (ASN) of the side Z.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|InterconnectionServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InterconnectionServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-interfacetype"></a>interfaceType|||A type of physical interface: Copper cable, 5G...|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-prefixseta"></a>prefixSetA|||CIDR Provider Identifier of network on the side A.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-prefixsetz"></a>prefixSetZ|||CIDR Provider Identifier of network on the side Z.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19142,7 +19143,7 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |InterconnectionServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-connectiontype"></a>connectionType|||The supported types of connection, preferably specified as a controlled vocabulary entry: ethernet unicast, multicast, broadcast support...|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-servicetype"></a>serviceType||1|Type of Service Offering. Choose one of the following: virtual, bare-metal, mixed|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InterconnectionServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InterconnectionServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-publicipaddressprovisioning"></a>publicIpAddressProvisioning||1|Defines how public IP address are provided. Floating: floating ips are supported.||gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
@@ -19160,16 +19161,16 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |InternetExchangePointShape|gx|manufacturedBy|||A list of resolvable links to Gaia-X Credentials of participant manufacturing the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetExchangePointShape|gx|ownedBy|||A list of resolvable links to Gaia-X Credentials of participant owning the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetExchangePointShape|gx|waterUsageEffectiveness||1|Information regarding the water usage effectiveness of the resource, including certifications and effectiveness measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|InternetExchangePointShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InternetExchangePointShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InternetExchangePointShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InternetExchangePointShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InternetExchangePointShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |InternetServiceProviderShape|gx|<a id="prop-https---w3id-org-gaia-x-development-headquartersaddress"></a>headquartersAddress|1|1|Full physical location of the headquarter of the organization.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetServiceProviderShape|gx|<a id="prop-https---w3id-org-gaia-x-development-legaladdress"></a>legalAddress|1|1|The full legal address of the organization.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetServiceProviderShape|gx|<a id="prop-https---w3id-org-gaia-x-development-parentorganizationof"></a>parentOrganizationOf|||A list of resolvable links to Gaia-X Credentials of participants that this entity is a subOrganization of, if any.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetServiceProviderShape|gx|<a id="prop-https---w3id-org-gaia-x-development-suborganisationof"></a>subOrganisationOf|||A list of resolvable links to Gaia-X Credentials of participants with a legal mandate on this entity, e.g., as a subsidiary.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InternetServiceProviderShape|gx|<a id="prop-https---w3id-org-gaia-x-development-registrationnumber"></a>registrationNumber|1||Country's registration number, which identifies one specific entity. Valid formats are local, EUID, EORI, vatID, leiCode.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|InternetServiceProviderShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InternetServiceProviderShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InternetServiceProviderShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|InternetServiceProviderShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |IssuerShape|gx|<a id="prop-https---w3id-org-gaia-x-development-gaiaxtermsandconditions"></a>gaiaxTermsAndConditions|1|1|Gaia-X terms and conditions this issuer agreed with in order to act as an issuer of Gaia-X compliant credentials.||gx.shacl.ttl|
 |JitterShape|gx|metric|1|1|Jitter expressed as time.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |JitterShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
@@ -19189,15 +19190,15 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |LegalPersonShape|gx|parentOrganizationOf|||A list of resolvable links to Gaia-X Credentials of participants that this entity is a subOrganization of, if any.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LegalPersonShape|gx|subOrganisationOf|||A list of resolvable links to Gaia-X Credentials of participants with a legal mandate on this entity, e.g., as a subsidiary.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LegalPersonShape|gx|registrationNumber|1||Country's registration number, which identifies one specific entity. Valid formats are local, EUID, EORI, vatID, leiCode.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|LegalPersonShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|LegalPersonShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LegalPersonShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LegalPersonShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LegallyBindingActShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LegallyBindingActShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |LegallyBindingActShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
 |LegallyBindingActShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
 |LegitimateInterestShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dataprotectioncontact"></a>dataProtectionContact|1|1|A URL pointing to a contact form or an email address.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LegitimateInterestShape|gx|<a id="prop-https---w3id-org-gaia-x-development-legalbasis"></a>legalBasis|1|1|Reasons to process PII as detailed in your personal data protection regime.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|LeiCodeShape||<a id="prop-http---schema-org-leicode"></a>http://schema.org/leiCode|1|1|Unique LEI number as defined by https://www.gleif.org.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LeiCodeShape|schema|<a id="prop-https---schema-org-leicode"></a>leiCode|1|1|Unique LEI number as defined by https://www.gleif.org.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LeiCodeShape|gx|<a id="prop-https---w3id-org-gaia-x-development-subdivisioncountrycode"></a>subdivisionCountryCode||1|The country subdivision (state/region) where the LEI number is registered.||gx.shacl.ttl|
 |LeiCodeShape|gx|countryCode||1|The country where the LEI number is registered.||gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19216,10 +19217,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |LinkConnectivityServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|vlanConfiguration||1|VLAN configuration.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|LinkConnectivityServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LinkConnectivityServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|LinkConnectivityServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LinkConnectivityServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-protocoltype"></a>protocolType|1|1|Link protocol type.||gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19233,7 +19234,7 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |MaintenanceSubscriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-subscriptionrequired"></a>subscriptionRequired||1|True, if cloud service user needs a maintenance subscription account from the vendor of image's operating system in order to receive fixes. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |MaintenanceSubscriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-maintaineduntil"></a>maintainedUntil||1|Date (UTC) until vendor of image's operating system promises maintenance at least.|<http://www.w3.org/2001/XMLSchema#date>|gx.shacl.ttl|
 |MeasureShape|gx|legalDocuments|1||Legal documents associated with the measure.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|MeasureShape||http://schema.org/description|1|1|Description of the measure.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|MeasureShape|schema|description|1|1|Description of the measure.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |MemoryCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-memory"></a>memory|1|1|Amount of virtual RAM available in given flavor.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |MemoryCapabilitiesShape|gx|overProvisioningRatio||1|A Non-negative float (being equal or greater than 1) defining the amount of overprovisoning. 
 1 means no over-provisiong.
@@ -19265,11 +19266,11 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |NetworkConnectivityServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|NetworkConnectivityServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|NetworkConnectivityServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|serviceType||1|Type of Service Offering. Choose one of the following: virtual, bare-metal, mixed|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|NetworkConnectivityServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|NetworkConnectivityServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|publicIpAddressProvisioning||1|Defines how public IP address are provided. Floating: floating ips are supported.||gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
@@ -19299,10 +19300,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ObjectStorageServiceOfferingShape|gx|dataViews||1|Capability to compose logical data views and present the subset of the data as a logical data entity|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|versioning||1|Whether versioning is available on this storage service.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|lifetimeManagement||1|Lifetime (in hours) of data (since last access), before it is moved externally, archived or deleted and will not be accessible through the storage service.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|ObjectStorageServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ObjectStorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ObjectStorageServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ObjectStorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-objectapicompatibility"></a>objectAPICompatibility|||Compatibility for third party object storage  APIs. Ref:https://docs.aws.amazon.com/AmazonS3/latest/API/Type_API_Reference.html, https://docs.microsoft.com/en-us/rest/api/storageservices/blob-service-rest-api||gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|storageConsistency||1|Consistency model provided. See https://en.wikipedia.org/wiki/Consistency_model||gx.shacl.ttl|
@@ -19315,10 +19316,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |OperatingSystemShape|gx|signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |OperatingSystemShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |OperatingSystemShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|OperatingSystemShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|OperatingSystemShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|OperatingSystemShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|OperatingSystemShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |OperatingSystemShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |OperatingSystemShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -19344,10 +19345,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PXEImageShape|gx|licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |PXEImageShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |PXEImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PXEImageShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PXEImageShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PXEImageShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PXEImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-pxeimagediskformat"></a>pxeImageDiskFormat||1|Disk format. Default "ISO".||gx.shacl.ttl|
 |PXEImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |PXEImageShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
@@ -19355,8 +19356,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PXEImageShape|gx|updateStrategy||1|Details on provider's image update strategy of this image. An update strategy defines ...||gx.shacl.ttl|
 |PacketLossShape|gx|metric|1|1|Lost packets during a transaction.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PacketLossShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
-|ParticipantShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ParticipantShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ParticipantShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ParticipantShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|connectivityConfiguration|1||All possible provided connectivity parameters for this network connectivity service offering.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19372,12 +19373,12 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PhysicalConnectivityServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|PhysicalConnectivityServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalConnectivityServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|interfaceType|1|1|For the chosen circuit type, one should know the interface type in case the interoperability is required.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-circuittype"></a>circuitType|1|1|Type of access medium: wired medium access or wireless medium access.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PhysicalConnectivityServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalConnectivityServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -19392,8 +19393,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PhysicalInterconnectionPointIdentifierShape|gx|ownedBy|||A list of resolvable links to Gaia-X Credentials of participant owning the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalInterconnectionPointIdentifierShape|gx|interconnectedParticipants|1||Legal persons interconnecting their networks via this point of presence|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalInterconnectionPointIdentifierShape|gx|waterUsageEffectiveness||1|Information regarding the water usage effectiveness of the resource, including certifications and effectiveness measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|PhysicalInterconnectionPointIdentifierShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PhysicalInterconnectionPointIdentifierShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalInterconnectionPointIdentifierShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalInterconnectionPointIdentifierShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalInterconnectionPointIdentifierShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |PhysicalResourceShape|gx|location|1||A list of physical locations.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalResourceShape|gx|energyMix|||A list of information on the composition of the energy mix used by the resource, including percentages of renewable energy and carbon-free energy.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19402,8 +19403,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PhysicalResourceShape|gx|ownedBy|||A list of resolvable links to Gaia-X Credentials of participant owning the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalResourceShape|gx|maintainedBy|1||A list of resolvable links to Gaia-X Credentials of participants maintaining the resource in operational condition and thus having physical access to it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalResourceShape|gx|waterUsageEffectiveness||1|Information regarding the water usage effectiveness of the resource, including certifications and effectiveness measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|PhysicalResourceShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PhysicalResourceShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PhysicalResourceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalResourceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |PhysicalSecurityShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalSecurityShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
@@ -19418,8 +19419,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |PointOfPresenceShape|gx|ownedBy|||A list of resolvable links to Gaia-X Credentials of participant owning the resource.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PointOfPresenceShape|gx|interconnectedParticipants|1||Legal persons interconnecting their networks via this point of presence|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PointOfPresenceShape|gx|waterUsageEffectiveness||1|Information regarding the water usage effectiveness of the resource, including certifications and effectiveness measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|PointOfPresenceShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PointOfPresenceShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PointOfPresenceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|PointOfPresenceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PointOfPresenceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |ProcurementManagementSecurityShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ProcurementManagementSecurityShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
@@ -19441,8 +19442,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |QoSShape|gx|<a id="prop-https---w3id-org-gaia-x-development-targetpercentile"></a>targetPercentile||1|Contractual percentile in the SLA. Usually referred to the number of frames the SLA metrics such as availability, latency and jitter can be guaranteed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |QoSShape|gx|<a id="prop-https---w3id-org-gaia-x-development-throughput"></a>throughput||1|QoS metric for throughput|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |RegionShape|gx|address||1|The physical address associated with the region.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|RegionShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|RegionShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|RegionShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|RegionShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |RegionShape|gx|aggregationOfResources|1||References those datacenters (at least one must exist) out of which a region is aggregated.||gx.shacl.ttl|
 |ReplicationPolicyShape|gx|protectionRetention|1|1|How long captured/protected data are kept available.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ReplicationPolicyShape|gx|<a id="prop-https---w3id-org-gaia-x-development-synchronousreplication"></a>synchronousReplication||1|Whether replication is performed in synchronous mode|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
@@ -19451,8 +19452,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ReplicationPolicyShape|gx|protectionMethod||1|Method used to protect data, can be be full copy, incremental,...||gx.shacl.ttl|
 |ReplicationPolicyShape|gx|<a id="prop-https---w3id-org-gaia-x-development-georeplication"></a>geoReplication|||Scope of geo-replication, cross-region, cross-dc or simply cross-az||gx.shacl.ttl|
 |ReplicationPolicyShape|gx|<a id="prop-https---w3id-org-gaia-x-development-consistencytype"></a>consistencyType||1|Type of consistency supported||gx.shacl.ttl|
-|ResourceShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ResourceShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ResourceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ResourceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |RetentionDurationShape||http://qudt.org/schema/qudt/quantityValue|1|1|is the measurement of an observable property of a particular object, event, or physical system.|<http://www.w3.org/2001/XMLSchema#float>|gx.shacl.ttl|
 |RetentionDurationShape||http://qudt.org/schema/qudt/applicableUnit|1|1|Unit of physical quantity of the class https://qudt.org/schema/qudt/QuantityKind|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19476,9 +19477,9 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ServerFlavorShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hypervisor"></a>hypervisor||1|Hypervisor as Gaia-X software resources.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServerFlavorShape|gx|memory|1|1|A non-negative integer, which defines how many memory given flavor provides.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServerFlavorShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hardwareassistedvirtualization"></a>hardwareAssistedVirtualization||1|Hardware-assisted virtualization, a.k.a. accelerated virtualization or hardware virtualization, enables full virtualization. Full virtualization means to run an unmodified guest operation system in complete isolation by emulating a complete hardware environment.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
-|ServerFlavorShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ServerFlavorShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServerFlavorShape|gx|<a id="prop-https---w3id-org-gaia-x-development-network"></a>network||1|Network capabilities of the flavor.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServerFlavorShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ServerFlavorShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServerFlavorShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hwrngtypeofflavor"></a>hwRngTypeOfFlavor||1|Type of physical phenomena hardware random number generator (RNG) of this flavor is based on.||gx.shacl.ttl|
 |ServiceAgreementOfferShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceAgreementOfferShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
@@ -19497,10 +19498,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |ServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |ServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -19519,10 +19520,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |SoftwareResourceShape|gx|signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |SoftwareResourceShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |SoftwareResourceShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|SoftwareResourceShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|SoftwareResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |SoftwareResourceShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |SoftwareResourceShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|SoftwareResourceShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|SoftwareResourceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |SoftwareResourceShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |SoftwareResourceShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |SoftwareResourceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -19533,8 +19534,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |StorageConfigurationShape|gx|storageEncryption|1||Available encryption features.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageConfigurationShape|gx|blockSize|||Available block size to be used.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageConfigurationShape|gx|storageQoS|||Available QoS class for storage service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|StorageConfigurationShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|StorageConfigurationShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|StorageConfigurationShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|StorageConfigurationShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |StorageConfigurationShape|gx|storageCompression|||Available compression features.||gx.shacl.ttl|
 |StorageConfigurationShape|gx|storageDeduplication|||Deduplication features available for the storage service, such as inline or post-processing.||gx.shacl.ttl|
 |StorageConfigurationShape|gx|storageRedundancyMechanism|||Underlying data protection mechanism (such as RAID levels or Erasure Codes).||gx.shacl.ttl|
@@ -19558,10 +19559,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |StorageServiceOfferingShape|gx|dataViews||1|Capability to compose logical data views and present the subset of the data as a logical data entity|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|versioning||1|Whether versioning is available on this storage service.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|lifetimeManagement||1|Lifetime (in hours) of data (since last access), before it is moved externally, archived or deleted and will not be accessible through the storage service.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|StorageServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|StorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|StorageServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|StorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|storageConsistency||1|Consistency model provided. See https://en.wikipedia.org/wiki/Consistency_model||gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19578,7 +19579,7 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |SubProcessorDataTransferShape|gx|reason|1|1|Reason for which the transfer might occur.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |TargetPercentileShape|gx|metric|1|1|Percentage of frames the SLA metrics can be guaranteed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |TargetPercentileShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
-|TaxIDShape||<a id="prop-http---schema-org-taxid"></a>http://schema.org/taxID|1|1|The company tax ID.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|TaxIDShape|schema|<a id="prop-https---schema-org-taxid"></a>taxID|1|1|The company tax ID.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |TermsAndConditionsShape|gx|hash|1|1|SHA-256 hash of the document.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |TermsAndConditionsShape|gx|url|1|1|A resolvable link to the terms & conditions document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |ThirdCountryDataTransferShape|gx|<a id="prop-https---w3id-org-gaia-x-development-securingmechanism"></a>securingMechanism|1||Mechanism used to secure the data transfer.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19613,10 +19614,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |VMImageShape|gx|licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |VMImageShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |VMImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VMImageShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VMImageShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VMImageShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VMImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VMImageShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VMImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VMImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-vmimagediskformat"></a>vmImageDiskFormat||1|Disk format og the VM inage. Default "RAW"||gx.shacl.ttl|
 |VMImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hwrngtypeofimage"></a>hwRngTypeOfImage||1|Type of physical phenomena hardware random number generator (RNG) this image prefers.||gx.shacl.ttl|
 |VMImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-watchdogaction"></a>watchDogAction||1|Define the action to be performed if server hangs.||gx.shacl.ttl|
@@ -19631,8 +19632,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |VirtualInterconnectionPointIdentifierShape|gx|interconnectionPointIdentifier|1|1|Definition of the location where resources can interconnect.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|interconnectedParticipants|1||Legal persons participating within a concept.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VirtualInterconnectionPointIdentifierShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VirtualInterconnectionPointIdentifierShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualInterconnectionPointIdentifierShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualInterconnectionPointIdentifierShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
@@ -19651,10 +19652,10 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |VirtualMachineServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|codeArtifact|1||Compute Service Code Artifacts.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|VirtualMachineServiceOfferingShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualMachineServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VirtualMachineServiceOfferingShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualMachineServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19662,8 +19663,8 @@ _Class diagram omitted for size (9031 classes). See class hierarchy and definiti
 |VirtualMachineServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |VirtualResourceShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VirtualResourceShape||http://schema.org/name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|VirtualResourceShape||http://schema.org/description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualResourceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualResourceShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VirtualResourceShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |VirtualResourceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|

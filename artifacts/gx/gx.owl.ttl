@@ -6,6 +6,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -87,43 +88,6 @@ gx:AssetsManagement a owl:Class ;
     skos:definition "Legal document describing the management of assets related to security." ;
     skos:inScheme gx:legal-document .
 
-gx:BackupPolicy a owl:Class ;
-    rdfs:label "BackupPolicy" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:backupLocation ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ReplicationPolicy ;
-            owl:onProperty gx:backupReplication ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Resource ;
-            owl:onProperty gx:backupLocation ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:backupReplication ],
-        gx:DataProtectionPolicy ;
-    skos:definition "Describe data protection features based on Backup for storage services" ;
-    skos:inScheme gx:data-protection-policy .
-
-gx:BareMetalServiceOffering a owl:Class ;
-    rdfs:label "BareMetalServiceOffering" ;
-    dcterms:title "Bare Metal Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:codeArtifact ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:instantiationReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:PXEImage ;
-            owl:onProperty gx:codeArtifact ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ServerFlavor ;
-            owl:onProperty gx:instantiationReq ],
-        gx:ComputeServiceOffering ;
-    skos:definition "A digital service available for order and offering bare metal computational capabilities." ;
-    skos:inScheme gx:service-offering .
-
 gx:BlockStorageServiceOffering a owl:Class ;
     rdfs:label "BlockStorageServiceOffering" ;
     dcterms:title "Block Storage Service Offering" ;
@@ -158,142 +122,11 @@ gx:ComplianceAssurance a owl:Class ;
     skos:definition "Legal document describing the assurance of compliance with security standards." ;
     skos:inScheme gx:legal-document .
 
-gx:ComputeFunctionServiceOffering a owl:Class ;
-    rdfs:label "ComputeFunctionServiceOffering" ;
-    dcterms:title "Compute Function Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:computeFunctionConfiguration ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionAllowAutoScaling ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionAllowFSMount ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionAllowQuota ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionAllowTimeout ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionAllowVersioning ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionDebugTools ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:computeFunctionEditor ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionConfiguration ;
-            owl:onProperty gx:computeFunctionConfiguration ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionAllowAutoScaling ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionAllowFSMount ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionAllowQuota ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionAllowTimeout ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionAllowVersioning ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionConfiguration ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionDebugTools ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionEditor ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionAllowAutoScaling ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionAllowFSMount ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionAllowQuota ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionAllowTimeout ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionAllowVersioning ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionDebugTools ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionEditor ],
-        gx:ComputeServiceOffering ;
-    skos:definition "A digital service available for order and providing compute functions capabilities." ;
-    skos:inScheme gx:compute-function-service-offering .
-
-gx:ContainerServiceOffering a owl:Class ;
-    rdfs:label "ContainerServiceOffering" ;
-    dcterms:title "Container Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:codeArtifact ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:instantiationReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ContainerImage ;
-            owl:onProperty gx:codeArtifact ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ContainerResourceLimits ;
-            owl:onProperty gx:instantiationReq ],
-        gx:ComputeServiceOffering ;
-    skos:definition "A digital service available for order and providing containers." ;
-    skos:inScheme gx:service-offering .
-
 gx:CopyrightAndIntellectualPropertyDocument a owl:Class ;
     rdfs:label "CopyrightAndIntellectualPropertyDocument" ;
     rdfs:subClassOf gx:LegalDocument ;
     skos:definition "Legal document describing the provisions governing aspects regarding copyright or any other intellectual property rights." ;
     skos:inScheme gx:legal-document .
-
-gx:CountryCompanyNumber a owl:Class ;
-    rdfs:label "CountryCompanyNumber" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:countryCompanyNumber ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:companyNumberQualifier ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:countryCompanyNumber ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CountryNameAlpha2 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:companyNumberQualifier ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:countryCompanyNumber ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:companyNumberQualifier ],
-        gx:RegistrationNumber ;
-    skos:definition "defines an arbitrary country-specific company number based on (i) an (arbitrary) country-specific numbering scheme identifier and (ii) the corresponding (arbitrary) unique identifier" ;
-    skos:inScheme gx:legal-person .
 
 gx:CustomerAuditingRights a owl:Class ;
     rdfs:label "CustomerAuditingRights" ;
@@ -336,33 +169,6 @@ gx:DocumentChangeProcedures a owl:Class ;
     rdfs:subClassOf gx:LegalDocument ;
     skos:definition "Legal document describing the provisions governing changes, regardless of their kind." ;
     skos:inScheme gx:legal-document .
-
-gx:EUID a owl:Class ;
-    rdfs:label "EUID" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:euid ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:euid ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:euid ],
-        gx:RegistrationNumber ;
-    skos:inScheme gx:legal-person .
-
-gx:Ecosystem a owl:Class ;
-    rdfs:label "Ecosystem" ;
-    dcterms:title "Ecosystem" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:ecoTrustScope ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:EcoTrustScope ;
-            owl:onProperty gx:ecoTrustScope ],
-        gx:GaiaXEntity ;
-    skos:definition "Description of an ecosystem including a (formal) representation of its trust profile.  The (subject) identifier of an RDF resource of this type is understood to be the ecosystem's ID so should be chosen with care." ;
-    skos:inScheme gx:meta-registry .
 
 gx:EmployeeResponsibilities a owl:Class ;
     rdfs:label "EmployeeResponsibilities" ;
@@ -441,6 +247,15 @@ gx:InterconnectionServiceOffering a owl:Class ;
     dcterms:title "Interconnection Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
+            owl:onProperty gx:connectedNetworkA ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:connectedNetworkZ ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:connectionType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty gx:interfaceType ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
@@ -481,15 +296,6 @@ gx:InterconnectionServiceOffering a owl:Class ;
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty gx:vlanConfiguration ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:connectedNetworkA ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:connectedNetworkZ ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:connectionType ],
         gx:NetworkConnectivityServiceOffering ;
     skos:definition "TBD" ;
     skos:inScheme gx:interconnection-service-offering .
@@ -596,77 +402,6 @@ gx:LegitimateInterest a owl:Class ;
     skos:definition "A legitimate interest entity describing reasons for processing personal identifiable information (PII)." ;
     skos:inScheme gx:legitimate-interest .
 
-gx:LeiCode a owl:Class ;
-    rdfs:label "LeiCode" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:subdivisionCountryCode ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty <http://schema.org/leiCode> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty <http://schema.org/leiCode> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CountryNameAlpha2 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:RegionCode ;
-            owl:onProperty gx:subdivisionCountryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty <http://schema.org/leiCode> ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:subdivisionCountryCode ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:countryCode ],
-        gx:RegistrationNumber ;
-    skos:inScheme gx:legal-person .
-
-gx:LinkConnectivityServiceOffering a owl:Class ;
-    rdfs:label "LinkConnectivityServiceOffering" ;
-    dcterms:title "Link Connectivity Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:vlanConfiguration ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:protocolType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ProtocolType ;
-            owl:onProperty gx:protocolType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:VLANConfiguration ;
-            owl:onProperty gx:vlanConfiguration ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:protocolType ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:vlanConfiguration ],
-        gx:ConnectivityServiceOffering ;
-    skos:definition "TBD" ;
-    skos:inScheme gx:link-connectivity-service-offering .
-
-gx:LocalRegistrationNumber a owl:Class ;
-    rdfs:label "LocalRegistrationNumber" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:local ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:local ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:local ],
-        gx:RegistrationNumber ;
-    skos:inScheme gx:legal-person .
-
 gx:ObjectStorageServiceOffering a owl:Class ;
     rdfs:label "ObjectStorageServiceOffering" ;
     dcterms:title "Object Storage Service Offering" ;
@@ -701,31 +436,6 @@ gx:OperationalSecurity a owl:Class ;
     skos:definition "Legal document describing the operational security practices within the organization." ;
     skos:inScheme gx:legal-document .
 
-gx:PhysicalConnectivityServiceOffering a owl:Class ;
-    rdfs:label "PhysicalConnectivityServiceOffering" ;
-    dcterms:title "Physical Connectivity Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:circuitType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:interfaceType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:circuitType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:interfaceType ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:circuitType ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:interfaceType ],
-        gx:ConnectivityServiceOffering ;
-    skos:definition "TBD" ;
-    skos:inScheme gx:physical-connectivity-service-offering .
-
 gx:PhysicalSecurity a owl:Class ;
     rdfs:label "PhysicalSecurity" ;
     rdfs:subClassOf gx:LegalDocument ;
@@ -744,28 +454,6 @@ gx:ProductSecurity a owl:Class ;
     skos:definition "Legal document describing the security practices related to product development and maintenance." ;
     skos:inScheme gx:legal-document .
 
-gx:Region a owl:Class ;
-    rdfs:label "Region" ;
-    dcterms:title "Region" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:aggregationOfResources ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Address ;
-            owl:onProperty gx:address ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Datacenter ;
-            owl:onProperty gx:aggregationOfResources ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:address ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:address ],
-        gx:Resource ;
-    skos:definition "A region is an aggregation of datacenters." ;
-    skos:inScheme gx:region .
-
 gx:RoleAndResponsibilities a owl:Class ;
     rdfs:label "RoleAndResponsibilities" ;
     rdfs:subClassOf gx:LegalDocument ;
@@ -783,18 +471,6 @@ gx:ServiceAgreementOffer a owl:Class ;
     rdfs:subClassOf gx:LegalDocument ;
     skos:definition "Legal document describing the ability to establish a contract per a set of governing law countries." ;
     skos:inScheme gx:legal-document .
-
-gx:SnapshotPolicy a owl:Class ;
-    rdfs:label "SnapshotPolicy" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:snapshotReplication ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ReplicationPolicy ;
-            owl:onProperty gx:snapshotReplication ],
-        gx:DataProtectionPolicy ;
-    skos:definition "Describe data protection features based on Snapshot for storage services" ;
-    skos:inScheme gx:data-protection-policy .
 
 gx:SubProcessorDataTransfer a owl:Class ;
     rdfs:label "SubProcessorDataTransfer" ;
@@ -819,21 +495,6 @@ gx:SubProcessorDataTransfer a owl:Class ;
         gx:DataTransfer ;
     skos:definition "Specifies data transfer to a sub-processor with associated management details." ;
     skos:inScheme gx:sub-processor-data-transfer .
-
-gx:TaxID a owl:Class ;
-    rdfs:label "TaxID" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty <http://schema.org/taxID> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty <http://schema.org/taxID> ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty <http://schema.org/taxID> ],
-        gx:RegistrationNumber ;
-    skos:definition "Company tax ID used to identify it through the OpenCorporate service." ;
-    skos:inScheme gx:legal-person .
 
 gx:ThirdCountryDataTransfer a owl:Class ;
     rdfs:label "ThirdCountryDataTransfer" ;
@@ -861,48 +522,6 @@ gx:UserDocumentationMaintenance a owl:Class ;
     rdfs:subClassOf gx:LegalDocument ;
     skos:definition "Legal document describing the maintenance of user documentation related to security." ;
     skos:inScheme gx:legal-document .
-
-gx:VatID a owl:Class ;
-    rdfs:label "VatID" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:vatID ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:vatID ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CountryNameAlpha2 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:countryCode ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:vatID ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:countryCode ],
-        gx:RegistrationNumber ;
-    skos:inScheme gx:legal-person .
-
-gx:VirtualMachineServiceOffering a owl:Class ;
-    rdfs:label "VirtualMachineServiceOffering" ;
-    dcterms:title "Virtual Machine Service Offering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:codeArtifact ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:instantiationReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ServerFlavor ;
-            owl:onProperty gx:instantiationReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:VMImage ;
-            owl:onProperty gx:codeArtifact ],
-        gx:ComputeServiceOffering ;
-    skos:definition "A digital service available for order and offering computational capabilities." ;
-    skos:inScheme gx:service-offering .
 
 gx:consent a owl:DatatypeProperty ;
     rdfs:label "consent" ;
@@ -1073,26 +692,50 @@ gx:termsAndConditions a owl:DatatypeProperty ;
     skos:definition "A resolvable link to the Terms and Conditions applying to that service." ;
     skos:inScheme gx:slots .
 
-gx:AvailabilityZone a owl:Class ;
-    rdfs:label "AvailabilityZone" ;
-    dcterms:title "Availability Zone" ;
+gx:BackupPolicy a owl:Class ;
+    rdfs:label "BackupPolicy" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom gx:Address ;
-            owl:onProperty gx:address ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:backupLocation ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:address ],
+            owl:allValuesFrom gx:ReplicationPolicy ;
+            owl:onProperty gx:backupReplication ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Resource ;
+            owl:onProperty gx:backupLocation ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:address ],
-        gx:Resource ;
-    skos:definition "An availability zone is an aggregation of resources - physical and abstract - in a non-redundant setup often associated with a single datacenter room" ;
-    skos:inScheme gx:availability-zone .
+            owl:onProperty gx:backupReplication ],
+        gx:DataProtectionPolicy ;
+    skos:definition "Describe data protection features based on Backup for storage services" ;
+    skos:inScheme gx:data-protection-policy .
+
+gx:BareMetalServiceOffering a owl:Class ;
+    rdfs:label "BareMetalServiceOffering" ;
+    dcterms:title "Bare Metal Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:codeArtifact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:instantiationReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:PXEImage ;
+            owl:onProperty gx:codeArtifact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ServerFlavor ;
+            owl:onProperty gx:instantiationReq ],
+        gx:ComputeServiceOffering ;
+    skos:definition "A digital service available for order and offering bare metal computational capabilities." ;
+    skos:inScheme gx:service-offering .
 
 gx:BlockStorageConfiguration a owl:Class ;
     rdfs:label "BlockStorageConfiguration" ;
     dcterms:title "Block Storage Configuration" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:blockStorageTechnology ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:lowLevelBlockAccessProtocol ],
         [ a owl:Restriction ;
@@ -1101,120 +744,153 @@ gx:BlockStorageConfiguration a owl:Class ;
         [ a owl:Restriction ;
             owl:allValuesFrom gx:BlockStorageTechnology ;
             owl:onProperty gx:blockStorageTechnology ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:blockStorageTechnology ],
         gx:StorageConfiguration ;
     skos:definition "Represents the attributes that are configurable at service instantiation for storage service offerings." ;
     skos:inScheme gx:storage-configuration .
 
-gx:ContainerImage a owl:Class ;
-    rdfs:label "ContainerImage" ;
-    dcterms:title "Container Image" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:baseContainerImage ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:containerFormat ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:BaseContainerImage ;
-            owl:onProperty gx:baseContainerImage ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ContainerFormat ;
-            owl:onProperty gx:containerFormat ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:baseContainerImage ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:containerFormat ],
-        gx:Image ;
-    skos:definition "Image available for containers." ;
-    skos:inScheme gx:container-image .
-
-gx:ContainerResourceLimits a owl:Class ;
-    rdfs:label "ContainerResourceLimits" ;
-    dcterms:title "Container Resource Limits" ;
+gx:ComputeFunctionServiceOffering a owl:Class ;
+    rdfs:label "ComputeFunctionServiceOffering" ;
+    dcterms:title "Compute Function Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:gpuLimit ],
+            owl:onProperty gx:computeFunctionAllowAutoScaling ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:gpuRequirements ],
+            owl:onProperty gx:computeFunctionAllowFSMount ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:memoryLimit ],
+            owl:onProperty gx:computeFunctionAllowQuota ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:memoryRequirements ],
+            owl:onProperty gx:computeFunctionAllowTimeout ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:numberOfCoresLimit ],
+            owl:onProperty gx:computeFunctionAllowVersioning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionDebugTools ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionEditor ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:confidential ],
+            owl:onProperty gx:computeFunctionConfiguration ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:confidential ],
+            owl:onProperty gx:computeFunctionAllowAutoScaling ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty gx:gpuLimit ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionAllowFSMount ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty gx:numberOfCoresLimit ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionAllowQuota ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:CPU ;
-            owl:onProperty gx:cpuRequirements ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionAllowTimeout ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConfidentialComputing ;
-            owl:onProperty gx:confidentialComputingTechnology ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionAllowVersioning ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:GPU ;
-            owl:onProperty gx:gpuRequirements ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionDebugTools ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:memoryLimit ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:computeFunctionEditor ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:Memory ;
-            owl:onProperty gx:memoryRequirements ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:confidentialComputingTechnology ],
+            owl:allValuesFrom gx:ComputeFunctionConfiguration ;
+            owl:onProperty gx:computeFunctionConfiguration ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:confidential ],
+            owl:onProperty gx:computeFunctionAllowAutoScaling ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:cpuRequirements ],
+            owl:onProperty gx:computeFunctionAllowFSMount ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:gpuLimit ],
+            owl:onProperty gx:computeFunctionAllowQuota ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:gpuRequirements ],
+            owl:onProperty gx:computeFunctionAllowTimeout ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:memoryLimit ],
+            owl:onProperty gx:computeFunctionAllowVersioning ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:memoryRequirements ],
+            owl:onProperty gx:computeFunctionConfiguration ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:numberOfCoresLimit ],
+            owl:onProperty gx:computeFunctionDebugTools ],
         [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:computeFunctionEditor ],
+        gx:ComputeServiceOffering ;
+    skos:definition "A digital service available for order and providing compute functions capabilities." ;
+    skos:inScheme gx:compute-function-service-offering .
+
+gx:ContainerServiceOffering a owl:Class ;
+    rdfs:label "ContainerServiceOffering" ;
+    dcterms:title "Container Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:codeArtifact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:instantiationReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ContainerImage ;
+            owl:onProperty gx:codeArtifact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ContainerResourceLimits ;
+            owl:onProperty gx:instantiationReq ],
+        gx:ComputeServiceOffering ;
+    skos:definition "A digital service available for order and providing containers." ;
+    skos:inScheme gx:service-offering .
+
+gx:CountryCompanyNumber a owl:Class ;
+    rdfs:label "CountryCompanyNumber" ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:confidentialComputingTechnology ],
+            owl:onProperty gx:companyNumberQualifier ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:cpuRequirements ],
-        gx:InstantiationRequirement ;
-    skos:definition "InstantiationRequirements for containers (available resources and associated limits)." ;
-    skos:inScheme gx:container-resource-limits .
+            owl:minCardinality 1 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:countryCompanyNumber ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:companyNumberQualifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:countryCompanyNumber ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CountryNameAlpha2 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:companyNumberQualifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:countryCompanyNumber ],
+        gx:RegistrationNumber ;
+    skos:definition "defines an arbitrary country-specific company number based on (i) an (arbitrary) country-specific numbering scheme identifier and (ii) the corresponding (arbitrary) unique identifier" ;
+    skos:inScheme gx:legal-person .
 
 gx:DataUsageAgreement a owl:Class ;
     rdfs:label "DataUsageAgreement" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataAccessPrerequisites ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataUsageConstraints ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataUsagePurpose ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:dataConsumer ],
         [ a owl:Restriction ;
@@ -1279,150 +955,36 @@ gx:DataUsageAgreement a owl:Class ;
             owl:onProperty gx:dataUsagePurpose ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty odrl:profile ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataAccessPrerequisites ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataUsageConstraints ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataUsagePurpose ] ;
+            owl:onProperty odrl:profile ] ;
     skos:definition "a formal agreement between a Data Right Holder and a Data Consumer" ;
     skos:inScheme gx:data-product .
 
-gx:DigitalServiceOffering a owl:Class ;
-    rdfs:label "DigitalServiceOffering" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:digitalServiceOfferingContactInformation ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:digitalServiceOfferingEndDate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:keyword ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceLegalDocuments ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingIdentifier ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingName ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingProvider ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingShortDescription ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceUsageDataPolicy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:digitalServiceOfferingEndDate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:digitalServiceOfferingIdentifier ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:digitalServiceOfferingName ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:digitalServiceOfferingShortDescription ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:keyword ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ContactInformation ;
-            owl:onProperty gx:digitalServiceOfferingContactInformation ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalDocument ;
-            owl:onProperty gx:digitalServiceLegalDocuments ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:digitalServiceOfferingProvider ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ServiceTermsAndConditions ;
-            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:TermsAndConditions ;
-            owl:onProperty gx:digitalServiceUsageDataPolicy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:UsageTermsAndConditions ;
-            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingContactInformation ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingEndDate ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingIdentifier ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingName ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingProvider ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingShortDescription ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceUsageDataPolicy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
-        gx:GaiaXEntity ;
-    skos:definition "the virtual base class for any kind of digital service (for inheritance not for instanciation)" ;
-    skos:inScheme gx:digital-service-offering .
-
-gx:EORI a owl:Class ;
-    rdfs:label "EORI" ;
+gx:EUID a owl:Class ;
+    rdfs:label "EUID" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:eori ],
+            owl:onProperty gx:euid ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:country ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:eori ],
+            owl:onProperty gx:euid ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:country ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:eori ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:country ],
+            owl:onProperty gx:euid ],
         gx:RegistrationNumber ;
-    owl:equivalentClass gx:EORI ;
     skos:inScheme gx:legal-person .
+
+gx:Ecosystem a owl:Class ;
+    rdfs:label "Ecosystem" ;
+    dcterms:title "Ecosystem" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:ecoTrustScope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:EcoTrustScope ;
+            owl:onProperty gx:ecoTrustScope ],
+        gx:GaiaXEntity ;
+    skos:definition "Description of an ecosystem including a (formal) representation of its trust profile.  The (subject) identifier of an RDF resource of this type is understood to be the ecosystem's ID so should be chosen with care." ;
+    skos:inScheme gx:meta-registry .
 
 gx:FileStorageConfiguration a owl:Class ;
     rdfs:label "FileStorageConfiguration" ;
@@ -1442,6 +1004,77 @@ gx:FileStorageConfiguration a owl:Class ;
         gx:StorageConfiguration ;
     skos:definition "Represents the attributes that are configurable at service instantiation for storage service offerings." ;
     skos:inScheme gx:storage-configuration .
+
+gx:LeiCode a owl:Class ;
+    rdfs:label "LeiCode" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:subdivisionCountryCode ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty schema:leiCode ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty schema:leiCode ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CountryNameAlpha2 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:RegionCode ;
+            owl:onProperty gx:subdivisionCountryCode ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty schema:leiCode ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:subdivisionCountryCode ],
+        gx:RegistrationNumber ;
+    skos:inScheme gx:legal-person .
+
+gx:LinkConnectivityServiceOffering a owl:Class ;
+    rdfs:label "LinkConnectivityServiceOffering" ;
+    dcterms:title "Link Connectivity Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:vlanConfiguration ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:protocolType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ProtocolType ;
+            owl:onProperty gx:protocolType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:VLANConfiguration ;
+            owl:onProperty gx:vlanConfiguration ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:protocolType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:vlanConfiguration ],
+        gx:ConnectivityServiceOffering ;
+    skos:definition "TBD" ;
+    skos:inScheme gx:link-connectivity-service-offering .
+
+gx:LocalRegistrationNumber a owl:Class ;
+    rdfs:label "LocalRegistrationNumber" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:local ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:local ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:local ],
+        gx:RegistrationNumber ;
+    skos:inScheme gx:legal-person .
 
 gx:MemoryCapabilities a owl:Class ;
     rdfs:label "MemoryCapabilities" ;
@@ -1470,64 +1103,30 @@ gx:MemoryCapabilities a owl:Class ;
             owl:onProperty gx:overProvisioningRatio ] ;
     skos:inScheme gx:server-flavor .
 
-gx:NetworkConnectivityServiceOffering a owl:Class ;
-    rdfs:label "NetworkConnectivityServiceOffering" ;
-    dcterms:title "Network Connectivity Service Offering" ;
+gx:PhysicalConnectivityServiceOffering a owl:Class ;
+    rdfs:label "PhysicalConnectivityServiceOffering" ;
+    dcterms:title "Physical Connectivity Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:ipVersion ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:circuitType ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:publicIpAddressProvisioning ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:serviceType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:interfaceType ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:serviceType ],
+            owl:onProperty gx:circuitType ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:IpVersionTypes ;
-            owl:onProperty gx:ipVersion ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:PublicIpAddressProvisioningTypes ;
-            owl:onProperty gx:publicIpAddressProvisioning ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:TenantSeparation ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:interfaceType ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:ipVersion ],
+            owl:onProperty gx:circuitType ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:publicIpAddressProvisioning ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:serviceType ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:onProperty gx:interfaceType ],
         gx:ConnectivityServiceOffering ;
     skos:definition "TBD" ;
-    skos:inScheme gx:network-connectivity-service-offering .
-
-gx:PXEImage a owl:Class ;
-    rdfs:label "PXE_Image" ;
-    dcterms:title "PXE image" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:pxeImageDiskFormat ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:PXEDiskType ;
-            owl:onProperty gx:pxeImageDiskFormat ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:pxeImageDiskFormat ],
-        gx:Image ;
-    skos:definition "PXE image for physical machines." ;
-    skos:inScheme gx:pxe-image .
+    skos:inScheme gx:physical-connectivity-service-offering .
 
 gx:PointOfPresence a owl:Class ;
     rdfs:label "PointOfPresence" ;
@@ -1557,65 +1156,98 @@ gx:PointOfPresence a owl:Class ;
     skos:definition "Point of connection between separate communicating entities" ;
     skos:inScheme gx:connectivity-configuration .
 
-gx:VMImage a owl:Class ;
-    rdfs:label "VMImage" ;
-    dcterms:title "VM image" ;
+gx:Region a owl:Class ;
+    rdfs:label "Region" ;
+    dcterms:title "Region" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:aggregationOfResources ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Address ;
+            owl:onProperty gx:address ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Datacenter ;
+            owl:onProperty gx:aggregationOfResources ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:address ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:address ],
+        gx:Resource ;
+    skos:definition "A region is an aggregation of datacenters." ;
+    skos:inScheme gx:region .
+
+gx:SnapshotPolicy a owl:Class ;
+    rdfs:label "SnapshotPolicy" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:firmwareType ],
+            owl:onProperty gx:snapshotReplication ],
         [ a owl:Restriction ;
+            owl:allValuesFrom gx:ReplicationPolicy ;
+            owl:onProperty gx:snapshotReplication ],
+        gx:DataProtectionPolicy ;
+    skos:definition "Describe data protection features based on Snapshot for storage services" ;
+    skos:inScheme gx:data-protection-policy .
+
+gx:TaxID a owl:Class ;
+    rdfs:label "TaxID" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty schema:taxID ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty schema:taxID ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty schema:taxID ],
+        gx:RegistrationNumber ;
+    skos:definition "Company tax ID used to identify it through the OpenCorporate service." ;
+    skos:inScheme gx:legal-person .
+
+gx:VatID a owl:Class ;
+    rdfs:label "VatID" ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:hwRngTypeOfImage ],
+            owl:onProperty gx:countryCode ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:hypervisorType ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:vatID ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:vmImageDiskFormat ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:vatID ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:watchDogAction ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:FirmType ;
-            owl:onProperty gx:firmwareType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:HypervisorType ;
-            owl:onProperty gx:hypervisorType ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:RNGTypes ;
-            owl:onProperty gx:hwRngTypeOfImage ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:VMDiskType ;
-            owl:onProperty gx:vmImageDiskFormat ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:WatchDogActions ;
-            owl:onProperty gx:watchDogAction ],
+            owl:allValuesFrom gx:CountryNameAlpha2 ;
+            owl:onProperty gx:countryCode ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:firmwareType ],
+            owl:onProperty gx:countryCode ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:hwRngTypeOfImage ],
+            owl:onProperty gx:vatID ],
+        gx:RegistrationNumber ;
+    skos:inScheme gx:legal-person .
+
+gx:VirtualMachineServiceOffering a owl:Class ;
+    rdfs:label "VirtualMachineServiceOffering" ;
+    dcterms:title "Virtual Machine Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:codeArtifact ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:hypervisorType ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:instantiationReq ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:vmImageDiskFormat ],
+            owl:allValuesFrom gx:ServerFlavor ;
+            owl:onProperty gx:instantiationReq ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:watchDogAction ],
-        gx:Image ;
-    skos:definition "Image for virtual machines." ;
-    skos:inScheme gx:vm-image .
+            owl:allValuesFrom gx:VMImage ;
+            owl:onProperty gx:codeArtifact ],
+        gx:ComputeServiceOffering ;
+    skos:definition "A digital service available for order and offering computational capabilities." ;
+    skos:inScheme gx:service-offering .
 
 <http://qudt.org/schema/qudt/floatPercentage> a rdfs:Datatype .
-
-<http://qudt.org/vocab/quantitykind/Power> a owl:Class ;
-    rdfs:label "Power" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    owl:equivalentClass gx:Power ;
-    skos:inScheme gx:quantity .
 
 dcat:Dataset a owl:DatatypeProperty ;
     rdfs:label "dataSets" ;
@@ -1719,6 +1351,22 @@ gx:Availability a owl:Class ;
     skos:definition "Contractual availability of connection defined in the SLA agreement. Availability is measured in the pseudo-unit \"percent\"." ;
     skos:inScheme gx:qos .
 
+gx:AvailabilityZone a owl:Class ;
+    rdfs:label "AvailabilityZone" ;
+    dcterms:title "Availability Zone" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom gx:Address ;
+            owl:onProperty gx:address ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:address ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:address ],
+        gx:Resource ;
+    skos:definition "An availability zone is an aggregation of resources - physical and abstract - in a non-redundant setup often associated with a single datacenter room" ;
+    skos:inScheme gx:availability-zone .
+
 gx:BandWidth a owl:Class ;
     rdfs:label "BandWidth" ;
     dcterms:title "Bandwidth" ;
@@ -1739,6 +1387,9 @@ gx:BaseContainerImage a owl:Class ;
     rdfs:label "BaseContainerImage" ;
     dcterms:title "Base Container Image" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:containerImageTag ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:containerImageLink ],
         [ a owl:Restriction ;
@@ -1749,10 +1400,7 @@ gx:BaseContainerImage a owl:Class ;
             owl:onProperty gx:containerImageTag ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:containerImageLink ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:containerImageTag ] ;
+            owl:onProperty gx:containerImageLink ] ;
     skos:definition "A set of tags for an image and a repository link" ;
     skos:inScheme gx:container-image .
 
@@ -1882,7 +1530,8 @@ gx:CheckSum a owl:Class ;
 gx:CodeArtifact a owl:Class ;
     rdfs:label "CodeArtifact" ;
     dcterms:title "Code Artifact" ;
-    rdfs:subClassOf gx:SoftwareResource ;
+    rdfs:subClassOf [ owl:unionOf ( gx:ComputeFunctionTemplate gx:Image ) ],
+        gx:SoftwareResource ;
     skos:definition "A piece of software that can be executed by a Compute service. It is a subclass of SoftwareResource." ;
     skos:inScheme gx:code-resource .
 
@@ -1949,58 +1598,6 @@ gx:CompliantCredential a owl:Class ;
     rdfs:label "PPM" ;
     rdfs:subClassOf gx:CompressionAlgorithm ;
     skos:definition "Prediction by partial matching algorithm, cf https://en.wikipedia.org/wiki/Prediction_by_partial_matching" .
-
-gx:ComputeFunctionConfiguration a owl:Class ;
-    rdfs:label "ComputeFunctionConfiguration" ;
-    dcterms:title "Compute Function Configuration" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:computeFunctionRuntime ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionDeploymentMethod ;
-            owl:onProperty gx:computeFunctionDeploymentMethod ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionQuotas ;
-            owl:onProperty gx:computeFunctionQuotas ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionRuntime ;
-            owl:onProperty gx:computeFunctionRuntime ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionRuntime ;
-            owl:onProperty gx:computeFunctionSDK ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionTemplate ;
-            owl:onProperty gx:computeFunctionLibrary ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionTrigger ;
-            owl:onProperty gx:computeFunctionTrigger ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConfidentialComputing ;
-            owl:onProperty gx:confidentialComputingTechnology ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:confidentialComputingTechnology ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionDeploymentMethod ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionLibrary ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionQuotas ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionSDK ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:computeFunctionTrigger ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:confidentialComputingTechnology ],
-        gx:InstantiationRequirement ;
-    skos:definition "InstantiationRequirements for compute functions." ;
-    skos:inScheme gx:compute-function-configuration .
 
 <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/gitLab> a owl:Class ;
     rdfs:label "gitLab" ;
@@ -2130,37 +1727,6 @@ gx:ComputeFunctionQuotas a owl:Class ;
     skos:definition "Attributes describing quotas for compute functions" ;
     skos:inScheme gx:compute-function-configuration .
 
-gx:ComputeFunctionTemplate a owl:Class ;
-    rdfs:label "ComputeFunctionTemplate" ;
-    dcterms:title "Compute Function Template" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:computeFunctionDescription ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:computeFunctionName ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:computeFunctionTemplateRuntime ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:computeFunctionDescription ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:computeFunctionName ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ComputeFunctionRuntime ;
-            owl:onProperty gx:computeFunctionTemplateRuntime ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionDescription ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:computeFunctionName ],
-        gx:CodeArtifact ;
-    skos:definition "Class for describing a template of compute function" ;
-    skos:inScheme gx:compute-function-configuration .
-
 gx:ComputeFunctionTrigger a owl:Class ;
     rdfs:label "ComputeFunctionTrigger" ;
     dcterms:title "Compute Function Trigger" ;
@@ -2181,33 +1747,6 @@ gx:ComputeFunctionTrigger a owl:Class ;
             owl:onProperty gx:triggeringService ] ;
     skos:definition "Attributes describing Compute Function Trigger" ;
     skos:inScheme gx:compute-function-configuration .
-
-gx:ConnectivityConfiguration a owl:Class ;
-    rdfs:label "ConnectivityConfiguration" ;
-    dcterms:title "Connectivity Configuration" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:destinationIdentifierZ ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:sourceIdentifierA ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalInterconnectionPointIdentifier gx:VirtualInterconnectionPointIdentifier ) ] xsd:string ) ] ;
-            owl:onProperty gx:destinationIdentifierZ ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalInterconnectionPointIdentifier gx:VirtualInterconnectionPointIdentifier ) ] xsd:string ) ] ;
-            owl:onProperty gx:sourceIdentifierA ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:destinationIdentifierZ ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:sourceIdentifierA ],
-        gx:InstantiationRequirement ;
-    skos:definition "The connectivityConfiguration class encapsulates the configurable attributes of a ConnectivityServiceOffering." ;
-    skos:inScheme gx:connectivity-configuration .
 
 <https://w3id.org/gaia-x/development#ConsistencyType/Bounded-Staleness> a owl:Class ;
     rdfs:label "Bounded-Staleness" ;
@@ -2258,6 +1797,110 @@ gx:ConnectivityConfiguration a owl:Class ;
     rdfs:label "oci" ;
     rdfs:subClassOf gx:ContainerFormat ;
     skos:definition "Container is packaged with OCI format." .
+
+gx:ContainerImage a owl:Class ;
+    rdfs:label "ContainerImage" ;
+    dcterms:title "Container Image" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:baseContainerImage ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:containerFormat ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:BaseContainerImage ;
+            owl:onProperty gx:baseContainerImage ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ContainerFormat ;
+            owl:onProperty gx:containerFormat ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:baseContainerImage ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:containerFormat ],
+        gx:Image ;
+    skos:definition "Image available for containers." ;
+    skos:inScheme gx:container-image .
+
+gx:ContainerResourceLimits a owl:Class ;
+    rdfs:label "ContainerResourceLimits" ;
+    dcterms:title "Container Resource Limits" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:cpuRequirements ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:gpuLimit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:gpuRequirements ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:memoryLimit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:memoryRequirements ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:numberOfCoresLimit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:confidential ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:confidential ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty gx:gpuLimit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty gx:numberOfCoresLimit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CPU ;
+            owl:onProperty gx:cpuRequirements ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ConfidentialComputing ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:GPU ;
+            owl:onProperty gx:gpuRequirements ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:memoryLimit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Memory ;
+            owl:onProperty gx:memoryRequirements ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:confidential ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:cpuRequirements ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:gpuLimit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:gpuRequirements ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memoryLimit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memoryRequirements ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:numberOfCoresLimit ],
+        gx:InstantiationRequirement ;
+    skos:definition "InstantiationRequirements for containers (available resources and associated limits)." ;
+    skos:inScheme gx:container-resource-limits .
 
 <https://w3id.org/gaia-x/development#CountryNameAlpha2/AD> a owl:Class ;
     rdfs:label "AD" ;
@@ -6062,6 +5705,12 @@ gx:DataLicense a owl:Class ;
     rdfs:label "DataLicense" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
+            owl:onProperty gx:dataAccessPrerequisites ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataUsageConstraints ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty gx:genericLicense ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:anyURI ;
@@ -6080,19 +5729,16 @@ gx:DataLicense a owl:Class ;
             owl:onProperty odrl:profile ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty odrl:profile ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataAccessPrerequisites ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataUsageConstraints ] ;
+            owl:onProperty odrl:profile ] ;
     skos:definition "the constraints that applies to the data consumers accessing and using the datasets in the Data Product, note that this is for information purpose as the constraints which applies are those in the Data Usage Agreement (Data Usage Agreements are usually derived from the Data License but might differ according to the result of the negotiation between the Data Rights Holders and the Data Consumer.)" ;
     skos:inScheme gx:data-product .
 
 gx:DataPortability a owl:Class ;
     rdfs:label "DataPortability" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:contactInformation ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:deletionMethods ],
         [ a owl:Restriction ;
@@ -6157,16 +5803,16 @@ gx:DataPortability a owl:Class ;
             owl:onProperty gx:pricing ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:resource ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:contactInformation ] ;
+            owl:onProperty gx:resource ] ;
     skos:definition "Which resource of the service offering is concerned by this data portability measure. For example, backup files, stored personal data, infrastructure description file (IaaS), etc." ;
     skos:inScheme gx:data-portability .
 
 gx:DataProduct a owl:Class ;
     rdfs:label "DataProduct" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataRightsHolders ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:dataProductDescription ],
         [ a owl:Restriction ;
@@ -6178,9 +5824,6 @@ gx:DataProduct a owl:Class ;
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty gx:dataProductDescription ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataRightsHolders ],
         gx:DigitalServiceOffering ;
     skos:definition "A collection of data which is packaged by a Data Provider and made ready for Data Access." ;
     skos:inScheme gx:data-product .
@@ -6216,6 +5859,9 @@ gx:DataProductConfigurationParameter a owl:Class ;
 gx:DataProductDescription a owl:Class ;
     rdfs:label "DataProductDescription" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataLicense ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty dcat:Dataset ],
         [ a owl:Restriction ;
@@ -6232,9 +5878,6 @@ gx:DataProductDescription a owl:Class ;
             owl:onProperty gx:dataProductConfigurationParameters ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:dataLicense ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
             owl:onProperty gx:dataLicense ] ;
     skos:definition "the full description of the Data Product service offering" ;
     skos:inScheme gx:data-product .
@@ -6310,6 +5953,114 @@ gx:DatacenterAllocation a owl:Class ;
     rdfs:subClassOf gx:DeduplicationMethod ;
     skos:definition "Post processing deduplication leveraging knowledge of data formats" .
 
+gx:DigitalServiceOffering a owl:Class ;
+    rdfs:label "DigitalServiceOffering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:digitalServiceOfferingContactInformation ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:digitalServiceOfferingEndDate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:keyword ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceLegalDocuments ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingIdentifier ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingProvider ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingShortDescription ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceUsageDataPolicy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:digitalServiceOfferingEndDate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:digitalServiceOfferingIdentifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:digitalServiceOfferingName ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:digitalServiceOfferingShortDescription ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:keyword ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ContactInformation ;
+            owl:onProperty gx:digitalServiceOfferingContactInformation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalDocument ;
+            owl:onProperty gx:digitalServiceLegalDocuments ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:digitalServiceOfferingProvider ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ServiceTermsAndConditions ;
+            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:TermsAndConditions ;
+            owl:onProperty gx:digitalServiceUsageDataPolicy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:UsageTermsAndConditions ;
+            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingContactInformation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingEndDate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingIdentifier ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingLaunchDate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingProvider ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingShortDescription ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceOfferingTermsAndConditions ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceUsageDataPolicy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:digitalServiceUsageTermsAndConditions ],
+        gx:GaiaXEntity ;
+    skos:definition "the virtual base class for any kind of digital service (for inheritance not for instanciation)" ;
+    skos:inScheme gx:digital-service-offering .
+
 <https://w3id.org/gaia-x/development#DiskBusType/NVMe> a owl:Class ;
     rdfs:label "NVMe" ;
     rdfs:subClassOf gx:DiskBusType ;
@@ -6370,46 +6121,29 @@ gx:DatacenterAllocation a owl:Class ;
     rdfs:subClassOf gx:DiskType ;
     skos:definition "The information is stored in a central resource that is accessible to multiple users or data systems." .
 
-gx:EcoTSP a owl:Class ;
-    rdfs:label "EcoTSP" ;
-    dcterms:title "Ecosystem Trust Service Provider" ;
+gx:EORI a owl:Class ;
+    rdfs:label "EORI" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:ecoTSPEndPoint ],
+            owl:onProperty gx:country ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:ecoIssuesCredentialsOfType ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:ecoTSPId ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:anyURI ;
-            owl:onProperty gx:ecoTSPEndPoint ],
+            owl:onProperty gx:eori ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:ecoIssuesCredentialsOfType ],
+            owl:onProperty gx:country ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:ecoTSPId ],
+            owl:onProperty gx:eori ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:ecoTSPId ],
-        gx:GaiaXEntity ;
-    skos:definition "A Trust Service Provider (TSP) recognized and accepted by an ecosystem to issue various verifiable credentials for a particular trust scope." ;
-    skos:inScheme gx:meta-registry .
-
-gx:EcoTrustScope a owl:Class ;
-    rdfs:label "EcoTrustScope" ;
-    dcterms:title "A particular trust scope for an ecosystem" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:ecoTrustServiceProvider ],
+            owl:onProperty gx:country ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:EcoTSP ;
-            owl:onProperty gx:ecoTrustServiceProvider ],
-        gx:GaiaXEntity ;
-    skos:definition "The explicitly recognized and named trust scope of a set of certain trust service providers (TSP) and verifiable credentials they issue. This trust scope of (or for) a particular ecosystem has the meaning that participants within the ecosystem accept verifiable credentials issued by these TSPs for matters related to this trust scope; it is the scope of trust for this set of credentials." ;
-    skos:inScheme gx:meta-registry .
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:eori ],
+        gx:RegistrationNumber ;
+    owl:equivalentClass gx:EORI ;
+    skos:inScheme gx:legal-person .
 
 <https://w3id.org/gaia-x/development#EncryptionAlgorithm/3DES> a owl:Class ;
     rdfs:label "3DES" ;
@@ -6510,6 +6244,9 @@ gx:EnergyMix a owl:Class ;
 gx:EnergyUsageEfficiency a owl:Class ;
     rdfs:label "EnergyUsageEfficiency" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:certifications ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:powerUsageEffectiveness ],
         [ a owl:Restriction ;
@@ -6520,10 +6257,7 @@ gx:EnergyUsageEfficiency a owl:Class ;
             owl:onProperty gx:certifications ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:powerUsageEffectiveness ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:certifications ] ;
+            owl:onProperty gx:powerUsageEffectiveness ] ;
     skos:definition "Represents the efficiency of energy usage in a resource." ;
     skos:inScheme gx:energy-usage-efficiency .
 
@@ -6863,12 +6597,6 @@ gx:Latency a owl:Class ;
         gx:QoSMetric ;
     skos:definition "Contractual latency defined in the SLA. If not specified, then best effort is assumed." ;
     skos:inScheme gx:qos .
-
-gx:LostPackets a owl:Class ;
-    rdfs:label "LostPackets" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    skos:definition "Percentage of lost packets compared to the total number of exchanged packets." ;
-    skos:inScheme gx:quantity .
 
 <https://w3id.org/gaia-x/development#MIMETypes/application%2F1d-interleaved-parityfec> a owl:Class ;
     rdfs:label "application/1d-interleaved-parityfec" ;
@@ -14542,19 +14270,19 @@ gx:Measure a owl:Class ;
     rdfs:label "Measure" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty <http://schema.org/description> ],
+            owl:onProperty schema:description ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:legalDocuments ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty <http://schema.org/description> ],
+            owl:onProperty schema:description ],
         [ a owl:Restriction ;
             owl:allValuesFrom gx:LegalDocument ;
             owl:onProperty gx:legalDocuments ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty <http://schema.org/description> ] ;
+            owl:onProperty schema:description ] ;
     skos:definition "Defines a specific measure taken, including related legal documentation." ;
     skos:inScheme gx:measure .
 
@@ -15973,6 +15701,49 @@ gx:Measure a owl:Class ;
     rdfs:subClassOf gx:NUTS2Region ;
     skos:definition "NUTS2 Code for Extra-Regio NUTS 2" .
 
+gx:NetworkConnectivityServiceOffering a owl:Class ;
+    rdfs:label "NetworkConnectivityServiceOffering" ;
+    dcterms:title "Network Connectivity Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:ipVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:publicIpAddressProvisioning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:serviceType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:tenantSeparation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:serviceType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:IpVersionTypes ;
+            owl:onProperty gx:ipVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:PublicIpAddressProvisioningTypes ;
+            owl:onProperty gx:publicIpAddressProvisioning ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:TenantSeparation ;
+            owl:onProperty gx:tenantSeparation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:ipVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:publicIpAddressProvisioning ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:serviceType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:tenantSeparation ],
+        gx:ConnectivityServiceOffering ;
+    skos:definition "TBD" ;
+    skos:inScheme gx:network-connectivity-service-offering .
+
 <https://w3id.org/gaia-x/development#OSDistribution/AlmaLinux> a owl:Class ;
     rdfs:label "AlmaLinux" ;
     rdfs:subClassOf gx:OSDistribution .
@@ -16092,6 +15863,22 @@ gx:OperatingSystem a owl:Class ;
 <https://w3id.org/gaia-x/development#PXEDiskType/WINPE> a owl:Class ;
     rdfs:label "WINPE" ;
     rdfs:subClassOf gx:PXEDiskType .
+
+gx:PXEImage a owl:Class ;
+    rdfs:label "PXE_Image" ;
+    dcterms:title "PXE image" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:pxeImageDiskFormat ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:PXEDiskType ;
+            owl:onProperty gx:pxeImageDiskFormat ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:pxeImageDiskFormat ],
+        gx:Image ;
+    skos:definition "PXE image for physical machines." ;
+    skos:inScheme gx:pxe-image .
 
 gx:PacketLoss a owl:Class ;
     rdfs:label "PacketLoss" ;
@@ -41555,12 +41342,6 @@ gx:RoundTripTime a owl:Class ;
     skos:definition "Contractual roundTrip time defined in the SLA. If not specified, then best effort is assumed." ;
     skos:inScheme gx:qos .
 
-gx:SLATargetPercentile a owl:Class ;
-    rdfs:label "SLATargetPercentile" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    skos:definition "Percentage of frames the SLA metrics can be guaranteed." ;
-    skos:inScheme gx:quantity .
-
 <https://w3id.org/gaia-x/development#SPDX/0BSD> a owl:Class ;
     rdfs:label "0BSD" ;
     rdfs:subClassOf gx:SPDX ;
@@ -44396,100 +44177,6 @@ gx:SLATargetPercentile a owl:Class ;
     rdfs:subClassOf gx:SPDX ;
     skos:definition "Visit https://spdx.org/licenses/zlib-acknowledgement.html for complete details of zlib/libpng License with Acknowledgement" .
 
-gx:ServerFlavor a owl:Class ;
-    rdfs:label "ServerFlavor" ;
-    dcterms:title "Server Flavor" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:gpu ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:hardwareAssistedVirtualization ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:hwRngTypeOfFlavor ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:hypervisor ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:network ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:bootVolume ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:cpu ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:memory ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:hardwareAssistedVirtualization ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:network ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConfidentialComputing ;
-            owl:onProperty gx:confidentialComputing ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CpuCapabilities ;
-            owl:onProperty gx:cpu ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Disk ;
-            owl:onProperty gx:additionalVolume ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Disk ;
-            owl:onProperty gx:bootVolume ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:GPU ;
-            owl:onProperty gx:gpu ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Hypervisor ;
-            owl:onProperty gx:hypervisor ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemoryCapabilities ;
-            owl:onProperty gx:memory ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:RNGTypes ;
-            owl:onProperty gx:hwRngTypeOfFlavor ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:bootVolume ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:confidentialComputing ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:cpu ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:gpu ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:hardwareAssistedVirtualization ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:hwRngTypeOfFlavor ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:hypervisor ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:memory ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:network ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:additionalVolume ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:confidentialComputing ],
-        gx:InstantiationRequirement ;
-    skos:definition "Description of the available hardware configuration, such as processor, ram and disk capacities, of a physical or virtual servers that can be launched." ;
-    skos:inScheme gx:server-flavor .
-
 gx:ServiceTermsAndConditions a owl:Class ;
     rdfs:label "ServiceTermsAndConditions" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -44896,6 +44583,58 @@ gx:UsageTermsAndConditions a owl:Class ;
     rdfs:label "VMDK" ;
     rdfs:subClassOf gx:VMDiskType .
 
+gx:VMImage a owl:Class ;
+    rdfs:label "VMImage" ;
+    dcterms:title "VM image" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:firmwareType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:hwRngTypeOfImage ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:hypervisorType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:vmImageDiskFormat ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:watchDogAction ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:FirmType ;
+            owl:onProperty gx:firmwareType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:HypervisorType ;
+            owl:onProperty gx:hypervisorType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:RNGTypes ;
+            owl:onProperty gx:hwRngTypeOfImage ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:VMDiskType ;
+            owl:onProperty gx:vmImageDiskFormat ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:WatchDogActions ;
+            owl:onProperty gx:watchDogAction ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:firmwareType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:hwRngTypeOfImage ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:hypervisorType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:vmImageDiskFormat ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:watchDogAction ],
+        gx:Image ;
+    skos:definition "Image for virtual machines." ;
+    skos:inScheme gx:vm-image .
+
 <https://w3id.org/gaia-x/development#VlanType/dot1q> a owl:Class ;
     rdfs:label "dot1q" ;
     rdfs:subClassOf gx:VlanType ;
@@ -44939,6 +44678,9 @@ gx:UsageTermsAndConditions a owl:Class ;
 gx:WaterUsageEffectiveness a owl:Class ;
     rdfs:label "WaterUsageEffectiveness" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:certifications ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:waterUsageEffectivenessValue ],
         [ a owl:Restriction ;
@@ -44949,10 +44691,7 @@ gx:WaterUsageEffectiveness a owl:Class ;
             owl:onProperty gx:certifications ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:waterUsageEffectivenessValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:certifications ] ;
+            owl:onProperty gx:waterUsageEffectivenessValue ] ;
     skos:definition "Represents the effectiveness of water usage in a resource." ;
     skos:inScheme gx:water-usage-effectiveness .
 
@@ -45534,30 +45273,11 @@ dcterms:title a owl:DatatypeProperty ;
     skos:definition "is the measurement of an observable property of a particular object, event, or physical system." ;
     skos:inScheme gx:slots .
 
-<http://qudt.org/vocab/quantitykind/DataRate> a owl:Class ;
-    rdfs:label "DataRate" ;
+<http://qudt.org/vocab/quantitykind/Power> a owl:Class ;
+    rdfs:label "Power" ;
     rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    owl:equivalentClass gx:DataRate ;
+    owl:equivalentClass gx:Power ;
     skos:inScheme gx:quantity .
-
-<http://schema.org/leiCode> a owl:DatatypeProperty ;
-    rdfs:label "leiCode" ;
-    rdfs:range xsd:string ;
-    skos:definition "Unique LEI number as defined by https://www.gleif.org." ;
-    skos:inScheme gx:slots .
-
-<http://schema.org/name> a owl:DatatypeProperty ;
-    rdfs:label "name" ;
-    dcterms:title "name" ;
-    rdfs:range xsd:string ;
-    skos:definition "A human readable name of the entity." ;
-    skos:inScheme gx:slots .
-
-<http://schema.org/taxID> a owl:DatatypeProperty ;
-    rdfs:label "taxId" ;
-    rdfs:range xsd:string ;
-    skos:definition "The company tax ID." ;
-    skos:inScheme gx:slots .
 
 <http://www.w3.org/2006/vcard/ns#locality> a owl:DatatypeProperty ;
     rdfs:label "locality" ;
@@ -45583,27 +45303,134 @@ dcterms:title a owl:DatatypeProperty ;
     skos:definition "The street address of a postal address." ;
     skos:inScheme gx:slots .
 
-gx:ConnectivityServiceOffering a owl:Class ;
-    rdfs:label "ConnectivityServiceOffering" ;
-    dcterms:title "Connectivity Service Offering" ;
+schema:leiCode a owl:DatatypeProperty ;
+    rdfs:label "leiCode" ;
+    rdfs:range xsd:string ;
+    skos:definition "Unique LEI number as defined by https://www.gleif.org." ;
+    skos:inScheme gx:slots .
+
+schema:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    dcterms:title "name" ;
+    rdfs:range xsd:string ;
+    skos:definition "A human readable name of the entity." ;
+    skos:inScheme gx:slots .
+
+schema:taxID a owl:DatatypeProperty ;
+    rdfs:label "taxId" ;
+    rdfs:range xsd:string ;
+    skos:definition "The company tax ID." ;
+    skos:inScheme gx:slots .
+
+gx:ComputeFunctionConfiguration a owl:Class ;
+    rdfs:label "ComputeFunctionConfiguration" ;
+    dcterms:title "Compute Function Configuration" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:connectivityConfiguration ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConnectivityConfiguration ;
-            owl:onProperty gx:connectivityConfiguration ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:QoS ;
-            owl:onProperty gx:connectivityQoS ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:connectivityQoS ],
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionDeploymentMethod ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:connectivityQoS ],
-        gx:InfrastructureServiceOffering ;
-    skos:definition "Connectivity Infrastructure services are made out of Physical, Link and Network services. Interconnection services between providers exist as a subclass of Network services." ;
-    skos:inScheme gx:connectivity-service-offering .
+            owl:onProperty gx:computeFunctionLibrary ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionQuotas ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionSDK ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:computeFunctionTrigger ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:computeFunctionRuntime ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionDeploymentMethod ;
+            owl:onProperty gx:computeFunctionDeploymentMethod ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionQuotas ;
+            owl:onProperty gx:computeFunctionQuotas ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionRuntime ;
+            owl:onProperty gx:computeFunctionRuntime ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionRuntime ;
+            owl:onProperty gx:computeFunctionSDK ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionTemplate ;
+            owl:onProperty gx:computeFunctionLibrary ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionTrigger ;
+            owl:onProperty gx:computeFunctionTrigger ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ConfidentialComputing ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:confidentialComputingTechnology ],
+        gx:InstantiationRequirement ;
+    skos:definition "InstantiationRequirements for compute functions." ;
+    skos:inScheme gx:compute-function-configuration .
+
+gx:ComputeFunctionTemplate a owl:Class ;
+    rdfs:label "ComputeFunctionTemplate" ;
+    dcterms:title "Compute Function Template" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:computeFunctionDescription ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:computeFunctionName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:computeFunctionTemplateRuntime ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:computeFunctionDescription ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:computeFunctionName ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ComputeFunctionRuntime ;
+            owl:onProperty gx:computeFunctionTemplateRuntime ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:computeFunctionDescription ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:computeFunctionName ],
+        gx:CodeArtifact ;
+    skos:definition "Class for describing a template of compute function" ;
+    skos:inScheme gx:compute-function-configuration .
+
+gx:ConnectivityConfiguration a owl:Class ;
+    rdfs:label "ConnectivityConfiguration" ;
+    dcterms:title "Connectivity Configuration" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:destinationIdentifierZ ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:sourceIdentifierA ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalInterconnectionPointIdentifier gx:VirtualInterconnectionPointIdentifier ) ] xsd:string ) ] ;
+            owl:onProperty gx:destinationIdentifierZ ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalInterconnectionPointIdentifier gx:VirtualInterconnectionPointIdentifier ) ] xsd:string ) ] ;
+            owl:onProperty gx:sourceIdentifierA ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:destinationIdentifierZ ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:sourceIdentifierA ],
+        gx:InstantiationRequirement ;
+    skos:definition "The connectivityConfiguration class encapsulates the configurable attributes of a ConnectivityServiceOffering." ;
+    skos:inScheme gx:connectivity-configuration .
 
 gx:DataAccessPrerequisite a owl:Class ;
     rdfs:label "DataAccessPrerequisite" ;
@@ -45699,9 +45526,53 @@ gx:Datacenter a owl:Class ;
     skos:definition "A datacenter is an aggregation of availability zones" ;
     skos:inScheme gx:datacenter .
 
+gx:EcoTSP a owl:Class ;
+    rdfs:label "EcoTSP" ;
+    dcterms:title "Ecosystem Trust Service Provider" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:ecoTSPEndPoint ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:ecoIssuesCredentialsOfType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:ecoTSPId ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty gx:ecoTSPEndPoint ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:ecoIssuesCredentialsOfType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:ecoTSPId ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:ecoTSPId ],
+        gx:GaiaXEntity ;
+    skos:definition "A Trust Service Provider (TSP) recognized and accepted by an ecosystem to issue various verifiable credentials for a particular trust scope." ;
+    skos:inScheme gx:meta-registry .
+
+gx:EcoTrustScope a owl:Class ;
+    rdfs:label "EcoTrustScope" ;
+    dcterms:title "A particular trust scope for an ecosystem" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:ecoTrustServiceProvider ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:EcoTSP ;
+            owl:onProperty gx:ecoTrustServiceProvider ],
+        gx:GaiaXEntity ;
+    skos:definition "The explicitly recognized and named trust scope of a set of certain trust service providers (TSP) and verifiable credentials they issue. This trust scope of (or for) a particular ecosystem has the meaning that participants within the ecosystem accept verifiable credentials issued by these TSPs for matters related to this trust scope; it is the scope of trust for this set of credentials." ;
+    skos:inScheme gx:meta-registry .
+
 gx:GPSLocation a owl:Class ;
     rdfs:label "GPSLocation" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:crs ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:latitude ],
         [ a owl:Restriction ;
@@ -45738,150 +45609,15 @@ gx:GPSLocation a owl:Class ;
             owl:onProperty gx:longitude ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:altitude ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:crs ] ;
+            owl:onProperty gx:altitude ] ;
     skos:definition "Physical GPS coordinates in ISO 6709:2008/Cor 1:2009 format." ;
     skos:inScheme gx:address .
-
-gx:Image a owl:Class ;
-    rdfs:label "Image" ;
-    dcterms:title "Image" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:encryption ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:fileSize ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:gpuReq ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:licenseIncluded ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:maintenance ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:multiQueues ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:operatingSystem ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:ramReq ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:rootDiskReq ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:secureBoot ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:updateStrategy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:vPMU ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:videoRamSize ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:licenseIncluded ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:multiQueues ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:secureBoot ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:vPMU ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CPU ;
-            owl:onProperty gx:cpuReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Disk ;
-            owl:onProperty gx:rootDiskReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Encryption ;
-            owl:onProperty gx:encryption ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:GPU ;
-            owl:onProperty gx:gpuReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MaintenanceSubscription ;
-            owl:onProperty gx:maintenance ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:fileSize ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:videoRamSize ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Memory ;
-            owl:onProperty gx:ramReq ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:OperatingSystem ;
-            owl:onProperty gx:operatingSystem ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:UpdateStrategyEnum ;
-            owl:onProperty gx:updateStrategy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:cpuReq ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:encryption ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:fileSize ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:gpuReq ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:licenseIncluded ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:maintenance ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:multiQueues ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:operatingSystem ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:ramReq ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:rootDiskReq ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:secureBoot ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:updateStrategy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:vPMU ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:videoRamSize ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:cpuReq ],
-        gx:CodeArtifact ;
-    skos:definition "A software piece that can be executed by a virtual or bare metal Compute services. It is a subclass of OperatingSystem and CodeArtifact." ;
-    skos:inScheme gx:image .
 
 gx:InfrastructureServiceOffering a owl:Class ;
     rdfs:label "InfrastructureServiceOffering" ;
     dcterms:title "Infrastructure Service Offering" ;
-    rdfs:subClassOf gx:ServiceOffering ;
+    rdfs:subClassOf [ owl:unionOf ( gx:ComputeServiceOffering gx:ConnectivityServiceOffering gx:StorageServiceOffering ) ],
+        gx:ServiceOffering ;
     skos:definition "A digital service available for order and offering computational, storage and/pr network capabilities." ;
     skos:inScheme gx:service-offering .
 
@@ -45889,6 +45625,9 @@ gx:InterconnectionPointIdentifier a owl:Class ;
     rdfs:label "InterconnectionPointIdentifier" ;
     dcterms:title "Interconnection Point Identifier" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:datacenterAllocation ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:ipAddress ],
         [ a owl:Restriction ;
@@ -45953,143 +45692,115 @@ gx:InterconnectionPointIdentifier a owl:Class ;
             owl:onProperty gx:macAddress ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:specificParameters ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:datacenterAllocation ] ;
+            owl:onProperty gx:specificParameters ] ;
     skos:definition "Interconnection Point Identifier is a unique Service Access Point that identifies the location where resources can interconnect." ;
     skos:inScheme gx:connectivity-configuration .
 
-gx:SoftwareResource a owl:Class ;
-    rdfs:label "SoftwareResource" ;
-    dcterms:title "Software Resource" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:patchLevel ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:signature ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:version ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:dateTime ;
-            owl:onProperty gx:buildDate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:patchLevel ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:version ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CheckSum ;
-            owl:onProperty gx:checkSum ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Signature ;
-            owl:onProperty gx:signature ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:buildDate ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:checkSum ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:patchLevel ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:signature ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:version ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:buildDate ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:checkSum ],
-        gx:VirtualResource ;
-    skos:definition "A Gaia-X Virtual Resource describing an executable program." ;
-    skos:inScheme gx:resource .
+gx:LostPackets a owl:Class ;
+    rdfs:label "LostPackets" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    skos:definition "Percentage of lost packets compared to the total number of exchanged packets." ;
+    skos:inScheme gx:quantity .
 
-gx:StorageServiceOffering a owl:Class ;
-    rdfs:label "StorageServiceOffering" ;
-    dcterms:title "Storage Service Offering" ;
+gx:SLATargetPercentile a owl:Class ;
+    rdfs:label "SLATargetPercentile" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    skos:definition "Percentage of frames the SLA metrics can be guaranteed." ;
+    skos:inScheme gx:quantity .
+
+gx:ServerFlavor a owl:Class ;
+    rdfs:label "ServerFlavor" ;
+    dcterms:title "Server Flavor" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:lifetimeManagement ],
+            owl:onProperty gx:confidentialComputing ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:maximumSize ],
+            owl:onProperty gx:gpu ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:minimumSize ],
+            owl:onProperty gx:hardwareAssistedVirtualization ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:multipleViews ],
+            owl:onProperty gx:hwRngTypeOfFlavor ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageConsistency ],
+            owl:onProperty gx:hypervisor ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:versioning ],
+            owl:onProperty gx:network ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:storageConfiguration ],
+            owl:onProperty gx:bootVolume ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:cpu ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:memory ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:dataViews ],
+            owl:onProperty gx:hardwareAssistedVirtualization ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:multipleViews ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:network ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:versioning ],
+            owl:allValuesFrom gx:ConfidentialComputing ;
+            owl:onProperty gx:confidentialComputing ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty gx:lifetimeManagement ],
+            owl:allValuesFrom gx:CpuCapabilities ;
+            owl:onProperty gx:cpu ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConsistencyType ;
-            owl:onProperty gx:storageConsistency ],
+            owl:allValuesFrom gx:Disk ;
+            owl:onProperty gx:additionalVolume ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:maximumSize ],
+            owl:allValuesFrom gx:Disk ;
+            owl:onProperty gx:bootVolume ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:minimumSize ],
+            owl:allValuesFrom gx:GPU ;
+            owl:onProperty gx:gpu ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:StorageConfiguration ;
-            owl:onProperty gx:storageConfiguration ],
+            owl:allValuesFrom gx:Hypervisor ;
+            owl:onProperty gx:hypervisor ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:dataViews ],
+            owl:allValuesFrom gx:MemoryCapabilities ;
+            owl:onProperty gx:memory ],
         [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:lifetimeManagement ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:maximumSize ],
+            owl:allValuesFrom gx:RNGTypes ;
+            owl:onProperty gx:hwRngTypeOfFlavor ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:minimumSize ],
+            owl:onProperty gx:bootVolume ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:multipleViews ],
+            owl:onProperty gx:confidentialComputing ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:storageConfiguration ],
+            owl:onProperty gx:cpu ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:storageConsistency ],
+            owl:onProperty gx:gpu ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:versioning ],
+            owl:onProperty gx:hardwareAssistedVirtualization ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:hwRngTypeOfFlavor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:hypervisor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memory ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:network ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:dataViews ],
-        gx:InfrastructureServiceOffering ;
-    skos:definition "A digital service available for order and offering storage capabilities." ;
-    skos:inScheme gx:storage-service-offering .
+            owl:onProperty gx:additionalVolume ],
+        gx:InstantiationRequirement ;
+    skos:definition "Description of the available hardware configuration, such as processor, ram and disk capacities, of a physical or virtual servers that can be launched." ;
+    skos:inScheme gx:server-flavor .
 
 gx:VLANConfiguration a owl:Class ;
     rdfs:label "VLANConfiguration" ;
@@ -47705,10 +47416,10 @@ gx:waterUsageEffectivenessValue a owl:DatatypeProperty ;
     skos:definition "Subresource Integrity hash of the verifiable credential ensuring it has won't be modified." ;
     skos:inScheme gx:slots .
 
-<http://qudt.org/vocab/quantitykind/Frequency> a owl:Class ;
-    rdfs:label "Frequency" ;
+<http://qudt.org/vocab/quantitykind/DataRate> a owl:Class ;
+    rdfs:label "DataRate" ;
     rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    owl:equivalentClass gx:Frequency ;
+    owl:equivalentClass gx:DataRate ;
     skos:inScheme gx:quantity .
 
 gx:AccessTypes a owl:Class ;
@@ -47718,21 +47429,28 @@ gx:AccessTypes a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#AccessTypes/digital>,
         <https://w3id.org/gaia-x/development#AccessTypes/physical> .
 
-gx:ComputeServiceOffering a owl:Class ;
-    rdfs:label "ComputeServiceOffering" ;
-    dcterms:title "Compute Service Offering" ;
+gx:ConnectivityServiceOffering a owl:Class ;
+    rdfs:label "ConnectivityServiceOffering" ;
+    dcterms:title "Connectivity Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:onProperty gx:connectivityQoS ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:TenantSeparation ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:minCardinality 1 ;
+            owl:onProperty gx:connectivityConfiguration ],
+        [ owl:unionOf ( gx:LinkConnectivityServiceOffering gx:NetworkConnectivityServiceOffering gx:PhysicalConnectivityServiceOffering ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ConnectivityConfiguration ;
+            owl:onProperty gx:connectivityConfiguration ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:QoS ;
+            owl:onProperty gx:connectivityQoS ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:tenantSeparation ],
+            owl:onProperty gx:connectivityQoS ],
         gx:InfrastructureServiceOffering ;
-    skos:definition "A digital service available for order and offering computational capabilities." ;
-    skos:inScheme gx:service-offering .
+    skos:definition "Connectivity Infrastructure services are made out of Physical, Link and Network services. Interconnection services between providers exist as a subclass of Network services." ;
+    skos:inScheme gx:connectivity-service-offering .
 
 gx:DataTransfer a owl:Class ;
     rdfs:label "DataTransfer" ;
@@ -47771,6 +47489,7 @@ gx:Device a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:vendor ],
+        [ owl:unionOf ( gx:CPU gx:Disk gx:GPU gx:Memory ) ],
         [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
@@ -47896,6 +47615,140 @@ gx:GaiaXTermsAndConditions a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#GaiaXTermsAndConditions/067dcac5efd18c1927deb1ffed3feab6d0ad044c0a9a263e6d5d8bdc43224515>,
         <https://w3id.org/gaia-x/development#GaiaXTermsAndConditions/4bd7554097444c960292b4726c2efa1373485e8a5565d94d41195214c5e0ceb3> .
 
+gx:Image a owl:Class ;
+    rdfs:label "Image" ;
+    dcterms:title "Image" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:cpuReq ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:encryption ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:fileSize ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:gpuReq ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:licenseIncluded ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:maintenance ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:multiQueues ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:operatingSystem ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:ramReq ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:rootDiskReq ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:secureBoot ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:updateStrategy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:vPMU ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:videoRamSize ],
+        [ owl:unionOf ( gx:ContainerImage gx:PXEImage gx:VMImage ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:licenseIncluded ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:multiQueues ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:secureBoot ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:vPMU ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CPU ;
+            owl:onProperty gx:cpuReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Disk ;
+            owl:onProperty gx:rootDiskReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Encryption ;
+            owl:onProperty gx:encryption ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:GPU ;
+            owl:onProperty gx:gpuReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MaintenanceSubscription ;
+            owl:onProperty gx:maintenance ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:fileSize ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:videoRamSize ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Memory ;
+            owl:onProperty gx:ramReq ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:OperatingSystem ;
+            owl:onProperty gx:operatingSystem ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:UpdateStrategyEnum ;
+            owl:onProperty gx:updateStrategy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:cpuReq ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:encryption ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:fileSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:gpuReq ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:licenseIncluded ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:maintenance ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:multiQueues ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:operatingSystem ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:ramReq ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:rootDiskReq ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:secureBoot ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:updateStrategy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:vPMU ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:videoRamSize ],
+        gx:CodeArtifact ;
+    skos:definition "A software piece that can be executed by a virtual or bare metal Compute services. It is a subclass of OperatingSystem and CodeArtifact." ;
+    skos:inScheme gx:image .
+
 gx:IpVersionTypes a owl:Class ;
     rdfs:label "IpVersionTypes" ;
     owl:unionOf ( <https://w3id.org/gaia-x/development#IpVersionTypes/IPv4> <https://w3id.org/gaia-x/development#IpVersionTypes/IPv6> ) ;
@@ -47910,73 +47763,6 @@ gx:PXEDiskType a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#PXEDiskType/ISO>,
         <https://w3id.org/gaia-x/development#PXEDiskType/WINPE> .
 
-gx:Participant a owl:Class ;
-    rdfs:label "Participant" ;
-    rdfs:subClassOf gx:GaiaXEntity ;
-    skos:definition "An legal or natural person that is onboarded to Gaia-X and offers, consumes services or operates resources." ;
-    skos:inScheme gx:participant .
-
-gx:PhysicalResource a owl:Class ;
-    rdfs:label "PhysicalResource" ;
-    dcterms:title "Physical Resource" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:energyMix ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:energyUsageEfficiency ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:manufacturedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:ownedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:waterUsageEffectiveness ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:location ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:maintainedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Address ;
-            owl:onProperty gx:location ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:EnergyMix ;
-            owl:onProperty gx:energyMix ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:EnergyUsageEfficiency ;
-            owl:onProperty gx:energyUsageEfficiency ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:maintainedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:manufacturedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:ownedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Resource ;
-            owl:onProperty gx:aggregationOfResources ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:WaterUsageEffectiveness ;
-            owl:onProperty gx:waterUsageEffectiveness ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:energyUsageEfficiency ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:waterUsageEffectiveness ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:aggregationOfResources ],
-        gx:Resource ;
-    skos:definition "A Physical resource is, but not limited to, a datacenter, a bare-metal service, a warehouse, a plant. Those are entities that have a weight and position in physical space." ;
-    skos:inScheme gx:resource .
-
 gx:ProtectionMethod a owl:Class ;
     rdfs:label "ProtectionMethod" ;
     owl:unionOf ( <https://w3id.org/gaia-x/development#ProtectionMethod/Full-Copy> <https://w3id.org/gaia-x/development#ProtectionMethod/Incremental> ) ;
@@ -47988,6 +47774,9 @@ gx:QoS a owl:Class ;
     rdfs:label "QoS" ;
     dcterms:title "Service offering performance values." ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:bandWidth ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:iops ],
         [ a owl:Restriction ;
@@ -48064,97 +47853,140 @@ gx:QoS a owl:Class ;
             owl:onProperty gx:throughput ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:availability ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:bandWidth ] ;
+            owl:onProperty gx:availability ] ;
     skos:definition "Contractual performance values defined in the Service Level Agreement." ;
     skos:inScheme gx:qos .
 
-gx:ReplicationPolicy a owl:Class ;
-    rdfs:label "ReplicationPolicy" ;
+gx:SoftwareResource a owl:Class ;
+    rdfs:label "SoftwareResource" ;
+    dcterms:title "Software Resource" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:geoReplication ],
+            owl:onProperty gx:buildDate ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:replicaNumber ],
+            owl:onProperty gx:checkSum ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:synchronousReplication ],
+            owl:onProperty gx:patchLevel ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:synchronousReplication ],
+            owl:minCardinality 0 ;
+            owl:onProperty gx:signature ],
         [ a owl:Restriction ;
-            owl:allValuesFrom xsd:integer ;
-            owl:onProperty gx:replicaNumber ],
+            owl:minCardinality 0 ;
+            owl:onProperty gx:version ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:ConsistencyType ;
-            owl:onProperty gx:consistencyType ],
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty gx:buildDate ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:GeoReplicationScope ;
-            owl:onProperty gx:geoReplication ],
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:patchLevel ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CheckSum ;
+            owl:onProperty gx:checkSum ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Signature ;
+            owl:onProperty gx:signature ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:consistencyType ],
+            owl:onProperty gx:buildDate ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:synchronousReplication ],
+            owl:onProperty gx:checkSum ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:consistencyType ],
-        gx:DataProtectionPolicy ;
-    skos:definition "Describe data protection features based on Replication for storage services" ;
-    skos:inScheme gx:data-protection-policy .
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:patchLevel ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:signature ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:version ],
+        gx:VirtualResource ;
+    skos:definition "A Gaia-X Virtual Resource describing an executable program." ;
+    skos:inScheme gx:resource .
 
-gx:StorageConfiguration a owl:Class ;
-    rdfs:label "StorageConfiguration" ;
-    dcterms:title "Storage Configuration" ;
+gx:StorageServiceOffering a owl:Class ;
+    rdfs:label "StorageServiceOffering" ;
+    dcterms:title "Storage Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageCompression ],
+            owl:onProperty gx:dataViews ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageDeduplication ],
+            owl:onProperty gx:lifetimeManagement ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageProtection ],
+            owl:onProperty gx:maximumSize ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageQoS ],
+            owl:onProperty gx:minimumSize ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty gx:storageRedundancyMechanism ],
+            owl:onProperty gx:multipleViews ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageConsistency ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:versioning ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:storageEncryption ],
+            owl:onProperty gx:storageConfiguration ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:CompressionAlgorithm ;
-            owl:onProperty gx:storageCompression ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:dataViews ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:DataProtectionPolicy ;
-            owl:onProperty gx:storageProtection ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:multipleViews ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:DeduplicationMethod ;
-            owl:onProperty gx:storageDeduplication ],
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:versioning ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:Encryption ;
-            owl:onProperty gx:storageEncryption ],
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty gx:lifetimeManagement ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ConsistencyType ;
+            owl:onProperty gx:storageConsistency ],
         [ a owl:Restriction ;
             owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:blockSize ],
+            owl:onProperty gx:maximumSize ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:QoS ;
-            owl:onProperty gx:storageQoS ],
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:minimumSize ],
         [ a owl:Restriction ;
-            owl:allValuesFrom gx:StorageRedundancyMechanism ;
-            owl:onProperty gx:storageRedundancyMechanism ],
+            owl:allValuesFrom gx:StorageConfiguration ;
+            owl:onProperty gx:storageConfiguration ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:blockSize ],
-        gx:InstantiationRequirement ;
-    skos:definition "Represents the attributes that are configurable at service instantiation for storage service offerings." ;
-    skos:inScheme gx:storage-configuration .
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:dataViews ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:lifetimeManagement ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:maximumSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:minimumSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:multipleViews ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:storageConfiguration ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:storageConsistency ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:versioning ],
+        gx:InfrastructureServiceOffering ;
+    skos:definition "A digital service available for order and offering storage capabilities." ;
+    skos:inScheme gx:storage-service-offering .
 
 gx:TermsAndConditions a owl:Class ;
     rdfs:label "TermsAndConditions" ;
@@ -48178,56 +48010,6 @@ gx:TermsAndConditions a owl:Class ;
             owl:onProperty gx:url ] ;
     skos:definition "Terms and Conditions applying to a service offering." ;
     skos:inScheme gx:service-offering .
-
-gx:VirtualInterconnectionPointIdentifier a owl:Class ;
-    rdfs:label "VirtualInterconnectionPointIdentifier" ;
-    dcterms:title "Virtual Interconnection Point Identifier" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:interconnectedParticipants ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:interconnectionPointIdentifier ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:InterconnectionPointIdentifier ;
-            owl:onProperty gx:interconnectionPointIdentifier ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:interconnectedParticipants ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:interconnectionPointIdentifier ],
-        gx:VirtualResource ;
-    skos:definition "TBD" ;
-    skos:inScheme gx:connectivity-configuration .
-
-gx:VirtualResource a owl:Class ;
-    rdfs:label "VirtualResource" ;
-    dcterms:title "Virtual Resource" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:copyrightOwnedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:license ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:resourcePolicy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ a rdfs:Datatype ;
-                                owl:unionOf ( gx:SPDX xsd:anyURI ) ] xsd:string ) ] ;
-            owl:onProperty gx:license ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( gx:LegalPerson xsd:string ) ] xsd:string ) ] ;
-            owl:onProperty gx:copyrightOwnedBy ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:resourcePolicy ],
-        gx:Resource ;
-    skos:definition "It represents static data in any form and necessary information such as dataset, configuration file, license, keypair, an AI model, neural network weights, etc." ;
-    skos:inScheme gx:resource .
 
 gx:accessAttributes a owl:ObjectProperty ;
     rdfs:label "accessAttributes" ;
@@ -48305,6 +48087,12 @@ gx:means a owl:DatatypeProperty ;
     skos:definition "Means used to accomplish a task." ;
     skos:inScheme gx:slots .
 
+<http://qudt.org/vocab/quantitykind/Frequency> a owl:Class ;
+    rdfs:label "Frequency" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    owl:equivalentClass gx:Frequency ;
+    skos:inScheme gx:quantity .
+
 gx:BlockStorageTechnology a owl:Class ;
     rdfs:label "BlockStorageTechnology" ;
     owl:unionOf ( <https://w3id.org/gaia-x/development#BlockStorageTechnology/HDD> <https://w3id.org/gaia-x/development#BlockStorageTechnology/Optane> <https://w3id.org/gaia-x/development#BlockStorageTechnology/SSD> ) ;
@@ -48312,6 +48100,23 @@ gx:BlockStorageTechnology a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#BlockStorageTechnology/HDD>,
         <https://w3id.org/gaia-x/development#BlockStorageTechnology/Optane>,
         <https://w3id.org/gaia-x/development#BlockStorageTechnology/SSD> .
+
+gx:ComputeServiceOffering a owl:Class ;
+    rdfs:label "ComputeServiceOffering" ;
+    dcterms:title "Compute Service Offering" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:tenantSeparation ],
+        [ owl:unionOf ( gx:BareMetalServiceOffering gx:ComputeFunctionServiceOffering gx:ContainerServiceOffering gx:VirtualMachineServiceOffering ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:TenantSeparation ;
+            owl:onProperty gx:tenantSeparation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:tenantSeparation ],
+        gx:InfrastructureServiceOffering ;
+    skos:definition "A digital service available for order and offering computational capabilities." ;
+    skos:inScheme gx:service-offering .
 
 gx:ConfidentialComputing a owl:Class ;
     rdfs:label "ConfidentialComputing" ;
@@ -48346,6 +48151,7 @@ gx:DataProtectionPolicy a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:protectionRetention ],
+        [ owl:unionOf ( gx:BackupPolicy gx:ReplicationPolicy gx:SnapshotPolicy ) ],
         [ a owl:Restriction ;
             owl:allValuesFrom gx:ProtectionFrequency ;
             owl:onProperty gx:protectionFrequency ],
@@ -48384,13 +48190,6 @@ gx:GeoReplicationScope a owl:Class ;
         <https://w3id.org/gaia-x/development#GeoReplicationScope/Cross-DC>,
         <https://w3id.org/gaia-x/development#GeoReplicationScope/Cross-Region> .
 
-gx:InstantiationRequirement a owl:Class ;
-    rdfs:label "InstantiationRequirement" ;
-    dcterms:title "Instantiation Requirement" ;
-    rdfs:subClassOf gx:GaiaXEntity ;
-    skos:definition "A container class to gather all requirements for compute service offering instantiations." ;
-    skos:inScheme gx:instantiation-requirement .
-
 gx:KeyManagement a owl:Class ;
     rdfs:label "KeyManagement" ;
     owl:unionOf ( <https://w3id.org/gaia-x/development#KeyManagement/BYOK> <https://w3id.org/gaia-x/development#KeyManagement/HYOK> <https://w3id.org/gaia-x/development#KeyManagement/managed> ) ;
@@ -48399,56 +48198,11 @@ gx:KeyManagement a owl:Class ;
         <https://w3id.org/gaia-x/development#KeyManagement/HYOK>,
         <https://w3id.org/gaia-x/development#KeyManagement/managed> .
 
-gx:Memory a owl:Class ;
-    rdfs:label "Memory" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:eccEnabled ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:hardwareEncryption ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:memoryClass ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:memoryRank ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:memorySize ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:eccEnabled ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:hardwareEncryption ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemoryClasses ;
-            owl:onProperty gx:memoryClass ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemoryRanks ;
-            owl:onProperty gx:memoryRank ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:memorySize ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:eccEnabled ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:hardwareEncryption ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:memoryClass ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:memoryRank ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:memorySize ],
-        gx:Device ;
-    skos:definition "Details with respect to properties and capabilities of RAM." ;
-    skos:inScheme gx:memory .
+gx:Participant a owl:Class ;
+    rdfs:label "Participant" ;
+    rdfs:subClassOf gx:GaiaXEntity ;
+    skos:definition "An legal or natural person that is onboarded to Gaia-X and offers, consumes services or operates resources." ;
+    skos:inScheme gx:participant .
 
 gx:PhysicalInterconnectionPointIdentifier a owl:Class ;
     rdfs:label "PhysicalInterconnectionPointIdentifier" ;
@@ -48456,6 +48210,67 @@ gx:PhysicalInterconnectionPointIdentifier a owl:Class ;
     rdfs:subClassOf gx:PointOfPresence ;
     skos:definition "TBD" ;
     skos:inScheme gx:connectivity-configuration .
+
+gx:PhysicalResource a owl:Class ;
+    rdfs:label "PhysicalResource" ;
+    dcterms:title "Physical Resource" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:energyMix ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:energyUsageEfficiency ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:manufacturedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:ownedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:waterUsageEffectiveness ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:location ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:maintainedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Address ;
+            owl:onProperty gx:location ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:EnergyMix ;
+            owl:onProperty gx:energyMix ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:EnergyUsageEfficiency ;
+            owl:onProperty gx:energyUsageEfficiency ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:maintainedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:manufacturedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:ownedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Resource ;
+            owl:onProperty gx:aggregationOfResources ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:WaterUsageEffectiveness ;
+            owl:onProperty gx:waterUsageEffectiveness ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:energyUsageEfficiency ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:waterUsageEffectiveness ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:aggregationOfResources ],
+        gx:Resource ;
+    skos:definition "A Physical resource is, but not limited to, a datacenter, a bare-metal service, a warehouse, a plant. Those are entities that have a weight and position in physical space." ;
+    skos:inScheme gx:resource .
 
 gx:ProvisionTypes a owl:Class ;
     rdfs:label "ProvisionTypes" ;
@@ -48473,6 +48288,91 @@ gx:PublicIpAddressProvisioningTypes a owl:Class ;
         <https://w3id.org/gaia-x/development#PublicIpAddressProvisioningTypes/floating>,
         <https://w3id.org/gaia-x/development#PublicIpAddressProvisioningTypes/provider-network> .
 
+gx:ReplicationPolicy a owl:Class ;
+    rdfs:label "ReplicationPolicy" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:consistencyType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:geoReplication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:replicaNumber ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:synchronousReplication ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:synchronousReplication ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty gx:replicaNumber ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:ConsistencyType ;
+            owl:onProperty gx:consistencyType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:GeoReplicationScope ;
+            owl:onProperty gx:geoReplication ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:consistencyType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:synchronousReplication ],
+        gx:DataProtectionPolicy ;
+    skos:definition "Describe data protection features based on Replication for storage services" ;
+    skos:inScheme gx:data-protection-policy .
+
+gx:StorageConfiguration a owl:Class ;
+    rdfs:label "StorageConfiguration" ;
+    dcterms:title "Storage Configuration" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:blockSize ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageCompression ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageDeduplication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageProtection ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageQoS ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:storageRedundancyMechanism ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:storageEncryption ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CompressionAlgorithm ;
+            owl:onProperty gx:storageCompression ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:DataProtectionPolicy ;
+            owl:onProperty gx:storageProtection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:DeduplicationMethod ;
+            owl:onProperty gx:storageDeduplication ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Encryption ;
+            owl:onProperty gx:storageEncryption ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:blockSize ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:QoS ;
+            owl:onProperty gx:storageQoS ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:StorageRedundancyMechanism ;
+            owl:onProperty gx:storageRedundancyMechanism ],
+        gx:InstantiationRequirement ;
+    skos:definition "Represents the attributes that are configurable at service instantiation for storage service offerings." ;
+    skos:inScheme gx:storage-configuration .
+
 gx:UpdateStrategyEnum a owl:Class ;
     rdfs:label "UpdateStrategyEnum" ;
     owl:unionOf ( <https://w3id.org/gaia-x/development#UpdateStrategyEnum/do_not_update> <https://w3id.org/gaia-x/development#UpdateStrategyEnum/maximum_security> <https://w3id.org/gaia-x/development#UpdateStrategyEnum/minimal_downtime> ) ;
@@ -48481,6 +48381,57 @@ gx:UpdateStrategyEnum a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#UpdateStrategyEnum/do_not_update>,
         <https://w3id.org/gaia-x/development#UpdateStrategyEnum/maximum_security>,
         <https://w3id.org/gaia-x/development#UpdateStrategyEnum/minimal_downtime> .
+
+gx:VirtualInterconnectionPointIdentifier a owl:Class ;
+    rdfs:label "VirtualInterconnectionPointIdentifier" ;
+    dcterms:title "Virtual Interconnection Point Identifier" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:interconnectedParticipants ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:interconnectionPointIdentifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:InterconnectionPointIdentifier ;
+            owl:onProperty gx:interconnectionPointIdentifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:interconnectedParticipants ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:interconnectionPointIdentifier ],
+        gx:VirtualResource ;
+    skos:definition "TBD" ;
+    skos:inScheme gx:connectivity-configuration .
+
+gx:VirtualResource a owl:Class ;
+    rdfs:label "VirtualResource" ;
+    dcterms:title "Virtual Resource" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:copyrightOwnedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:license ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:resourcePolicy ],
+        [ owl:unionOf ( gx:SoftwareResource gx:VirtualInterconnectionPointIdentifier ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ a rdfs:Datatype ;
+                                owl:unionOf ( gx:SPDX xsd:anyURI ) ] xsd:string ) ] ;
+            owl:onProperty gx:license ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ owl:unionOf ( gx:LegalPerson xsd:string ) ] xsd:string ) ] ;
+            owl:onProperty gx:copyrightOwnedBy ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:resourcePolicy ],
+        gx:Resource ;
+    skos:definition "It represents static data in any form and necessary information such as dataset, configuration file, license, keypair, an AI model, neural network weights, etc." ;
+    skos:inScheme gx:resource .
 
 gx:VlanType a owl:Class ;
     rdfs:label "VlanType" ;
@@ -48510,7 +48461,7 @@ gx:interfaceType a owl:DatatypeProperty ;
     skos:definition "A type of interface whether it's physical or virtual." ;
     skos:inScheme gx:slots .
 
-<http://schema.org/description> a owl:DatatypeProperty ;
+schema:description a owl:DatatypeProperty ;
     rdfs:label "description" ;
     rdfs:range xsd:string ;
     skos:inScheme gx:slots .
@@ -48522,96 +48473,6 @@ gx:AccessAttribute a owl:Class ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#AccessAttribute/Append-Only>,
         <https://w3id.org/gaia-x/development#AccessAttribute/Read-Only>,
         <https://w3id.org/gaia-x/development#AccessAttribute/Read-Write> .
-
-gx:CPU a owl:Class ;
-    rdfs:label "CPU" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:lastLevelCacheSize ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:numberOfCores ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:numberOfThreads ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:smtEnabled ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:thermalDesignPower ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
-            owl:onProperty gx:numberOfCores ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
-            owl:onProperty gx:numberOfThreads ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Frequency> ;
-            owl:onProperty gx:baseFrequency ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Frequency> ;
-            owl:onProperty gx:boostFrequency ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Power> ;
-            owl:onProperty gx:thermalDesignPower ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:boolean ;
-            owl:onProperty gx:smtEnabled ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:cpuFlag ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:Architectures ;
-            owl:onProperty gx:cpuArchitecture ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:MemorySize ;
-            owl:onProperty gx:lastLevelCacheSize ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:baseFrequency ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:boostFrequency ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:cpuArchitecture ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:lastLevelCacheSize ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:numberOfCores ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:numberOfThreads ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:smtEnabled ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:thermalDesignPower ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:baseFrequency ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:boostFrequency ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:cpuArchitecture ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:cpuFlag ],
-        gx:Device ;
-    skos:definition "Computational processing unit of virtual and physical machines." ;
-    skos:inScheme gx:cpu .
 
 gx:ComputeFunctionRuntime a owl:Class ;
     rdfs:label "ComputeFunctionRuntime" ;
@@ -48683,6 +48544,271 @@ gx:DeduplicationMethod a owl:Class ;
         <https://w3id.org/gaia-x/development#DeduplicationMethod/Inline-Content-Aware>,
         <https://w3id.org/gaia-x/development#DeduplicationMethod/Post-Process-Content-Agnostic>,
         <https://w3id.org/gaia-x/development#DeduplicationMethod/Post-Process-Content-Aware> .
+
+gx:InstantiationRequirement a owl:Class ;
+    rdfs:label "InstantiationRequirement" ;
+    dcterms:title "Instantiation Requirement" ;
+    rdfs:subClassOf [ owl:unionOf ( gx:ComputeFunctionConfiguration gx:ConnectivityConfiguration gx:ContainerResourceLimits gx:ServerFlavor gx:StorageConfiguration ) ],
+        gx:GaiaXEntity ;
+    skos:definition "A container class to gather all requirements for compute service offering instantiations." ;
+    skos:inScheme gx:instantiation-requirement .
+
+gx:LabelLevel a owl:Class ;
+    rdfs:label "LabelLevel" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#LabelLevel/L1> <https://w3id.org/gaia-x/development#LabelLevel/L2> <https://w3id.org/gaia-x/development#LabelLevel/L3> <https://w3id.org/gaia-x/development#LabelLevel/SC> ) ;
+    skos:inScheme gx:compliance ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#LabelLevel/L1>,
+        <https://w3id.org/gaia-x/development#LabelLevel/L2>,
+        <https://w3id.org/gaia-x/development#LabelLevel/L3>,
+        <https://w3id.org/gaia-x/development#LabelLevel/SC> .
+
+gx:Memory a owl:Class ;
+    rdfs:label "Memory" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:eccEnabled ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:hardwareEncryption ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:memoryClass ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:memoryRank ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:memorySize ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:eccEnabled ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:hardwareEncryption ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemoryClasses ;
+            owl:onProperty gx:memoryClass ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemoryRanks ;
+            owl:onProperty gx:memoryRank ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:memorySize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:eccEnabled ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:hardwareEncryption ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memoryClass ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memoryRank ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:memorySize ],
+        gx:Device ;
+    skos:definition "Details with respect to properties and capabilities of RAM." ;
+    skos:inScheme gx:memory .
+
+gx:MemoryRanks a owl:Class ;
+    rdfs:label "MemoryRanks" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#MemoryRanks/1R%20RDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/2R%20RDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/4R%20LRDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/other> ) ;
+    skos:inScheme gx:memory ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#MemoryRanks/1R%20RDIMM>,
+        <https://w3id.org/gaia-x/development#MemoryRanks/2R%20RDIMM>,
+        <https://w3id.org/gaia-x/development#MemoryRanks/4R%20LRDIMM>,
+        <https://w3id.org/gaia-x/development#MemoryRanks/other> .
+
+gx:codeArtifact a owl:DatatypeProperty ;
+    rdfs:label "codeArtifact" ;
+    dcterms:title "Code Artifact" ;
+    skos:inScheme gx:slots .
+
+gx:confidentialComputingTechnology a owl:ObjectProperty ;
+    rdfs:label "confidentialComputingTechnology" ;
+    dcterms:title "Confidential Computing Technology" ;
+    rdfs:range gx:ConfidentialComputing ;
+    skos:definition "Details with respect to confidential computing requirements" ;
+    skos:inScheme gx:slots .
+
+gx:country a owl:DatatypeProperty ;
+    rdfs:label "country" ;
+    rdfs:range xsd:string ;
+    skos:definition "Textual representation of a country." ;
+    skos:inScheme gx:slots .
+
+gx:hypervisorType a owl:ObjectProperty ;
+    rdfs:label "hypervisorType" ;
+    dcterms:title "Hypervisor type" ;
+    rdfs:range gx:HypervisorType ;
+    skos:inScheme gx:slots .
+
+gx:instantiationReq a owl:DatatypeProperty ;
+    rdfs:label "instantiationReq" ;
+    dcterms:title "Instantiation Requirement" ;
+    skos:inScheme gx:slots .
+
+gx:interconnectedParticipants a owl:ObjectProperty ;
+    rdfs:label "interconnectedParticipants" ;
+    rdfs:range gx:LegalPerson ;
+    skos:definition "Legal persons participating within a concept." ;
+    skos:inScheme gx:slots .
+
+gx:interconnectionPointIdentifier a owl:ObjectProperty ;
+    rdfs:label "interconnectionPointIdentifier" ;
+    dcterms:title "Interconnection Point Identifier" ;
+    rdfs:range gx:InterconnectionPointIdentifier ;
+    skos:definition "Definition of the location where resources can interconnect." ;
+    skos:inScheme gx:slots .
+
+gx:overProvisioningRatio a owl:DatatypeProperty ;
+    rdfs:label "overProvisioningRatio" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+    skos:definition "Overprovisioning ratio defined by the division of the amount of allocated virtual resource over the amount of physical resource available." ;
+    skos:inScheme gx:slots .
+
+gx:tenantSeparation a owl:ObjectProperty ;
+    rdfs:label "tenantSeparation" ;
+    dcterms:title "tenant separation" ;
+    rdfs:range gx:TenantSeparation ;
+    skos:definition "How compute resources of different tenants are separated. Default value = hw-virtualized." ;
+    skos:inScheme gx:slots .
+
+gx:vlanConfiguration a owl:ObjectProperty ;
+    rdfs:label "vlanConfiguration" ;
+    dcterms:title "vlan configuration" ;
+    rdfs:range gx:VLANConfiguration ;
+    skos:definition "VLAN configuration." ;
+    skos:inScheme gx:slots .
+
+gx:CPU a owl:Class ;
+    rdfs:label "CPU" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:baseFrequency ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:boostFrequency ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:cpuArchitecture ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:cpuFlag ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:lastLevelCacheSize ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:numberOfCores ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:numberOfThreads ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:smtEnabled ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:thermalDesignPower ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+            owl:onProperty gx:numberOfCores ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+            owl:onProperty gx:numberOfThreads ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Frequency> ;
+            owl:onProperty gx:baseFrequency ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Frequency> ;
+            owl:onProperty gx:boostFrequency ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom <http://qudt.org/vocab/quantitykind/Power> ;
+            owl:onProperty gx:thermalDesignPower ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty gx:smtEnabled ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:cpuFlag ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Architectures ;
+            owl:onProperty gx:cpuArchitecture ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:MemorySize ;
+            owl:onProperty gx:lastLevelCacheSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:baseFrequency ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:boostFrequency ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:cpuArchitecture ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:lastLevelCacheSize ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:numberOfCores ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:numberOfThreads ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:smtEnabled ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:thermalDesignPower ],
+        gx:Device ;
+    skos:definition "Computational processing unit of virtual and physical machines." ;
+    skos:inScheme gx:cpu .
+
+gx:ComputeFunctionDeploymentMethod a owl:Class ;
+    rdfs:label "ComputeFunctionDeploymentMethod" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/gitLab> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/inlineEditor> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/integratedRepo> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/objectStorage> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/other> ) ;
+    skos:definition "Methods for deploying compute function code." ;
+    skos:inScheme gx:compute-function-configuration ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/gitLab>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/inlineEditor>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/integratedRepo>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/objectStorage>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/other> .
+
+gx:ComputeFunctionLanguage a owl:Class ;
+    rdfs:label "ComputeFunctionLanguage" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/golang> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/jre> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/node.js> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/other> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/python> ) ;
+    skos:definition "Language runtime for compute function code." ;
+    skos:inScheme gx:compute-function-configuration ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/golang>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/jre>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/node.js>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/other>,
+        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/python> .
+
+gx:ContainerFormat a owl:Class ;
+    rdfs:label "ContainerFormat" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#ContainerFormat/dockerv1> <https://w3id.org/gaia-x/development#ContainerFormat/dockerv2> <https://w3id.org/gaia-x/development#ContainerFormat/lxc> <https://w3id.org/gaia-x/development#ContainerFormat/lxd> <https://w3id.org/gaia-x/development#ContainerFormat/oci> ) ;
+    skos:definition "Possible values for container image format." ;
+    skos:inScheme gx:container-image ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#ContainerFormat/dockerv1>,
+        <https://w3id.org/gaia-x/development#ContainerFormat/dockerv2>,
+        <https://w3id.org/gaia-x/development#ContainerFormat/lxc>,
+        <https://w3id.org/gaia-x/development#ContainerFormat/lxd>,
+        <https://w3id.org/gaia-x/development#ContainerFormat/oci> .
 
 gx:Disk a owl:Class ;
     rdfs:label "Disk" ;
@@ -48762,29 +48888,67 @@ gx:GPU a owl:Class ;
     skos:definition "Graphical processing unit of virtual and physical machines." ;
     skos:inScheme gx:gpu .
 
-gx:LabelLevel a owl:Class ;
-    rdfs:label "LabelLevel" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#LabelLevel/L1> <https://w3id.org/gaia-x/development#LabelLevel/L2> <https://w3id.org/gaia-x/development#LabelLevel/L3> <https://w3id.org/gaia-x/development#LabelLevel/SC> ) ;
-    skos:inScheme gx:compliance ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#LabelLevel/L1>,
-        <https://w3id.org/gaia-x/development#LabelLevel/L2>,
-        <https://w3id.org/gaia-x/development#LabelLevel/L3>,
-        <https://w3id.org/gaia-x/development#LabelLevel/SC> .
+gx:IPIType a owl:Class ;
+    rdfs:label "IPIType" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#IPIType/Link> <https://w3id.org/gaia-x/development#IPIType/Network> <https://w3id.org/gaia-x/development#IPIType/Other> <https://w3id.org/gaia-x/development#IPIType/Physical> <https://w3id.org/gaia-x/development#IPIType/URI> ) ;
+    skos:inScheme gx:connectivity-configuration ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#IPIType/Link>,
+        <https://w3id.org/gaia-x/development#IPIType/Network>,
+        <https://w3id.org/gaia-x/development#IPIType/Other>,
+        <https://w3id.org/gaia-x/development#IPIType/Physical>,
+        <https://w3id.org/gaia-x/development#IPIType/URI> .
 
-gx:MemoryRanks a owl:Class ;
-    rdfs:label "MemoryRanks" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#MemoryRanks/1R%20RDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/2R%20RDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/4R%20LRDIMM> <https://w3id.org/gaia-x/development#MemoryRanks/other> ) ;
-    skos:inScheme gx:memory ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#MemoryRanks/1R%20RDIMM>,
-        <https://w3id.org/gaia-x/development#MemoryRanks/2R%20RDIMM>,
-        <https://w3id.org/gaia-x/development#MemoryRanks/4R%20LRDIMM>,
-        <https://w3id.org/gaia-x/development#MemoryRanks/other> .
+gx:PersonalDataProtectionRegime a owl:Class ;
+    rdfs:label "PersonalDataProtectionRegime" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/CCPA2018> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/GDPR2016> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/LGPD2019> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/PDPA2012> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/VCDPA2021> ) ;
+    skos:inScheme gx:service-offering ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/CCPA2018>,
+        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/GDPR2016>,
+        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/LGPD2019>,
+        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/PDPA2012>,
+        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/VCDPA2021> .
+
+gx:PolicyLanguageEnum a owl:Class ;
+    rdfs:label "PolicyLanguageEnum" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#PolicyLanguageEnum/JSON> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/ODRL> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Other> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Rego> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/XACML> ) ;
+    skos:definition "Enumeration of (non-exhaustive) possible policy languages." ;
+    skos:inScheme gx:access-usage-policy ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#PolicyLanguageEnum/JSON>,
+        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/ODRL>,
+        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Other>,
+        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Rego>,
+        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/XACML> .
+
+gx:ProtocolType a owl:Class ;
+    rdfs:label "ProtocolType" ;
+    owl:unionOf ( <https://w3id.org/gaia-x/development#ProtocolType/ARP> <https://w3id.org/gaia-x/development#ProtocolType/Ethernet> <https://w3id.org/gaia-x/development#ProtocolType/Other> <https://w3id.org/gaia-x/development#ProtocolType/PPP> <https://w3id.org/gaia-x/development#ProtocolType/VLAN> ) ;
+    skos:inScheme gx:link-connectivity-service-offering ;
+    linkml:permissible_values <https://w3id.org/gaia-x/development#ProtocolType/ARP>,
+        <https://w3id.org/gaia-x/development#ProtocolType/Ethernet>,
+        <https://w3id.org/gaia-x/development#ProtocolType/Other>,
+        <https://w3id.org/gaia-x/development#ProtocolType/PPP>,
+        <https://w3id.org/gaia-x/development#ProtocolType/VLAN> .
 
 gx:ServiceOffering a owl:Class ;
     rdfs:label "ServiceOffering",
         "Dienst-Angebot"@de ;
     dcterms:title "Service Offering" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:cryptographicSecurityStandards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:customerInstructions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataAccountExport ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataPortability ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:dataProtectionRegime ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:dependsOn ],
         [ a owl:Restriction ;
@@ -48905,169 +49069,9 @@ gx:ServiceOffering a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:aggregationOfResources ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:cryptographicSecurityStandards ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:customerInstructions ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataAccountExport ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataPortability ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:dataProtectionRegime ],
         gx:GaiaXEntity ;
     skos:definition "A digital service available for order." ;
     skos:inScheme gx:service-offering .
-
-gx:codeArtifact a owl:DatatypeProperty ;
-    rdfs:label "codeArtifact" ;
-    dcterms:title "Code Artifact" ;
-    skos:inScheme gx:slots .
-
-gx:confidentialComputingTechnology a owl:ObjectProperty ;
-    rdfs:label "confidentialComputingTechnology" ;
-    dcterms:title "Confidential Computing Technology" ;
-    rdfs:range gx:ConfidentialComputing ;
-    skos:definition "Details with respect to confidential computing requirements" ;
-    skos:inScheme gx:slots .
-
-gx:country a owl:DatatypeProperty ;
-    rdfs:label "country" ;
-    rdfs:range xsd:string ;
-    skos:definition "Textual representation of a country." ;
-    skos:inScheme gx:slots .
-
-gx:hypervisorType a owl:ObjectProperty ;
-    rdfs:label "hypervisorType" ;
-    dcterms:title "Hypervisor type" ;
-    rdfs:range gx:HypervisorType ;
-    skos:inScheme gx:slots .
-
-gx:instantiationReq a owl:DatatypeProperty ;
-    rdfs:label "instantiationReq" ;
-    dcterms:title "Instantiation Requirement" ;
-    skos:inScheme gx:slots .
-
-gx:interconnectedParticipants a owl:ObjectProperty ;
-    rdfs:label "interconnectedParticipants" ;
-    rdfs:range gx:LegalPerson ;
-    skos:definition "Legal persons participating within a concept." ;
-    skos:inScheme gx:slots .
-
-gx:interconnectionPointIdentifier a owl:ObjectProperty ;
-    rdfs:label "interconnectionPointIdentifier" ;
-    dcterms:title "Interconnection Point Identifier" ;
-    rdfs:range gx:InterconnectionPointIdentifier ;
-    skos:definition "Definition of the location where resources can interconnect." ;
-    skos:inScheme gx:slots .
-
-gx:overProvisioningRatio a owl:DatatypeProperty ;
-    rdfs:label "overProvisioningRatio" ;
-    rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
-                        owl:onDatatype xsd:integer ;
-                        owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
-    skos:definition "Overprovisioning ratio defined by the division of the amount of allocated virtual resource over the amount of physical resource available." ;
-    skos:inScheme gx:slots .
-
-gx:tenantSeparation a owl:ObjectProperty ;
-    rdfs:label "tenantSeparation" ;
-    dcterms:title "tenant separation" ;
-    rdfs:range gx:TenantSeparation ;
-    skos:definition "How compute resources of different tenants are separated. Default value = hw-virtualized." ;
-    skos:inScheme gx:slots .
-
-gx:vlanConfiguration a owl:ObjectProperty ;
-    rdfs:label "vlanConfiguration" ;
-    dcterms:title "vlan configuration" ;
-    rdfs:range gx:VLANConfiguration ;
-    skos:definition "VLAN configuration." ;
-    skos:inScheme gx:slots .
-
-<http://qudt.org/vocab/quantitykind/Time> a owl:Class ;
-    rdfs:label "Time" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    owl:equivalentClass gx:Time ;
-    skos:inScheme gx:quantity .
-
-gx:ComputeFunctionDeploymentMethod a owl:Class ;
-    rdfs:label "ComputeFunctionDeploymentMethod" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/gitLab> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/inlineEditor> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/integratedRepo> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/objectStorage> <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/other> ) ;
-    skos:definition "Methods for deploying compute function code." ;
-    skos:inScheme gx:compute-function-configuration ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/gitLab>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/inlineEditor>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/integratedRepo>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/objectStorage>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionDeploymentMethod/other> .
-
-gx:ComputeFunctionLanguage a owl:Class ;
-    rdfs:label "ComputeFunctionLanguage" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/golang> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/jre> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/node.js> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/other> <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/python> ) ;
-    skos:definition "Language runtime for compute function code." ;
-    skos:inScheme gx:compute-function-configuration ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/golang>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/jre>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/node.js>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/other>,
-        <https://w3id.org/gaia-x/development#ComputeFunctionLanguage/python> .
-
-gx:ContainerFormat a owl:Class ;
-    rdfs:label "ContainerFormat" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#ContainerFormat/dockerv1> <https://w3id.org/gaia-x/development#ContainerFormat/dockerv2> <https://w3id.org/gaia-x/development#ContainerFormat/lxc> <https://w3id.org/gaia-x/development#ContainerFormat/lxd> <https://w3id.org/gaia-x/development#ContainerFormat/oci> ) ;
-    skos:definition "Possible values for container image format." ;
-    skos:inScheme gx:container-image ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#ContainerFormat/dockerv1>,
-        <https://w3id.org/gaia-x/development#ContainerFormat/dockerv2>,
-        <https://w3id.org/gaia-x/development#ContainerFormat/lxc>,
-        <https://w3id.org/gaia-x/development#ContainerFormat/lxd>,
-        <https://w3id.org/gaia-x/development#ContainerFormat/oci> .
-
-gx:IPIType a owl:Class ;
-    rdfs:label "IPIType" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#IPIType/Link> <https://w3id.org/gaia-x/development#IPIType/Network> <https://w3id.org/gaia-x/development#IPIType/Other> <https://w3id.org/gaia-x/development#IPIType/Physical> <https://w3id.org/gaia-x/development#IPIType/URI> ) ;
-    skos:inScheme gx:connectivity-configuration ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#IPIType/Link>,
-        <https://w3id.org/gaia-x/development#IPIType/Network>,
-        <https://w3id.org/gaia-x/development#IPIType/Other>,
-        <https://w3id.org/gaia-x/development#IPIType/Physical>,
-        <https://w3id.org/gaia-x/development#IPIType/URI> .
-
-gx:PersonalDataProtectionRegime a owl:Class ;
-    rdfs:label "PersonalDataProtectionRegime" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/CCPA2018> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/GDPR2016> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/LGPD2019> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/PDPA2012> <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/VCDPA2021> ) ;
-    skos:inScheme gx:service-offering ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/CCPA2018>,
-        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/GDPR2016>,
-        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/LGPD2019>,
-        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/PDPA2012>,
-        <https://w3id.org/gaia-x/development#PersonalDataProtectionRegime/VCDPA2021> .
-
-gx:PolicyLanguageEnum a owl:Class ;
-    rdfs:label "PolicyLanguageEnum" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#PolicyLanguageEnum/JSON> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/ODRL> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Other> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Rego> <https://w3id.org/gaia-x/development#PolicyLanguageEnum/XACML> ) ;
-    skos:definition "Enumeration of (non-exhaustive) possible policy languages." ;
-    skos:inScheme gx:access-usage-policy ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#PolicyLanguageEnum/JSON>,
-        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/ODRL>,
-        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Other>,
-        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/Rego>,
-        <https://w3id.org/gaia-x/development#PolicyLanguageEnum/XACML> .
-
-gx:ProtocolType a owl:Class ;
-    rdfs:label "ProtocolType" ;
-    owl:unionOf ( <https://w3id.org/gaia-x/development#ProtocolType/ARP> <https://w3id.org/gaia-x/development#ProtocolType/Ethernet> <https://w3id.org/gaia-x/development#ProtocolType/Other> <https://w3id.org/gaia-x/development#ProtocolType/PPP> <https://w3id.org/gaia-x/development#ProtocolType/VLAN> ) ;
-    skos:inScheme gx:link-connectivity-service-offering ;
-    linkml:permissible_values <https://w3id.org/gaia-x/development#ProtocolType/ARP>,
-        <https://w3id.org/gaia-x/development#ProtocolType/Ethernet>,
-        <https://w3id.org/gaia-x/development#ProtocolType/Other>,
-        <https://w3id.org/gaia-x/development#ProtocolType/PPP>,
-        <https://w3id.org/gaia-x/development#ProtocolType/VLAN> .
 
 gx:StorageAPI a owl:Class ;
     rdfs:label "StorageAPI" ;
@@ -49098,6 +49102,7 @@ gx:WatchDogActions a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty <http://qudt.org/schema/qudt/quantityValue> ],
+        [ owl:unionOf ( <http://qudt.org/vocab/quantitykind/DataRate> <http://qudt.org/vocab/quantitykind/Frequency> gx:LostPackets gx:MemorySize <http://qudt.org/vocab/quantitykind/Power> gx:SLATargetPercentile <http://qudt.org/vocab/quantitykind/Time> ) ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:float ;
             owl:onProperty <http://qudt.org/schema/qudt/quantityValue> ],
@@ -49112,6 +49117,12 @@ gx:WatchDogActions a owl:Class ;
             owl:onProperty <http://qudt.org/schema/qudt/quantityValue> ] ;
     owl:equivalentClass gx:QuantityKind ;
     skos:definition "A Quantity Kind is any observable property that can be measured and quantified numerically. Familiar examples include physical properties such as length, mass, time, force, energy, power, electric charge, etc. Less familiar examples include currency, interest rate, price to earning ratio, and information capacity." ;
+    skos:inScheme gx:quantity .
+
+<http://qudt.org/vocab/quantitykind/Time> a owl:Class ;
+    rdfs:label "Time" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    owl:equivalentClass gx:Time ;
     skos:inScheme gx:quantity .
 
 gx:Architectures a owl:Class ;
@@ -49161,24 +49172,25 @@ gx:GPUInterconnetionTypes a owl:Class ;
 gx:GaiaXEntity a owl:Class ;
     rdfs:label "GaiaXEntity" ;
     dcterms:title "Gaia-X Entity" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty <http://schema.org/description> ],
+    rdfs:subClassOf [ owl:unionOf ( gx:DigitalServiceOffering gx:EcoTSP gx:EcoTrustScope gx:Ecosystem gx:InstantiationRequirement gx:Participant gx:Resource gx:ServiceOffering ) ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
-            owl:onProperty <http://schema.org/name> ],
+            owl:onProperty schema:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty schema:name ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty <http://schema.org/description> ],
+            owl:onProperty schema:description ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty <http://schema.org/name> ],
+            owl:onProperty schema:name ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty <http://schema.org/description> ],
+            owl:onProperty schema:description ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty <http://schema.org/name> ] ;
+            owl:onProperty schema:name ] ;
     skos:definition "Root class for Gaia-X entities." ;
     skos:inScheme <http://w3id.org/gaia-x/gx-trust-framework> .
 
@@ -49318,6 +49330,7 @@ gx:RNGTypes a owl:Class ;
 
 gx:RegistrationNumber a owl:Class ;
     rdfs:label "RegistrationNumber" ;
+    rdfs:subClassOf [ owl:unionOf ( gx:CountryCompanyNumber gx:EORI gx:EUID gx:LeiCode gx:LocalRegistrationNumber gx:TaxID gx:VatID ) ] ;
     skos:definition "Country's registration number, which identifies one specific entity. Allowed entries are Local, VatID, lei code, EODI, and EUID." ;
     skos:inScheme gx:legal-person .
 
@@ -49408,18 +49421,6 @@ gx:MemoryClasses a owl:Class ;
         <https://w3id.org/gaia-x/development#MemoryClasses/SDRAM>,
         <https://w3id.org/gaia-x/development#MemoryClasses/other> .
 
-gx:Resource a owl:Class ;
-    rdfs:label "Resource" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom gx:Resource ;
-            owl:onProperty gx:aggregationOfResources ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:aggregationOfResources ],
-        gx:GaiaXEntity ;
-    skos:definition "Description of a good or object of the Gaia-X Ecosystem, and may be aggregated in a Service Offering or exist independently of it." ;
-    skos:inScheme gx:resource .
-
 gx:aggregationOfResources a owl:DatatypeProperty ;
     rdfs:label "aggregationOfResources" ;
     dcterms:title "aggregation of" ;
@@ -49430,6 +49431,9 @@ gx:aggregationOfResources a owl:DatatypeProperty ;
 gx:Address a owl:Class ;
     rdfs:label "Address" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:countryName ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:gps ],
         [ a owl:Restriction ;
@@ -49485,12 +49489,22 @@ gx:Address a owl:Class ;
             owl:onProperty <http://www.w3.org/2006/vcard/ns#region> ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
-            owl:onProperty <http://www.w3.org/2006/vcard/ns#street-address> ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:countryName ] ;
+            owl:onProperty <http://www.w3.org/2006/vcard/ns#street-address> ] ;
     skos:definition "Full address of the entity." ;
     skos:inScheme gx:address .
+
+gx:Resource a owl:Class ;
+    rdfs:label "Resource" ;
+    rdfs:subClassOf [ owl:unionOf ( gx:AvailabilityZone gx:PhysicalResource gx:Region gx:VirtualResource ) ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:Resource ;
+            owl:onProperty gx:aggregationOfResources ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:aggregationOfResources ],
+        gx:GaiaXEntity ;
+    skos:definition "Description of a good or object of the Gaia-X Ecosystem, and may be aggregated in a Service Offering or exist independently of it." ;
+    skos:inScheme gx:resource .
 
 gx:SignatureAlgorithm a owl:Class ;
     rdfs:label "SignatureAlgorithm" ;
