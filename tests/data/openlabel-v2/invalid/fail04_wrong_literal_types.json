@@ -3,7 +3,7 @@
       "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "http://schema.org/"
+         "sdo": "https://schema.org/"
       }
    ],
    "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail04_integer_for_decimal",

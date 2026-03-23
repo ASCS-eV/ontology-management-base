@@ -10,5 +10,5 @@
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue                                               =
 =    Error:            Node Literal("3.5", datatype=xsd:integer) must conform to one or more shapes in [ sh:datatype xsd:integer ; sh:nodeKind       =
-=                      sh:Literal ] , [ sh:class schema1:QuantitativeValue ]                                                                         =
+=                      sh:Literal ] , [ sh:class sdo:QuantitativeValue ]                                                                             =
 ======================================================================================================================================================

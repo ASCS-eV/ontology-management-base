@@ -5,7 +5,7 @@
 @prefix pav: <http://purl.org/pav/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema1: <http://schema.org/> .
+@prefix sdo: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -2071,7 +2071,7 @@ openlabel_v2:QuantitativeValue a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty openlabel_v2:minValue ] ;
     skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
-    skos:exactMatch schema1:QuantitativeValue ;
+    skos:exactMatch sdo:QuantitativeValue ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:DrivableAreaType a owl:Class,

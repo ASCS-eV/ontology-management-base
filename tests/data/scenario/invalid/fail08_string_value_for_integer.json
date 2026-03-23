@@ -8,7 +8,7 @@
       {
          "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "http://schema.org/"
+         "sdo": "https://schema.org/"
       }
    ],
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail08_string_value_for_integer",
@@ -60,15 +60,15 @@
             "@type": "openlabel:Behaviour",
             "openlabel:MotionDecelerate": true,
             "openlabel:motionDecelerateValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": "4.444",
-               "schema:minValue": "0.053"
+               "@type": "sdo:QuantitativeValue",
+               "sdo:maxValue": "4.444",
+               "sdo:minValue": "0.053"
             },
             "openlabel:MotionDrive": true,
             "openlabel:motionDriveValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": "60.001",
-               "schema:minValue": "0.01"
+               "@type": "sdo:QuantitativeValue",
+               "sdo:maxValue": "60.001",
+               "sdo:minValue": "0.01"
             }
          }
       ],

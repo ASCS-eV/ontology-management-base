@@ -5,7 +5,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "http://schema.org/",
+         "sdo": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],
@@ -14,8 +14,8 @@
    "leakage-test:hasCodeArtifact": {
       "@id": "did:web:registry.envited-x.net::CodeArtifactBase:leakage-test-001",
       "@type": "envited-x:CodeArtifactBase",
-      "schema:name": "Leakage Test",
-      "schema:description": "parameters for a leakage test",
+      "sdo:name": "Leakage Test",
+      "sdo:description": "parameters for a leakage test",
       "gx:license": "EPL-2.0",
       "gx:copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"

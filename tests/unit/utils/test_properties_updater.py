@@ -52,7 +52,7 @@ def test_prefix_helpers(temp_dir: Path):
 
 
 def test_parse_graph_preserves_authored_schema_prefix(temp_dir: Path):
-    ttl = """@prefix schema: <http://schema.org/> .
+    ttl = """@prefix schema: <https://schema.org/> .
 @prefix ex: <http://example.org/> .
 
 ex:Thing schema:name "Example" .
@@ -63,5 +63,5 @@ ex:Thing schema:name "Example" .
     graph = properties_updater.parse_graph(file_path, "turtle")
     prefixes = properties_updater.extract_prefixes(graph)
 
-    assert prefixes["http://schema.org/"] == "schema"
-    assert "https://schema.org/" not in prefixes
+    assert prefixes["https://schema.org/"] == "schema"
+    assert "http://schema.org/" not in prefixes

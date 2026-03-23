@@ -6,7 +6,7 @@
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "http://schema.org/",
+         "sdo": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],
@@ -15,8 +15,8 @@
    "service:hasServiceOffering": {
       "@id": "did:web:registry.envited-x.net::ServiceOfferingBase:service-001",
       "@type": "envited-x:ServiceOfferingBase",
-      "schema:name": "Example Service",
-      "schema:description": "Description of Example Service",
+      "sdo:name": "Example Service",
+      "sdo:description": "Description of Example Service",
       "gx:providedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },

@@ -10,7 +10,7 @@
       "sh": "http://www.w3.org/ns/shacl#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "schema": "http://schema.org/"
+      "sdo": "https://schema.org/"
    },
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail01_false_value_scenario_instance",
    "@type": "scenario:Scenario",
@@ -61,15 +61,15 @@
             "@type": "openlabel:Behaviour",
             "openlabel:MotionDecelerate": false,
             "openlabel:motionDecelerateValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": 4.444,
-               "schema:minValue": 0.053
+               "@type": "sdo:QuantitativeValue",
+               "sdo:maxValue": 4.444,
+               "sdo:minValue": 0.053
             },
             "openlabel:MotionDrive": true,
             "openlabel:motionDriveValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": 60.001,
-               "schema:minValue": 0.01
+               "@type": "sdo:QuantitativeValue",
+               "sdo:maxValue": 60.001,
+               "sdo:minValue": 0.01
             }
          }
       ],

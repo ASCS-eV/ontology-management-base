@@ -5,7 +5,7 @@
       "HTML": {
          "@id": "rdf:HTML"
       },
-      "@vocab": "http://schema.org/",
+      "@vocab": "https://schema.org/",
       "brick": "https://brickschema.org/schema/Brick#",
       "csvw": "http://www.w3.org/ns/csvw#",
       "dc": "http://purl.org/dc/elements/1.1/",
@@ -23,7 +23,7 @@
       "qb": "http://purl.org/linked-data/cube#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-      "schema": "http://schema.org/",
+      "schema": "https://schema.org/",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "sosa": "http://www.w3.org/ns/sosa/",

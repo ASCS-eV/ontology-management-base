@@ -17,7 +17,7 @@ license: https://creativecommons.org/licenses/by/4.0/
 prefixes:
   linkml: https://w3id.org/linkml/
   openlabel_v2: https://w3id.org/ascs-ev/envited-x/openlabel/v2/
-  schema: http://schema.org/
+  sdo: https://schema.org/
 
 default_prefix: openlabel_v2
 default_range: string
@@ -379,7 +379,7 @@ classes:
     description: >-
       A point value or interval for quantitative measurements.
       Requires minValue and maxValue.
-    class_uri: schema:QuantitativeValue
+    class_uri: sdo:QuantitativeValue
     slots:
       - minValue
       - maxValue
@@ -1107,13 +1107,13 @@ slots:
   # ---------------------------------------------------------------------------
   minValue:
     description: Minimum value of the range.
-    slot_uri: schema:minValue
+    slot_uri: sdo:minValue
     range: decimal
     required: true
 
   maxValue:
     description: Maximum value of the range.
-    slot_uri: schema:maxValue
+    slot_uri: sdo:maxValue
     range: decimal
     required: true
 

@@ -169,7 +169,7 @@ def test_base_ontology_filtering_normalizes_http_https(temp_dir):
 <!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
   "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-  <uri name="http://schema.org/" uri="schema/schema.owl.ttl"/>
+  <uri name="https://schema.org/" uri="schema/schema.owl.ttl"/>
 </catalog>
 """
     _write_imports_catalog(temp_dir, imports_catalog)
@@ -255,7 +255,7 @@ def test_is_imported_namespace_matches_imports_catalog(temp_dir):
         """<?xml version="1.0" encoding="UTF-8"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
   <uri name="http://www.w3.org/2002/07/owl" uri="owl/owl.owl.ttl"/>
-  <uri name="http://schema.org/" uri="schema/schema.owl.ttl"/>
+  <uri name="https://schema.org/" uri="schema/schema.owl.ttl"/>
 </catalog>
 """,
     )
@@ -264,7 +264,7 @@ def test_is_imported_namespace_matches_imports_catalog(temp_dir):
 
     # Matches via imports catalog
     assert resolver.is_imported_namespace("http://www.w3.org/2002/07/owl#Class")
-    assert resolver.is_imported_namespace("http://schema.org/Person")
+    assert resolver.is_imported_namespace("https://schema.org/Person")
     # http/https normalization
     assert resolver.is_imported_namespace("https://schema.org/QuantitativeValue")
     # Not in imports catalog

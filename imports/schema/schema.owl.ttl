@@ -14889,8 +14889,7 @@ schema:loser a rdf:Property ;
 schema:lowPrice a rdf:Property ;
     rdfs:label "lowPrice" ;
     rdfs:comment "The lowest price of all offers available.\\n\\nUsage guidelines:\\n\\n* Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols.\\n* Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator." ;
-    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount,
-        cmns-q:hasLowerBound ;
+    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount ;
     schema:domainIncludes schema:AggregateOffer ;
     schema:rangeIncludes schema:Number,
         schema:Text .
@@ -14988,8 +14987,7 @@ schema:mathExpression a rdf:Property ;
 schema:maxPrice a rdf:Property ;
     rdfs:label "maxPrice" ;
     rdfs:comment "The highest price if the price is a range." ;
-    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount,
-        cmns-q:hasUpperBound ;
+    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount ;
     schema:contributor <https://schema.org/docs/collab/GoodRelationsTerms> ;
     schema:domainIncludes schema:PriceSpecification ;
     schema:rangeIncludes schema:Number .
@@ -14997,7 +14995,6 @@ schema:maxPrice a rdf:Property ;
 schema:maxValue a rdf:Property ;
     rdfs:label "maxValue" ;
     rdfs:comment "The upper value of some characteristic or property." ;
-    rdfs:subPropertyOf cmns-q:hasUpperBound ;
     schema:contributor <https://schema.org/docs/collab/GoodRelationsTerms> ;
     schema:domainIncludes schema:MonetaryAmount,
         schema:PropertyValue,
@@ -15008,7 +15005,6 @@ schema:maxValue a rdf:Property ;
 schema:maximumAttendeeCapacity a rdf:Property ;
     rdfs:label "maximumAttendeeCapacity" ;
     rdfs:comment "The total number of individuals that may attend an event or venue." ;
-    rdfs:subPropertyOf cmns-q:hasUpperBound ;
     schema:domainIncludes schema:Event,
         schema:Place ;
     schema:rangeIncludes schema:Integer .
@@ -15262,8 +15258,7 @@ schema:mileageFromOdometer a rdf:Property ;
 schema:minPrice a rdf:Property ;
     rdfs:label "minPrice" ;
     rdfs:comment "The lowest price if the price is a range." ;
-    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount,
-        cmns-q:hasLowerBound ;
+    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount ;
     schema:contributor <https://schema.org/docs/collab/GoodRelationsTerms> ;
     schema:domainIncludes schema:PriceSpecification ;
     schema:rangeIncludes schema:Number .
@@ -15271,7 +15266,6 @@ schema:minPrice a rdf:Property ;
 schema:minValue a rdf:Property ;
     rdfs:label "minValue" ;
     rdfs:comment "The lower value of some characteristic or property." ;
-    rdfs:subPropertyOf cmns-q:hasLowerBound ;
     schema:contributor <https://schema.org/docs/collab/GoodRelationsTerms> ;
     schema:domainIncludes schema:MonetaryAmount,
         schema:PropertyValue,
@@ -15282,8 +15276,7 @@ schema:minValue a rdf:Property ;
 schema:minimumPaymentDue a rdf:Property ;
     rdfs:label "minimumPaymentDue" ;
     rdfs:comment "The minimum payment required at this time." ;
-    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount,
-        cmns-q:hasLowerBound ;
+    rdfs:subPropertyOf fibo-fnd-acc-cur:hasMonetaryAmount ;
     schema:domainIncludes schema:Invoice ;
     schema:rangeIncludes schema:MonetaryAmount,
         schema:PriceSpecification .
@@ -16005,7 +15998,6 @@ schema:orderPercentage a rdf:Property ;
 schema:orderQuantity a rdf:Property ;
     rdfs:label "orderQuantity" ;
     rdfs:comment "The number of the item ordered. If the property is not set, assume the quantity is one." ;
-    rdfs:subPropertyOf cmns-q:hasQuantity ;
     owl:equivalentProperty unece:orderQuantity ;
     schema:domainIncludes schema:OrderItem ;
     schema:rangeIncludes schema:Number,
@@ -16549,7 +16541,6 @@ schema:postalCode a rdf:Property ;
 schema:postalCodeBegin a rdf:Property ;
     rdfs:label "postalCodeBegin" ;
     rdfs:comment "First postal code in a range (included)." ;
-    rdfs:subPropertyOf cmns-q:hasLowerBound ;
     schema:domainIncludes schema:PostalCodeRangeSpecification ;
     schema:rangeIncludes schema:Text ;
     schema:source <https://github.com/schemaorg/schemaorg/issues/2506> .
@@ -16557,7 +16548,6 @@ schema:postalCodeBegin a rdf:Property ;
 schema:postalCodeEnd a rdf:Property ;
     rdfs:label "postalCodeEnd" ;
     rdfs:comment "Last postal code in the range (included). Needs to be after [[postalCodeBegin]]." ;
-    rdfs:subPropertyOf cmns-q:hasUpperBound ;
     schema:domainIncludes schema:PostalCodeRangeSpecification ;
     schema:rangeIncludes schema:Text ;
     schema:source <https://github.com/schemaorg/schemaorg/issues/2506> .
@@ -16673,8 +16663,7 @@ schema:price a rdf:Property ;
     rdfs:label "price" ;
     rdfs:comment """The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.\\n\\nUsage guidelines:\\n\\n* Use the [[priceCurrency]] property (with standard formats: [ISO 4217 currency format](http://en.wikipedia.org/wiki/ISO_4217), e.g. "USD"; [Ticker symbol](https://en.wikipedia.org/wiki/List_of_cryptocurrencies) for cryptocurrencies, e.g. "BTC"; well known names for [Local Exchange Trading Systems](https://en.wikipedia.org/wiki/Local_exchange_trading_system) (LETS) and other currency types, e.g. "Ithaca HOUR") instead of including [ambiguous symbols](http://en.wikipedia.org/wiki/Dollar_sign#Currencies_that_use_the_dollar_or_peso_sign) such as '$' in the value.\\n* Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.\\n* Note that both [RDFa](http://www.w3.org/TR/xhtml-rdfa-primer/#using-the-content-attribute) and Microdata syntax allow the use of a "content=" attribute for publishing simple machine-readable values alongside more human-friendly formatting.\\n* Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols.
       """ ;
-    rdfs:subPropertyOf fibo-fnd-acc-cur:hasAmount,
-        cmns-q:hasNumericValue ;
+    rdfs:subPropertyOf fibo-fnd-acc-cur:hasAmount ;
     schema:domainIncludes schema:DonateAction,
         schema:Offer,
         schema:PriceSpecification,
@@ -21107,9 +21096,7 @@ cmns-loc:hasLongitude a rdf:Property .
 
 cmns-loc:isLocatedIn a rdf:Property .
 
-cmns-q:hasNumericValue a rdf:Property .
 
-cmns-q:hasQuantity a rdf:Property .
 
 eli:amends a rdf:Property .
 
@@ -21476,7 +21463,6 @@ fibo-fnd-acc-cur:hasMonetaryAmount a rdf:Property .
 
 cmns-cls:isClassifiedBy a rdf:Property .
 
-cmns-q:hasUpperBound a rdf:Property .
 
 schema:hasPart a rdf:Property ;
     rdfs:label "hasPart" ;
@@ -21496,7 +21482,6 @@ schema:position a rdf:Property ;
 
 cmns-loc:hasAddress a rdf:Property .
 
-cmns-q:hasLowerBound a rdf:Property .
 
 schema:isPartOf a rdf:Property ;
     rdfs:label "isPartOf" ;
