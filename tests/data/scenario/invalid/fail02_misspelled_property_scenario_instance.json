@@ -7,7 +7,7 @@
       "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
       "gx": "https://w3id.org/gaia-x/development#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "sdo": "https://schema.org/",
+      "schema": "https://schema.org/",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#"
    },
@@ -75,15 +75,15 @@
             "@type": "openlabel:Behaviour",
             "openlabel:MotionDecelerate": true,
             "openlabel:motionDecelerateValue": {
-               "@type": "sdo:QuantitativeValue",
-               "sdo:maxValue": "4.444",
-               "sdo:minValue": "0.053"
+               "@type": "schema:QuantitativeValue",
+               "schema:maxValue": "4.444",
+               "schema:minValue": "0.053"
             },
             "openlabel:MotionDrive": true,
             "openlabel:motionDriveValue": {
-               "@type": "sdo:QuantitativeValue",
-               "sdo:maxValue": "60.001",
-               "sdo:minValue": "0.01"
+               "@type": "schema:QuantitativeValue",
+               "schema:maxValue": "60.001",
+               "schema:minValue": "0.01"
             }
          }
       ],

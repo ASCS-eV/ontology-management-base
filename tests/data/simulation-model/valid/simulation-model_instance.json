@@ -5,7 +5,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
          "gx": "https://w3id.org/gaia-x/development#",
-         "sdo": "https://schema.org/",
+         "schema": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],
@@ -14,8 +14,8 @@
    "simulation-model:hasSoftwareResource": {
       "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:simulation-model-example-001",
       "@type": "envited-x:SoftwareResourceBase",
-      "sdo:name": "Simulation Model Example",
-      "sdo:description": "A sample description of a none existing simulation model.",
+      "schema:name": "Simulation Model Example",
+      "schema:description": "A sample description of a none existing simulation model.",
       "gx:license": "EPL-2.0",
       "gx:copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"

@@ -103,7 +103,7 @@ print('    OWL done')
 # JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top)
 import subprocess
 result = subprocess.run(
-    ['gen-jsonld-context', '--deterministic', '--no-mergeimports', 'linkml/gaia-x.yaml'],
+    ['gen-jsonld-context', '--deterministic', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
     capture_output=True, text=True,
 )
 if result.returncode != 0:

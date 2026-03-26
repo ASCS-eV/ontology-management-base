@@ -5,14 +5,14 @@
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
          "gx": "https://w3id.org/gaia-x/development#",
-         "sdo": "https://schema.org/"
+         "schema": "https://schema.org/"
       }
    ],
    "@graph": [
       {
          "@id": "did:web:test.gx.net:DataProduct:test_valid_gx_data_product",
          "@type": "gx:DataProduct",
-         "sdo:description": "Generated description.",
+         "schema:description": "Generated description.",
          "gx:digitalServiceOfferingName": "Generated Data Product",
          "gx:digitalServiceOfferingShortDescription": "Generated data product for Gaia-X validation examples.",
          "gx:digitalServiceOfferingIdentifier": "gx-data-product-001",

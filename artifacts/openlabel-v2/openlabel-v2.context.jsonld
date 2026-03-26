@@ -3,7 +3,7 @@
       "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       "linkml": "https://w3id.org/linkml/",
       "openlabel_v2": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      "sdo": "https://schema.org/",
+      "schema": "https://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "AdminTag": {
@@ -288,7 +288,7 @@
          "@type": "xsd:boolean"
       },
       "QuantitativeValue": {
-         "@id": "sdo:QuantitativeValue"
+         "@id": "schema:QuantitativeValue"
       },
       "RainType": {
          "@context": {
@@ -451,11 +451,11 @@
          "@type": "xsd:decimal"
       },
       "maxValue": {
-         "@id": "sdo:maxValue",
+         "@id": "schema:maxValue",
          "@type": "xsd:decimal"
       },
       "minValue": {
-         "@id": "sdo:minValue",
+         "@id": "schema:minValue",
          "@type": "xsd:decimal"
       },
       "motionAccelerateValue": {

@@ -5,7 +5,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
          "gx": "https://w3id.org/gaia-x/development#",
-         "sdo": "https://schema.org/",
+         "schema": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],
@@ -14,8 +14,8 @@
    "vv-report:hasCodeArtifact": {
       "@id": "did:web:registry.envited-x.net::CodeArtifactBase:vv-report-001",
       "@type": "envited-x:CodeArtifactBase",
-      "sdo:name": "ARS548 simulation model V&V report",
-      "sdo:description": "V&V Report of the radar sensor simulation model of the Continental ARS548 radar sensor",
+      "schema:name": "ARS548 simulation model V&V report",
+      "schema:description": "V&V Report of the radar sensor simulation model of the Continental ARS548 radar sensor",
       "gx:license": "EPL-2.0",
       "gx:copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"

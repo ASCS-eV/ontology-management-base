@@ -5,14 +5,14 @@
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
          "gx": "https://w3id.org/gaia-x/development#",
-         "sdo": "https://schema.org/"
+         "schema": "https://schema.org/"
       }
    ],
    "@graph": [
       {
          "@id": "did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type",
          "@type": "gx:DataProduct",
-         "sdo:description": "Invalid: gx:url uses xsd:string instead of xsd:anyURI.",
+         "schema:description": "Invalid: gx:url uses xsd:string instead of xsd:anyURI.",
          "gx:digitalServiceOfferingName": "Invalid URL Type Test",
          "gx:digitalServiceOfferingShortDescription": "Tests wrong datatype on gx:url.",
          "gx:digitalServiceOfferingIdentifier": "gx-invalid-url-001",

@@ -6,7 +6,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
          "gx": "https://w3id.org/gaia-x/development#",
-         "sdo": "https://schema.org/",
+         "schema": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],
@@ -15,8 +15,8 @@
    "automotive-simulator:hasSoftwareResource": {
       "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:auto-sim-001",
       "@type": "envited-x:SoftwareResourceBase",
-      "sdo:name": "Sensor failure and attack simulation with a modified CARLA simulator",
-      "sdo:description": "An extension of the CARLA simulator by various degradation models for perception sensors that cover effects of internal failures, external failures and security attacks.",
+      "schema:name": "Sensor failure and attack simulation with a modified CARLA simulator",
+      "schema:description": "An extension of the CARLA simulator by various degradation models for perception sensors that cover effects of internal failures, external failures and security attacks.",
       "gx:license": "EPL-2.0",
       "gx:copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
@@ -34,7 +34,7 @@
          "simulated-sensor:simulatedSensor": [
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "sdo:name": "Simulated Radar Sensor",
+               "schema:name": "Simulated Radar Sensor",
                "sensorIdentifier": "sensor.other.radar",
                "sensorType": {
                   "@type": "simulated-sensor:Radar"
@@ -51,7 +51,7 @@
             },
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "sdo:name": "Simulated Lidar Sensor",
+               "schema:name": "Simulated Lidar Sensor",
                "sensorIdentifier": "sensor.other.lidar",
                "sensorType": {
                   "@type": "simulated-sensor:Lidar"
@@ -68,7 +68,7 @@
             },
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "sdo:name": "Simulated Camera Sensor",
+               "schema:name": "Simulated Camera Sensor",
                "sensorIdentifier": "sensor.camera.rgb",
                "sensorType": {
                   "@type": "simulated-sensor:Camera",

@@ -3,7 +3,7 @@
       "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "sdo": "https://schema.org/"
+         "schema": "https://schema.org/"
       }
    ],
    "@id": "did:web:test.openlabel-v2.net:Tag:test_valid_openlabel-v2_instance",
@@ -31,7 +31,7 @@
       },
       "MotionAccelerate": true,
       "motionAccelerateValue": {
-         "@type": "sdo:QuantitativeValue",
+         "@type": "schema:QuantitativeValue",
          "minValue": "0.5",
          "maxValue": "2.5"
       },

@@ -8,7 +8,7 @@
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-      "sdo": "https://schema.org/"
+      "schema": "https://schema.org/"
    },
    "@id": "did:web:test.openlabel.net:Tag:test_invalid_fail01_wrong_value_openlabel_instance",
    "@type": "openlabel:Tag",
@@ -79,21 +79,21 @@
       ],
       "openlabel:MotionAccelerate": false,
       "openlabel:motionAccelerateValue": {
-         "@type": "sdo:QuantitativeValue",
-         "sdo:maxValue": 2.5,
-         "sdo:minValue": 0.5
+         "@type": "schema:QuantitativeValue",
+         "schema:maxValue": 2.5,
+         "schema:minValue": 0.5
       },
       "openlabel:MotionDecelerate": true,
       "openlabel:motionDecelerateValue": {
-         "@type": "sdo:QuantitativeValue",
-         "sdo:maxValue": 4.444,
-         "sdo:minValue": 0.053
+         "@type": "schema:QuantitativeValue",
+         "schema:maxValue": 4.444,
+         "schema:minValue": 0.053
       },
       "openlabel:MotionDrive": true,
       "openlabel:motionDriveValue": {
-         "@type": "sdo:QuantitativeValue",
-         "sdo:maxValue": 60.001,
-         "sdo:minValue": 0.0
+         "@type": "schema:QuantitativeValue",
+         "schema:maxValue": 60.001,
+         "schema:minValue": 0.0
       },
       "openlabel:MotionAway": true,
       "openlabel:MotionCross": false,

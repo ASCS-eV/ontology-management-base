@@ -3,7 +3,7 @@
       "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       {
          "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "sdo": "https://schema.org/",
+         "schema": "https://schema.org/",
          "openlabel_v2": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
       }
    ],
