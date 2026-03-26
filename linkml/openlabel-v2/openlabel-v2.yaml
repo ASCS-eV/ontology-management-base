@@ -18,6 +18,7 @@ prefixes:
   linkml: https://w3id.org/linkml/
   openlabel_v2: https://w3id.org/ascs-ev/envited-x/openlabel/v2/
   sdo: https://schema.org/
+  cmns-q: https://www.omg.org/spec/Commons/Quantities/
 
 default_prefix: openlabel_v2
 default_range: string
@@ -383,6 +384,8 @@ classes:
     slots:
       - minValue
       - maxValue
+      - hasLowerBound
+      - hasUpperBound
 
 
 # =============================================================================
@@ -1116,6 +1119,22 @@ slots:
     slot_uri: sdo:maxValue
     range: decimal
     required: true
+
+  hasLowerBound:
+    description: >-
+      Lower bound inferred via RDFS from schema:minValue being a
+      subPropertyOf cmns-q:hasLowerBound in schema.org OWL.
+    slot_uri: cmns-q:hasLowerBound
+    range: decimal
+    required: false
+
+  hasUpperBound:
+    description: >-
+      Upper bound inferred via RDFS from schema:maxValue being a
+      subPropertyOf cmns-q:hasUpperBound in schema.org OWL.
+    slot_uri: cmns-q:hasUpperBound
+    range: decimal
+    required: false
 
 
 # =============================================================================

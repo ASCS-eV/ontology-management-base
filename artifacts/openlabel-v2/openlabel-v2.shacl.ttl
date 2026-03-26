@@ -1,4 +1,5 @@
 @prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
+@prefix cmns-q: <https://www.omg.org/spec/Commons/Quantities/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix brick: <https://brickschema.org/schema/Brick#> .
@@ -33,7 +34,7 @@ schema:QuantitativeValue a sh:NodeShape ;
 	rdfs:comment "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
 	sh:closed true ;
 	sh:ignoredProperties _:b4570261c33f2 ;
-	sh:property _:b1179a7a20e05 , _:befb1d26523de ;
+	sh:property _:b1179a7a20e05 , _:b399a5b353e6b , _:b8a7f49066519 , _:befb1d26523de ;
 	sh:targetClass schema:QuantitativeValue .
 openlabel_v2:AdminTag a sh:NodeShape ;
 	rdfs:comment "The base tag to use when extending the Administration tags with new classes." ;
@@ -306,6 +307,12 @@ _:b3951233508db rdf:first openlabel_v2:HumanWheelchairUser ;
 	rdf:rest rdf:nil .
 _:b3952ac107fde rdf:first openlabel_v2:SurfaceFeatureRut ;
 	rdf:rest _:b046ebc660541 .
+_:b399a5b353e6b sh:datatype xsd:decimal ;
+	sh:description "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path cmns-q:hasLowerBound .
 _:b39b2e6093e10 rdf:first openlabel_v2:RoadTypeMotorway ;
 	rdf:rest _:b3d9bcf21f1a3 .
 _:b39ea7a68683f sh:datatype xsd:decimal ;
@@ -592,6 +599,12 @@ _:b87af8269770a sh:description "Special road structure. Refer to BSI PAS-1883 Se
 	sh:path openlabel_v2:ScenerySpecialStructure .
 _:b8a164f0f9376 rdf:first openlabel_v2:TransverseDivided ;
 	rdf:rest _:bbc98dfe8d0a4 .
+_:b8a7f49066519 sh:datatype xsd:decimal ;
+	sh:description "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL." ;
+	sh:maxCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path cmns-q:hasUpperBound .
 _:b8ae9c14b9756 sh:datatype xsd:dateTime ;
 	sh:description "The date that the scenario was created/published." ;
 	sh:maxCount 1 ;

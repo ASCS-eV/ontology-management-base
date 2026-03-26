@@ -1,5 +1,6 @@
 @prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
 @prefix OIO: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix cmns-q: <https://www.omg.org/spec/Commons/Quantities/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix brick: <https://brickschema.org/schema/Brick#> .
@@ -12,24 +13,24 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix prof: <http://www.w3.org/ns/dx/prof/> .
 @prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix prof: <http://www.w3.org/ns/dx/prof/> .
 @prefix dcmitype: <http://purl.org/dc/dcmitype/> .
-@prefix time: <http://www.w3.org/2006/time#> .
 @prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix vann: <http://purl.org/vocab/vann/> .
-@prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix ssn: <http://www.w3.org/ns/ssn/> .
-@prefix dcam: <http://purl.org/dc/dcam/> .
-@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
 @prefix linkml: <https://w3id.org/linkml/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcam: <http://purl.org/dc/dcam/> .
 @prefix pav: <http://purl.org/pav/> .
 @prefix schema: <https://schema.org/> .
 openlabel_v2:AdminTag a owl:Class , owl:ObjectProperty ;
@@ -588,7 +589,7 @@ openlabel_v2:PositioningGps a owl:Class ;
 	skos:definition "Global Positioning System (GPS)." .
 openlabel_v2:QuantitativeValue a owl:Class ;
 	rdfs:label "QuantitativeValue" ;
-	rdfs:subClassOf _:b2cd42d9250b1 , _:b8272a0cb58b9 , _:b8bddc764cd2d , _:b95271673bdd6 , _:bbfaa9ea1ac12 , _:bf16cf8b96499 ;
+	rdfs:subClassOf _:b13937d4010fc , _:b240b9123e3ea , _:b2cd42d9250b1 , _:b4b1162c13baf , _:b7de6c557a941 , _:b8272a0cb58b9 , _:b8bddc764cd2d , _:b95271673bdd6 , _:bb9e16b657ea9 , _:bbfaa9ea1ac12 , _:bd6910912e67a , _:bf16cf8b96499 ;
 	skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
 	skos:exactMatch schema:QuantitativeValue ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -1093,10 +1094,20 @@ openlabel_v2:daySunElevationValue a owl:DatatypeProperty ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+openlabel_v2:hasLowerBound a owl:DatatypeProperty ;
+	rdfs:label "hasLowerBound" ;
+	rdfs:range xsd:decimal ;
+	skos:definition "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL." ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:hasTag a owl:ObjectProperty ;
 	rdfs:label "hasTag" ;
 	rdfs:range openlabel_v2:Tag ;
 	skos:definition "A tag associated with a scenario." ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+openlabel_v2:hasUpperBound a owl:DatatypeProperty ;
+	rdfs:label "hasUpperBound" ;
+	rdfs:range xsd:decimal ;
+	skos:definition "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:horizontalCurvesValue a owl:DatatypeProperty ;
 	rdfs:label "horizontalCurvesValue" ;
@@ -1402,6 +1413,9 @@ _:b133910c7993a a owl:Restriction ;
 _:b1341f6552e12 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
+_:b13937d4010fc a owl:Restriction ;
+	owl:allValuesFrom xsd:decimal ;
+	owl:onProperty openlabel_v2:hasUpperBound .
 _:b13a72c331899 owl:unionOf _:bc46ecded49b5 .
 _:b13f98e1283e1 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
@@ -1494,6 +1508,9 @@ _:b23571c27f3fd a owl:Restriction ;
 _:b2364d5c5bc0e a owl:Restriction ;
 	owl:allValuesFrom xsd:boolean ;
 	owl:onProperty openlabel_v2:MotionAccelerate .
+_:b240b9123e3ea a owl:Restriction ;
+	owl:allValuesFrom xsd:decimal ;
+	owl:onProperty openlabel_v2:hasLowerBound .
 _:b24288be84c11 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:IlluminationLowLight ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
@@ -1764,9 +1781,9 @@ _:b488878c030d4 rdf:first _:b641c377cd6ed ;
 	rdf:rest rdf:nil .
 _:b488878c030d4_1 rdf:first _:b641c377cd6ed_1 ;
 	rdf:rest rdf:nil .
-_:b488878c030d4_2 rdf:first _:b641c377cd6ed_3 ;
+_:b488878c030d4_2 rdf:first _:b641c377cd6ed_4 ;
 	rdf:rest rdf:nil .
-_:b488878c030d4_3 rdf:first _:b641c377cd6ed_4 ;
+_:b488878c030d4_3 rdf:first _:b641c377cd6ed_5 ;
 	rdf:rest rdf:nil .
 _:b488878c030d4_4 rdf:first _:b641c377cd6ed_7 ;
 	rdf:rest rdf:nil .
@@ -1789,6 +1806,9 @@ _:b4a8cf677f8c3 a owl:Restriction ;
 	owl:onProperty openlabel_v2:BehaviourCommunication .
 _:b4ad268bddf55 rdf:first openlabel_v2:VehicleCycle ;
 	rdf:rest _:b5cf6959b9bbd .
+_:b4b1162c13baf a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:hasUpperBound .
 _:b4b586879a10d rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
 _:b4b9711feb765 rdf:first openlabel_v2:CommunicationHorn ;
@@ -2159,6 +2179,9 @@ _:b7d6cf6eb6e8f a owl:Restriction ;
 _:b7d8431c99bd1 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionTurnRight .
+_:b7de6c557a941 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:hasUpperBound .
 _:b7e0dd4b4ceae a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
@@ -2236,7 +2259,7 @@ _:b877f73b019b1 owl:unionOf _:beb2d3d7ea406 .
 _:b87e4c75baa4b a owl:Restriction ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions ;
 	owl:someValuesFrom _:b5b815c864373 .
-_:b8842f5e6ce7e rdf:first _:b641c377cd6ed_5 ;
+_:b8842f5e6ce7e rdf:first _:b641c377cd6ed_2 ;
 	rdf:rest rdf:nil .
 _:b88757786d47f a owl:Restriction ;
 	owl:maxCardinality 1 ;
@@ -2310,7 +2333,7 @@ _:b90c6a88e4fac rdfs:subClassOf _:b51dfe9fd7f0e ;
 _:b91f9c89b90aa a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionDecelerate .
-_:b922116e3d7d7 rdf:first _:b641c377cd6ed_2 ;
+_:b922116e3d7d7 rdf:first _:b641c377cd6ed_3 ;
 	rdf:rest rdf:nil .
 _:b930589e8749a rdf:first xsd:integer ;
 	rdf:rest _:b97e4c354127e .
@@ -2538,6 +2561,9 @@ _:bb9045df11e66 a owl:Restriction ;
 _:bb9784d7fb0cc a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
+_:bb9e16b657ea9 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:hasLowerBound .
 _:bba38ecc5513a rdfs:subClassOf _:bfa91741e0152 ;
 	owl:intersectionOf _:b69ace15a5a54 .
 _:bba70c5b062a7 a owl:Restriction ;
@@ -2737,6 +2763,9 @@ _:bd5b8f11b9bd9 rdf:first openlabel_v2:LowLightNight ;
 	rdf:rest rdf:nil .
 _:bd6157e72aaf6 rdf:first openlabel_v2:TransverseBarriers ;
 	rdf:rest _:b595f541fbc72 .
+_:bd6910912e67a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:hasLowerBound .
 _:bd72a4e0e90cf rdf:first openlabel_v2:CommunicationHeadlightFlash ;
 	rdf:rest _:b4b9711feb765 .
 _:bd74f79dac9e7 rdf:first xsd:decimal ;
