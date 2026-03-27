@@ -10166,7 +10166,7 @@ gx:Memory a owl:Class ;
 	skos:inScheme gx:memory .
 gx:MemoryCapabilities a owl:Class ;
 	rdfs:label "MemoryCapabilities" ;
-	rdfs:subClassOf _:b17e59f2e266a , _:b29ab645bd24e , _:b3d9a39ce14f0 , _:ba36ccacc5b38 , _:bca12385045f2 , _:be7accd30284f ;
+	rdfs:subClassOf _:b29ab645bd24e , _:b3d9a39ce14f0 , _:b7a055b4e2ead , _:ba36ccacc5b38 , _:bca12385045f2 , _:be7accd30284f ;
 	skos:inScheme gx:server-flavor .
 gx:MemoryClasses\/DDR\%20SDRAM a owl:Class ;
 	rdfs:label "DDR SDRAM" ;
@@ -36029,7 +36029,7 @@ gx:osDistribution dcterms:title "Operation System Distribution" ;
 	skos:inScheme gx:slots .
 gx:overProvisioningRatio a owl:DatatypeProperty ;
 	rdfs:label "overProvisioningRatio" ;
-	rdfs:range _:bc3d90b0b9b06 ;
+	rdfs:range _:be2971ab69a8e ;
 	skos:definition "Overprovisioning ratio defined by the division of the amount of allocated virtual resource over the amount of physical resource available." ;
 	skos:inScheme gx:slots .
 gx:ownedBy dcterms:title "owned by" ;
@@ -37317,6 +37317,8 @@ _:b077c6702cd71 rdf:first gx:CountryNameAlpha3\/MDA ;
 	rdf:rest _:bca63a98513dc .
 _:b077c67eef96d rdf:first gx:RegionCode\/DZ-17 ;
 	rdf:rest _:ba672304e8478 .
+_:b0784539de961 rdf:first xsd:decimal ;
+	rdf:rest _:b27584d26c11c .
 _:b07878c3666ed a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:storageConfiguration .
@@ -37724,6 +37726,8 @@ _:b0c6712515af1 rdf:first gx:RegionCode\/RO-SB ;
 	rdf:rest _:b78fbdaefba44 .
 _:b0c75fa3be110 rdf:first gx:MIMETypes\/application\%2Fvnd.oma.cab-feature-handler\%2Bxml ;
 	rdf:rest _:b56b6f4fd6bd1 .
+_:b0c7ca4bbc43d rdf:first xsd:decimal ;
+	rdf:rest _:b10ccbdab5587 .
 _:b0c7dd7afb6bb rdf:first gx:RegionCode\/IR-23 ;
 	rdf:rest _:b3f0ae1d00145 .
 _:b0c8f67de7517 rdf:first gx:RegionCode\/GB-LBC ;
@@ -37793,9 +37797,6 @@ _:b0d0fe23b195c a owl:Restriction ;
 _:b0d11bad2de27 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:euid .
-_:b0d13354564f0 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b826c7786ad25 .
 _:b0d17b679219c rdf:first _:be0246d5156f2 ;
 	rdf:rest _:bdb5bde3b6628 .
 _:b0d264bc73601 rdf:first gx:NUTS2Region\/ES53 ;
@@ -38107,6 +38108,8 @@ _:b10b67c5006bf a owl:Restriction ;
 	owl:onProperty gx:providedBy .
 _:b10bfb4c413b3 rdf:first gx:RegionCode\/LT-38 ;
 	rdf:rest _:b00fdb402e156 .
+_:b10ccbdab5587 rdf:first _:b4a72e7b9b1c4 ;
+	rdf:rest _:bcf1714cd7b07 .
 _:b10cde8da6c8e rdf:first gx:RegionCode\/BD-32 ;
 	rdf:rest _:b5e43f1e1b6fe .
 _:b10cf0d76e8c8 rdf:first gx:RegionCode\/BF-SIS ;
@@ -38347,8 +38350,6 @@ _:b1372bf851c3b rdf:first gx:RegionCode\/CO-CUN ;
 	rdf:rest _:b6dc7f8f744a6 .
 _:b1375581164bb rdf:first gx:RegionCode\/ME-13 ;
 	rdf:rest _:b2af46f54e4a8 .
-_:b1375730e8fec rdf:first _:be0a9f8a54adf ;
-	rdf:rest rdf:nil .
 _:b137b75a711b7 rdf:first gx:RegionCode\/UG-217 ;
 	rdf:rest _:bef92ed0456d8 .
 _:b13807ec45ab6 rdf:first gx:RegionCode\/SE-I ;
@@ -38712,9 +38713,6 @@ _:b17e093d02c6d rdf:first gx:CountryNameAlpha3\/BHR ;
 	rdf:rest _:b49bb189b0103 .
 _:b17e44ba608d0 rdf:first gx:CountryNameNumeric\/703 ;
 	rdf:rest _:b824710adb3c6 .
-_:b17e59f2e266a a owl:Restriction ;
-	owl:allValuesFrom _:baad189a70fa0 ;
-	owl:onProperty gx:overProvisioningRatio .
 _:b17f0628fbedb rdf:first gx:RegionCode\/KE-18 ;
 	rdf:rest _:bcec8037de343 .
 _:b17f22b67974a rdf:first gx:RegionCode\/UY-CA ;
@@ -38746,7 +38744,6 @@ _:b1855087a2ba1 rdf:first gx:RegionCode\/SI-026 ;
 	rdf:rest _:bc3ba2a8f8a2d .
 _:b1856e4ea2422 rdf:first gx:MIMETypes\/application\%2Fvnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition\%2Bxml ;
 	rdf:rest _:b0968e88f1211 .
-_:b1858d07b42a7 xsd:minInclusive 1 .
 _:b186111442fa8 rdf:first gx:RegionCode\/SI-003 ;
 	rdf:rest _:bd7495f57c371 .
 _:b18670696811e rdf:first gx:RegionCode\/IS-BLA ;
@@ -39961,6 +39958,8 @@ _:b274cae479f1b rdf:first gx:RegionCode\/UG-222 ;
 	rdf:rest _:bc591433d4326 .
 _:b274de3f6eb20 rdf:first gx:RegionCode\/MT-47 ;
 	rdf:rest _:b010e3be898d0 .
+_:b27584d26c11c rdf:first _:be706dc9491a8 ;
+	rdf:rest rdf:nil .
 _:b275bd046b60b rdf:first gx:NUTS2Region\/ITH3 ;
 	rdf:rest _:b8cea68a4c25d .
 _:b276d2b8a6341 a owl:Restriction ;
@@ -41559,8 +41558,6 @@ _:b3a9fb8290ad9 rdf:first gx:RegionCode\/SI-203 ;
 	rdf:rest _:b44634955f41a .
 _:b3aaf311d251a rdf:first gx:MIMETypes\/application\%2Fsenml-etch\%2Bcbor ;
 	rdf:rest _:b9a59ec2c6835 .
-_:b3ab1ae260226 rdf:first xsd:float ;
-	rdf:rest _:b92ca55aeec96 .
 _:b3ab2a3aa27c1 rdf:first gx:RegionCode\/SY-DR ;
 	rdf:rest _:b88940f2a2ddd .
 _:b3ab37c00a524 a owl:Restriction ;
@@ -41626,8 +41623,6 @@ _:b3b6b72a495be rdf:first gx:RegionCode\/RO-CL ;
 	rdf:rest _:b655b9068bf18 .
 _:b3b758dfaef72 rdf:first gx:MIMETypes\/application\%2Fvnd.qualcomm.brew-app-res ;
 	rdf:rest _:b7fdd15574282 .
-_:b3b7cc2286d9c rdf:first _:bbfc67a2b8b0f ;
-	rdf:rest rdf:nil .
 _:b3b804bc0e5ed rdf:first gx:RegionCode\/CA-AB ;
 	rdf:rest _:b48fb2858746e .
 _:b3b85c030ae25 rdf:first gx:NUTS2Region\/DEA4 ;
@@ -42912,6 +42907,9 @@ _:b4a45f68f71e5 a owl:Restriction ;
 	owl:onProperty gx:cipher .
 _:b4a5ec63b2da5 rdf:first gx:CountryNameAlpha2\/AU ;
 	rdf:rest _:b3cc4d55a5d39 .
+_:b4a72e7b9b1c4 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:be70d0cf5be22 .
 _:b4a798639614d rdf:first gx:CountryNameAlpha3\/BLM ;
 	rdf:rest _:bfc28897e4755 .
 _:b4a7f5261cd2e rdf:first gx:MIMETypes\/application\%2Findex.response ;
@@ -46887,6 +46885,9 @@ _:b79f61bc06263 rdf:first gx:CountryNameNumeric\/666 ;
 	rdf:rest _:b87481ff9fe69 .
 _:b79fdb0516c6b rdf:first gx:SPDX\/BSD-3-Clause-No-Nuclear-License-2014 ;
 	rdf:rest _:b2b9e90f90723 .
+_:b7a055b4e2ead a owl:Restriction ;
+	owl:allValuesFrom _:bf5c693cb579f ;
+	owl:onProperty gx:overProvisioningRatio .
 _:b7a0d4d2c4b4e rdf:first gx:RegionCode\/HU-DU ;
 	rdf:rest _:b281067a9d143 .
 _:b7a0db02f9339 rdf:first gx:RegionCode\/KH-20 ;
@@ -47559,8 +47560,6 @@ _:b8262acf8fa44 rdf:first gx:RegionCode\/CM-LT ;
 	rdf:rest _:b7348b825b82f .
 _:b826695b947c1 rdf:first gx:RegionCode\/BR-AL ;
 	rdf:rest _:bed3133e3d345 .
-_:b826c7786ad25 rdf:first _:bab484b96f7c0 ;
-	rdf:rest rdf:nil .
 _:b826e79d8c15e rdf:first gx:RegionCode\/CZ-20B ;
 	rdf:rest _:b003c1e13cd6a .
 _:b8271e76f44b4 a owl:Restriction ;
@@ -48737,8 +48736,6 @@ _:b8f82ee888c28 rdf:first gx:RegionCode\/PY-9 ;
 	rdf:rest _:b248f5ac6f4e4 .
 _:b8f836abea2b6 rdf:first gx:RegionCode\/CR-G ;
 	rdf:rest _:bb41ccfcc1352 .
-_:b8f8eb01be4cb rdf:first xsd:float ;
-	rdf:rest _:b3b7cc2286d9c .
 _:b8f94d9b86a6c rdf:first gx:CountryNameAlpha2\/PA ;
 	rdf:rest _:be0cf21641273 .
 _:b8f98a5b24d10 rdf:first gx:RegionCode\/GT-12 ;
@@ -49036,8 +49033,6 @@ _:b92c02cefd9c5 a owl:Restriction ;
 	owl:onProperty gx:bandWidth .
 _:b92c92750b50f rdf:first gx:RegionCode\/MR-02 ;
 	rdf:rest _:be6b8fb1bd975 .
-_:b92ca55aeec96 rdf:first _:ba0e5c867860d ;
-	rdf:rest _:bebcfadb53246 .
 _:b92cb2ce34b0b rdf:first gx:RegionCode\/GB-SAY ;
 	rdf:rest _:b5c63277ec396 .
 _:b92cc217f24dd rdf:first gx:RegionCode\/IN-ML ;
@@ -49621,6 +49616,7 @@ _:b99cc7cc8b6be rdf:first gx:SignatureAlgorithm\/ECDSA ;
 	rdf:rest _:be9cb89ff4644 .
 _:b99d412fc48f8 rdf:first gx:MIMETypes\/image\%2Favci ;
 	rdf:rest _:b1871f96f3a30 .
+_:b99fa01ff92f6 xsd:minInclusive 1 .
 _:b9a0dabbb051e rdf:first gx:RegionCode\/EC-X ;
 	rdf:rest _:bafdb9f1cd5eb .
 _:b9a0e44c64722 rdf:first gx:RegionCode\/CM-SU ;
@@ -49739,6 +49735,8 @@ _:b9b9153ea81c3 rdf:first _:bd8ebc18c643b ;
 	rdf:rest rdf:nil .
 _:b9b9209f6bd42 rdf:first gx:RegionCode\/AZ-QAB ;
 	rdf:rest _:bbe76761cd376 .
+_:b9b93ecd12b08 rdf:first _:bd224d1994165 ;
+	rdf:rest rdf:nil .
 _:b9b96d9a2cd7f a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty odrl:profile .
@@ -50173,9 +50171,6 @@ _:ba0cd53c8fd33 rdf:first gx:RegionCode\/CO-MET ;
 	rdf:rest _:b9d2447682aee .
 _:ba0db61710ab2 rdf:first gx:RegionCode\/PE-LIM ;
 	rdf:rest _:be90d9ef3f6a2 .
-_:ba0e5c867860d a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b1375730e8fec .
 _:ba0ef928c1347 rdf:first gx:RegionCode\/JP-20 ;
 	rdf:rest _:bfca6e9eb713b .
 _:ba0f3b2d038be a owl:Restriction ;
@@ -51077,8 +51072,6 @@ _:baac853d14d94 a owl:Restriction ;
 	owl:onProperty gx:instantiationReq .
 _:baace98d5dc81 rdf:first gx:RegionCode\/IS-SEL ;
 	rdf:rest _:bf10755959974 .
-_:baad189a70fa0 a rdfs:Datatype ;
-	owl:intersectionOf _:b3ab1ae260226 .
 _:baad6b8ab32fb rdf:first gx:NUTS2Region\/DE13 ;
 	rdf:rest _:be2e1ddbfb771 .
 _:bab04e4ff9fd3 rdf:first gx:RegionCode\/NG-SO ;
@@ -52321,6 +52314,9 @@ _:bb9d7a7060a05 rdf:first gx:CountryNameAlpha2\/NR ;
 	rdf:rest _:b69c205701f84 .
 _:bb9d8af576cec rdf:first gx:NUTS2Region\/FIZZ ;
 	rdf:rest _:b16b94b077995 .
+_:bb9e00cef204f a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bf70bba539335 .
 _:bb9e07eca6278 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty gx:gpuProcessingUnits .
@@ -52859,9 +52855,6 @@ _:bbfc5d548fd09 rdf:first gx:RegionCode\/US-AL ;
 	rdf:rest _:bd77f824da511 .
 _:bbfc5f2ed0cb3 rdf:first gx:StorageRedundancyMechanism\/Other ;
 	rdf:rest _:b36ee468bebf6 .
-_:bbfc67a2b8b0f a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:be056b3add3e8 .
 _:bbfc6dae2e154 rdf:first gx:RegionCode\/SI-147 ;
 	rdf:rest _:bc516ac68fc09 .
 _:bbfcc932054c4 a owl:Restriction ;
@@ -53234,8 +53227,6 @@ _:bc3cd07898431 rdf:first gx:RegionCode\/ID-SN ;
 	rdf:rest _:b711bb5bcca5f .
 _:bc3d17a964e15 rdf:first gx:MIMETypes\/application\%2Fsamlmetadata\%2Bxml ;
 	rdf:rest _:becb92dd4a9c0 .
-_:bc3d90b0b9b06 a rdfs:Datatype ;
-	owl:intersectionOf _:b8f8eb01be4cb .
 _:bc3f2e5c90e56 rdf:first gx:RegionCode\/GN-GA ;
 	rdf:rest _:b80ba5f3d302c .
 _:bc3f310e91d7f rdf:first gx:RegionCode\/SI-128 ;
@@ -54249,6 +54240,8 @@ _:bcf13bbc0df64 rdf:first gx:RegionCode\/VN-52 ;
 	rdf:rest _:b68f9e93a737b .
 _:bcf1428aaee52 rdf:first gx:RegionCode\/CZ-207 ;
 	rdf:rest _:b42394578997d .
+_:bcf1714cd7b07 rdf:first _:bb9e00cef204f ;
+	rdf:rest rdf:nil .
 _:bcf205ccf6b09 rdf:first gx:RegionCode\/UZ-BU ;
 	rdf:rest _:b5a1005cb48d9 .
 _:bcf21602d390d rdf:first gx:MIMETypes\/application\%2Fvnd.etsi.tsl.der ;
@@ -54497,6 +54490,7 @@ _:bd21b44c1c4a3 rdf:first gx:SPDX\/OFFIS ;
 _:bd2237b4b088c a owl:Restriction ;
 	owl:allValuesFrom gx:VMImage ;
 	owl:onProperty gx:codeArtifact .
+_:bd224d1994165 xsd:minInclusive 1 .
 _:bd22703bf3e5c rdf:first gx:SPDX\/magaz ;
 	rdf:rest _:b29053141fe60 .
 _:bd2286856b56f rdf:first gx:RegionCode\/ES-GC ;
@@ -55790,8 +55784,6 @@ _:be04fdbf62ec0 rdf:first gx:MIMETypes\/application\%2Fshf\%2Bxml ;
 	rdf:rest _:b825ddb404835 .
 _:be0558ac6e810 rdf:first gx:RegionCode\/FR-974 ;
 	rdf:rest _:b8868250c0dd2 .
-_:be056b3add3e8 rdf:first _:b1858d07b42a7 ;
-	rdf:rest rdf:nil .
 _:be05e6aa70f75 rdf:first gx:MIMETypes\/application\%2Fvnd.oma.push ;
 	rdf:rest _:b5ad328de00ae .
 _:be064915491c1 rdf:first gx:MIMETypes\/application\%2Fvnd.kde.kspread ;
@@ -55823,7 +55815,6 @@ _:be0a2c43e0a4a rdf:first gx:RegionCode\/NG-NA ;
 _:be0a6bd6246dd a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty gx:generation .
-_:be0a9f8a54adf xsd:minInclusive 1 .
 _:be0b1766c91da rdf:first gx:MIMETypes\/application\%2Fvnd.desmume.movie ;
 	rdf:rest _:ba346ab3ebb9c .
 _:be0b31fac0d80 rdf:first gx:RegionCode\/MC-SP ;
@@ -55994,6 +55985,8 @@ _:be27a0aa1c13a rdf:first gx:MemoryRanks\/2R\%20RDIMM ;
 	rdf:rest _:b88c261c4bb19 .
 _:be27eb77fb7b1 rdf:first gx:MIMETypes\/application\%2Fvnd.geometry-explorer ;
 	rdf:rest _:b0ddb441de12a .
+_:be2971ab69a8e a rdfs:Datatype ;
+	owl:intersectionOf _:b0784539de961 .
 _:be29fe280e479 rdf:first gx:RegionCode\/PS-QQA ;
 	rdf:rest _:be7362d8a3953 .
 _:be2a24d245b89 rdf:first gx:MIMETypes\/audio\%2Fscip ;
@@ -56352,10 +56345,15 @@ _:be6eb89b82d18 rdf:first gx:MIMETypes\/application\%2Ftamp-apex-update-confirm 
 	rdf:rest _:bb76f61a26810 .
 _:be6fd72b9fc67 rdf:first gx:OSDistribution\/Arch\%20Linux ;
 	rdf:rest _:bd63e1b47cb42 .
+_:be706dc9491a8 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:b9b93ecd12b08 .
 _:be708140972af rdf:first gx:MIMETypes\/application\%2Fvnd.geogebra.file ;
 	rdf:rest _:b3c74ba90bd7a .
 _:be70cab1185ee rdf:first gx:MIMETypes\/application\%2Fvnd.oma.bcast.associated-procedure-parameter\%2Bxml ;
 	rdf:rest _:ba4f813c25b2f .
+_:be70d0cf5be22 rdf:first _:b99fa01ff92f6 ;
+	rdf:rest rdf:nil .
 _:be7106bca31b1 rdf:first gx:CountryNameNumeric\/729 ;
 	rdf:rest _:b220a7f2cf71f .
 _:be7284fd6a8d5 rdf:first gx:RegionCode\/JP-37 ;
@@ -56768,8 +56766,6 @@ _:bebcb7a989600 rdf:first gx:RegionCode\/LT-03 ;
 	rdf:rest _:b42bf8ada535b .
 _:bebcd7c3b0e54 rdf:first gx:MIMETypes\/application\%2Fcall-completion ;
 	rdf:rest _:b839e1b224c4b .
-_:bebcfadb53246 rdf:first _:b0d13354564f0 ;
-	rdf:rest rdf:nil .
 _:bebebe2860cbf rdf:first gx:RegionCode\/BT-42 ;
 	rdf:rest _:b12ab7f19b959 .
 _:bebf1af4bb2d2 rdf:first gx:RegionCode\/EE-708 ;
@@ -57682,6 +57678,8 @@ _:bf5c45b285ac2 rdf:first gx:RegionCode\/AF-NUR ;
 	rdf:rest _:b0629b1b9dfa9 .
 _:bf5c552efe58c rdf:first gx:RegionCode\/TR-20 ;
 	rdf:rest _:be1bf6c58362a .
+_:bf5c693cb579f a rdfs:Datatype ;
+	owl:intersectionOf _:b0c7ca4bbc43d .
 _:bf5c96c83a130 rdf:first gx:RegionCode\/FI-04 ;
 	rdf:rest _:b77da0b228ae5 .
 _:bf5ce8a41be83 rdf:first gx:MIMETypes\/application\%2Fvnd.osgi.bundle ;
@@ -57769,6 +57767,8 @@ _:bf6fe5e5fbe84 rdf:first gx:CountryNameAlpha2\/TH ;
 	rdf:rest _:b099f4824cc12 .
 _:bf70007c76fe8 rdf:first gx:RegionCode\/MX-CMX ;
 	rdf:rest _:bc10af118be7c .
+_:bf70bba539335 rdf:first _:bab484b96f7c0 ;
+	rdf:rest rdf:nil .
 _:bf70c84c8c700 rdf:first gx:MIMETypes\/application\%2Fmbms-msk\%2Bxml ;
 	rdf:rest _:b36f19e826068 .
 _:bf70db1a7fd6e rdf:first gx:RegionCode\/GN-KA ;

@@ -156,10 +156,9 @@ def _collect_domains() -> list[str]:
 KNOWN_ID_COERCION_ISSUES = {"gx"}
 
 # Domains with known context/SHACL type mismatches.
-# GX has overProvisioningRatio defined as both xsd:integer (CPU) and xsd:float
-# (RAM) on different parent classes. The context picks one type while SHACL
-# emits the other, creating a spurious mismatch. This is a GX schema issue.
-KNOWN_TYPE_MISMATCHES: set[str] = {"gx"}
+# Previously GX had overProvisioningRatio as both xsd:integer (CPU) and
+# xsd:float (RAM); fixed upstream by harmonizing to xsd:decimal.
+KNOWN_TYPE_MISMATCHES: set[str] = set()
 
 
 class TestContextShaclCoherence:
