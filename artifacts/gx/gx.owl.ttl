@@ -221,7 +221,7 @@ gx:AccessTypes a owl:Class ;
 	linkml:permissible_values gx:AccessTypes\/digital , gx:AccessTypes\/physical .
 gx:AccessUsagePolicy a owl:Class ;
 	rdfs:label "AccessUsagePolicy" ;
-	rdfs:subClassOf _:b30d456df6897 , _:b3c16663e2989 , _:b4e45114341fe , _:b8f20d970ed15 , _:bb06d5a82c75b , _:bf25c6c06722a ;
+	rdfs:subClassOf _:b30d456df6897 , _:b3c16663e2989 , _:b4e45114341fe , _:b74a9dd181969 , _:b8f20d970ed15 , _:bb06d5a82c75b ;
 	skos:definition "An access or usage policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...)." ;
 	skos:inScheme gx:access-usage-policy .
 gx:Address a owl:Class ;
@@ -295,7 +295,7 @@ gx:BareMetalServiceOffering dcterms:title "Bare Metal Service Offering" ;
 gx:BaseContainerImage dcterms:title "Base Container Image" ;
 	a owl:Class ;
 	rdfs:label "BaseContainerImage" ;
-	rdfs:subClassOf _:b703c8edafbcf , _:b970edb3ce2f9 , _:bb3a602c672b7 , _:bd1a001b1950c , _:be17f73f998bf ;
+	rdfs:subClassOf _:b703c8edafbcf , _:b970edb3ce2f9 , _:bb3a602c672b7 , _:bd7dafbe7ccac , _:be17f73f998bf ;
 	skos:definition "A set of tags for an image and a repository link" ;
 	skos:inScheme gx:container-image .
 gx:BlockAccessProtocol\/FCP a owl:Class ;
@@ -575,7 +575,7 @@ gx:ComputeServiceOffering dcterms:title "Compute Service Offering" ;
 	skos:inScheme gx:service-offering .
 gx:ConfidentialComputing a owl:Class ;
 	rdfs:label "ConfidentialComputing" ;
-	rdfs:subClassOf _:b0ff056ac199e , _:b2552580c3de9 , _:b8601b4965535 , _:b8bb02f06a3d4 , _:b8e10ebce7ec7 , _:bad16ebae1c00 ;
+	rdfs:subClassOf _:b0ff056ac199e , _:b2552580c3de9 , _:b4a01a3c857b7 , _:b8601b4965535 , _:b8bb02f06a3d4 , _:b8e10ebce7ec7 ;
 	skos:inScheme gx:server-flavor .
 gx:ConnectivityConfiguration dcterms:title "Connectivity Configuration" ;
 	a owl:Class ;
@@ -616,7 +616,7 @@ gx:ConsistencyType a owl:Class ;
 	linkml:permissible_values gx:ConsistencyType\/Bounded-Staleness , gx:ConsistencyType\/Eventual , gx:ConsistencyType\/Other , gx:ConsistencyType\/Session , gx:ConsistencyType\/Strong .
 gx:ContactInformation a owl:Class ;
 	rdfs:label "ContactInformation" ;
-	rdfs:subClassOf _:b094804b679e8 , _:b15b328854f2e , _:b2e16fdbcbac0 , _:b5732fbe2eefc , _:b622afd183384 , _:b6ec910a81871 , _:b86d7bb7dde28 , _:b88791977c9fb , _:b905a36cc2e26 , _:b988eaeb6d765 , _:b9d349591f2fb , _:bae501b72622b ;
+	rdfs:subClassOf _:b094804b679e8 , _:b15b328854f2e , _:b2e16fdbcbac0 , _:b5732fbe2eefc , _:b622afd183384 , _:b6ec910a81871 , _:b86d7bb7dde28 , _:b88791977c9fb , _:b905a36cc2e26 , _:b988eaeb6d765 , _:b9d349591f2fb , _:bc604bf802efb ;
 	skos:definition "Contains contact details for an entity." ;
 	skos:inScheme gx:contact-information .
 gx:ContainerFormat\/dockerv1 a owl:Class ;
@@ -3716,7 +3716,7 @@ gx:CustomerInstructions a owl:Class ;
 	skos:inScheme gx:customer-instructions .
 gx:DataAccessPrerequisite a owl:Class ;
 	rdfs:label "DataAccessPrerequisite" ;
-	rdfs:subClassOf _:b29c1fb4f55ca , _:b79b952c5c08a , _:b86020f659294 , _:bb2e76aeceb6d , _:bce08ef2d8f5d , _:be26d474dccf4 ;
+	rdfs:subClassOf _:b29039f5a87af , _:b79b952c5c08a , _:b86020f659294 , _:bb2e76aeceb6d , _:bce08ef2d8f5d , _:be26d474dccf4 ;
 	skos:definition "a condition that the Data Consumer must fulfill to be given access to an instance of the data sets" ;
 	skos:inScheme gx:data-product .
 gx:DataAccountExport a owl:Class ;
@@ -3727,12 +3727,12 @@ gx:DataAccountExport a owl:Class ;
 	skos:inScheme gx:service-offering .
 gx:DataLicense a owl:Class ;
 	rdfs:label "DataLicense" ;
-	rdfs:subClassOf _:b1a26c28a2498 , _:b4410679543bd , _:b55af40b05f57 , _:b585b4545f542 , _:ba65dabc99ebe , _:bc6946c44a3f8 , _:bd4e0165a4ad6 , _:bd8b3dcb3c372 , _:bf46fa2eb64ab ;
+	rdfs:subClassOf _:b4410679543bd , _:b4efc4768dd26 , _:b55af40b05f57 , _:b585b4545f542 , _:ba65dabc99ebe , _:bc6946c44a3f8 , _:bd4e0165a4ad6 , _:bd8b3dcb3c372 , _:bf46fa2eb64ab ;
 	skos:definition "the constraints that applies to the data consumers accessing and using the datasets in the Data Product, note that this is for information purpose as the constraints which applies are those in the Data Usage Agreement (Data Usage Agreements are usually derived from the Data License but might differ according to the result of the negotiation between the Data Rights Holders and the Data Consumer.)" ;
 	skos:inScheme gx:data-product .
 gx:DataPortability a owl:Class ;
 	rdfs:label "DataPortability" ;
-	rdfs:subClassOf _:b1140de090f22 , _:b1648008e30bc , _:b2d23c8f19c53 , _:b2e5913ea4af4 , _:b34ae654e1650 , _:b42bc8f0d6f31 , _:b514cadda9101 , _:b5d1a33b18d50 , _:b6156b4f2d548 , _:b66d8f99e6d2b , _:b6f2edc17dee4 , _:b7b46185f4316 , _:b8271e76f44b4 , _:b8639687618f5 , _:b864215b8b167 , _:b9474b9baa604 , _:baa59783ed38f , _:bbdb07c690b18 , _:bbe543c9215d7 , _:bc2dbef4ffc05 , _:bc42e512384b6 , _:bea7821985daf , _:beb55efdadd9e ;
+	rdfs:subClassOf _:b02b91df6791b , _:b1140de090f22 , _:b1648008e30bc , _:b2d23c8f19c53 , _:b2e5913ea4af4 , _:b34ae654e1650 , _:b42bc8f0d6f31 , _:b514cadda9101 , _:b6156b4f2d548 , _:b66d8f99e6d2b , _:b7b46185f4316 , _:b8271e76f44b4 , _:b8639687618f5 , _:b864215b8b167 , _:b9474b9baa604 , _:baa59783ed38f , _:bbdb07c690b18 , _:bbe543c9215d7 , _:bc2dbef4ffc05 , _:bc42e512384b6 , _:bc5314a7cacc8 , _:bea7821985daf , _:beb55efdadd9e ;
 	skos:definition "Which resource of the service offering is concerned by this data portability measure. For example, backup files, stored personal data, infrastructure description file (IaaS), etc." ;
 	skos:inScheme gx:data-portability .
 gx:DataProduct a owl:Class ;
@@ -3776,7 +3776,7 @@ gx:DataUsageAgreement a owl:Class ;
 	skos:inScheme gx:data-product .
 gx:DataUsageConstraint a owl:Class ;
 	rdfs:label "DataUsageConstraint" ;
-	rdfs:subClassOf _:b3921a48d14a1 , _:b493e5fbfddf4 , _:b8697aa56c9d1 , _:bc6af61a56942 , _:be8717856f215 , _:bf1ea05d45a91 ;
+	rdfs:subClassOf _:b24079b46378c , _:b493e5fbfddf4 , _:b8697aa56c9d1 , _:bc6af61a56942 , _:be8717856f215 , _:bf1ea05d45a91 ;
 	skos:definition "a condition that a Data Consumer must respect when using an instance of the data sets" ;
 	skos:inScheme gx:data-product .
 gx:Datacenter dcterms:title "Datacenter" ;
@@ -3907,7 +3907,7 @@ gx:EUID a owl:Class ;
 gx:EcoTSP dcterms:title "Ecosystem Trust Service Provider" ;
 	a owl:Class ;
 	rdfs:label "EcoTSP" ;
-	rdfs:subClassOf gx:GaiaXEntity , _:b0f2cbde78942 , _:b4aa3cbbcfac8 , _:b5870cc66d858 , _:b6523b4732651 , _:b96cc4f396a44 , _:ba6c0858d4533 , _:be38f66f5d303 ;
+	rdfs:subClassOf gx:GaiaXEntity , _:b0f2cbde78942 , _:b2ba4908f56f1 , _:b4aa3cbbcfac8 , _:b5870cc66d858 , _:b6523b4732651 , _:b96cc4f396a44 , _:ba6c0858d4533 ;
 	skos:definition "A Trust Service Provider (TSP) recognized and accepted by an ecosystem to issue various verifiable credentials for a particular trust scope." ;
 	skos:inScheme gx:meta-registry .
 gx:EcoTrustScope dcterms:title "A particular trust scope for an ecosystem" ;
@@ -3967,7 +3967,7 @@ gx:EncryptionAlgorithm a owl:Class ;
 	linkml:permissible_values gx:EncryptionAlgorithm\/3DES , gx:EncryptionAlgorithm\/AES , gx:EncryptionAlgorithm\/Blowfish , gx:EncryptionAlgorithm\/RSA , gx:EncryptionAlgorithm\/SDA , gx:EncryptionAlgorithm\/Twofish , gx:EncryptionAlgorithm\/other .
 gx:Endpoint a owl:Class ;
 	rdfs:label "Endpoint" ;
-	rdfs:subClassOf _:b04619488a07f , _:b0ae37192076a , _:b0dbd3cc31eb0 , _:b1c38b213c7ee , _:b2ce446c6aaf0 , _:b3b873bea5dcd , _:bb56247a7e1af , _:bbbe201615935 ;
+	rdfs:subClassOf _:b04619488a07f , _:b08a3568556bd , _:b0ae37192076a , _:b0dbd3cc31eb0 , _:b1c38b213c7ee , _:b3b873bea5dcd , _:bb56247a7e1af , _:bbbe201615935 ;
 	skos:definition "An endpoint is a mean to access and interact with a service or a resource." ;
 	skos:inScheme gx:endpoint .
 gx:EnergyMix a owl:Class ;
@@ -4378,7 +4378,7 @@ gx:Latency dcterms:title "Latency" ;
 gx:LegalDocument dcterms:title "Legal Document" ;
 	a owl:Class ;
 	rdfs:label "LegalDocument" ;
-	rdfs:subClassOf _:b2f8e1cb080fd , _:b34a8b82a8e0f , _:b371c4cc6609f , _:b57b05b17e6c1 , _:b74c0888d5cef , _:b784942b35776 , _:bbfcc932054c4 , _:be0f9414a4d28 , _:bf9af217c56e0 ;
+	rdfs:subClassOf _:b34a8b82a8e0f , _:b371c4cc6609f , _:b57b05b17e6c1 , _:b74c0888d5cef , _:b784942b35776 , _:bbfcc932054c4 , _:be0f9414a4d28 , _:be86cbb2dd419 , _:bf9af217c56e0 ;
 	skos:definition "A document that has legal significance, typically outlining terms, conditions, or regulations." ;
 	skos:inScheme gx:legal-document .
 gx:LegalPerson dcterms:title "Legal Person" ;
@@ -34229,7 +34229,7 @@ gx:ServiceOffering dcterms:title "Service Offering" ;
 	skos:inScheme gx:service-offering .
 gx:ServiceTermsAndConditions a owl:Class ;
 	rdfs:label "ServiceTermsAndConditions" ;
-	rdfs:subClassOf _:b37c81a22308b , _:b527d37ff370a , _:b827c2feb52fd , _:ba576e34eb1ad , _:bbf5bf0280291 , _:bdafca2255683 ;
+	rdfs:subClassOf _:b37c81a22308b , _:b527d37ff370a , _:b827c2feb52fd , _:ba576e34eb1ad , _:bd4189fca7312 , _:bdafca2255683 ;
 	skos:definition "Terms and Conditions applying to a digital service offering." ;
 	skos:inScheme gx:digital-service-offering .
 gx:Signature a owl:Class ;
@@ -34290,7 +34290,7 @@ gx:SoftwareResource dcterms:title "Software Resource" ;
 	skos:inScheme gx:resource .
 gx:StandardConformity a owl:Class ;
 	rdfs:label "StandardConformity" ;
-	rdfs:subClassOf _:b0449a448727c , _:b091753fb8ee2 , _:b24a17b5a78f1 , _:b3960fa733cb0 , _:b49736926a808 , _:bcdf010df9e36 , _:be44172fc0181 , _:bf3c4dae01554 , _:bf5e2aa94072f ;
+	rdfs:subClassOf _:b0449a448727c , _:b091753fb8ee2 , _:b15615a591a7e , _:b24a17b5a78f1 , _:b49736926a808 , _:bcdf010df9e36 , _:be44172fc0181 , _:bf3c4dae01554 , _:bf5e2aa94072f ;
 	skos:definition "Details about standard applied to Gaia-X entities." ;
 	skos:inScheme gx:standard-conformity .
 gx:StorageAPI\/Azure-Blob a owl:Class ;
@@ -34377,7 +34377,7 @@ gx:StorageServiceOffering dcterms:title "Storage Service Offering" ;
 	skos:inScheme gx:storage-service-offering .
 gx:SubContractor a owl:Class ;
 	rdfs:label "SubContractor" ;
-	rdfs:subClassOf _:b0a1ffd608251 , _:b14587463f66d , _:b5f60f4a2fcee , _:b73a8c590d93b , _:b872ad44a6039 , _:b8933c633fcf0 , _:ba3bf7f800131 , _:bd20fe5fff7da , _:be861d3e90895 , _:bef1294ae9224 ;
+	rdfs:subClassOf _:b0a1ffd608251 , _:b13cb07435be0 , _:b14587463f66d , _:b5f60f4a2fcee , _:b73a8c590d93b , _:b8933c633fcf0 , _:ba3bf7f800131 , _:bd20fe5fff7da , _:be861d3e90895 , _:bef1294ae9224 ;
 	skos:definition "Represents a subcontractor with specific legal and communication attributes." ;
 	skos:inScheme gx:sub-contractor .
 gx:SubProcessorDataTransfer a owl:Class ;
@@ -34427,7 +34427,7 @@ gx:TenantSeparation a owl:Class ;
 	linkml:permissible_values gx:TenantSeparation\/hw-partitioned , gx:TenantSeparation\/hw-virtualized , gx:TenantSeparation\/os-hw-virtualized , gx:TenantSeparation\/os-virtualized , gx:TenantSeparation\/physical , gx:TenantSeparation\/sw-virtualized .
 gx:TermsAndConditions a owl:Class ;
 	rdfs:label "TermsAndConditions" ;
-	rdfs:subClassOf _:b4ceb9606f527 , _:b591508ffe2c7 , _:b9174d6a398a8 , _:b9558c931289d , _:bad46a7ede41a , _:bb05676fe3a5e ;
+	rdfs:subClassOf _:b1f6dd31c5f7e , _:b4ceb9606f527 , _:b591508ffe2c7 , _:b9558c931289d , _:bad46a7ede41a , _:bb05676fe3a5e ;
 	skos:definition "Terms and Conditions applying to a service offering." ;
 	skos:inScheme gx:service-offering .
 gx:ThirdCountryDataTransfer a owl:Class ;
@@ -34495,7 +34495,7 @@ gx:UpdateStrategyEnum a owl:Class ;
 	linkml:permissible_values gx:UpdateStrategyEnum\/do_not_update , gx:UpdateStrategyEnum\/maximum_security , gx:UpdateStrategyEnum\/minimal_downtime .
 gx:UsageTermsAndConditions a owl:Class ;
 	rdfs:label "UsageTermsAndConditions" ;
-	rdfs:subClassOf _:b433c9c8af3aa , _:b52bbe559c0d5 , _:b62a3040a74d3 , _:b6ae4a8ac9a3e , _:bc6e2678d541d , _:be1160ad2c3e7 ;
+	rdfs:subClassOf _:b52bbe559c0d5 , _:b62a3040a74d3 , _:b67f22860148b , _:b6ae4a8ac9a3e , _:bc6e2678d541d , _:be1160ad2c3e7 ;
 	skos:definition "Terms and Conditions applying to the usage of a digital service." ;
 	skos:inScheme gx:digital-service-offering .
 gx:UserDocumentationMaintenance a owl:Class ;
@@ -34560,7 +34560,7 @@ gx:VirtualMachineServiceOffering dcterms:title "Virtual Machine Service Offering
 gx:VirtualResource dcterms:title "Virtual Resource" ;
 	a owl:Class ;
 	rdfs:label "VirtualResource" ;
-	rdfs:subClassOf gx:Resource , _:b2f64b54299c7 , _:ba23639195ac7 , _:baf5af7e7af25 , _:bd4309cf62a0a , _:bf2780d8a2bd7 , _:bf6fd8a3fe351 ;
+	rdfs:subClassOf gx:Resource , _:b2f64b54299c7 , _:ba23639195ac7 , _:baf5af7e7af25 , _:bb361f1314ebd , _:bf2780d8a2bd7 , _:bf6fd8a3fe351 ;
 	skos:definition "It represents static data in any form and necessary information such as dataset, configuration file, license, keypair, an AI model, neural network weights, etc." ;
 	skos:inScheme gx:resource .
 gx:VlanType\/dot1q a owl:Class ;
@@ -34670,9 +34670,8 @@ gx:attainmentDate a owl:DatatypeProperty ;
 	skos:definition "Date for which this energy mix has been attained, if the date is in the past, or is forecast to be attained, if the date is in the future." ;
 	skos:inScheme gx:slots .
 gx:attestationServiceURI dcterms:title "attestation service URI" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "attestationServiceURI" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "indicates whether confidential server has an associated attestation service." ;
 	skos:inScheme gx:slots .
 gx:availability dcterms:title "availability" ;
@@ -34984,9 +34983,8 @@ gx:containerFormat dcterms:title "Format" ;
 	skos:definition "container image format" ;
 	skos:inScheme gx:slots .
 gx:containerImageLink dcterms:title "Container Image Link" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "containerImageLink" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "Link to the image's repository" ;
 	skos:inScheme gx:slots .
 gx:containerImageTag dcterms:title "Container Image Tag" ;
@@ -35084,7 +35082,7 @@ gx:customerInstructions dcterms:title "Customer instructions" ;
 	skos:inScheme gx:slots .
 gx:dataAccessPolicy a owl:DatatypeProperty ;
 	rdfs:label "dataAccessPolicy" ;
-	rdfs:range _:b93626f8bb182 ;
+	rdfs:range xsd:string ;
 	skos:definition "A text expressing a specific condition applicable - ODRL recommended" ;
 	skos:inScheme gx:data-product .
 gx:dataAccessPrerequisites a owl:ObjectProperty ;
@@ -35195,7 +35193,7 @@ gx:dataUsageLegalContext a owl:DatatypeProperty ;
 	skos:inScheme gx:data-product .
 gx:dataUsagePolicy a owl:DatatypeProperty ;
 	rdfs:label "dataUsagePolicy" ;
-	rdfs:range _:bda675b99d1d8 ;
+	rdfs:range xsd:string ;
 	skos:definition "A text expressing a specific condition - ODRL recommended" ;
 	skos:inScheme gx:data-product .
 gx:dataUsagePurpose a owl:DatatypeProperty ;
@@ -35326,9 +35324,8 @@ gx:diskType dcterms:title "Disk Type" ;
 	rdfs:range gx:DiskType ;
 	skos:definition "The type of storage drive." ;
 	skos:inScheme gx:slots .
-gx:documentations a owl:DatatypeProperty ;
+gx:documentations a owl:ObjectProperty ;
 	rdfs:label "documentations" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "Documentations explaining how data portability can be done, in the sense of a manual." ;
 	skos:inScheme gx:slots .
 gx:eccEnabled dcterms:title "error correction code (ecc)" ;
@@ -35343,9 +35340,8 @@ gx:ecoIssuesCredentialsOfType dcterms:title "The type of verifiable credentials 
 	skos:definition "Type(s) of credentials issued by an Ecosystem TSP and recognized for a particular TSP for a given trust scope.  This is used in the same way as the \"type\" information in the Verifiable Credentials Data Model 2.0 (https://www.w3.org/TR/vc-data-model-2.0/#types)." ;
 	skos:inScheme gx:meta-registry .
 gx:ecoTSPEndPoint dcterms:title "Ecosystem TSP endpoint" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "ecoTSPEndPoint" ;
-	rdfs:range xsd:anyURI ;
 	skos:inScheme gx:meta-registry .
 gx:ecoTSPId dcterms:title "Ecosystem TSP identifier" ;
 	a owl:DatatypeProperty ;
@@ -35379,9 +35375,8 @@ gx:endpoint dcterms:title "endpoint" ;
 	skos:definition "Endpoint through which the Service Offering can be accessed." ;
 	skos:inScheme gx:slots .
 gx:endpointURL dcterms:title "endpoint URL" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "endpointURL" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "The URL of the endpoint where it can be accessed." ;
 	skos:inScheme gx:slots .
 gx:energyMix dcterms:title "Energy Mix" ;
@@ -35526,9 +35521,8 @@ gx:generation dcterms:title "Generation of the device" ;
 	rdfs:range xsd:string ;
 	skos:definition "Vendor specific generation of the device." ;
 	skos:inScheme gx:slots .
-gx:genericLicense a owl:DatatypeProperty ;
+gx:genericLicense a owl:ObjectProperty ;
 	rdfs:label "genericLicense" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "states if one or mode generic licenses appliy, like Open Data (or other ecosystem-defined license)" ;
 	skos:inScheme gx:data-product .
 gx:geoReplication dcterms:title "Geo Replication" ;
@@ -35673,7 +35667,7 @@ gx:hypervisorType dcterms:title "Hypervisor type" ;
 	skos:inScheme gx:slots .
 gx:informationDocuments a owl:DatatypeProperty ;
 	rdfs:label "informationDocuments" ;
-	rdfs:range _:b43a16aa9b1eb ;
+	rdfs:range _:b7911c3c34df6 ;
 	skos:definition "Documents providing additional information about the subcontractor." ;
 	skos:inScheme gx:slots .
 gx:instantiationReq dcterms:title "Instantiation Requirement" ;
@@ -35808,7 +35802,7 @@ gx:legalValidity a owl:DatatypeProperty ;
 	skos:inScheme gx:slots .
 gx:license a owl:DatatypeProperty ;
 	rdfs:label "license" ;
-	rdfs:range _:bfb94772856f5 ;
+	rdfs:range _:b8a2338909e63 ;
 	skos:definition "A list of SPDX identifiers or URL to document." ;
 	skos:inScheme gx:slots .
 gx:licenseIncluded dcterms:title "License included" ;
@@ -36099,7 +36093,7 @@ gx:phoneNumber a owl:DatatypeProperty ;
 	skos:inScheme gx:slots .
 gx:policyDocument a owl:DatatypeProperty ;
 	rdfs:label "policyDocument" ;
-	rdfs:range _:b1e1f2fcb8556 ;
+	rdfs:range _:b212951b03440 ;
 	skos:definition "A link to the actual policy or the content of the policy itself." ;
 	skos:inScheme gx:slots .
 gx:policyLanguage dcterms:title "Policy Language Type" ;
@@ -36142,9 +36136,8 @@ gx:prefixSetZ dcterms:title "prefix set Z" ;
 	rdfs:range xsd:string ;
 	skos:definition "CIDR Provider Identifier of network on the side Z." ;
 	skos:inScheme gx:slots .
-gx:pricing a owl:DatatypeProperty ;
+gx:pricing a owl:ObjectProperty ;
 	rdfs:label "pricing" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "Link to the service's pricing page." ;
 	skos:inScheme gx:slots .
 gx:producedBy dcterms:title "produced by" ;
@@ -36399,9 +36392,8 @@ gx:standardConformity dcterms:title "standard conformity" ;
 	skos:definition "Provides information about applied standards." ;
 	skos:inScheme gx:slots .
 gx:standardReference dcterms:title "standard reference" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "standardReference" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "Provides a link to schemas or details about applied standards." ;
 	skos:inScheme gx:slots .
 gx:storageCompression dcterms:title "Storage Compression" ;
@@ -36576,9 +36568,8 @@ gx:updateStrategy a owl:ObjectProperty ;
 	skos:definition "Details on provider's image update strategy of this image. An update strategy defines ..." ;
 	skos:inScheme gx:slots .
 gx:url dcterms:title "URL" ;
-	a owl:DatatypeProperty ;
+	a owl:ObjectProperty ;
 	rdfs:label "url" ;
-	rdfs:range xsd:anyURI ;
 	skos:definition "Resolvable link to a resource." ;
 	skos:inScheme gx:slots .
 gx:vCPUs dcterms:title "number of virtual CPUs" ;
@@ -36902,6 +36893,9 @@ _:b02a0df04848a rdf:first gx:RegionCode\/JM-07 ;
 	rdf:rest _:b6321a6a0b83f .
 _:b02ac78c58009 rdf:first gx:VlanType\/other ;
 	rdf:rest _:be74d220c9a1a .
+_:b02b91df6791b a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:pricing .
 _:b02c2a3a7f7be a owl:Restriction ;
 	owl:allValuesFrom gx:ComputeFunctionQuotas ;
 	owl:onProperty gx:computeFunctionQuotas .
@@ -36959,8 +36953,6 @@ _:b036ce1c038fd rdf:first gx:RegionCode\/TD-EO ;
 _:b036e07cd0868 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:decimals .
-_:b036f23950bf2 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b03701dcb8c15 rdf:first gx:MIMETypes\/application\%2Frdap\%2Bjson ;
 	rdf:rest _:b2233baef1541 .
 _:b03724d890a59 rdf:first gx:NUTS2Region\/BG41 ;
@@ -37108,8 +37100,6 @@ _:b04f26696c9d3 rdf:first gx:SPDX\/Plexus ;
 	rdf:rest _:b329b91a6bb91 .
 _:b04fb286128b9 rdf:first gx:CountryNameAlpha3\/ARG ;
 	rdf:rest _:b8e05bf970233 .
-_:b04fc2134a207 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b050a4b223dc7 rdf:first gx:RegionCode\/CV-CA ;
 	rdf:rest _:bfcc4cebc90ea .
 _:b050ce907a518 rdf:first gx:RegionCode\/CV-TA ;
@@ -37236,8 +37226,6 @@ _:b06b136827541 a owl:Restriction ;
 	owl:onProperty gx:maximumSize .
 _:b06b2ba8ef555 rdf:first gx:RegionCode\/PA-10 ;
 	rdf:rest _:b3da3a60b292b .
-_:b06ba44c0ff77 rdf:first xsd:anyURI ;
-	rdf:rest _:bbd0e1d582a8b .
 _:b06bdcb25e7c1 rdf:first gx:MIMETypes\/application\%2Fvnd.etsi.cug\%2Bxml ;
 	rdf:rest _:bd58b4dd28de8 .
 _:b06bde839f5a4 rdf:first gx:RegionCode\/HU-TO ;
@@ -37411,6 +37399,9 @@ _:b088859e48bc0 rdf:first gx:RegionCode\/HU-SH ;
 _:b0893cf0f0dfb a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty gx:gps .
+_:b08a3568556bd a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:endpointURL .
 _:b08a517d5d678 rdf:first gx:RegionCode\/BD-21 ;
 	rdf:rest _:bf794e120b256 .
 _:b08a5adb8163b rdf:first gx:RegionCode\/GN-FR ;
@@ -37439,8 +37430,6 @@ _:b08e8005c6c25 rdf:first gx:RegionCode\/BW-KL ;
 	rdf:rest _:b9104b0c8e123 .
 _:b08e9195b43de rdf:first gx:NUTS2Region\/PL92 ;
 	rdf:rest _:be6e46eee0a93 .
-_:b08ee30d7d3dc rdf:first xsd:string ;
-	rdf:rest _:b0acc2eaa2126 .
 _:b08f3898c6e51 rdf:first gx:SPDX\/GFDL-1.3-or-later ;
 	rdf:rest _:b8802869c6981 .
 _:b08fda24af460 rdf:first gx:MIMETypes\/application\%2Fvnd.gerber ;
@@ -37608,8 +37597,6 @@ _:b0ab4ca15c896 rdf:first gx:RegionCode\/TZ-09 ;
 	rdf:rest _:bd3ab884b87bd .
 _:b0ac698e6cf60 rdf:first gx:RegionCode\/SY-DI ;
 	rdf:rest _:b3ab2a3aa27c1 .
-_:b0acc2eaa2126 rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:b0ad97a4ab851 rdf:first gx:RegionCode\/RU-SVE ;
 	rdf:rest _:bd50b5b86ca60 .
 _:b0adf5be2dafe rdf:first gx:OSDistribution\/openSUSE ;
@@ -37909,6 +37896,8 @@ _:b0e2be0495b14 rdf:first gx:RegionCode\/MH-EBO ;
 	rdf:rest _:b0bbcd483988f .
 _:b0e33960eda78 rdf:first gx:RegionCode\/IR-08 ;
 	rdf:rest _:b0a2efa560131 .
+_:b0e3db49fd14b rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b0e49d30514b6 rdf:first gx:StorageAPI\/S3 ;
 	rdf:rest _:bf22e6dc58282 .
 _:b0e53bec84280 rdf:first gx:RegionCode\/IE-DL ;
@@ -38219,8 +38208,6 @@ _:b1211336ebb03 rdf:first gx:OSDistribution\/others ;
 	rdf:rest rdf:nil .
 _:b1213623d2ce3 rdf:first gx:RegionCode\/FR-2A ;
 	rdf:rest _:be675cc800ede .
-_:b121871a9938b rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:b121f4a65c946 rdf:first gx:RegionCode\/BF-08 ;
 	rdf:rest _:bca0aa30c59ac .
 _:b122ee0e5b9a9 rdf:first gx:SPDX\/AFL-1.2 ;
@@ -38372,6 +38359,9 @@ _:b13b9bcdb6eac rdf:first gx:RegionCode\/FR-NOR ;
 	rdf:rest _:bc24e907f6b39 .
 _:b13c85865ffa9 rdf:first gx:RegionCode\/KH-18 ;
 	rdf:rest _:b33b455bba562 .
+_:b13cb07435be0 a owl:Restriction ;
+	owl:allValuesFrom _:b253a30fa2c2c ;
+	owl:onProperty gx:informationDocuments .
 _:b13cecb2ddd50 rdf:first gx:NUTS2Region\/ES42 ;
 	rdf:rest _:b080421e338e6 .
 _:b13dce71e42ac a owl:Restriction ;
@@ -38512,6 +38502,9 @@ _:b15511b89ca48 rdf:first gx:RegionCode\/CN-XZ ;
 	rdf:rest _:b1a918dee8884 .
 _:b155bdebf5094 rdf:first gx:MIMETypes\/application\%2Fvnd.banana-accounting ;
 	rdf:rest _:bdd644db28c12 .
+_:b15615a591a7e a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:standardReference .
 _:b15682684c8cd rdf:first gx:RegionCode\/IT-SI ;
 	rdf:rest _:b23decbee8500 .
 _:b156ad7de128a rdf:first gx:RegionCode\/FR-PM ;
@@ -38627,6 +38620,8 @@ _:b16b94b077995 rdf:first gx:NUTS2Region\/FR10 ;
 	rdf:rest _:b86a94d129a42 .
 _:b16bc202264f9 rdf:first gx:RegionCode\/ML-5 ;
 	rdf:rest _:b6351340e1053 .
+_:b16bf1ccedfc3 a rdfs:Datatype ;
+	owl:intersectionOf _:b885dab836c07 .
 _:b16c9966e9b6e rdf:first gx:DeduplicationMethod\/Post-Process-Content-Agnostic ;
 	rdf:rest _:b7e0007349c78 .
 _:b16c99c69ba3b rdf:first gx:RegionCode\/UM-79 ;
@@ -38880,9 +38875,6 @@ _:b1a211a81ca4e rdf:first gx:MIMETypes\/application\%2Fsensml-exi ;
 	rdf:rest _:b4b49c5d92485 .
 _:b1a266213f5a2 rdf:first gx:RegionCode\/IT-BZ ;
 	rdf:rest _:b2a4d1382878e .
-_:b1a26c28a2498 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:genericLicense .
 _:b1a2d1b5b8f0a rdf:first gx:RegionCode\/SD-GZ ;
 	rdf:rest _:bf7d12ad600d5 .
 _:b1a30e81b8344 rdf:first gx:RegionCode\/NR-14 ;
@@ -39058,6 +39050,8 @@ _:b1c2584969d0a rdf:first gx:MIMETypes\/application\%2Fvnd.anser-web-certificate
 	rdf:rest _:bcd72e949f4a3 .
 _:b1c2938c7a4d7 rdf:first gx:MIMETypes\/application\%2Fvnd.is-xpr ;
 	rdf:rest _:b3e81c1c39e74 .
+_:b1c29fc0ffc4c rdf:first gx:LegalDocument ;
+	rdf:rest _:b57404884bd33 .
 _:b1c3194ed519a rdf:first gx:RegionCode\/SB-IS ;
 	rdf:rest _:ba7e8804a43de .
 _:b1c380919a0f8 rdf:first gx:RegionCode\/BW-FR ;
@@ -39070,7 +39064,6 @@ _:b1c40325d9d58 rdf:first gx:RegionCode\/DZ-25 ;
 _:b1c44a9cbd76a a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:credentialType .
-_:b1c4702f034cd owl:unionOf _:b06ba44c0ff77 .
 _:b1c4704fd7b58 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:cpuReq .
@@ -39237,8 +39230,6 @@ _:b1e1b99be8b1f rdf:first gx:MIMETypes\/application\%2Fvnd.oai.workflows\%2Byaml
 	rdf:rest _:bd42ab05089fe .
 _:b1e1bb90785f2 rdf:first xsd:integer ;
 	rdf:rest _:bd11042cd5cf2 .
-_:b1e1f2fcb8556 a rdfs:Datatype ;
-	owl:intersectionOf _:b633162933c82 .
 _:b1e2485a3e2f0 rdf:first gx:MIMETypes\/application\%2Ftimestamp-query ;
 	rdf:rest _:bd5e149a7e30c .
 _:b1e3bd9f442b3 rdf:first gx:MIMETypes\/application\%2Fvnd.oma.bcast.simple-symbol-container ;
@@ -39351,6 +39342,9 @@ _:b1f57c12376f1 rdf:first gx:RegionCode\/LV-JEL ;
 	rdf:rest _:bfb783086bd9d .
 _:b1f635ef31235 rdf:first gx:RegionCode\/UY-FS ;
 	rdf:rest _:bade6c72b3cf9 .
+_:b1f6dd31c5f7e a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:url .
 _:b1f6e06f9a500 rdf:first gx:SPDX\/LOOP ;
 	rdf:rest _:b0fa8af26d7ec .
 _:b1f72e95cbf8c a owl:Restriction ;
@@ -39486,6 +39480,8 @@ _:b211bb1d3647a a owl:Restriction ;
 	owl:onProperty gx:waterUsageEffectiveness .
 _:b2124524e8b5b rdf:first gx:NUTS2Region\/LUZZ ;
 	rdf:rest _:b911410172c35 .
+_:b212951b03440 a rdfs:Datatype ;
+	owl:intersectionOf _:b34b677d23d32 .
 _:b212c7aaf056c rdf:first gx:MIMETypes\/application\%2Fvnd.anki ;
 	rdf:rest _:b1c2584969d0a .
 _:b21394c63776a rdf:first gx:NUTS2Region\/RO22 ;
@@ -39576,6 +39572,8 @@ _:b226fefdf4492 rdf:first gx:RegionCode\/TH-86 ;
 	rdf:rest _:b2fd271e04ed9 .
 _:b22765d796315 rdf:first gx:AccessAttribute\/Read-Only ;
 	rdf:rest _:b4eab1103d853 .
+_:b228a87548693 a rdfs:Datatype ;
+	owl:intersectionOf _:bb03d3db354b6 .
 _:b22934fd6dfd8 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty gx:diskBusType .
@@ -39687,6 +39685,9 @@ _:b23e838339e7b rdf:first gx:RegionCode\/GB-ZET ;
 	rdf:rest _:bba7cb86f4aa7 .
 _:b23eed4441d8c rdf:first gx:RegionCode\/MH-MAL ;
 	rdf:rest _:bd7b20a880e54 .
+_:b24079b46378c a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:dataUsagePolicy .
 _:b24099b4f07db rdf:first gx:MIMETypes\/application\%2Fvnd.ffsns ;
 	rdf:rest _:ba2932b44e81b .
 _:b240aae93b63d rdf:first gx:RegionCode\/FR-42 ;
@@ -39761,7 +39762,7 @@ _:b24f5269e23b2 rdf:first gx:MIMETypes\/application\%2Fibe-key-request\%2Bxml ;
 _:b250dc16e4eee rdf:first gx:RegionCode\/MC-LA ;
 	rdf:rest _:b73b10972dfc7 .
 _:b250e869a1992 rdf:first xsd:string ;
-	rdf:rest _:b262823be3f1f .
+	rdf:rest _:b262823be3f1f_1 .
 _:b251e5b706beb rdf:first gx:RegionCode\/MN-055 ;
 	rdf:rest _:b224ad8a1e974 .
 _:b25204d413700 rdf:first gx:MIMETypes\/application\%2Fmikey ;
@@ -39770,6 +39771,7 @@ _:b252dd096971c rdf:first gx:CountryNameAlpha3\/IRL ;
 	rdf:rest _:bf52085ae1495 .
 _:b252e2b9dd801 rdf:first gx:RegionCode\/HR-13 ;
 	rdf:rest _:b7640dbabe3d3 .
+_:b253a30fa2c2c owl:intersectionOf _:b6e91f95baed2 .
 _:b25479c4c4aa3 rdf:first gx:RegionCode\/LU-ME ;
 	rdf:rest _:bf40e59cbfec6 .
 _:b254b357d1fa3 rdf:first gx:MIMETypes\/application\%2Fvnd.loom ;
@@ -40107,6 +40109,9 @@ _:b28e6c4c83e89 rdf:first gx:CountryNameNumeric\/304 ;
 	rdf:rest _:b386547a6c02b .
 _:b28ecbad134a5 rdf:first gx:RegionCode\/SN-TH ;
 	rdf:rest _:bdf72e69aad20 .
+_:b29039f5a87af a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:dataAccessPolicy .
 _:b29053141fe60 rdf:first gx:SPDX\/metamail ;
 	rdf:rest _:b4bcc5fd9253a .
 _:b29059a981e1e rdf:first gx:RegionCode\/UG-113 ;
@@ -40163,9 +40168,6 @@ _:b29b7bedd94d9 rdf:first gx:SPDX\/LiLiQ-P-1.1 ;
 	rdf:rest _:b750092d08191 .
 _:b29bfb8c59e9d rdf:first gx:SPDX\/OLDAP-2.2 ;
 	rdf:rest _:ba1c1d1407726 .
-_:b29c1fb4f55ca a owl:Restriction ;
-	owl:allValuesFrom _:b401bab004921 ;
-	owl:onProperty gx:dataAccessPolicy .
 _:b29c206540fa2 rdf:first gx:RegionCode\/UZ-SI ;
 	rdf:rest _:bb71ff563b876 .
 _:b29cb123d7219 rdf:first gx:RegionCode\/LV-111 ;
@@ -40261,6 +40263,8 @@ _:b2ae088418931 rdf:first gx:RegionCode\/MA-AZI ;
 _:b2ae784d75a86 a owl:Restriction ;
 	owl:allValuesFrom gx:AccessAttribute ;
 	owl:onProperty gx:accessAttributes .
+_:b2af2cb001a6f rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b2af46f54e4a8 rdf:first gx:RegionCode\/ME-14 ;
 	rdf:rest _:b3257cc5e034b .
 _:b2af710c7a175 rdf:first gx:RegionCode\/SM-01 ;
@@ -40331,6 +40335,9 @@ _:b2b9e90f90723 rdf:first gx:SPDX\/BSD-3-Clause-No-Nuclear-Warranty ;
 	rdf:rest _:b2c41a25a6757 .
 _:b2b9ea203ec1b rdf:first gx:RegionCode\/KH-5 ;
 	rdf:rest _:bb7d5e420061d .
+_:b2ba4908f56f1 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:ecoTSPEndPoint .
 _:b2babf5e54e58 rdf:first gx:RegionCode\/PE-APU ;
 	rdf:rest _:be4664da62904 .
 _:b2bad2b2a16dd a owl:Restriction ;
@@ -40397,8 +40404,6 @@ _:b2c63e86dae27 rdf:first gx:SPDX\/Artistic-1.0 ;
 	rdf:rest _:bb279c9165361 .
 _:b2c64e3b7823f rdf:first gx:CryptographicSecurityStandards\/RFC7515 ;
 	rdf:rest _:b84ea6f0b1ce6 .
-_:b2c671e4134f6 rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:b2c69d49239e3 rdf:first gx:MIMETypes\/application\%2Fvnd.3gpp.seal-unicast-info\%2Bxml ;
 	rdf:rest _:b01f82a920be1 .
 _:b2c6cbe4d3a4d rdf:first gx:NUTS2Region\/NL35 ;
@@ -40448,9 +40453,6 @@ _:b2cd90adf326a rdf:first gx:CountryNameNumeric\/659 ;
 	rdf:rest _:b3c69b39e25d4 .
 _:b2cdd534ed707 rdf:first gx:RegionCode\/DO-30 ;
 	rdf:rest _:b8d7f04387041 .
-_:b2ce446c6aaf0 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:endpointURL .
 _:b2ce81ca3509f rdf:first gx:RegionCode\/GB-BKM ;
 	rdf:rest _:bb8a59de36b95 .
 _:b2cea6917074f rdf:first gx:MIMETypes\/application\%2Fc2pa ;
@@ -40668,9 +40670,6 @@ _:b2f8492bb4a39 rdf:first gx:NUTS2Region\/BE31 ;
 	rdf:rest _:bc3c2b8058fde .
 _:b2f8d2d5a152e rdf:first gx:CountryNameNumeric\/566 ;
 	rdf:rest _:b09e3fc1e3bdf .
-_:b2f8e1cb080fd a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:url .
 _:b2f90e7030b7e rdf:first gx:MIMETypes\/application\%2Fjose\%2Bjson ;
 	rdf:rest _:bd88ca4c60956 .
 _:b2faa84bc7575 rdf:first gx:RegionCode\/KE-05 ;
@@ -41032,6 +41031,8 @@ _:b34ade63e80e3 rdf:first gx:RegionCode\/NE-4 ;
 _:b34ae654e1650 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:deletionTimeframe .
+_:b34b677d23d32 rdf:first xsd:string ;
+	rdf:rest _:b0e3db49fd14b .
 _:b34bca0fe3040 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty schema:leiCode .
@@ -41052,8 +41053,6 @@ _:b34d6ff3c091d rdf:first gx:RegionCode\/GB-WSM ;
 	rdf:rest _:bce2a64e53bb3 .
 _:b34d87c3e4923 rdf:first _:b8cb6c5af09fb ;
 	rdf:rest _:b4299bf0c8cee .
-_:b34db63c409cd rdf:first gx:LegalDocument ;
-	rdf:rest rdf:nil .
 _:b34dd2b5a28ea rdf:first gx:StorageRedundancyMechanism\/RAID1 ;
 	rdf:rest _:be42d514ddaed .
 _:b34e9b387f653 rdf:first gx:SPDX\/HPND-sell-variant-MIT-disclaimer ;
@@ -41409,9 +41408,6 @@ _:b391c71ade9e9 rdf:first gx:RegionCode\/TD-WF ;
 	rdf:rest _:bca06a70b792a .
 _:b39204ed38206 rdf:first gx:RegionCode\/TR-53 ;
 	rdf:rest _:bef01523948b2 .
-_:b3921a48d14a1 a owl:Restriction ;
-	owl:allValuesFrom _:bd2b1ae1e0785 ;
-	owl:onProperty gx:dataUsagePolicy .
 _:b39238ed0a134 rdf:first gx:MIMETypes\/application\%2Fprs.vcfbzip2 ;
 	rdf:rest _:b6f661041fe91 .
 _:b3928b011fd71 rdf:first gx:RegionCode\/LK-2 ;
@@ -41432,13 +41428,13 @@ _:b393f5eb49473_1 rdf:first _:b70f9b3150c4a_1 ;
 	rdf:rest rdf:nil .
 _:b393f5eb49473_2 rdf:first _:b70f9b3150c4a_2 ;
 	rdf:rest rdf:nil .
-_:b393f5eb49473_3 rdf:first _:b70f9b3150c4a_4 ;
+_:b393f5eb49473_3 rdf:first _:b70f9b3150c4a_6 ;
 	rdf:rest rdf:nil .
-_:b393f5eb49473_4 rdf:first _:b70f9b3150c4a_7 ;
+_:b393f5eb49473_4 rdf:first _:b70f9b3150c4a_9 ;
 	rdf:rest rdf:nil .
 _:b393f5eb49473_5 rdf:first _:b70f9b3150c4a_10 ;
 	rdf:rest rdf:nil .
-_:b393f5eb49473_6 rdf:first _:b70f9b3150c4a_11 ;
+_:b393f5eb49473_6 rdf:first _:b70f9b3150c4a_12 ;
 	rdf:rest rdf:nil .
 _:b394a622fddd6 rdf:first gx:MIMETypes\/message\%2Fohttp-req ;
 	rdf:rest _:be5f7d70d28cf .
@@ -41452,9 +41448,6 @@ _:b3956ccafa536 rdf:first gx:CountryNameAlpha2\/GD ;
 	rdf:rest _:b9db6b04e9bcf .
 _:b395ad67a304d rdf:first gx:RegionCode\/LT-51 ;
 	rdf:rest _:b426b34908745 .
-_:b3960fa733cb0 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:standardReference .
 _:b39671058fddc rdf:first gx:RegionCode\/SA-04 ;
 	rdf:rest _:bb8a1fa66466d .
 _:b396c66d9c7a1 a owl:Restriction ;
@@ -41493,6 +41486,8 @@ _:b39f255c706f3 rdf:first gx:CountryNameAlpha3\/LBR ;
 	rdf:rest _:bcb1b1f8b47a0 .
 _:b39f2b3f947fe rdf:first gx:RegionCode\/MK-313 ;
 	rdf:rest _:b1001892d8b9c .
+_:b39f407d3fda9 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b39f9810c4fb8 rdf:first gx:MIMETypes\/application\%2Face\%2Bjson ;
 	rdf:rest _:b6730a7526dc7 .
 _:b3a01ef7355c0 rdf:first gx:SPDX\/OSET-PL-2.1 ;
@@ -41959,7 +41954,7 @@ _:b3f4adeda786e rdf:first gx:RegionCode\/SI-168 ;
 	rdf:rest _:b2a49184584ad .
 _:b3f4c294d66dc a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473_1 .
+	owl:withRestrictions _:b393f5eb49473_3 .
 _:b3f5024898164 rdf:first gx:RegionCode\/FR-973 ;
 	rdf:rest _:be0558ac6e810 .
 _:b3f57f6f7c76c rdf:first gx:RegionCode\/IT-MC ;
@@ -42049,8 +42044,6 @@ _:b40151eec5b49 rdf:first gx:MIMETypes\/video\%2FH265 ;
 	rdf:rest _:b307cc447fae0 .
 _:b40180c1f6eae rdf:first gx:RegionCode\/PH-ROM ;
 	rdf:rest _:b74b328e29e5f .
-_:b401bab004921 a rdfs:Datatype ;
-	owl:unionOf _:bc39562aceb12 .
 _:b401c3cca9a02 rdf:first gx:RegionCode\/AZ-SUS ;
 	rdf:rest _:b4fdfdc2ae284 .
 _:b401f6d7a34bf rdf:first gx:SPDX\/GFDL-1.1-no-invariants-or-later ;
@@ -42315,9 +42308,6 @@ _:b433697d71254 rdf:first gx:MIMETypes\/audio\%2Ft140c ;
 	rdf:rest _:bb078b4be5159 .
 _:b4339d5bbd399 rdf:first gx:MIMETypes\/multipart\%2Fmultilingual ;
 	rdf:rest _:bb12c36327cf1 .
-_:b433c9c8af3aa a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:url .
 _:b433cd68256ed rdf:first gx:RegionCode\/AZ-MI ;
 	rdf:rest _:b02033a2ab166 .
 _:b4347f279c0e5 a owl:Restriction ;
@@ -42334,8 +42324,6 @@ _:b435dfccaeca6 rdf:first gx:SPDX\/MirOS ;
 	rdf:rest _:b8a3f947ad992 .
 _:b436d4f63837f rdf:first gx:RegionCode\/GH-AF ;
 	rdf:rest _:b39e073ec69f0 .
-_:b436f730723ac rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b4372fb540295 rdf:first gx:RegionCode\/LA-XA ;
 	rdf:rest _:b65bbccab2344 .
 _:b437f171b2b22 rdf:first gx:RegionCode\/ES-RI ;
@@ -42353,8 +42341,6 @@ _:b439318980529 a owl:Restriction ;
 	owl:onProperty gx:countryCode .
 _:b43a07fc2ec2c rdf:first gx:SPDX\/CC-BY-3.0-IGO ;
 	rdf:rest _:b789a09d88bb4 .
-_:b43a16aa9b1eb a rdfs:Datatype ;
-	owl:intersectionOf _:bb7abca9e062a .
 _:b43a1ca5023e4 rdf:first gx:RegionCode\/UA-23 ;
 	rdf:rest _:bf3b2df922f2c .
 _:b43a69c479617 rdf:first gx:RegionCode\/BD-45 ;
@@ -42880,6 +42866,9 @@ _:b49f669e99882 rdf:first gx:RegionCode\/IT-TS ;
 	rdf:rest _:b48fa58fa7fba .
 _:b49fa504a5663 rdf:first gx:NUTS2Region\/ES51 ;
 	rdf:rest _:bddd182b437a1 .
+_:b4a01a3c857b7 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:attestationServiceURI .
 _:b4a056fe90e2a rdf:first gx:NUTS2Region\/ES24 ;
 	rdf:rest _:bac529b16bc59 .
 _:b4a06bc1fb84e rdf:first gx:RegionCode\/MV-14 ;
@@ -43004,8 +42993,6 @@ _:b4ba7bb56ce37 a owl:Restriction ;
 	owl:onProperty gx:computeFunctionAllowFSMount .
 _:b4ba873842ee2 rdf:first gx:RegionCode\/ZM-04 ;
 	rdf:rest _:bd9dbf2c63154 .
-_:b4bc1e81faf82 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b4bcc5fd9253a rdf:first gx:SPDX\/mpi-permissive ;
 	rdf:rest _:b029fa708098d .
 _:b4bdb93811d82 rdf:first gx:MIMETypes\/application\%2Fvnd.canon-lips ;
@@ -43276,6 +43263,9 @@ _:b4eedb7e752c7 rdf:first gx:RegionCode\/CL-MA ;
 	rdf:rest _:be33c90e786b5 .
 _:b4ef9d74efcaf rdf:first gx:RegionCode\/PY-5 ;
 	rdf:rest _:bd7fc33a4bf98 .
+_:b4efc4768dd26 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:genericLicense .
 _:b4eff24e0978c rdf:first gx:RegionCode\/CO-RIS ;
 	rdf:rest _:bc0f6a980b24a .
 _:b4f070be2452c rdf:first gx:RegionCode\/LV-062 ;
@@ -43573,8 +43563,6 @@ _:b52a66ff63e28 rdf:first gx:RegionCode\/MA-BRR ;
 _:b52af8efdcb69 a owl:Restriction ;
 	owl:allValuesFrom gx:SLATargetPercentile ;
 	owl:onProperty gx:metric .
-_:b52b5ac20ec89 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b52bb60163d6d rdf:first gx:SPDX\/DL-DE-ZERO-2.0 ;
 	rdf:rest _:b6b7887e3dc03 .
 _:b52bbe559c0d5 a owl:Restriction ;
@@ -43741,8 +43729,6 @@ _:b54cc99ed61f5 rdf:first gx:RegionCode\/GE-KK ;
 	rdf:rest _:b57ab7890ae80 .
 _:b54d2d4694167 rdf:first gx:MIMETypes\/application\%2Fvnd.geoplan ;
 	rdf:rest _:bc860c562cac1 .
-_:b54d5b6f1d141 a rdfs:Datatype ;
-	owl:unionOf _:b801b4eff3872 .
 _:b54db26423da8 rdf:first gx:CountryNameAlpha3\/MSR ;
 	rdf:rest _:b98928eb83e31 .
 _:b54e00a6c861d rdf:first gx:RegionCode\/PH-11 ;
@@ -43787,8 +43773,6 @@ _:b553dd67923f8 rdf:first gx:RegionCode\/LT-57 ;
 	rdf:rest _:bfe873ca95746 .
 _:b5543122e56ab rdf:first gx:RegionCode\/TL-OE ;
 	rdf:rest _:bd25ff75fc4ab .
-_:b5543b413129c a rdfs:Datatype ;
-	owl:unionOf _:b70d50b50d35b .
 _:b5545e6d63f24 rdf:first gx:MIMETypes\/image\%2Fief ;
 	rdf:rest _:be6ace7c5e428 .
 _:b554dce916826 rdf:first gx:RegionCode\/BH-15 ;
@@ -43935,6 +43919,8 @@ _:b56c251068cfa rdf:first gx:MIMETypes\/application\%2Fvnd.cncf.helm.chart.conte
 	rdf:rest _:b2642c818943d .
 _:b56ca5b592130 rdf:first gx:RegionCode\/DO-34 ;
 	rdf:rest _:b4b5d37eae6d8 .
+_:b56cdf20787ff rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b56d623fd3afa rdf:first gx:NUTS2Region\/FRJ2 ;
 	rdf:rest _:bf788fe600d32 .
 _:b56d7686a8738 rdf:first gx:RegionCode\/AO-MOX ;
@@ -43993,6 +43979,8 @@ _:b5739dd2866f4 rdf:first gx:RegionCode\/SS-EC ;
 	rdf:rest _:b377c13d76905 .
 _:b573db8f64c7f rdf:first gx:RegionCode\/MK-204 ;
 	rdf:rest _:bacb3aabbc51c .
+_:b57404884bd33 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b5741b3600fd4 rdf:first gx:RegionCode\/IS-TAL ;
 	rdf:rest _:b2a966000222c .
 _:b574e484b22b7 rdf:first gx:RegionCode\/GA-6 ;
@@ -44102,8 +44090,6 @@ _:b58af626198ed rdf:first gx:MIMETypes\/application\%2Fvnd.Kinar ;
 	rdf:rest _:b2871dc118a96 .
 _:b58b176165234 rdf:first gx:RegionCode\/UG-422 ;
 	rdf:rest _:bf93c020056ee .
-_:b58bbc5a0a15f rdf:first _:b54d5b6f1d141 ;
-	rdf:rest _:b4bc1e81faf82 .
 _:b58d3e422a69d rdf:first gx:RegionCode\/AZ-QOB ;
 	rdf:rest _:bc85bdc25e7c4 .
 _:b58ddd3744cf0 rdf:first gx:RequestTypes\/unregisteredLetter ;
@@ -44438,9 +44424,6 @@ _:b5d056bf0e7e4 rdf:first gx:RegionCode\/DZ-32 ;
 	rdf:rest _:b09449748c787 .
 _:b5d0e2b3fc6e4 rdf:first gx:MIMETypes\/application\%2Fmarc ;
 	rdf:rest _:b8aed3dd09d43 .
-_:b5d1a33b18d50 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:pricing .
 _:b5d1df42e0874 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:eori .
@@ -44573,6 +44556,8 @@ _:b5ea5c44242e9 rdf:first gx:RegionCode\/YE-SU ;
 	rdf:rest _:be2552f4da0f3 .
 _:b5eab32338abf rdf:first gx:RegionCode\/BJ-CO ;
 	rdf:rest _:b8c2e1fca9f16 .
+_:b5ead1e1487ee rdf:first xsd:string ;
+	rdf:rest rdf:nil .
 _:b5eaf90df9b24 rdf:first gx:RegionCode\/LA-BK ;
 	rdf:rest _:bb82324a46581 .
 _:b5eb4cd530d00 rdf:first _:bd6fd096cb2b3 ;
@@ -44687,8 +44672,6 @@ _:b6002064fbd3d rdf:first gx:RegionCode\/KH-24 ;
 	rdf:rest _:b93994012b9c5 .
 _:b601cc3a43609 rdf:first gx:RegionCode\/MN-041 ;
 	rdf:rest _:b1eee620bb096 .
-_:b6025142a20b7 a rdfs:Datatype ;
-	owl:intersectionOf _:b8471ae79ea5b .
 _:b6025801932ee rdf:first gx:MIMETypes\/application\%2Fvnd.commerce-battelle ;
 	rdf:rest _:bffe18b41498f .
 _:b6029655f9b66 rdf:first gx:MIMETypes\/text\%2Frtx ;
@@ -44928,8 +44911,6 @@ _:b632ed71a63ce rdf:first gx:SPDX\/BSD-2-Clause-Patent ;
 _:b632ef1666a68 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:osDistribution .
-_:b633162933c82 rdf:first _:b76682abf1177 ;
-	rdf:rest _:b036f23950bf2 .
 _:b6331cb4fdbe1 rdf:first gx:CountryNameNumeric\/418 ;
 	rdf:rest _:bee6e7d7fe1d4 .
 _:b633824db4f6e rdf:first gx:CountryNameNumeric\/580 ;
@@ -45312,6 +45293,9 @@ _:b67dd4edc55fb rdf:first gx:RegionCode\/IQ-KI ;
 	rdf:rest _:b166f8e0626a5 .
 _:b67dddf53da19 rdf:first xsd:string ;
 	rdf:rest rdf:nil .
+_:b67f22860148b a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:url .
 _:b67f9cf934a61 rdf:first gx:RegionCode\/ST-03 ;
 	rdf:rest _:b49a1895ab26f .
 _:b6801a42a7a40 rdf:first gx:MIMETypes\/application\%2Fvnd.micrografx.igx ;
@@ -45505,7 +45489,7 @@ _:b6a274264544b rdf:first gx:RegionCode\/SI-054 ;
 	rdf:rest _:bace5c083b6b8 .
 _:b6a3478dad406 rdf:first gx:MIMETypes\/application\%2Fsbml\%2Bxml ;
 	rdf:rest _:bd55016c96d7f .
-_:b6a350d16c802 rdf:first _:b70f9b3150c4a_6 ;
+_:b6a350d16c802 rdf:first _:b70f9b3150c4a_3 ;
 	rdf:rest rdf:nil .
 _:b6a35f1d0b993 rdf:first gx:MIMETypes\/multipart\%2Fdigest ;
 	rdf:rest _:b970bd5968911 .
@@ -45774,8 +45758,6 @@ _:b6d39b27ccc83 rdf:first gx:MIMETypes\/video\%2Fvnd.vivo ;
 	rdf:rest _:ba337f41de30a .
 _:b6d3f612ea5ca rdf:first gx:RegionCode\/SI-092 ;
 	rdf:rest _:bfa256e71a19f .
-_:b6d47933190a2 rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:b6d4f255fb741 rdf:first gx:RegionCode\/WS-GI ;
 	rdf:rest _:bdf70322f25d5 .
 _:b6d506d5315bd a owl:Restriction ;
@@ -45903,6 +45885,8 @@ _:b6e8562a1c07d rdf:first gx:RegionCode\/EE-897 ;
 	rdf:rest _:b0293ed3f22ee .
 _:b6e884084cf6e rdf:first gx:RegionCode\/KN-03 ;
 	rdf:rest _:b231e83e1018e .
+_:b6e91f95baed2 rdf:first gx:LegalDocument ;
+	rdf:rest _:b2af2cb001a6f .
 _:b6e93db4c9ede rdf:first gx:MIMETypes\/image\%2Fjpx ;
 	rdf:rest _:bd61f923dc9ab .
 _:b6e977eeeadbe rdf:first gx:RegionCode\/MA-KHO ;
@@ -45956,9 +45940,6 @@ _:b6f1e5a423070 rdf:first gx:RegionCode\/YE-HU ;
 	rdf:rest _:b840d82796e86 .
 _:b6f24dcd04886 rdf:first gx:RegionCode\/DO-25 ;
 	rdf:rest _:bfa46e8506b82 .
-_:b6f2edc17dee4 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:documentations .
 _:b6f34a3dfeda6 rdf:first gx:RegionCode\/MA-05 ;
 	rdf:rest _:b74fd32cf1c74 .
 _:b6f361ba58842 rdf:first gx:MIMETypes\/audio\%2FTETRA_ACELP ;
@@ -46111,8 +46092,6 @@ _:b70cbf4227c3f rdf:first gx:MIMETypes\/application\%2Fvnd.leap\%2Bjson ;
 	rdf:rest _:bd1e941997d01 .
 _:b70d4771a1bf9 rdf:first gx:RegionCode\/PH-NER ;
 	rdf:rest _:b7ae808e136cc .
-_:b70d50b50d35b rdf:first xsd:string ;
-	rdf:rest _:bccb4950ec64f .
 _:b70df1108b7f6 rdf:first gx:RegionCode\/IR-21 ;
 	rdf:rest _:b8df7eb7bd82b .
 _:b70e353afb95d rdf:first gx:RegionCode\/RU-TVE ;
@@ -46464,6 +46443,9 @@ _:b74884d7d620d rdf:first gx:MIMETypes\/application\%2Fpkix-cert ;
 	rdf:rest _:b85e37048f569 .
 _:b748ca28fef91 rdf:first gx:CountryNameAlpha2\/MA ;
 	rdf:rest _:be98ebb368245 .
+_:b74a9dd181969 a owl:Restriction ;
+	owl:allValuesFrom _:b228a87548693 ;
+	owl:onProperty gx:policyDocument .
 _:b74ac5693d292 rdf:first gx:RegionCode\/ES-GI ;
 	rdf:rest _:b7b17476f99bc .
 _:b74b328e29e5f rdf:first gx:RegionCode\/PH-SAR ;
@@ -46594,8 +46576,6 @@ _:b765a5e77a8ed rdf:first gx:RegionCode\/EE-293 ;
 	rdf:rest _:bbfdfd1aaaeed .
 _:b7667c239e15b rdf:first gx:MIMETypes\/image\%2Fjxsi ;
 	rdf:rest _:bc4b81a8fb265 .
-_:b76682abf1177 a rdfs:Datatype ;
-	owl:unionOf _:bb0e87abe4fd9 .
 _:b766be2348368 rdf:first gx:CountryNameNumeric\/48 ;
 	rdf:rest _:b791eb02f9347 .
 _:b766c8d809b41 a owl:Restriction ;
@@ -46658,7 +46638,7 @@ _:b77155337551c rdf:first gx:RegionCode\/BS-LI ;
 _:b7716cb680b70 a owl:Restriction ;
 	owl:allValuesFrom gx:DataAccessPrerequisite ;
 	owl:onProperty gx:dataAccessPrerequisites .
-_:b77258a832730 rdf:first _:b70f9b3150c4a_3 ;
+_:b77258a832730 rdf:first _:b70f9b3150c4a_11 ;
 	rdf:rest rdf:nil .
 _:b77371f80a19a rdf:first gx:MIMETypes\/application\%2Fprs.hpub\%2Bzip ;
 	rdf:rest _:b394f8c67ee72 .
@@ -46668,8 +46648,6 @@ _:b77540877bd6e rdf:first gx:MIMETypes\/model\%2Fvnd.pytha.pyox ;
 	rdf:rest _:b3d4821de7ca9 .
 _:b775fc5bcd5c3 rdf:first gx:ProtectionFrequency\/Monthly ;
 	rdf:rest _:b06d26f4731ca .
-_:b7761843aa0c9 rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:b77657a4e330a rdf:first gx:RegionCode\/HU-BC ;
 	rdf:rest _:bee6592a8c239 .
 _:b77667c0bc002 rdf:first gx:MIMETypes\/application\%2Fvnd.dna ;
@@ -46810,6 +46788,7 @@ _:b79048f3591a6 rdf:first gx:NUTS2Region\/PT20 ;
 	rdf:rest _:b5000a8756616 .
 _:b790b77b3efc5 rdf:first gx:CountryNameNumeric\/604 ;
 	rdf:rest _:b30f89f364ca7 .
+_:b7911c3c34df6 owl:intersectionOf _:b1c29fc0ffc4c .
 _:b79132012249c rdf:first gx:CountryNameAlpha3\/PRI ;
 	rdf:rest _:b800ed5f4be89 .
 _:b791a6db55fe3 rdf:first gx:RegionCode\/SN-KD ;
@@ -47054,7 +47033,7 @@ _:b7bd8684abfd9 rdf:first gx:RegionCode\/SB-GU ;
 	rdf:rest _:b1c3194ed519a .
 _:b7be3a8af643c rdf:first gx:RegionCode\/AZ-ZAQ ;
 	rdf:rest _:b09c89e3f1ad7 .
-_:b7be5126c6c86 rdf:first _:b22d5b9ebcef8 ;
+_:b7be5126c6c86 rdf:first _:b22d5b9ebcef8_1 ;
 	rdf:rest rdf:nil .
 _:b7be5e5f6d088 rdf:first gx:RegionCode\/CO-CHO ;
 	rdf:rest _:be6a322c2028c .
@@ -47394,8 +47373,6 @@ _:b8012bf0b1af9 rdf:first gx:RegionCode\/NG-EN ;
 	rdf:rest _:b07c601ea993d .
 _:b801a44c57172 rdf:first gx:MIMETypes\/application\%2Felm\%2Bxml ;
 	rdf:rest _:bbd085fd210e5 .
-_:b801b4eff3872 rdf:first gx:SPDX ;
-	rdf:rest _:b7761843aa0c9 .
 _:b8024b4780cbf rdf:first gx:NUTS2Region\/FRC2 ;
 	rdf:rest _:b13ebdc6ba20c .
 _:b802d98649e92 rdf:first gx:MIMETypes\/application\%2Fvnd.openxmlformats-officedocument.themeOverride\%2Bxml ;
@@ -47751,8 +47728,6 @@ _:b8464549f2253 rdf:first gx:MIMETypes\/application\%2Fvnd.ms-PrintDeviceCapabil
 	rdf:rest _:ba44ca965595e .
 _:b8466dd4bb73e rdf:first gx:MIMETypes\/model\%2Fvnd.moml\%2Bxml ;
 	rdf:rest _:b54a01e273eb2 .
-_:b8471ae79ea5b rdf:first _:baa8af893aac4 ;
-	rdf:rest _:b52b5ac20ec89 .
 _:b8477ca9894f4 rdf:first gx:RegionCode\/TW-TPE ;
 	rdf:rest _:b8799d4ed34b8 .
 _:b847be232d954 rdf:first gx:RegionCode\/GD-06 ;
@@ -47938,8 +47913,6 @@ _:b86c40b83cee3 rdf:first gx:NUTS2Region\/SK02 ;
 	rdf:rest _:b46285fb6503b .
 _:b86c83f19a613 rdf:first gx:RegionCode\/LK-32 ;
 	rdf:rest _:b14033be51a69 .
-_:b86ca57af3926 a rdfs:Datatype ;
-	owl:intersectionOf _:b58bbc5a0a15f .
 _:b86cd2d9c71f7 rdf:first gx:MIMETypes\/application\%2Fvnd.cyclonedx\%2Bjson ;
 	rdf:rest _:ba557c4fac433 .
 _:b86d4ce9798d4 rdf:first gx:MIMETypes\/application\%2Fprivate-token-issuer-directory ;
@@ -47976,9 +47949,6 @@ _:b8721f3f49cca rdf:first gx:RegionCode\/IR-01 ;
 	rdf:rest _:b432e405588fa .
 _:b872ac006b1cf rdf:first gx:RegionCode\/LV-101 ;
 	rdf:rest _:bcfaa66f7e0a7 .
-_:b872ad44a6039 a owl:Restriction ;
-	owl:allValuesFrom _:b6025142a20b7 ;
-	owl:onProperty gx:informationDocuments .
 _:b874200e109a4 rdf:first gx:RegionCode\/AF-TAK ;
 	rdf:rest _:ba43d865971ca .
 _:b8742b25f0f39 rdf:first gx:RegionCode\/WS-AT ;
@@ -48120,6 +48090,8 @@ _:b884efcfaf337 rdf:first gx:RegionCode\/KP-14 ;
 	rdf:rest _:bb37b2fa744e3 .
 _:b885669866f52 rdf:first gx:CountryNameAlpha3\/JAM ;
 	rdf:rest _:b24d4e4888f83 .
+_:b885dab836c07 rdf:first gx:SPDX ;
+	rdf:rest _:b56cdf20787ff .
 _:b885dcec7cbd3 rdf:first gx:RegionCode\/EE-141 ;
 	rdf:rest _:bc0dac5d764e6 .
 _:b8868250c0dd2 rdf:first gx:RegionCode\/FR-976 ;
@@ -48267,6 +48239,8 @@ _:b8a1b694c3e0e rdf:first gx:RegionCode\/DZ-29 ;
 	rdf:rest _:b2fb66775b614 .
 _:b8a1dcf97694d rdf:first gx:RegionCode\/LC-08 ;
 	rdf:rest _:b425cae4a77f0 .
+_:b8a2338909e63 a rdfs:Datatype ;
+	owl:intersectionOf _:b90abc03dd266 .
 _:b8a2a3850e955 rdf:first gx:SPDX\/CAL-1.0 ;
 	rdf:rest _:bf818a5fc0504 .
 _:b8a2bd5ec468d rdf:first gx:RegionCode\/GB-CLD ;
@@ -48742,8 +48716,6 @@ _:b8f98a5b24d10 rdf:first gx:RegionCode\/GT-12 ;
 	rdf:rest _:b6c7d76f2c6ef .
 _:b8f9e94437856 rdf:first gx:MIMETypes\/application\%2Fvnd.openxmlformats-officedocument.wordprocessingml.webSettings\%2Bxml ;
 	rdf:rest _:bbeb2aefdcac9 .
-_:b8fa5fbc91105 a rdfs:Datatype ;
-	owl:intersectionOf _:bc88efd2ddf33 .
 _:b8fa9f7a58869 rdf:first gx:RegionCode\/BG-11 ;
 	rdf:rest _:b66c37d79f98e .
 _:b8fb0b868181d rdf:first gx:RegionCode\/MX-MEX ;
@@ -48832,6 +48804,8 @@ _:b90a6bfdca148 rdf:first gx:MIMETypes\/audio\%2FEVRCB ;
 	rdf:rest _:bc0c06df3c84f .
 _:b90a76d82b5c6 rdf:first gx:RegionCode\/TZ-21 ;
 	rdf:rest _:bf4114482226b .
+_:b90abc03dd266 rdf:first gx:SPDX ;
+	rdf:rest _:b5ead1e1487ee .
 _:b90b280861617 rdf:first gx:RegionCode\/CZ-647 ;
 	rdf:rest _:b7d7c81466bd1 .
 _:b90b5bcfc8564 rdf:first gx:RegionCode\/BD-63 ;
@@ -48910,9 +48884,6 @@ _:b9154a3d0c479 a rdfs:Datatype ;
 	owl:intersectionOf _:b2b5763094277 .
 _:b91565b5d9664 rdf:first gx:RegionCode\/TW-LIE ;
 	rdf:rest _:b3f64bde52c3f .
-_:b9174d6a398a8 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:url .
 _:b917d7665759c rdf:first gx:RegionCode\/LR-MG ;
 	rdf:rest _:b39f0f71e1f79 .
 _:b91800c489b9e rdf:first gx:RegionCode\/DE-NI ;
@@ -49081,8 +49052,6 @@ _:b936035c4342d rdf:first gx:RegionCode\/TZ-02 ;
 	rdf:rest _:b6f1c604e46e3 .
 _:b93608f013639 rdf:first gx:CountryNameAlpha3\/TCD ;
 	rdf:rest _:b3682f78400db .
-_:b93626f8bb182 a rdfs:Datatype ;
-	owl:unionOf _:b08ee30d7d3dc .
 _:b9364e930a725 rdf:first gx:RegionCode\/TZ-28 ;
 	rdf:rest _:b8c1296d4d20a .
 _:b936ca94b50fc rdf:first gx:RegionCode\/CL-TA ;
@@ -50564,7 +50533,7 @@ _:ba55e82bac164 rdf:first gx:MIMETypes\/application\%2Fvnd.cab-jscript ;
 	rdf:rest _:bbbad26bea872 .
 _:ba561146598fd a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473_3 .
+	owl:withRestrictions _:b393f5eb49473_2 .
 _:ba5666b3e0d0d rdf:first gx:RegionCode\/KE-09 ;
 	rdf:rest _:b04b7f455e759 .
 _:ba569909792c3 rdf:first gx:MIMETypes\/audio\%2F3gpp2 ;
@@ -50785,7 +50754,7 @@ _:ba767c5881302 rdf:first gx:MemorySize ;
 	rdf:rest rdf:nil .
 _:ba76dc829ce9c rdf:first gx:SPDX\/Condor-1.1 ;
 	rdf:rest _:bc0478ac10a06 .
-_:ba78498318e8a rdf:first _:b22d5b9ebcef8_1 ;
+_:ba78498318e8a rdf:first _:b22d5b9ebcef8 ;
 	rdf:rest rdf:nil .
 _:ba787627d4a98 rdf:first gx:CountryNameNumeric\/694 ;
 	rdf:rest _:b51e1817c30c1 .
@@ -50930,7 +50899,7 @@ _:ba912fc2c9f1e rdf:first gx:CountryNameAlpha3\/MCO ;
 	rdf:rest _:b077c6702cd71 .
 _:ba9177f10c21d a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473_2 .
+	owl:withRestrictions _:b393f5eb49473 .
 _:ba91ed2995ecf rdf:first gx:RegionCode\/TD-MC ;
 	rdf:rest _:b64efb2bafb1e .
 _:ba921c99aa5df rdf:first gx:RegionCode\/BD-36 ;
@@ -51042,7 +51011,6 @@ _:baa844dca43a3 rdf:first gx:MIMETypes\/application\%2Fvnd.apple.numbers ;
 	rdf:rest _:b28571a3a6681 .
 _:baa87c4681287 rdf:first gx:MIMETypes\/image\%2Fbmp ;
 	rdf:rest _:b8e0a8a794ba5 .
-_:baa8af893aac4 owl:unionOf _:bbd53b0d5d646 .
 _:baa8b713d9ed4 rdf:first gx:RegionCode\/UG-120 ;
 	rdf:rest _:b9d4a8fb58196 .
 _:baa9c21a1de42 rdf:first gx:MIMETypes\/audio\%2Fvnd.dolby.heaac.1 ;
@@ -51085,7 +51053,7 @@ _:bab1543a41270 a owl:Restriction ;
 	owl:onProperty gx:firmwareType .
 _:bab15e2bd654a a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473_5 .
+	owl:withRestrictions _:b393f5eb49473_4 .
 _:bab1d72df926e rdf:first gx:RegionCode\/TW-TXG ;
 	rdf:rest _:b45223980b8f8 .
 _:bab1f78700e02 rdf:first gx:RegionCode\/PK-JK ;
@@ -51235,15 +51203,10 @@ _:bad0e88cc9d84 rdf:first gx:MIMETypes\/application\%2Fsensml\%2Bxml ;
 	rdf:rest _:b1a211a81ca4e .
 _:bad0f23eebf03 rdf:first gx:MIMETypes\/application\%2Ffont-sfnt ;
 	rdf:rest _:bf1019b96b2bf .
-_:bad16ebae1c00 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:attestationServiceURI .
 _:bad18f3f8afff rdf:first gx:WatchDogActions\/pause ;
 	rdf:rest _:b3081c585d95b .
 _:bad2436d9b5d4 rdf:first gx:PersonalDataProtectionRegime\/GDPR2016 ;
 	rdf:rest _:b2428b42b7761 .
-_:bad2df31ea1be a rdfs:Datatype ;
-	owl:unionOf _:bc31b574674ea .
 _:bad431ea0f807 rdf:first gx:RegionCode\/SI-077 ;
 	rdf:rest _:b1c25042f843d .
 _:bad46a7ede41a a owl:Restriction ;
@@ -51336,9 +51299,6 @@ _:bae4a47b7e1ad rdf:first gx:RegionCode\/PE-ANC ;
 	rdf:rest _:b2babf5e54e58 .
 _:bae4a8775c39f rdf:first gx:MIMETypes\/application\%2Findex ;
 	rdf:rest _:b8cc15ac09d0d .
-_:bae501b72622b a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:url .
 _:bae55a1cf6b31 rdf:first gx:RegionCode\/ZA-KZN ;
 	rdf:rest _:b100460c7043b .
 _:bae57d4008d7b rdf:first gx:RegionCode\/KE-13 ;
@@ -51516,6 +51476,8 @@ _:bb03890610f3f rdf:first gx:RegionCode\/AZ-BEY ;
 	rdf:rest _:b6bda860a58d9 .
 _:bb039f7ce84d3 rdf:first gx:RegionCode\/RO-HD ;
 	rdf:rest _:bf0934e434003 .
+_:bb03d3db354b6 rdf:first xsd:string ;
+	rdf:rest _:b39f407d3fda9 .
 _:bb03eba8ecaca rdf:first gx:RegionCode\/KP-13 ;
 	rdf:rest _:b884efcfaf337 .
 _:bb042f6ae9b5b rdf:first gx:RegionCode\/TL-MT ;
@@ -51579,8 +51541,6 @@ _:bb0d87433a040 rdf:first gx:RegionCode\/NG-OY ;
 	rdf:rest _:bae4259c44d9d .
 _:bb0e7d94516b7 rdf:first gx:RegionCode\/CZ-723 ;
 	rdf:rest _:b05709324960d .
-_:bb0e87abe4fd9 rdf:first xsd:string ;
-	rdf:rest _:b6d47933190a2 .
 _:bb0e8ad89dcb5 rdf:first gx:RegionCode\/EE-803 ;
 	rdf:rest _:b25b6d16e37f5 .
 _:bb0eaed67a1a7 a owl:Restriction ;
@@ -51785,6 +51745,9 @@ _:bb34bbbba5757 rdf:first gx:RegionCode\/BD-38 ;
 	rdf:rest _:bc2bc7de17391 .
 _:bb35e674c3213 rdf:first gx:MIMETypes\/audio\%2FPCMU-WB ;
 	rdf:rest _:bf2db30dd8086 .
+_:bb361f1314ebd a owl:Restriction ;
+	owl:allValuesFrom _:b16bf1ccedfc3 ;
+	owl:onProperty gx:license .
 _:bb36cfac60873 rdf:first _:b0db7320286d2 ;
 	rdf:rest rdf:nil .
 _:bb37480ad9675 rdf:first gx:MIMETypes\/text\%2Fulpfec ;
@@ -52037,7 +52000,7 @@ _:bb69d603b6936 rdf:first gx:RegionCode\/CH-NW ;
 	rdf:rest _:b4eaa15c5a6f6 .
 _:bb6a5ee6aaa6d rdf:first gx:MIMETypes\/application\%2Fvnd.etsi.simservs\%2Bxml ;
 	rdf:rest _:b87fd00c125f2 .
-_:bb6b454f0b00b rdf:first _:b70f9b3150c4a_5 ;
+_:bb6b454f0b00b rdf:first _:b70f9b3150c4a_4 ;
 	rdf:rest rdf:nil .
 _:bb6bd267c86ad rdf:first gx:SPDX\/OPL-UK-3.0 ;
 	rdf:rest _:b941d6530fc9d .
@@ -52128,8 +52091,6 @@ _:bb7a66ffa557e rdf:first gx:MIMETypes\/application\%2FPDX ;
 	rdf:rest _:b51ef6f9ae064 .
 _:bb7a7652fbfdf rdf:first gx:RegionCode\/GB-EDU ;
 	rdf:rest _:b52caf8b07dfb .
-_:bb7abca9e062a rdf:first _:b1c4702f034cd ;
-	rdf:rest _:bdad1413aaaa3 .
 _:bb7b62c44769d rdf:first gx:RegionCode\/IT-GE ;
 	rdf:rest _:b426109752fb8 .
 _:bb7b70fb61af2 rdf:first gx:RegionCode\/MA-LAR ;
@@ -52169,8 +52130,6 @@ _:bb8079e88e41a rdf:first gx:RegionCode\/SI-029 ;
 	rdf:rest _:b10a7648bfd98 .
 _:bb8081b265e1b rdf:first gx:RegionCode\/AR-Z ;
 	rdf:rest _:b10fa22560486 .
-_:bb816aab72c36 rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:bb81ccb8df67d rdf:first gx:RegionCode\/LV-113 ;
 	rdf:rest _:b427540fb2561 .
 _:bb82324a46581 rdf:first gx:RegionCode\/LA-BL ;
@@ -52603,8 +52562,6 @@ _:bbcfc41676a76 rdf:first gx:OSDistribution\/FreeBSD ;
 	rdf:rest _:ba44813913c25 .
 _:bbd085fd210e5 rdf:first gx:MIMETypes\/application\%2Femma\%2Bxml ;
 	rdf:rest _:b2dc6d0ed7a86 .
-_:bbd0e1d582a8b rdf:first gx:LegalDocument ;
-	rdf:rest rdf:nil .
 _:bbd117030eac3 rdf:first gx:RegionCode\/EG-DT ;
 	rdf:rest _:b04018bf2bc6b .
 _:bbd17b0c9e197 rdf:first gx:MIMETypes\/text\%2Fshex ;
@@ -52627,8 +52584,6 @@ _:bbd3744c3b14d rdf:first gx:RegionCode\/UG-304 ;
 	rdf:rest _:b2ec24d5cfe75 .
 _:bbd42487c599c rdf:first gx:RegionCode\/MW-NI ;
 	rdf:rest _:bdaef23d3a12c .
-_:bbd53b0d5d646 rdf:first xsd:anyURI ;
-	rdf:rest _:b34db63c409cd .
 _:bbd552c263cf8 rdf:first gx:RegionCode\/TT-TUP ;
 	rdf:rest _:bc241690af73f .
 _:bbd575419317c rdf:first gx:RegionCode\/PH-MGS ;
@@ -52814,9 +52769,6 @@ _:bbf4fabbc4d39 rdf:first gx:RegionCode\/IT-BT ;
 	rdf:rest _:b1a266213f5a2 .
 _:bbf5711a3aa79 rdf:first gx:RegionCode\/KW-MU ;
 	rdf:rest _:bc8fc75302eb1 .
-_:bbf5bf0280291 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:url .
 _:bbf5c231a3e48 rdf:first xsd:integer ;
 	rdf:rest _:b4d509369200f .
 _:bbf646ee4e4ab rdf:first gx:CountryNameNumeric\/764 ;
@@ -52976,7 +52928,7 @@ _:bc113c400f03f rdf:first gx:RegionCode\/LA-OU ;
 	rdf:rest _:b68c72986604c .
 _:bc11844dc0fba a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473 .
+	owl:withRestrictions _:b393f5eb49473_1 .
 _:bc119f431919c a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty gx:datacenterAllocation .
@@ -53172,8 +53124,6 @@ _:bc31486a7c92f rdf:first gx:SPDX\/Unlicense ;
 	rdf:rest _:b7f367681ae49 .
 _:bc3183090fdb7 rdf:first gx:RegionCode\/LK-6 ;
 	rdf:rest _:b27f7ca575a82 .
-_:bc31b574674ea rdf:first gx:SPDX ;
-	rdf:rest _:b2c671e4134f6 .
 _:bc327d96c58d2 rdf:first gx:MIMETypes\/text\%2Fvnd.wap.sl ;
 	rdf:rest _:b77da1dc5de45 .
 _:bc32be23f8790 rdf:first gx:RegionCode\/FR-23 ;
@@ -53211,8 +53161,6 @@ _:bc3828b5547db rdf:first gx:RegionCode\/AL-08 ;
 	rdf:rest _:b3f8062a232c0 .
 _:bc38a1b12d1c5 rdf:first gx:CountryNameAlpha2\/AQ ;
 	rdf:rest _:ba2cb7312d141 .
-_:bc39562aceb12 rdf:first xsd:string ;
-	rdf:rest _:bc639bd495a3d .
 _:bc3ba2a8f8a2d rdf:first gx:RegionCode\/SI-027 ;
 	rdf:rest _:b87e3964c8f87 .
 _:bc3bab22576b7 rdf:first gx:CountryNameNumeric\/728 ;
@@ -53325,6 +53273,9 @@ _:bc51912298b12 rdf:first gx:RegionCode\/US-DC ;
 	rdf:rest _:b11d8628c93e3 .
 _:bc52970270049 rdf:first gx:SPDX\/EUDatagrid ;
 	rdf:rest _:b10ace890864d .
+_:bc5314a7cacc8 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:documentations .
 _:bc535c5db03e0 rdf:first gx:RegionCode\/KZ-55 ;
 	rdf:rest _:b6f821dbc85a4 .
 _:bc537f2c64314 rdf:first gx:RegionCode\/GE-IM ;
@@ -53383,6 +53334,9 @@ _:bc5e8c430f3eb rdf:first gx:RegionCode\/MT-45 ;
 	rdf:rest _:b48375f077f57 .
 _:bc6041c86dc8e rdf:first gx:RegionCode\/PW-150 ;
 	rdf:rest _:bc2c8c3b64923 .
+_:bc604bf802efb a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:url .
 _:bc605c95cd996 rdf:first gx:RegionCode\/RU-KOS ;
 	rdf:rest _:b7e301dc543c6 .
 _:bc608bb1779ae rdf:first gx:MIMETypes\/application\%2Ftve-trigger ;
@@ -53406,8 +53360,6 @@ _:bc63698dd06e7 rdf:first gx:CountryNameAlpha3\/MAF ;
 	rdf:rest _:bc0085d97ec11 .
 _:bc637eeef34f5 rdf:first gx:RegionCode\/VN-HP ;
 	rdf:rest _:be6ae8b2f5ef3 .
-_:bc639bd495a3d rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:bc63d49f8bcf1 rdf:first gx:RegionCode\/NA-KA ;
 	rdf:rest _:b49b123f9edbe .
 _:bc6416783e6b9 rdf:first gx:RegionCode\/AT-4 ;
@@ -53632,8 +53584,6 @@ _:bc86ade71bb6f rdf:first gx:MIMETypes\/application\%2Fvnd.openxmlformats-office
 	rdf:rest _:b8fc907bf8fb9 .
 _:bc88d6ced67d8 rdf:first gx:RegionCode\/SO-GA ;
 	rdf:rest _:b2de39fcac6eb .
-_:bc88efd2ddf33 rdf:first _:b5543b413129c ;
-	rdf:rest _:b04fc2134a207 .
 _:bc8974d70ff04 rdf:first gx:RegionCode\/RU-VGG ;
 	rdf:rest _:bdff3811d3430 .
 _:bc898e214b1b8 rdf:first gx:RegionCode\/GB-CHE ;
@@ -53855,8 +53805,6 @@ _:bcaf4b40ff71c rdf:first gx:RegionCode\/GB-SWD ;
 	rdf:rest _:b1ecef2b56f42 .
 _:bcafcec741ed1 rdf:first gx:RegionCode\/US-GA ;
 	rdf:rest _:b4911d13cf103 .
-_:bcb0b52c40e3d rdf:first xsd:string ;
-	rdf:rest _:b121871a9938b .
 _:bcb0e4cc10171 rdf:first gx:NUTS2Region\/FRE1 ;
 	rdf:rest _:b0114e32f7da1 .
 _:bcb1b1f8b47a0 rdf:first gx:CountryNameAlpha3\/LBY ;
@@ -54012,8 +53960,6 @@ _:bcca7178fe127 rdf:first gx:RegionCode\/IE-LD ;
 	rdf:rest _:be594267a5851 .
 _:bcca9aaeda27f rdf:first gx:SPDX\/ODC-By-1.0 ;
 	rdf:rest _:b7d6b88ac0f06 .
-_:bccb4950ec64f rdf:first xsd:anyURI ;
-	rdf:rest rdf:nil .
 _:bccbe793640e1 rdf:first gx:CountryNameNumeric\/120 ;
 	rdf:rest _:baccf7de2160d .
 _:bccca8f0e6d4a rdf:first gx:MIMETypes\/application\%2Fvnd.3gpp.state-and-event-info\%2Bxml ;
@@ -54444,9 +54390,6 @@ _:bd178cd3e5340 a owl:Restriction ;
 	owl:onProperty gx:providedBy .
 _:bd17f604bfe82 rdf:first gx:RegionCode\/CU-11 ;
 	rdf:rest _:be5f9722167d5 .
-_:bd1a001b1950c a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:containerImageLink .
 _:bd1af396e4e01 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty gx:patchLevel .
@@ -54547,8 +54490,6 @@ _:bd293e2a21cbf rdf:first gx:NUTS2Region\/EL53 ;
 	rdf:rest _:bd8c52fdfb13a .
 _:bd29c7609fc73 rdf:first gx:RegionCode\/GN-C ;
 	rdf:rest _:b101645f5691f .
-_:bd2b1ae1e0785 a rdfs:Datatype ;
-	owl:unionOf _:bd97eff2de93a .
 _:bd2b7541fc5ce rdf:first gx:RegionCode\/LT-29 ;
 	rdf:rest _:b9336b1eddadd .
 _:bd2b88425d8bc rdf:first gx:RegionCode\/CZ-644 ;
@@ -54692,6 +54633,9 @@ _:bd4111ca981ee rdf:first gx:CountryNameNumeric\/528 ;
 	rdf:rest _:b6cfcf9a01246 .
 _:bd41691d51533 rdf:first gx:RegionCode\/EC-E ;
 	rdf:rest _:b6af5c31cd257 .
+_:bd4189fca7312 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:url .
 _:bd41de09509ba rdf:first gx:RegionCode\/RS-03 ;
 	rdf:rest _:bf6009a120a5f .
 _:bd4209e903ae0 rdf:first gx:RegionCode\/AE-AJ ;
@@ -54703,9 +54647,6 @@ _:bd42d2d7d0e80 a owl:Restriction ;
 	owl:onProperty gx:computeFunctionEditor .
 _:bd42db8865613 rdf:first gx:MIMETypes\/message\%2Fdelivery-status ;
 	rdf:rest _:b29de13ac38a7 .
-_:bd4309cf62a0a a owl:Restriction ;
-	owl:allValuesFrom _:b86ca57af3926 ;
-	owl:onProperty gx:license .
 _:bd438a2a9ac9d rdf:first gx:ProtectionMethod\/Incremental ;
 	rdf:rest rdf:nil .
 _:bd43c1fe57057 rdf:first gx:MIMETypes\/application\%2Ftamp-apex-update ;
@@ -55003,7 +54944,7 @@ _:bd7c6665b5f47 rdf:first gx:RegionCode\/MA-SEF ;
 	rdf:rest _:b8d4dff643536 .
 _:bd7cc4c965afb rdf:first gx:CountryNameNumeric\/384 ;
 	rdf:rest _:b8403e5d56967 .
-_:bd7ce97d8085f rdf:first _:b70f9b3150c4a_9 ;
+_:bd7ce97d8085f rdf:first _:b70f9b3150c4a_5 ;
 	rdf:rest rdf:nil .
 _:bd7d25c808389 rdf:first gx:RegionCode\/CZ-324 ;
 	rdf:rest _:b0f3002654637 .
@@ -55011,6 +54952,9 @@ _:bd7d711a04de5 rdf:first gx:RegionCode\/PK-KP ;
 	rdf:rest _:b7d5d95b07815 .
 _:bd7d86aadb838 rdf:first gx:RegionCode\/TJ-KT ;
 	rdf:rest _:b95b84871c4fb .
+_:bd7dafbe7ccac a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:containerImageLink .
 _:bd7de3f07dff7 rdf:first gx:MIMETypes\/application\%2Fvnd.macports.portpkg ;
 	rdf:rest _:b56fff81bee3e .
 _:bd7e3cafcbf56 rdf:first gx:RegionCode\/GB-NNH ;
@@ -55169,8 +55113,6 @@ _:bd971976e8a49 rdf:first gx:RegionCode\/MX-BCN ;
 	rdf:rest _:b8b01a3cc2c85 .
 _:bd97761defc63 rdf:first gx:RegionCode\/AO-BGO ;
 	rdf:rest _:bb13df69d7b70 .
-_:bd97eff2de93a rdf:first xsd:string ;
-	rdf:rest _:bb816aab72c36 .
 _:bd98a5b7f4ee3 rdf:first gx:RegionCode\/MD-DU ;
 	rdf:rest _:b333a0d95a2d0 .
 _:bd98c1b0d0ec4 rdf:first gx:MIMETypes\/application\%2Fvnd.Mobius.DAF ;
@@ -55233,7 +55175,7 @@ _:bda288f78be5f rdf:first gx:RegionCode\/EG-C ;
 _:bda297e482c54 rdf:first gx:RegionCode\/MC-PH ;
 	rdf:rest _:b99a8376479f5 .
 _:bda2a987146f4 rdf:first xsd:string ;
-	rdf:rest _:b262823be3f1f_1 .
+	rdf:rest _:b262823be3f1f .
 _:bda2e98a169ac rdf:first gx:SPDX\/eGenix ;
 	rdf:rest _:b1c9df331be18 .
 _:bda2f2bff19d2 rdf:first gx:RegionCode\/SI-213 ;
@@ -55242,8 +55184,6 @@ _:bda3ba3c381ac rdf:first gx:RegionCode\/TZ-12 ;
 	rdf:rest _:b6dd37ff3f119 .
 _:bda43a00c3f44 rdf:first gx:RegionCode\/MD-SV ;
 	rdf:rest _:bbaac09766c3d .
-_:bda50c210bff0 rdf:first _:bad2df31ea1be ;
-	rdf:rest _:b436f730723ac .
 _:bda51b61aab53 rdf:first gx:RegionCode\/IE-MN ;
 	rdf:rest _:bc99fcc7090d0 .
 _:bda51ee6077f8 rdf:first gx:RegionCode\/PE-JUN ;
@@ -55256,8 +55196,6 @@ _:bda6095be41da rdf:first gx:MIMETypes\/application\%2Froute-usd\%2Bxml ;
 	rdf:rest _:b0bf19a15826d .
 _:bda663563bcde rdf:first gx:SPDX\/CERN-OHL-1.2 ;
 	rdf:rest _:b128e98442633 .
-_:bda675b99d1d8 a rdfs:Datatype ;
-	owl:unionOf _:bcb0b52c40e3d .
 _:bda77e497e749 rdf:first gx:RegionCode\/UG-119 ;
 	rdf:rest _:baa8b713d9ed4 .
 _:bda8c696e3751 rdf:first gx:RegionCode\/MY-16 ;
@@ -55292,8 +55230,6 @@ _:bdacf248098b8 rdf:first gx:NUTS2Region\/SE12 ;
 	rdf:rest _:b72521de8c6a5 .
 _:bdad136e1ae50 rdf:first gx:RegionCode\/TR-58 ;
 	rdf:rest _:bba65273eb211 .
-_:bdad1413aaaa3 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:bdad16ddbff36 rdf:first gx:RegionCode\/DO-40 ;
 	rdf:rest _:ba29a3ba69755 .
 _:bdad53d680008 rdf:first gx:RegionCode\/FR-50 ;
@@ -55716,7 +55652,7 @@ _:bdf97e5a81ddd rdf:first gx:MIMETypes\/audio\%2FEVS ;
 	rdf:rest _:bd39e4632ce40 .
 _:bdf9e5a0216f2 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:b393f5eb49473_4 .
+	owl:withRestrictions _:b393f5eb49473_5 .
 _:bdf9f5ade7977 rdf:first gx:RegionCode\/IN-OD ;
 	rdf:rest _:b48f5b5ac5ec2 .
 _:bdfa7b2b6746c rdf:first gx:SPDX\/TORQUE-1.1 ;
@@ -56064,9 +56000,6 @@ _:be384f23544bb rdf:first gx:RegionCode\/ME-01 ;
 	rdf:rest _:b8aa453fdc948 .
 _:be389c26efcb6 rdf:first gx:CountryNameNumeric\/58 ;
 	rdf:rest _:b633824db4f6e .
-_:be38f66f5d303 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty gx:ecoTSPEndPoint .
 _:be39c1303a1f1 rdf:first gx:MIMETypes\/video\%2Frtp-enc-aescm128 ;
 	rdf:rest _:bb859c6b5f9c4 .
 _:be39ce74330d0 rdf:first gx:RegionCode\/UG-236 ;
@@ -56462,6 +56395,9 @@ _:be862a0d61615 rdf:first gx:CountryNameAlpha2\/IQ ;
 	rdf:rest _:bcad023156bd6 .
 _:be863f540e248 rdf:first gx:OSDistribution\/Rocky\%20Linux ;
 	rdf:rest _:be0ed9b2f7a32 .
+_:be86cbb2dd419 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:url .
 _:be8717856f215 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty odrl:profile .
@@ -56990,7 +56926,7 @@ _:bee6047b5a4d0 rdf:first gx:CountryNameAlpha2\/SM ;
 	rdf:rest _:b5b2c3bbea268 .
 _:bee6592a8c239 rdf:first gx:RegionCode\/HU-BE ;
 	rdf:rest _:b24410e19c009 .
-_:bee6a46176c93 rdf:first _:b70f9b3150c4a_12 ;
+_:bee6a46176c93 rdf:first _:b70f9b3150c4a_7 ;
 	rdf:rest rdf:nil .
 _:bee6e7d7fe1d4 rdf:first gx:CountryNameNumeric\/42 ;
 	rdf:rest _:b93067bcbb0d6 .
@@ -57352,9 +57288,6 @@ _:bf2464867eea3 rdf:first gx:RegionCode\/GN-BE ;
 	rdf:rest _:b3a9eac5a2ed1 .
 _:bf24b89a6a733 rdf:first gx:WatchDogActions\/disabled ;
 	rdf:rest _:bad18f3f8afff .
-_:bf25c6c06722a a owl:Restriction ;
-	owl:allValuesFrom _:b8fa5fbc91105 ;
-	owl:onProperty gx:policyDocument .
 _:bf25f7404a2f2 rdf:first gx:CountryNameNumeric\/214 ;
 	rdf:rest _:b97e20628071f .
 _:bf25f90c559ed rdf:first gx:RegionCode\/PL-18 ;
@@ -58125,8 +58058,6 @@ _:bfb7c17cc8f38 rdf:first gx:MIMETypes\/application\%2Fjson ;
 	rdf:rest _:b92dbb01c9f41 .
 _:bfb7f9543d401 rdf:first gx:MIMETypes\/font\%2Fwoff ;
 	rdf:rest _:ba5eee719d4e9 .
-_:bfb94772856f5 a rdfs:Datatype ;
-	owl:intersectionOf _:bda50c210bff0 .
 _:bfb970d92034a rdf:first gx:RegionCode\/GB-CON ;
 	rdf:rest _:b99859fec5e9f .
 _:bfb9723c39d2c rdf:first gx:RegionCode\/CA-NB ;

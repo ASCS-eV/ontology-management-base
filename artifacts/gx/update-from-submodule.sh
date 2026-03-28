@@ -94,7 +94,7 @@ print('    SHACL done')
 # OWL: gen-owl + hand-written linkml/*.owl.ttl
 generate_and_merge(
     ['gen-owl', '--deterministic', '--normalize-prefixes', '--no-use-native-uris', '--assert-equivalent-classes',
-     '--skip-abstract-class-as-unionof-subclasses',
+     '--skip-abstract-class-as-unionof-subclasses', '--xsd-anyuri-as-iri',
      '--enum-iri-separator', '/', 'linkml/gaia-x.yaml'],
     'linkml/*.owl.ttl',
     Path('ontology.owl.ttl'),
