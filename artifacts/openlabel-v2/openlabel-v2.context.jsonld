@@ -1,9 +1,10 @@
 {
    "@context": {
       "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      "cmns-q": "https://www.omg.org/spec/Commons/Quantities/",
       "linkml": "https://w3id.org/linkml/",
       "openlabel_v2": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      "schema": "http://schema.org/",
+      "schema": "https://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "AdminTag": {
@@ -419,9 +420,17 @@
          "@id": "daySunElevationValue",
          "@type": "xsd:decimal"
       },
+      "hasLowerBound": {
+         "@id": "cmns-q:hasLowerBound",
+         "@type": "xsd:decimal"
+      },
       "hasTag": {
          "@id": "hasTag",
          "@type": "@id"
+      },
+      "hasUpperBound": {
+         "@id": "cmns-q:hasUpperBound",
+         "@type": "xsd:decimal"
       },
       "horizontalCurvesValue": {
          "@id": "horizontalCurvesValue",
@@ -541,3 +550,4 @@
       }
    }
 }
+

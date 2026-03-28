@@ -76,7 +76,7 @@ KNOWN_IRIS = {
     "foaf.owl.ttl": "http://xmlns.com/foaf/0.1/",
     "prov.owl.ttl": "http://www.w3.org/ns/prov#",
     "dcat.owl.ttl": "http://www.w3.org/ns/dcat#",
-    "schema.owl.ttl": "http://schema.org/",
+    "schema.owl.ttl": "https://schema.org/",
     "cred.owl.ttl": "https://www.w3.org/2018/credentials#",
 }
 

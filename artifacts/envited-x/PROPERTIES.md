@@ -79,7 +79,7 @@ class Class_definition_for_SoftwareResourceBase
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-- schema: <http://schema.org/>
+- schema: <https://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
 - skos: <http://www.w3.org/2004/02/skos/core#>
 - xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -112,8 +112,8 @@ class Class_definition_for_SoftwareResourceBase
 #### manifest:hasReferencedArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts .property-anchor }
 #### manifest:iri {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-iri .property-anchor }
 #### rdf:type {: #prop-http---www-w3-org-1999-02-22-rdf-syntax-ns-type .property-anchor }
-#### schema:description {: #prop-http---schema-org-description .property-anchor }
-#### schema:name {: #prop-http---schema-org-name .property-anchor }
+#### schema:description {: #prop-https---schema-org-description .property-anchor }
+#### schema:name {: #prop-https---schema-org-name .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
@@ -147,8 +147,8 @@ class Class_definition_for_SoftwareResourceBase
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-description"></a>description|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-license"></a>license||1|Allows custom commercial identifiers in addition to Gaia-X standard SPDX checks.||envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema|<a id="prop-http---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema|<a id="prop-http---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|<a id="prop-https---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|<a id="prop-https---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|license||1|||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-resourcepolicy"></a>resourcePolicy|1|||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|

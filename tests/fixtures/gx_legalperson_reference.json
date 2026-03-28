@@ -2,7 +2,7 @@
    "@context": {
       "gx": "https://w3id.org/gaia-x/development#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "schema": "http://schema.org/",
+      "schema": "https://schema.org/",
       "vcard": "http://www.w3.org/2006/vcard/ns#"
    },
    "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",

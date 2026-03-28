@@ -156,7 +156,8 @@ def _collect_domains() -> list[str]:
 KNOWN_ID_COERCION_ISSUES = {"gx"}
 
 # Domains with known context/SHACL type mismatches.
-# (Currently empty — all context_generator.py-managed domains are fixed.)
+# Previously GX had overProvisioningRatio as both xsd:integer (CPU) and
+# xsd:float (RAM); fixed upstream by harmonizing to xsd:decimal.
 KNOWN_TYPE_MISMATCHES: set[str] = set()
 
 

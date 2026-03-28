@@ -44,7 +44,7 @@ and `UPSTREAM_COMMIT`.
 
 - **Commit**: [711b6d4](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics/-/commit/711b6d4aee19667f7c6ed8b3a33ab0444d3c4c68)
 - **Branch**: fix/354-rename-httpsschema-prefix
-- **Description**: Replaces the non-standard `httpsschema` prefix with `schema` and uses `http://schema.org/` to remain compatible with `linkml:types`
+- **Description**: Replaces the non-standard `httpsschema` prefix with `schema` and uses `https://schema.org/` to remain compatible with `linkml:types`
 - **Reason**: Prevents LinkML prefix merge failures while keeping the generated Gaia-X artifacts aligned with the upstream build pipeline
 
 ### Why Post-Release Patches?

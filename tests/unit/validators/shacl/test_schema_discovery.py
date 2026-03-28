@@ -61,7 +61,7 @@ def test_discover_required_schemas_excludes_imported_namespace_types(temp_dir: P
   <uri name="http://www.w3.org/1999/02/22-rdf-syntax-ns#" uri="rdf/rdf.owl.ttl"/>
   <uri name="http://www.w3.org/2000/01/rdf-schema#" uri="rdfs/rdfs.owl.ttl"/>
   <uri name="http://www.w3.org/2002/07/owl" uri="owl/owl.owl.ttl"/>
-  <uri name="http://schema.org/" uri="schema/schema.owl.ttl"/>
+  <uri name="https://schema.org/" uri="schema/schema.owl.ttl"/>
 </catalog>
 """,
     )
