@@ -1,1056 +1,692 @@
-@prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
 @prefix cmns-q: <https://www.omg.org/spec/Commons/Quantities/> .
+@prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix wgs: <https://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix brick: <https://brickschema.org/schema/Brick#> .
-@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix qb: <http://purl.org/linked-data/cube#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix doap: <http://usefulinc.com/ns/doap#> .
-@prefix prof: <http://www.w3.org/ns/dx/prof/> .
-@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
-@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
-@prefix time: <http://www.w3.org/2006/time#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix vann: <http://purl.org/vocab/vann/> .
-@prefix csvw: <http://www.w3.org/ns/csvw#> .
-@prefix dcat: <http://www.w3.org/ns/dcat#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix sosa: <http://www.w3.org/ns/sosa/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix ssn: <http://www.w3.org/ns/ssn/> .
-@prefix dcam: <http://purl.org/dc/dcam/> .
-@prefix linkml: <https://w3id.org/linkml/> .
-@prefix void: <http://rdfs.org/ns/void#> .
 @prefix schema: <https://schema.org/> .
-schema:QuantitativeValue a sh:NodeShape ;
-	rdfs:comment "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
-	sh:closed true ;
-	sh:ignoredProperties _:b4570261c33f2 ;
-	sh:property _:b1179a7a20e05 , _:b399a5b353e6b , _:b8a7f49066519 , _:befb1d26523de ;
-	sh:targetClass schema:QuantitativeValue .
-openlabel_v2:AdminTag a sh:NodeShape ;
-	rdfs:comment "The base tag to use when extending the Administration tags with new classes." ;
-	sh:closed true ;
-	sh:ignoredProperties _:b77feb166669d ;
-	sh:property _:b01df7f1a8d85 , _:b2586cef74e72 , _:b31f6e8268ded , _:b6a5498c24548 , _:b8ae9c14b9756 , _:b8b0feccb02c2 , _:bb20b902eba02 , _:bc5caf6868d29 , _:bcaec386cef07 , _:be7ac9d7acbdd , _:be889b7cdb6bc , _:be9126bf9293b , _:bf43bbef2f7cf ;
-	sh:targetClass openlabel_v2:AdminTag .
-openlabel_v2:Behaviour a sh:NodeShape ;
-	rdfs:comment "An activity performed by a road user." ;
-	sh:closed true ;
-	sh:ignoredProperties _:bd0bbddbc3c51 ;
-	sh:property _:b0b0b5b322c9a , _:b104f5d5cb95a , _:b10683c620d5a , _:b12bc4acb6b69 , _:b15fcf63fce81 , _:b186258513307 , _:b235a20707615 , _:b24c10a8f5e74 , _:b279fcf64b4c4 , _:b33d451462a41 , _:b4c189642a595 , _:b4e8dab074993 , _:b6869bfc7da7d , _:b7443e177be22 , _:b82a117485970 , _:b8bf42898054d , _:b9752c1398103 , _:b9d3ae658f353 , _:bc427152edd0d , _:be50140b488da , _:bef7efe1a91ab , _:bf169f346819e , _:bf91d8ac5cdbf , _:bffec11c39145 ;
-	sh:targetClass openlabel_v2:Behaviour .
-openlabel_v2:Odd a sh:NodeShape ;
-	rdfs:comment "Operational Design Domain. Refer to BSI PAS-1883 Section 5." ;
-	sh:closed true ;
-	sh:ignoredProperties _:bacc391edb135 ;
-	sh:property _:b01c203d8cd09 , _:b02d2004e5bf3 , _:b069a7194ad99 , _:b06e8e5e444d2 , _:b0a07b9ddc1c0 , _:b1187cba4b72f , _:b1785a16e76fe , _:b1978507e356e , _:b19d65db7695c , _:b1b792dc7ebc9 , _:b1e906c2a427f , _:b21276eac6877 , _:b273330e988bb , _:b30729a697dc3 , _:b39ea7a68683f , _:b3a9d12c72f42 , _:b3b2dcde8d1e8 , _:b3bc2aeff4bdb , _:b3fa5ba1b0447 , _:b49f679483916 , _:b4c22013e6505 , _:b4ecc6286a16d , _:b4f8a61a37030 , _:b517148b0f3f3 , _:b51bf7d4dcbc5 , _:b5515e6fe4d5f , _:b58a36ff0d1ad , _:b5c2f97d9a7dc , _:b5f12c6bcac70 , _:b66976a0d2186 , _:b6d19a52488b3 , _:b716a3665bb84 , _:b74028e1449aa , _:b7cda678fa665 , _:b80790562b84c , _:b8314979990e7 , _:b87af8269770a , _:b8e3333e79e7a , _:b90c3bb443021 , _:b919e61ea7da0 , _:b92d5d145eb81 , _:b9333e59d4e16 , _:b96e42a4e6bdd , _:ba4eb52d6b5de , _:baca1d72056f7 , _:bb0ce23eea1e0 , _:bb1fe31be899b , _:bb25813fc3039 , _:bb5852e78b90c , _:bbc10da06ff68 , _:bc26521343ddd , _:bc6d5406f528d , _:bcc2f46cbbd2c , _:bd1db241a637a , _:bd3bc2b35414f , _:bd68e24b09767 , _:bdb6532431020 , _:bdf67b81d4447 , _:be3da98449cb8 , _:be7168b34d5a4 , _:bf82567804ac8 ;
-	sh:targetClass openlabel_v2:Odd .
-openlabel_v2:RoadUser a sh:NodeShape ;
-	rdfs:comment "Something which uses a road to travel." ;
-	sh:closed true ;
-	sh:ignoredProperties _:b068f29fb6978 ;
-	sh:property _:b7ee02f077e8f , _:bcbbcf0296110 , _:be24d8db00719 , _:bf2357616fb17 ;
-	sh:targetClass openlabel_v2:RoadUser .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 openlabel_v2:Scenario a sh:NodeShape ;
-	rdfs:comment "A scenario that can be tagged with OpenLABEL tags." ;
-	sh:closed true ;
-	sh:ignoredProperties _:b0bd76febcb25 ;
-	sh:property _:bbc89b8a1c393 ;
-	sh:targetClass openlabel_v2:Scenario .
+    rdfs:comment "A scenario that can be tagged with OpenLABEL tags." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class openlabel_v2:Tag ;
+            sh:description "A tag associated with a scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path openlabel_v2:hasTag ] ;
+    sh:targetClass openlabel_v2:Scenario .
+
 openlabel_v2:Tag a sh:NodeShape ;
-	rdfs:comment "The base tag." ;
-	sh:closed true ;
-	sh:ignoredProperties _:bc3dbc78831b1 ;
-	sh:property _:bb2a244fe6544 , _:bb570b56df2ea , _:bd0e104aefebd , _:bffc56f038bff ;
-	sh:targetClass openlabel_v2:Tag .
-_:b013108e08fcd rdf:first openlabel_v2:RoadTypeRadial ;
-	rdf:rest _:beeeaa37e1d46 .
-_:b01c203d8cd09 sh:description "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2." ;
-	sh:in _:b6ab0c7bada17 ;
-	sh:maxCount 1 ;
-	sh:order 4 ;
-	sh:path openlabel_v2:DaySunPosition .
-_:b01df7f1a8d85 sh:datatype xsd:string ;
-	sh:description "URI of SDL language used for the definition of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 6 ;
-	sh:path openlabel_v2:scenarioDefinitionLanguageURI .
-_:b02d2004e5bf3 sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b." ;
-	sh:maxCount 1 ;
-	sh:or _:b2b5c80de1b7c ;
-	sh:order 47 ;
-	sh:path openlabel_v2:subjectVehicleSpeedValue .
-_:b046ebc660541 rdf:first openlabel_v2:SurfaceFeatureSwell ;
-	rdf:rest rdf:nil .
-_:b068f29fb6978 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:b069a7194ad99 sh:datatype xsd:boolean ;
-	sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 30 ;
-	sh:path openlabel_v2:LongitudinalLevelPlane .
-_:b06e8e5e444d2 sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b." ;
-	sh:in _:b9f0d49d3cd94 ;
-	sh:maxCount 1 ;
-	sh:order 11 ;
-	sh:path openlabel_v2:GeometryTransverse .
-_:b0711dc0bb8ba rdf:first openlabel_v2:SunPositionFront ;
-	rdf:rest _:be293fca90e71 .
-_:b077d7db9d031 rdf:first openlabel_v2:CommunicationSignalHazard ;
-	rdf:rest _:b6daaf7127bad .
-_:b091f83c30662 rdf:first openlabel_v2:FixedStructureStreetlight ;
-	rdf:rest _:b2f1e0472f566 .
-_:b0a07b9ddc1c0 sh:datatype xsd:decimal ;
-	sh:description "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 13 ;
-	sh:path openlabel_v2:horizontalCurvesValue .
-_:b0b0b5b322c9a sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject vehicle is moving in the opposite direction to which it is facing." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 14 ;
-	sh:path openlabel_v2:MotionReverse .
-_:b0bd76febcb25 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:b104f5d5cb95a sh:datatype xsd:boolean ;
-	sh:description "Subject exits the intersection on a road to the left of the original." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 20 ;
-	sh:path openlabel_v2:MotionTurnLeft .
-_:b10683c620d5a sh:datatype xsd:boolean ;
-	sh:description "Subject exits the intersection on a road to the right of the original." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 21 ;
-	sh:path openlabel_v2:MotionTurnRight .
-_:b1179a7a20e05 sh:datatype xsd:decimal ;
-	sh:description "Maximum value of the range." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path schema:maxValue .
-_:b1187cba4b72f sh:datatype xsd:decimal ;
-	sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 29 ;
-	sh:path openlabel_v2:longitudinalDownSlopeValue .
-_:b11891f941b30 rdf:first openlabel_v2:RoundaboutLargeSignal ;
-	rdf:rest _:b127c91e02f89 .
-_:b127c91e02f89 rdf:first openlabel_v2:RoundaboutMiniNosignal ;
-	rdf:rest _:bda2d7a717260 .
-_:b12bc4acb6b69 sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject vehicle is moving in the direction it is facing." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 9 ;
-	sh:path openlabel_v2:MotionDrive .
-_:b15fcf63fce81 sh:description "Rate of deceleration (ms-2)." ;
-	sh:maxCount 1 ;
-	sh:or _:b3914146c9605 ;
-	sh:order 8 ;
-	sh:path openlabel_v2:motionDecelerateValue .
-_:b1780c027fe89 rdf:first _:bf2eeb318208d ;
-	rdf:rest rdf:nil .
-_:b1785a16e76fe sh:datatype xsd:decimal ;
-	sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 58 ;
-	sh:path openlabel_v2:weatherSnowValue .
-_:b186258513307 sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user decreases their velocity." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 7 ;
-	sh:path openlabel_v2:MotionDecelerate .
-_:b187c49d8b158 rdf:first openlabel_v2:RoundaboutCompactNosignal ;
-	rdf:rest _:beb031d749f1b .
-_:b194c5e03f16e rdf:first openlabel_v2:HumanCyclist ;
-	rdf:rest _:b69330d337e16 .
-_:b19536217fdbc rdf:first openlabel_v2:EdgeNone ;
-	rdf:rest _:b7ae7f71affd4 .
-_:b1978507e356e sh:datatype xsd:boolean ;
-	sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 59 ;
-	sh:path openlabel_v2:WeatherWind .
-_:b19d65db7695c sh:description "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
-	sh:maxCount 1 ;
-	sh:or _:b496a139b8a41 ;
-	sh:order 22 ;
-	sh:path openlabel_v2:laneSpecificationDimensionsValue .
-_:b19ef5c3ef789 rdf:first openlabel_v2:RoundaboutDoubleSignal ;
-	rdf:rest _:bd4acc4973677 .
-_:b1a4a81ec087a rdf:first openlabel_v2:IntersectionTJunction ;
-	rdf:rest _:b8e7d8b3d6f6d .
-_:b1b792dc7ebc9 sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e." ;
-	sh:in _:b1fe46d60ad0d ;
-	sh:maxCount 1 ;
-	sh:order 26 ;
-	sh:path openlabel_v2:LaneSpecificationTravelDirection .
-_:b1e51cbb2bde9 rdf:first openlabel_v2:MotorwayManaged ;
-	rdf:rest _:b513e9c8f8739 .
-_:b1e906c2a427f sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e." ;
-	sh:in _:b82322b3fc855 ;
-	sh:maxCount 1 ;
-	sh:order 39 ;
-	sh:path openlabel_v2:SceneryFixedStructure .
-_:b1fe46d60ad0d rdf:first openlabel_v2:TravelDirectionLeft ;
-	rdf:rest _:bf0c49889c29c .
-_:b209f342480df rdf:first openlabel_v2:VehicleTruck ;
-	rdf:rest _:bec9fde9af0a9 .
-_:b21276eac6877 sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b." ;
-	sh:in _:bfe4e9ef9e165 ;
-	sh:maxCount 1 ;
-	sh:order 44 ;
-	sh:path openlabel_v2:SignsRegulatory .
-_:b21db27b97522 rdf:first _:b6b4108773d85 ;
-	rdf:rest rdf:nil .
-_:b229666fd8c67 rdf:first openlabel_v2:ParticulatesVolcanic ;
-	rdf:rest _:bc46a4b2729c5 .
-_:b235a20707615 sh:description "Communication type of road user behaviour." ;
-	sh:in _:bac8b5c88334f ;
-	sh:order 0 ;
-	sh:path openlabel_v2:BehaviourCommunication .
-_:b24c10a8f5e74 sh:datatype xsd:boolean ;
-	sh:description "Subject performs a turn resulting in heading in the opposite direction." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 22 ;
-	sh:path openlabel_v2:MotionUTurn .
-_:b2586cef74e72 sh:datatype xsd:string ;
-	sh:description "The type of license which governs usage of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 0 ;
-	sh:path openlabel_v2:licenseURI .
-_:b25ce37e7ee49 rdf:first openlabel_v2:ZoneGeoFenced ;
-	rdf:rest _:b3391e9f4cd5e .
-_:b2646bc334ca6 rdf:first openlabel_v2:LowLightNight ;
-	rdf:rest rdf:nil .
-_:b273330e988bb sh:datatype xsd:boolean ;
-	sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 48 ;
-	sh:path openlabel_v2:TrafficAgentDensity .
-_:b2779b2dd1958 rdf:first openlabel_v2:CommunicationV2i ;
-	rdf:rest _:bdc6cfbdb83e8 .
-_:b279fcf64b4c4 sh:datatype xsd:boolean ;
-	sh:description "Locomotion mode where at least one foot is always on the ground." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 23 ;
-	sh:path openlabel_v2:MotionWalk .
-_:b2b5c80de1b7c rdf:first _:bfc4c52469890 ;
-	rdf:rest _:b1780c027fe89 .
-_:b2d1a5cb72b4e sh:datatype xsd:decimal ;
-	sh:nodeKind sh:Literal .
-_:b2d3f68a75578 rdf:first openlabel_v2:RegulatorySignsVariableFullTime ;
-	rdf:rest _:b30b153803e4c .
-_:b2f1e0472f566 rdf:first openlabel_v2:FixedStructureVegetation ;
-	rdf:rest rdf:nil .
-_:b30729a697dc3 sh:datatype xsd:boolean ;
-	sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 50 ;
-	sh:path openlabel_v2:TrafficFlowRate .
-_:b307f847310ac rdf:first openlabel_v2:V2vSatellite ;
-	rdf:rest _:bbfd84e161142 .
-_:b30b0a424c91d rdf:first openlabel_v2:CommunicationSignalRight ;
-	rdf:rest _:bb5453e914ca6 .
-_:b30b153803e4c rdf:first openlabel_v2:RegulatorySignsVariableTemporary ;
-	rdf:rest rdf:nil .
-_:b31f6e8268ded sh:datatype xsd:string ;
-	sh:description "The name of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 8 ;
-	sh:path openlabel_v2:scenarioName .
-_:b33688231c9b3 rdf:first openlabel_v2:SurfaceConditionContamination ;
-	rdf:rest _:bc47da5c6bb63 .
-_:b3391e9f4cd5e rdf:first openlabel_v2:ZoneInterference ;
-	rdf:rest _:ba60f832a52ae .
-_:b33d451462a41 sh:datatype xsd:boolean ;
-	sh:description "An activity where the trajectory of the road user crosses the trajectory of the object." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 4 ;
-	sh:path openlabel_v2:MotionCross .
-_:b34da477c0a41 rdf:first openlabel_v2:EdgeLineMarkers ;
-	rdf:rest _:b19536217fdbc .
-_:b364418213863 rdf:first openlabel_v2:EdgeShoulderPavedOrGravel ;
-	rdf:rest _:bcc6f7872bfaa .
-_:b38f2c13d6c79 sh:datatype xsd:decimal ;
-	sh:nodeKind sh:Literal .
-_:b3914146c9605 rdf:first _:ba0c054d70606 ;
-	rdf:rest _:b21db27b97522 .
-_:b3951233508db rdf:first openlabel_v2:HumanWheelchairUser ;
-	rdf:rest rdf:nil .
-_:b3952ac107fde rdf:first openlabel_v2:SurfaceFeatureRut ;
-	rdf:rest _:b046ebc660541 .
-_:b399a5b353e6b sh:datatype xsd:decimal ;
-	sh:description "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 2 ;
-	sh:path cmns-q:hasLowerBound .
-_:b39b2e6093e10 rdf:first openlabel_v2:RoadTypeMotorway ;
-	rdf:rest _:b3d9bcf21f1a3 .
-_:b39ea7a68683f sh:datatype xsd:decimal ;
-	sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 60 ;
-	sh:path openlabel_v2:weatherWindValue .
-_:b3a9d12c72f42 sh:datatype xsd:boolean ;
-	sh:description "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 34 ;
-	sh:path openlabel_v2:ParticulatesMarine .
-_:b3b1b448e3b9d rdf:first openlabel_v2:LaneTypeTram ;
-	rdf:rest rdf:nil .
-_:b3b2dcde8d1e8 sh:description "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a." ;
-	sh:in _:b2779b2dd1958 ;
-	sh:maxCount 1 ;
-	sh:order 0 ;
-	sh:path openlabel_v2:ConnectivityCommunication .
-_:b3bc2aeff4bdb sh:datatype xsd:integer ;
-	sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3." ;
-	sh:maxCount 1 ;
-	sh:minInclusive 0 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 51 ;
-	sh:path openlabel_v2:trafficFlowRateValue .
-_:b3bd1f94db180 rdf:first openlabel_v2:WarningSignsVariableTemporary ;
-	rdf:rest rdf:nil .
-_:b3c6331ed5316 rdf:first openlabel_v2:PositioningGalileo ;
-	rdf:rest _:bb0b7c83b1705 .
-_:b3d27c6f41c4c rdf:first openlabel_v2:VehicleWheelchair ;
-	rdf:rest rdf:nil .
-_:b3d8861884b15 rdf:first openlabel_v2:FixedStructureStreetFurniture ;
-	rdf:rest _:b091f83c30662 .
-_:b3d9bcf21f1a3 rdf:first openlabel_v2:RoadTypeParking ;
-	rdf:rest _:b013108e08fcd .
-_:b3fa5ba1b0447 sh:datatype xsd:decimal ;
-	sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 56 ;
-	sh:path openlabel_v2:weatherRainValue .
-_:b3fb8632e68e5 rdf:first openlabel_v2:ZoneSchool ;
-	rdf:rest _:b84fe0b612feb .
-_:b40d1e3833255 rdf:first openlabel_v2:ArtificialVehicleLighting ;
-	rdf:rest rdf:nil .
-_:b415f7cc37c02 rdf:first openlabel_v2:SpecialStructureRailCrossing ;
-	rdf:rest _:b532a2b73635c .
-_:b4348b81fe452 rdf:first openlabel_v2:WarningSignsUniformFullTime ;
-	rdf:rest _:b82cb0a41dbe3 .
-_:b4570261c33f2 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:b45f46b68cdbb rdf:first openlabel_v2:SurfaceConditionMirage ;
-	rdf:rest _:b811c4337e3c8 .
-_:b496a139b8a41 rdf:first _:bc420d68b5b2f ;
-	rdf:rest _:b54e0f12dd970 .
-_:b49f679483916 sh:description "Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d." ;
-	sh:in _:b6e1d46eb203c ;
-	sh:maxCount 1 ;
-	sh:order 15 ;
-	sh:path openlabel_v2:IlluminationArtificial .
-_:b4a3aee1103cf rdf:first openlabel_v2:RoundaboutNormalSignal ;
-	rdf:rest rdf:nil .
-_:b4a7ea586a5fb rdf:first openlabel_v2:EdgeTemporaryLineMarkers ;
-	rdf:rest rdf:nil .
-_:b4bebd397f5b1 rdf:first openlabel_v2:HumanMotorcyclist ;
-	rdf:rest _:b5f65aedf5468 .
-_:b4c189642a595 sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject vehicle is in a lane right of the original." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 12 ;
-	sh:path openlabel_v2:MotionLaneChangeRight .
-_:b4c22013e6505 sh:datatype xsd:boolean ;
-	sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 52 ;
-	sh:path openlabel_v2:TrafficSpecialVehicle .
-_:b4c7529280487 rdf:first openlabel_v2:CommunicationSignalEmergency ;
-	rdf:rest _:b077d7db9d031 .
-_:b4e71227e9052 rdf:first openlabel_v2:WarningSignsVariableFullTime ;
-	rdf:rest _:b3bd1f94db180 .
-_:b4e8dab074993 sh:datatype xsd:boolean ;
-	sh:description "An activity where the object vehicle suddenly moves out of the lane." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 6 ;
-	sh:path openlabel_v2:MotionCutOut .
-_:b4ecc6286a16d sh:datatype xsd:boolean ;
-	sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 57 ;
-	sh:path openlabel_v2:WeatherSnow .
-_:b4f70fbdc860a rdf:first openlabel_v2:SpecialStructureBridge ;
-	rdf:rest _:b9b61035e6212 .
-_:b4f8a61a37030 sh:datatype xsd:boolean ;
-	sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 16 ;
-	sh:path openlabel_v2:IlluminationCloudiness .
-_:b508354127ffd rdf:first openlabel_v2:SpecialStructureAutoAccess ;
-	rdf:rest _:b4f70fbdc860a .
-_:b513e9c8f8739 rdf:first openlabel_v2:MotorwayUnmanaged ;
-	rdf:rest _:bd0c3e0296efb .
-_:b517148b0f3f3 sh:datatype xsd:boolean ;
-	sh:description "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 35 ;
-	sh:path openlabel_v2:ParticulatesPollution .
-_:b51b321f6d06c rdf:first _:b90a73b6d0d34 ;
-	rdf:rest _:bba3b8cdf83d5 .
-_:b51bf7d4dcbc5 sh:datatype xsd:boolean ;
-	sh:description "Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 23 ;
-	sh:path openlabel_v2:LaneSpecificationLaneCount .
-_:b532a2b73635c rdf:first openlabel_v2:SpecialStructureTollPlaza ;
-	rdf:rest _:b8b17e0cb7ed5 .
-_:b53c3bd8fb6bb rdf:first openlabel_v2:V2vCellular ;
-	rdf:rest _:b307f847310ac .
-_:b54e0f12dd970 rdf:first _:bf990631a576c ;
-	rdf:rest rdf:nil .
-_:b5515e6fe4d5f sh:datatype xsd:boolean ;
-	sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 55 ;
-	sh:path openlabel_v2:WeatherRain .
-_:b58a36ff0d1ad sh:description "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b." ;
-	sh:in _:b3c6331ed5316 ;
-	sh:maxCount 1 ;
-	sh:order 1 ;
-	sh:path openlabel_v2:ConnectivityPositioning .
-_:b5c2f97d9a7dc sh:datatype xsd:boolean ;
-	sh:description "Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 14 ;
-	sh:path openlabel_v2:HorizontalStraights .
-_:b5cf6959b9bbd rdf:first openlabel_v2:VehicleEmergency ;
-	rdf:rest _:b68e6db66d82c .
-_:b5de2a23f49ac rdf:first openlabel_v2:RegulatorySignsUniformTemporary ;
-	rdf:rest _:b2d3f68a75578 .
-_:b5f12c6bcac70 sh:description "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a." ;
-	sh:in _:b86cd4a8fdf0d ;
-	sh:maxCount 1 ;
-	sh:order 8 ;
-	sh:path openlabel_v2:DrivableAreaSurfaceType .
-_:b5f65aedf5468 rdf:first openlabel_v2:HumanPassenger ;
-	rdf:rest _:bdaaafddf9b1c .
-_:b61057bceba61 sh:class schema:QuantitativeValue .
-_:b63aebde1566e rdf:first openlabel_v2:InformationSignsVariableFullTime ;
-	rdf:rest _:b845d62ebb6d0 .
-_:b6597735fb5b7 rdf:first _:b61057bceba61 ;
-	rdf:rest rdf:nil .
-_:b6691d3e449bb rdf:first openlabel_v2:RainTypeOrographic ;
-	rdf:rest rdf:nil .
-_:b66976a0d2186 sh:datatype xsd:integer ;
-	sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2." ;
-	sh:maxCount 1 ;
-	sh:minInclusive 0 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 54 ;
-	sh:path openlabel_v2:trafficVolumeValue .
-_:b6869bfc7da7d sh:description "Speed (km/h)." ;
-	sh:maxCount 1 ;
-	sh:or _:b6c6a5e9f7af9 ;
-	sh:order 10 ;
-	sh:path openlabel_v2:motionDriveValue .
-_:b68e6db66d82c rdf:first openlabel_v2:VehicleMotorcycle ;
-	rdf:rest _:b8528ea883733 .
-_:b69330d337e16 rdf:first openlabel_v2:HumanDriver ;
-	rdf:rest _:b4bebd397f5b1 .
-_:b6a5498c24548 sh:datatype xsd:string ;
-	sh:description "Relative or absolute URL of a static image or animation of the scenario to allow users to easily see what the scenario represents." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 12 ;
-	sh:path openlabel_v2:scenarioVisualisationURL .
-_:b6ab0c7bada17 rdf:first openlabel_v2:SunPositionBehind ;
-	rdf:rest _:b0711dc0bb8ba .
-_:b6b4108773d85 sh:class schema:QuantitativeValue .
-_:b6c6a5e9f7af9 rdf:first _:b38f2c13d6c79 ;
-	rdf:rest _:b6597735fb5b7 .
-_:b6d19a52488b3 sh:description "Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c." ;
-	sh:in _:bb220432e1222 ;
-	sh:order 27 ;
-	sh:path openlabel_v2:LaneSpecificationType .
-_:b6daaf7127bad rdf:first openlabel_v2:CommunicationSignalLeft ;
-	rdf:rest _:b30b0a424c91d .
-_:b6db39d035165 rdf:first openlabel_v2:VehicleBus ;
-	rdf:rest _:bf913ab286178 .
-_:b6e1d46eb203c rdf:first openlabel_v2:ArtificialStreetLighting ;
-	rdf:rest _:b40d1e3833255 .
-_:b6eb3d820b5ec rdf:first openlabel_v2:ParticulatesDust ;
-	rdf:rest _:b758bef35fb30 .
-_:b6f58ce2ca8a2 rdf:first openlabel_v2:IntersectionCrossroad ;
-	rdf:rest _:bbcb08deb9670 .
-_:b716a3665bb84 sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c." ;
-	sh:in _:ba467840d9aed ;
-	sh:maxCount 1 ;
-	sh:order 45 ;
-	sh:path openlabel_v2:SignsWarning .
-_:b74028e1449aa sh:description "Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b." ;
-	sh:in _:b983190197d63 ;
-	sh:maxCount 1 ;
-	sh:order 18 ;
-	sh:path openlabel_v2:IlluminationLowLight .
-_:b7443e177be22 sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject starts behind and ends up in front by changing lanes." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 13 ;
-	sh:path openlabel_v2:MotionOvertake .
-_:b758bef35fb30 rdf:first openlabel_v2:ParticulatesMarine ;
-	rdf:rest _:bbe623e43f64a .
-_:b77f4735e3c3a rdf:first openlabel_v2:HumanAnimalRider ;
-	rdf:rest _:b194c5e03f16e .
-_:b77feb166669d rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:b7930cfc4cf66 rdf:first openlabel_v2:TransverseUndivided ;
-	rdf:rest rdf:nil .
-_:b7a205b5e8d80 rdf:first openlabel_v2:LaneTypeTraffic ;
-	rdf:rest _:b3b1b448e3b9d .
-_:b7ae7f71affd4 rdf:first openlabel_v2:EdgeShoulderGrass ;
-	rdf:rest _:b364418213863 .
-_:b7cda678fa665 sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a." ;
-	sh:in _:b25ce37e7ee49 ;
-	sh:maxCount 1 ;
-	sh:order 42 ;
-	sh:path openlabel_v2:SceneryZone .
-_:b7ee02f077e8f sh:description "Vehicle type." ;
-	sh:in _:bbd7dac495c6c ;
-	sh:maxCount 1 ;
-	sh:order 2 ;
-	sh:path openlabel_v2:RoadUserVehicle .
-_:b80790562b84c sh:datatype xsd:boolean ;
-	sh:description "Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 2 ;
-	sh:path openlabel_v2:DaySunElevation .
-_:b80c1668545c5 rdf:first openlabel_v2:LaneTypeSpecial ;
-	rdf:rest _:b7a205b5e8d80 .
-_:b811c4337e3c8 rdf:first openlabel_v2:SurfaceConditionSnow ;
-	rdf:rest _:bf1a604c7c5e4 .
-_:b814f726c7cf5 rdf:first openlabel_v2:RoadTypeSlip ;
-	rdf:rest rdf:nil .
-_:b82322b3fc855 rdf:first openlabel_v2:FixedStructureBuilding ;
-	rdf:rest _:b3d8861884b15 .
-_:b82a117485970 sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user is further away from the object by the end." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 3 ;
-	sh:path openlabel_v2:MotionAway .
-_:b82cb0a41dbe3 rdf:first openlabel_v2:WarningSignsUniformTemporary ;
-	rdf:rest _:b4e71227e9052 .
-_:b8314979990e7 sh:datatype xsd:decimal ;
-	sh:description "Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 17 ;
-	sh:path openlabel_v2:illuminationCloudinessValue .
-_:b845d62ebb6d0 rdf:first openlabel_v2:InformationSignsVariableTemporary ;
-	rdf:rest rdf:nil .
-_:b84fe0b612feb rdf:first openlabel_v2:ZoneTrafficManagement ;
-	rdf:rest rdf:nil .
-_:b8528ea883733 rdf:first openlabel_v2:VehicleTrailer ;
-	rdf:rest _:b209f342480df .
-_:b86cd4a8fdf0d rdf:first openlabel_v2:SurfaceTypeLoose ;
-	rdf:rest _:bbca40b6df45a .
-_:b87af8269770a sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d." ;
-	sh:in _:b508354127ffd ;
-	sh:maxCount 1 ;
-	sh:order 40 ;
-	sh:path openlabel_v2:ScenerySpecialStructure .
-_:b8a164f0f9376 rdf:first openlabel_v2:TransverseDivided ;
-	rdf:rest _:bbc98dfe8d0a4 .
-_:b8a7f49066519 sh:datatype xsd:decimal ;
-	sh:description "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 3 ;
-	sh:path cmns-q:hasUpperBound .
-_:b8ae9c14b9756 sh:datatype xsd:dateTime ;
-	sh:description "The date that the scenario was created/published." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 4 ;
-	sh:path openlabel_v2:scenarioCreatedDate .
-_:b8b0feccb02c2 sh:datatype xsd:string ;
-	sh:description "The URL of the legal entity who owns the rights to the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 3 ;
-	sh:path openlabel_v2:ownerURL .
-_:b8b17e0cb7ed5 rdf:first openlabel_v2:SpecialStructureTunnel ;
-	rdf:rest rdf:nil .
-_:b8bf42898054d sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user changes their heading." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 19 ;
-	sh:path openlabel_v2:MotionTurn .
-_:b8c1336199019 rdf:first openlabel_v2:SurfaceConditionWet ;
-	rdf:rest rdf:nil .
-_:b8e3333e79e7a sh:description "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
-	sh:maxCount 1 ;
-	sh:or _:b51b321f6d06c ;
-	sh:order 24 ;
-	sh:path openlabel_v2:laneSpecificationLaneCountValue .
-_:b8e4b73fa9efe rdf:first openlabel_v2:InformationSignsUniformTemporary ;
-	rdf:rest _:b63aebde1566e .
-_:b8e7d8b3d6f6d rdf:first openlabel_v2:IntersectionYJunction ;
-	rdf:rest rdf:nil .
-_:b8f57e4e25b3e rdf:first openlabel_v2:VehicleConstruction ;
-	rdf:rest _:bb307808ca045 .
-_:b90846f0224d4 rdf:first _:b955e519f41da ;
-	rdf:rest rdf:nil .
-_:b90a73b6d0d34 sh:datatype xsd:integer ;
-	sh:nodeKind sh:Literal .
-_:b90c3bb443021 sh:description "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4." ;
-	sh:in _:b187c49d8b158 ;
-	sh:maxCount 1 ;
-	sh:order 20 ;
-	sh:path openlabel_v2:JunctionRoundabout .
-_:b919e61ea7da0 sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4." ;
-	sh:in _:b6f58ce2ca8a2 ;
-	sh:maxCount 1 ;
-	sh:order 19 ;
-	sh:path openlabel_v2:JunctionIntersection .
-_:b92d5d145eb81 sh:datatype xsd:boolean ;
-	sh:description "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 33 ;
-	sh:path openlabel_v2:ParticulatesDust .
-_:b9333e59d4e16 sh:datatype xsd:boolean ;
-	sh:description "Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 25 ;
-	sh:path openlabel_v2:LaneSpecificationMarking .
-_:b936e4b9739a5 sh:datatype xsd:decimal ;
-	sh:nodeKind sh:Literal .
-_:b9377db3a1ac9 rdf:first openlabel_v2:CommunicationHorn ;
-	rdf:rest _:b4c7529280487 .
-_:b955e519f41da sh:class schema:QuantitativeValue .
-_:b96e42a4e6bdd sh:description "Particulate type. Refer to BSI PAS-1883 Section 5.3.2." ;
-	sh:in _:b6eb3d820b5ec ;
-	sh:maxCount 1 ;
-	sh:order 10 ;
-	sh:path openlabel_v2:EnvironmentParticulates .
-_:b9752c1398103 sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user is closer to the object by the end." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 18 ;
-	sh:path openlabel_v2:MotionTowards .
-_:b983190197d63 rdf:first openlabel_v2:LowLightAmbient ;
-	rdf:rest _:b2646bc334ca6 .
-_:b9b61035e6212 rdf:first openlabel_v2:SpecialStructurePedestrianCrossing ;
-	rdf:rest _:b415f7cc37c02 .
-_:b9cd4ce31eac9 rdf:first openlabel_v2:SurfaceConditionIcy ;
-	rdf:rest _:b45f46b68cdbb .
-_:b9d3ae658f353 sh:description "Rate of acceleration (ms-2)." ;
-	sh:maxCount 1 ;
-	sh:or _:bea920cde98a6 ;
-	sh:order 2 ;
-	sh:path openlabel_v2:motionAccelerateValue .
-_:b9f0d49d3cd94 rdf:first openlabel_v2:TransverseBarriers ;
-	rdf:rest _:b8a164f0f9376 .
-_:b9f2c95b76dfd rdf:first openlabel_v2:SurfaceFeaturePothole ;
-	rdf:rest _:b3952ac107fde .
-_:ba0c054d70606 sh:datatype xsd:decimal ;
-	sh:nodeKind sh:Literal .
-_:ba0c6ed9897de rdf:first openlabel_v2:V2iCellular ;
-	rdf:rest _:bbfa765482771 .
-_:ba467840d9aed rdf:first openlabel_v2:WarningSignsUniform ;
-	rdf:rest _:b4348b81fe452 .
-_:ba4eb52d6b5de sh:datatype xsd:boolean ;
-	sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 46 ;
-	sh:path openlabel_v2:SubjectVehicleSpeed .
-_:ba60f832a52ae rdf:first openlabel_v2:ZoneRegion ;
-	rdf:rest _:b3fb8632e68e5 .
-_:bac8b5c88334f rdf:first openlabel_v2:CommunicationHeadlightFlash ;
-	rdf:rest _:b9377db3a1ac9 .
-_:baca1d72056f7 sh:datatype xsd:decimal ;
-	sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 32 ;
-	sh:path openlabel_v2:longitudinalUpSlopeValue .
-_:bacc391edb135 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:bad17b2cfe9a5 rdf:first openlabel_v2:LaneTypeCycle ;
-	rdf:rest _:bc8d5f120a3ce .
-_:bae1405681a2a rdf:first openlabel_v2:RoadTypeMinor ;
-	rdf:rest _:b39b2e6093e10 .
-_:bb0b7c83b1705 rdf:first openlabel_v2:PositioningGlonass ;
-	rdf:rest _:bf82002fb334e .
-_:bb0ce23eea1e0 sh:description "Road type. Refer to BSI PAS-1883 Section 5.2.3.2." ;
-	sh:in _:b1e51cbb2bde9 ;
-	sh:maxCount 1 ;
-	sh:order 9 ;
-	sh:path openlabel_v2:DrivableAreaType .
-_:bb1fe31be899b sh:datatype xsd:boolean ;
-	sh:description "Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 31 ;
-	sh:path openlabel_v2:LongitudinalUpSlope .
-_:bb20b902eba02 sh:datatype xsd:string ;
-	sh:description "Universally unique identifier (UUID) assigned to the scenario which allows the scenario to be identified." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 10 ;
-	sh:path openlabel_v2:scenarioUniqueReference .
-_:bb220432e1222 rdf:first openlabel_v2:LaneTypeBus ;
-	rdf:rest _:bad17b2cfe9a5 .
-_:bb25813fc3039 sh:datatype xsd:decimal ;
-	sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 37 ;
-	sh:path openlabel_v2:particulatesWaterValue .
-_:bb2a244fe6544 sh:class openlabel_v2:Odd ;
-	sh:description "Operational Design Domain tag." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:BlankNodeOrIRI ;
-	sh:order 2 ;
-	sh:path openlabel_v2:Odd .
-_:bb307808ca045 rdf:first openlabel_v2:VehicleCycle ;
-	rdf:rest _:b5cf6959b9bbd .
-_:bb5453e914ca6 rdf:first openlabel_v2:CommunicationSignalSlowing ;
-	rdf:rest _:bc33fae4a3c66 .
-_:bb570b56df2ea sh:class openlabel_v2:Behaviour ;
-	sh:description "Behaviour tag." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:BlankNodeOrIRI ;
-	sh:order 1 ;
-	sh:path openlabel_v2:Behaviour .
-_:bb5852e78b90c sh:datatype xsd:boolean ;
-	sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 53 ;
-	sh:path openlabel_v2:TrafficVolume .
-_:bb7c7e2e7c135 rdf:first _:b2d1a5cb72b4e ;
-	rdf:rest _:be995cd4a4a11 .
-_:bb8f8e594318e rdf:first openlabel_v2:TemporaryStructureRoadWorks ;
-	rdf:rest rdf:nil .
-_:bba3b8cdf83d5 rdf:first _:be21d7fbab5c0 ;
-	rdf:rest rdf:nil .
-_:bbc10da06ff68 sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f." ;
-	sh:in _:bbe244fb4536f ;
-	sh:maxCount 1 ;
-	sh:order 41 ;
-	sh:path openlabel_v2:SceneryTemporaryStructure .
-_:bbc89b8a1c393 sh:class openlabel_v2:Tag ;
-	sh:description "A tag associated with a scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:BlankNodeOrIRI ;
-	sh:order 0 ;
-	sh:path openlabel_v2:hasTag .
-_:bbc98dfe8d0a4 rdf:first openlabel_v2:TransverseLanesTogether ;
-	rdf:rest _:be08fb99bc21f .
-_:bbca40b6df45a rdf:first openlabel_v2:SurfaceTypeSegmented ;
-	rdf:rest _:bff6e619c0d8e .
-_:bbcb08deb9670 rdf:first openlabel_v2:IntersectionGradeSeperated ;
-	rdf:rest _:bfb1f283915cf .
-_:bbd7dac495c6c rdf:first openlabel_v2:VehicleAgricultural ;
-	rdf:rest _:b6db39d035165 .
-_:bbe244fb4536f rdf:first openlabel_v2:TemporaryStructureConstructionDetour ;
-	rdf:rest _:bf5af32bac88f .
-_:bbe623e43f64a rdf:first openlabel_v2:ParticulatesPollution ;
-	rdf:rest _:b229666fd8c67 .
-_:bbfa765482771 rdf:first openlabel_v2:V2iSatellite ;
-	rdf:rest _:bf61111e1c58e .
-_:bbfd84e161142 rdf:first openlabel_v2:V2vWifi ;
-	rdf:rest rdf:nil .
-_:bc26521343ddd sh:datatype xsd:boolean ;
-	sh:description "Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 12 ;
-	sh:path openlabel_v2:HorizontalCurves .
-_:bc33fae4a3c66 rdf:first openlabel_v2:CommunicationWave ;
-	rdf:rest rdf:nil .
-_:bc3dbc78831b1 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:bc420d68b5b2f sh:datatype xsd:decimal ;
-	sh:nodeKind sh:Literal .
-_:bc427152edd0d sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user increases their velocity." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path openlabel_v2:MotionAccelerate .
-_:bc46a4b2729c5 rdf:first openlabel_v2:ParticulatesWater ;
-	rdf:rest rdf:nil .
-_:bc47da5c6bb63 rdf:first openlabel_v2:SurfaceConditionFlooded ;
-	rdf:rest _:b9cd4ce31eac9 .
-_:bc5caf6868d29 sh:datatype xsd:string ;
-	sh:description "Universally unique identifier (UUID) which identifies the scenario which this one has been derived from." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 9 ;
-	sh:path openlabel_v2:scenarioParentReference .
-_:bc6d5406f528d sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e." ;
-	sh:in _:b34da477c0a41 ;
-	sh:order 5 ;
-	sh:path openlabel_v2:DrivableAreaEdge .
-_:bc8d5f120a3ce rdf:first openlabel_v2:LaneTypeEmergency ;
-	rdf:rest _:b80c1668545c5 .
-_:bcaec386cef07 sh:datatype xsd:string ;
-	sh:description "The version number of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 11 ;
-	sh:path openlabel_v2:scenarioVersion .
-_:bcbbcf0296110 sh:datatype xsd:boolean ;
-	sh:description "Animal road user flag." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 0 ;
-	sh:path openlabel_v2:RoadUserAnimal .
-_:bcc2f46cbbd2c sh:datatype xsd:boolean ;
-	sh:description "Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 21 ;
-	sh:path openlabel_v2:LaneSpecificationDimensions .
-_:bcc6f7872bfaa rdf:first openlabel_v2:EdgeSolidBarriers ;
-	rdf:rest _:b4a7ea586a5fb .
-_:bccf3a2912a05 rdf:first openlabel_v2:RoundaboutDoubleNosignal ;
-	rdf:rest _:b19ef5c3ef789 .
-_:bce501011400a rdf:first openlabel_v2:RainTypeDynamic ;
-	rdf:rest _:b6691d3e449bb .
-_:bcf39d8c6c4d0 rdf:first openlabel_v2:TemporaryStructureRoadSignage ;
-	rdf:rest _:bb8f8e594318e .
-_:bd0bbddbc3c51 rdf:first rdf:type ;
-	rdf:rest rdf:nil .
-_:bd0c3e0296efb rdf:first openlabel_v2:RoadTypeDistributor ;
-	rdf:rest _:bae1405681a2a .
-_:bd0e104aefebd sh:class openlabel_v2:RoadUser ;
-	sh:description "Road user tag." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:BlankNodeOrIRI ;
-	sh:order 3 ;
-	sh:path openlabel_v2:RoadUser .
-_:bd1db241a637a sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a." ;
-	sh:in _:bd594468f66e2 ;
-	sh:maxCount 1 ;
-	sh:order 43 ;
-	sh:path openlabel_v2:SignsInformation .
-_:bd3bc2b35414f sh:description "Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b." ;
-	sh:in _:be2cf0c5df2e7 ;
-	sh:maxCount 1 ;
-	sh:order 7 ;
-	sh:path openlabel_v2:DrivableAreaSurfaceFeature .
-_:bd4acc4973677 rdf:first openlabel_v2:RoundaboutLargeNosignal ;
-	rdf:rest _:b11891f941b30 .
-_:bd594468f66e2 rdf:first openlabel_v2:InformationSignsUniformFullTime ;
-	rdf:rest _:b8e4b73fa9efe .
-_:bd68e24b09767 sh:datatype xsd:decimal ;
-	sh:description "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 3 ;
-	sh:path openlabel_v2:daySunElevationValue .
-_:bda2d7a717260 rdf:first openlabel_v2:RoundaboutMiniSignal ;
-	rdf:rest _:be9af7cfc6aa5 .
-_:bdaaafddf9b1c rdf:first openlabel_v2:HumanPedestrian ;
-	rdf:rest _:b3951233508db .
-_:bdb6532431020 sh:datatype xsd:boolean ;
-	sh:description "Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 28 ;
-	sh:path openlabel_v2:LongitudinalDownSlope .
-_:bdc6cfbdb83e8 rdf:first openlabel_v2:CommunicationV2v ;
-	rdf:rest _:ba0c6ed9897de .
-_:bdf67b81d4447 sh:description "Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c." ;
-	sh:in _:b33688231c9b3 ;
-	sh:maxCount 1 ;
-	sh:order 6 ;
-	sh:path openlabel_v2:DrivableAreaSurfaceCondition .
-_:be08fb99bc21f rdf:first openlabel_v2:TransversePavements ;
-	rdf:rest _:b7930cfc4cf66 .
-_:be21d7fbab5c0 sh:class schema:QuantitativeValue .
-_:be24d8db00719 sh:description "Speed (km/h)." ;
-	sh:maxCount 1 ;
-	sh:or _:bb7c7e2e7c135 ;
-	sh:order 3 ;
-	sh:path openlabel_v2:motionDriveValue .
-_:be293fca90e71 rdf:first openlabel_v2:SunPositionLeft ;
-	rdf:rest _:be7a71ae20037 .
-_:be2cf0c5df2e7 rdf:first openlabel_v2:SurfaceFeatureCrack ;
-	rdf:rest _:b9f2c95b76dfd .
-_:be3da98449cb8 sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2." ;
-	sh:in _:becfd3d95b2f3 ;
-	sh:maxCount 1 ;
-	sh:order 38 ;
-	sh:path openlabel_v2:RainType .
-_:be50140b488da sh:datatype xsd:boolean ;
-	sh:description "An activity where the road user is stationary." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 17 ;
-	sh:path openlabel_v2:MotionStop .
-_:be7168b34d5a4 sh:datatype xsd:boolean ;
-	sh:description "Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 36 ;
-	sh:path openlabel_v2:ParticulatesVolcanic .
-_:be7a71ae20037 rdf:first openlabel_v2:SunPositionRight ;
-	rdf:rest rdf:nil .
-_:be7ac9d7acbdd sh:datatype xsd:string ;
-	sh:description "SDL definition of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 5 ;
-	sh:path openlabel_v2:scenarioDefinition .
-_:be889b7cdb6bc sh:datatype xsd:string ;
-	sh:description "The name of the legal entity who owns the rights to the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 2 ;
-	sh:path openlabel_v2:ownerName .
-_:be9126bf9293b sh:datatype xsd:string ;
-	sh:description "A description of the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 7 ;
-	sh:path openlabel_v2:scenarioDescription .
-_:be995cd4a4a11 rdf:first _:bf5c314dc8bf5 ;
-	rdf:rest rdf:nil .
-_:be9af7cfc6aa5 rdf:first openlabel_v2:RoundaboutNormalNosignal ;
-	rdf:rest _:b4a3aee1103cf .
-_:bea920cde98a6 rdf:first _:b936e4b9739a5 ;
-	rdf:rest _:b90846f0224d4 .
-_:beb031d749f1b rdf:first openlabel_v2:RoundaboutCompactSignal ;
-	rdf:rest _:bccf3a2912a05 .
-_:bec9fde9af0a9 rdf:first openlabel_v2:VehicleVan ;
-	rdf:rest _:b3d27c6f41c4c .
-_:becfd3d95b2f3 rdf:first openlabel_v2:RainTypeConvective ;
-	rdf:rest _:bce501011400a .
-_:beeeaa37e1d46 rdf:first openlabel_v2:RoadTypeShared ;
-	rdf:rest _:b814f726c7cf5 .
-_:bef7efe1a91ab sh:datatype xsd:boolean ;
-	sh:description "An activity where a pedestrian is slipping/sliding on the road." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 16 ;
-	sh:path openlabel_v2:MotionSlide .
-_:befb1d26523de sh:datatype xsd:decimal ;
-	sh:description "Minimum value of the range." ;
-	sh:maxCount 1 ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 0 ;
-	sh:path schema:minValue .
-_:bf0c49889c29c rdf:first openlabel_v2:TravelDirectionRight ;
-	rdf:rest rdf:nil .
-_:bf169f346819e sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject vehicle is in a lane left of the original." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 11 ;
-	sh:path openlabel_v2:MotionLaneChangeLeft .
-_:bf1a604c7c5e4 rdf:first openlabel_v2:SurfaceConditionStandingWater ;
-	rdf:rest _:b8c1336199019 .
-_:bf2357616fb17 sh:description "Human road user type." ;
-	sh:in _:b77f4735e3c3a ;
-	sh:maxCount 1 ;
-	sh:order 1 ;
-	sh:path openlabel_v2:RoadUserHuman .
-_:bf2eeb318208d sh:class schema:QuantitativeValue .
-_:bf43bbef2f7cf sh:datatype xsd:string ;
-	sh:description "The email address of the legal entity who owns the rights to the scenario." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path openlabel_v2:ownerEmail .
-_:bf5af32bac88f rdf:first openlabel_v2:TemporaryStructureRefuseCollection ;
-	rdf:rest _:bcf39d8c6c4d0 .
-_:bf5c314dc8bf5 sh:class schema:QuantitativeValue .
-_:bf61111e1c58e rdf:first openlabel_v2:V2iWifi ;
-	rdf:rest _:b53c3bd8fb6bb .
-_:bf82002fb334e rdf:first openlabel_v2:PositioningGps ;
-	rdf:rest rdf:nil .
-_:bf82567804ac8 sh:datatype xsd:integer ;
-	sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1." ;
-	sh:maxCount 1 ;
-	sh:minInclusive 0 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 49 ;
-	sh:path openlabel_v2:trafficAgentDensityValue .
-_:bf913ab286178 rdf:first openlabel_v2:VehicleCar ;
-	rdf:rest _:b8f57e4e25b3e .
-_:bf91d8ac5cdbf sh:datatype xsd:boolean ;
-	sh:description "An activity where the subject vehicle ends up directly in front of the object vehicle." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 5 ;
-	sh:path openlabel_v2:MotionCutIn .
-_:bf990631a576c sh:class schema:QuantitativeValue .
-_:bfb1f283915cf rdf:first openlabel_v2:IntersectionStaggered ;
-	rdf:rest _:b1a4a81ec087a .
-_:bfc4c52469890 sh:datatype xsd:integer ;
-	sh:nodeKind sh:Literal .
-_:bfe4e9ef9e165 rdf:first openlabel_v2:RegulatorySignsUniformFullTime ;
-	rdf:rest _:b5de2a23f49ac .
-_:bff6e619c0d8e rdf:first openlabel_v2:SurfaceTypeUniform ;
-	rdf:rest rdf:nil .
-_:bffc56f038bff sh:class openlabel_v2:AdminTag ;
-	sh:description "Administration tag." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:BlankNodeOrIRI ;
-	sh:order 0 ;
-	sh:path openlabel_v2:AdminTag .
-_:bffec11c39145 sh:datatype xsd:boolean ;
-	sh:description "Locomotion mode where at a specific point no foot touches the ground." ;
-	sh:maxCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 15 ;
-	sh:path openlabel_v2:MotionRun .
+    rdfs:comment "The base tag." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class openlabel_v2:Odd ;
+            sh:description "Operational Design Domain tag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path openlabel_v2:Odd ],
+        [ sh:class openlabel_v2:Behaviour ;
+            sh:description "Behaviour tag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path openlabel_v2:Behaviour ],
+        [ sh:class openlabel_v2:RoadUser ;
+            sh:description "Road user tag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path openlabel_v2:RoadUser ],
+        [ sh:class openlabel_v2:AdminTag ;
+            sh:description "Administration tag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path openlabel_v2:AdminTag ] ;
+    sh:targetClass openlabel_v2:Tag .
+
+openlabel_v2:AdminTag a sh:NodeShape ;
+    rdfs:comment "The base tag to use when extending the Administration tags with new classes." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "URI of SDL language used for the definition of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path openlabel_v2:scenarioDefinitionLanguageURI ],
+        [ sh:datatype xsd:string ;
+            sh:description "The type of license which governs usage of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path openlabel_v2:licenseURI ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path openlabel_v2:scenarioName ],
+        [ sh:datatype xsd:string ;
+            sh:description "Relative or absolute URL of a static image or animation of the scenario to allow users to easily see what the scenario represents." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path openlabel_v2:scenarioVisualisationURL ],
+        [ sh:datatype xsd:dateTime ;
+            sh:description "The date that the scenario was created/published." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path openlabel_v2:scenarioCreatedDate ],
+        [ sh:datatype xsd:string ;
+            sh:description "The URL of the legal entity who owns the rights to the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path openlabel_v2:ownerURL ],
+        [ sh:datatype xsd:string ;
+            sh:description "Universally unique identifier (UUID) assigned to the scenario which allows the scenario to be identified." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path openlabel_v2:scenarioUniqueReference ],
+        [ sh:datatype xsd:string ;
+            sh:description "Universally unique identifier (UUID) which identifies the scenario which this one has been derived from." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path openlabel_v2:scenarioParentReference ],
+        [ sh:datatype xsd:string ;
+            sh:description "The version number of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path openlabel_v2:scenarioVersion ],
+        [ sh:datatype xsd:string ;
+            sh:description "SDL definition of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path openlabel_v2:scenarioDefinition ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of the legal entity who owns the rights to the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path openlabel_v2:ownerName ],
+        [ sh:datatype xsd:string ;
+            sh:description "A description of the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path openlabel_v2:scenarioDescription ],
+        [ sh:datatype xsd:string ;
+            sh:description "The email address of the legal entity who owns the rights to the scenario." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path openlabel_v2:ownerEmail ] ;
+    sh:targetClass openlabel_v2:AdminTag .
+
+openlabel_v2:Behaviour a sh:NodeShape ;
+    rdfs:comment "An activity performed by a road user." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject vehicle is moving in the opposite direction to which it is facing." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path openlabel_v2:MotionReverse ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject exits the intersection on a road to the left of the original." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 20 ;
+            sh:path openlabel_v2:MotionTurnLeft ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject exits the intersection on a road to the right of the original." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path openlabel_v2:MotionTurnRight ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject vehicle is moving in the direction it is facing." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path openlabel_v2:MotionDrive ],
+        [ sh:description "Rate of deceleration (ms-2)." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 8 ;
+            sh:path openlabel_v2:motionDecelerateValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user decreases their velocity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path openlabel_v2:MotionDecelerate ],
+        [ sh:description "Communication type of road user behaviour." ;
+            sh:in ( openlabel_v2:CommunicationHeadlightFlash openlabel_v2:CommunicationHorn openlabel_v2:CommunicationSignalEmergency openlabel_v2:CommunicationSignalHazard openlabel_v2:CommunicationSignalLeft openlabel_v2:CommunicationSignalRight openlabel_v2:CommunicationSignalSlowing openlabel_v2:CommunicationWave ) ;
+            sh:order 0 ;
+            sh:path openlabel_v2:BehaviourCommunication ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject performs a turn resulting in heading in the opposite direction." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path openlabel_v2:MotionUTurn ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Locomotion mode where at least one foot is always on the ground." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path openlabel_v2:MotionWalk ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the trajectory of the road user crosses the trajectory of the object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path openlabel_v2:MotionCross ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject vehicle is in a lane right of the original." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path openlabel_v2:MotionLaneChangeRight ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the object vehicle suddenly moves out of the lane." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path openlabel_v2:MotionCutOut ],
+        [ sh:description "Speed (km/h)." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 10 ;
+            sh:path openlabel_v2:motionDriveValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject starts behind and ends up in front by changing lanes." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path openlabel_v2:MotionOvertake ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user is further away from the object by the end." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path openlabel_v2:MotionAway ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user changes their heading." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 19 ;
+            sh:path openlabel_v2:MotionTurn ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user is closer to the object by the end." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 18 ;
+            sh:path openlabel_v2:MotionTowards ],
+        [ sh:description "Rate of acceleration (ms-2)." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 2 ;
+            sh:path openlabel_v2:motionAccelerateValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user increases their velocity." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path openlabel_v2:MotionAccelerate ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the road user is stationary." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path openlabel_v2:MotionStop ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where a pedestrian is slipping/sliding on the road." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path openlabel_v2:MotionSlide ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject vehicle is in a lane left of the original." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path openlabel_v2:MotionLaneChangeLeft ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "An activity where the subject vehicle ends up directly in front of the object vehicle." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path openlabel_v2:MotionCutIn ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Locomotion mode where at a specific point no foot touches the ground." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path openlabel_v2:MotionRun ] ;
+    sh:targetClass openlabel_v2:Behaviour .
+
+openlabel_v2:Odd a sh:NodeShape ;
+    rdfs:comment "Operational Design Domain. Refer to BSI PAS-1883 Section 5." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2." ;
+            sh:in ( openlabel_v2:SunPositionBehind openlabel_v2:SunPositionFront openlabel_v2:SunPositionLeft openlabel_v2:SunPositionRight ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path openlabel_v2:DaySunPosition ],
+        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 47 ;
+            sh:path openlabel_v2:subjectVehicleSpeedValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 30 ;
+            sh:path openlabel_v2:LongitudinalLevelPlane ],
+        [ sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b." ;
+            sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
+            sh:maxCount 1 ;
+            sh:order 11 ;
+            sh:path openlabel_v2:GeometryTransverse ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path openlabel_v2:horizontalCurvesValue ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 29 ;
+            sh:path openlabel_v2:longitudinalDownSlopeValue ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 58 ;
+            sh:path openlabel_v2:weatherSnowValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 59 ;
+            sh:path openlabel_v2:WeatherWind ],
+        [ sh:description "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 22 ;
+            sh:path openlabel_v2:laneSpecificationDimensionsValue ],
+        [ sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e." ;
+            sh:in ( openlabel_v2:TravelDirectionLeft openlabel_v2:TravelDirectionRight ) ;
+            sh:maxCount 1 ;
+            sh:order 26 ;
+            sh:path openlabel_v2:LaneSpecificationTravelDirection ],
+        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e." ;
+            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+            sh:maxCount 1 ;
+            sh:order 39 ;
+            sh:path openlabel_v2:SceneryFixedStructure ],
+        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b." ;
+            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:order 44 ;
+            sh:path openlabel_v2:SignsRegulatory ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 48 ;
+            sh:path openlabel_v2:TrafficAgentDensity ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 50 ;
+            sh:path openlabel_v2:TrafficFlowRate ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 60 ;
+            sh:path openlabel_v2:weatherWindValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 34 ;
+            sh:path openlabel_v2:ParticulatesMarine ],
+        [ sh:description "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a." ;
+            sh:in ( openlabel_v2:CommunicationV2i openlabel_v2:CommunicationV2v openlabel_v2:V2iCellular openlabel_v2:V2iSatellite openlabel_v2:V2iWifi openlabel_v2:V2vCellular openlabel_v2:V2vSatellite openlabel_v2:V2vWifi ) ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path openlabel_v2:ConnectivityCommunication ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3." ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 51 ;
+            sh:path openlabel_v2:trafficFlowRateValue ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 56 ;
+            sh:path openlabel_v2:weatherRainValue ],
+        [ sh:description "Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d." ;
+            sh:in ( openlabel_v2:ArtificialStreetLighting openlabel_v2:ArtificialVehicleLighting ) ;
+            sh:maxCount 1 ;
+            sh:order 15 ;
+            sh:path openlabel_v2:IlluminationArtificial ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 52 ;
+            sh:path openlabel_v2:TrafficSpecialVehicle ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 57 ;
+            sh:path openlabel_v2:WeatherSnow ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path openlabel_v2:IlluminationCloudiness ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 35 ;
+            sh:path openlabel_v2:ParticulatesPollution ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 23 ;
+            sh:path openlabel_v2:LaneSpecificationLaneCount ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 55 ;
+            sh:path openlabel_v2:WeatherRain ],
+        [ sh:description "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b." ;
+            sh:in ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path openlabel_v2:ConnectivityPositioning ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 14 ;
+            sh:path openlabel_v2:HorizontalStraights ],
+        [ sh:description "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a." ;
+            sh:in ( openlabel_v2:SurfaceTypeLoose openlabel_v2:SurfaceTypeSegmented openlabel_v2:SurfaceTypeUniform ) ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path openlabel_v2:DrivableAreaSurfaceType ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2." ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 54 ;
+            sh:path openlabel_v2:trafficVolumeValue ],
+        [ sh:description "Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c." ;
+            sh:in ( openlabel_v2:LaneTypeBus openlabel_v2:LaneTypeCycle openlabel_v2:LaneTypeEmergency openlabel_v2:LaneTypeSpecial openlabel_v2:LaneTypeTraffic openlabel_v2:LaneTypeTram ) ;
+            sh:order 27 ;
+            sh:path openlabel_v2:LaneSpecificationType ],
+        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c." ;
+            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:order 45 ;
+            sh:path openlabel_v2:SignsWarning ],
+        [ sh:description "Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b." ;
+            sh:in ( openlabel_v2:LowLightAmbient openlabel_v2:LowLightNight ) ;
+            sh:maxCount 1 ;
+            sh:order 18 ;
+            sh:path openlabel_v2:IlluminationLowLight ],
+        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a." ;
+            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+            sh:maxCount 1 ;
+            sh:order 42 ;
+            sh:path openlabel_v2:SceneryZone ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path openlabel_v2:DaySunElevation ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path openlabel_v2:illuminationCloudinessValue ],
+        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d." ;
+            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+            sh:maxCount 1 ;
+            sh:order 40 ;
+            sh:path openlabel_v2:ScenerySpecialStructure ],
+        [ sh:description "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 24 ;
+            sh:path openlabel_v2:laneSpecificationLaneCountValue ],
+        [ sh:description "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4." ;
+            sh:in ( openlabel_v2:RoundaboutCompactNosignal openlabel_v2:RoundaboutCompactSignal openlabel_v2:RoundaboutDoubleNosignal openlabel_v2:RoundaboutDoubleSignal openlabel_v2:RoundaboutLargeNosignal openlabel_v2:RoundaboutLargeSignal openlabel_v2:RoundaboutMiniNosignal openlabel_v2:RoundaboutMiniSignal openlabel_v2:RoundaboutNormalNosignal openlabel_v2:RoundaboutNormalSignal ) ;
+            sh:maxCount 1 ;
+            sh:order 20 ;
+            sh:path openlabel_v2:JunctionRoundabout ],
+        [ sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4." ;
+            sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
+            sh:maxCount 1 ;
+            sh:order 19 ;
+            sh:path openlabel_v2:JunctionIntersection ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 33 ;
+            sh:path openlabel_v2:ParticulatesDust ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 25 ;
+            sh:path openlabel_v2:LaneSpecificationMarking ],
+        [ sh:description "Particulate type. Refer to BSI PAS-1883 Section 5.3.2." ;
+            sh:in ( openlabel_v2:ParticulatesDust openlabel_v2:ParticulatesMarine openlabel_v2:ParticulatesPollution openlabel_v2:ParticulatesVolcanic openlabel_v2:ParticulatesWater ) ;
+            sh:maxCount 1 ;
+            sh:order 10 ;
+            sh:path openlabel_v2:EnvironmentParticulates ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 46 ;
+            sh:path openlabel_v2:SubjectVehicleSpeed ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 32 ;
+            sh:path openlabel_v2:longitudinalUpSlopeValue ],
+        [ sh:description "Road type. Refer to BSI PAS-1883 Section 5.2.3.2." ;
+            sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path openlabel_v2:DrivableAreaType ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 31 ;
+            sh:path openlabel_v2:LongitudinalUpSlope ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 37 ;
+            sh:path openlabel_v2:particulatesWaterValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 53 ;
+            sh:path openlabel_v2:TrafficVolume ],
+        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f." ;
+            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+            sh:maxCount 1 ;
+            sh:order 41 ;
+            sh:path openlabel_v2:SceneryTemporaryStructure ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 12 ;
+            sh:path openlabel_v2:HorizontalCurves ],
+        [ sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e." ;
+            sh:in ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
+            sh:order 5 ;
+            sh:path openlabel_v2:DrivableAreaEdge ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 21 ;
+            sh:path openlabel_v2:LaneSpecificationDimensions ],
+        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a." ;
+            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:order 43 ;
+            sh:path openlabel_v2:SignsInformation ],
+        [ sh:description "Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b." ;
+            sh:in ( openlabel_v2:SurfaceFeatureCrack openlabel_v2:SurfaceFeaturePothole openlabel_v2:SurfaceFeatureRut openlabel_v2:SurfaceFeatureSwell ) ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path openlabel_v2:daySunElevationValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 28 ;
+            sh:path openlabel_v2:LongitudinalDownSlope ],
+        [ sh:description "Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c." ;
+            sh:in ( openlabel_v2:SurfaceConditionContamination openlabel_v2:SurfaceConditionFlooded openlabel_v2:SurfaceConditionIcy openlabel_v2:SurfaceConditionMirage openlabel_v2:SurfaceConditionSnow openlabel_v2:SurfaceConditionStandingWater openlabel_v2:SurfaceConditionWet ) ;
+            sh:maxCount 1 ;
+            sh:order 6 ;
+            sh:path openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2." ;
+            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+            sh:maxCount 1 ;
+            sh:order 38 ;
+            sh:path openlabel_v2:RainType ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 36 ;
+            sh:path openlabel_v2:ParticulatesVolcanic ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1." ;
+            sh:maxCount 1 ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 49 ;
+            sh:path openlabel_v2:trafficAgentDensityValue ] ;
+    sh:targetClass openlabel_v2:Odd .
+
+openlabel_v2:RoadUser a sh:NodeShape ;
+    rdfs:comment "Something which uses a road to travel." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Vehicle type." ;
+            sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path openlabel_v2:RoadUserVehicle ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Animal road user flag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path openlabel_v2:RoadUserAnimal ],
+        [ sh:description "Speed (km/h)." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 3 ;
+            sh:path openlabel_v2:motionDriveValue ],
+        [ sh:description "Human road user type." ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path openlabel_v2:RoadUserHuman ] ;
+    sh:targetClass openlabel_v2:RoadUser .
+
+schema:QuantitativeValue a sh:NodeShape ;
+    rdfs:comment "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:decimal ;
+            sh:description "Maximum value of the range." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path schema:maxValue ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path cmns-q:hasLowerBound ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path cmns-q:hasUpperBound ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Minimum value of the range." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path schema:minValue ] ;
+    sh:targetClass schema:QuantitativeValue .
+
 
