@@ -17,7 +17,8 @@ license: https://creativecommons.org/licenses/by/4.0/
 prefixes:
   linkml: https://w3id.org/linkml/
   openlabel_v2: https://w3id.org/ascs-ev/envited-x/openlabel/v2/
-  schema: http://schema.org/
+  sdo: https://schema.org/
+  cmns-q: https://www.omg.org/spec/Commons/Quantities/
 
 default_prefix: openlabel_v2
 default_range: string
@@ -379,10 +380,12 @@ classes:
     description: >-
       A point value or interval for quantitative measurements.
       Requires minValue and maxValue.
-    class_uri: schema:QuantitativeValue
+    class_uri: sdo:QuantitativeValue
     slots:
       - minValue
       - maxValue
+      - hasLowerBound
+      - hasUpperBound
 
 
 # =============================================================================
@@ -1107,15 +1110,31 @@ slots:
   # ---------------------------------------------------------------------------
   minValue:
     description: Minimum value of the range.
-    slot_uri: schema:minValue
+    slot_uri: sdo:minValue
     range: decimal
     required: true
 
   maxValue:
     description: Maximum value of the range.
-    slot_uri: schema:maxValue
+    slot_uri: sdo:maxValue
     range: decimal
     required: true
+
+  hasLowerBound:
+    description: >-
+      Lower bound inferred via RDFS from schema:minValue being a
+      subPropertyOf cmns-q:hasLowerBound in schema.org OWL.
+    slot_uri: cmns-q:hasLowerBound
+    range: decimal
+    required: false
+
+  hasUpperBound:
+    description: >-
+      Upper bound inferred via RDFS from schema:maxValue being a
+      subPropertyOf cmns-q:hasUpperBound in schema.org OWL.
+    slot_uri: cmns-q:hasUpperBound
+    range: decimal
+    required: false
 
 
 # =============================================================================

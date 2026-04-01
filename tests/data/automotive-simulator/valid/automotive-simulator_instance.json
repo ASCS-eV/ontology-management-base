@@ -6,7 +6,7 @@
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "http://schema.org/",
+         "schema": "https://schema.org/",
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }
    ],

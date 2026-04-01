@@ -84,7 +84,7 @@ def generate_and_merge(gen_cmd, hand_written_glob, output_path):
 
 # SHACL: gen-shacl + hand-written linkml/*.shacl.ttl
 generate_and_merge(
-    ['gen-shacl', '--deterministic', '--no-mergeimports', '--closed', '--suffix', 'Shape',
+    ['gen-shacl', '--deterministic', '--normalize-prefixes', '--no-mergeimports', '--closed', '--suffix', 'Shape',
      'linkml/gaia-x.yaml'],
     'linkml/*.shacl.ttl',
     Path('shapes.shacl.ttl'),
@@ -93,7 +93,8 @@ print('    SHACL done')
 
 # OWL: gen-owl + hand-written linkml/*.owl.ttl
 generate_and_merge(
-    ['gen-owl', '--deterministic', '--no-use-native-uris', '--assert-equivalent-classes',
+    ['gen-owl', '--deterministic', '--normalize-prefixes', '--no-use-native-uris', '--assert-equivalent-classes',
+     '--skip-abstract-class-as-unionof-subclasses', '--xsd-anyuri-as-iri',
      '--enum-iri-separator', '/', 'linkml/gaia-x.yaml'],
     'linkml/*.owl.ttl',
     Path('ontology.owl.ttl'),
@@ -103,7 +104,7 @@ print('    OWL done')
 # JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top)
 import subprocess
 result = subprocess.run(
-    ['gen-jsonld-context', '--deterministic', '--no-mergeimports', 'linkml/gaia-x.yaml'],
+    ['gen-jsonld-context', '--deterministic', '--normalize-prefixes', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
     capture_output=True, text=True,
 )
 if result.returncode != 0:

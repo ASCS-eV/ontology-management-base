@@ -8,7 +8,7 @@
       {
          "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
          "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "http://schema.org/"
+         "schema": "https://schema.org/"
       }
    ],
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail09_float_value_for_integer",

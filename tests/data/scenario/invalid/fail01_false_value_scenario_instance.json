@@ -10,7 +10,7 @@
       "sh": "http://www.w3.org/ns/shacl#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "schema": "http://schema.org/"
+      "schema": "https://schema.org/"
    },
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail01_false_value_scenario_instance",
    "@type": "scenario:Scenario",
