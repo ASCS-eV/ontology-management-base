@@ -115,22 +115,86 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
             sh:path hdmap:hasGeoreference ;
         ] ;
 
-    # ── Version-conditional enum enforcement for levelOfDetail ──────────
-    # OpenDRIVE v1.4 defined object type as free-form xs:string (any value
-    # valid).  From v1.5 onward, e_objectType is a strict XSD enum.  This
-    # constraint uses sh:or with property paths to enforce the enum ONLY
-    # when the declared format version is NOT 1.4.x.
+    # ══════════════════════════════════════════════════════════════════════
+    # Version-conditional enum enforcement for roadTypes, laneTypes, and
+    # levelOfDetail.  OpenDRIVE v1.4 used free-form xs:string for object
+    # types and smaller enum sets for road/lane types.  From v1.5 onward
+    # all three have strict enums that grew further in v1.8.
+    #
+    # Each constraint uses sh:or with property paths on hasFormat/version
+    # and hasContent/<property> to enforce version-appropriate enums.
     # See: https://github.com/ASCS-eV/ontology-management-base/issues/48
+    # ══════════════════════════════════════════════════════════════════════
+
+    # ── roadTypes: v1.4 (7 values) vs v1.5+ (13 values) ────────────────
     sh:or (
-        [   # Branch 1: version <= 1.4 (1.0, 1.1, 1.2, 1.3, 1.4) — any string accepted
+        [   # Branch 1: version <= 1.4 — 7 road types (e_roadType)
+            sh:property [
+                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
+                sh:pattern "^1\\.[0-4]" ;
+                sh:minCount 1 ;
+            ] ;
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:roadTypes ) ;
+                sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "unknown") ;
+                sh:message "roadTypes must be a known OpenDRIVE e_roadType for v1.4."@en ;
+            ]
+        ]
+        [   # Branch 2: version > 1.4 — 13 road types (v1.5 added 6 town subtypes)
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:roadTypes ) ;
+                sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "unknown") ;
+                sh:message "roadTypes must be a known OpenDRIVE e_roadType for v1.5+."@en ;
+            ]
+        ]
+    ) ;
+
+    # ── laneTypes: v1.4 (20) vs v1.5 (26) vs v1.8 (31) ────────────────
+    sh:or (
+        [   # Branch 1: version <= 1.4 — 20 lane types (e_laneType v1.4)
+            sh:property [
+                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
+                sh:pattern "^1\\.[0-4]" ;
+                sh:minCount 1 ;
+            ] ;
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
+                sh:in ("bidirectional" "biking" "border" "driving" "entry" "exit" "median" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "tram") ;
+                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.4."@en ;
+            ]
+        ]
+        [   # Branch 2: version 1.5–1.7 — 26 lane types (v1.5 added 6)
+            sh:property [
+                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
+                sh:pattern "^1\\.[5-7]" ;
+                sh:minCount 1 ;
+            ] ;
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
+                sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "taxi" "tram") ;
+                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.5–v1.7."@en ;
+            ]
+        ]
+        [   # Branch 3: version >= 1.8 — 31 lane types (v1.8 added 5)
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
+                sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
+                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.8+."@en ;
+            ]
+        ]
+    ) ;
+
+    # ── levelOfDetail: v1.4 (free-form) vs v1.5+ (28-value enum) ───────
+    sh:or (
+        [   # Branch 1: version <= 1.4 — any string accepted (xs:string)
             sh:property [
                 sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
                 sh:pattern "^1\\.[0-4]" ;
                 sh:minCount 1 ;
             ]
         ]
-        [   # Branch 2: version > 1.4 (1.5, 1.6, ..., 2.x, ...) — strict e_objectType enum
-            # Union of all 28 known values from v1.4H keywords + v1.5M enum + v1.8.0 enum
+        [   # Branch 2: version > 1.4 — strict e_objectType enum
+            # Union of all 28 known values from v1.4H keywords + v1.5M + v1.8.0
             sh:property [
                 sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
                 sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
@@ -155,21 +219,19 @@ hdmap:ContentShape a sh:NodeShape ;
     sh:targetClass hdmap:Content ;
     
     sh:property [ skos:example "[motorway, rural]" ;
-            sh:description "Lists the road types used in the HD map asset."@en ;
-            sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "town" "unknown") ;
-            sh:message "Validation of roadTypes failed!"@en ;
+            sh:description "Lists the road types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
+            sh:datatype xsd:string ;
             sh:name "road types"@en ;
             sh:order 0 ;
             sh:path hdmap:roadTypes ],
         [ skos:example "driving, shoulder, parking, walking" ;
-            sh:description "Lists the lane types used in the HD map asset."@en ;
-            sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
-            sh:message "Validation of laneTypes failed!"@en ;
+            sh:description "Lists the lane types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
+            sh:datatype xsd:string ;
             sh:name "lane types"@en ;
             sh:order 1 ;
             sh:path hdmap:laneTypes ],
         [ skos:example "tree, pole, roadSurface, barrier, ..." ;
-            sh:description "Lists the object types used in the HD map asset. OpenDRIVE v1.4 allowed free-form strings (xs:string); v1.5+ uses a strict e_objectType enum. Accepted as xsd:string here; version-conditional enum enforcement is via sh:sparql on DomainSpecificationShape."@en ;
+            sh:description "Lists the object types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
             sh:datatype xsd:string ;
             sh:name "level of detail"@en ;
             sh:order 2 ;
