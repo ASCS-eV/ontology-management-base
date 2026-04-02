@@ -96,7 +96,7 @@
 =                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:onProperty       =
 =                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasFormat> ; owl:someValuesFrom <https://w3id.org/ascs-                      =
 =                      ev/envited-x/envited-x/v3/Format> ; rdf:type owl:Restriction, rdfs:Resource ], rdfs:Resource ] must conform to one or more    =
-=                      shapes in [ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ( hdmap:hasFormat hdmap:version ) ;        =
+=                      shapes in ([ sh:property [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ( hdmap:hasFormat hdmap:version ) ;       =
 =                      sh:pattern Literal("^1\.[0-4]", datatype=xsd:string) ] ] , [ sh:property [ sh:in ( Literal("barrier", datatype=xsd:string)    =
 =                      Literal("bike", datatype=xsd:string) Literal("building", datatype=xsd:string) Literal("bus", datatype=xsd:string)             =
 =                      Literal("car", datatype=xsd:string) Literal("crosswalk", datatype=xsd:string) Literal("gantry", datatype=xsd:string)          =
@@ -108,7 +108,51 @@
 =                      datatype=xsd:string) Literal("tram", datatype=xsd:string) Literal("tree", datatype=xsd:string) Literal("truck",               =
 =                      datatype=xsd:string) Literal("van", datatype=xsd:string) Literal("vegetation", datatype=xsd:string) Literal("wind",           =
 =                      datatype=xsd:string) ) ; sh:message Literal("levelOfDetail must be a known OpenDRIVE e_objectType for v1.5+. Use 'none' for   =
-=                      unmapped custom values.", lang=en) ; sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ] ]                                     =
+=                      unmapped custom values.", lang=en) ; sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ] ]) and ([ sh:property [ sh:in (       =
+=                      Literal("bidirectional", datatype=xsd:string) Literal("biking", datatype=xsd:string) Literal("border", datatype=xsd:string)   =
+=                      Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit", datatype=xsd:string)            =
+=                      Literal("median", datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp", datatype=xsd:string)           =
+=                      Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail", datatype=xsd:string)           =
+=                      Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shoulder", datatype=xsd:string) =
+=                      Literal("sidewalk", datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2", datatype=xsd:string)    =
+=                      Literal("special3", datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("tram", datatype=xsd:string) ) ;        =
+=                      sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.4.", lang=en) ; sh:path ( hdmap:hasContent          =
+=                      hdmap:laneTypes ) ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ( hdmap:hasFormat hdmap:version ) ;           =
+=                      sh:pattern Literal("^1\.[0-4]", datatype=xsd:string) ] ] , [ sh:property [ sh:in ( Literal("HOV", datatype=xsd:string)        =
+=                      Literal("bidirectional", datatype=xsd:string) Literal("biking", datatype=xsd:string) Literal("border", datatype=xsd:string)   =
+=                      Literal("bus", datatype=xsd:string) Literal("connectingRamp", datatype=xsd:string) Literal("driving", datatype=xsd:string)    =
+=                      Literal("entry", datatype=xsd:string) Literal("exit", datatype=xsd:string) Literal("median", datatype=xsd:string)             =
+=                      Literal("mwyEntry", datatype=xsd:string) Literal("mwyExit", datatype=xsd:string) Literal("none", datatype=xsd:string)         =
+=                      Literal("offRamp", datatype=xsd:string) Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string)        =
+=                      Literal("rail", datatype=xsd:string) Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string)     =
+=                      Literal("shoulder", datatype=xsd:string) Literal("sidewalk", datatype=xsd:string) Literal("special1", datatype=xsd:string)    =
+=                      Literal("special2", datatype=xsd:string) Literal("special3", datatype=xsd:string) Literal("stop", datatype=xsd:string)        =
+=                      Literal("taxi", datatype=xsd:string) Literal("tram", datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known   =
+=                      OpenDRIVE e_laneType for v1.5–v1.7.", lang=en) ; sh:path ( hdmap:hasContent hdmap:laneTypes ) ], [ sh:minCount Literal("1",   =
+=                      datatype=xsd:integer) ; sh:path ( hdmap:hasFormat hdmap:version ) ; sh:pattern Literal("^1\.[5-7]", datatype=xsd:string) ] ]  =
+=                      , [ sh:property [ sh:in ( Literal("HOV", datatype=xsd:string) Literal("bidirectional", datatype=xsd:string) Literal("biking", =
+=                      datatype=xsd:string) Literal("border", datatype=xsd:string) Literal("bus", datatype=xsd:string) Literal("connectingRamp",     =
+=                      datatype=xsd:string) Literal("curb", datatype=xsd:string) Literal("driving", datatype=xsd:string) Literal("entry",            =
+=                      datatype=xsd:string) Literal("exit", datatype=xsd:string) Literal("median", datatype=xsd:string) Literal("mwyEntry",          =
+=                      datatype=xsd:string) Literal("mwyExit", datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp",          =
+=                      datatype=xsd:string) Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail",           =
+=                      datatype=xsd:string) Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shared",   =
+=                      datatype=xsd:string) Literal("shoulder", datatype=xsd:string) Literal("sidewalk", datatype=xsd:string) Literal("slipLane",    =
+=                      datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2", datatype=xsd:string) Literal("special3",    =
+=                      datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("taxi", datatype=xsd:string) Literal("tram",                =
+=                      datatype=xsd:string) Literal("walking", datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known OpenDRIVE      =
+=                      e_laneType for v1.8+.", lang=en) ; sh:path ( hdmap:hasContent hdmap:laneTypes ) ] ]) and ([ sh:property [ sh:in (             =
+=                      Literal("bicycle", datatype=xsd:string) Literal("lowSpeed", datatype=xsd:string) Literal("motorway", datatype=xsd:string)     =
+=                      Literal("pedestrian", datatype=xsd:string) Literal("rural", datatype=xsd:string) Literal("town", datatype=xsd:string)         =
+=                      Literal("unknown", datatype=xsd:string) ) ; sh:message Literal("roadTypes must be a known OpenDRIVE e_roadType for v1.4.",    =
+=                      lang=en) ; sh:path ( hdmap:hasContent hdmap:roadTypes ) ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path (       =
+=                      hdmap:hasFormat hdmap:version ) ; sh:pattern Literal("^1\.[0-4]", datatype=xsd:string) ] ] , [ sh:property [ sh:in (          =
+=                      Literal("bicycle", datatype=xsd:string) Literal("lowSpeed", datatype=xsd:string) Literal("motorway", datatype=xsd:string)     =
+=                      Literal("pedestrian", datatype=xsd:string) Literal("rural", datatype=xsd:string) Literal("town", datatype=xsd:string)         =
+=                      Literal("townArterial", datatype=xsd:string) Literal("townCollector", datatype=xsd:string) Literal("townExpressway",          =
+=                      datatype=xsd:string) Literal("townLocal", datatype=xsd:string) Literal("townPlayStreet", datatype=xsd:string)                 =
+=                      Literal("townPrivate", datatype=xsd:string) Literal("unknown", datatype=xsd:string) ) ; sh:message Literal("roadTypes must be =
+=                      a known OpenDRIVE e_roadType for v1.5+.", lang=en) ; sh:path ( hdmap:hasContent hdmap:roadTypes ) ] ])                        =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.hdmap.net:HdMap:test_invalid_custom_v15_objecttype                                                               =
 =    Property:         https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDomainSpecification                                                            =
