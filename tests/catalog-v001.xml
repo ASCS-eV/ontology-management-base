@@ -31,9 +31,12 @@
   <uri name="did:web:test.gx.net:DataProduct:test_valid_gx_data_product" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
   <uri name="did:web:test.gx.net:ServiceOffering:test_invalid_fail01_gx_service_offering" uri="tests/data/gx/invalid/fail01_wrong_url_type.json" domain="gx" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.hdmap.net:HdMap:test_invalid_custom_v15_objecttype" uri="tests/data/hdmap/invalid/fail02_custom_v15_objecttype.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_invalid_fail01_false_value_hdmap_instance" uri="tests/data/hdmap/invalid/fail01_false_value_hdmap_instance.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance" uri="tests/data/hdmap/valid/hdmap_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_no_georeference" uri="tests/data/hdmap/valid/hdmap_no_georeference_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.hdmap.net:HdMap:test_valid_v14_custom_objecttype" uri="tests/data/hdmap/valid/hdmap_v14_custom_objecttype_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
+  <uri name="did:web:test.hdmap.net:HdMap:test_valid_v15_truck" uri="tests/data/hdmap/valid/hdmap_v15_truck_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
   <uri name="did:web:test.leakage-test.net:LeakageTest:test_valid_leakage-test_instance" uri="tests/data/leakage-test/valid/leakage-test_instance.json" domain="leakage-test" test-type="valid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance" uri="tests/data/manifest/invalid/fail_01_missing_license_instance.json" domain="manifest" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.manifest.net:Manifest:test_invalid_fail_02_missing_manifest_instance" uri="tests/data/manifest/invalid/fail_02_missing_manifest_instance.json" domain="manifest" test-type="invalid" category="test-data"/>

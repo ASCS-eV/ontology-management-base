@@ -114,6 +114,31 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
             sh:order 6 ;
             sh:path hdmap:hasGeoreference ;
         ] ;
+
+    # ── Version-conditional enum enforcement for levelOfDetail ──────────
+    # OpenDRIVE v1.4 defined object type as free-form xs:string (any value
+    # valid).  From v1.5 onward, e_objectType is a strict XSD enum.  This
+    # constraint uses sh:or with property paths to enforce the enum ONLY
+    # when the declared format version is NOT 1.4.x.
+    # See: https://github.com/ASCS-eV/ontology-management-base/issues/48
+    sh:or (
+        [   # Branch 1: version <= 1.4 (1.0, 1.1, 1.2, 1.3, 1.4) — any string accepted
+            sh:property [
+                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
+                sh:pattern "^1\\.[0-4]" ;
+                sh:minCount 1 ;
+            ]
+        ]
+        [   # Branch 2: version > 1.4 (1.5, 1.6, ..., 2.x, ...) — strict e_objectType enum
+            # Union of all 28 known values from v1.4H keywords + v1.5M enum + v1.8.0 enum
+            sh:property [
+                sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
+                sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
+                sh:message "levelOfDetail must be a known OpenDRIVE e_objectType for v1.5+. Use 'none' for unmapped custom values."@en ;
+            ]
+        ]
+    ) ;
+
     sh:targetClass hdmap:DomainSpecification .
 
 hdmap:ContentOrOddSceneryShape a sh:NodeShape ;
@@ -144,9 +169,8 @@ hdmap:ContentShape a sh:NodeShape ;
             sh:order 1 ;
             sh:path hdmap:laneTypes ],
         [ skos:example "tree, pole, roadSurface, barrier, ..." ;
-            sh:description "Lists the object types used in the HD map asset."@en ;
-            sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "van" "vegetation" "wind") ;
-            sh:message "Validation of levelOfDetail failed!"@en ;
+            sh:description "Lists the object types used in the HD map asset. OpenDRIVE v1.4 allowed free-form strings (xs:string); v1.5+ uses a strict e_objectType enum. Accepted as xsd:string here; version-conditional enum enforcement is via sh:sparql on DomainSpecificationShape."@en ;
+            sh:datatype xsd:string ;
             sh:name "level of detail"@en ;
             sh:order 2 ;
             sh:path hdmap:levelOfDetail ],
