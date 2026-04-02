@@ -48,7 +48,7 @@ uri = "http://www.w3.org/2000/01/rdf-schema#"
 local = "imports/rdfs/rdfs.owl.ttl"
 
 [dependencies.schema]
-uri = "http://schema.org/"
+uri = "https://schema.org/"
 local = "imports/schema/schema.owl.ttl"
 
 [dependencies.sec]

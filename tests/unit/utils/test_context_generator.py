@@ -349,7 +349,7 @@ class TestAnalyzeOrBranches:
         # Branch 2: object (sh:class)
         object_branch = BNode()
         g.add(
-            (object_branch, SH["class"], URIRef("http://schema.org/QuantitativeValue"))
+            (object_branch, SH["class"], URIRef("https://schema.org/QuantitativeValue"))
         )
 
         # Build RDF list: [literal_branch, object_branch]

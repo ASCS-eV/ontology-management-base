@@ -7,7 +7,7 @@
       "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
       "gx": "https://w3id.org/gaia-x/development#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "schema": "http://schema.org/",
+      "schema": "https://schema.org/",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#"
    },
