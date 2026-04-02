@@ -32,7 +32,9 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "ruff",
+    "ruff>=0.15.0",
+    # linkml: in [dev] for standalone pip install; the submodule pin in
+    # submodules/linkml/ is the single source of truth for the actual version.
     "linkml @ git+https://github.com/ASCS-eV/linkml.git@develop#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
