@@ -4,24 +4,40 @@
 # Allow parent makefiles to override the venv path/tooling.
 VENV ?= .venv
 
-# OS detection for cross-platform support (Windows vs Unix)
-ifeq ($(OS),Windows_NT)
-    # Windows (including Git Bash, MSYS2, MINGW)
-    VENV_BIN := $(VENV)/Scripts
-    PYTHON ?= $(VENV_BIN)/python.exe
-    BOOTSTRAP_PYTHON ?= python
-    ACTIVATE_SCRIPT := $(VENV_BIN)/activate
+# CI detection — in CI, use system Python directly (no venv creation).
+# GitHub Actions sets CI=true as an environment variable.
+ifdef CI
+    PYTHON ?= python3
+    PIP := $(PYTHON) -m pip
+    PRECOMMIT := $(PYTHON) -m pre_commit
+    ACTIVATE_HINT := (CI mode — no venv)
+    VENV_BIN := $(dir $(shell which python3))
 else
-    # Unix (Linux, macOS)
-    VENV_BIN := $(VENV)/bin
-    PYTHON ?= $(VENV_BIN)/python3
-    BOOTSTRAP_PYTHON ?= python3
-    ACTIVATE_SCRIPT := $(VENV_BIN)/activate
+    # OS detection for cross-platform support (Windows vs Unix)
+    ifeq ($(OS),Windows_NT)
+        # Windows (including Git Bash, MSYS2, MINGW)
+        VENV_BIN := $(VENV)/Scripts
+        PYTHON ?= $(VENV_BIN)/python.exe
+        BOOTSTRAP_PYTHON ?= python
+        ACTIVATE_SCRIPT := $(VENV_BIN)/activate
+    else
+        # Unix (Linux, macOS)
+        VENV_BIN := $(VENV)/bin
+        PYTHON ?= $(VENV_BIN)/python3
+        BOOTSTRAP_PYTHON ?= python3
+        ACTIVATE_SCRIPT := $(VENV_BIN)/activate
+    endif
+    PIP := "$(PYTHON)" -m pip
+    PRECOMMIT := "$(PYTHON)" -m pre_commit
+    ACTIVATE_HINT := Activate with: source $(ACTIVATE_SCRIPT)
 endif
+
+# Absolute path to Python — needed after cd into subdirectories
+PYTHON_ABS := $(abspath $(PYTHON))
 
 # Check if dev environment is set up
 define check_dev_setup
-	@if [ ! -f "$(PYTHON)" ]; then \
+	@if [ -z "$$CI" ] && [ ! -f "$(PYTHON)" ]; then \
 		echo ""; \
 		echo "[ERR] Development environment not set up."; \
 		echo ""; \
@@ -52,7 +68,7 @@ GX_SUBMODULE_DIR := submodules/service-characteristics
 GX_ARTIFACTS_DIR := artifacts/gx
 GX_UPDATE_SCRIPT := $(GX_ARTIFACTS_DIR)/update-from-submodule.sh
 
-.PHONY: all setup install lint format test generate docs registry clean help \
+.PHONY: all setup install lint format test validate generate docs registry clean help \
 	_help_general _help_install _help_test _help_docs _help_registry _help_clean \
 	_help_generate _install_default _install_dev \
 	_generate_default _generate_gx \
@@ -60,7 +76,7 @@ GX_UPDATE_SCRIPT := $(GX_ARTIFACTS_DIR)/update-from-submodule.sh
 	_docs_generate _docs_serve _docs_build \
 	_registry_update _clean_default _clean_cache
 
-GROUPED_COMMANDS := install generate test docs registry clean
+GROUPED_COMMANDS := install generate test validate docs registry clean
 PRIMARY_GOAL := $(firstword $(MAKECMDGOALS))
 
 ifneq ($(filter $(PRIMARY_GOAL),$(GROUPED_COMMANDS)),)
@@ -79,17 +95,25 @@ all: lint test
 
 # Setup: create venv and install dev dependencies
 # Uses Make's dependency system for bootstrapping; validates deps are importable.
+ifdef CI
+setup:
+	@echo "[INFO] CI mode — installing dependencies without venv..."
+	@$(PIP) install -e ".[dev]"
+	@echo "[OK] ontology-management-base setup complete (CI mode)"
+else
 setup: $(ACTIVATE_SCRIPT)
 	@if ! "$(PYTHON)" -c "import pre_commit, rdflib, pyshacl" >/dev/null 2>&1; then \
 		echo "[INFO] Dependencies missing; reinstalling..."; \
-		"$(PYTHON)" -m pip install -e ".[dev]"; \
-		"$(PYTHON)" -m pre_commit install; \
+		$(PIP) install -e ".[dev]"; \
+		$(PRECOMMIT) install; \
 	fi
 	@echo "[INFO] Setting up ontology-management-base..."
 	@echo "[OK] Python virtual environment and dependencies are ready at $(VENV)"
 	@echo ""
-	@echo "[OK] ontology-management-base setup complete. Activate with: source $(ACTIVATE_SCRIPT)"
+	@echo "[OK] ontology-management-base setup complete. $(ACTIVATE_HINT)"
+endif
 
+ifndef CI
 $(PYTHON):
 	@echo "[INFO] Creating Python virtual environment at $(VENV)..."
 	@"$(BOOTSTRAP_PYTHON)" -m venv "$(VENV)"
@@ -98,10 +122,11 @@ $(PYTHON):
 
 $(ACTIVATE_SCRIPT): $(PYTHON)
 	@echo "[INFO] Installing ontology-management-base Python dependencies..."
-	@"$(PYTHON)" -m pip install -e ".[dev]"
-	@"$(PYTHON)" -m pre_commit install
+	@$(PIP) install -e ".[dev]"
+	@$(PRECOMMIT) install
 	@touch "$(ACTIVATE_SCRIPT)"
 	@echo "[OK] Python dependencies installed"
+endif
 
 # Installation targets
 install:
@@ -119,22 +144,34 @@ install:
 		*) echo "ERROR: Unknown install subcommand '$$subcommand'"; echo "Run 'make install help' for available options."; exit 1 ;; \
 	esac
 
+ifdef CI
+_install_default:
+	@echo "[INFO] Installing ontology-management-base package..."
+	@$(PIP) install -e .
+	@echo "[OK] Package installation complete"
+
+_install_dev:
+	@echo "[INFO] Installing ontology-management-base development dependencies..."
+	@$(PIP) install -e ".[dev]"
+	@echo "[OK] Development dependencies installed"
+else
 _install_default: $(PYTHON)
 	@echo "[INFO] Installing ontology-management-base package..."
-	@"$(PYTHON)" -m pip install -e .
+	@$(PIP) install -e .
 	@echo "[OK] Package installation complete"
 
 _install_dev: $(PYTHON)
 	@echo "[INFO] Installing ontology-management-base development dependencies..."
-	@"$(PYTHON)" -m pip install -e ".[dev]"
-	@"$(PYTHON)" -m pre_commit install
+	@$(PIP) install -e ".[dev]"
+	@$(PRECOMMIT) install
 	@echo "[OK] Development dependencies installed"
+endif
 
 # Linting and formatting
 lint:
 	$(call check_dev_setup)
 	@echo "[INFO] Running pre-commit checks..."
-	@"$(PYTHON)" -m pre_commit run --all-files
+	@$(PRECOMMIT) run --all-files
 	@echo "[OK] Pre-commit checks complete"
 
 format:
@@ -258,6 +295,14 @@ _test_domain:
 	@echo "[INFO] Running full validation suite for domain: $(DOMAIN)..."
 	@"$(PYTHON)" -m src.tools.validators.validation_suite --run all --domain "$(DOMAIN)"
 	@echo "[OK] Domain validation complete"
+
+# Validate target — runs the validation suite with optional ARGS passthrough.
+# Usage: make validate ARGS="--run check-data-conformance --domain hdmap"
+validate:
+	$(call check_dev_setup)
+	@echo "[INFO] Running validation suite..."
+	@"$(PYTHON)" -m src.tools.validators.validation_suite $(ARGS)
+	@echo "[OK] Validation complete"
 
 # Documentation targets
 docs:
