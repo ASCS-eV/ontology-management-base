@@ -99,6 +99,30 @@ jobs:
             exit 1
           fi
 
+  # --- JOB 1b: Generate Artifacts ---
+  generate:
+    name: Generate Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: 'pip'
+      - name: Install dependencies
+        run: make setup
+      - name: Generate artifacts
+        run: make generate
+      - name: Verify no changes
+        run: |
+          CHANGES=$(git diff --name-only -- artifacts/)
+          if [ -n "$CHANGES" ]; then
+            echo "::error::make generate produced different artifacts than committed:"
+            echo "$CHANGES"
+            git diff -- artifacts/
+            exit 1
+          fi
+
   # --- JOB 2: SHACL Validation ---
   validate-shacl:
     name: SHACL Validation
