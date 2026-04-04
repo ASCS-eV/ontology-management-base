@@ -1,0 +1,415 @@
+@prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/> .
+@prefix openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/> .
+@prefix environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/> .
+@prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gx: <https://w3id.org/gaia-x/development#> .
+
+<https://w3id.org/ascs-ev/envited-x/scenario/v6> a owl:Ontology ;
+    rdfs:label "Ontology definition for scenario"@en ;
+    rdfs:comment "An ontology with common classes to describe a scenario asset."@en ;
+
+    dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+    dcterms:contributor [
+        a foaf:Person ;
+        foaf:name "Fin Heuer" ;
+        org:memberOf <https://www.dlr.de/> ;
+    ] , [
+        a foaf:Person ;
+        foaf:name "Rico Auerswald" ;
+        org:memberOf <https://www.ivi.fraunhofer.de/> ;
+    ] , [
+        a foaf:Person ;
+        foaf:name "Mirco Nierenz" ;
+        org:memberOf <https://triangraphics.de/> ;
+    ] , [
+        a foaf:Person ;
+        foaf:name "Carlo van Driesten" ;
+        org:memberOf <https://www.bmwgroup.com/> ;
+    ] ;
+
+    # Permanent identifier for the ontology (not version-specific)
+    dcterms:identifier <https://w3id.org/ascs-ev/envited-x/scenario> ;
+
+    # GitHub repository where the ontology is maintained
+    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+
+    # Specific GitHub release used for publishing this version
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.3> ;
+
+    # Versioning
+    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/scenario/v6> ;
+    owl:versionInfo "v6" ;
+    owl:priorVersion <https://w3id.org/ascs-ev/envited-x/scenario/v5> ;
+
+    # Imports strict dependencies
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
+                <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
+
+    # Reference to SHACL validation rules
+    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/scenario/v6/shapes> ;
+
+    # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies/specifications
+    dcterms:references <https://www.asam.net/standards/detail/openscenario/> ;
+    rdfs:seeAlso <https://ascs-ev.github.io/EVES/> .
+
+### Classes ###################################################################
+
+scenario:Scenario a owl:Class ;
+    rdfs:label "Class definition for Scenario"@en ;
+    rdfs:comment "General properties for defining a scenario asset, including format, content, data sources, quantity, and quality attributes."@en ;
+    rdfs:subClassOf envited-x:SimulationAsset ,
+                    openlabel:Scenario ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasDomainSpecification ;
+        owl:someValuesFrom scenario:DomainSpecification
+    ] ;
+    # Scenario must have a standard envited-x:ResourceDescription
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasResourceDescription ;
+        owl:someValuesFrom [
+            a owl:Class ;
+            owl:unionOf ( envited-x:ResourceDescription manifest:Link )
+        ]
+    ] ;
+    # Scenario must have a manifest, either:
+    #  - an inline envited-x:Manifest instance, or
+    #  - a manifest:Link.
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasManifest ;
+        owl:someValuesFrom [
+            a owl:Class ;
+            owl:unionOf ( envited-x:Manifest manifest:Link )
+        ]
+    ] .
+
+scenario:DomainSpecification a owl:Class ;
+    rdfs:label "Class definition for DomainSpecification"@en ;
+    rdfs:comment "Scenario DomainSpecification containing additional metadata information of the simulation asset."@en ;
+    rdfs:subClassOf envited-x:DomainSpecification ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasContent ;
+        owl:minCardinality 1
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasDataSource ;
+        owl:maxCardinality 1
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasFormat ;
+        owl:cardinality 1
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasQuality ;
+        owl:maxCardinality 1
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasQuantity ;
+        owl:cardinality 1
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty scenario:hasGeoreference ;
+        owl:maxCardinality 1
+    ] .
+
+scenario:Format a owl:Class ;
+    rdfs:label "Class definition for Format"@en ;
+    rdfs:comment "Contains properties that describe the format of the scenario asset."@en ;
+    rdfs:subClassOf envited-x:Format .
+
+scenario:Content a owl:Class ;
+    rdfs:label "Class definition for Content"@en ;
+    rdfs:comment "Defines the content of the scenario asset, such as time, abstraction level, and links."@en ;
+    rdfs:subClassOf envited-x:Content .
+
+scenario:Quantity a owl:Class ;
+    rdfs:label "Class definition for Quantity"@en ;
+    rdfs:comment "Contains properties that describe the quantity of the scenario asset (e.g., number of traffic objects, controllers)."@en ;
+    rdfs:subClassOf envited-x:Quantity .
+
+scenario:Quality a owl:Class ;
+    rdfs:label "Class definition for Quality"@en ;
+    rdfs:comment "Contains properties that describe the accuracy of objects and the calibration of the scenario asset."@en ;
+    rdfs:subClassOf envited-x:Quality .
+
+scenario:DataSource a owl:Class ;
+    rdfs:label "Class definition for DataSource"@en ;
+    rdfs:comment "Defines which data resources were used to create the scenario asset."@en ;
+    rdfs:subClassOf envited-x:DataSource .
+
+### Object properties #########################################################
+
+scenario:hasDomainSpecification a owl:ObjectProperty ;
+    rdfs:label "Object property: hasDomainSpecification"@en ;
+    rdfs:comment "Links a scenario asset to its specific metadata (DomainSpecification), which may contain additional scenario-specific attributes."@en ;
+    rdfs:subPropertyOf envited-x:hasDomainSpecification ;
+    rdfs:domain scenario:Scenario ;
+    rdfs:range scenario:DomainSpecification .
+
+scenario:hasResourceDescription a owl:ObjectProperty ;
+    rdfs:label "Object property: hasResourceDescription"@en ;
+    rdfs:comment "Links a scenario asset to a standard ResourceDescription instance from envited-x."@en ;
+    rdfs:subPropertyOf envited-x:hasResourceDescription ;
+    rdfs:domain scenario:Scenario ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf ( envited-x:ResourceDescription manifest:Link )
+    ] .
+
+scenario:hasManifest a owl:ObjectProperty ;
+    rdfs:label "Object property: hasManifest"@en ;
+    rdfs:comment """
+                Links an Scenario asset to its manifest.
+                The value can be either:
+                - an inline envited-x:Manifest node (embedded manifest structure), or
+                - an manifest:Link node (a link that points via manifest:iri
+                to an external manifest representation, typically identified by a DID).
+                """@en ;
+    rdfs:subPropertyOf envited-x:hasManifest ;
+    rdfs:domain scenario:Scenario ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf ( envited-x:Manifest manifest:Link )
+    ] .
+
+# Declare a union class combining scenario:Content and openlabel:Tag
+scenario:ContentOrTag a owl:Class ;
+    rdfs:label "Content or OpenLabel Tag"@en ;
+    rdfs:comment "Combines Scenario content with OpenLABEL's Tag."@en ;
+    owl:unionOf (scenario:Content openlabel:Tag) .
+
+scenario:hasContent a owl:ObjectProperty ;
+    rdfs:label "Object property: hasContent"@en ;
+    rdfs:comment "Links a DomainSpecification to an instance of scenario:Content that describes the scenario's content."@en ;
+    rdfs:subPropertyOf envited-x:hasContent ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range scenario:ContentOrTag .
+
+scenario:hasDataSource a owl:ObjectProperty ;
+    rdfs:label "Object property: hasDataSource"@en ;
+    rdfs:comment "Links a DomainSpecification to an instance of scenario:DataSource that describes how the scenario was created."@en ;
+    rdfs:subPropertyOf envited-x:hasDataSource ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range scenario:DataSource .
+
+scenario:hasFormat a owl:ObjectProperty ;
+    rdfs:label "Object property: hasFormat"@en ;
+    rdfs:comment "Links a DomainSpecification to an instance of scenario:Format that describes the scenario's format details."@en ;
+    rdfs:subPropertyOf envited-x:hasFormat ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range scenario:Format .
+
+scenario:hasQuantity a owl:ObjectProperty ;
+    rdfs:label "Object property: hasQuantity"@en ;
+    rdfs:comment "Links a DomainSpecification to an instance of scenario:Quantity describing the scenario's quantity."@en ;
+    rdfs:subPropertyOf envited-x:hasQuantity ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range scenario:Quantity .
+
+scenario:hasQuality a owl:ObjectProperty ;
+    rdfs:label "Object property: hasQuality"@en ;
+    rdfs:comment "Links a DomainSpecification to an instance of scenario:Quality describing the scenario's accuracy or calibration."@en ;
+    rdfs:subPropertyOf envited-x:hasQuality ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range scenario:Quality .
+
+### hasGeoreference (DomainSpecification -> georeference:Georeference)
+scenario:hasGeoreference a owl:ObjectProperty ;
+    rdfs:label "Object property: hasGeoreference"@en ;
+    rdfs:comment "Links a DomainSpecification to a georeference:Georeference describing how the scenario is georeferenced."@en ;
+    rdfs:domain scenario:DomainSpecification ;
+    rdfs:range georeference:Georeference .
+
+### Datatype properties ###########################################################
+
+scenario:formatType a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: formatType"@en ;
+    rdfs:comment "Defines the type of data format used for the scenario asset. Values aligned with ASAM OpenSCENARIO standard family (cf. ASAM OpenSCENARIO XML v1.3.1, §1 Scope; ASAM OpenSCENARIO DSL v2.2.0, §1 Scope)."@en ;
+    rdfs:domain scenario:Format ;
+    rdfs:range xsd:string .
+
+scenario:version a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: version"@en ;
+    rdfs:comment "Defines the version of the data format used for the scenario asset (e.g., '1.3' for OpenSCENARIO XML, cf. ASAM OpenSCENARIO XML v1.3.1, FileHeader.revMajor/revMinor)."@en ;
+    rdfs:domain scenario:Format ;
+    rdfs:range xsd:string .
+
+scenario:abstractionLevel a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: abstractionLevel"@en ;
+    rdfs:comment """Specifies the abstraction level of the scenario. Values based on scenario abstraction taxonomy:
+- 'Functional': high-level intent (Pegasus Layer; Menzel et al. 2019, §II)
+- 'Abstract': parameterized but without concrete values (ASAM OpenSCENARIO DSL v2.2.0, §3.2 Scenario Abstraction)
+- 'Logical': parameter ranges defined (Menzel et al. 2019, §III; VVM Deliverable D13, §4.1.2)
+- 'Concrete': fully specified, executable (Menzel et al. 2019, §IV; VVM Deliverable D13, §4.1.4)"""@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:timeDate a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: timeDate"@en ;
+    rdfs:comment "Optionally specifies the time associated with the scenario asset (e.g., time of recording). Corresponds to ASAM OpenSCENARIO XML v1.3.1, FileHeader.date and TimeOfDay element."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:dateTime .
+
+scenario:aim a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: aim"@en ;
+    rdfs:comment "Defines the purpose of the scenario asset (e.g., 'criticality analysis', 'sensor testing')."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:usedStandardFunctions a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: usedStandardFunctions"@en ;
+    rdfs:comment "Specifies which standard functions (e.g., actions) are utilized. Refers to ASAM OpenSCENARIO XML v1.3.1, §7.4 Actions (SpeedAction, LaneChangeAction, etc.)."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:movementDescription a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: movementDescription"@en ;
+    rdfs:comment "Indicates the type of movement employed by traffic participants (e.g., 'FollowTrajectory', 'via support points'). Refers to ASAM OpenSCENARIO XML v1.3.1, §7.4.1 FollowTrajectoryAction and §6.9 Trajectories."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:customCommands a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: customCommands"@en ;
+    rdfs:comment "Defines scenario-specific custom commands or user-defined actions. Corresponds to ASAM OpenSCENARIO XML v1.3.1, CustomCommandAction (§7.4)."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:sunAzimuth a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: sunAzimuth"@en ;
+    rdfs:comment "Defines the azimuth of the sun in degrees. Corresponds to ASAM OpenSCENARIO XML v1.3.1, Sun.azimuth attribute (Environment → Weather → Sun)."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:float .
+
+scenario:countrySpecificSign a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: countrySpecificSign"@en ;
+    rdfs:comment "Indicates which country-specific traffic signs are used in the scenario asset."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:countrySpecificTrafficParticipants a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: countrySpecificTrafficParticipants"@en ;
+    rdfs:comment "Indicates which country-specific traffic participants are used in the scenario asset."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:country a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: country"@en ;
+    rdfs:comment "Indicates the country of origin for the scenario asset."@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:entityTypes a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: entityTypes"@en ;
+    rdfs:comment """Specifies the types of traffic entities present in the scenario. Multi-valued.
+Values aligned with ASAM OpenSCENARIO XML v1.3.1 VehicleCategory (§12.2 Entity Type Constraints)
+and ObjectType enumeration (car, van, truck, bus, motorcycle, bicycle, pedestrian, animal, misc),
+extended with the Vulnerable Road User (VRU) concept from UNECE WP.29 and Westhofen et al. 2022 (§V.C, A.U.T.O. ontology)."""@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:scenarioCategory a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: scenarioCategory"@en ;
+    rdfs:comment """Classifies the scenario by maneuver type using a controlled vocabulary.
+Derived from CRUISE scenario concept (Zipfl et al. 2023, 99 scenario concepts)
+and VVM Deliverable D13 (Scholtes et al. 2023, 273 base scenarios, §5.2).
+Example values: cut-in, lane-change, intersection-crossing, following, overtaking,
+pedestrian-crossing, emergency-braking, free-driving."""@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:weatherSummary a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: weatherSummary"@en ;
+    rdfs:comment """Coarse weather/environment classification for the scenario. Single-valued.
+Lightweight metadata derived from Layer 5 (Environmental Conditions) of the
+6-Layer Model (Scholtes et al. 2021, IEEE Access, §IV.E) and harmonized with:
+- ASAM OpenSCENARIO XML v1.3.1: PrecipitationType (dry, rain, snow), Wetness,
+  FractionalCloudCover, Weather/Sun/Fog/Wind elements.
+- ASAM OSI v3 EnvironmentalConditions (osi_environment.proto): Precipitation
+  (NONE..EXTREME, mm/h thresholds), Fog (visibility in m), AmbientIllumination
+  (lux levels), FractionalCloudCover (oktas), Wind (speed in m/s).
+Value mapping: clear → OSI Precipitation=NONE + Fog≥GOOD_VISIBILITY;
+rain → OSI Precipitation≥LIGHT + OpenSCENARIO PrecipitationType=rain;
+snow → PrecipitationType=snow; fog → OSI Fog≤LIGHT (visibility <1000m);
+night → OSI AmbientIllumination≤LEVEL3 (<3 lx);
+windy → OSI Wind.speed threshold; icy_conditions → derivable from
+OSI temperature<273K + precipitation/wetness (gap in both standards)."""@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:criticalityFactors a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: criticalityFactors"@en ;
+    rdfs:comment """Optional tags describing safety-relevant factors present in the scenario. Multi-valued.
+Derived from the criticality phenomena catalog of the Automotive Urban Traffic Ontology
+(Westhofen et al. 2022, IEEE OJITS, §IV.A, Table 3; ~300 phenomena).
+Coarse categories: occlusion, high_relative_speed, VRU_interaction, adverse_weather,
+infrastructure_violation, near_miss.
+Enables two-axis scenario search: maneuver type (scenarioCategory) × criticality factor."""@en ;
+    rdfs:domain scenario:Content ;
+    rdfs:range xsd:string .
+
+scenario:temporaryTrafficObjects a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: temporaryTrafficObjects"@en ;
+    rdfs:comment "Specifies the total number of temporary traffic objects. Corresponds to ASAM OpenSCENARIO XML v1.3.1, MiscObject entities with temporary lifetime."@en ;
+    rdfs:domain scenario:Quantity ;
+    rdfs:range xsd:integer .
+
+scenario:numberTrafficObjects a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: numberTrafficObjects"@en ;
+    rdfs:comment "Specifies the total number of traffic objects defined in the scenario."@en ;
+    rdfs:domain scenario:Quantity ;
+    rdfs:range xsd:integer .
+
+scenario:controllers a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: controllers"@en ;
+    rdfs:comment "Specifies the simulation core controllers used. Corresponds to ASAM OpenSCENARIO XML v1.3.1, Controller element (§6.6)."@en ;
+    rdfs:domain scenario:Quantity ;
+    rdfs:range xsd:string .
+
+scenario:permanentTrafficObjects a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: permanentTrafficObjects"@en ;
+    rdfs:comment "Specifies the total number of permanent traffic objects. Corresponds to ASAM OpenSCENARIO XML v1.3.1, MiscObject entities with permanent lifetime."@en ;
+    rdfs:domain scenario:Quantity ;
+    rdfs:range xsd:integer .
+
+scenario:accuracyObjects a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: accuracyObjects"@en ;
+    rdfs:comment "Defines the accuracy of moving objects (only applicable for real-measurement-based scenarios)."@en ;
+    rdfs:domain scenario:Quality ;
+    rdfs:range xsd:float .
+
+scenario:calibration a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: calibration"@en ;
+    rdfs:comment "Describes the calibration steps performed prior to measurements."@en ;
+    rdfs:domain scenario:Quality ;
+    rdfs:range xsd:string .
+
+scenario:sourceType a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: sourceType"@en ;
+    rdfs:comment """Specifies the category of source data used to create the scenario. Values include
+established sources (VVM Deliverable D13, §3.2) and authoring modes:
+Accident Database, Real World Data, Analytical Hazard Based Approach,
+Formal Verification, Operational Design Domain, Ontology,
+Standards/Regulations/Guidelines, Real-world Deployment and Trials,
+Manual Authoring, Synthetic Generation, Simulation Recording,
+Staged Recording, Drone Recording."""@en ;
+    rdfs:domain scenario:DataSource ;
+    rdfs:range xsd:string .
+
+scenario:sourceDescription a owl:DatatypeProperty ;
+    rdfs:label "Datatype property: sourceDescription"@en ;
+    rdfs:comment "Provides a detailed free-text description of the source data used."@en ;
+    rdfs:domain scenario:DataSource ;
+    rdfs:range xsd:string .

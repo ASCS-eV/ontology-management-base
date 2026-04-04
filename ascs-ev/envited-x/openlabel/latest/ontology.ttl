@@ -1,0 +1,2888 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+openlabel_v2:Scenario a owl:Class ;
+    rdfs:label "Scenario" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:hasTag ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:hasTag ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:Tag ;
+            owl:onProperty openlabel_v2:hasTag ] ;
+    skos:definition "A scenario that can be tagged with OpenLABEL tags." ;
+    skos:exactMatch openlabel_v2:Scenario ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ArtificialStreetLighting a owl:Class ;
+    rdfs:label "ArtificialStreetLighting" ;
+    rdfs:subClassOf openlabel_v2:IlluminationArtificial ;
+    skos:definition "Streetlights." .
+
+openlabel_v2:ArtificialVehicleLighting a owl:Class ;
+    rdfs:label "ArtificialVehicleLighting" ;
+    rdfs:subClassOf openlabel_v2:IlluminationArtificial ;
+    skos:definition "Oncoming vehicle lights." .
+
+openlabel_v2:CommunicationHeadlightFlash a owl:Class ;
+    rdfs:label "CommunicationHeadlightFlash" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Flash headlight." .
+
+openlabel_v2:CommunicationHorn a owl:Class ;
+    rdfs:label "CommunicationHorn" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Sound horn." .
+
+openlabel_v2:CommunicationSignalEmergency a owl:Class ;
+    rdfs:label "CommunicationSignalEmergency" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Signal emergency." .
+
+openlabel_v2:CommunicationSignalHazard a owl:Class ;
+    rdfs:label "CommunicationSignalHazard" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Signal hazard." .
+
+openlabel_v2:CommunicationSignalLeft a owl:Class ;
+    rdfs:label "CommunicationSignalLeft" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Signal left." .
+
+openlabel_v2:CommunicationSignalRight a owl:Class ;
+    rdfs:label "CommunicationSignalRight" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Signal right." .
+
+openlabel_v2:CommunicationSignalSlowing a owl:Class ;
+    rdfs:label "CommunicationSignalSlowing" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Signal slowing." .
+
+openlabel_v2:CommunicationV2i a owl:Class ;
+    rdfs:label "CommunicationV2i" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "Vehicle to infrastructure communication (V2I)." .
+
+openlabel_v2:CommunicationV2v a owl:Class ;
+    rdfs:label "CommunicationV2v" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "Vehicle to vehicle communication (V2V)." .
+
+openlabel_v2:CommunicationWave a owl:Class ;
+    rdfs:label "CommunicationWave" ;
+    rdfs:subClassOf openlabel_v2:BehaviourCommunication ;
+    skos:definition "Wave." .
+
+openlabel_v2:EdgeLineMarkers a owl:Class ;
+    rdfs:label "EdgeLineMarkers" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "Line markers." .
+
+openlabel_v2:EdgeNone a owl:Class ;
+    rdfs:label "EdgeNone" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "None." .
+
+openlabel_v2:EdgeShoulderGrass a owl:Class ;
+    rdfs:label "EdgeShoulderGrass" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "Shoulder (grass)." .
+
+openlabel_v2:EdgeShoulderPavedOrGravel a owl:Class ;
+    rdfs:label "EdgeShoulderPavedOrGravel" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "Shoulder (paved or gravel)." .
+
+openlabel_v2:EdgeSolidBarriers a owl:Class ;
+    rdfs:label "EdgeSolidBarriers" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "Solid barriers (e.g. grating, rails, curb, cones)." .
+
+openlabel_v2:EdgeTemporaryLineMarkers a owl:Class ;
+    rdfs:label "EdgeTemporaryLineMarkers" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaEdge ;
+    skos:definition "Temporary line markers." .
+
+openlabel_v2:FixedStructureBuilding a owl:Class ;
+    rdfs:label "FixedStructureBuilding" ;
+    rdfs:subClassOf openlabel_v2:SceneryFixedStructure ;
+    skos:definition "Buildings." .
+
+openlabel_v2:FixedStructureStreetFurniture a owl:Class ;
+    rdfs:label "FixedStructureStreetFurniture" ;
+    rdfs:subClassOf openlabel_v2:SceneryFixedStructure ;
+    skos:definition "Street furniture (e.g. bollards)." .
+
+openlabel_v2:FixedStructureStreetlight a owl:Class ;
+    rdfs:label "FixedStructureStreetlight" ;
+    rdfs:subClassOf openlabel_v2:SceneryFixedStructure ;
+    skos:definition "Street lights." .
+
+openlabel_v2:FixedStructureVegetation a owl:Class ;
+    rdfs:label "FixedStructureVegetation" ;
+    rdfs:subClassOf openlabel_v2:SceneryFixedStructure ;
+    skos:definition "Vegetation." .
+
+openlabel_v2:HumanAnimalRider a owl:Class ;
+    rdfs:label "HumanAnimalRider" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Animal rider (e.g. horse rider)." .
+
+openlabel_v2:HumanCyclist a owl:Class ;
+    rdfs:label "HumanCyclist" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Cyclist." .
+
+openlabel_v2:HumanDriver a owl:Class ;
+    rdfs:label "HumanDriver" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Driver." .
+
+openlabel_v2:HumanMotorcyclist a owl:Class ;
+    rdfs:label "HumanMotorcyclist" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Motorcyclist." .
+
+openlabel_v2:HumanPassenger a owl:Class ;
+    rdfs:label "HumanPassenger" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Passenger." .
+
+openlabel_v2:HumanPedestrian a owl:Class ;
+    rdfs:label "HumanPedestrian" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Pedestrian." .
+
+openlabel_v2:HumanWheelchairUser a owl:Class ;
+    rdfs:label "HumanWheelchairUser" ;
+    rdfs:subClassOf openlabel_v2:RoadUserHuman ;
+    skos:definition "Wheelchair user." .
+
+openlabel_v2:InformationSignsUniformFullTime a owl:Class ;
+    rdfs:label "InformationSignsUniformFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsInformation ;
+    skos:definition "Uniform full-time." .
+
+openlabel_v2:InformationSignsUniformTemporary a owl:Class ;
+    rdfs:label "InformationSignsUniformTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsInformation ;
+    skos:definition "Uniform temporary." .
+
+openlabel_v2:InformationSignsVariableFullTime a owl:Class ;
+    rdfs:label "InformationSignsVariableFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsInformation ;
+    skos:definition "Variable full-time." .
+
+openlabel_v2:InformationSignsVariableTemporary a owl:Class ;
+    rdfs:label "InformationSignsVariableTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsInformation ;
+    skos:definition "Variable temporary." .
+
+openlabel_v2:IntersectionCrossroad a owl:Class ;
+    rdfs:label "IntersectionCrossroad" ;
+    rdfs:subClassOf openlabel_v2:JunctionIntersection ;
+    skos:definition "Crossroads." .
+
+openlabel_v2:IntersectionGradeSeperated a owl:Class ;
+    rdfs:label "IntersectionGradeSeperated" ;
+    rdfs:subClassOf openlabel_v2:JunctionIntersection ;
+    skos:definition "Grade separated." .
+
+openlabel_v2:IntersectionStaggered a owl:Class ;
+    rdfs:label "IntersectionStaggered" ;
+    rdfs:subClassOf openlabel_v2:JunctionIntersection ;
+    skos:definition "Staggered." .
+
+openlabel_v2:IntersectionTJunction a owl:Class ;
+    rdfs:label "IntersectionTJunction" ;
+    rdfs:subClassOf openlabel_v2:JunctionIntersection ;
+    skos:definition "T-Junctions." .
+
+openlabel_v2:IntersectionYJunction a owl:Class ;
+    rdfs:label "IntersectionYJunction" ;
+    rdfs:subClassOf openlabel_v2:JunctionIntersection ;
+    skos:definition "Y-Junction." .
+
+openlabel_v2:LaneTypeBus a owl:Class ;
+    rdfs:label "LaneTypeBus" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Bus lane." .
+
+openlabel_v2:LaneTypeCycle a owl:Class ;
+    rdfs:label "LaneTypeCycle" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Cycle lane." .
+
+openlabel_v2:LaneTypeEmergency a owl:Class ;
+    rdfs:label "LaneTypeEmergency" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Emergency lane." .
+
+openlabel_v2:LaneTypeSpecial a owl:Class ;
+    rdfs:label "LaneTypeSpecial" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Special purpose lane." .
+
+openlabel_v2:LaneTypeTraffic a owl:Class ;
+    rdfs:label "LaneTypeTraffic" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Traffic lane." .
+
+openlabel_v2:LaneTypeTram a owl:Class ;
+    rdfs:label "LaneTypeTram" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationType ;
+    skos:definition "Tram lane." .
+
+openlabel_v2:LowLightAmbient a owl:Class ;
+    rdfs:label "LowLightAmbient" ;
+    rdfs:subClassOf openlabel_v2:IlluminationLowLight ;
+    skos:definition "Low ambient lighting." .
+
+openlabel_v2:LowLightNight a owl:Class ;
+    rdfs:label "LowLightNight" ;
+    rdfs:subClassOf openlabel_v2:IlluminationLowLight ;
+    skos:definition "Night." .
+
+openlabel_v2:MotorwayManaged a owl:Class ;
+    rdfs:label "MotorwayManaged" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Managed motorways." .
+
+openlabel_v2:MotorwayUnmanaged a owl:Class ;
+    rdfs:label "MotorwayUnmanaged" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Unmanaged motorways." .
+
+openlabel_v2:ParticulatesWater a owl:Class ;
+    rdfs:label "ParticulatesWater" ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Non-precipitating water droplets or ice crystals (i.e. mist/fog)." .
+
+openlabel_v2:PositioningGalileo a owl:Class ;
+    rdfs:label "PositioningGalileo" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityPositioning ;
+    skos:definition "Galileo." .
+
+openlabel_v2:PositioningGlonass a owl:Class ;
+    rdfs:label "PositioningGlonass" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityPositioning ;
+    skos:definition "GLObal NAvigation Satellite System (GLONASS)." .
+
+openlabel_v2:PositioningGps a owl:Class ;
+    rdfs:label "PositioningGps" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityPositioning ;
+    skos:definition "Global Positioning System (GPS)." .
+
+openlabel_v2:RainTypeConvective a owl:Class ;
+    rdfs:label "RainTypeConvective" ;
+    rdfs:subClassOf openlabel_v2:RainType ;
+    skos:definition "Convective." .
+
+openlabel_v2:RainTypeDynamic a owl:Class ;
+    rdfs:label "RainTypeDynamic" ;
+    rdfs:subClassOf openlabel_v2:RainType ;
+    skos:definition "Dynamic." .
+
+openlabel_v2:RainTypeOrographic a owl:Class ;
+    rdfs:label "RainTypeOrographic" ;
+    rdfs:subClassOf openlabel_v2:RainType ;
+    skos:definition "Orographic." .
+
+openlabel_v2:RegulatorySignsUniformFullTime a owl:Class ;
+    rdfs:label "RegulatorySignsUniformFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsRegulatory ;
+    skos:definition "Uniform full-time." .
+
+openlabel_v2:RegulatorySignsUniformTemporary a owl:Class ;
+    rdfs:label "RegulatorySignsUniformTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsRegulatory ;
+    skos:definition "Uniform temporary." .
+
+openlabel_v2:RegulatorySignsVariableFullTime a owl:Class ;
+    rdfs:label "RegulatorySignsVariableFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsRegulatory ;
+    skos:definition "Variable full-time." .
+
+openlabel_v2:RegulatorySignsVariableTemporary a owl:Class ;
+    rdfs:label "RegulatorySignsVariableTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsRegulatory ;
+    skos:definition "Variable temporary." .
+
+openlabel_v2:RoadTypeDistributor a owl:Class ;
+    rdfs:label "RoadTypeDistributor" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Distributor roads." .
+
+openlabel_v2:RoadTypeMinor a owl:Class ;
+    rdfs:label "RoadTypeMinor" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Minor roads." .
+
+openlabel_v2:RoadTypeMotorway a owl:Class ;
+    rdfs:label "RoadTypeMotorway" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Motorways." .
+
+openlabel_v2:RoadTypeParking a owl:Class ;
+    rdfs:label "RoadTypeParking" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Parking." .
+
+openlabel_v2:RoadTypeRadial a owl:Class ;
+    rdfs:label "RoadTypeRadial" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Radial roads." .
+
+openlabel_v2:RoadTypeShared a owl:Class ;
+    rdfs:label "RoadTypeShared" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Shared space." .
+
+openlabel_v2:RoadTypeSlip a owl:Class ;
+    rdfs:label "RoadTypeSlip" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaType ;
+    skos:definition "Slip roads." .
+
+openlabel_v2:RoundaboutCompactNosignal a owl:Class ;
+    rdfs:label "RoundaboutCompactNosignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Compact non-signalised." .
+
+openlabel_v2:RoundaboutCompactSignal a owl:Class ;
+    rdfs:label "RoundaboutCompactSignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Compact signalised." .
+
+openlabel_v2:RoundaboutDoubleNosignal a owl:Class ;
+    rdfs:label "RoundaboutDoubleNosignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Double non-signalised." .
+
+openlabel_v2:RoundaboutDoubleSignal a owl:Class ;
+    rdfs:label "RoundaboutDoubleSignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Double signalised." .
+
+openlabel_v2:RoundaboutLargeNosignal a owl:Class ;
+    rdfs:label "RoundaboutLargeNosignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Large non-signalised." .
+
+openlabel_v2:RoundaboutLargeSignal a owl:Class ;
+    rdfs:label "RoundaboutLargeSignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Large signalised." .
+
+openlabel_v2:RoundaboutMiniNosignal a owl:Class ;
+    rdfs:label "RoundaboutMiniNosignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Mini non-signalised." .
+
+openlabel_v2:RoundaboutMiniSignal a owl:Class ;
+    rdfs:label "RoundaboutMiniSignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Mini signalised." .
+
+openlabel_v2:RoundaboutNormalNosignal a owl:Class ;
+    rdfs:label "RoundaboutNormalNosignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Normal non-signalised." .
+
+openlabel_v2:RoundaboutNormalSignal a owl:Class ;
+    rdfs:label "RoundaboutNormalSignal" ;
+    rdfs:subClassOf openlabel_v2:JunctionRoundabout ;
+    skos:definition "Normal signalised." .
+
+openlabel_v2:SpecialStructureAutoAccess a owl:Class ;
+    rdfs:label "SpecialStructureAutoAccess" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Automatic access control." .
+
+openlabel_v2:SpecialStructureBridge a owl:Class ;
+    rdfs:label "SpecialStructureBridge" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Bridges." .
+
+openlabel_v2:SpecialStructurePedestrianCrossing a owl:Class ;
+    rdfs:label "SpecialStructurePedestrianCrossing" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Pedestrian crossings." .
+
+openlabel_v2:SpecialStructureRailCrossing a owl:Class ;
+    rdfs:label "SpecialStructureRailCrossing" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Rail crossings." .
+
+openlabel_v2:SpecialStructureTollPlaza a owl:Class ;
+    rdfs:label "SpecialStructureTollPlaza" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Toll plaza." .
+
+openlabel_v2:SpecialStructureTunnel a owl:Class ;
+    rdfs:label "SpecialStructureTunnel" ;
+    rdfs:subClassOf openlabel_v2:ScenerySpecialStructure ;
+    skos:definition "Tunnels." .
+
+openlabel_v2:SunPositionBehind a owl:Class ;
+    rdfs:label "SunPositionBehind" ;
+    rdfs:subClassOf openlabel_v2:DaySunPosition ;
+    skos:definition "Sun behind." .
+
+openlabel_v2:SunPositionFront a owl:Class ;
+    rdfs:label "SunPositionFront" ;
+    rdfs:subClassOf openlabel_v2:DaySunPosition ;
+    skos:definition "Sun in front." .
+
+openlabel_v2:SunPositionLeft a owl:Class ;
+    rdfs:label "SunPositionLeft" ;
+    rdfs:subClassOf openlabel_v2:DaySunPosition ;
+    skos:definition "Sun on the left." .
+
+openlabel_v2:SunPositionRight a owl:Class ;
+    rdfs:label "SunPositionRight" ;
+    rdfs:subClassOf openlabel_v2:DaySunPosition ;
+    skos:definition "Sun on the right." .
+
+openlabel_v2:SurfaceConditionContamination a owl:Class ;
+    rdfs:label "SurfaceConditionContamination" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Surface contamination." .
+
+openlabel_v2:SurfaceConditionFlooded a owl:Class ;
+    rdfs:label "SurfaceConditionFlooded" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Flooded roadways." .
+
+openlabel_v2:SurfaceConditionIcy a owl:Class ;
+    rdfs:label "SurfaceConditionIcy" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Icy." .
+
+openlabel_v2:SurfaceConditionMirage a owl:Class ;
+    rdfs:label "SurfaceConditionMirage" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Mirage." .
+
+openlabel_v2:SurfaceConditionSnow a owl:Class ;
+    rdfs:label "SurfaceConditionSnow" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Snow on drivable area." .
+
+openlabel_v2:SurfaceConditionStandingWater a owl:Class ;
+    rdfs:label "SurfaceConditionStandingWater" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Standing water." .
+
+openlabel_v2:SurfaceConditionWet a owl:Class ;
+    rdfs:label "SurfaceConditionWet" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceCondition ;
+    skos:definition "Wet road." .
+
+openlabel_v2:SurfaceFeatureCrack a owl:Class ;
+    rdfs:label "SurfaceFeatureCrack" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceFeature ;
+    skos:definition "Cracks." .
+
+openlabel_v2:SurfaceFeaturePothole a owl:Class ;
+    rdfs:label "SurfaceFeaturePothole" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceFeature ;
+    skos:definition "Potholes." .
+
+openlabel_v2:SurfaceFeatureRut a owl:Class ;
+    rdfs:label "SurfaceFeatureRut" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceFeature ;
+    skos:definition "Ruts." .
+
+openlabel_v2:SurfaceFeatureSwell a owl:Class ;
+    rdfs:label "SurfaceFeatureSwell" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceFeature ;
+    skos:definition "Swells." .
+
+openlabel_v2:SurfaceTypeLoose a owl:Class ;
+    rdfs:label "SurfaceTypeLoose" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceType ;
+    skos:definition "Loose (e.g. gravel, earth, sand)." .
+
+openlabel_v2:SurfaceTypeSegmented a owl:Class ;
+    rdfs:label "SurfaceTypeSegmented" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceType ;
+    skos:definition "Segmented (e.g. concrete slabs, granite setts, cobblestones)." .
+
+openlabel_v2:SurfaceTypeUniform a owl:Class ;
+    rdfs:label "SurfaceTypeUniform" ;
+    rdfs:subClassOf openlabel_v2:DrivableAreaSurfaceType ;
+    skos:definition "Uniform (e.g. asphalt)." .
+
+openlabel_v2:TemporaryStructureConstructionDetour a owl:Class ;
+    rdfs:label "TemporaryStructureConstructionDetour" ;
+    rdfs:subClassOf openlabel_v2:SceneryTemporaryStructure ;
+    skos:definition "Construction site detours." .
+
+openlabel_v2:TemporaryStructureRefuseCollection a owl:Class ;
+    rdfs:label "TemporaryStructureRefuseCollection" ;
+    rdfs:subClassOf openlabel_v2:SceneryTemporaryStructure ;
+    skos:definition "Refuse collection." .
+
+openlabel_v2:TemporaryStructureRoadSignage a owl:Class ;
+    rdfs:label "TemporaryStructureRoadSignage" ;
+    rdfs:subClassOf openlabel_v2:SceneryTemporaryStructure ;
+    skos:definition "Road signage." .
+
+openlabel_v2:TemporaryStructureRoadWorks a owl:Class ;
+    rdfs:label "TemporaryStructureRoadWorks" ;
+    rdfs:subClassOf openlabel_v2:SceneryTemporaryStructure ;
+    skos:definition "Road works." .
+
+openlabel_v2:TransverseBarriers a owl:Class ;
+    rdfs:label "TransverseBarriers" ;
+    rdfs:subClassOf openlabel_v2:GeometryTransverse ;
+    skos:definition "Barriers on edges." .
+
+openlabel_v2:TransverseDivided a owl:Class ;
+    rdfs:label "TransverseDivided" ;
+    rdfs:subClassOf openlabel_v2:GeometryTransverse ;
+    skos:definition "Divided." .
+
+openlabel_v2:TransverseLanesTogether a owl:Class ;
+    rdfs:label "TransverseLanesTogether" ;
+    rdfs:subClassOf openlabel_v2:GeometryTransverse ;
+    skos:definition "Types of lanes together." .
+
+openlabel_v2:TransversePavements a owl:Class ;
+    rdfs:label "TransversePavements" ;
+    rdfs:subClassOf openlabel_v2:GeometryTransverse ;
+    skos:definition "Pavements." .
+
+openlabel_v2:TransverseUndivided a owl:Class ;
+    rdfs:label "TransverseUndivided" ;
+    rdfs:subClassOf openlabel_v2:GeometryTransverse ;
+    skos:definition "Undivided." .
+
+openlabel_v2:TravelDirectionLeft a owl:Class ;
+    rdfs:label "TravelDirectionLeft" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationTravelDirection ;
+    skos:definition "Left." .
+
+openlabel_v2:TravelDirectionRight a owl:Class ;
+    rdfs:label "TravelDirectionRight" ;
+    rdfs:subClassOf openlabel_v2:LaneSpecificationTravelDirection ;
+    skos:definition "Right." .
+
+openlabel_v2:V2iCellular a owl:Class ;
+    rdfs:label "V2iCellular" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2I via cellular network." .
+
+openlabel_v2:V2iSatellite a owl:Class ;
+    rdfs:label "V2iSatellite" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2I via satellite." .
+
+openlabel_v2:V2iWifi a owl:Class ;
+    rdfs:label "V2iWifi" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2I via WiFi." .
+
+openlabel_v2:V2vCellular a owl:Class ;
+    rdfs:label "V2vCellular" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2V via cellular network." .
+
+openlabel_v2:V2vSatellite a owl:Class ;
+    rdfs:label "V2vSatellite" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2V via satellite." .
+
+openlabel_v2:V2vWifi a owl:Class ;
+    rdfs:label "V2vWifi" ;
+    rdfs:subClassOf openlabel_v2:ConnectivityCommunication ;
+    skos:definition "V2V via WiFi." .
+
+openlabel_v2:VehicleAgricultural a owl:Class ;
+    rdfs:label "VehicleAgricultural" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Agricultural vehicle." .
+
+openlabel_v2:VehicleBus a owl:Class ;
+    rdfs:label "VehicleBus" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Bus." .
+
+openlabel_v2:VehicleCar a owl:Class ;
+    rdfs:label "VehicleCar" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Car." .
+
+openlabel_v2:VehicleConstruction a owl:Class ;
+    rdfs:label "VehicleConstruction" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Construction vehicle." .
+
+openlabel_v2:VehicleCycle a owl:Class ;
+    rdfs:label "VehicleCycle" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Cycle." .
+
+openlabel_v2:VehicleEmergency a owl:Class ;
+    rdfs:label "VehicleEmergency" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Emergency vehicle." .
+
+openlabel_v2:VehicleMotorcycle a owl:Class ;
+    rdfs:label "VehicleMotorcycle" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Motorcycle." .
+
+openlabel_v2:VehicleTrailer a owl:Class ;
+    rdfs:label "VehicleTrailer" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Trailer." .
+
+openlabel_v2:VehicleTruck a owl:Class ;
+    rdfs:label "VehicleTruck" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Truck." .
+
+openlabel_v2:VehicleVan a owl:Class ;
+    rdfs:label "VehicleVan" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Van." .
+
+openlabel_v2:VehicleWheelchair a owl:Class ;
+    rdfs:label "VehicleWheelchair" ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicle ;
+    skos:definition "Wheelchair." .
+
+openlabel_v2:WarningSignsUniform a owl:Class ;
+    rdfs:label "WarningSignsUniform" ;
+    rdfs:subClassOf openlabel_v2:SignsWarning ;
+    skos:definition "Uniform." .
+
+openlabel_v2:WarningSignsUniformFullTime a owl:Class ;
+    rdfs:label "WarningSignsUniformFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsWarning ;
+    skos:definition "Uniform full-time." .
+
+openlabel_v2:WarningSignsUniformTemporary a owl:Class ;
+    rdfs:label "WarningSignsUniformTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsWarning ;
+    skos:definition "Uniform temporary." .
+
+openlabel_v2:WarningSignsVariableFullTime a owl:Class ;
+    rdfs:label "WarningSignsVariableFullTime" ;
+    rdfs:subClassOf openlabel_v2:SignsWarning ;
+    skos:definition "Variable full-time." .
+
+openlabel_v2:WarningSignsVariableTemporary a owl:Class ;
+    rdfs:label "WarningSignsVariableTemporary" ;
+    rdfs:subClassOf openlabel_v2:SignsWarning ;
+    skos:definition "Variable temporary." .
+
+openlabel_v2:ZoneGeoFenced a owl:Class ;
+    rdfs:label "ZoneGeoFenced" ;
+    rdfs:subClassOf openlabel_v2:SceneryZone ;
+    skos:definition "GeoFenced areas." .
+
+openlabel_v2:ZoneInterference a owl:Class ;
+    rdfs:label "ZoneInterference" ;
+    rdfs:subClassOf openlabel_v2:SceneryZone ;
+    skos:definition "Interference zones." .
+
+openlabel_v2:ZoneRegion a owl:Class ;
+    rdfs:label "ZoneRegion" ;
+    rdfs:subClassOf openlabel_v2:SceneryZone ;
+    skos:definition "Regions or states." .
+
+openlabel_v2:ZoneSchool a owl:Class ;
+    rdfs:label "ZoneSchool" ;
+    rdfs:subClassOf openlabel_v2:SceneryZone ;
+    skos:definition "School zones." .
+
+openlabel_v2:ZoneTrafficManagement a owl:Class ;
+    rdfs:label "ZoneTrafficManagement" ;
+    rdfs:subClassOf openlabel_v2:SceneryZone ;
+    skos:definition "Traffic management zones." .
+
+openlabel_v2:HorizontalStraights a owl:DatatypeProperty ;
+    rdfs:label "HorizontalStraights" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LaneSpecificationMarking a owl:DatatypeProperty ;
+    rdfs:label "LaneSpecificationMarking" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LongitudinalLevelPlane a owl:DatatypeProperty ;
+    rdfs:label "LongitudinalLevelPlane" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionAway a owl:DatatypeProperty ;
+    rdfs:label "MotionAway" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user is further away from the object by the end." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionCross a owl:DatatypeProperty ;
+    rdfs:label "MotionCross" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the trajectory of the road user crosses the trajectory of the object." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionCutIn a owl:DatatypeProperty ;
+    rdfs:label "MotionCutIn" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject vehicle ends up directly in front of the object vehicle." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionCutOut a owl:DatatypeProperty ;
+    rdfs:label "MotionCutOut" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the object vehicle suddenly moves out of the lane." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionLaneChangeLeft a owl:DatatypeProperty ;
+    rdfs:label "MotionLaneChangeLeft" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject vehicle is in a lane left of the original." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionLaneChangeRight a owl:DatatypeProperty ;
+    rdfs:label "MotionLaneChangeRight" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject vehicle is in a lane right of the original." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionOvertake a owl:DatatypeProperty ;
+    rdfs:label "MotionOvertake" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject starts behind and ends up in front by changing lanes." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionReverse a owl:DatatypeProperty ;
+    rdfs:label "MotionReverse" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject vehicle is moving in the opposite direction to which it is facing." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionRun a owl:DatatypeProperty ;
+    rdfs:label "MotionRun" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Locomotion mode where at a specific point no foot touches the ground." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionSlide a owl:DatatypeProperty ;
+    rdfs:label "MotionSlide" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where a pedestrian is slipping/sliding on the road." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionStop a owl:DatatypeProperty ;
+    rdfs:label "MotionStop" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user is stationary." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionTowards a owl:DatatypeProperty ;
+    rdfs:label "MotionTowards" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user is closer to the object by the end." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionTurn a owl:DatatypeProperty ;
+    rdfs:label "MotionTurn" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user changes their heading." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionTurnLeft a owl:DatatypeProperty ;
+    rdfs:label "MotionTurnLeft" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Subject exits the intersection on a road to the left of the original." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionTurnRight a owl:DatatypeProperty ;
+    rdfs:label "MotionTurnRight" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Subject exits the intersection on a road to the right of the original." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionUTurn a owl:DatatypeProperty ;
+    rdfs:label "MotionUTurn" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Subject performs a turn resulting in heading in the opposite direction." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionWalk a owl:DatatypeProperty ;
+    rdfs:label "MotionWalk" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Locomotion mode where at least one foot is always on the ground." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:RoadUserAnimal a owl:DatatypeProperty ;
+    rdfs:label "RoadUserAnimal" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "Animal road user flag." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:SubjectVehicleSpeed a owl:DatatypeProperty ;
+    rdfs:label "SubjectVehicleSpeed" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:Tag a owl:Class ;
+    rdfs:label "Tag" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:AdminTag ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUser ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:Behaviour ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:Odd ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:AdminTag ;
+            owl:onProperty openlabel_v2:AdminTag ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:Behaviour ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:Behaviour ;
+            owl:onProperty openlabel_v2:Behaviour ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:RoadUser ;
+            owl:onProperty openlabel_v2:RoadUser ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:AdminTag ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUser ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:Odd ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:Odd ;
+            owl:onProperty openlabel_v2:Odd ] ;
+    skos:definition "The base tag." ;
+    skos:exactMatch openlabel_v2:Tag ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:TrafficSpecialVehicle a owl:DatatypeProperty ;
+    rdfs:label "TrafficSpecialVehicle" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:hasLowerBound a owl:DatatypeProperty ;
+    rdfs:label "hasLowerBound" ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:hasTag a owl:ObjectProperty ;
+    rdfs:label "hasTag" ;
+    rdfs:range openlabel_v2:Tag ;
+    skos:definition "A tag associated with a scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:hasUpperBound a owl:DatatypeProperty ;
+    rdfs:label "hasUpperBound" ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:licenseURI a owl:DatatypeProperty ;
+    rdfs:label "licenseURI" ;
+    rdfs:range xsd:string ;
+    skos:definition "The type of license which governs usage of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:maxValue a owl:DatatypeProperty ;
+    rdfs:label "maxValue" ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Maximum value of the range." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:minValue a owl:DatatypeProperty ;
+    rdfs:label "minValue" ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Minimum value of the range." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ownerEmail a owl:DatatypeProperty ;
+    rdfs:label "ownerEmail" ;
+    rdfs:range xsd:string ;
+    skos:definition "The email address of the legal entity who owns the rights to the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ownerName a owl:DatatypeProperty ;
+    rdfs:label "ownerName" ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the legal entity who owns the rights to the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ownerURL a owl:DatatypeProperty ;
+    rdfs:label "ownerURL" ;
+    rdfs:range xsd:string ;
+    skos:definition "The URL of the legal entity who owns the rights to the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:particulatesWaterValue a owl:DatatypeProperty ;
+    rdfs:label "particulatesWaterValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioCreatedDate a owl:DatatypeProperty ;
+    rdfs:label "scenarioCreatedDate" ;
+    rdfs:range xsd:dateTime ;
+    skos:definition "The date that the scenario was created/published." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioDefinition a owl:DatatypeProperty ;
+    rdfs:label "scenarioDefinition" ;
+    rdfs:range xsd:string ;
+    skos:definition "SDL definition of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioDefinitionLanguageURI a owl:DatatypeProperty ;
+    rdfs:label "scenarioDefinitionLanguageURI" ;
+    rdfs:range xsd:string ;
+    skos:definition "URI of SDL language used for the definition of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioDescription a owl:DatatypeProperty ;
+    rdfs:label "scenarioDescription" ;
+    rdfs:range xsd:string ;
+    skos:definition "A description of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioName a owl:DatatypeProperty ;
+    rdfs:label "scenarioName" ;
+    rdfs:range xsd:string ;
+    skos:definition "The name of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioParentReference a owl:DatatypeProperty ;
+    rdfs:label "scenarioParentReference" ;
+    rdfs:range xsd:string ;
+    skos:definition "Universally unique identifier (UUID) which identifies the scenario which this one has been derived from." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioUniqueReference a owl:DatatypeProperty ;
+    rdfs:label "scenarioUniqueReference" ;
+    rdfs:range xsd:string ;
+    skos:definition "Universally unique identifier (UUID) assigned to the scenario which allows the scenario to be identified." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioVersion a owl:DatatypeProperty ;
+    rdfs:label "scenarioVersion" ;
+    rdfs:range xsd:string ;
+    skos:definition "The version number of the scenario." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:scenarioVisualisationURL a owl:DatatypeProperty ;
+    rdfs:label "scenarioVisualisationURL" ;
+    rdfs:range xsd:string ;
+    skos:definition "Relative or absolute URL of a static image or animation of the scenario to allow users to easily see what the scenario represents." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:subjectVehicleSpeedValue a owl:DatatypeProperty ;
+    rdfs:label "subjectVehicleSpeedValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+                        owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                    owl:onDatatype xsd:integer ;
+                                    owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:DaySunElevation a owl:DatatypeProperty ;
+    rdfs:label "DaySunElevation" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:HorizontalCurves a owl:DatatypeProperty ;
+    rdfs:label "HorizontalCurves" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:IlluminationCloudiness a owl:DatatypeProperty ;
+    rdfs:label "IlluminationCloudiness" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LaneSpecificationDimensions a owl:DatatypeProperty ;
+    rdfs:label "LaneSpecificationDimensions" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LaneSpecificationLaneCount a owl:DatatypeProperty ;
+    rdfs:label "LaneSpecificationLaneCount" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LongitudinalDownSlope a owl:DatatypeProperty ;
+    rdfs:label "LongitudinalDownSlope" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:LongitudinalUpSlope a owl:DatatypeProperty ;
+    rdfs:label "LongitudinalUpSlope" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionAccelerate a owl:DatatypeProperty ;
+    rdfs:label "MotionAccelerate" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user increases their velocity." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionDecelerate a owl:DatatypeProperty ;
+    rdfs:label "MotionDecelerate" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the road user decreases their velocity." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:MotionDrive a owl:DatatypeProperty ;
+    rdfs:label "MotionDrive" ;
+    rdfs:range xsd:boolean ;
+    skos:definition "An activity where the subject vehicle is moving in the direction it is facing." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:TrafficAgentDensity a owl:DatatypeProperty ;
+    rdfs:label "TrafficAgentDensity" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:TrafficFlowRate a owl:DatatypeProperty ;
+    rdfs:label "TrafficFlowRate" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:TrafficVolume a owl:DatatypeProperty ;
+    rdfs:label "TrafficVolume" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:WeatherRain a owl:DatatypeProperty ;
+    rdfs:label "WeatherRain" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:WeatherSnow a owl:DatatypeProperty ;
+    rdfs:label "WeatherSnow" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:WeatherWind a owl:DatatypeProperty ;
+    rdfs:label "WeatherWind" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:daySunElevationValue a owl:DatatypeProperty ;
+    rdfs:label "daySunElevationValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:horizontalCurvesValue a owl:DatatypeProperty ;
+    rdfs:label "horizontalCurvesValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:illuminationCloudinessValue a owl:DatatypeProperty ;
+    rdfs:label "illuminationCloudinessValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:laneSpecificationDimensionsValue a owl:DatatypeProperty ;
+    rdfs:label "laneSpecificationDimensionsValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:laneSpecificationLaneCountValue a owl:DatatypeProperty ;
+    rdfs:label "laneSpecificationLaneCountValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+                        owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                    owl:onDatatype xsd:integer ;
+                                    owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:longitudinalDownSlopeValue a owl:DatatypeProperty ;
+    rdfs:label "longitudinalDownSlopeValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:longitudinalUpSlopeValue a owl:DatatypeProperty ;
+    rdfs:label "longitudinalUpSlopeValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:motionAccelerateValue a owl:DatatypeProperty ;
+    rdfs:label "motionAccelerateValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    skos:definition "Rate of acceleration (ms-2)." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:motionDecelerateValue a owl:DatatypeProperty ;
+    rdfs:label "motionDecelerateValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    skos:definition "Rate of deceleration (ms-2)." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:trafficAgentDensityValue a owl:DatatypeProperty ;
+    rdfs:label "trafficAgentDensityValue" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:trafficFlowRateValue a owl:DatatypeProperty ;
+    rdfs:label "trafficFlowRateValue" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:trafficVolumeValue a owl:DatatypeProperty ;
+    rdfs:label "trafficVolumeValue" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:weatherRainValue a owl:DatatypeProperty ;
+    rdfs:label "weatherRainValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:weatherSnowValue a owl:DatatypeProperty ;
+    rdfs:label "weatherSnowValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:weatherWindValue a owl:DatatypeProperty ;
+    rdfs:label "weatherWindValue" ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ParticulatesDust a owl:Class,
+        owl:DatatypeProperty ;
+    rdfs:label "ParticulatesDust" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.",
+        "Sand and dust." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ParticulatesMarine a owl:Class,
+        owl:DatatypeProperty ;
+    rdfs:label "ParticulatesMarine" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.",
+        "Marine (coastal areas only)." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ParticulatesPollution a owl:Class,
+        owl:DatatypeProperty ;
+    rdfs:label "ParticulatesPollution" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.",
+        "Smoke and pollution." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ParticulatesVolcanic a owl:Class,
+        owl:DatatypeProperty ;
+    rdfs:label "ParticulatesVolcanic" ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.",
+        "Volcanic ash." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:AdminTag a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "AdminTag" ;
+    rdfs:range openlabel_v2:AdminTag ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioUniqueReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:licenseURI ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioUniqueReference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioCreatedDate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:dateTime ;
+            owl:onProperty openlabel_v2:scenarioCreatedDate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDefinition ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerEmail ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioDescription ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioCreatedDate ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioDescription ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioDescription ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioUniqueReference ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioName ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:licenseURI ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:licenseURI ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ownerName ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioVisualisationURL ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ownerURL ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioName ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioVersion ] ;
+    skos:definition "Administration tag.",
+        "The base tag to use when extending the Administration tags with new classes." ;
+    skos:exactMatch openlabel_v2:AdminTag ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:RoadUser a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "RoadUser" ;
+    rdfs:range openlabel_v2:RoadUser ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUserHuman ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:RoadUserHuman ;
+            owl:onProperty openlabel_v2:RoadUserHuman ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUserVehicle ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RoadUserAnimal ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUserHuman ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RoadUserVehicle ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:RoadUserVehicle ;
+            owl:onProperty openlabel_v2:RoadUserVehicle ] ;
+    skos:definition "Road user tag.",
+        "Something which uses a road to travel." ;
+    skos:exactMatch openlabel_v2:RoadUser ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:IlluminationArtificial a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "IlluminationArtificial",
+        "IlluminationArtificialEnum" ;
+    rdfs:range openlabel_v2:IlluminationArtificial ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:ArtificialStreetLighting openlabel_v2:ArtificialVehicleLighting ) ;
+    skos:definition "Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.",
+        "Types of artificial illumination. Refer to BSI PAS-1883 Section 5.3.3.d." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:ArtificialStreetLighting,
+        openlabel_v2:ArtificialVehicleLighting .
+
+openlabel_v2:IlluminationLowLight a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "IlluminationLowLight",
+        "IlluminationLowLightEnum" ;
+    rdfs:range openlabel_v2:IlluminationLowLight ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:LowLightAmbient openlabel_v2:LowLightNight ) ;
+    skos:definition "Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.",
+        "Types of low light conditions. Refer to BSI PAS-1883 Section 5.3.3.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:LowLightAmbient,
+        openlabel_v2:LowLightNight .
+
+openlabel_v2:LaneSpecificationTravelDirection a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "LaneSpecificationTravelDirection",
+        "LaneSpecificationTravelDirectionEnum" ;
+    rdfs:range openlabel_v2:LaneSpecificationTravelDirection ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:TravelDirectionLeft openlabel_v2:TravelDirectionRight ) ;
+    skos:definition "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:TravelDirectionLeft,
+        openlabel_v2:TravelDirectionRight .
+
+openlabel_v2:motionDriveValue a owl:DatatypeProperty ;
+    rdfs:label "motionDriveValue" ;
+    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    skos:definition "Speed (km/h)." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:ConnectivityPositioning a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "ConnectivityPositioning",
+        "ConnectivityPositioningEnum" ;
+    rdfs:range openlabel_v2:ConnectivityPositioning ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
+    skos:definition "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.",
+        "Types of positioning systems. Refer to BSI PAS-1883 Section 5.3.4.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:PositioningGalileo,
+        openlabel_v2:PositioningGlonass,
+        openlabel_v2:PositioningGps .
+
+openlabel_v2:DrivableAreaSurfaceType a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DrivableAreaSurfaceType",
+        "DrivableAreaSurfaceTypeEnum" ;
+    rdfs:range openlabel_v2:DrivableAreaSurfaceType ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:SurfaceTypeLoose openlabel_v2:SurfaceTypeSegmented openlabel_v2:SurfaceTypeUniform ) ;
+    skos:definition "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.",
+        "Road surface types. Refer to BSI PAS-1883 Section 5.2.3.7.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:SurfaceTypeLoose,
+        openlabel_v2:SurfaceTypeSegmented,
+        openlabel_v2:SurfaceTypeUniform .
+
+openlabel_v2:RainType a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "RainType",
+        "RainTypeEnum" ;
+    rdfs:range openlabel_v2:RainType ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+    skos:definition "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.",
+        "Types of rainfall. Refer to BSI PAS-1883 Section 5.3.1.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:RainTypeConvective,
+        openlabel_v2:RainTypeDynamic,
+        openlabel_v2:RainTypeOrographic .
+
+openlabel_v2:Behaviour a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "Behaviour" ;
+    rdfs:range openlabel_v2:Behaviour ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionCutOut ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionAccelerate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionDecelerate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionCutIn ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionWalk ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionCutIn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:BehaviourCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionCross ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionSlide ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCutOut ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionStop ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCross ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionWalk ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionAccelerate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionOvertake ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionDrive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionDrive ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurnRight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionReverse ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionCutOut ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionAccelerate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionDecelerate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionUTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionAway ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTowards ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionWalk ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionCross ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:MotionStop ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurnLeft ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionStop ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionLaneChangeLeft ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionDecelerate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:BehaviourCommunication ;
+            owl:onProperty openlabel_v2:BehaviourCommunication ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:MotionDrive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionLaneChangeRight ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:MotionCutIn ] ;
+    skos:definition "An activity performed by a road user.",
+        "Behaviour tag." ;
+    skos:exactMatch openlabel_v2:Behaviour ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:DaySunPosition a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DaySunPosition",
+        "DaySunPositionEnum" ;
+    rdfs:range openlabel_v2:DaySunPosition ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:SunPositionBehind openlabel_v2:SunPositionFront openlabel_v2:SunPositionLeft openlabel_v2:SunPositionRight ) ;
+    skos:definition "Position of the sun relative to direction of travel. Refer to BSI PAS-1883 Section 5.3.3.a.2.",
+        "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:SunPositionBehind,
+        openlabel_v2:SunPositionFront,
+        openlabel_v2:SunPositionLeft,
+        openlabel_v2:SunPositionRight .
+
+openlabel_v2:DrivableAreaSurfaceFeature a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DrivableAreaSurfaceFeature",
+        "DrivableAreaSurfaceFeatureEnum" ;
+    rdfs:range openlabel_v2:DrivableAreaSurfaceFeature ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:SurfaceFeatureCrack openlabel_v2:SurfaceFeaturePothole openlabel_v2:SurfaceFeatureRut openlabel_v2:SurfaceFeatureSwell ) ;
+    skos:definition "Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.",
+        "Road surface features. Refer to BSI PAS-1883 Section 5.2.3.7.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:SurfaceFeatureCrack,
+        openlabel_v2:SurfaceFeaturePothole,
+        openlabel_v2:SurfaceFeatureRut,
+        openlabel_v2:SurfaceFeatureSwell .
+
+openlabel_v2:SceneryFixedStructure a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SceneryFixedStructure",
+        "SceneryFixedStructureEnum" ;
+    rdfs:range openlabel_v2:SceneryFixedStructure ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+    skos:definition "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.",
+        "Types of fixed road structures. Refer to BSI PAS-1883 Section 5.2.6." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:FixedStructureBuilding,
+        openlabel_v2:FixedStructureStreetFurniture,
+        openlabel_v2:FixedStructureStreetlight,
+        openlabel_v2:FixedStructureVegetation .
+
+openlabel_v2:SceneryTemporaryStructure a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SceneryTemporaryStructure",
+        "SceneryTemporaryStructureEnum" ;
+    rdfs:range openlabel_v2:SceneryTemporaryStructure ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+    skos:definition "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.",
+        "Types of temporary road structures. Refer to BSI PAS-1883 Section 5.2.7." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:TemporaryStructureConstructionDetour,
+        openlabel_v2:TemporaryStructureRefuseCollection,
+        openlabel_v2:TemporaryStructureRoadSignage,
+        openlabel_v2:TemporaryStructureRoadWorks .
+
+openlabel_v2:SignsInformation a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SignsInformation",
+        "SignsInformationEnum" ;
+    rdfs:range openlabel_v2:SignsInformation ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+    skos:definition "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.",
+        "Types of information signs. Refer to BSI PAS-1883 Section 5.2.3.5.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:InformationSignsUniformFullTime,
+        openlabel_v2:InformationSignsUniformTemporary,
+        openlabel_v2:InformationSignsVariableFullTime,
+        openlabel_v2:InformationSignsVariableTemporary .
+
+openlabel_v2:SignsRegulatory a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SignsRegulatory",
+        "SignsRegulatoryEnum" ;
+    rdfs:range openlabel_v2:SignsRegulatory ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
+    skos:definition "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.",
+        "Types of regulatory signs. Refer to BSI PAS-1883 Section 5.2.3.5.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:RegulatorySignsUniformFullTime,
+        openlabel_v2:RegulatorySignsUniformTemporary,
+        openlabel_v2:RegulatorySignsVariableFullTime,
+        openlabel_v2:RegulatorySignsVariableTemporary .
+
+openlabel_v2:DrivableAreaEdge a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DrivableAreaEdge",
+        "DrivableAreaEdgeEnum" ;
+    rdfs:range openlabel_v2:DrivableAreaEdge ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
+    skos:definition "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.",
+        "Types of drivable area edges. Refer to BSI PAS-1883 Section 5.2.3.6." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:EdgeLineMarkers,
+        openlabel_v2:EdgeNone,
+        openlabel_v2:EdgeShoulderGrass,
+        openlabel_v2:EdgeShoulderPavedOrGravel,
+        openlabel_v2:EdgeSolidBarriers,
+        openlabel_v2:EdgeTemporaryLineMarkers .
+
+openlabel_v2:EnvironmentParticulates a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "EnvironmentParticulates",
+        "EnvironmentParticulatesEnum" ;
+    rdfs:range openlabel_v2:EnvironmentParticulates ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:ParticulatesDust openlabel_v2:ParticulatesMarine openlabel_v2:ParticulatesPollution openlabel_v2:ParticulatesVolcanic openlabel_v2:ParticulatesWater ) ;
+    skos:definition "Particulate type. Refer to BSI PAS-1883 Section 5.3.2.",
+        "Types of particulates. Refer to BSI PAS-1883 Section 5.3.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:ParticulatesDust,
+        openlabel_v2:ParticulatesMarine,
+        openlabel_v2:ParticulatesPollution,
+        openlabel_v2:ParticulatesVolcanic,
+        openlabel_v2:ParticulatesWater .
+
+openlabel_v2:GeometryTransverse a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "GeometryTransverse",
+        "GeometryTransverseEnum" ;
+    rdfs:range openlabel_v2:GeometryTransverse ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
+    skos:definition "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.",
+        "Types of transverse geometry. Refer to BSI PAS-1883 Section 5.2.3.3.b." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:TransverseBarriers,
+        openlabel_v2:TransverseDivided,
+        openlabel_v2:TransverseLanesTogether,
+        openlabel_v2:TransversePavements,
+        openlabel_v2:TransverseUndivided .
+
+openlabel_v2:JunctionIntersection a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "JunctionIntersection",
+        "JunctionIntersectionEnum" ;
+    rdfs:range openlabel_v2:JunctionIntersection ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
+    skos:definition "Intersection type. Refer to BSI PAS-1883 Section 5.2.4.",
+        "Types of intersections. Refer to BSI PAS-1883 Section 5.2.4." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:IntersectionCrossroad,
+        openlabel_v2:IntersectionGradeSeperated,
+        openlabel_v2:IntersectionStaggered,
+        openlabel_v2:IntersectionTJunction,
+        openlabel_v2:IntersectionYJunction .
+
+openlabel_v2:LaneSpecificationType a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "LaneSpecificationType",
+        "LaneSpecificationTypeEnum" ;
+    rdfs:range openlabel_v2:LaneSpecificationType ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:LaneTypeBus openlabel_v2:LaneTypeCycle openlabel_v2:LaneTypeEmergency openlabel_v2:LaneTypeSpecial openlabel_v2:LaneTypeTraffic openlabel_v2:LaneTypeTram ) ;
+    skos:definition "Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.",
+        "Types of lanes. Refer to BSI PAS-1883 Section 5.2.3.4.c." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:LaneTypeBus,
+        openlabel_v2:LaneTypeCycle,
+        openlabel_v2:LaneTypeEmergency,
+        openlabel_v2:LaneTypeSpecial,
+        openlabel_v2:LaneTypeTraffic,
+        openlabel_v2:LaneTypeTram .
+
+openlabel_v2:SceneryZone a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SceneryZone",
+        "SceneryZoneEnum" ;
+    rdfs:range openlabel_v2:SceneryZone ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+    skos:definition "Types of zones. Refer to BSI PAS-1883 Section 5.2.2.",
+        "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:ZoneGeoFenced,
+        openlabel_v2:ZoneInterference,
+        openlabel_v2:ZoneRegion,
+        openlabel_v2:ZoneSchool,
+        openlabel_v2:ZoneTrafficManagement .
+
+openlabel_v2:SignsWarning a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "SignsWarning",
+        "SignsWarningEnum" ;
+    rdfs:range openlabel_v2:SignsWarning ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+    skos:definition "Types of warning signs. Refer to BSI PAS-1883 Section 5.2.3.5.c.",
+        "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:WarningSignsUniform,
+        openlabel_v2:WarningSignsUniformFullTime,
+        openlabel_v2:WarningSignsUniformTemporary,
+        openlabel_v2:WarningSignsVariableFullTime,
+        openlabel_v2:WarningSignsVariableTemporary .
+
+openlabel_v2:ScenerySpecialStructure a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "ScenerySpecialStructure",
+        "ScenerySpecialStructureEnum" ;
+    rdfs:range openlabel_v2:ScenerySpecialStructure ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+    skos:definition "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.",
+        "Types of special road structures. Refer to BSI PAS-1883 Section 5.2.5." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:SpecialStructureAutoAccess,
+        openlabel_v2:SpecialStructureBridge,
+        openlabel_v2:SpecialStructurePedestrianCrossing,
+        openlabel_v2:SpecialStructureRailCrossing,
+        openlabel_v2:SpecialStructureTollPlaza,
+        openlabel_v2:SpecialStructureTunnel .
+
+openlabel_v2:BehaviourCommunication a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "BehaviourCommunication",
+        "BehaviourCommunicationEnum" ;
+    rdfs:range openlabel_v2:BehaviourCommunication ;
+    owl:unionOf ( openlabel_v2:CommunicationHeadlightFlash openlabel_v2:CommunicationHorn openlabel_v2:CommunicationSignalEmergency openlabel_v2:CommunicationSignalHazard openlabel_v2:CommunicationSignalLeft openlabel_v2:CommunicationSignalRight openlabel_v2:CommunicationSignalSlowing openlabel_v2:CommunicationWave ) ;
+    skos:definition "Communication type of road user behaviour.",
+        "Types of communication behaviours by road users." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:CommunicationHeadlightFlash,
+        openlabel_v2:CommunicationHorn,
+        openlabel_v2:CommunicationSignalEmergency,
+        openlabel_v2:CommunicationSignalHazard,
+        openlabel_v2:CommunicationSignalLeft,
+        openlabel_v2:CommunicationSignalRight,
+        openlabel_v2:CommunicationSignalSlowing,
+        openlabel_v2:CommunicationWave .
+
+openlabel_v2:DrivableAreaSurfaceCondition a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DrivableAreaSurfaceCondition",
+        "DrivableAreaSurfaceConditionEnum" ;
+    rdfs:range openlabel_v2:DrivableAreaSurfaceCondition ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:SurfaceConditionContamination openlabel_v2:SurfaceConditionFlooded openlabel_v2:SurfaceConditionIcy openlabel_v2:SurfaceConditionMirage openlabel_v2:SurfaceConditionSnow openlabel_v2:SurfaceConditionStandingWater openlabel_v2:SurfaceConditionWet ) ;
+    skos:definition "Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.",
+        "Road surface conditions. Refer to BSI PAS-1883 Section 5.2.3.7.c." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:SurfaceConditionContamination,
+        openlabel_v2:SurfaceConditionFlooded,
+        openlabel_v2:SurfaceConditionIcy,
+        openlabel_v2:SurfaceConditionMirage,
+        openlabel_v2:SurfaceConditionSnow,
+        openlabel_v2:SurfaceConditionStandingWater,
+        openlabel_v2:SurfaceConditionWet .
+
+openlabel_v2:RoadUserHuman a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "RoadUserHuman",
+        "RoadUserHumanEnum" ;
+    rdfs:range openlabel_v2:RoadUserHuman ;
+    owl:unionOf ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ;
+    skos:definition "Human road user type.",
+        "Types of human road users." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:HumanAnimalRider,
+        openlabel_v2:HumanCyclist,
+        openlabel_v2:HumanDriver,
+        openlabel_v2:HumanMotorcyclist,
+        openlabel_v2:HumanPassenger,
+        openlabel_v2:HumanPedestrian,
+        openlabel_v2:HumanWheelchairUser .
+
+openlabel_v2:ConnectivityCommunication a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "ConnectivityCommunication",
+        "ConnectivityCommunicationEnum" ;
+    rdfs:range openlabel_v2:ConnectivityCommunication ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:CommunicationV2i openlabel_v2:CommunicationV2v openlabel_v2:V2iCellular openlabel_v2:V2iSatellite openlabel_v2:V2iWifi openlabel_v2:V2vCellular openlabel_v2:V2vSatellite openlabel_v2:V2vWifi ) ;
+    skos:definition "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.",
+        "Types of communication connectivity. Refer to BSI PAS-1883 Section 5.3.4.a." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:CommunicationV2i,
+        openlabel_v2:CommunicationV2v,
+        openlabel_v2:V2iCellular,
+        openlabel_v2:V2iSatellite,
+        openlabel_v2:V2iWifi,
+        openlabel_v2:V2vCellular,
+        openlabel_v2:V2vSatellite,
+        openlabel_v2:V2vWifi .
+
+openlabel_v2:QuantitativeValue a owl:Class ;
+    rdfs:label "QuantitativeValue" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:hasLowerBound ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:maxValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty openlabel_v2:maxValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:hasLowerBound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:hasLowerBound ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:maxValue ] ;
+    skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
+    skos:exactMatch schema:QuantitativeValue ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:DrivableAreaType a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "DrivableAreaType",
+        "DrivableAreaTypeEnum" ;
+    rdfs:range openlabel_v2:DrivableAreaType ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
+    skos:definition "Road type. Refer to BSI PAS-1883 Section 5.2.3.2.",
+        "Road types. Refer to BSI PAS-1883 Section 5.2.3.2." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:MotorwayManaged,
+        openlabel_v2:MotorwayUnmanaged,
+        openlabel_v2:RoadTypeDistributor,
+        openlabel_v2:RoadTypeMinor,
+        openlabel_v2:RoadTypeMotorway,
+        openlabel_v2:RoadTypeParking,
+        openlabel_v2:RoadTypeRadial,
+        openlabel_v2:RoadTypeShared,
+        openlabel_v2:RoadTypeSlip .
+
+openlabel_v2:JunctionRoundabout a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "JunctionRoundabout",
+        "JunctionRoundaboutEnum" ;
+    rdfs:range openlabel_v2:JunctionRoundabout ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    owl:unionOf ( openlabel_v2:RoundaboutCompactNosignal openlabel_v2:RoundaboutCompactSignal openlabel_v2:RoundaboutDoubleNosignal openlabel_v2:RoundaboutDoubleSignal openlabel_v2:RoundaboutLargeNosignal openlabel_v2:RoundaboutLargeSignal openlabel_v2:RoundaboutMiniNosignal openlabel_v2:RoundaboutMiniSignal openlabel_v2:RoundaboutNormalNosignal openlabel_v2:RoundaboutNormalSignal ) ;
+    skos:definition "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.",
+        "Types of roundabouts. Refer to BSI PAS-1883 Section 5.2.4." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:RoundaboutCompactNosignal,
+        openlabel_v2:RoundaboutCompactSignal,
+        openlabel_v2:RoundaboutDoubleNosignal,
+        openlabel_v2:RoundaboutDoubleSignal,
+        openlabel_v2:RoundaboutLargeNosignal,
+        openlabel_v2:RoundaboutLargeSignal,
+        openlabel_v2:RoundaboutMiniNosignal,
+        openlabel_v2:RoundaboutMiniSignal,
+        openlabel_v2:RoundaboutNormalNosignal,
+        openlabel_v2:RoundaboutNormalSignal .
+
+openlabel_v2:RoadUserVehicle a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "RoadUserVehicle",
+        "RoadUserVehicleEnum" ;
+    rdfs:range openlabel_v2:RoadUserVehicle ;
+    owl:unionOf ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+    skos:definition "Types of vehicles.",
+        "Vehicle type." ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    linkml:permissible_values openlabel_v2:VehicleAgricultural,
+        openlabel_v2:VehicleBus,
+        openlabel_v2:VehicleCar,
+        openlabel_v2:VehicleConstruction,
+        openlabel_v2:VehicleCycle,
+        openlabel_v2:VehicleEmergency,
+        openlabel_v2:VehicleMotorcycle,
+        openlabel_v2:VehicleTrailer,
+        openlabel_v2:VehicleTruck,
+        openlabel_v2:VehicleVan,
+        openlabel_v2:VehicleWheelchair .
+
+openlabel_v2:Odd a owl:Class,
+        owl:ObjectProperty ;
+    rdfs:label "Odd" ;
+    rdfs:range openlabel_v2:Odd ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesPollution ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SignsInformation ;
+            owl:onProperty openlabel_v2:SignsInformation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficVolume ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SignsRegulatory ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:trafficFlowRateValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:trafficFlowRateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficFlowRateValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:WeatherRain ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherSnowValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesPollution ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:IlluminationLowLight ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:WeatherRain ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:trafficVolumeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceType ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesDust ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:JunctionIntersection ;
+            owl:onProperty openlabel_v2:JunctionIntersection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ScenerySpecialStructure ;
+            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficVolume ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:daySunElevationValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SceneryFixedStructure ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:JunctionRoundabout ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:IlluminationArtificial ;
+            owl:onProperty openlabel_v2:IlluminationArtificial ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:EnvironmentParticulates ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SignsWarning ;
+            owl:onProperty openlabel_v2:SignsWarning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:weatherSnowValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaEdge ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:weatherSnowValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsRegulatory ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:RainType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SceneryFixedStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesDust ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:IlluminationArtificial ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceFeature ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:weatherRainValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaEdge ;
+            owl:onProperty openlabel_v2:DrivableAreaEdge ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsWarning ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:LaneSpecificationTravelDirection ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:illuminationCloudinessValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:RainType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:WeatherSnow ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:EnvironmentParticulates ;
+            owl:onProperty openlabel_v2:EnvironmentParticulates ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherSnow ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationLowLight ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:JunctionIntersection ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:LaneSpecificationType ;
+            owl:onProperty openlabel_v2:LaneSpecificationType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SignsRegulatory ;
+            owl:onProperty openlabel_v2:SignsRegulatory ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesPollution ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SubjectVehicleSpeed ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ConnectivityPositioning ;
+            owl:onProperty openlabel_v2:ConnectivityPositioning ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:IlluminationArtificial ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SignsInformation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesVolcanic ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:TrafficVolume ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:RainType ;
+            owl:onProperty openlabel_v2:RainType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryTemporaryStructure ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesMarine ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryFixedStructure ;
+            owl:onProperty openlabel_v2:SceneryFixedStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationMarking ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:trafficAgentDensityValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:WeatherRain ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaType ;
+            owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:HorizontalStraights ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:horizontalCurvesValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:WeatherSnow ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:JunctionRoundabout ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:SceneryZone ;
+            owl:onProperty openlabel_v2:SceneryZone ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:GeometryTransverse ;
+            owl:onProperty openlabel_v2:GeometryTransverse ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:JunctionIntersection ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesDust ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty openlabel_v2:particulatesWaterValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:DaySunElevation ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:SignsInformation ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceCondition ;
+            owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:LaneSpecificationType ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:longitudinalUpSlopeValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:SignsWarning ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:WeatherWind ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:DaySunPosition ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ScenerySpecialStructure ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:HorizontalCurves ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:EnvironmentParticulates ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:ConnectivityCommunication ;
+            owl:onProperty openlabel_v2:ConnectivityCommunication ] ;
+    skos:definition "Operational Design Domain tag.",
+        "Operational Design Domain. Refer to BSI PAS-1883 Section 5." ;
+    skos:exactMatch openlabel_v2:Odd ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+<https://w3id.org/ascs-ev/envited-x/openlabel/v2> a owl:Ontology ;
+    rdfs:label "openlabel-v2" ;
+    dcterms:license "https://creativecommons.org/licenses/by/4.0/" ;
+    dcterms:title "ASAM OpenLABEL Scenario Tagging Ontology" ;
+    pav:version "2.0.0" ;
+    skos:definition "Ontology for scenario tagging based on the ASAM OpenLABEL standard and BSI PAS-1883 Operational Design Domain taxonomy." .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:HorizontalCurves ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:horizontalCurvesValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:TrafficFlowRate ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:trafficFlowRateValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:MotionAccelerate ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:motionAccelerateValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Behaviour ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:TrafficAgentDensity ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:trafficAgentDensityValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:LaneSpecificationLaneCount ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:WeatherSnow ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:weatherSnowValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:MotionDecelerate ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:motionDecelerateValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Behaviour ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:LaneSpecificationDimensions ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:WeatherWind ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:weatherWindValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:WeatherRain ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:weatherRainValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:TrafficVolume ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:trafficVolumeValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:MotionDrive ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:motionDriveValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Behaviour ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:IlluminationCloudiness ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:illuminationCloudinessValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:LongitudinalDownSlope ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:longitudinalDownSlopeValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:DaySunElevation ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:daySunElevationValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:LongitudinalUpSlope ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:longitudinalUpSlopeValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+
