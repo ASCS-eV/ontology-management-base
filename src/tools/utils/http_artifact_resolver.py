@@ -103,9 +103,13 @@ logger = get_logger(__name__)
 GH_PAGES_BASE = "https://ascs-ev.github.io/ontology-management-base"
 
 # Raw GitHub content for files not published to Pages (catalogs, imports).
-RAW_GITHUB_BASE = (
-    "https://raw.githubusercontent.com/ASCS-eV/ontology-management-base/main"
+# The ref segment is replaced with the registry's release tag in ensure_cache()
+# so that catalogs, imports, and non-registry artifacts (e.g. gx) are fetched
+# from the same commit as the published registry — not from 'main' HEAD.
+_RAW_GITHUB_REPO = (
+    "https://raw.githubusercontent.com/ASCS-eV/ontology-management-base"
 )
+RAW_GITHUB_BASE = f"{_RAW_GITHUB_REPO}/main"
 
 # Registry JSON URL (published via GH Pages docs workflow).
 REGISTRY_URL = f"{GH_PAGES_BASE}/registry.json"
@@ -370,6 +374,33 @@ class HttpArtifactResolver:
         """Write a timestamp marker for cache freshness tracking."""
         marker = cache_dir / ".cache-timestamp"
         marker.write_text(str(time.time()))
+
+    def _pin_raw_github_to_release(self, tag: str) -> None:
+        """Pin ``raw_github_base`` to a release tag instead of ``main``.
+
+        Replaces the Git ref segment (last path component) in the raw GitHub
+        URL with the given release tag so that catalogs, imports, and
+        non-registry artifacts are fetched from a deterministic commit.
+
+        Args:
+            tag: Release tag from the registry (e.g., "v0.1.6").
+        """
+        if not tag or tag == "unknown":
+            return
+
+        repo_base, _, current_ref = self.raw_github_base.rpartition("/")
+        if not repo_base:
+            return
+
+        if current_ref == tag:
+            return
+
+        self.raw_github_base = f"{repo_base}/{tag}"
+        logger.info(
+            "Pinned raw GitHub base to release tag: %s (was: %s)",
+            tag,
+            current_ref,
+        )
 
     # =========================================================================
     # Fetching: Catalogs
@@ -693,6 +724,11 @@ class HttpArtifactResolver:
         """
         version = self.get_registry_version()
         cache_dir = self._versioned_cache_dir(version)
+
+        # Pin raw GitHub fetches to the release tag so catalogs, imports, and
+        # non-registry artifacts (e.g. gx) come from the same commit as the
+        # published registry — not from an arbitrary 'main' HEAD.
+        self._pin_raw_github_to_release(version)
 
         if not force and self.is_cache_valid(cache_dir):
             logger.info("Using valid cache at %s", cache_dir)

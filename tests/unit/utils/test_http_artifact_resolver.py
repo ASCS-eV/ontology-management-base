@@ -183,6 +183,34 @@ class TestCacheManagement:
         assert not version_dir.exists()
 
 
+class TestPinRawGithubToRelease:
+    """Tests for _pin_raw_github_to_release."""
+
+    def test_pins_main_to_release_tag(self, resolver):
+        """Default '/raw' ref is replaced with the release tag."""
+        resolver.raw_github_base = "https://test.example.com/raw/main"
+        resolver._pin_raw_github_to_release("v0.1.4")
+        assert resolver.raw_github_base == "https://test.example.com/raw/v0.1.4"
+
+    def test_skips_when_already_pinned(self, resolver):
+        """No-op when base already uses the target tag."""
+        resolver.raw_github_base = "https://test.example.com/raw/v0.1.4"
+        resolver._pin_raw_github_to_release("v0.1.4")
+        assert resolver.raw_github_base == "https://test.example.com/raw/v0.1.4"
+
+    def test_skips_unknown_version(self, resolver):
+        """No-op when version is 'unknown'."""
+        original = resolver.raw_github_base
+        resolver._pin_raw_github_to_release("unknown")
+        assert resolver.raw_github_base == original
+
+    def test_skips_empty_version(self, resolver):
+        """No-op when version is empty."""
+        original = resolver.raw_github_base
+        resolver._pin_raw_github_to_release("")
+        assert resolver.raw_github_base == original
+
+
 # ---------------------------------------------------------------------------
 # Catalog Fetch Tests
 # ---------------------------------------------------------------------------
