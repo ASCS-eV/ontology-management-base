@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 """
-HTTP-based artifact resolution for pip-only OMB installations.
+HTTP Artifact Resolver - Remote ontology artifact fetching and caching.
 
 When OMB is installed via ``pip install`` (without the full repository clone),
 the local ``artifacts/``, ``imports/``, and ``tests/`` directories are absent.
 This module fetches ontology artifacts from the published GitHub Pages site and
 raw GitHub content, caching them locally so the existing catalog-driven
 validation pipeline works unchanged.
+
+FEATURE SET:
+============
+1. HttpArtifactResolver - Fetches and caches OMB ontology artifacts from HTTP
+2. _http_get - Unified HTTP GET with optional content-negotiation
+3. _validate_response_host - SSRF prevention via host allowlist
+4. _safe_cache_path - Path traversal prevention for cache writes
+5. _get_default_cache_dir - Platform-appropriate cache directory
 
 DESIGN:
 =======
@@ -49,6 +57,27 @@ USAGE:
 
     # Or fetch only domains needed for specific IRIs:
     cache_dir = resolver.ensure_cache_for_iris(iris_set)
+
+STANDALONE TESTING:
+==================
+    python3 -m src.tools.utils.http_artifact_resolver --test
+
+    Options:
+      --test         Run self-tests (no network required)
+      --clear-cache  Remove all cached artifacts
+      --cache-dir    Override default cache directory
+      --verbose      Verbose output
+
+DEPENDENCIES:
+=============
+- urllib: HTTP fetching (stdlib, no external dependencies)
+- xml.etree.ElementTree: XML catalog parsing
+
+NOTES:
+======
+- Uses urllib.request (not ``requests``) for consistency with graph_loader.py
+- SSRF prevention via ALLOWED_HOSTS post-redirect validation
+- Path traversal prevention via _safe_cache_path on all cache writes
 """
 
 import json
@@ -58,7 +87,6 @@ import shutil
 import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Dict, List, Optional, Set
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
@@ -108,6 +136,37 @@ ALLOWED_HOSTS = frozenset(
 # Cache TTL: re-validate after this many seconds (24 hours).
 CACHE_TTL_SECONDS = 86400
 
+# Stale build sentinel timeout in seconds (10 minutes).
+# If a `.cache-building` marker is older than this, it's treated as stale
+# (crashed process) and ignored.
+STALE_BUILD_TIMEOUT_SECONDS = 600
+
+
+def _safe_cache_path(cache_dir: Path, *segments: str) -> Path:
+    """Resolve a path within cache_dir, rejecting traversal attempts.
+
+    All cache-write operations must call this **before** any ``mkdir()`` to
+    prevent directory creation outside the cache boundary.
+
+    Args:
+        cache_dir: Root cache directory (must already exist or be the target
+                   for creation).
+        *segments: Path segments to join (e.g., ``"imports"``, ``"rdf/rdf.owl.ttl"``).
+
+    Returns:
+        Resolved absolute path guaranteed to be under *cache_dir*.
+
+    Raises:
+        ValueError: If the resolved path escapes *cache_dir*.
+    """
+    dest = (cache_dir.resolve() / Path(*segments)).resolve()
+    if not dest.is_relative_to(cache_dir.resolve()):
+        raise ValueError(
+            f"Path traversal blocked: {'/'.join(segments)} "
+            f"resolves outside cache {cache_dir}"
+        )
+    return dest
+
 
 def _get_default_cache_dir() -> Path:
     """Return platform-appropriate cache directory for OMB artifacts."""
@@ -136,12 +195,15 @@ def _validate_response_host(response_url: str) -> None:
         )
 
 
-def _http_get(url: str, timeout: int = HTTP_TIMEOUT) -> bytes:
+def _http_get(
+    url: str, timeout: int = HTTP_TIMEOUT, accept: str | None = None
+) -> bytes:
     """Fetch URL content with a simple GET request.
 
     Args:
         url: URL to fetch
         timeout: Request timeout in seconds
+        accept: Optional Accept header for content-negotiation
 
     Returns:
         Response body as bytes
@@ -150,33 +212,10 @@ def _http_get(url: str, timeout: int = HTTP_TIMEOUT) -> bytes:
         URLError: On network failure or untrusted redirect
         HTTPError: On non-2xx response
     """
-    request = Request(url, headers={"User-Agent": "ontology-management-base"})
-    with urlopen(request, timeout=timeout) as response:
-        _validate_response_host(response.url)
-        return response.read()
-
-
-def _http_get_with_accept(url: str, accept: str, timeout: int = HTTP_TIMEOUT) -> bytes:
-    """Fetch URL with a specific Accept header (content-negotiation).
-
-    Args:
-        url: URL to fetch
-        accept: Accept header value (e.g., "text/turtle")
-        timeout: Request timeout in seconds
-
-    Returns:
-        Response body as bytes
-
-    Raises:
-        URLError: On network failure or untrusted redirect
-    """
-    request = Request(
-        url,
-        headers={
-            "User-Agent": "ontology-management-base",
-            "Accept": accept,
-        },
-    )
+    headers: dict[str, str] = {"User-Agent": "ontology-management-base"}
+    if accept:
+        headers["Accept"] = accept
+    request = Request(url, headers=headers)
     with urlopen(request, timeout=timeout) as response:
         _validate_response_host(response.url)
         return response.read()
@@ -194,7 +233,7 @@ class HttpArtifactResolver:
 
     def __init__(
         self,
-        cache_dir: Optional[Path] = None,
+        cache_dir: Path | None = None,
         gh_pages_base: str = GH_PAGES_BASE,
         raw_github_base: str = RAW_GITHUB_BASE,
         registry_url: str = REGISTRY_URL,
@@ -214,13 +253,13 @@ class HttpArtifactResolver:
         self.raw_github_base = raw_github_base.rstrip("/")
         self.registry_url = registry_url
         self.timeout = timeout
-        self._registry: Optional[Dict] = None
+        self._registry: dict | None = None
 
     # =========================================================================
     # Registry Discovery
     # =========================================================================
 
-    def fetch_registry(self) -> Dict:
+    def fetch_registry(self) -> dict:
         """Fetch and parse docs/registry.json from GitHub Pages.
 
         Returns:
@@ -252,7 +291,7 @@ class HttpArtifactResolver:
         registry = self.fetch_registry()
         return registry.get("latestRelease", "unknown")
 
-    def get_domain_info(self) -> Dict[str, Dict]:
+    def get_domain_info(self) -> dict[str, dict]:
         """Get domain→metadata mapping from the registry.
 
         Returns:
@@ -266,7 +305,7 @@ class HttpArtifactResolver:
     # Cache Management
     # =========================================================================
 
-    def _versioned_cache_dir(self, version: Optional[str] = None) -> Path:
+    def _versioned_cache_dir(self, version: str | None = None) -> Path:
         """Get the versioned cache directory.
 
         Args:
@@ -279,8 +318,12 @@ class HttpArtifactResolver:
             version = self.get_registry_version()
         return self.cache_base / version
 
-    def is_cache_valid(self, cache_dir: Optional[Path] = None) -> bool:
+    def is_cache_valid(self, cache_dir: Path | None = None) -> bool:
         """Check if the cache is present and not stale.
+
+        Returns False when a ``.cache-building`` sentinel exists (build in
+        progress or crashed).  Stale sentinels older than
+        ``STALE_BUILD_TIMEOUT_SECONDS`` are cleaned up automatically.
 
         Args:
             cache_dir: Explicit cache directory, or auto-detect.
@@ -292,6 +335,25 @@ class HttpArtifactResolver:
             try:
                 cache_dir = self._versioned_cache_dir()
             except RuntimeError:
+                return False
+
+        building_marker = cache_dir / ".cache-building"
+        if building_marker.exists():
+            try:
+                ts = float(building_marker.read_text().strip())
+                if (time.time() - ts) > STALE_BUILD_TIMEOUT_SECONDS:
+                    logger.warning(
+                        "Removing stale build marker (>%d s old): %s",
+                        STALE_BUILD_TIMEOUT_SECONDS,
+                        building_marker,
+                    )
+                    building_marker.unlink(missing_ok=True)
+                else:
+                    logger.debug("Cache build in progress: %s", building_marker)
+                    return False
+            except (ValueError, OSError):
+                # Corrupt marker — remove and treat as invalid
+                building_marker.unlink(missing_ok=True)
                 return False
 
         marker = cache_dir / ".cache-timestamp"
@@ -324,7 +386,7 @@ class HttpArtifactResolver:
             Absolute path to the cached catalog file
         """
         url = f"{self.raw_github_base}/{catalog_rel_path}"
-        dest = cache_dir / catalog_rel_path
+        dest = _safe_cache_path(cache_dir, catalog_rel_path)
         dest.parent.mkdir(parents=True, exist_ok=True)
 
         logger.info("Fetching catalog: %s", catalog_rel_path)
@@ -361,14 +423,14 @@ class HttpArtifactResolver:
         registry = self.fetch_registry()
         dest = cache_dir / "docs" / "registry.json"
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(json.dumps(registry, indent=3), encoding="utf-8")
+        dest.write_text(json.dumps(registry, indent=2), encoding="utf-8")
         return dest
 
     # =========================================================================
     # Fetching: Domain Artifacts (via w3id.org / GH Pages)
     # =========================================================================
 
-    def _build_w3id_url(self, domain_info: Dict) -> Optional[str]:
+    def _build_w3id_url(self, domain_info: dict) -> str | None:
         """Build the w3id.org base URL for a domain's artifacts.
 
         Args:
@@ -382,7 +444,7 @@ class HttpArtifactResolver:
             return None
         return iri.rstrip("#/")
 
-    def _build_gh_pages_url(self, domain_info: Dict) -> Optional[str]:
+    def _build_gh_pages_url(self, domain_info: dict) -> str | None:
         """Build the GitHub Pages URL for a domain's artifacts.
 
         GH Pages URL pattern:
@@ -404,7 +466,7 @@ class HttpArtifactResolver:
     def fetch_domain_artifacts(
         self,
         domain: str,
-        domain_info: Dict,
+        domain_info: dict,
         cache_dir: Path,
     ) -> bool:
         """Fetch OWL, SHACL, and context files for a domain.
@@ -420,7 +482,7 @@ class HttpArtifactResolver:
         Returns:
             True if at least the ontology was fetched successfully
         """
-        domain_dir = cache_dir / "artifacts" / domain
+        domain_dir = _safe_cache_path(cache_dir, "artifacts", domain)
         domain_dir.mkdir(parents=True, exist_ok=True)
 
         gh_url = self._build_gh_pages_url(domain_info)
@@ -465,9 +527,7 @@ class HttpArtifactResolver:
                 else:
                     conneg_url = w3id_url
                 try:
-                    data = _http_get_with_accept(
-                        conneg_url, accept_header, self.timeout
-                    )
+                    data = _http_get(conneg_url, self.timeout, accept=accept_header)
                     dest.write_bytes(data)
                     logger.info("Fetched %s/%s via w3id.org conneg", domain, local_name)
                     fetched = True
@@ -513,7 +573,7 @@ class HttpArtifactResolver:
 
         fetched = 0
         cached = 0
-        seen_paths: Set[str] = set()
+        seen_paths: set[str] = set()
 
         for elem in uri_elems:
             rel_path = elem.get("uri")
@@ -521,7 +581,11 @@ class HttpArtifactResolver:
                 continue
             seen_paths.add(rel_path)
 
-            dest = cache_dir / "imports" / rel_path
+            try:
+                dest = _safe_cache_path(cache_dir, "imports", rel_path)
+            except ValueError:
+                logger.warning("Skipping import with path traversal: %s", rel_path)
+                continue
             if dest.exists():
                 cached += 1
                 continue
@@ -568,7 +632,7 @@ class HttpArtifactResolver:
 
         fetched = 0
         cached = 0
-        seen_paths: Set[str] = set()
+        seen_paths: set[str] = set()
 
         for elem in uri_elems:
             rel_path = elem.get("uri")
@@ -576,7 +640,13 @@ class HttpArtifactResolver:
                 continue
             seen_paths.add(rel_path)
 
-            dest = cache_dir / "artifacts" / rel_path
+            try:
+                dest = _safe_cache_path(cache_dir, "artifacts", rel_path)
+            except ValueError:
+                logger.warning(
+                    "Skipping catalog artifact with path traversal: %s", rel_path
+                )
+                continue
             if dest.exists():
                 cached += 1
                 continue
@@ -604,7 +674,7 @@ class HttpArtifactResolver:
 
     def ensure_cache(
         self,
-        domains: Optional[List[str]] = None,
+        domains: list[str] | None = None,
         force: bool = False,
     ) -> Path:
         """Ensure all required artifacts are cached locally.
@@ -631,45 +701,50 @@ class HttpArtifactResolver:
         logger.info("Building artifact cache at %s", cache_dir)
         cache_dir.mkdir(parents=True, exist_ok=True)
 
-        # Step 1: Fetch registry
-        self.fetch_registry_to_cache(cache_dir)
+        building_marker = cache_dir / ".cache-building"
+        building_marker.write_text(str(time.time()))
+        try:
+            # Step 1: Fetch registry
+            self.fetch_registry_to_cache(cache_dir)
 
-        # Step 2: Fetch catalogs
-        self.fetch_all_catalogs(cache_dir)
+            # Step 2: Fetch catalogs
+            self.fetch_all_catalogs(cache_dir)
 
-        # Step 3: Fetch domain artifacts
-        domain_info = self.get_domain_info()
-        if domains is None:
-            domains = list(domain_info.keys())
+            # Step 3: Fetch domain artifacts
+            domain_info = self.get_domain_info()
+            if domains is None:
+                domains = list(domain_info.keys())
 
-        fetched_domains = []
-        for domain_name in domains:
-            info = domain_info.get(domain_name)
-            if not info:
-                logger.warning("Domain '%s' not found in registry", domain_name)
-                continue
-            if self.fetch_domain_artifacts(domain_name, info, cache_dir):
-                fetched_domains.append(domain_name)
+            fetched_domains = []
+            for domain_name in domains:
+                info = domain_info.get(domain_name)
+                if not info:
+                    logger.warning("Domain '%s' not found in registry", domain_name)
+                    continue
+                if self.fetch_domain_artifacts(domain_name, info, cache_dir):
+                    fetched_domains.append(domain_name)
 
-        logger.info(
-            "Fetched artifacts for %d/%d domains",
-            len(fetched_domains),
-            len(domains),
-        )
+            logger.info(
+                "Fetched artifacts for %d/%d domains",
+                len(fetched_domains),
+                len(domains),
+            )
 
-        # Step 4: Fetch import ontologies
-        self.fetch_import_files(cache_dir)
+            # Step 4: Fetch import ontologies
+            self.fetch_import_files(cache_dir)
 
-        # Step 5: Fetch any remaining artifacts from catalog
-        # (covers domains like gx that are in catalog but not registry.json)
-        self.fetch_artifacts_from_catalog(cache_dir)
+            # Step 5: Fetch any remaining artifacts from catalog
+            # (covers domains like gx that are in catalog but not registry.json)
+            self.fetch_artifacts_from_catalog(cache_dir)
 
-        # Step 6: Write cache marker
-        self._write_cache_marker(cache_dir)
+            # Step 6: Write cache marker (only on success)
+            self._write_cache_marker(cache_dir)
+        finally:
+            building_marker.unlink(missing_ok=True)
 
         return cache_dir
 
-    def ensure_cache_for_iris(self, iris: Set[str]) -> Path:
+    def ensure_cache_for_iris(self, iris: set[str]) -> Path:
         """Ensure artifacts are cached for domains matching the given IRIs.
 
         Discovers which domains are needed based on the IRI prefixes in the
@@ -682,7 +757,7 @@ class HttpArtifactResolver:
             Path to the versioned cache directory.
         """
         domain_info = self.get_domain_info()
-        needed_domains: Set[str] = set()
+        needed_domains: set[str] = set()
 
         for iri in iris:
             for domain_name, info in domain_info.items():
@@ -713,7 +788,7 @@ class HttpArtifactResolver:
         )
         return self.ensure_cache(domains=list(needed_domains))
 
-    def clear_cache(self, version: Optional[str] = None) -> None:
+    def clear_cache(self, version: str | None = None) -> None:
         """Remove cached artifacts.
 
         Args:
@@ -738,3 +813,148 @@ class HttpArtifactResolver:
         if target.exists():
             shutil.rmtree(target)
             logger.info("Cleared cache: %s", target)
+
+
+# =========================================================================
+# Standalone self-tests
+# =========================================================================
+
+
+def _run_tests() -> bool:
+    """Run self-tests for the module.
+
+    Tests core utilities (cache dir, host validation, safe paths, URL builders)
+    without making real HTTP requests.
+    """
+    import tempfile
+
+    print("Running http_artifact_resolver self-tests...")
+    all_passed = True
+
+    # Test 1: _get_default_cache_dir returns an omb-suffixed path
+    cache_dir = _get_default_cache_dir()
+    if cache_dir.name != "omb":
+        print(f"FAIL: Expected cache dir name 'omb', got '{cache_dir.name}'")
+        all_passed = False
+    else:
+        print(f"PASS: Default cache dir: {cache_dir}")
+
+    # Test 2: _validate_response_host accepts trusted hosts
+    try:
+        _validate_response_host("https://ascs-ev.github.io/test")
+        print("PASS: Trusted host accepted")
+    except URLError:
+        print("FAIL: Trusted host rejected")
+        all_passed = False
+
+    # Test 3: _validate_response_host rejects untrusted hosts
+    try:
+        _validate_response_host("https://evil.example.com/payload")
+        print("FAIL: Untrusted host accepted")
+        all_passed = False
+    except URLError:
+        print("PASS: Untrusted host rejected")
+
+    # Test 4: _safe_cache_path rejects path traversal
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        try:
+            _safe_cache_path(tmp, "imports", "../../etc/passwd")
+            print("FAIL: Path traversal not rejected")
+            all_passed = False
+        except ValueError:
+            print("PASS: Path traversal rejected")
+
+        # Test 5: _safe_cache_path allows normal paths
+        result = _safe_cache_path(tmp, "artifacts", "hdmap/hdmap.owl.ttl")
+        if result.is_relative_to(tmp.resolve()):
+            print("PASS: Normal path allowed")
+        else:
+            print("FAIL: Normal path rejected")
+            all_passed = False
+
+    # Test 6: URL builders
+    resolver = HttpArtifactResolver(cache_dir=Path(tempfile.mkdtemp()))
+    info_ascs = {"iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6"}
+    gh_url = resolver._build_gh_pages_url(info_ascs)
+    if gh_url and "w3id/ascs-ev/envited-x/hdmap/v6" in gh_url:
+        print("PASS: GH Pages URL built correctly")
+    else:
+        print(f"FAIL: GH Pages URL: {gh_url}")
+        all_passed = False
+
+    w3id_url = resolver._build_w3id_url(info_ascs)
+    if w3id_url == "https://w3id.org/ascs-ev/envited-x/hdmap/v6":
+        print("PASS: w3id URL built correctly")
+    else:
+        print(f"FAIL: w3id URL: {w3id_url}")
+        all_passed = False
+
+    # Test 7: Missing IRI returns None
+    if resolver._build_w3id_url({}) is None:
+        print("PASS: Missing IRI returns None")
+    else:
+        print("FAIL: Missing IRI did not return None")
+        all_passed = False
+
+    # Cleanup
+    shutil.rmtree(resolver.cache_base, ignore_errors=True)
+
+    print(f"\n{'All tests passed!' if all_passed else 'Some tests FAILED!'}")
+    return all_passed
+
+
+def main():
+    """CLI entry point for http_artifact_resolver."""
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(
+        description="HTTP-based artifact resolution for OMB"
+    )
+    parser.add_argument(
+        "--test",
+        action="store_true",
+        help="Run self-tests",
+    )
+    parser.add_argument(
+        "--clear-cache",
+        action="store_true",
+        help="Clear all cached artifacts",
+    )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        help="Override cache directory",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Verbose output",
+    )
+
+    args = parser.parse_args()
+
+    if args.test:
+        success = _run_tests()
+        sys.exit(0 if success else 1)
+
+    resolver = HttpArtifactResolver(cache_dir=args.cache_dir)
+
+    if args.clear_cache:
+        resolver.clear_cache()
+        print("Cache cleared.")
+        sys.exit(0)
+
+    # Default: show cache info
+    cache_dir = _get_default_cache_dir()
+    print(f"Cache directory: {cache_dir}")
+    if cache_dir.exists():
+        versions = [d.name for d in cache_dir.iterdir() if d.is_dir()]
+        print(f"Cached versions: {versions or '(none)'}")
+    else:
+        print("No cache present.")
+
+
+if __name__ == "__main__":
+    main()

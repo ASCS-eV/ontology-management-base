@@ -80,7 +80,6 @@ class RegistryResolver:
                 replaces ``root_dir`` with the HTTP cache directory.
         """
         self.root_dir = Path(root_dir or Path.cwd()).resolve()
-        self._original_root_dir = self.root_dir
         self._registry: Dict = {}
         self._catalog: Dict[str, Dict] = {}  # Full catalog (test-data + fixtures)
         self._fixtures_catalog: Dict[str, str] = {}  # Fixture IRIs only
@@ -99,6 +98,11 @@ class RegistryResolver:
         self._load_catalog()
         self._load_artifacts_catalog()
         self._build_iri_index()
+
+    @property
+    def is_http_bootstrapped(self) -> bool:
+        """Whether this resolver was bootstrapped from HTTP cache."""
+        return self._http_enabled
 
     def _has_local_catalogs(self) -> bool:
         """Check whether the essential XML catalogs exist locally."""
