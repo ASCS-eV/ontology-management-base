@@ -12,9 +12,10 @@ import pytest
 from rdflib import BNode, Graph, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, XSD
 
-from src.tools.core.iri_utils import iri_to_domain_hint
 from src.tools.utils.context_generator import (
     _analyze_or_branches,
+    _build_ns_prefix_lookup,
+    _lookup_prefix,
     extract_classes,
     extract_ontology_iri,
     extract_property_datatypes,
@@ -29,28 +30,58 @@ ROOT_DIR = Path(__file__).parent.parent.parent.parent.resolve()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
 
 
-class TestIriToDomainHint:
-    """Tests for iri_to_domain_hint (replaces extract_prefix_from_iri)."""
+class TestNsPrefixLookup:
+    """Tests for _build_ns_prefix_lookup and _lookup_prefix."""
 
-    def test_iri_to_domain_hint_manifest_iri(self):
-        """Should extract 'manifest' from manifest ontology IRI."""
-        iri = "https://w3id.org/ascs-ev/envited-x/manifest/v5"
-        assert iri_to_domain_hint(iri) == "manifest"
+    def test_lookup_hash_namespace(self):
+        """Should find prefix for hash-terminated namespace."""
+        g = Graph()
+        g.bind("gx", "https://w3id.org/gaia-x/development#")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert _lookup_prefix(ns_lookup, "https://w3id.org/gaia-x/development#") == "gx"
 
-    def test_iri_to_domain_hint_trailing_slash(self):
-        """Should extract 'hdmap' from hdmap ontology IRI with trailing slash."""
-        iri = "https://w3id.org/ascs-ev/envited-x/hdmap/v5/"
-        assert iri_to_domain_hint(iri) == "hdmap"
+    def test_lookup_slash_namespace(self):
+        """Should find prefix for slash-terminated namespace."""
+        g = Graph()
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert (
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+            == "manifest"
+        )
 
-    def test_iri_to_domain_hint_legacy_iri(self):
-        """Should extract domain from legacy gaia-x4plcaad IRI."""
-        iri = "https://w3id.org/gaia-x4plcaad/ontologies/scenario/v5"
-        assert iri_to_domain_hint(iri) == "scenario"
+    def test_lookup_normalizes_missing_trailing_slash(self):
+        """Should find prefix when IRI lacks trailing slash but namespace has it."""
+        g = Graph()
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert (
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5")
+            == "manifest"
+        )
 
-    def test_iri_to_domain_hint_simple_iri(self):
-        """Should handle simple IRI without version pattern."""
-        iri = "https://example.org/ontology/myterm"
-        assert iri_to_domain_hint(iri) == "myterm"
+    def test_lookup_tries_hash_variant(self):
+        """Should find prefix via hash variant when IRI has no terminator."""
+        g = Graph()
+        g.bind("gx", "https://w3id.org/gaia-x/development#")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert _lookup_prefix(ns_lookup, "https://w3id.org/gaia-x/development") == "gx"
+
+    def test_lookup_returns_none_for_unknown(self):
+        """Should return None for unknown IRI."""
+        g = Graph()
+        g.bind("gx", "https://w3id.org/gaia-x/development#")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert _lookup_prefix(ns_lookup, "https://example.org/unknown/") is None
+
+    def test_build_skips_empty_prefix(self):
+        """Should not include the default (empty) prefix in the lookup."""
+        g = Graph()
+        g.bind("", "https://example.org/default/")
+        g.bind("ex", "https://example.org/explicit/")
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert "https://example.org/default/" not in ns_lookup
+        assert ns_lookup["https://example.org/explicit/"] == "ex"
 
 
 class TestExtractOntologyIri:
@@ -406,6 +437,24 @@ class TestGenerateContext:
         # These properties use sh:or with sh:node branches
         assert ctx.get("hasResourceDescription", {}).get("@type") == "@id"
         assert ctx.get("hasManifest", {}).get("@type") == "@id"
+
+    def test_generate_context_envited_x_uses_gx_prefix(self):
+        """envited-x context should use 'gx' prefix from @prefix declaration, not 'development'."""
+        envited_x_owl = ARTIFACTS_DIR / "envited-x" / "envited-x.owl.ttl"
+        if not envited_x_owl.exists():
+            pytest.skip("envited-x OWL file not found")
+
+        result = generate_context("envited-x")
+        assert result is not None
+
+        ctx = result["@context"]
+        # Must use the declared @prefix name 'gx', not the path segment 'development'
+        assert "gx" in ctx, "Expected 'gx' prefix from @prefix declaration"
+        assert ctx["gx"] == "https://w3id.org/gaia-x/development#"
+        assert "development" not in ctx, (
+            "Prefix 'development' should not appear — "
+            "use the author-declared @prefix name 'gx' instead"
+        )
 
 
 class TestRoundTrip:
