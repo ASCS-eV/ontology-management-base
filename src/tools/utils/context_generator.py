@@ -51,7 +51,7 @@ from rdflib import RDF, Graph, Namespace, URIRef
 from rdflib.namespace import OWL, XSD
 
 from src.tools.core.constants import FAST_STORE, Extensions
-from src.tools.core.iri_utils import get_local_name, iri_to_domain_hint, normalize_iri
+from src.tools.core.iri_utils import get_local_name, normalize_iri
 from src.tools.core.logging import get_logger
 from src.tools.utils.graph_loader import load_graph, load_graphs
 from src.tools.utils.print_formatter import normalize_path_for_display
@@ -92,6 +92,52 @@ def extract_ontology_iri(owl_graph: Graph) -> Optional[str]:
     """Extract the ontology IRI from an OWL graph."""
     for s in owl_graph.subjects(RDF.type, OWL.Ontology):
         return str(s)
+    return None
+
+
+def _build_ns_prefix_lookup(graph: Graph) -> Dict[str, str]:
+    """Build a reverse lookup from namespace URI to declared prefix name.
+
+    Uses the ``@prefix`` declarations from the parsed Turtle source
+    (available via ``graph.namespaces()``).  This is the
+    standards-conformant way to resolve prefix names — the ontology
+    author's declared prefixes are authoritative.
+
+    Returns:
+        Dict mapping namespace URI strings to prefix name strings.
+    """
+    lookup: Dict[str, str] = {}
+    for prefix, ns in graph.namespaces():
+        prefix_str = str(prefix)
+        ns_str = str(ns)
+        if prefix_str:
+            lookup[ns_str] = prefix_str
+    return lookup
+
+
+def _lookup_prefix(ns_lookup: Dict[str, str], iri: str) -> Optional[str]:
+    """Look up a prefix for an IRI using declared namespace bindings.
+
+    Tries the normalized IRI (with trailing ``/``) and both ``/`` and
+    ``#`` variants to handle hash-vs-slash namespace mismatches.
+
+    Args:
+        ns_lookup: Mapping from namespace URI to prefix name
+            (built by :func:`_build_ns_prefix_lookup`).
+        iri: The ontology IRI to look up.
+
+    Returns:
+        The declared prefix name, or ``None`` if not found.
+    """
+    normalized = normalize_iri(iri, trailing_slash=True)
+    if normalized in ns_lookup:
+        return ns_lookup[normalized]
+
+    base = iri.rstrip("/#")
+    for variant in (base + "#", base + "/"):
+        if variant in ns_lookup:
+            return ns_lookup[variant]
+
     return None
 
 
@@ -394,8 +440,13 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
 
     logger.info("Processing domain '%s' with IRI: %s", domain, ontology_iri)
 
-    # Determine prefix
-    prefix = iri_to_domain_hint(ontology_iri) or domain
+    # Build reverse lookup from namespace URIs to author-declared prefix names.
+    # This uses the @prefix declarations from the Turtle source, which are the
+    # authoritative prefix-to-namespace mappings.
+    ns_lookup = _build_ns_prefix_lookup(owl_graph)
+
+    # Determine prefix from namespace bindings, fall back to domain name
+    prefix = _lookup_prefix(ns_lookup, ontology_iri) or domain
 
     # Build context
     context: Dict[str, Any] = {
@@ -415,11 +466,20 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
     # Reserved keys that properties/classes must not overwrite
     reserved_keys = set(context.keys())
 
-    # Add prefixes for imported ontologies (resolved from owl:imports IRIs)
+    # Add prefixes for imported ontologies resolved from owl:imports IRIs.
+    # Only uses author-declared @prefix bindings; imports without a matching
+    # declaration are skipped with a warning (no heuristic guessing).
     for imported in sorted(owl_graph.objects(URIRef(ontology_iri), OWL.imports)):
         imported_str = str(imported)
-        imported_prefix = iri_to_domain_hint(imported_str)
-        if imported_prefix and imported_prefix not in context:
+        imported_prefix = _lookup_prefix(ns_lookup, imported_str)
+        if not imported_prefix:
+            logger.warning(
+                "No @prefix declaration for <%s> in %s, skipping import prefix",
+                imported_str,
+                domain,
+            )
+            continue
+        if imported_prefix not in context:
             imported_ns = normalize_iri(imported_str, trailing_slash=True)
             context[imported_prefix] = imported_ns
             reserved_keys.add(imported_prefix)
@@ -652,17 +712,22 @@ def _run_tests() -> bool:
     print("Running context_generator self-tests...")
     all_passed = True
 
-    # Test 1: iri_to_domain_hint (replaces extract_prefix_from_iri)
+    # Test 1: _build_ns_prefix_lookup / _lookup_prefix
     try:
-        iri1 = "https://w3id.org/ascs-ev/envited-x/manifest/v5"
-        assert iri_to_domain_hint(iri1) == "manifest"
+        g = Graph()
+        g.bind("gx", "https://w3id.org/gaia-x/development#")
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
 
-        iri2 = "https://w3id.org/ascs-ev/envited-x/hdmap/v5/"
-        assert iri_to_domain_hint(iri2) == "hdmap"
+        ns_lookup = _build_ns_prefix_lookup(g)
+        assert _lookup_prefix(ns_lookup, "https://w3id.org/gaia-x/development#") == "gx"
+        assert (
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5")
+            == "manifest"
+        )
 
-        print("PASS: iri_to_domain_hint")
+        print("PASS: namespace prefix lookup")
     except AssertionError as e:
-        print(f"FAIL: iri_to_domain_hint - {e}")
+        print(f"FAIL: namespace prefix lookup - {e}")
         all_passed = False
 
     # Test 2: Generate context for manifest (if files exist)

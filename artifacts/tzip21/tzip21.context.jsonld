@@ -16,7 +16,7 @@
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "tzip21": "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
       "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "development": "https://w3id.org/gaia-x/development#",
+      "gx": "https://w3id.org/gaia-x/development#",
       "artifactUri": {
          "@id": "tzip21:artifactUri",
          "@type": "xsd:anyURI"
