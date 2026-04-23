@@ -145,6 +145,43 @@ else
     fi
 fi
 
+# ---------------------------------------------------------------------------
+# Annotate the OWL ontology with OMB provenance metadata.
+# This embeds owl:versionInfo and rdfs:comment directly in the Turtle file so
+# consumers can distinguish this ASCS/OMB profile from the vanilla upstream.
+# ---------------------------------------------------------------------------
+echo "Annotating OWL ontology with provenance metadata..."
+GX_VERSION=$(tr -d '[:space:]' < "$VERSION_FILE" 2>/dev/null || echo "unknown")
+python -c "
+import sys
+from pathlib import Path
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import OWL, RDFS, RDF
+from linkml.utils.generator import deterministic_turtle
+
+owl_path = Path(sys.argv[1])
+version = sys.argv[2]
+
+g = Graph()
+g.parse(owl_path, format='turtle')
+
+ont_nodes = list(g.subjects(RDF.type, OWL.Ontology))
+if not ont_nodes:
+    print('  WARNING: No owl:Ontology node found -- skipping annotation')
+    sys.exit(0)
+
+ont = ont_nodes[0]
+g.add((ont, OWL.versionInfo, Literal(version + ' (ASCS/OMB profile)')))
+g.add((ont, RDFS.comment, Literal(
+    'ASCS/OMB profile of the Gaia-X Trust Framework ontology, '
+    'regenerated via LinkML from service-characteristics. '
+    'See artifacts/gx/VERSIONING.md for provenance details.'
+)))
+
+owl_path.write_text(deterministic_turtle(g), encoding='utf-8', newline='\n')
+print('  OWL provenance annotation added')
+" "$ARTIFACTS_DIR/gx.owl.ttl" "$GX_VERSION" 2>>"$GX_LOG"
+
 echo ""
 echo "✓ GX artifacts updated from $(git rev-parse --short HEAD)"
 echo ""
