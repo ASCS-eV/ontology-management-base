@@ -69,12 +69,15 @@ class RegistryResolver:
         domains = resolver.list_domains()
     """
 
-    def __init__(self, root_dir: Path = None):
+    def __init__(self, root_dir: Path = None, enable_http: bool = False):
         """
         Initialize the registry resolver.
 
         Args:
             root_dir: Root directory of the repository. Defaults to current directory.
+            enable_http: If True and local catalogs are missing, bootstrap
+                artifacts from HTTP using HttpArtifactResolver.  Note: this
+                replaces ``root_dir`` with the HTTP cache directory.
         """
         self.root_dir = Path(root_dir or Path.cwd()).resolve()
         self._registry: Dict = {}
@@ -86,11 +89,41 @@ class RegistryResolver:
         self._imports_catalog_entries: Optional[Dict[str, str]] = None
         self._imports_context_entries: Optional[Dict[str, str]] = None
         self._imports_shacl_entries: Optional[Dict[str, List[str]]] = None
+        self._http_enabled: bool = False
+
+        if enable_http and not self._has_local_catalogs():
+            self._bootstrap_from_http()
 
         self._load_registry()
-        self._load_catalog()  # Replaces _load_fixtures_catalog
+        self._load_catalog()
         self._load_artifacts_catalog()
         self._build_iri_index()
+
+    @property
+    def is_http_bootstrapped(self) -> bool:
+        """Whether this resolver was bootstrapped from HTTP cache."""
+        return self._http_enabled
+
+    def _has_local_catalogs(self) -> bool:
+        """Check whether the essential XML catalogs exist locally."""
+        catalog_name = "catalog-v001.xml"
+        artifacts_cat = self.root_dir / "artifacts" / catalog_name
+        imports_cat = self.root_dir / "imports" / catalog_name
+        return artifacts_cat.exists() and imports_cat.exists()
+
+    def _bootstrap_from_http(self) -> None:
+        """Fetch artifacts via HTTP and point root_dir at the cache."""
+        from src.tools.utils.http_artifact_resolver import HttpArtifactResolver
+
+        http_resolver = HttpArtifactResolver()
+        cache_dir = http_resolver.ensure_cache()
+        logger.info(
+            "HTTP bootstrap: root_dir changed from %s to cache at %s",
+            self.root_dir,
+            cache_dir,
+        )
+        self.root_dir = cache_dir
+        self._http_enabled = True
 
     def _load_registry(self) -> None:
         """Load docs/registry.json."""

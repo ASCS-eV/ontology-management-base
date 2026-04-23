@@ -96,6 +96,7 @@ class ShaclValidator:
         resolver: Optional["RegistryResolver"] = None,
         strict: bool = False,
         allow_online: bool = True,
+        enable_http: bool = False,
     ):
         """
         Initialize the SHACL validator.
@@ -109,9 +110,19 @@ class ShaclValidator:
                 registered on the resolver before passing.
             strict: If True, unresolved IRIs cause validation failure.
             allow_online: If True, attempt HTTP resolution for unresolved IRIs.
+            enable_http: If True and no local catalogs, bootstrap via HTTP.
         """
         self.root_dir = Path(root_dir).resolve()
-        self.resolver = resolver if resolver else RegistryResolver(root_dir)
+        if resolver and enable_http:
+            logger.warning(
+                "Both 'resolver' and 'enable_http' provided to ShaclValidator; "
+                "'enable_http' is ignored when a pre-built resolver is supplied"
+            )
+        self.resolver = (
+            resolver
+            if resolver
+            else RegistryResolver(root_dir, enable_http=enable_http)
+        )
         self.inference_mode = inference_mode
         self.verbose = verbose
         self.strict = strict

@@ -222,11 +222,18 @@ def load_jsonld_files(
                 )
 
                 json_str = load_jsonld_with_local_contexts(json_file, context_url_map)
+                try:
+                    file_uri = json_file.resolve().as_uri()
+                except OSError:
+                    # On Windows, resolve() may call os.getcwd() even for
+                    # absolute paths.  Fall back to as_uri() when cwd is
+                    # unavailable (e.g. deleted working directory).
+                    file_uri = json_file.absolute().as_uri()
                 graph.parse(
                     data=json_str,
                     format="json-ld",
-                    base=json_file.resolve().as_uri(),
-                    publicID=json_file.resolve().as_uri(),
+                    base=file_uri,
+                    publicID=file_uri,
                 )
             else:
                 graph.parse(str(json_file), format="json-ld")

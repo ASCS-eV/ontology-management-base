@@ -261,6 +261,9 @@ def validate_data_conformance_all(
     print("📋 Using catalog-based test discovery\n", flush=True)
 
     # Create validator with shared resolver
+    # Note: enable_http is not passed here because catalog_resolver is already
+    # HTTP-bootstrapped when --remote is used.  ShaclValidator uses the
+    # pre-built resolver directly.
     validator = ShaclValidator(
         root_dir,
         inference_mode=inference_mode,
@@ -343,7 +346,7 @@ def check_failing_tests_all(
 
     print("📋 Using catalog-based test discovery\n", flush=True)
 
-    # Create validator with shared resolver
+    # Create validator with shared resolver (already HTTP-bootstrapped if --remote)
     validator = ShaclValidator(
         root_dir,
         inference_mode=inference_mode,
@@ -621,7 +624,16 @@ def main():
         help="Disable online fallback for unresolved IRIs.",
     )
 
+    target_group.add_argument(
+        "--remote",
+        action="store_true",
+        default=False,
+        help="Enable HTTP artifact resolution for pip-only installations "
+        "(fetches ontology schemas from GitHub Pages when local catalogs are missing).",
+    )
+
     args = parser.parse_args()
+    _enable_http = args.remote
 
     # DATA PATHS MODE: User specified file/directory paths
     # Uses auto-discovery to detect top-level files vs fixtures
@@ -665,7 +677,7 @@ def main():
                 print(f"      - {dup_id}: {file_names}")
 
         # Create catalog resolver
-        catalog_resolver = RegistryResolver(ROOT_DIR)
+        catalog_resolver = RegistryResolver(ROOT_DIR, enable_http=_enable_http)
 
         # Register discovered fixtures for IRI resolution
         if iri_to_file:
@@ -703,7 +715,7 @@ def main():
     # DOMAIN MODE: User specified catalog domains
     elif args.domain is not None:
         print(f"🔍 Domain mode: Using catalog for domain(s): {args.domain}", flush=True)
-        catalog_resolver = RegistryResolver(ROOT_DIR)
+        catalog_resolver = RegistryResolver(ROOT_DIR, enable_http=_enable_http)
 
         # Register additional artifact directories (before checking domains)
         if args.artifacts:
@@ -742,7 +754,7 @@ def main():
     # AUTO MODE: Discover all domains from catalog
     else:
         print("🔍 Auto mode: Discovering all domains from catalog", flush=True)
-        catalog_resolver = RegistryResolver(ROOT_DIR)
+        catalog_resolver = RegistryResolver(ROOT_DIR, enable_http=_enable_http)
         ontology_domains = catalog_resolver.get_test_domains()
 
         if not ontology_domains:
