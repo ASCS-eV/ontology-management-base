@@ -76,9 +76,11 @@ class RegistryResolver:
         Args:
             root_dir: Root directory of the repository. Defaults to current directory.
             enable_http: If True and local catalogs are missing, bootstrap
-                artifacts from HTTP using HttpArtifactResolver.
+                artifacts from HTTP using HttpArtifactResolver.  Note: this
+                replaces ``root_dir`` with the HTTP cache directory.
         """
         self.root_dir = Path(root_dir or Path.cwd()).resolve()
+        self._original_root_dir = self.root_dir
         self._registry: Dict = {}
         self._catalog: Dict[str, Dict] = {}  # Full catalog (test-data + fixtures)
         self._fixtures_catalog: Dict[str, str] = {}  # Fixture IRIs only
@@ -100,8 +102,9 @@ class RegistryResolver:
 
     def _has_local_catalogs(self) -> bool:
         """Check whether the essential XML catalogs exist locally."""
-        artifacts_cat = self.root_dir / "artifacts" / "catalog-v001.xml"
-        imports_cat = self.root_dir / "imports" / "catalog-v001.xml"
+        catalog_name = "catalog-v001.xml"
+        artifacts_cat = self.root_dir / "artifacts" / catalog_name
+        imports_cat = self.root_dir / "imports" / catalog_name
         return artifacts_cat.exists() and imports_cat.exists()
 
     def _bootstrap_from_http(self) -> None:
@@ -110,6 +113,11 @@ class RegistryResolver:
 
         http_resolver = HttpArtifactResolver()
         cache_dir = http_resolver.ensure_cache()
+        logger.info(
+            "HTTP bootstrap: root_dir changed from %s to cache at %s",
+            self.root_dir,
+            cache_dir,
+        )
         self.root_dir = cache_dir
         self._http_enabled = True
 

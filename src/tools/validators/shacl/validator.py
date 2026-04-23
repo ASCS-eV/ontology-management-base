@@ -113,8 +113,15 @@ class ShaclValidator:
             enable_http: If True and no local catalogs, bootstrap via HTTP.
         """
         self.root_dir = Path(root_dir).resolve()
-        self.resolver = resolver if resolver else RegistryResolver(
-            root_dir, enable_http=enable_http
+        if resolver and enable_http:
+            logger.warning(
+                "Both 'resolver' and 'enable_http' provided to ShaclValidator; "
+                "'enable_http' is ignored when a pre-built resolver is supplied"
+            )
+        self.resolver = (
+            resolver
+            if resolver
+            else RegistryResolver(root_dir, enable_http=enable_http)
         )
         self.inference_mode = inference_mode
         self.verbose = verbose

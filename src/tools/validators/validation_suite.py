@@ -261,6 +261,9 @@ def validate_data_conformance_all(
     print("📋 Using catalog-based test discovery\n", flush=True)
 
     # Create validator with shared resolver
+    # Note: enable_http is not passed here because catalog_resolver is already
+    # HTTP-bootstrapped when --remote is used.  ShaclValidator uses the
+    # pre-built resolver directly.
     validator = ShaclValidator(
         root_dir,
         inference_mode=inference_mode,
@@ -343,7 +346,7 @@ def check_failing_tests_all(
 
     print("📋 Using catalog-based test discovery\n", flush=True)
 
-    # Create validator with shared resolver
+    # Create validator with shared resolver (already HTTP-bootstrapped if --remote)
     validator = ShaclValidator(
         root_dir,
         inference_mode=inference_mode,

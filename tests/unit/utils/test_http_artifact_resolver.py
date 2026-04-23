@@ -4,12 +4,15 @@ import json
 import textwrap
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+from urllib.error import URLError
 
 import pytest
 
 from src.tools.utils.http_artifact_resolver import (
+    ALLOWED_HOSTS,
     HttpArtifactResolver,
     _get_default_cache_dir,
+    _validate_response_host,
 )
 
 
@@ -396,7 +399,7 @@ class TestDefaultCacheDir:
 
 
 class TestRegistryResolverHttpFallback:
-    """Tests for RegistryResolver.enable_http_fallback()."""
+    """Tests for RegistryResolver HTTP bootstrap via _bootstrap_from_http()."""
 
     def test_enable_http_false_default_no_http_calls(self, tmp_path):
         """Default enable_http=False does not trigger HTTP fetching."""
@@ -445,3 +448,154 @@ class TestRegistryResolverHttpFallback:
             resolver = RegistryResolver(tmp_path, enable_http=True)
             MockResolver.assert_not_called()
             assert resolver._http_enabled is False
+
+
+# ---------------------------------------------------------------------------
+# Host Allowlist Validation (SSRF prevention)
+# ---------------------------------------------------------------------------
+
+
+class TestValidateResponseHost:
+    """Tests for _validate_response_host SSRF prevention."""
+
+    @pytest.mark.parametrize(
+        "url",
+        [
+            "https://ascs-ev.github.io/ontology-management-base/registry.json",
+            "https://raw.githubusercontent.com/ASCS-eV/ontology-management-base/main/x",
+            "https://w3id.org/ascs-ev/envited-x/hdmap/v6/ontology.ttl",
+        ],
+    )
+    def test_allowed_hosts_pass(self, url):
+        """Trusted hosts do not raise."""
+        _validate_response_host(url)  # should not raise
+
+    @pytest.mark.parametrize(
+        "url",
+        [
+            "https://evil.example.com/payload",
+            "http://169.254.169.254/latest/meta-data/",
+            "https://internal-service.company.com/secret",
+        ],
+    )
+    def test_untrusted_hosts_raise(self, url):
+        """Untrusted hosts raise URLError."""
+        with pytest.raises(URLError, match="untrusted host"):
+            _validate_response_host(url)
+
+    def test_allowed_hosts_constant_has_expected_entries(self):
+        """ALLOWED_HOSTS includes the three expected domains."""
+        assert "ascs-ev.github.io" in ALLOWED_HOSTS
+        assert "raw.githubusercontent.com" in ALLOWED_HOSTS
+        assert "w3id.org" in ALLOWED_HOSTS
+
+    @pytest.mark.parametrize(
+        "url",
+        [
+            "file:///tmp/test",
+            "not-a-url",
+            "",
+        ],
+    )
+    def test_missing_host_raises(self, url):
+        """URLs without a hostname are rejected (fail-closed)."""
+        with pytest.raises(URLError, match="missing host"):
+            _validate_response_host(url)
+
+
+# ---------------------------------------------------------------------------
+# W3ID Content-Negotiation Fallback
+# ---------------------------------------------------------------------------
+
+
+class TestW3idConnegFallback:
+    """Tests for fetch_domain_artifacts w3id.org content-negotiation path."""
+
+    def test_falls_back_to_w3id_when_gh_pages_fails(self, tmp_path):
+        """When GH Pages returns 404, w3id.org content-negotiation is tried."""
+        from urllib.error import HTTPError
+
+        resolver = HttpArtifactResolver(cache_dir=tmp_path)
+
+        domain_info = {
+            "iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6",
+            "namespace": "ascs-ev",
+        }
+
+        gh_pages_404 = HTTPError(
+            url="https://ascs-ev.github.io/...",
+            code=404,
+            msg="Not Found",
+            hdrs={},
+            fp=None,
+        )
+
+        call_count = {"_http_get": 0, "_http_get_with_accept": 0}
+
+        def mock_http_get(url, timeout=30):
+            call_count["_http_get"] += 1
+            raise gh_pages_404
+
+        def mock_http_get_with_accept(url, accept, timeout=30):
+            call_count["_http_get_with_accept"] += 1
+            return b"# turtle content"
+
+        with (
+            patch(
+                "src.tools.utils.http_artifact_resolver._http_get",
+                side_effect=mock_http_get,
+            ),
+            patch(
+                "src.tools.utils.http_artifact_resolver._http_get_with_accept",
+                side_effect=mock_http_get_with_accept,
+            ),
+        ):
+            result = resolver.fetch_domain_artifacts("hdmap", domain_info, tmp_path)
+
+        assert result is True
+        # GH Pages was tried (and failed) for all 3 artifacts
+        assert call_count["_http_get"] == 3
+        # w3id.org conneg was tried as fallback for all 3
+        assert call_count["_http_get_with_accept"] == 3
+
+
+# ---------------------------------------------------------------------------
+# clear_cache Safety
+# ---------------------------------------------------------------------------
+
+
+class TestClearCacheSafety:
+    """Tests for clear_cache path validation."""
+
+    def test_clear_cache_no_version_removes_cache_base(self, tmp_path):
+        """clear_cache(None) removes the entire cache_base directory."""
+        cache_base = tmp_path / "omb"
+        cache_base.mkdir()
+        (cache_base / "v0.1.4").mkdir()
+        (cache_base / "v0.1.4" / "marker.txt").write_text("x")
+
+        resolver = HttpArtifactResolver(cache_dir=cache_base)
+        resolver.clear_cache()
+
+        assert not cache_base.exists()
+
+    def test_clear_cache_with_version_only_removes_version(self, tmp_path):
+        """clear_cache('v0.1.4') only removes that version subdir."""
+        cache_base = tmp_path / "omb"
+        (cache_base / "v0.1.4").mkdir(parents=True)
+        (cache_base / "v0.1.5").mkdir(parents=True)
+
+        resolver = HttpArtifactResolver(cache_dir=cache_base)
+        resolver.clear_cache("v0.1.4")
+
+        assert not (cache_base / "v0.1.4").exists()
+        assert (cache_base / "v0.1.5").exists()
+
+    def test_clear_cache_rejects_path_traversal(self, tmp_path):
+        """clear_cache rejects version strings that escape cache_base."""
+        cache_base = tmp_path / "omb"
+        cache_base.mkdir()
+
+        resolver = HttpArtifactResolver(cache_dir=cache_base)
+        with pytest.raises(ValueError, match="not under cache base"):
+            resolver.clear_cache("../../etc")

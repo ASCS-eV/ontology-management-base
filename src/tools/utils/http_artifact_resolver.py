@@ -56,12 +56,18 @@ import os
 import platform
 import shutil
 import time
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 from src.tools.core.logging import get_logger
+
+# NOTE: This module uses urllib.request (not the ``requests`` library) for
+# consistency with ``graph_loader.py`` which also uses urllib for HTTPS
+# fetching.  Both modules share the same trust boundary and timeout semantics.
 
 logger = get_logger(__name__)
 
@@ -78,13 +84,26 @@ REGISTRY_URL = f"{GH_PAGES_BASE}/registry.json"
 
 # W3ID artifact file names served by GitHub Pages.
 W3ID_ARTIFACTS = {
-    "ontology": "ontology.ttl",
-    "shapes": "shapes.ttl",
-    "context": "context.jsonld",
+    "ontology": ("ontology.ttl", "text/turtle"),
+    "shapes": ("shapes.ttl", "text/turtle"),
+    "context": ("context.jsonld", "application/ld+json"),
 }
+
+# Standard catalog filename used across the repository.
+CATALOG_FILENAME = "catalog-v001.xml"
 
 # Default HTTP timeout in seconds.
 HTTP_TIMEOUT = 30
+
+# Trusted hosts for HTTP fetching.  Response URLs are validated against this
+# set after following redirects to prevent SSRF via malicious redirect targets.
+ALLOWED_HOSTS = frozenset(
+    {
+        "ascs-ev.github.io",
+        "raw.githubusercontent.com",
+        "w3id.org",
+    }
+)
 
 # Cache TTL: re-validate after this many seconds (24 hours).
 CACHE_TTL_SECONDS = 86400
@@ -99,6 +118,24 @@ def _get_default_cache_dir() -> Path:
     return base / "omb"
 
 
+def _validate_response_host(response_url: str) -> None:
+    """Validate that the response URL host is in the trusted allowlist.
+
+    Prevents SSRF via attacker-controlled redirect targets.  Fails closed:
+    missing or unrecognised hosts are rejected.
+
+    Raises:
+        URLError: If the response host is not in ALLOWED_HOSTS.
+    """
+    host = urlparse(response_url).hostname
+    if not host:
+        raise URLError(f"Invalid response URL (missing host): {response_url}")
+    if host not in ALLOWED_HOSTS:
+        raise URLError(
+            f"Response redirected to untrusted host: {host} (URL: {response_url})"
+        )
+
+
 def _http_get(url: str, timeout: int = HTTP_TIMEOUT) -> bytes:
     """Fetch URL content with a simple GET request.
 
@@ -110,11 +147,12 @@ def _http_get(url: str, timeout: int = HTTP_TIMEOUT) -> bytes:
         Response body as bytes
 
     Raises:
-        URLError: On network failure
+        URLError: On network failure or untrusted redirect
         HTTPError: On non-2xx response
     """
     request = Request(url, headers={"User-Agent": "ontology-management-base"})
     with urlopen(request, timeout=timeout) as response:
+        _validate_response_host(response.url)
         return response.read()
 
 
@@ -128,6 +166,9 @@ def _http_get_with_accept(url: str, accept: str, timeout: int = HTTP_TIMEOUT) ->
 
     Returns:
         Response body as bytes
+
+    Raises:
+        URLError: On network failure or untrusted redirect
     """
     request = Request(
         url,
@@ -137,6 +178,7 @@ def _http_get_with_accept(url: str, accept: str, timeout: int = HTTP_TIMEOUT) ->
         },
     )
     with urlopen(request, timeout=timeout) as response:
+        _validate_response_host(response.url)
         return response.read()
 
 
@@ -144,7 +186,7 @@ class HttpArtifactResolver:
     """Fetches and caches OMB ontology artifacts from HTTP sources.
 
     Attributes:
-        cache_dir: Root cache directory (versioned subdirs created inside)
+        cache_base: Root cache directory (versioned subdirs created inside)
         gh_pages_base: GitHub Pages base URL
         raw_github_base: Raw GitHub content base URL
         registry_url: URL for docs/registry.json
@@ -298,9 +340,9 @@ class HttpArtifactResolver:
     def fetch_all_catalogs(self, cache_dir: Path) -> None:
         """Fetch all 3 XML catalogs to the cache directory."""
         for rel_path in [
-            "artifacts/catalog-v001.xml",
-            "imports/catalog-v001.xml",
-            "tests/catalog-v001.xml",
+            f"artifacts/{CATALOG_FILENAME}",
+            f"imports/{CATALOG_FILENAME}",
+            f"tests/{CATALOG_FILENAME}",
         ]:
             try:
                 self.fetch_catalog(rel_path, cache_dir)
@@ -329,21 +371,15 @@ class HttpArtifactResolver:
     def _build_w3id_url(self, domain_info: Dict) -> Optional[str]:
         """Build the w3id.org base URL for a domain's artifacts.
 
-        The w3id URL pattern depends on the namespace:
-        - ascs-ev: https://w3id.org/ascs-ev/envited-x/{domain}/{version}
-        - gaia-x4plcaad: https://w3id.org/gaia-x4plcaad/ontologies/{domain}/{version}
-        - gaia-x development: special case (# fragment IRI)
-
         Args:
             domain_info: Domain metadata from registry.json
 
         Returns:
-            Base w3id.org URL, or None if cannot be determined.
+            Base w3id.org URL, or None if IRI is missing.
         """
         iri = domain_info.get("iri")
         if not iri:
             return None
-        # The IRI itself is the w3id.org URL (minus any trailing # or /)
         return iri.rstrip("#/")
 
     def _build_gh_pages_url(self, domain_info: Dict) -> Optional[str]:
@@ -359,15 +395,11 @@ class HttpArtifactResolver:
             GH Pages base URL for the domain's w3id artifacts.
         """
         iri = domain_info.get("iri", "")
-        if not iri:
+        if not iri or "w3id.org/" not in iri:
             return None
 
-        # Extract the path after w3id.org/
-        if "w3id.org/" in iri:
-            path = iri.split("w3id.org/", 1)[1].rstrip("#/")
-            return f"{self.gh_pages_base}/w3id/{path}"
-
-        return None
+        path = iri.split("w3id.org/", 1)[1].rstrip("#/")
+        return f"{self.gh_pages_base}/w3id/{path}"
 
     def fetch_domain_artifacts(
         self,
@@ -395,10 +427,11 @@ class HttpArtifactResolver:
         w3id_url = self._build_w3id_url(domain_info)
 
         # Map of local filename → (GH Pages artifact name, w3id accept header)
+        # derived from W3ID_ARTIFACTS constant.
         file_map = {
-            f"{domain}.owl.ttl": ("ontology.ttl", "text/turtle"),
-            f"{domain}.shacl.ttl": ("shapes.ttl", "text/turtle"),
-            f"{domain}.context.jsonld": ("context.jsonld", "application/ld+json"),
+            f"{domain}.owl.ttl": W3ID_ARTIFACTS["ontology"],
+            f"{domain}.shacl.ttl": W3ID_ARTIFACTS["shapes"],
+            f"{domain}.context.jsonld": W3ID_ARTIFACTS["context"],
         }
 
         ontology_fetched = False
@@ -464,16 +497,14 @@ class HttpArtifactResolver:
             cache_dir: Cache root directory
 
         Returns:
-            Number of files successfully fetched
+            Number of files successfully fetched (excluding cache hits)
         """
-        import xml.etree.ElementTree as ET
-
-        catalog_path = cache_dir / "imports" / "catalog-v001.xml"
+        catalog_path = cache_dir / "imports" / CATALOG_FILENAME
         if not catalog_path.exists():
             logger.warning("Imports catalog not cached, cannot fetch import files")
             return 0
 
-        tree = ET.parse(catalog_path)
+        tree = ET.parse(catalog_path)  # noqa: S314 — trusted source (raw GitHub)
         root = tree.getroot()
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
         uri_elems = root.findall("cat:uri", ns)
@@ -481,6 +512,7 @@ class HttpArtifactResolver:
             uri_elems = root.findall("uri")
 
         fetched = 0
+        cached = 0
         seen_paths: Set[str] = set()
 
         for elem in uri_elems:
@@ -491,7 +523,7 @@ class HttpArtifactResolver:
 
             dest = cache_dir / "imports" / rel_path
             if dest.exists():
-                fetched += 1
+                cached += 1
                 continue
 
             url = f"{self.raw_github_base}/imports/{rel_path}"
@@ -505,7 +537,7 @@ class HttpArtifactResolver:
             except (HTTPError, URLError) as e:
                 logger.warning("Failed to fetch import %s: %s", rel_path, e)
 
-        logger.info("Fetched %d import files", fetched)
+        logger.info("Import files: %d fetched, %d already cached", fetched, cached)
         return fetched
 
     def fetch_artifacts_from_catalog(self, cache_dir: Path) -> int:
@@ -520,16 +552,14 @@ class HttpArtifactResolver:
             cache_dir: Cache root directory
 
         Returns:
-            Number of files successfully fetched
+            Number of files successfully fetched (excluding cache hits)
         """
-        import xml.etree.ElementTree as ET
-
-        catalog_path = cache_dir / "artifacts" / "catalog-v001.xml"
+        catalog_path = cache_dir / "artifacts" / CATALOG_FILENAME
         if not catalog_path.exists():
             logger.warning("Artifacts catalog not cached, skipping catalog fetch")
             return 0
 
-        tree = ET.parse(catalog_path)
+        tree = ET.parse(catalog_path)  # noqa: S314 — trusted source (raw GitHub)
         root = tree.getroot()
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
         uri_elems = root.findall("cat:uri", ns)
@@ -537,6 +567,7 @@ class HttpArtifactResolver:
             uri_elems = root.findall("uri")
 
         fetched = 0
+        cached = 0
         seen_paths: Set[str] = set()
 
         for elem in uri_elems:
@@ -547,6 +578,7 @@ class HttpArtifactResolver:
 
             dest = cache_dir / "artifacts" / rel_path
             if dest.exists():
+                cached += 1
                 continue
 
             url = f"{self.raw_github_base}/artifacts/{rel_path}"
@@ -561,7 +593,9 @@ class HttpArtifactResolver:
                 logger.warning("Failed to fetch artifact %s: %s", rel_path, e)
 
         if fetched:
-            logger.info("Fetched %d additional artifact files from catalog", fetched)
+            logger.info(
+                "Catalog artifacts: %d fetched, %d already cached", fetched, cached
+            )
         return fetched
 
     # =========================================================================
@@ -661,8 +695,12 @@ class HttpArtifactResolver:
                     break
 
         if not needed_domains:
-            logger.warning(
-                "No matching domains found for %d IRIs, fetching all",
+            # Non-registry domains (e.g., gx/gaia-x) are only discoverable
+            # via the artifacts catalog, not registry.json.  Fall back to a
+            # full cache build which includes catalog-based fetching.
+            logger.info(
+                "No registry-based domain match for %d IRI(s); "
+                "fetching all domains (includes catalog-only domains like gx)",
                 len(iris),
             )
             return self.ensure_cache()
@@ -680,11 +718,22 @@ class HttpArtifactResolver:
 
         Args:
             version: Specific version to clear. If None, clears entire cache.
+
+        Raises:
+            ValueError: If the resolved target is not under cache_base.
         """
         if version:
             target = self.cache_base / version
         else:
             target = self.cache_base
+
+        # Safety: ensure target is under the expected cache hierarchy.
+        try:
+            target.resolve().relative_to(self.cache_base.resolve())
+        except ValueError:
+            raise ValueError(
+                f"Refusing to delete {target}: not under cache base {self.cache_base}"
+            ) from None
 
         if target.exists():
             shutil.rmtree(target)
