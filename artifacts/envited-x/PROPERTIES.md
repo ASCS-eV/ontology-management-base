@@ -98,9 +98,7 @@ class Class_definition_for_SoftwareResourceBase
 #### envited-x:hasServiceOffering {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasserviceoffering .property-anchor }
 #### envited-x:hasSoftwareResource {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hassoftwareresource .property-anchor }
 #### gx:copyrightOwnedBy {: #prop-https---w3id-org-gaia-x-development-copyrightownedby .property-anchor }
-#### gx:description {: #prop-https---w3id-org-gaia-x-development-description .property-anchor }
 #### gx:license {: #prop-https---w3id-org-gaia-x-development-license .property-anchor }
-#### gx:name {: #prop-https---w3id-org-gaia-x-development-name .property-anchor }
 #### gx:providedBy {: #prop-https---w3id-org-gaia-x-development-providedby .property-anchor }
 #### gx:resourcePolicy {: #prop-https---w3id-org-gaia-x-development-resourcepolicy .property-anchor }
 #### gx:serviceOfferingTermsAndConditions {: #prop-https---w3id-org-gaia-x-development-serviceofferingtermsandconditions .property-anchor }
@@ -144,11 +142,11 @@ class Class_definition_for_SoftwareResourceBase
 |ManifestShape|manifest|hasArtifacts|||||envited-x.shacl.ttl|
 |ManifestShape|manifest|hasArtifacts|||||envited-x.shacl.ttl|
 |ManifestShape|manifest|hasArtifacts|||||envited-x.shacl.ttl|
-|ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-description"></a>description|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|ResourceDescriptionShape|schema|<a id="prop-https---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|ResourceDescriptionShape|schema|<a id="prop-https---schema-org-description"></a>description|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |ResourceDescriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-license"></a>license||1|Allows custom commercial identifiers in addition to Gaia-X standard SPDX checks.||envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema|<a id="prop-https---schema-org-name"></a>name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
-|SoftwareResourceBaseShape|schema|<a id="prop-https---schema-org-description"></a>description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|name|1|1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareResourceBaseShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|license||1|||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||||envited-x.shacl.ttl|
 |SoftwareResourceBaseShape|gx|<a id="prop-https---w3id-org-gaia-x-development-resourcepolicy"></a>resourcePolicy|1|||<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|

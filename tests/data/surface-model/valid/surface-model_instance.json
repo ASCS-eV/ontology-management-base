@@ -1,12 +1,12 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/surface-model/v6/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.surface-model.net:SurfaceModel:test_valid_surface-model_instance",
@@ -14,18 +14,16 @@
    "surface-model:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:q5OkfCSDuJB32KslTNZp1vZ0yL9tM7ayzIe4",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Sample Surface Model Data",
-      "gx:description": "A detailed surface model for simulation applications.",
-      "gx:version": "1.0.0",
-      "gx:license": "EPL-2.0",
-      "gx:resourcePolicy": "allow",
-      "gx:containsPII": false,
-      "gx:copyrightOwnedBy": {
+      "name": "Sample Surface Model Data",
+      "description": "A detailed surface model for simulation applications.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:producedBy": {
-         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      }
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
    "surface-model:hasDomainSpecification": {
       "@type": "surface-model:DomainSpecification",

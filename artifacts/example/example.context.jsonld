@@ -14,6 +14,7 @@
       "owl": "http://www.w3.org/2002/07/owl#",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
+      "schema": "https://schema.org/",
       "example": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
       "belongsTo": {
          "@id": "example:belongsTo",

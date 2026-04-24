@@ -66,6 +66,7 @@ LINKML_DIR = ROOT_DIR / "linkml"
 # Namespaces
 SH = Namespace("http://www.w3.org/ns/shacl#")
 SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
+SCHEMA = Namespace("https://schema.org/")
 
 # XSD datatype mappings for JSON-LD context
 XSD_TYPE_MAP = {
@@ -224,7 +225,12 @@ def extract_property_datatypes(
 
             # Only process properties from this domain
             if not path_str.startswith(domain_iri):
-                # Also handle external properties we want to map (skos:note, sh:conformsTo)
+                # Also handle external properties we want to map
+                # (skos:note, sh:conformsTo)
+                # NOTE: schema: properties (name, description) are NOT mapped
+                # here — they come from the gx context. Duplicating them in
+                # domain contexts would override domain-specific terms with
+                # the same local name (e.g. service:description).
                 if path_str.startswith(str(SKOS)):
                     local_name = path_str.replace(str(SKOS), "")
                     properties[local_name] = {"@id": f"skos:{local_name}"}
@@ -459,6 +465,7 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         "owl": "http://www.w3.org/2002/07/owl#",
         "sh": "http://www.w3.org/ns/shacl#",
         "skos": "http://www.w3.org/2004/02/skos/core#",
+        "schema": "https://schema.org/",
         # Domain prefix
         prefix: normalize_iri(ontology_iri, trailing_slash=True),
     }

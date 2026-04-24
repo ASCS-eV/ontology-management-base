@@ -17,8 +17,11 @@ from src.tools.core.logging import get_logger
 logger = get_logger(__name__)
 
 # URI tweaks applied when inlining context files.
-# Empty by default — generated artifacts use native IRIs from LinkML.
-DEFAULT_URI_TWEAKS: Dict[str, str] = {}
+# The official schema.org JSON-LD context uses legacy ``http://schema.org/``
+# while all LinkML-generated artifacts and SHACL shapes use ``https://``.
+DEFAULT_URI_TWEAKS: Dict[str, str] = {
+    "http://schema.org/": "https://schema.org/",
+}
 
 
 def _add_url_variants(url_map: Dict[str, Path], iri: str, abs_path: Path) -> None:

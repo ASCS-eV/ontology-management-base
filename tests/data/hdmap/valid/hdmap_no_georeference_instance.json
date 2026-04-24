@@ -1,11 +1,11 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.hdmap.net:HdMap:test_valid_hdmap_no_georeference",
@@ -13,18 +13,16 @@
    "hdmap:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:nK7xQ4pW2mR8vJ6yT3aF5hB0cD9eL1",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Generic NCAP Scenario HD Map",
-      "gx:description": "A generic HD map without georeference, representing an abstract road geometry for NCAP scenarios.",
-      "gx:version": "1.0.0",
-      "gx:license": "EPL-2.0",
-      "gx:resourcePolicy": "allow",
-      "gx:containsPII": false,
-      "gx:copyrightOwnedBy": {
+      "name": "Generic NCAP Scenario HD Map",
+      "description": "A generic HD map without georeference, representing an abstract road geometry for NCAP scenarios.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:producedBy": {
-         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      }
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
    "hdmap:hasDomainSpecification": {
       "@type": "hdmap:DomainSpecification",

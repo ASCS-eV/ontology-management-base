@@ -1,12 +1,12 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
       "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_mcap_instance",
@@ -14,18 +14,16 @@
    "ositrace:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:Mcap3ChHighwayRecording",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Highway scenario MCAP recording with 3 channels",
-      "gx:description": "Multi-channel MCAP recording of a highway scenario with radar SensorData, camera SensorView, and GroundTruth channels.",
-      "gx:version": "1.0.0",
-      "gx:license": "EPL-2.0",
-      "gx:resourcePolicy": "allow",
-      "gx:containsPII": false,
-      "gx:copyrightOwnedBy": {
+      "schema:name": "Highway scenario MCAP recording with 3 channels",
+      "schema:description": "Multi-channel MCAP recording of a highway scenario with radar SensorData, camera SensorView, and GroundTruth channels.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:producedBy": {
-         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      }
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
    "ositrace:hasDomainSpecification": {
       "@type": "ositrace:DomainSpecification",

@@ -1,11 +1,11 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.survey.net:Survey:test_valid_survey-result-data-offering_instance",
@@ -13,14 +13,14 @@
    "survey:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:survey-result-001",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Semiconductor True Demand Survey",
-      "gx:description": "End to end supply chain survey on important leading and lagging indicators for semiconductor supply chains such as demand & sales development and inventory metrics to forecast market development",
-      "gx:license": "EPL-2.0",
-      "gx:copyrightOwnedBy": {
+      "name": "Semiconductor True Demand Survey",
+      "description": "End to end supply chain survey on important leading and lagging indicators for semiconductor supply chains such as demand & sales development and inventory metrics to forecast market development",
+      "license": "EPL-2.0",
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:containsPII": false,
-      "gx:resourcePolicy": "allow intent"
+      "containsPII": false,
+      "resourcePolicy": "allow intent"
    },
    "survey:hasDomainSpecification": {
       "@type": "survey:ResultDomainSpecification",
