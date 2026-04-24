@@ -1,11 +1,12 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://openlabel.asam.net/V1-0-0/ontologies/",
       {
-         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-         "schema": "https://schema.org/"
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
+      },
+      {
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.openlabel.net:Tag:test_valid_openlabel_instance",

@@ -7,15 +7,16 @@
       "gx": "https://w3id.org/gaia-x/development#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "sh": "http://www.w3.org/ns/shacl#",
-      "skos": "http://www.w3.org/2004/02/skos/core#"
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "schema": "https://schema.org/"
    },
    "@id": "did:web:test.scenario.net:Scenario:test_minimal_scenario_instance",
    "@type": "scenario:Scenario",
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:minimalScenario001",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Minimal Scenario",
-      "gx:description": "A minimal scenario without optional sub-shapes (hasQuality, hasDataSource, hasGeoreference).",
+      "schema:name": "Minimal Scenario",
+      "schema:description": "A minimal scenario without optional sub-shapes (hasQuality, hasDataSource, hasGeoreference).",
       "gx:version": "1.0.0",
       "gx:license": "EPL-2.0",
       "gx:resourcePolicy": "allow",

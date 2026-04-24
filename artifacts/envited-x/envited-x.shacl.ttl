@@ -344,7 +344,7 @@ envited-x:ResourceDescriptionShape a sh:NodeShape ;
     sh:closed false ;
 
     sh:property [
-        sh:path gx:name ;
+        sh:path schema:name ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
@@ -353,7 +353,7 @@ envited-x:ResourceDescriptionShape a sh:NodeShape ;
         sh:order 0
     ] ;
     sh:property [
-        sh:path gx:description ;
+        sh:path schema:description ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;

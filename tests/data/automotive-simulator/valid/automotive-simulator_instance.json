@@ -1,13 +1,12 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/",
       "https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "https://schema.org/",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.automotive-simulator.net:AutomotiveSimulator:test_valid_automotive-simulator_instance",
@@ -15,13 +14,13 @@
    "automotive-simulator:hasSoftwareResource": {
       "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:auto-sim-001",
       "@type": "envited-x:SoftwareResourceBase",
-      "schema:name": "Sensor failure and attack simulation with a modified CARLA simulator",
-      "schema:description": "An extension of the CARLA simulator by various degradation models for perception sensors that cover effects of internal failures, external failures and security attacks.",
-      "gx:license": "EPL-2.0",
-      "gx:copyrightOwnedBy": {
+      "name": "Sensor failure and attack simulation with a modified CARLA simulator",
+      "description": "An extension of the CARLA simulator by various degradation models for perception sensors that cover effects of internal failures, external failures and security attacks.",
+      "license": "EPL-2.0",
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:resourcePolicy": "allow intent"
+      "resourcePolicy": "allow intent"
    },
    "automotive-simulator:hasDomainSpecification": {
       "@type": "automotive-simulator:DomainSpecification",
@@ -34,41 +33,37 @@
          "simulated-sensor:simulatedSensor": [
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "schema:name": "Simulated Radar Sensor",
+               "name": "Simulated Radar Sensor",
                "sensorIdentifier": "sensor.other.radar",
                "sensorType": {
                   "@type": "simulated-sensor:Radar"
                },
-               "gx:producedBy": {
+               "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",
+               "copyrightOwnedBy": {
                   "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
                },
-               "gx:copyrightOwnedBy": {
-                  "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-               },
-               "gx:license": "EPL-2.0",
-               "gx:containsPII": false,
-               "gx:resourcePolicy": "allow intent"
+               "license": "EPL-2.0",
+               "containsPII": false,
+               "resourcePolicy": "allow intent"
             },
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "schema:name": "Simulated Lidar Sensor",
+               "name": "Simulated Lidar Sensor",
                "sensorIdentifier": "sensor.other.lidar",
                "sensorType": {
                   "@type": "simulated-sensor:Lidar"
                },
-               "gx:producedBy": {
+               "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",
+               "copyrightOwnedBy": {
                   "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
                },
-               "gx:copyrightOwnedBy": {
-                  "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-               },
-               "gx:license": "EPL-2.0",
-               "gx:containsPII": false,
-               "gx:resourcePolicy": "allow intent"
+               "license": "EPL-2.0",
+               "containsPII": false,
+               "resourcePolicy": "allow intent"
             },
             {
                "@type": "simulated-sensor:SimulatedSensor",
-               "schema:name": "Simulated Camera Sensor",
+               "name": "Simulated Camera Sensor",
                "sensorIdentifier": "sensor.camera.rgb",
                "sensorType": {
                   "@type": "simulated-sensor:Camera",
@@ -76,15 +71,13 @@
                   "flag3D": false,
                   "depthFlag": false
                },
-               "gx:producedBy": {
+               "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference",
+               "copyrightOwnedBy": {
                   "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
                },
-               "gx:copyrightOwnedBy": {
-                  "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-               },
-               "gx:license": "EPL-2.0",
-               "gx:containsPII": false,
-               "gx:resourcePolicy": "allow intent"
+               "license": "EPL-2.0",
+               "containsPII": false,
+               "resourcePolicy": "allow intent"
             }
          ]
       },

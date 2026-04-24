@@ -1,12 +1,12 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
       "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_instance",
@@ -14,18 +14,16 @@
    "ositrace:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Cut-out scenario on testing ground",
-      "gx:description": "OSI SensorData trace of cut-out scenario on testing ground.",
-      "gx:version": "1.0.0",
-      "gx:license": "EPL-2.0",
-      "gx:resourcePolicy": "allow",
-      "gx:containsPII": false,
-      "gx:copyrightOwnedBy": {
+      "schema:name": "Cut-out scenario on testing ground",
+      "schema:description": "OSI SensorData trace of cut-out scenario on testing ground.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:producedBy": {
-         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      }
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
    "ositrace:hasDomainSpecification": {
       "@type": "ositrace:DomainSpecification",

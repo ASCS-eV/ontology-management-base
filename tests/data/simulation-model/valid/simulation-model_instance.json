@@ -1,12 +1,11 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "https://schema.org/",
-         "skos": "http://www.w3.org/2004/02/skos/core#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.simulation-model.net:SimulationModel:test_valid_simulation-model_instance",
@@ -14,13 +13,13 @@
    "simulation-model:hasSoftwareResource": {
       "@id": "did:web:registry.envited-x.net::SoftwareResourceBase:simulation-model-example-001",
       "@type": "envited-x:SoftwareResourceBase",
-      "schema:name": "Simulation Model Example",
-      "schema:description": "A sample description of a none existing simulation model.",
-      "gx:license": "EPL-2.0",
-      "gx:copyrightOwnedBy": {
+      "name": "Simulation Model Example",
+      "description": "A sample description of a none existing simulation model.",
+      "license": "EPL-2.0",
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:resourcePolicy": "allow intent"
+      "resourcePolicy": "allow intent"
    },
    "simulation-model:hasDomainSpecification": {
       "@type": "simulation-model:DomainSpecification",

@@ -1,0 +1,19 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                   ['tests/data/envited-x/invalid/fail_03_bare_name_missing_name_instance.json']                                    =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:registry.envited-x.net::ResourceDescription:fA1l3bArN4mM1sS1nGnAm3                                                    =
+=    Property:         https://schema.org/name                                                                                                       =
+=    Error:            Each ResourceDescription must have a human-readable name of the entity.                                                       =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_03_bare_name_missing_name_instance                               =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasResourceDescription                                                        =
+=    Error:            envited-x:hasResourceDescription must be either (a) an inline envited-x:ResourceDescription, or (b) a valid manifest:Link     =
+=                      (LinkShape + ExtendedLinkShape).                                                                                              =
+======================================================================================================================================================
+

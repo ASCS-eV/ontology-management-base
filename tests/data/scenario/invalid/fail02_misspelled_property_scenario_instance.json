@@ -16,8 +16,8 @@
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Scenario Example",
-      "gx:description": "A sample description of a non-existing scenario.",
+      "schema:name": "Scenario Example",
+      "schema:description": "A sample description of a non-existing scenario.",
       "gx:version": "1.0.0",
       "gx:license": "EPL-2.0",
       "gx:resourcePolicy": "allow",

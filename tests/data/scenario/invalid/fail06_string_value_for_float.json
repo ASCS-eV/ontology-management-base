@@ -1,14 +1,16 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
       "https://openlabel.asam.net/V1-0-0/ontologies/",
       "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "https://w3id.org/ascs-ev/envited-x/scenario/v6/",
       {
-         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
-         "gx": "https://w3id.org/gaia-x/development#",
-         "schema": "https://schema.org/"
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
+      },
+      {
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail06_string_value_for_float",
@@ -16,18 +18,16 @@
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
       "@type": "envited-x:ResourceDescription",
-      "gx:name": "Scenario Example",
-      "gx:description": "A sample description of a non-existing scenario.",
-      "gx:version": "1.0.0",
-      "gx:license": "EPL-2.0",
-      "gx:resourcePolicy": "allow",
-      "gx:containsPII": false,
-      "gx:copyrightOwnedBy": {
+      "name": "Scenario Example",
+      "description": "A sample description of a non-existing scenario.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
          "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
       },
-      "gx:producedBy": {
-         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
-      }
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
    "scenario:hasDomainSpecification": {
       "@type": "scenario:DomainSpecification",

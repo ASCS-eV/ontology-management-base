@@ -7,13 +7,12 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.envited-x.net:SimulationAsset:test_valid_envited-x_instance",
+   "@id": "did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_03_bare_name_missing_name_instance",
    "@type": "envited-x:SimulationAsset",
    "hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:pX8mN4kL2vR9ZjW5bS7yH3cW1dGf6A8",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:fA1l3bArN4mM1sS1nGnAm3",
       "@type": "envited-x:ResourceDescription",
-      "name": "3D Model in Grafing",
-      "description": "A 3D model representing the town district with traffic signs.",
+      "description": "A resource description with missing required name field.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",

@@ -1,9 +1,9 @@
 {
    "@context": [
+      "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/tzip21/v1/",
       {
-         "gx": "https://w3id.org/gaia-x/development#",
-         "xsd": "http://www.w3.org/2001/XMLSchema#"
+         "@vocab": null
       }
    ],
    "@id": "did:web:test.tzip21.net:Asset:test_valid_tzip21_instance",
@@ -104,9 +104,9 @@
          "type": "uri"
       }
    ],
-   "gx:copyrightOwnedBy": {
+   "copyrightOwnedBy": {
       "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
    },
-   "gx:license": "EPL-2.0",
-   "gx:resourcePolicy": "allow intent"
+   "license": "EPL-2.0",
+   "resourcePolicy": "allow intent"
 }
