@@ -1,0 +1,35 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "https://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail09_missing_required",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@bmw.de",
+      "ownerName": "BMW AG",
+      "ownerURL": "https://www.bmw.com",
+      "scenarioCreatedDate": "2024-01-15T10:00:00",
+      "scenarioDefinition": "Scenario Definition Content",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "Invalid: QuantitativeValue missing required minValue/maxValue",
+      "scenarioName": "Invalid_Missing_Required",
+      "scenarioParentReference": "UUID-PARENT-1234",
+      "scenarioUniqueReference": "UUID-UNIQUE-5678",
+      "scenarioVersion": "2.0.0",
+      "scenarioVisualisationURL": "https://example.com/visualization.png"
+   },
+   "Behaviour": {
+      "@type": "Behaviour",
+      "MotionAccelerate": true,
+      "motionAccelerateValue": {
+         "@type": "schema:QuantitativeValue"
+      },
+      "MotionDrive": false
+   }
+}

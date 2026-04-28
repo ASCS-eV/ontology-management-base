@@ -9,9 +9,9 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/scenarioCreatedDate                                                           =
-=    Error:            Value is not Literal with datatype xsd:dateTime                                                                               =
+=    Error:            scenarioCreatedDate (AdminTag): The date that the scenario was created/published.                                             =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            Value is not Literal with datatype xsd:decimal                                                                                =
+=    Error:            weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.                                              =
 ======================================================================================================================================================

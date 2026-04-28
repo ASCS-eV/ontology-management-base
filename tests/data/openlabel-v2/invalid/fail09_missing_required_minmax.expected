@@ -1,17 +1,17 @@
 ======================================================================================================================================================
 =                                                           ❌ SHACL validation failed for:                                                          =
 =                                                                                                                                                    =
-=                                        ['tests/data/openlabel-v2/invalid/fail04_wrong_literal_types.json']                                         =
+=                                      ['tests/data/openlabel-v2/invalid/fail09_missing_required_minmax.json']                                       =
 =                                                                                                                                                    =
 ======================================================================================================================================================
 =                                                                                                                                                    =
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue                                                      =
-=    Error:            subjectVehicleSpeedValue (Odd): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.                                            =
+=    Property:         https://schema.org/maxValue                                                                                                   =
+=    Error:            maxValue (QuantitativeValue): Maximum value of the range.                                                                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.                                              =
+=    Property:         https://schema.org/minValue                                                                                                   =
+=    Error:            minValue (QuantitativeValue): Minimum value of the range.                                                                     =
 ======================================================================================================================================================

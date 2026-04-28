@@ -26,9 +26,14 @@
    },
    "Behaviour": {
       "@type": "Behaviour",
-      "BehaviourCommunication": {
-         "@id": "openlabel_v2:CommunicationSignalLeft"
-      },
+      "BehaviourCommunication": [
+         {
+            "@id": "openlabel_v2:CommunicationSignalLeft"
+         },
+         {
+            "@id": "openlabel_v2:CommunicationHeadlightFlash"
+         }
+      ],
       "MotionAccelerate": true,
       "motionAccelerateValue": {
          "@type": "schema:QuantitativeValue",
@@ -58,9 +63,14 @@
    },
    "Odd": {
       "@type": "Odd",
-      "DrivableAreaEdge": {
-         "@id": "openlabel_v2:EdgeShoulderPavedOrGravel"
-      },
+      "DrivableAreaEdge": [
+         {
+            "@id": "openlabel_v2:EdgeShoulderPavedOrGravel"
+         },
+         {
+            "@id": "openlabel_v2:EdgeLineMarkers"
+         }
+      ],
       "DrivableAreaType": {
          "@id": "openlabel_v2:MotorwayManaged"
       },
@@ -81,9 +91,11 @@
       "LaneSpecificationTravelDirection": {
          "@id": "openlabel_v2:TravelDirectionRight"
       },
-      "LaneSpecificationType": {
-         "@id": "openlabel_v2:LaneTypeTraffic"
-      },
+      "LaneSpecificationType": [
+         {
+            "@id": "openlabel_v2:LaneTypeTraffic"
+         }
+      ],
       "HorizontalStraights": true,
       "HorizontalCurves": true,
       "horizontalCurvesValue": 250.0,
@@ -157,6 +169,15 @@
       "subjectVehicleSpeedValue": "80",
       "TrafficAgentDensity": true,
       "trafficAgentDensityValue": 15,
+      "TrafficAgentType": true,
+      "trafficAgentTypeValue": [
+         {
+            "@id": "openlabel_v2:VehicleCar"
+         },
+         {
+            "@id": "openlabel_v2:HumanPedestrian"
+         }
+      ],
       "TrafficFlowRate": true,
       "trafficFlowRateValue": 1200,
       "TrafficVolume": true,

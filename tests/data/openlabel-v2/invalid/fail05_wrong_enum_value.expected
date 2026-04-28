@@ -1,17 +1,17 @@
 ======================================================================================================================================================
 =                                                           ❌ SHACL validation failed for:                                                          =
 =                                                                                                                                                    =
-=                                        ['tests/data/openlabel-v2/invalid/fail04_wrong_literal_types.json']                                         =
+=                                          ['tests/data/openlabel-v2/invalid/fail05_wrong_enum_value.json']                                          =
 =                                                                                                                                                    =
 ======================================================================================================================================================
 =                                                                                                                                                    =
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue                                                      =
-=    Error:            subjectVehicleSpeedValue (Odd): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.                                            =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType                                                              =
+=    Error:            DrivableAreaType (Odd): Road type. Refer to BSI PAS-1883 Section 5.2.3.2.                                                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.                                              =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType                                                                      =
+=    Error:            RainType (Odd): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.                                                         =
 ======================================================================================================================================================
