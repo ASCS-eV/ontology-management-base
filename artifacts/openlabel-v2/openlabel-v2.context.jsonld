@@ -15,27 +15,33 @@
       },
       "BehaviourCommunication": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "BehaviourCommunication"
+         "@id": "BehaviourCommunication",
+         "@type": "@vocab"
       },
       "ConnectivityCommunication": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "ConnectivityCommunication"
+         "@id": "ConnectivityCommunication",
+         "@type": "@vocab"
       },
       "ConnectivityPositioning": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "ConnectivityPositioning"
+         "@id": "ConnectivityPositioning",
+         "@type": "@vocab"
       },
       "DaySunElevation": {
          "@id": "DaySunElevation",
@@ -43,67 +49,83 @@
       },
       "DaySunPosition": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DaySunPosition"
+         "@id": "DaySunPosition",
+         "@type": "@vocab"
       },
       "DrivableAreaEdge": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DrivableAreaEdge"
+         "@id": "DrivableAreaEdge",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceCondition": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DrivableAreaSurfaceCondition"
+         "@id": "DrivableAreaSurfaceCondition",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceFeature": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DrivableAreaSurfaceFeature"
+         "@id": "DrivableAreaSurfaceFeature",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceType": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DrivableAreaSurfaceType"
+         "@id": "DrivableAreaSurfaceType",
+         "@type": "@vocab"
       },
       "DrivableAreaType": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "DrivableAreaType"
+         "@id": "DrivableAreaType",
+         "@type": "@vocab"
       },
       "EnvironmentParticulates": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "EnvironmentParticulates"
+         "@id": "EnvironmentParticulates",
+         "@type": "@vocab"
       },
       "GeometryTransverse": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "GeometryTransverse"
+         "@id": "GeometryTransverse",
+         "@type": "@vocab"
       },
       "HorizontalCurves": {
          "@id": "HorizontalCurves",
@@ -115,11 +137,13 @@
       },
       "IlluminationArtificial": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "IlluminationArtificial"
+         "@id": "IlluminationArtificial",
+         "@type": "@vocab"
       },
       "IlluminationCloudiness": {
          "@id": "IlluminationCloudiness",
@@ -127,27 +151,33 @@
       },
       "IlluminationLowLight": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "IlluminationLowLight"
+         "@id": "IlluminationLowLight",
+         "@type": "@vocab"
       },
       "JunctionIntersection": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "JunctionIntersection"
+         "@id": "JunctionIntersection",
+         "@type": "@vocab"
       },
       "JunctionRoundabout": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "JunctionRoundabout"
+         "@id": "JunctionRoundabout",
+         "@type": "@vocab"
       },
       "LaneSpecificationDimensions": {
          "@id": "LaneSpecificationDimensions",
@@ -163,19 +193,23 @@
       },
       "LaneSpecificationTravelDirection": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "LaneSpecificationTravelDirection"
+         "@id": "LaneSpecificationTravelDirection",
+         "@type": "@vocab"
       },
       "LaneSpecificationType": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "LaneSpecificationType"
+         "@id": "LaneSpecificationType",
+         "@type": "@vocab"
       },
       "LongitudinalDownSlope": {
          "@id": "LongitudinalDownSlope",
@@ -293,11 +327,13 @@
       },
       "RainType": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "RainType"
+         "@id": "RainType",
+         "@type": "@vocab"
       },
       "RoadUser": {
          "@id": "RoadUser"
@@ -308,78 +344,96 @@
       },
       "RoadUserHuman": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "RoadUserHuman"
+         "@id": "RoadUserHuman",
+         "@type": "@vocab"
       },
       "RoadUserVehicle": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "RoadUserVehicle"
+         "@id": "RoadUserVehicle",
+         "@type": "@vocab"
       },
       "Scenario": {
          "@id": "Scenario"
       },
       "SceneryFixedStructure": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SceneryFixedStructure"
+         "@id": "SceneryFixedStructure",
+         "@type": "@vocab"
       },
       "ScenerySpecialStructure": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "ScenerySpecialStructure"
+         "@id": "ScenerySpecialStructure",
+         "@type": "@vocab"
       },
       "SceneryTemporaryStructure": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SceneryTemporaryStructure"
+         "@id": "SceneryTemporaryStructure",
+         "@type": "@vocab"
       },
       "SceneryZone": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SceneryZone"
+         "@id": "SceneryZone",
+         "@type": "@vocab"
       },
       "SignsInformation": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SignsInformation"
+         "@id": "SignsInformation",
+         "@type": "@vocab"
       },
       "SignsRegulatory": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SignsRegulatory"
+         "@id": "SignsRegulatory",
+         "@type": "@vocab"
       },
       "SignsWarning": {
          "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "SignsWarning"
+         "@id": "SignsWarning",
+         "@type": "@vocab"
       },
       "SubjectVehicleSpeed": {
          "@id": "SubjectVehicleSpeed",
@@ -390,6 +444,10 @@
       },
       "TrafficAgentDensity": {
          "@id": "TrafficAgentDensity",
+         "@type": "xsd:boolean"
+      },
+      "TrafficAgentType": {
+         "@id": "TrafficAgentType",
          "@type": "xsd:boolean"
       },
       "TrafficFlowRate": {
@@ -527,6 +585,9 @@
       "trafficAgentDensityValue": {
          "@id": "trafficAgentDensityValue",
          "@type": "xsd:integer"
+      },
+      "trafficAgentTypeValue": {
+         "@id": "trafficAgentTypeValue"
       },
       "trafficFlowRateValue": {
          "@id": "trafficFlowRateValue",
