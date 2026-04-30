@@ -365,6 +365,13 @@ gx:BareMetalServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 24 ;
             sh:path schema:description ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path gx:providedBy ],
         [ sh:description "A resolvable link of resources related to an entity and that can exist independently of it." ;
             sh:name "aggregation of" ;
             sh:or ( [ sh:class gx:Resource ] ) ;
@@ -395,13 +402,6 @@ gx:BareMetalServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 25 ;
             sh:path rdfs:label ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 4 ;
-            sh:path gx:providedBy ],
         [ sh:description "How compute resources of different tenants are separated. Default value = hw-virtualized." ;
             sh:in ( "hw-partitioned" "hw-virtualized" "os-hw-virtualized" "os-virtualized" "physical" "sw-virtualized" ) ;
             sh:maxCount 1 ;
@@ -626,6 +626,13 @@ gx:BlockStorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 15 ;
             sh:path gx:keyword ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 9 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:description "A human readable name of the entity." ;
             sh:maxCount 1 ;
@@ -735,13 +742,6 @@ gx:BlockStorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path gx:lifetimeManagement ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 9 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:SubContractor ;
             sh:description "A list of sub-contractors processing customer data." ;
             sh:name "Sub-contractors" ;
@@ -1305,6 +1305,13 @@ gx:ComputeFunctionServiceOfferingShape a sh:NodeShape ;
             sh:name "Cryptographic security standard" ;
             sh:order 27 ;
             sh:path gx:cryptographicSecurityStandards ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 10 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:boolean ;
             sh:description "Indicates whether the service allows to define timeouts for functions" ;
             sh:maxCount 1 ;
@@ -1444,13 +1451,6 @@ gx:ComputeFunctionServiceOfferingShape a sh:NodeShape ;
             sh:name "provision type" ;
             sh:order 17 ;
             sh:path gx:provisionType ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 10 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:DataTransfer ;
             sh:description "One or more data transfer documents describing if and to which extent Customer data transfers will happen." ;
             sh:name "Possible Personal Data Transfer" ;
@@ -1680,6 +1680,13 @@ gx:ComputeServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 10 ;
             sh:path gx:endpoint ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:description "A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property." ;
             sh:maxCount 1 ;
@@ -1692,13 +1699,6 @@ gx:ComputeServiceOfferingShape a sh:NodeShape ;
             sh:name "data protection regime" ;
             sh:order 6 ;
             sh:path gx:dataProtectionRegime ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 2 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:CustomerInstructions ;
             sh:description "One or more customer instructions describing the Customer instructions regarding any data therein." ;
             sh:name "Customer instructions" ;
@@ -1818,20 +1818,20 @@ gx:ConnectivityServiceOfferingShape a sh:NodeShape ;
     rdfs:comment "Connectivity Infrastructure services are made out of Physical, Link and Network services. Interconnection services between providers exist as a subclass of Network services." ;
     sh:closed false ;
     sh:ignoredProperties ( rdf:type gx:circuitType gx:connectedNetworkA gx:connectedNetworkZ gx:connectionType gx:interfaceType gx:ipVersion gx:prefixSetA gx:prefixSetZ gx:protocolType gx:publicIpAddressProvisioning gx:serviceType gx:tenantSeparation gx:vlanConfiguration ) ;
-    sh:property [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 3 ;
-            sh:path gx:providedBy ],
-        [ sh:datatype xsd:string ;
+    sh:property [ sh:datatype xsd:string ;
             sh:description "A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property." ;
             sh:maxCount 1 ;
             sh:name "label" ;
             sh:nodeKind sh:Literal ;
             sh:order 24 ;
             sh:path rdfs:label ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:SubContractor ;
             sh:description "A list of sub-contractors processing customer data." ;
             sh:name "Sub-contractors" ;
@@ -1971,15 +1971,6 @@ gx:ConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:order 8 ;
             sh:path gx:dataAccountExport ] ;
     sh:targetClass gx:ConnectivityServiceOffering .
-
-gx:ConsentShape a sh:NodeShape ;
-    sh:or ( [ sh:and ( [ sh:in ( "6.1.a" "9.2.a" ) ;
-                            sh:path gx:legalBasis ] [ sh:or ( [ sh:minCount 1 ;
-                                        sh:path gx:consentWithdrawalContactPoint ] [ sh:minCount 1 ;
-                                        sh:path gx:dataProtectionContactPoint ] ) ] ) ] [ sh:and ( [ sh:not [ sh:in ( "6.1.a" "9.2.a" ) ;
-                                    sh:path gx:legalBasis ] ] [ sh:minCount 1 ;
-                            sh:path gx:purpose ] ) ] ) ;
-    sh:targetClass gx:Consent .
 
 gx:ContactInformationShape a sh:NodeShape ;
     rdfs:comment "Contains contact details for an entity." ;
@@ -2340,13 +2331,6 @@ gx:ContainerServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 22 ;
             sh:path gx:providerContactInformation ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 4 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:DataPortability ;
             sh:description "One or more data portability documents describing the data portability measures for the stored Customer data." ;
             sh:name "Data Portability" ;
@@ -2442,6 +2426,13 @@ gx:ContainerServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 10 ;
             sh:path gx:keyword ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path gx:providedBy ],
         [ sh:description "Provision type of the service" ;
             sh:in ( "hybrid" "private" "public" ) ;
             sh:maxCount 1 ;
@@ -2516,8 +2507,17 @@ gx:CpuCapabilitiesShape a sh:NodeShape ;
             sh:order 0 ;
             sh:path gx:pCPU ],
         [ sh:datatype xsd:integer ;
-            sh:defaultValue 1 ;
-            sh:description """A non-negative integer (being equal or greater than 1) defining the amount of overprovisioning. 
+            sh:description "A Non-negative integer (beeing equal or greater than 1) defining the number of virtual CPUs availabe in given flavor." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:minInclusive 1 ;
+            sh:name "number of virtual CPUs" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path gx:vCPUs ],
+        [ sh:datatype xsd:decimal ;
+            sh:defaultValue 1.0 ;
+            sh:description """A Non-negative integer (being equal or greater than 1) defining the amount of overprovisioning. 
 1 means no over-provisioning.
 > 1 means the physical CPU/thread is over-provisioned by the given factor, e.g. factor 2 means one physical CPU is used by two virtual CPUs.
 """ ;
@@ -2526,16 +2526,7 @@ gx:CpuCapabilitiesShape a sh:NodeShape ;
             sh:name "over-provisioning ratio of virtual CPU" ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
-            sh:path gx:overProvisioningRatio ],
-        [ sh:datatype xsd:integer ;
-            sh:description "A Non-negative integer (beeing equal or greater than 1) defining the number of virtual CPUs availabe in given flavor." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:minInclusive 1 ;
-            sh:name "number of virtual CPUs" ;
-            sh:nodeKind sh:Literal ;
-            sh:order 1 ;
-            sh:path gx:vCPUs ] ;
+            sh:path gx:overProvisioningRatio ] ;
     sh:targetClass gx:CpuCapabilities .
 
 gx:CustomerAuditingRightsShape a sh:NodeShape ;
@@ -2801,13 +2792,6 @@ gx:DataProductCatalogueShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 17 ;
             sh:path gx:requiredMeasures ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path gx:providedBy ],
         [ sh:description "List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc." ;
             sh:name "hosted on" ;
             sh:or ( [ sh:class gx:VirtualResource ] [ sh:class gx:PhysicalResource ] ) ;
@@ -2845,6 +2829,13 @@ gx:DataProductCatalogueShape a sh:NodeShape ;
             sh:or ( [ sh:class gx:Resource ] ) ;
             sh:order 0 ;
             sh:path gx:aggregationOfResources ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:description "A human readable name of the entity." ;
             sh:maxCount 1 ;
@@ -3621,7 +3612,12 @@ gx:DocumentChangeProceduresShape a sh:NodeShape ;
 gx:EORIShape a sh:NodeShape ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:string ;
+    sh:property [ sh:description "The country where the EORI is registered as an ISO 3166-1 alpha-2 code." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:in ( "AD" "AE" "AF" "AG" "AI" "AL" "AM" "AO" "AQ" "AR" "AS" "AT" "AU" "AW" "AX" "AZ" "BA" "BB" "BD" "BE" "BF" "BG" "BH" "BI" "BJ" "BL" "BM" "BN" "BO" "BQ" "BR" "BS" "BT" "BV" "BW" "BY" "BZ" "CA" "CC" "CD" "CF" "CG" "CH" "CI" "CK" "CL" "CM" "CN" "CO" "CR" "CU" "CV" "CW" "CX" "CY" "CZ" "DE" "DJ" "DK" "DM" "DO" "DZ" "EC" "EE" "EG" "EH" "ER" "ES" "ET" "FI" "FJ" "FK" "FM" "FO" "FR" "GA" "GB" "GD" "GE" "GF" "GG" "GH" "GI" "GL" "GM" "GN" "GP" "GQ" "GR" "GS" "GT" "GU" "GW" "GY" "HK" "HM" "HN" "HR" "HT" "HU" "ID" "IE" "IL" "IM" "IN" "IO" "IQ" "IR" "IS" "IT" "JE" "JM" "JO" "JP" "KE" "KG" "KH" "KI" "KM" "KN" "KP" "KR" "KW" "KY" "KZ" "LA" "LB" "LC" "LI" "LK" "LR" "LS" "LT" "LU" "LV" "LY" "MA" "MC" "MD" "ME" "MF" "MG" "MH" "MK" "ML" "MM" "MN" "MO" "MP" "MQ" "MR" "MS" "MT" "MU" "MV" "MW" "MX" "MY" "MZ" "NA" "NC" "NE" "NF" "NG" "NI" "NL" "NO" "NP" "NR" "NU" "NZ" "OM" "PA" "PE" "PF" "PG" "PH" "PK" "PL" "PM" "PN" "PR" "PS" "PT" "PW" "PY" "QA" "RE" "RO" "RS" "RU" "RW" "SA" "SB" "SC" "SD" "SE" "SG" "SH" "SI" "SJ" "SK" "SL" "SM" "SN" "SO" "SR" "SS" "ST" "SV" "SX" "SY" "SZ" "TC" "TD" "TF" "TG" "TH" "TJ" "TK" "TL" "TM" "TN" "TO" "TR" "TT" "TV" "TW" "TZ" "UA" "UG" "UM" "US" "UY" "UZ" "VA" "VC" "VE" "VG" "VI" "VN" "VU" "WF" "WS" "YE" "YT" "ZA" "ZM" "ZW" ) ] ) ;
+            sh:order 2 ;
+            sh:path gx:countryCode ],
+        [ sh:datatype xsd:string ;
             sh:description "The Economic Operators Registration and Identification number (EORI)." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
@@ -4028,13 +4024,6 @@ gx:FileStorageServiceOfferingShape a sh:NodeShape ;
             sh:or ( [ sh:class gx:Resource ] ) ;
             sh:order 10 ;
             sh:path gx:aggregationOfResources ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 11 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:MemorySize ;
             sh:description "Minimum Capacity (expressed as value + unit) supported by the service." ;
             sh:maxCount 1 ;
@@ -4190,6 +4179,13 @@ gx:FileStorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 19 ;
             sh:path gx:endpoint ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 11 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:FileStorageConfiguration ;
             sh:description "Attributes that are configurable at service instantiation." ;
             sh:maxCount 1 ;
@@ -4354,7 +4350,7 @@ gx:GaiaXEntityShape a sh:NodeShape ;
     rdfs:label "Gaia-X Entity" ;
     rdfs:comment "Root class for Gaia-X entities." ;
     sh:closed false ;
-    sh:ignoredProperties ( rdf:type gx:accessAttributes gx:accessSemantics gx:additionalVolume gx:address gx:aggregationOfResources gx:baseContainerImage gx:blockSize gx:blockStorageTechnology gx:bootVolume gx:buildDate gx:checkSum gx:circuitType gx:codeArtifact gx:computeFunctionAllowAutoScaling gx:computeFunctionAllowFSMount gx:computeFunctionAllowQuota gx:computeFunctionAllowTimeout gx:computeFunctionAllowVersioning gx:computeFunctionConfiguration gx:computeFunctionDebugTools gx:computeFunctionDeploymentMethod gx:computeFunctionDescription gx:computeFunctionEditor gx:computeFunctionLibrary gx:computeFunctionName gx:computeFunctionQuotas gx:computeFunctionRuntime gx:computeFunctionSDK gx:computeFunctionTemplateRuntime gx:computeFunctionTrigger gx:confidential gx:confidentialComputing gx:confidentialComputingTechnology gx:connectedNetworkA gx:connectedNetworkZ gx:connectionType gx:connectivityConfiguration gx:connectivityQoS gx:containerFormat gx:copyrightOwnedBy gx:cpu gx:cpuReq gx:cpuRequirements gx:cryptographicSecurityStandards gx:customerInstructions gx:dataAccountExport gx:dataPortability gx:dataProductDescription gx:dataProtectionRegime gx:dataRightsHolders gx:dataViews gx:dependsOn gx:destinationIdentifierZ gx:digitalServiceLegalDocuments gx:digitalServiceOfferingContactInformation gx:digitalServiceOfferingEndDate gx:digitalServiceOfferingIdentifier gx:digitalServiceOfferingLaunchDate gx:digitalServiceOfferingName gx:digitalServiceOfferingProvider gx:digitalServiceOfferingShortDescription gx:digitalServiceOfferingTermsAndConditions gx:digitalServiceUsageDataPolicy gx:digitalServiceUsageTermsAndConditions gx:ecoIssuesCredentialsOfType gx:ecoTSPEndPoint gx:ecoTSPId gx:ecoTrustScope gx:ecoTrustServiceProvider gx:encryption gx:endpoint gx:energyMix gx:energyUsageEfficiency gx:fileSize gx:fileSystemType gx:firmwareType gx:gpu gx:gpuLimit gx:gpuReq gx:gpuRequirements gx:hardwareAssistedVirtualization gx:headquartersAddress gx:highLevelAccessProtocol gx:hostedOn gx:hwRngTypeOfFlavor gx:hwRngTypeOfImage gx:hypervisor gx:hypervisorType gx:instantiationReq gx:interconnectedParticipants gx:interconnectionPointIdentifier gx:interfaceType gx:ipVersion gx:keyword gx:legalAddress gx:legalDocuments gx:license gx:licenseIncluded gx:lifetimeManagement gx:location gx:lowLevelBlockAccessProtocol gx:maintainedBy gx:maintenance gx:manufacturedBy gx:maximumObjectSize gx:maximumSize gx:memory gx:memoryLimit gx:memoryRequirements gx:minimumSize gx:multiQueues gx:multipleViews gx:network gx:numberOfCoresLimit gx:objectAPICompatibility gx:operatingSystem gx:osDistribution gx:ownedBy gx:parentOrganizationOf gx:patchLevel gx:possiblePersonalDataTransfers gx:prefixSetA gx:prefixSetZ gx:protocolType gx:providedBy gx:providerContactInformation gx:provisionType gx:publicIpAddressProvisioning gx:pxeImageDiskFormat gx:ramReq gx:registrationNumber gx:requiredMeasures gx:resourcePolicy gx:rootDiskReq gx:secureBoot gx:serviceOfferingTermsAndConditions gx:servicePolicy gx:serviceScope gx:serviceType gx:signature gx:sourceIdentifierA gx:storageCompression gx:storageConfiguration gx:storageConsistency gx:storageDeduplication gx:storageEncryption gx:storageProtection gx:storageQoS gx:storageRedundancyMechanism gx:subContractors gx:subOrganisationOf gx:tenantSeparation gx:updateStrategy gx:vPMU gx:version gx:versioning gx:videoRamSize gx:vlanConfiguration gx:vmImageDiskFormat gx:watchDogAction gx:waterUsageEffectiveness ) ;
+    sh:ignoredProperties ( rdf:type gx:accessAttributes gx:accessSemantics gx:additionalVolume gx:address gx:aggregationOfResources gx:baseContainerImage gx:blockSize gx:blockStorageTechnology gx:bootVolume gx:buildDate gx:checkSum gx:circuitType gx:codeArtifact gx:computeFunctionAllowAutoScaling gx:computeFunctionAllowFSMount gx:computeFunctionAllowQuota gx:computeFunctionAllowTimeout gx:computeFunctionAllowVersioning gx:computeFunctionConfiguration gx:computeFunctionDebugTools gx:computeFunctionDeploymentMethod gx:computeFunctionDescription gx:computeFunctionEditor gx:computeFunctionLibrary gx:computeFunctionName gx:computeFunctionQuotas gx:computeFunctionRuntime gx:computeFunctionSDK gx:computeFunctionTemplateRuntime gx:computeFunctionTrigger gx:confidential gx:confidentialComputing gx:confidentialComputingTechnology gx:connectedNetworkA gx:connectedNetworkZ gx:connectionType gx:connectivityConfiguration gx:connectivityQoS gx:containerFormat gx:copyrightOwnedBy gx:cpu gx:cpuReq gx:cpuRequirements gx:cryptographicSecurityStandards gx:customerInstructions gx:dataAccountExport gx:dataPortability gx:dataProductDescription gx:dataProtectionRegime gx:dataRightsHolders gx:dataViews gx:dependsOn gx:destinationIdentifierZ gx:digitalServiceLegalDocuments gx:digitalServiceOfferingContactInformation gx:digitalServiceOfferingEndDate gx:digitalServiceOfferingIdentifier gx:digitalServiceOfferingLaunchDate gx:digitalServiceOfferingName gx:digitalServiceOfferingProvider gx:digitalServiceOfferingShortDescription gx:digitalServiceOfferingTermsAndConditions gx:digitalServiceUsageDataPolicy gx:digitalServiceUsageTermsAndConditions gx:ecoIssuesCredentialsOfType gx:ecoTSPEndPoint gx:ecoTSPId gx:ecoTrustScope gx:ecoTrustServiceProvider gx:encryption gx:endpoint gx:energyMix gx:energyUsageEfficiency gx:fileSize gx:fileSystemType gx:firmwareType gx:gpu gx:gpuLimit gx:gpuReq gx:gpuRequirements gx:hardwareAssistedVirtualization gx:headquartersAddress gx:highLevelAccessProtocol gx:hostedOn gx:hwRngTypeOfFlavor gx:hwRngTypeOfImage gx:hypervisor gx:hypervisorType gx:instantiationReq gx:interconnectedParticipants gx:interconnectionPointIdentifier gx:interfaceType gx:ipVersion gx:keyword gx:legalAddress gx:legalDocuments gx:license gx:licenseIncluded gx:lifetimeManagement gx:location gx:lowLevelBlockAccessProtocol gx:maintainedBy gx:maintenance gx:manufacturedBy gx:maximumObjectSize gx:maximumSize gx:memory gx:memoryLimit gx:memoryRequirements gx:minimumSize gx:multiQueues gx:multipleViews gx:network gx:numberOfCoresLimit gx:objectAPICompatibility gx:operatedBy gx:operatingSystem gx:osDistribution gx:ownedBy gx:parentOrganizationOf gx:patchLevel gx:possiblePersonalDataTransfers gx:prefixSetA gx:prefixSetZ gx:protocolType gx:providedBy gx:providerContactInformation gx:provisionType gx:publicIpAddressProvisioning gx:pxeImageDiskFormat gx:ramReq gx:registrationNumber gx:requiredMeasures gx:resourcePolicy gx:rootDiskReq gx:secureBoot gx:serviceOfferingTermsAndConditions gx:servicePolicy gx:serviceScope gx:serviceType gx:signature gx:sourceIdentifierA gx:spiffeId gx:storageCompression gx:storageConfiguration gx:storageConsistency gx:storageDeduplication gx:storageEncryption gx:storageProtection gx:storageQoS gx:storageRedundancyMechanism gx:subContractors gx:subOrganisationOf gx:tenantSeparation gx:trustDomain gx:updateStrategy gx:vPMU gx:version gx:versioning gx:videoRamSize gx:vlanConfiguration gx:vmImageDiskFormat gx:watchDogAction gx:waterUsageEffectiveness ) ;
     sh:property [ sh:datatype xsd:string ;
             sh:description "A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property." ;
             sh:maxCount 1 ;
@@ -4847,13 +4843,6 @@ gx:InfrastructureServiceOfferingShape a sh:NodeShape ;
             sh:name "data protection regime" ;
             sh:order 5 ;
             sh:path gx:dataProtectionRegime ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path gx:providedBy ],
         [ sh:description "Provision type of the service" ;
             sh:in ( "hybrid" "private" "public" ) ;
             sh:maxCount 1 ;
@@ -4871,6 +4860,13 @@ gx:InfrastructureServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 21 ;
             sh:path schema:description ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:description "A human readable name of the entity." ;
             sh:maxCount 1 ;
@@ -5059,13 +5055,6 @@ gx:InterconnectionServiceOfferingShape a sh:NodeShape ;
             sh:or ( [ sh:class gx:Resource ] ) ;
             sh:order 13 ;
             sh:path gx:aggregationOfResources ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 14 ;
-            sh:path gx:providedBy ],
         [ sh:description "One or more cryptographic security standards protecting authenticity or integrity of the data." ;
             sh:in ( "FIPS180-4" "FIPS186-5" "RFC5406" "RFC7296" "RFC7515" "RFC8446" "RFC9142" ) ;
             sh:name "Cryptographic security standard" ;
@@ -5144,6 +5133,13 @@ gx:InterconnectionServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 11 ;
             sh:path gx:connectivityConfiguration ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 14 ;
+            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:description "CIDR Provider Identifier of network on the side A." ;
             sh:name "prefix set A" ;
@@ -5522,7 +5518,7 @@ gx:LegalDocumentShape a sh:NodeShape ;
 
 gx:LegalPersonShape a sh:NodeShape ;
     rdfs:label "Legal Person" ;
-    rdfs:comment "A legal person, who is uniquely identified by its registration number." ;
+    rdfs:comment "A legal person per [ISO-LP] §3.24: \"an individual, company, or other entity which has legal rights and is subject to obligations.\" This encompasses both natural persons (individuals) and business persons (organizations/companies). Uniquely identified by its registration number within the Gaia-X ecosystem. See [GX-CD-PA] §5.1 Criterion PA1.1 for compliance requirements." ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:class gx:LegalPerson ;
@@ -5664,13 +5660,6 @@ gx:LinkConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 3 ;
             sh:path gx:connectivityQoS ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 5 ;
-            sh:path gx:providedBy ],
         [ sh:description "Link protocol type." ;
             sh:in ( "ARP" "Ethernet" "Other" "PPP" "VLAN" ) ;
             sh:maxCount 1 ;
@@ -5701,6 +5690,13 @@ gx:LinkConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:name "provision type" ;
             sh:order 12 ;
             sh:path gx:provisionType ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:TermsAndConditions ;
             sh:description "One or more Terms and Conditions applying to that service." ;
             sh:minCount 1 ;
@@ -5907,9 +5903,17 @@ gx:MeasureShape a sh:NodeShape ;
 gx:MemoryCapabilitiesShape a sh:NodeShape ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:decimal ;
+    sh:property [ sh:class gx:Memory ;
+            sh:description "Amount of virtual RAM available in given flavor." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "size of virtual RAM" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path gx:memory ],
+        [ sh:datatype xsd:decimal ;
             sh:defaultValue 1.0 ;
-            sh:description """A non-negative number (being equal or greater than 1) defining the amount of overprovisioning. 
+            sh:description """A Non-negative number (being equal or greater than 1) defining the amount of overprovisioning. 
 1 means no over-provisioning.
 > 1 means physical memory is over-provisioned by the given factor, e.g. factor 2 means available virtual RAM size is twice as big as physical RAM size. Maximum value is 3.
 """ ;
@@ -5919,15 +5923,7 @@ gx:MemoryCapabilitiesShape a sh:NodeShape ;
             sh:name "over-provisioning of virtual RAM" ;
             sh:nodeKind sh:Literal ;
             sh:order 1 ;
-            sh:path gx:overProvisioningRatio ],
-        [ sh:class gx:Memory ;
-            sh:description "Amount of virtual RAM available in given flavor." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:name "size of virtual RAM" ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 0 ;
-            sh:path gx:memory ] ;
+            sh:path gx:overProvisioningRatio ] ;
     sh:targetClass gx:MemoryCapabilities .
 
 gx:MemoryShape a sh:NodeShape ;
@@ -6051,6 +6047,13 @@ gx:NetworkConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 10 ;
             sh:path gx:servicePolicy ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path gx:providedBy ],
         [ sh:description "Version of IP address supported. IPv4: only ipV4 addresses are supported. IPv6: both version iIPV4 and IPv6 are supported." ;
             sh:in ( "IPv4" "IPv6" ) ;
             sh:maxCount 1 ;
@@ -6089,13 +6092,6 @@ gx:NetworkConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 0 ;
             sh:path gx:serviceType ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 7 ;
-            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
@@ -6366,6 +6362,13 @@ gx:ObjectStorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 1 ;
             sh:path gx:maximumObjectSize ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 12 ;
+            sh:path gx:providedBy ],
         [ sh:description "Provision type of the service" ;
             sh:in ( "hybrid" "private" "public" ) ;
             sh:maxCount 1 ;
@@ -6395,13 +6398,6 @@ gx:ObjectStorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 23 ;
             sh:path gx:legalDocuments ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 12 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:MemorySize ;
             sh:description "Maximum Capacity (expressed as value + unit) supported by the service." ;
             sh:maxCount 1 ;
@@ -6746,9 +6742,9 @@ gx:PacketLossShape a sh:NodeShape ;
     sh:targetClass gx:PacketLoss .
 
 gx:ParticipantShape a sh:NodeShape ;
-    rdfs:comment "An legal or natural person that is onboarded to Gaia-X and offers, consumes services or operates resources." ;
+    rdfs:comment "A legal or natural person, or a machine/workload identity, that is onboarded to Gaia-X and offers, consumes services, or operates resources. Analogous to odrl:Party [ODRL-PARTY] §2.3 which covers individuals, organizations, devices, and software agents. Concrete subclasses are LegalPerson (for human/organizational entities per [ISO-LP] §3.24) and ServiceEntity (for M2M workload identities per [SPIFFE-ID])." ;
     sh:closed false ;
-    sh:ignoredProperties ( rdf:type gx:headquartersAddress gx:legalAddress gx:parentOrganizationOf gx:registrationNumber gx:subOrganisationOf ) ;
+    sh:ignoredProperties ( rdf:type gx:headquartersAddress gx:legalAddress gx:operatedBy gx:parentOrganizationOf gx:registrationNumber gx:spiffeId gx:subOrganisationOf gx:trustDomain ) ;
     sh:property [ sh:datatype xsd:string ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
@@ -6839,6 +6835,13 @@ gx:PhysicalConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 24 ;
             sh:path schema:name ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:DataPortability ;
             sh:description "One or more data portability documents describing the data portability measures for the stored Customer data." ;
             sh:name "Data Portability" ;
@@ -6915,13 +6918,6 @@ gx:PhysicalConnectivityServiceOfferingShape a sh:NodeShape ;
             sh:name "data protection regime" ;
             sh:order 9 ;
             sh:path gx:dataProtectionRegime ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 5 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:ServiceOffering ;
             sh:description "A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it." ;
             sh:name "depends on" ;
@@ -7748,6 +7744,54 @@ gx:ServiceAgreementOfferShape a sh:NodeShape ;
             sh:path gx:url ] ;
     sh:targetClass gx:ServiceAgreementOffer .
 
+gx:ServiceEntityShape a sh:NodeShape ;
+    rdfs:comment "A machine or workload identity that operates within the Gaia-X ecosystem on behalf of a LegalPerson. Identified by a SPIFFE ID URI (spiffe://<trust-domain>/<path>) per [SPIFFE-ID]. Authentication uses JWT-SVID [JWT-SVID] §3.1 where the \"sub\" claim is the SPIFFE ID. Enables M2M (machine-to-machine) interactions where services and workloads need verifiable, short-lived cryptographic identities independent of the human operators who manage them." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The SPIFFE trust domain this service entity belongs to. Represents an administrative boundary (e.g., a Gaia-X federation or dataspace). Derived from the authority component of the SPIFFE ID." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "Trust Domain" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path gx:trustDomain ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path schema:description ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human readable name of the entity." ;
+            sh:maxCount 1 ;
+            sh:name "name" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path schema:name ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson that operates and is legally responsible for this service entity. Every ServiceEntity MUST be operated by a LegalPerson — machines cannot bear legal responsibility independently." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "Operated By" ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path gx:operatedBy ],
+        [ sh:description "The SPIFFE ID URI uniquely identifying this workload or service entity. Format: spiffe://<trust-domain>/<path> per [SPIFFE-ID]. Used as the \"sub\" claim in JWT-SVIDs [JWT-SVID] §3.1." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "SPIFFE ID" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path gx:spiffeId ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property." ;
+            sh:maxCount 1 ;
+            sh:name "label" ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path rdfs:label ] ;
+    sh:targetClass gx:ServiceEntity .
+
 gx:ServiceOfferingShape a sh:NodeShape ;
     rdfs:label "Service Offering" ;
     rdfs:comment "A digital service available for order." ;
@@ -7811,13 +7855,6 @@ gx:ServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 4 ;
             sh:path gx:servicePolicy ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 1 ;
-            sh:path gx:providedBy ],
         [ sh:datatype xsd:string ;
             sh:maxCount 1 ;
             sh:nodeKind sh:Literal ;
@@ -7861,6 +7898,13 @@ gx:ServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 11 ;
             sh:path gx:serviceScope ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:CustomerInstructions ;
             sh:description "One or more customer instructions describing the Customer instructions regarding any data therein." ;
             sh:name "Customer instructions" ;
@@ -8199,18 +8243,18 @@ gx:StorageServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 17 ;
             sh:path gx:endpoint ],
-        [ sh:description "A resolvable link of resources related to an entity and that can exist independently of it." ;
-            sh:name "aggregation of" ;
-            sh:or ( [ sh:class gx:Resource ] ) ;
-            sh:order 8 ;
-            sh:path gx:aggregationOfResources ],
         [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 9 ;
             sh:path gx:providedBy ],
+        [ sh:description "A resolvable link of resources related to an entity and that can exist independently of it." ;
+            sh:name "aggregation of" ;
+            sh:or ( [ sh:class gx:Resource ] ) ;
+            sh:order 8 ;
+            sh:path gx:aggregationOfResources ],
         [ sh:class gx:LegalDocument ;
             sh:description "A list of legal documents in relation to the service or the customer." ;
             sh:name "Legal Documents" ;
@@ -8966,6 +9010,13 @@ gx:VirtualMachineServiceOfferingShape a sh:NodeShape ;
             sh:name "Cryptographic security standard" ;
             sh:order 21 ;
             sh:path gx:cryptographicSecurityStandards ],
+        [ sh:class gx:LegalPerson ;
+            sh:description "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path gx:providedBy ],
         [ sh:class gx:CustomerInstructions ;
             sh:description "One or more customer instructions describing the Customer instructions regarding any data therein." ;
             sh:name "Customer instructions" ;
@@ -9027,13 +9078,6 @@ gx:VirtualMachineServiceOfferingShape a sh:NodeShape ;
             sh:nodeKind sh:BlankNodeOrIRI ;
             sh:order 9 ;
             sh:path gx:dataAccountExport ],
-        [ sh:class gx:LegalPerson ;
-            sh:description "A resolvable link to Gaia-X Credential of the participant providing the service." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:BlankNodeOrIRI ;
-            sh:order 4 ;
-            sh:path gx:providedBy ],
         [ sh:class gx:ServerFlavor ;
             sh:description "Set of technical requirements or conditions to instantiate this service offering." ;
             sh:minCount 1 ;

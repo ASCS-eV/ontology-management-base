@@ -12,7 +12,7 @@ description: >-
   Ontology for scenario tagging based on the ASAM OpenLABEL standard
   and BSI PAS-1883 Operational Design Domain taxonomy.
 version: "2.0.0"
-license: https://creativecommons.org/licenses/by/4.0/
+license: https://www.eclipse.org/legal/epl-2.0/
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -203,6 +203,8 @@ classes:
       - subjectVehicleSpeedValue
       - TrafficAgentDensity
       - trafficAgentDensityValue
+      - TrafficAgentType
+      - trafficAgentTypeValue
       - TrafficFlowRate
       - trafficFlowRateValue
       - TrafficSpecialVehicle
@@ -282,6 +284,17 @@ classes:
             TrafficAgentDensity:
               equals_string: "true"
       - description: >-
+          If trafficAgentTypeValue is provided, TrafficAgentType must be true.
+          Corresponds to BSI PAS-1883 Section 5.4.a.4 conditional constraint.
+        preconditions:
+          slot_conditions:
+            trafficAgentTypeValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficAgentType:
+              equals_string: "true"
+      - description: >-
           If trafficFlowRateValue is provided, TrafficFlowRate must be true.
           Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
@@ -357,6 +370,17 @@ classes:
         postconditions:
           slot_conditions:
             LongitudinalUpSlope:
+              equals_string: "true"
+      - description: >-
+          If subjectVehicleSpeedValue is provided, SubjectVehicleSpeed must be true.
+          Corresponds to BSI PAS-1883 Section 5.4.b conditional constraint.
+        preconditions:
+          slot_conditions:
+            subjectVehicleSpeedValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            SubjectVehicleSpeed:
               equals_string: "true"
 
   # ---------------------------------------------------------------------------
@@ -940,6 +964,13 @@ slots:
     slot_uri: openlabel_v2:TrafficAgentDensity
     range: boolean
 
+  TrafficAgentType:
+    description: Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:TrafficAgentType
+    range: boolean
+
   TrafficFlowRate:
     description: Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.
     see_also:
@@ -1049,6 +1080,16 @@ slots:
     slot_uri: openlabel_v2:trafficAgentDensityValue
     range: integer
     minimum_value: 0
+
+  trafficAgentTypeValue:
+    description: Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:trafficAgentTypeValue
+    any_of:
+      - range: RoadUserHumanEnum
+      - range: RoadUserVehicleEnum
+    multivalued: true
 
   trafficFlowRateValue:
     description: Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.
