@@ -785,6 +785,42 @@ gx:ServiceAgreementOffer a owl:Class ;
     skos:definition "Legal document describing the ability to establish a contract per a set of governing law countries." ;
     skos:inScheme gx:legal-document .
 
+gx:ServiceEntity a owl:Class ;
+    rdfs:label "ServiceEntity" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom gx:LegalPerson ;
+            owl:onProperty gx:operatedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:operatedBy ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:trustDomain ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:operatedBy ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:trustDomain ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:spiffeId ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:spiffeId ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:spiffeId ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:trustDomain ],
+        gx:Participant ;
+    skos:definition "A machine or workload identity that operates within the Gaia-X ecosystem on behalf of a LegalPerson. Identified by a SPIFFE ID URI (spiffe://<trust-domain>/<path>) per [SPIFFE-ID]. Authentication uses JWT-SVID [JWT-SVID] §3.1 where the \"sub\" claim is the SPIFFE ID. Enables M2M (machine-to-machine) interactions where services and workloads need verifiable, short-lived cryptographic identities independent of the human operators who manage them." ;
+    skos:inScheme gx:participant ;
+    skos:note "Analogous to odrl:Party representing a \"device or software agent\" per [ODRL-PARTY] §2.3.",
+        "[JWT-SVID] §3.1: The \"sub\" claim MUST be set to the SPIFFE ID of the subject (the workload).",
+        "[SPIFFE-ID]: SPIFFE ID format is spiffe://<trust-domain>/<path>. The trust domain represents an administrative boundary (e.g., a Gaia-X federation or dataspace)." .
+
 gx:SnapshotPolicy a owl:Class ;
     rdfs:label "SnapshotPolicy" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -905,20 +941,6 @@ gx:VirtualMachineServiceOffering a owl:Class ;
     skos:definition "A digital service available for order and offering computational capabilities." ;
     skos:inScheme gx:service-offering .
 
-gx:consent a owl:DatatypeProperty ;
-    rdfs:label "consent" ;
-    dcterms:title "consent" ;
-    rdfs:range xsd:string ;
-    skos:definition "list of consents covering the processing activities from the data subjects as Natural Person when the dataset contains PII." ;
-    skos:inScheme gx:slots .
-
-gx:consentWithdrawalContactPoint a owl:DatatypeProperty ;
-    rdfs:label "consentWithdrawalContactPoint" ;
-    dcterms:title "consent withdrawal contact point" ;
-    rdfs:range xsd:string ;
-    skos:definition "ContactPoint of the Participant to whom to formulate a withdrawal consent request" ;
-    skos:inScheme gx:slots .
-
 gx:consumedBy a owl:DatatypeProperty ;
     rdfs:label "consumedBy" ;
     rdfs:range xsd:string ;
@@ -943,13 +965,6 @@ gx:dataProduct a owl:ObjectProperty ;
     rdfs:label "dataProduct" ;
     rdfs:range gx:DataProduct ;
     skos:definition "A resolvable link to the Data Product Description Declaration (after negotiation)." ;
-    skos:inScheme gx:slots .
-
-gx:dataProtectionContactPoint a owl:DatatypeProperty ;
-    rdfs:label "dataProtectionContactPoint" ;
-    dcterms:title "data protection contact point" ;
-    rdfs:range xsd:string ;
-    skos:definition "ContactPoint of the Data Protection Officer or Participant responsible for the management of personal or sensitive data" ;
     skos:inScheme gx:slots .
 
 gx:dataUsageAgreementNotary a owl:DatatypeProperty ;
@@ -979,7 +994,9 @@ gx:exposedThrough a owl:ObjectProperty ;
     skos:inScheme gx:slots .
 
 gx:gaia-x.owl.ttl a owl:Ontology ;
-    rdfs:label "gaia-x" .
+    rdfs:label "gaia-x" ;
+    rdfs:comment "ASCS/OMB profile of the Gaia-X Trust Framework ontology, regenerated via LinkML from service-characteristics. See artifacts/gx/VERSIONING.md for provenance details." ;
+    owl:versionInfo "25.11+fix.5 (ASCS/OMB profile)" .
 
 gx:hotfixHours a owl:DatatypeProperty ;
     rdfs:label "hotfixHours" ;
@@ -1046,13 +1063,6 @@ gx:providedUntil a owl:DatatypeProperty ;
     dcterms:title "Provided until" ;
     rdfs:range xsd:date ;
     skos:definition "Details, date until the image will be provided in image catalogue." ;
-    skos:inScheme gx:slots .
-
-gx:purpose a owl:DatatypeProperty ;
-    rdfs:label "purpose" ;
-    dcterms:title "purpose" ;
-    rdfs:range xsd:string ;
-    skos:definition "Purposes of the processing. It is recommended to use well know controlled vocabulary such as the Data Privacy Vocabulary:Purposes" ;
     skos:inScheme gx:slots .
 
 gx:replaceFrequency a owl:ObjectProperty ;
@@ -1404,11 +1414,17 @@ gx:DigitalServiceOffering a owl:Class ;
 gx:EORI a owl:Class ;
     rdfs:label "EORI" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom gx:CountryNameAlpha2 ;
+            owl:onProperty gx:countryCode ],
+        [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty gx:eori ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:eori ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:countryCode ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty gx:country ],
@@ -1421,6 +1437,9 @@ gx:EORI a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:country ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:countryCode ],
         gx:RegistrationNumber ;
     owl:equivalentClass gx:EORI ;
     skos:inScheme gx:legal-person .
@@ -5981,13 +6000,13 @@ gx:CpuCapabilities a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty gx:vCPUs ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+            owl:minCardinality 0 ;
             owl:onProperty gx:overProvisioningRatio ],
         [ a owl:Restriction ;
-            owl:minCardinality 0 ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:decimal [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
             owl:onProperty gx:overProvisioningRatio ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
@@ -44718,7 +44737,7 @@ gx:SubContractor a owl:Class ;
             owl:onProperty gx:legalName ],
         [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:LegalDocument ) ] xsd:string ) ] ;
+                    owl:intersectionOf ( [ owl:unionOf ( gx:LegalDocument xsd:string ) ] xsd:string ) ] ;
             owl:onProperty gx:communicationMethods ],
         [ a owl:Restriction ;
             owl:allValuesFrom gx:CountryNameAlpha2 ;
@@ -44999,7 +45018,7 @@ gx:blockStorageTechnology a owl:ObjectProperty ;
 gx:communicationMethods a owl:DatatypeProperty ;
     rdfs:label "communicationMethods" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:LegalDocument ) ] xsd:string ) ] ;
+            owl:intersectionOf ( [ owl:unionOf ( gx:LegalDocument xsd:string ) ] xsd:string ) ] ;
     skos:definition "The method of communication with the subcontractor." ;
     skos:inScheme gx:slots .
 
@@ -45265,7 +45284,7 @@ gx:hostedOn a owl:DatatypeProperty ;
     rdfs:label "hostedOn" ;
     dcterms:title "hosted on" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( [ owl:unionOf ( gx:VirtualResource gx:PhysicalResource ) ] xsd:string ) ] ;
+            owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalResource gx:VirtualResource ) ] xsd:string ) ] ;
     skos:definition "List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc." ;
     skos:inScheme gx:slots .
 
@@ -45579,7 +45598,7 @@ schema:name a owl:DatatypeProperty ;
     skos:inScheme gx:slots .
 
 schema:taxID a owl:DatatypeProperty ;
-    rdfs:label "taxId" ;
+    rdfs:label "taxID" ;
     rdfs:range xsd:string ;
     skos:definition "The company tax ID." ;
     skos:inScheme gx:slots .
@@ -45726,12 +45745,12 @@ gx:GPSLocation a owl:Class ;
             owl:onProperty gx:altitude ],
         [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:GPSUnit ) ] xsd:string ) ] ;
-            owl:onProperty gx:longitude ],
+                    owl:intersectionOf ( [ owl:unionOf ( gx:GPSUnit xsd:string ) ] xsd:string ) ] ;
+            owl:onProperty gx:latitude ],
         [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:GPSUnit ) ] xsd:string ) ] ;
-            owl:onProperty gx:latitude ],
+                    owl:intersectionOf ( [ owl:unionOf ( gx:GPSUnit xsd:string ) ] xsd:string ) ] ;
+            owl:onProperty gx:longitude ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:latitude ],
@@ -46967,7 +46986,7 @@ gx:latitude a owl:DatatypeProperty ;
     rdfs:label "latitude" ;
     dcterms:title "latitude" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:GPSUnit ) ] xsd:string ) ] ;
+            owl:intersectionOf ( [ owl:unionOf ( gx:GPSUnit xsd:string ) ] xsd:string ) ] ;
     skos:definition "Coordinate representing x horizontal position such as latitude. Negative number south of equator and positive north of equator." ;
     skos:inScheme gx:slots .
 
@@ -47020,7 +47039,7 @@ gx:longitude a owl:DatatypeProperty ;
     rdfs:label "longitude" ;
     dcterms:title "longitude" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( [ owl:unionOf ( xsd:string gx:GPSUnit ) ] xsd:string ) ] ;
+            owl:intersectionOf ( [ owl:unionOf ( gx:GPSUnit xsd:string ) ] xsd:string ) ] ;
     skos:definition "Coordinate representing y horizontal position such as longitude. Negative values west of Prime Meridian and positive values east of Prime Meridian." ;
     skos:inScheme gx:slots .
 
@@ -47161,6 +47180,13 @@ gx:numberOfThreads a owl:DatatypeProperty ;
     skos:definition "Number of threads of the CPU." ;
     skos:inScheme gx:slots .
 
+gx:operatedBy a owl:ObjectProperty ;
+    rdfs:label "operatedBy" ;
+    dcterms:title "Operated By" ;
+    rdfs:range gx:LegalPerson ;
+    skos:definition "A resolvable link to the Gaia-X Credential of the LegalPerson that operates and is legally responsible for this service entity. Every ServiceEntity MUST be operated by a LegalPerson — machines cannot bear legal responsibility independently." ;
+    skos:inScheme gx:slots .
+
 gx:operatingSystem a owl:ObjectProperty ;
     rdfs:label "operatingSystem" ;
     dcterms:title "Operating System" ;
@@ -47295,7 +47321,7 @@ gx:protocolType a owl:ObjectProperty ;
 gx:providedBy a owl:ObjectProperty ;
     rdfs:label "providedBy" ;
     rdfs:range gx:LegalPerson ;
-    skos:definition "A resolvable link to Gaia-X Credential of the participant providing the service." ;
+    skos:definition "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
     skos:inScheme gx:slots .
 
 gx:providerContactInformation a owl:ObjectProperty ;
@@ -47472,6 +47498,12 @@ gx:specificParameters a owl:DatatypeProperty ;
     skos:definition "Type or Provider Specific Parameters, separated by colons." ;
     skos:inScheme gx:slots .
 
+gx:spiffeId a owl:ObjectProperty ;
+    rdfs:label "spiffeId" ;
+    dcterms:title "SPIFFE ID" ;
+    skos:definition "The SPIFFE ID URI uniquely identifying this workload or service entity. Format: spiffe://<trust-domain>/<path> per [SPIFFE-ID]. Used as the \"sub\" claim in JWT-SVIDs [JWT-SVID] §3.1." ;
+    skos:inScheme gx:slots .
+
 gx:standardReference a owl:ObjectProperty ;
     rdfs:label "standardReference" ;
     dcterms:title "standard reference" ;
@@ -47573,6 +47605,13 @@ gx:triggeringService a owl:ObjectProperty ;
     dcterms:title "Triggering Service" ;
     rdfs:range gx:ServiceOffering ;
     skos:definition "Service providing the events usable to trigger execution of a ComputeFunction" ;
+    skos:inScheme gx:slots .
+
+gx:trustDomain a owl:DatatypeProperty ;
+    rdfs:label "trustDomain" ;
+    dcterms:title "Trust Domain" ;
+    rdfs:range xsd:string ;
+    skos:definition "The SPIFFE trust domain this service entity belongs to. Represents an administrative boundary (e.g., a Gaia-X federation or dataspace). Derived from the authority component of the SPIFFE ID." ;
     skos:inScheme gx:slots .
 
 gx:updateStrategy a owl:ObjectProperty ;
@@ -47900,12 +47939,6 @@ gx:PXEDiskType a owl:Class ;
     skos:inScheme gx:pxe-image ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#PXEDiskType/ISO>,
         <https://w3id.org/gaia-x/development#PXEDiskType/WINPE> .
-
-gx:Participant a owl:Class ;
-    rdfs:label "Participant" ;
-    rdfs:subClassOf gx:GaiaXEntity ;
-    skos:definition "An legal or natural person that is onboarded to Gaia-X and offers, consumes services or operates resources." ;
-    skos:inScheme gx:participant .
 
 gx:PhysicalResource a owl:Class ;
     rdfs:label "PhysicalResource" ;
@@ -48440,6 +48473,14 @@ gx:Memory a owl:Class ;
     skos:definition "Details with respect to properties and capabilities of RAM." ;
     skos:inScheme gx:memory .
 
+gx:Participant a owl:Class ;
+    rdfs:label "Participant" ;
+    rdfs:subClassOf gx:GaiaXEntity ;
+    skos:definition "A legal or natural person, or a machine/workload identity, that is onboarded to Gaia-X and offers, consumes services, or operates resources. Analogous to odrl:Party [ODRL-PARTY] §2.3 which covers individuals, organizations, devices, and software agents. Concrete subclasses are LegalPerson (for human/organizational entities per [ISO-LP] §3.24) and ServiceEntity (for M2M workload identities per [SPIFFE-ID])." ;
+    skos:inScheme gx:participant ;
+    skos:note "[GX-CD-PA] §5.1 Criterion PA1.1: \"A Gaia-X Participant is a legal or natural person, that has a Gaia-X Participant Credential.\"",
+        "[ODRL-PARTY] §2.3: \"An entity or a collection of entities that undertake Roles in a Rule\" — can represent individual, group, organization, device, or software agent." .
+
 gx:PhysicalInterconnectionPointIdentifier a owl:Class ;
     rdfs:label "PhysicalInterconnectionPointIdentifier" ;
     dcterms:title "Physical Interconnection Point Identifier" ;
@@ -48823,6 +48864,10 @@ gx:ServiceOffering a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty gx:providedBy ],
         [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ owl:unionOf ( gx:PhysicalResource gx:VirtualResource ) ] xsd:string ) ] ;
+            owl:onProperty gx:hostedOn ],
+        [ a owl:Restriction ;
             owl:allValuesFrom gx:DataPortability ;
             owl:onProperty gx:dataPortability ],
         [ a owl:Restriction ;
@@ -48888,10 +48933,6 @@ gx:ServiceOffering a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty gx:endpoint ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( [ owl:unionOf ( gx:VirtualResource gx:PhysicalResource ) ] xsd:string ) ] ;
-            owl:onProperty gx:hostedOn ],
         [ a owl:Restriction ;
             owl:allValuesFrom gx:PersonalDataProtectionRegime ;
             owl:onProperty gx:dataProtectionRegime ],
@@ -48959,7 +49000,7 @@ gx:interconnectionPointIdentifier a owl:ObjectProperty ;
 gx:overProvisioningRatio a owl:DatatypeProperty ;
     rdfs:label "overProvisioningRatio" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( xsd:decimal [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
                         owl:onDatatype xsd:integer ;
                         owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
     skos:definition "Overprovisioning ratio defined by the division of the amount of allocated virtual resource over the amount of physical resource available." ;
@@ -49520,12 +49561,6 @@ gx:StorageRedundancyMechanism a owl:Class ;
         <https://w3id.org/gaia-x/development#StorageRedundancyMechanism/RAID6>,
         <https://w3id.org/gaia-x/development#StorageRedundancyMechanism/RS_Code> .
 
-gx:countryCode a owl:DatatypeProperty ;
-    rdfs:label "countryCode" ;
-    rdfs:range gx:CountryNameAlpha2 ;
-    skos:definition "Unique code identifying a country." ;
-    skos:inScheme gx:slots .
-
 gx:resource a owl:DatatypeProperty ;
     rdfs:label "resource" ;
     rdfs:range xsd:string ;
@@ -49562,6 +49597,12 @@ gx:FileSystemType a owl:Class ;
         <https://w3id.org/gaia-x/development#FileSystemType/Other>,
         <https://w3id.org/gaia-x/development#FileSystemType/Reiser4>,
         <https://w3id.org/gaia-x/development#FileSystemType/XFS> .
+
+gx:countryCode a owl:DatatypeProperty ;
+    rdfs:label "countryCode" ;
+    rdfs:range gx:CountryNameAlpha2 ;
+    skos:definition "Unique code identifying a country." ;
+    skos:inScheme gx:slots .
 
 gx:url a owl:ObjectProperty ;
     rdfs:label "url" ;
@@ -49606,6 +49647,13 @@ gx:metric a owl:DatatypeProperty ;
     skos:definition "Metric used to measure an indicator." ;
     skos:inScheme gx:slots .
 
+gx:MemorySize a owl:Class ;
+    rdfs:label "MemorySize" ;
+    dcterms:title "Memory size" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    skos:definition "The number of bytes, that can be stored on a digital storage." ;
+    skos:inScheme gx:quantity .
+
 gx:LegalPerson a owl:Class ;
     rdfs:label "LegalPerson" ;
     dcterms:title "Legal Person" ;
@@ -49646,15 +49694,8 @@ gx:LegalPerson a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty gx:parentOrganizationOf ],
         gx:Participant ;
-    skos:definition "A legal person, who is uniquely identified by its registration number." ;
+    skos:definition "A legal person per [ISO-LP] §3.24: \"an individual, company, or other entity which has legal rights and is subject to obligations.\" This encompasses both natural persons (individuals) and business persons (organizations/companies). Uniquely identified by its registration number within the Gaia-X ecosystem. See [GX-CD-PA] §5.1 Criterion PA1.1 for compliance requirements." ;
     skos:inScheme gx:legal-person .
-
-gx:MemorySize a owl:Class ;
-    rdfs:label "MemorySize" ;
-    dcterms:title "Memory size" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    skos:definition "The number of bytes, that can be stored on a digital storage." ;
-    skos:inScheme gx:quantity .
 
 gx:LegalDocument a owl:Class ;
     rdfs:label "LegalDocument" ;

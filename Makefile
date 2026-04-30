@@ -208,8 +208,8 @@ _generate_default:
 	for domain in $$DOMAINS_TO_BUILD; do \
 		echo "  Processing $$domain..."; \
 		mkdir -p artifacts/$$domain; \
-		"$(GEN_OWL)" --deterministic --normalize-prefixes --no-metadata --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.owl.ttl 2>/dev/null; \
-		"$(GEN_SHACL)" --deterministic --normalize-prefixes --no-metadata linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.shacl.ttl 2>/dev/null; \
+		"$(GEN_OWL)" --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.owl.ttl 2>/dev/null; \
+		"$(GEN_SHACL)" --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description}" linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.shacl.ttl 2>/dev/null; \
 		"$(GEN_JSONLD_CONTEXT)" --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri linkml/$$domain/$$domain.yaml > artifacts/$$domain/$$domain.context.jsonld 2>/dev/null; \
 	done
 	@echo "[OK] Artifacts generated"
