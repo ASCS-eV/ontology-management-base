@@ -72,6 +72,9 @@ class LowLightNight
 class MotorwayManaged
 class MotorwayUnmanaged
 class Odd
+class OddDynamicElements
+class OddEnvironment
+class OddScenery
 class ParticulatesDust
 class ParticulatesMarine
 class ParticulatesPollution
@@ -228,6 +231,9 @@ IlluminationLowLight <|-- LowLightAmbient
 IlluminationLowLight <|-- LowLightNight
 DrivableAreaType <|-- MotorwayManaged
 DrivableAreaType <|-- MotorwayUnmanaged
+Odd <|-- OddDynamicElements
+Odd <|-- OddEnvironment
+Odd <|-- OddScenery
 EnvironmentParticulates <|-- ParticulatesDust
 EnvironmentParticulates <|-- ParticulatesMarine
 EnvironmentParticulates <|-- ParticulatesPollution
@@ -435,6 +441,9 @@ SceneryZone <|-- ZoneTrafficManagement
   - LaneTypeTraffic (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTraffic)
   - LaneTypeTram (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTram)
 - Odd (https://w3id.org/ascs-ev/envited-x/openlabel/v2/Odd)
+  - OddDynamicElements (https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddDynamicElements)
+  - OddEnvironment (https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddEnvironment)
+  - OddScenery (https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddScenery)
 - QuantitativeValue (https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue)
 - RainType (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType)
   - RainTypeConvective (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective)
@@ -575,6 +584,9 @@ SceneryZone <|-- ZoneTrafficManagement
 |MotorwayManaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayManaged||DrivableAreaType|
 |MotorwayUnmanaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayUnmanaged||DrivableAreaType|
 |Odd|https://w3id.org/ascs-ev/envited-x/openlabel/v2/Odd|||
+|OddDynamicElements|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddDynamicElements||Odd|
+|OddEnvironment|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddEnvironment||Odd|
+|OddScenery|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddScenery||Odd|
 |ParticulatesDust|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust||EnvironmentParticulates|
 |ParticulatesMarine|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine||EnvironmentParticulates|
 |ParticulatesPollution|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesPollution||EnvironmentParticulates|
@@ -811,6 +823,195 @@ SceneryZone <|-- ZoneTrafficManagement
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacefeature"></a>DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationlowlight"></a>IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalstraights"></a>HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsinformation"></a>SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signswarning"></a>SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionintersection"></a>JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-raintype"></a>RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrain"></a>WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenerytemporarystructure"></a>SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensity"></a>TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnow"></a>WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryfixedstructure"></a>SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslope"></a>LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwind"></a>WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-environmentparticulates"></a>EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeed"></a>SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacetype"></a>DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunposition"></a>DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatespollution"></a>ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficspecialvehicle"></a>TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesvolcanic"></a>ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevationvalue"></a>daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtype"></a>LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryspecialstructure"></a>ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslopevalue"></a>longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudiness"></a>IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareatype"></a>DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslopevalue"></a>longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitycommunication"></a>ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitypositioning"></a>ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnowvalue"></a>weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswatervalue"></a>particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolume"></a>TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtraveldirection"></a>LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareaedge"></a>DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensions"></a>LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesmarine"></a>ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecountvalue"></a>laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrainvalue"></a>weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolumevalue"></a>trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesdust"></a>ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowratevalue"></a>trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensionsvalue"></a>laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttype"></a>TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensityvalue"></a>trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryzone"></a>SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacecondition"></a>DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationartificial"></a>IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-geometrytransverse"></a>GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurvesvalue"></a>horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurves"></a>HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationmarking"></a>LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsregulatory"></a>SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionroundabout"></a>JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwindvalue"></a>weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslope"></a>LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinallevelplane"></a>LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecount"></a>LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevation"></a>DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowrate"></a>TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudinessvalue"></a>illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeedvalue"></a>subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
 |Scenario|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-hastag"></a>hasTag||1|A tag associated with a scenario.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
 |Tag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduser"></a>RoadUser||1|Road user tag.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
 |Tag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-admintag"></a>AdminTag||1|Administration tag.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
@@ -853,69 +1054,69 @@ SceneryZone <|-- ZoneTrafficManagement
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondrivevalue"></a>motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncutout"></a>MotionCutOut||1|An activity where the object vehicle suddenly moves out of the lane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncross"></a>MotionCross||1|An activity where the trajectory of the road user crosses the trajectory of the object.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslope"></a>LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwindvalue"></a>weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-geometrytransverse"></a>GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationartificial"></a>IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsregulatory"></a>SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacetype"></a>DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryfixedstructure"></a>SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionroundabout"></a>JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudinessvalue"></a>illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensions"></a>LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareatype"></a>DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeed"></a>SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signswarning"></a>SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowrate"></a>TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-raintype"></a>RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolume"></a>TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensity"></a>TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolumevalue"></a>trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionintersection"></a>JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtype"></a>LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitycommunication"></a>ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevation"></a>DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowratevalue"></a>trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationmarking"></a>LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinallevelplane"></a>LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacecondition"></a>DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-environmentparticulates"></a>EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunposition"></a>DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensityvalue"></a>trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslopevalue"></a>longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesvolcanic"></a>ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensionsvalue"></a>laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswatervalue"></a>particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareaedge"></a>DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacefeature"></a>DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrainvalue"></a>weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecount"></a>LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurves"></a>HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwind"></a>WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficspecialvehicle"></a>TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnow"></a>WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslopevalue"></a>longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationlowlight"></a>IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesdust"></a>ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslope"></a>LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitypositioning"></a>ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeedvalue"></a>subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecountvalue"></a>laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtraveldirection"></a>LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalstraights"></a>HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttype"></a>TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevationvalue"></a>daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenerytemporarystructure"></a>SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurvesvalue"></a>horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrain"></a>WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryspecialstructure"></a>ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnowvalue"></a>weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudiness"></a>IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesmarine"></a>ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsinformation"></a>SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatespollution"></a>ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryzone"></a>SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduservehicle"></a>RoadUserVehicle||1|Vehicle type.||openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduseranimal"></a>RoadUserAnimal||1|Animal road user flag.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|

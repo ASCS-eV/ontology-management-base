@@ -306,6 +306,15 @@
       "Odd": {
          "@id": "Odd"
       },
+      "OddDynamicElements": {
+         "@id": "OddDynamicElements"
+      },
+      "OddEnvironment": {
+         "@id": "OddEnvironment"
+      },
+      "OddScenery": {
+         "@id": "OddScenery"
+      },
       "ParticulatesDust": {
          "@id": "ParticulatesDust",
          "@type": "xsd:boolean"

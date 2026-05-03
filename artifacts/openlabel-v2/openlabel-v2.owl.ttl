@@ -9,6 +9,27 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+openlabel_v2:OddDynamicElements a owl:Class ;
+    rdfs:label "OddDynamicElements"@en ;
+    rdfs:subClassOf openlabel_v2:Odd ;
+    skos:definition "Dynamic elements subset of the Operational Design Domain. Covers traffic agents, flow rates, volume, and subject vehicle speed. Refer to BSI PAS-1883 Section 5.4."@en ;
+    skos:exactMatch openlabel_v2:OddDynamicElements ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:OddEnvironment a owl:Class ;
+    rdfs:label "OddEnvironment"@en ;
+    rdfs:subClassOf openlabel_v2:Odd ;
+    skos:definition "Environment-related subset of the Operational Design Domain. Covers weather, illumination, connectivity, and particulates. Refer to BSI PAS-1883 Section 5.3."@en ;
+    skos:exactMatch openlabel_v2:OddEnvironment ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:OddScenery a owl:Class ;
+    rdfs:label "OddScenery"@en ;
+    rdfs:subClassOf openlabel_v2:Odd ;
+    skos:definition "Scenery-related subset of the Operational Design Domain. Covers drivable area, geometry, lane specifications, junctions, signs, and structures. Refer to BSI PAS-1883 Section 5.2."@en ;
+    skos:exactMatch openlabel_v2:OddScenery ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
 openlabel_v2:Scenario a owl:Class ;
     rdfs:label "Scenario"@en ;
     rdfs:subClassOf [ a owl:Restriction ;
