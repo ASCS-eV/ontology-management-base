@@ -996,7 +996,7 @@ gx:exposedThrough a owl:ObjectProperty ;
 gx:gaia-x.owl.ttl a owl:Ontology ;
     rdfs:label "gaia-x" ;
     rdfs:comment "ASCS/OMB profile of the Gaia-X Trust Framework ontology, regenerated via LinkML from service-characteristics. See artifacts/gx/VERSIONING.md for provenance details." ;
-    owl:versionInfo "25.11+fix.5 (ASCS/OMB profile)" .
+    owl:versionInfo "2.1.4 (ASCS/OMB profile)" .
 
 gx:hotfixHours a owl:DatatypeProperty ;
     rdfs:label "hotfixHours" ;

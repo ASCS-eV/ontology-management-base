@@ -384,6 +384,39 @@ classes:
               equals_string: "true"
 
   # ---------------------------------------------------------------------------
+  # OddScenery (Scenery subset of ODD — BSI PAS-1883 Section 5.2)
+  # ---------------------------------------------------------------------------
+  OddScenery:
+    description: >-
+      Scenery-related subset of the Operational Design Domain.
+      Covers drivable area, geometry, lane specifications, junctions,
+      signs, and structures. Refer to BSI PAS-1883 Section 5.2.
+    is_a: Odd
+    class_uri: openlabel_v2:OddScenery
+
+  # ---------------------------------------------------------------------------
+  # OddEnvironment (Environment subset of ODD — BSI PAS-1883 Section 5.3)
+  # ---------------------------------------------------------------------------
+  OddEnvironment:
+    description: >-
+      Environment-related subset of the Operational Design Domain.
+      Covers weather, illumination, connectivity, and particulates.
+      Refer to BSI PAS-1883 Section 5.3.
+    is_a: Odd
+    class_uri: openlabel_v2:OddEnvironment
+
+  # ---------------------------------------------------------------------------
+  # OddDynamicElements (Dynamic Elements subset — BSI PAS-1883 Section 5.4)
+  # ---------------------------------------------------------------------------
+  OddDynamicElements:
+    description: >-
+      Dynamic elements subset of the Operational Design Domain.
+      Covers traffic agents, flow rates, volume, and subject vehicle speed.
+      Refer to BSI PAS-1883 Section 5.4.
+    is_a: Odd
+    class_uri: openlabel_v2:OddDynamicElements
+
+  # ---------------------------------------------------------------------------
   # RoadUser
   # ---------------------------------------------------------------------------
   RoadUser:
