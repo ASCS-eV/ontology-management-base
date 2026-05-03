@@ -24,3 +24,6 @@ site/
 .coverage
 htmlcov/
 .pytest_cache/
+
+# Reference documentation (local only)
+.reference/
