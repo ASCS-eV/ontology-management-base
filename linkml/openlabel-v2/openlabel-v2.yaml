@@ -393,6 +393,108 @@ classes:
       signs, and structures. Refer to BSI PAS-1883 Section 5.2.
     is_a: Odd
     class_uri: openlabel_v2:OddScenery
+    slot_usage:
+      # --- Restrict Environment slots (§5.3) ---
+      ConnectivityCommunication:
+        maximum_cardinality: 0
+        multivalued: true
+      ConnectivityPositioning:
+        maximum_cardinality: 0
+        multivalued: true
+      DaySunElevation:
+        maximum_cardinality: 0
+        multivalued: true
+      daySunElevationValue:
+        maximum_cardinality: 0
+        multivalued: true
+      DaySunPosition:
+        maximum_cardinality: 0
+        multivalued: true
+      EnvironmentParticulates:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationArtificial:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationCloudiness:
+        maximum_cardinality: 0
+        multivalued: true
+      illuminationCloudinessValue:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationLowLight:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesDust:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesMarine:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesPollution:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesVolcanic:
+        maximum_cardinality: 0
+        multivalued: true
+      particulatesWaterValue:
+        maximum_cardinality: 0
+        multivalued: true
+      RainType:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherRain:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherRainValue:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherSnow:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherSnowValue:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherWind:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherWindValue:
+        maximum_cardinality: 0
+        multivalued: true
+      # --- Restrict DynamicElements slots (§5.4) ---
+      SubjectVehicleSpeed:
+        maximum_cardinality: 0
+        multivalued: true
+      subjectVehicleSpeedValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficAgentDensity:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficAgentDensityValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficAgentType:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficAgentTypeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficFlowRate:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficFlowRateValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficSpecialVehicle:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficVolume:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficVolumeValue:
+        maximum_cardinality: 0
+        multivalued: true
 
   # ---------------------------------------------------------------------------
   # OddEnvironment (Environment subset of ODD — BSI PAS-1883 Section 5.3)
@@ -404,6 +506,132 @@ classes:
       Refer to BSI PAS-1883 Section 5.3.
     is_a: Odd
     class_uri: openlabel_v2:OddEnvironment
+    slot_usage:
+      # --- Restrict Scenery slots (§5.2) ---
+      DrivableAreaEdge:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceCondition:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceFeature:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceType:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaType:
+        maximum_cardinality: 0
+        multivalued: true
+      GeometryTransverse:
+        maximum_cardinality: 0
+        multivalued: true
+      HorizontalCurves:
+        maximum_cardinality: 0
+        multivalued: true
+      horizontalCurvesValue:
+        maximum_cardinality: 0
+        multivalued: true
+      HorizontalStraights:
+        maximum_cardinality: 0
+        multivalued: true
+      JunctionIntersection:
+        maximum_cardinality: 0
+        multivalued: true
+      JunctionRoundabout:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationDimensions:
+        maximum_cardinality: 0
+        multivalued: true
+      laneSpecificationDimensionsValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationLaneCount:
+        maximum_cardinality: 0
+        multivalued: true
+      laneSpecificationLaneCountValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationMarking:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationTravelDirection:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationType:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalDownSlope:
+        maximum_cardinality: 0
+        multivalued: true
+      longitudinalDownSlopeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalLevelPlane:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalUpSlope:
+        maximum_cardinality: 0
+        multivalued: true
+      longitudinalUpSlopeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryFixedStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      ScenerySpecialStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryTemporaryStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryZone:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsInformation:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsRegulatory:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsWarning:
+        maximum_cardinality: 0
+        multivalued: true
+      # --- Restrict DynamicElements slots (§5.4) ---
+      SubjectVehicleSpeed:
+        maximum_cardinality: 0
+        multivalued: true
+      subjectVehicleSpeedValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficAgentDensity:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficAgentDensityValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficAgentType:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficAgentTypeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficFlowRate:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficFlowRateValue:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficSpecialVehicle:
+        maximum_cardinality: 0
+        multivalued: true
+      TrafficVolume:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficVolumeValue:
+        maximum_cardinality: 0
+        multivalued: true
 
   # ---------------------------------------------------------------------------
   # OddDynamicElements (Dynamic Elements subset — BSI PAS-1883 Section 5.4)
@@ -415,6 +643,165 @@ classes:
       Refer to BSI PAS-1883 Section 5.4.
     is_a: Odd
     class_uri: openlabel_v2:OddDynamicElements
+    slot_usage:
+      # --- Restrict Scenery slots (§5.2) ---
+      DrivableAreaEdge:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceCondition:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceFeature:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaSurfaceType:
+        maximum_cardinality: 0
+        multivalued: true
+      DrivableAreaType:
+        maximum_cardinality: 0
+        multivalued: true
+      GeometryTransverse:
+        maximum_cardinality: 0
+        multivalued: true
+      HorizontalCurves:
+        maximum_cardinality: 0
+        multivalued: true
+      horizontalCurvesValue:
+        maximum_cardinality: 0
+        multivalued: true
+      HorizontalStraights:
+        maximum_cardinality: 0
+        multivalued: true
+      JunctionIntersection:
+        maximum_cardinality: 0
+        multivalued: true
+      JunctionRoundabout:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationDimensions:
+        maximum_cardinality: 0
+        multivalued: true
+      laneSpecificationDimensionsValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationLaneCount:
+        maximum_cardinality: 0
+        multivalued: true
+      laneSpecificationLaneCountValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationMarking:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationTravelDirection:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationType:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalDownSlope:
+        maximum_cardinality: 0
+        multivalued: true
+      longitudinalDownSlopeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalLevelPlane:
+        maximum_cardinality: 0
+        multivalued: true
+      LongitudinalUpSlope:
+        maximum_cardinality: 0
+        multivalued: true
+      longitudinalUpSlopeValue:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryFixedStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      ScenerySpecialStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryTemporaryStructure:
+        maximum_cardinality: 0
+        multivalued: true
+      SceneryZone:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsInformation:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsRegulatory:
+        maximum_cardinality: 0
+        multivalued: true
+      SignsWarning:
+        maximum_cardinality: 0
+        multivalued: true
+      # --- Restrict Environment slots (§5.3) ---
+      ConnectivityCommunication:
+        maximum_cardinality: 0
+        multivalued: true
+      ConnectivityPositioning:
+        maximum_cardinality: 0
+        multivalued: true
+      DaySunElevation:
+        maximum_cardinality: 0
+        multivalued: true
+      daySunElevationValue:
+        maximum_cardinality: 0
+        multivalued: true
+      DaySunPosition:
+        maximum_cardinality: 0
+        multivalued: true
+      EnvironmentParticulates:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationArtificial:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationCloudiness:
+        maximum_cardinality: 0
+        multivalued: true
+      illuminationCloudinessValue:
+        maximum_cardinality: 0
+        multivalued: true
+      IlluminationLowLight:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesDust:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesMarine:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesPollution:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesVolcanic:
+        maximum_cardinality: 0
+        multivalued: true
+      particulatesWaterValue:
+        maximum_cardinality: 0
+        multivalued: true
+      RainType:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherRain:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherRainValue:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherSnow:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherSnowValue:
+        maximum_cardinality: 0
+        multivalued: true
+      WeatherWind:
+        maximum_cardinality: 0
+        multivalued: true
+      weatherWindValue:
+        maximum_cardinality: 0
+        multivalued: true
 
   # ---------------------------------------------------------------------------
   # RoadUser
