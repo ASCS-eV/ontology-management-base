@@ -132,17 +132,26 @@ printf '%s\n' "$UPSTREAM_REF" > "$UPSTREAM_REF_FILE"
 
 VERSION_TAG=$(git describe --tags --exact-match 2>/dev/null || true)
 if [ -n "$VERSION_TAG" ]; then
+    # Exact release tag — use clean semver (strip leading v and any suffix)
     VERSION_NUMBER="${VERSION_TAG#v}"
     VERSION_NUMBER="${VERSION_NUMBER%%-*}"
-    echo "Updating VERSION file..."
+    echo "Updating VERSION file to $VERSION_NUMBER (exact tag)..."
     echo "$VERSION_NUMBER" > "$VERSION_FILE"
 else
-    CURRENT_VERSION="$(tr -d '[:space:]' < "$VERSION_FILE" 2>/dev/null || true)"
-    if [ -n "$CURRENT_VERSION" ]; then
-        echo "Leaving VERSION unchanged at $CURRENT_VERSION (current checkout is not an exact tag)."
+    # Not an exact tag — derive an ASCS profile version from git describe.
+    # git describe gives e.g. "v2.1.7-7-gc08ff72" → base=2.1.7, ahead=7
+    # We produce "2.1.7-ascs.7" to indicate 7 ASCS patches beyond v2.1.7.
+    GIT_DESC="$UPSTREAM_REF"
+    if echo "$GIT_DESC" | grep -qE '^v?[0-9]+\.[0-9]+\.[0-9]+-[0-9]+-g[0-9a-f]+'; then
+        BASE_VER=$(echo "$GIT_DESC" | sed -E 's/^v?([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+        AHEAD_COUNT=$(echo "$GIT_DESC" | sed -E 's/^v?[0-9]+\.[0-9]+\.[0-9]+-([0-9]+)-.*/\1/')
+        VERSION_NUMBER="${BASE_VER}-ascs.${AHEAD_COUNT}"
     else
-        echo "VERSION file not updated because the current checkout is not an exact tag."
+        # Fallback: keep whatever is in VERSION
+        VERSION_NUMBER="$(tr -d '[:space:]' < "$VERSION_FILE" 2>/dev/null || echo "unknown")"
     fi
+    echo "Updating VERSION file to $VERSION_NUMBER (ASCS profile, $GIT_DESC)..."
+    echo "$VERSION_NUMBER" > "$VERSION_FILE"
 fi
 
 # ---------------------------------------------------------------------------
@@ -171,7 +180,7 @@ if not ont_nodes:
     sys.exit(0)
 
 ont = ont_nodes[0]
-g.add((ont, OWL.versionInfo, Literal(version + ' (ASCS/OMB profile)')))
+g.add((ont, OWL.versionInfo, Literal(version)))
 g.add((ont, RDFS.comment, Literal(
     'ASCS/OMB profile of the Gaia-X Trust Framework ontology, '
     'regenerated via LinkML from service-characteristics. '

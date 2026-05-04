@@ -306,6 +306,15 @@
       "Odd": {
          "@id": "Odd"
       },
+      "OddDynamicElements": {
+         "@id": "OddDynamicElements"
+      },
+      "OddEnvironment": {
+         "@id": "OddEnvironment"
+      },
+      "OddScenery": {
+         "@id": "OddScenery"
+      },
       "ParticulatesDust": {
          "@id": "ParticulatesDust",
          "@type": "xsd:boolean"
@@ -320,6 +329,10 @@
       },
       "ParticulatesVolcanic": {
          "@id": "ParticulatesVolcanic",
+         "@type": "xsd:boolean"
+      },
+      "ParticulatesWater": {
+         "@id": "ParticulatesWater",
          "@type": "xsd:boolean"
       },
       "QuantitativeValue": {
