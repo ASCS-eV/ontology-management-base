@@ -2086,6 +2086,12 @@ openlabel_v2:ownerURL a owl:DatatypeProperty ;
     skos:definition "The URL of the legal entity who owns the rights to the scenario."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
+openlabel_v2:scenarioComment a owl:DatatypeProperty ;
+    rdfs:label "scenarioComment"@en ;
+    rdfs:range xsd:string ;
+    skos:definition "A free-text comment about the scenario."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
 openlabel_v2:scenarioCreatedDate a owl:DatatypeProperty ;
     rdfs:label "scenarioCreatedDate"@en ;
     rdfs:range xsd:dateTime ;
@@ -2236,6 +2242,9 @@ openlabel_v2:AdminTag a owl:Class,
             owl:onProperty openlabel_v2:scenarioVersion ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:scenarioComment ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:scenarioDescription ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
@@ -2246,6 +2255,9 @@ openlabel_v2:AdminTag a owl:Class,
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:scenarioParentReference ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:scenarioComment ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:scenarioDescription ],
@@ -2261,6 +2273,9 @@ openlabel_v2:AdminTag a owl:Class,
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:scenarioVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:scenarioComment ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:licenseURI ],
