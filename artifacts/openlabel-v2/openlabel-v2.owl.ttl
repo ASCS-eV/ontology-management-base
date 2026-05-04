@@ -109,6 +109,9 @@ openlabel_v2:OddDynamicElements a owl:Class ;
             owl:onProperty openlabel_v2:GeometryTransverse ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:LongitudinalDownSlope ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
@@ -176,6 +179,9 @@ openlabel_v2:OddDynamicElements a owl:Class ;
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:GeometryTransverse ],
@@ -323,6 +329,9 @@ openlabel_v2:OddDynamicElements a owl:Class ;
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:DaySunPosition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
         [ a owl:Restriction ;
             owl:maxCardinality 0 ;
             owl:onProperty openlabel_v2:longitudinalDownSlopeValue ],
@@ -875,6 +884,9 @@ openlabel_v2:OddScenery a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:TrafficVolume ],
         [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:weatherSnowValue ],
         [ a owl:Restriction ;
@@ -1130,6 +1142,9 @@ openlabel_v2:OddScenery a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
         [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
+        [ a owl:Restriction ;
             owl:maxCardinality 0 ;
             owl:onProperty openlabel_v2:weatherRainValue ],
         [ a owl:Restriction ;
@@ -1141,6 +1156,9 @@ openlabel_v2:OddScenery a owl:Class ;
         [ a owl:Restriction ;
             owl:maxCardinality 0 ;
             owl:onProperty openlabel_v2:weatherWindValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
             owl:onProperty openlabel_v2:particulatesWaterValue ],
@@ -1418,11 +1436,6 @@ openlabel_v2:MotorwayUnmanaged a owl:Class ;
     rdfs:label "MotorwayUnmanaged"@en ;
     rdfs:subClassOf openlabel_v2:DrivableAreaType ;
     skos:definition "Unmanaged motorways."@en .
-
-openlabel_v2:ParticulatesWater a owl:Class ;
-    rdfs:label "ParticulatesWater"@en ;
-    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
-    skos:definition "Non-precipitating water droplets or ice crystals (i.e. mist/fog)."@en .
 
 openlabel_v2:PositioningGalileo a owl:Class ;
     rdfs:label "PositioningGalileo"@en ;
@@ -2586,13 +2599,6 @@ openlabel_v2:TrafficSpecialVehicle a owl:DatatypeProperty ;
     skos:definition "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
-openlabel_v2:particulatesWaterValue a owl:DatatypeProperty ;
-    rdfs:label "particulatesWaterValue"@en ;
-    rdfs:range xsd:decimal ;
-    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-    skos:definition "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
 openlabel_v2:trafficAgentTypeValue a owl:DatatypeProperty ;
     rdfs:label "trafficAgentTypeValue"@en ;
     rdfs:range [ owl:unionOf ( openlabel_v2:RoadUserHuman openlabel_v2:RoadUserVehicle ) ] ;
@@ -2757,6 +2763,13 @@ openlabel_v2:longitudinalUpSlopeValue a owl:DatatypeProperty ;
     skos:definition "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
+openlabel_v2:particulatesWaterValue a owl:DatatypeProperty ;
+    rdfs:label "particulatesWaterValue"@en ;
+    rdfs:range xsd:decimal ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    skos:definition "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
 openlabel_v2:subjectVehicleSpeedValue a owl:DatatypeProperty ;
     rdfs:label "subjectVehicleSpeedValue"@en ;
     rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
@@ -2875,6 +2888,16 @@ openlabel_v2:BehaviourCommunication a owl:Class,
         openlabel_v2:CommunicationSignalRight,
         openlabel_v2:CommunicationSignalSlowing,
         openlabel_v2:CommunicationWave .
+
+openlabel_v2:ParticulatesWater a owl:Class,
+        owl:DatatypeProperty ;
+    rdfs:label "ParticulatesWater"@en ;
+    rdfs:range xsd:boolean ;
+    rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
+    rdfs:subClassOf openlabel_v2:EnvironmentParticulates ;
+    skos:definition "Non-precipitating water droplets or ice crystals (i.e. mist/fog)."@en,
+        "Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:IlluminationArtificial a owl:Class,
         owl:ObjectProperty ;
@@ -3368,6 +3391,9 @@ openlabel_v2:Odd a owl:Class,
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:SignsRegulatory ],
         [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
+        [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
                                 owl:onDatatype xsd:integer ;
@@ -3669,6 +3695,9 @@ openlabel_v2:Odd a owl:Class,
             owl:onProperty openlabel_v2:TrafficSpecialVehicle ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:LaneSpecificationTravelDirection ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
@@ -3868,6 +3897,9 @@ openlabel_v2:Odd a owl:Class,
         [ a owl:Restriction ;
             owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceCondition ;
             owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:boolean ;
+            owl:onProperty openlabel_v2:ParticulatesWater ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:LaneSpecificationType ],
@@ -4076,6 +4108,15 @@ openlabel_v2:Odd a owl:Class,
                     owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
     owl:intersectionOf ( [ a owl:Restriction ;
                 owl:onProperty openlabel_v2:daySunElevationValue ;
+                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:ParticulatesWater ;
+            owl:someValuesFrom [ a rdfs:Datatype ;
+                    owl:onDatatype xsd:string ;
+                    owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:particulatesWaterValue ;
                 owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
 
 [] rdfs:subClassOf [ a owl:Restriction ;

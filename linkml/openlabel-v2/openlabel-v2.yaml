@@ -190,6 +190,7 @@ classes:
       - ParticulatesMarine
       - ParticulatesPollution
       - ParticulatesVolcanic
+      - ParticulatesWater
       - particulatesWaterValue
       - RainType
       - SceneryFixedStructure
@@ -382,6 +383,17 @@ classes:
           slot_conditions:
             SubjectVehicleSpeed:
               equals_string: "true"
+      - description: >-
+          If particulatesWaterValue is provided, ParticulatesWater must be true.
+          Corresponds to BSI PAS-1883 Section 5.3.2.b conditional constraint.
+        preconditions:
+          slot_conditions:
+            particulatesWaterValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            ParticulatesWater:
+              equals_string: "true"
 
   # ---------------------------------------------------------------------------
   # OddScenery (Scenery subset of ODD — BSI PAS-1883 Section 5.2)
@@ -435,6 +447,9 @@ classes:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesVolcanic:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesWater:
         maximum_cardinality: 0
         multivalued: true
       particulatesWaterValue:
@@ -776,6 +791,9 @@ classes:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesVolcanic:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesWater:
         maximum_cardinality: 0
         multivalued: true
       particulatesWaterValue:
@@ -1361,6 +1379,15 @@ slots:
     see_also:
       - https://www.bsigroup.com/en-GB/CAV/pas-1883
     slot_uri: openlabel_v2:ParticulatesVolcanic
+    range: boolean
+
+  ParticulatesWater:
+    description: >-
+      Non-precipitating water droplets or ice crystals (mist/fog) flag.
+      Refer to BSI PAS-1883 Section 5.3.2.b.
+    see_also:
+      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+    slot_uri: openlabel_v2:ParticulatesWater
     range: boolean
 
   particulatesWaterValue:

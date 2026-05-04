@@ -331,6 +331,10 @@
          "@id": "ParticulatesVolcanic",
          "@type": "xsd:boolean"
       },
+      "ParticulatesWater": {
+         "@id": "ParticulatesWater",
+         "@type": "xsd:boolean"
+      },
       "QuantitativeValue": {
          "@id": "schema:QuantitativeValue"
       },

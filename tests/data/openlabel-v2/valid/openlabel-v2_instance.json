@@ -108,6 +108,7 @@
       "weatherWindValue": 12.5,
       "RainType": "RainTypeDynamic",
       "EnvironmentParticulates": "ParticulatesWater",
+      "ParticulatesWater": true,
       "particulatesWaterValue": 500.0,
       "ParticulatesDust": false,
       "ParticulatesMarine": false,

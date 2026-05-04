@@ -10,26 +10,27 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
     rdfs:comment "Dynamic elements subset of the Operational Design Domain. Covers traffic agents, flow rates, volume, and subject vehicle speed. Refer to BSI PAS-1883 Section 5.4."@en ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:datatype xsd:decimal ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:maxCount 0 ;
+            sh:message "WeatherRain (OddDynamicElements): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 58 ;
+            sh:path openlabel_v2:WeatherRain ],
+        [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:maxCount 0 ;
             sh:message "longitudinalUpSlopeValue (OddDynamicElements): Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 32 ;
             sh:path openlabel_v2:longitudinalUpSlopeValue ],
-        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
-            sh:maxCount 0 ;
-            sh:message "SignsWarning (OddDynamicElements): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:order 45 ;
-            sh:path openlabel_v2:SignsWarning ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 0 ;
-            sh:message "WeatherSnow (OddDynamicElements): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:maxCount 1 ;
+            sh:message "TrafficAgentDensity (OddDynamicElements): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 59 ;
-            sh:path openlabel_v2:WeatherSnow ],
+            sh:order 49 ;
+            sh:path openlabel_v2:TrafficAgentDensity ],
         [ sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
             sh:in ( openlabel_v2:TravelDirectionLeft openlabel_v2:TravelDirectionRight ) ;
             sh:maxCount 0 ;
@@ -44,12 +45,18 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:order 23 ;
             sh:path openlabel_v2:LaneSpecificationLaneCount ],
         [ sh:datatype xsd:decimal ;
-            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
             sh:maxCount 0 ;
-            sh:message "weatherSnowValue (OddDynamicElements): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:message "weatherWindValue (OddDynamicElements): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 60 ;
-            sh:path openlabel_v2:weatherSnowValue ],
+            sh:order 63 ;
+            sh:path openlabel_v2:weatherWindValue ],
+        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+            sh:maxCount 0 ;
+            sh:message "SignsWarning (OddDynamicElements): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:order 46 ;
+            sh:path openlabel_v2:SignsWarning ],
         [ sh:datatype xsd:boolean ;
             sh:description "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d."@en ;
             sh:maxCount 0 ;
@@ -57,6 +64,13 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
             sh:path openlabel_v2:ParticulatesPollution ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:maxCount 0 ;
+            sh:message "WeatherWind (OddDynamicElements): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 62 ;
+            sh:path openlabel_v2:WeatherWind ],
         [ sh:description "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
             sh:maxCount 0 ;
             sh:message "laneSpecificationDimensionsValue (OddDynamicElements): Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
@@ -98,26 +112,17 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:message "ConnectivityCommunication (OddDynamicElements): Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a."@en ;
             sh:order 0 ;
             sh:path openlabel_v2:ConnectivityCommunication ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "TrafficAgentDensity (OddDynamicElements): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 48 ;
-            sh:path openlabel_v2:TrafficAgentDensity ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
             sh:maxCount 0 ;
-            sh:message "weatherRainValue (OddDynamicElements): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 58 ;
-            sh:path openlabel_v2:weatherRainValue ],
-        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
-            sh:maxCount 0 ;
-            sh:message "SignsRegulatory (OddDynamicElements): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:order 44 ;
-            sh:path openlabel_v2:SignsRegulatory ],
+            sh:message "RainType (OddDynamicElements): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:order 39 ;
+            sh:path openlabel_v2:RainType ],
+        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:message "trafficAgentTypeValue (OddDynamicElements): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a."@en ;
             sh:in ( openlabel_v2:SurfaceTypeLoose openlabel_v2:SurfaceTypeSegmented openlabel_v2:SurfaceTypeUniform ) ;
             sh:maxCount 0 ;
@@ -125,12 +130,12 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:order 8 ;
             sh:path openlabel_v2:DrivableAreaSurfaceType ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:maxCount 1 ;
-            sh:message "SubjectVehicleSpeed (OddDynamicElements): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:message "TrafficFlowRate (OddDynamicElements): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 46 ;
-            sh:path openlabel_v2:SubjectVehicleSpeed ],
+            sh:order 53 ;
+            sh:path openlabel_v2:TrafficFlowRate ],
         [ sh:datatype xsd:boolean ;
             sh:description "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c."@en ;
             sh:maxCount 0 ;
@@ -144,6 +149,14 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:message "EnvironmentParticulates (OddDynamicElements): Particulate type. Refer to BSI PAS-1883 Section 5.3.2."@en ;
             sh:order 10 ;
             sh:path openlabel_v2:EnvironmentParticulates ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 1 ;
+            sh:message "trafficVolumeValue (OddDynamicElements): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 57 ;
+            sh:path openlabel_v2:trafficVolumeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 0 ;
@@ -151,32 +164,18 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 29 ;
             sh:path openlabel_v2:longitudinalDownSlopeValue ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
-            sh:maxCount 1 ;
-            sh:message "TrafficSpecialVehicle (OddDynamicElements): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 54 ;
-            sh:path openlabel_v2:TrafficSpecialVehicle ],
+        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+            sh:maxCount 0 ;
+            sh:message "ScenerySpecialStructure (OddDynamicElements): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:order 41 ;
+            sh:path openlabel_v2:ScenerySpecialStructure ],
         [ sh:description "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:in ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
             sh:maxCount 0 ;
             sh:message "ConnectivityPositioning (OddDynamicElements): Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:order 1 ;
             sh:path openlabel_v2:ConnectivityPositioning ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:maxCount 0 ;
-            sh:message "particulatesWaterValue (OddDynamicElements): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 37 ;
-            sh:path openlabel_v2:particulatesWaterValue ],
-        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
-            sh:maxCount 0 ;
-            sh:message "SceneryTemporaryStructure (OddDynamicElements): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:order 41 ;
-            sh:path openlabel_v2:SceneryTemporaryStructure ],
         [ sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
             sh:maxCount 0 ;
@@ -189,11 +188,12 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:message "IlluminationArtificial (OddDynamicElements): Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d."@en ;
             sh:order 15 ;
             sh:path openlabel_v2:IlluminationArtificial ],
-        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:message "trafficAgentTypeValue (OddDynamicElements): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 51 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
+        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+            sh:maxCount 0 ;
+            sh:message "SceneryZone (OddDynamicElements): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:order 43 ;
+            sh:path openlabel_v2:SceneryZone ],
         [ sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
             sh:in ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
             sh:maxCount 0 ;
@@ -214,38 +214,39 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 13 ;
             sh:path openlabel_v2:horizontalCurvesValue ],
-        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+        [ sh:datatype xsd:boolean ;
+            sh:description "Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:maxCount 0 ;
-            sh:message "RainType (OddDynamicElements): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:order 38 ;
-            sh:path openlabel_v2:RainType ],
+            sh:message "ParticulatesWater (OddDynamicElements): Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 37 ;
+            sh:path openlabel_v2:ParticulatesWater ],
         [ sh:description "Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c."@en ;
             sh:in ( openlabel_v2:LaneTypeBus openlabel_v2:LaneTypeCycle openlabel_v2:LaneTypeEmergency openlabel_v2:LaneTypeSpecial openlabel_v2:LaneTypeTraffic openlabel_v2:LaneTypeTram ) ;
             sh:maxCount 0 ;
             sh:message "LaneSpecificationType (OddDynamicElements): Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c."@en ;
             sh:order 27 ;
             sh:path openlabel_v2:LaneSpecificationType ],
+        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:maxCount 0 ;
+            sh:message "SignsInformation (OddDynamicElements): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:order 44 ;
+            sh:path openlabel_v2:SignsInformation ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
             sh:maxCount 1 ;
-            sh:message "TrafficVolume (OddDynamicElements): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:message "SubjectVehicleSpeed (OddDynamicElements): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 47 ;
+            sh:path openlabel_v2:SubjectVehicleSpeed ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
+            sh:maxCount 1 ;
+            sh:message "TrafficSpecialVehicle (OddDynamicElements): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 55 ;
-            sh:path openlabel_v2:TrafficVolume ],
-        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
-            sh:maxCount 0 ;
-            sh:message "SceneryZone (OddDynamicElements): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:order 42 ;
-            sh:path openlabel_v2:SceneryZone ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "weatherWindValue (OddDynamicElements): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 62 ;
-            sh:path openlabel_v2:weatherWindValue ],
+            sh:path openlabel_v2:TrafficSpecialVehicle ],
         [ sh:datatype xsd:boolean ;
             sh:description "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a."@en ;
             sh:maxCount 0 ;
@@ -260,6 +261,21 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
             sh:path openlabel_v2:DaySunElevation ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:maxCount 0 ;
+            sh:message "weatherRainValue (OddDynamicElements): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 59 ;
+            sh:path openlabel_v2:weatherRainValue ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:maxCount 1 ;
+            sh:message "trafficFlowRateValue (OddDynamicElements): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 54 ;
+            sh:path openlabel_v2:trafficFlowRateValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii."@en ;
             sh:maxCount 0 ;
@@ -267,20 +283,25 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 30 ;
             sh:path openlabel_v2:LongitudinalLevelPlane ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "trafficVolumeValue (OddDynamicElements): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 56 ;
-            sh:path openlabel_v2:trafficVolumeValue ],
         [ sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
             sh:maxCount 0 ;
             sh:message "JunctionIntersection (OddDynamicElements): Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:order 19 ;
             sh:path openlabel_v2:JunctionIntersection ],
+        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+            sh:maxCount 0 ;
+            sh:message "SceneryFixedStructure (OddDynamicElements): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:order 40 ;
+            sh:path openlabel_v2:SceneryFixedStructure ],
+        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "subjectVehicleSpeedValue (OddDynamicElements): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 48 ;
+            sh:path openlabel_v2:subjectVehicleSpeedValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 0 ;
@@ -288,49 +309,18 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 28 ;
             sh:path openlabel_v2:LongitudinalDownSlope ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
-            sh:maxCount 1 ;
-            sh:message "trafficFlowRateValue (OddDynamicElements): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 53 ;
-            sh:path openlabel_v2:trafficFlowRateValue ],
         [ sh:description "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:in ( openlabel_v2:SunPositionBehind openlabel_v2:SunPositionFront openlabel_v2:SunPositionLeft openlabel_v2:SunPositionRight ) ;
             sh:maxCount 0 ;
             sh:message "DaySunPosition (OddDynamicElements): Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:order 4 ;
             sh:path openlabel_v2:DaySunPosition ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:maxCount 1 ;
-            sh:message "TrafficAgentType (OddDynamicElements): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 50 ;
-            sh:path openlabel_v2:TrafficAgentType ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "trafficAgentDensityValue (OddDynamicElements): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 49 ;
-            sh:path openlabel_v2:trafficAgentDensityValue ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
             sh:maxCount 0 ;
-            sh:message "WeatherRain (OddDynamicElements): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 57 ;
-            sh:path openlabel_v2:WeatherRain ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "WeatherWind (OddDynamicElements): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 61 ;
-            sh:path openlabel_v2:WeatherWind ],
+            sh:message "SignsRegulatory (OddDynamicElements): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:order 45 ;
+            sh:path openlabel_v2:SignsRegulatory ],
         [ sh:datatype xsd:boolean ;
             sh:description "Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
             sh:maxCount 0 ;
@@ -364,12 +354,33 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:order 12 ;
             sh:path openlabel_v2:HorizontalCurves ],
         [ sh:datatype xsd:boolean ;
+            sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 1 ;
+            sh:message "TrafficVolume (OddDynamicElements): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 56 ;
+            sh:path openlabel_v2:TrafficVolume ],
+        [ sh:datatype xsd:boolean ;
             sh:description "Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:maxCount 0 ;
             sh:message "LongitudinalUpSlope (OddDynamicElements): Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 31 ;
             sh:path openlabel_v2:LongitudinalUpSlope ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:maxCount 1 ;
+            sh:message "TrafficAgentType (OddDynamicElements): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 51 ;
+            sh:path openlabel_v2:TrafficAgentType ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 0 ;
+            sh:message "weatherSnowValue (OddDynamicElements): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 61 ;
+            sh:path openlabel_v2:weatherSnowValue ],
         [ sh:description "Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b."@en ;
             sh:in ( openlabel_v2:LowLightAmbient openlabel_v2:LowLightNight ) ;
             sh:maxCount 0 ;
@@ -382,6 +393,13 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:message "DrivableAreaType (OddDynamicElements): Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 0 ;
+            sh:message "WeatherSnow (OddDynamicElements): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 60 ;
+            sh:path openlabel_v2:WeatherSnow ],
         [ sh:description "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
             sh:maxCount 0 ;
             sh:message "laneSpecificationLaneCountValue (OddDynamicElements): Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
@@ -389,38 +407,27 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 24 ;
             sh:path openlabel_v2:laneSpecificationLaneCountValue ],
-        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
-            sh:maxCount 0 ;
-            sh:message "SceneryFixedStructure (OddDynamicElements): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:order 39 ;
-            sh:path openlabel_v2:SceneryFixedStructure ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+        [ sh:datatype xsd:integer ;
+            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:maxCount 1 ;
-            sh:message "TrafficFlowRate (OddDynamicElements): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:message "trafficAgentDensityValue (OddDynamicElements): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:order 52 ;
-            sh:path openlabel_v2:TrafficFlowRate ],
-        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:order 50 ;
+            sh:path openlabel_v2:trafficAgentDensityValue ],
+        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
             sh:maxCount 0 ;
-            sh:message "SignsInformation (OddDynamicElements): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:order 43 ;
-            sh:path openlabel_v2:SignsInformation ],
-        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+            sh:message "SceneryTemporaryStructure (OddDynamicElements): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:order 42 ;
+            sh:path openlabel_v2:SceneryTemporaryStructure ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:maxCount 0 ;
-            sh:message "ScenerySpecialStructure (OddDynamicElements): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:order 40 ;
-            sh:path openlabel_v2:ScenerySpecialStructure ],
-        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:maxCount 1 ;
-            sh:message "subjectVehicleSpeedValue (OddDynamicElements): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:or ( [ sh:datatype xsd:integer ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 47 ;
-            sh:path openlabel_v2:subjectVehicleSpeedValue ],
+            sh:message "particulatesWaterValue (OddDynamicElements): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 38 ;
+            sh:path openlabel_v2:particulatesWaterValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c."@en ;
             sh:maxCount 0 ;
@@ -434,53 +441,48 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
     rdfs:comment "Environment-related subset of the Operational Design Domain. Covers weather, illumination, connectivity, and particulates. Refer to BSI PAS-1883 Section 5.3."@en ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:maxCount 0 ;
-            sh:message "SignsWarning (OddEnvironment): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:order 45 ;
-            sh:path openlabel_v2:SignsWarning ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
-            sh:maxCount 0 ;
-            sh:message "TrafficSpecialVehicle (OddEnvironment): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 54 ;
-            sh:path openlabel_v2:TrafficSpecialVehicle ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:maxCount 0 ;
-            sh:message "TrafficAgentType (OddEnvironment): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:message "trafficAgentDensityValue (OddEnvironment): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
             sh:order 50 ;
-            sh:path openlabel_v2:TrafficAgentType ],
+            sh:path openlabel_v2:trafficAgentDensityValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:maxCount 1 ;
+            sh:message "WeatherWind (OddEnvironment): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 62 ;
+            sh:path openlabel_v2:WeatherWind ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 0 ;
+            sh:message "trafficVolumeValue (OddEnvironment): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 57 ;
+            sh:path openlabel_v2:trafficVolumeValue ],
         [ sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
             sh:in ( openlabel_v2:TravelDirectionLeft openlabel_v2:TravelDirectionRight ) ;
             sh:maxCount 0 ;
             sh:message "LaneSpecificationTravelDirection (OddEnvironment): Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
             sh:order 26 ;
             sh:path openlabel_v2:LaneSpecificationTravelDirection ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
+            sh:maxCount 0 ;
+            sh:message "SignsRegulatory (OddEnvironment): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:order 45 ;
+            sh:path openlabel_v2:SignsRegulatory ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:maxCount 1 ;
-            sh:message "weatherWindValue (OddEnvironment): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 62 ;
-            sh:path openlabel_v2:weatherWindValue ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "weatherRainValue (OddEnvironment): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:message "WeatherRain (OddEnvironment): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 58 ;
-            sh:path openlabel_v2:weatherRainValue ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:maxCount 1 ;
-            sh:message "particulatesWaterValue (OddEnvironment): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 37 ;
-            sh:path openlabel_v2:particulatesWaterValue ],
+            sh:path openlabel_v2:WeatherRain ],
         [ sh:datatype xsd:decimal ;
             sh:description "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1."@en ;
             sh:maxCount 1 ;
@@ -501,18 +503,19 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
             sh:path openlabel_v2:DaySunElevation ],
-        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
-            sh:maxCount 0 ;
-            sh:message "ScenerySpecialStructure (OddEnvironment): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:order 40 ;
-            sh:path openlabel_v2:ScenerySpecialStructure ],
         [ sh:description "Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b."@en ;
             sh:in ( openlabel_v2:SurfaceFeatureCrack openlabel_v2:SurfaceFeaturePothole openlabel_v2:SurfaceFeatureRut openlabel_v2:SurfaceFeatureSwell ) ;
             sh:maxCount 0 ;
             sh:message "DrivableAreaSurfaceFeature (OddEnvironment): Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b."@en ;
             sh:order 7 ;
             sh:path openlabel_v2:DrivableAreaSurfaceFeature ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficAgentDensity (OddEnvironment): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 49 ;
+            sh:path openlabel_v2:TrafficAgentDensity ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:maxCount 0 ;
@@ -520,20 +523,40 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 32 ;
             sh:path openlabel_v2:longitudinalUpSlopeValue ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficVolumeValue (OddEnvironment): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:minInclusive 0 ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:maxCount 1 ;
+            sh:message "weatherWindValue (OddEnvironment): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 56 ;
-            sh:path openlabel_v2:trafficVolumeValue ],
+            sh:order 63 ;
+            sh:path openlabel_v2:weatherWindValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "ParticulatesWater (OddEnvironment): Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 37 ;
+            sh:path openlabel_v2:ParticulatesWater ],
         [ sh:description "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:in ( openlabel_v2:SunPositionBehind openlabel_v2:SunPositionFront openlabel_v2:SunPositionLeft openlabel_v2:SunPositionRight ) ;
             sh:maxCount 1 ;
             sh:message "DaySunPosition (OddEnvironment): Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:order 4 ;
             sh:path openlabel_v2:DaySunPosition ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:maxCount 1 ;
+            sh:message "weatherRainValue (OddEnvironment): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 59 ;
+            sh:path openlabel_v2:weatherRainValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 0 ;
+            sh:message "SubjectVehicleSpeed (OddEnvironment): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 47 ;
+            sh:path openlabel_v2:SubjectVehicleSpeed ],
         [ sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
             sh:in ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
             sh:maxCount 0 ;
@@ -561,6 +584,12 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 17 ;
             sh:path openlabel_v2:illuminationCloudinessValue ],
+        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+            sh:maxCount 0 ;
+            sh:message "SceneryFixedStructure (OddEnvironment): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:order 40 ;
+            sh:path openlabel_v2:SceneryFixedStructure ],
         [ sh:datatype xsd:boolean ;
             sh:description "Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
             sh:maxCount 0 ;
@@ -575,13 +604,14 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 31 ;
             sh:path openlabel_v2:LongitudinalUpSlope ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+        [ sh:datatype xsd:integer ;
+            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficFlowRate (OddEnvironment): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:message "trafficFlowRateValue (OddEnvironment): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:order 52 ;
-            sh:path openlabel_v2:TrafficFlowRate ],
+            sh:order 54 ;
+            sh:path openlabel_v2:trafficFlowRateValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c."@en ;
             sh:maxCount 1 ;
@@ -595,20 +625,6 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:message "ConnectivityPositioning (OddEnvironment): Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:order 1 ;
             sh:path openlabel_v2:ConnectivityPositioning ],
-        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
-            sh:maxCount 0 ;
-            sh:message "SceneryTemporaryStructure (OddEnvironment): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:order 41 ;
-            sh:path openlabel_v2:SceneryTemporaryStructure ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentDensityValue (OddEnvironment): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 49 ;
-            sh:path openlabel_v2:trafficAgentDensityValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 0 ;
@@ -616,26 +632,24 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 13 ;
             sh:path openlabel_v2:horizontalCurvesValue ],
+        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:maxCount 0 ;
+            sh:message "SignsInformation (OddEnvironment): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:order 44 ;
+            sh:path openlabel_v2:SignsInformation ],
         [ sh:description "Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d."@en ;
             sh:in ( openlabel_v2:ArtificialStreetLighting openlabel_v2:ArtificialVehicleLighting ) ;
             sh:maxCount 1 ;
             sh:message "IlluminationArtificial (OddEnvironment): Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d."@en ;
             sh:order 15 ;
             sh:path openlabel_v2:IlluminationArtificial ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "WeatherWind (OddEnvironment): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 61 ;
-            sh:path openlabel_v2:WeatherWind ],
-        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
             sh:maxCount 0 ;
-            sh:message "subjectVehicleSpeedValue (OddEnvironment): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:or ( [ sh:datatype xsd:integer ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 47 ;
-            sh:path openlabel_v2:subjectVehicleSpeedValue ],
+            sh:message "trafficAgentTypeValue (OddEnvironment): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e."@en ;
             sh:maxCount 1 ;
@@ -650,14 +664,13 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
             sh:path openlabel_v2:ParticulatesPollution ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficFlowRateValue (OddEnvironment): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
-            sh:minInclusive 0 ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 1 ;
+            sh:message "weatherSnowValue (OddEnvironment): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 53 ;
-            sh:path openlabel_v2:trafficFlowRateValue ],
+            sh:order 61 ;
+            sh:path openlabel_v2:weatherSnowValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
             sh:maxCount 0 ;
@@ -673,33 +686,19 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:order 25 ;
             sh:path openlabel_v2:LaneSpecificationMarking ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficAgentDensity (OddEnvironment): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:message "TrafficSpecialVehicle (OddEnvironment): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 48 ;
-            sh:path openlabel_v2:TrafficAgentDensity ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "WeatherRain (OddEnvironment): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 57 ;
-            sh:path openlabel_v2:WeatherRain ],
+            sh:order 55 ;
+            sh:path openlabel_v2:TrafficSpecialVehicle ],
         [ sh:datatype xsd:boolean ;
             sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
             sh:maxCount 0 ;
             sh:message "TrafficVolume (OddEnvironment): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 55 ;
+            sh:order 56 ;
             sh:path openlabel_v2:TrafficVolume ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 1 ;
-            sh:message "WeatherSnow (OddEnvironment): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 59 ;
-            sh:path openlabel_v2:WeatherSnow ],
         [ sh:description "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a."@en ;
             sh:in ( openlabel_v2:CommunicationV2i openlabel_v2:CommunicationV2v openlabel_v2:V2iCellular openlabel_v2:V2iSatellite openlabel_v2:V2iWifi openlabel_v2:V2vCellular openlabel_v2:V2vSatellite openlabel_v2:V2vWifi ) ;
             sh:maxCount 1 ;
@@ -718,12 +717,13 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:message "IlluminationLowLight (OddEnvironment): Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b."@en ;
             sh:order 18 ;
             sh:path openlabel_v2:IlluminationLowLight ],
-        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
-            sh:maxCount 1 ;
-            sh:message "RainType (OddEnvironment): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:order 38 ;
-            sh:path openlabel_v2:RainType ],
+        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 0 ;
+            sh:message "subjectVehicleSpeedValue (OddEnvironment): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 48 ;
+            sh:path openlabel_v2:subjectVehicleSpeedValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii."@en ;
             sh:maxCount 0 ;
@@ -731,13 +731,12 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 30 ;
             sh:path openlabel_v2:LongitudinalLevelPlane ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
             sh:maxCount 0 ;
-            sh:message "SubjectVehicleSpeed (OddEnvironment): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 46 ;
-            sh:path openlabel_v2:SubjectVehicleSpeed ],
+            sh:message "SceneryZone (OddEnvironment): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:order 43 ;
+            sh:path openlabel_v2:SceneryZone ],
         [ sh:datatype xsd:boolean ;
             sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c."@en ;
             sh:maxCount 1 ;
@@ -745,18 +744,18 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 16 ;
             sh:path openlabel_v2:IlluminationCloudiness ],
-        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
-            sh:maxCount 0 ;
-            sh:message "SignsRegulatory (OddEnvironment): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:order 44 ;
-            sh:path openlabel_v2:SignsRegulatory ],
         [ sh:description "Particulate type. Refer to BSI PAS-1883 Section 5.3.2."@en ;
             sh:in ( openlabel_v2:ParticulatesDust openlabel_v2:ParticulatesMarine openlabel_v2:ParticulatesPollution openlabel_v2:ParticulatesVolcanic openlabel_v2:ParticulatesWater ) ;
             sh:maxCount 1 ;
             sh:message "EnvironmentParticulates (OddEnvironment): Particulate type. Refer to BSI PAS-1883 Section 5.3.2."@en ;
             sh:order 10 ;
             sh:path openlabel_v2:EnvironmentParticulates ],
+        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+            sh:maxCount 0 ;
+            sh:message "SignsWarning (OddEnvironment): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:order 46 ;
+            sh:path openlabel_v2:SignsWarning ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 0 ;
@@ -764,18 +763,26 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 29 ;
             sh:path openlabel_v2:longitudinalDownSlopeValue ],
-        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
-            sh:maxCount 0 ;
-            sh:message "SceneryFixedStructure (OddEnvironment): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:order 39 ;
-            sh:path openlabel_v2:SceneryFixedStructure ],
         [ sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
             sh:maxCount 0 ;
             sh:message "GeometryTransverse (OddEnvironment): Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:order 11 ;
             sh:path openlabel_v2:GeometryTransverse ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficFlowRate (OddEnvironment): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 53 ;
+            sh:path openlabel_v2:TrafficFlowRate ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 1 ;
+            sh:message "WeatherSnow (OddEnvironment): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 60 ;
+            sh:path openlabel_v2:WeatherSnow ],
         [ sh:description "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
             sh:maxCount 0 ;
             sh:message "laneSpecificationLaneCountValue (OddEnvironment): Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
@@ -783,6 +790,13 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 24 ;
             sh:path openlabel_v2:laneSpecificationLaneCountValue ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "particulatesWaterValue (OddEnvironment): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 38 ;
+            sh:path openlabel_v2:particulatesWaterValue ],
         [ sh:description "Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c."@en ;
             sh:in ( openlabel_v2:LaneTypeBus openlabel_v2:LaneTypeCycle openlabel_v2:LaneTypeEmergency openlabel_v2:LaneTypeSpecial openlabel_v2:LaneTypeTraffic openlabel_v2:LaneTypeTram ) ;
             sh:maxCount 0 ;
@@ -802,25 +816,18 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:message "DrivableAreaSurfaceCondition (OddEnvironment): Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c."@en ;
             sh:order 6 ;
             sh:path openlabel_v2:DrivableAreaSurfaceCondition ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 1 ;
-            sh:message "weatherSnowValue (OddEnvironment): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 60 ;
-            sh:path openlabel_v2:weatherSnowValue ],
+        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+            sh:maxCount 0 ;
+            sh:message "SceneryTemporaryStructure (OddEnvironment): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:order 42 ;
+            sh:path openlabel_v2:SceneryTemporaryStructure ],
         [ sh:description "Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
             sh:maxCount 0 ;
             sh:message "DrivableAreaType (OddEnvironment): Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
-        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
-            sh:maxCount 0 ;
-            sh:message "SignsInformation (OddEnvironment): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:order 43 ;
-            sh:path openlabel_v2:SignsInformation ],
         [ sh:datatype xsd:boolean ;
             sh:description "Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 0 ;
@@ -828,59 +835,57 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 12 ;
             sh:path openlabel_v2:HorizontalCurves ],
+        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+            sh:maxCount 1 ;
+            sh:message "RainType (OddEnvironment): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:order 39 ;
+            sh:path openlabel_v2:RainType ],
         [ sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
             sh:maxCount 0 ;
             sh:message "JunctionIntersection (OddEnvironment): Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:order 19 ;
             sh:path openlabel_v2:JunctionIntersection ],
-        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
             sh:maxCount 0 ;
-            sh:message "SceneryZone (OddEnvironment): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:order 42 ;
-            sh:path openlabel_v2:SceneryZone ],
-        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (OddEnvironment): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 51 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
+            sh:message "ScenerySpecialStructure (OddEnvironment): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:order 41 ;
+            sh:path openlabel_v2:ScenerySpecialStructure ],
         [ sh:datatype xsd:boolean ;
             sh:description "Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 0 ;
             sh:message "HorizontalStraights (OddEnvironment): Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 14 ;
-            sh:path openlabel_v2:HorizontalStraights ] ;
+            sh:path openlabel_v2:HorizontalStraights ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficAgentType (OddEnvironment): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 51 ;
+            sh:path openlabel_v2:TrafficAgentType ] ;
     sh:targetClass openlabel_v2:OddEnvironment .
 
 openlabel_v2:OddScenery a sh:NodeShape ;
     rdfs:comment "Scenery-related subset of the Operational Design Domain. Covers drivable area, geometry, lane specifications, junctions, signs, and structures. Refer to BSI PAS-1883 Section 5.2."@en ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 0 ;
+            sh:message "SubjectVehicleSpeed (OddScenery): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 47 ;
+            sh:path openlabel_v2:SubjectVehicleSpeed ],
+        [ sh:description "Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
             sh:in ( openlabel_v2:TravelDirectionLeft openlabel_v2:TravelDirectionRight ) ;
             sh:maxCount 1 ;
             sh:message "LaneSpecificationTravelDirection (OddScenery): Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e."@en ;
             sh:order 26 ;
             sh:path openlabel_v2:LaneSpecificationTravelDirection ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentDensityValue (OddScenery): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 49 ;
-            sh:path openlabel_v2:trafficAgentDensityValue ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficVolumeValue (OddScenery): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 56 ;
-            sh:path openlabel_v2:trafficVolumeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 1 ;
@@ -888,6 +893,13 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 13 ;
             sh:path openlabel_v2:horizontalCurvesValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficAgentType (OddScenery): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 51 ;
+            sh:path openlabel_v2:TrafficAgentType ],
         [ sh:description "Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
             sh:maxCount 1 ;
             sh:message "laneSpecificationDimensionsValue (OddScenery): Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a."@en ;
@@ -895,32 +907,44 @@ openlabel_v2:OddScenery a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 22 ;
             sh:path openlabel_v2:laneSpecificationDimensionsValue ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:maxCount 0 ;
-            sh:message "trafficFlowRateValue (OddScenery): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
-            sh:minInclusive 0 ;
+            sh:message "particulatesWaterValue (OddScenery): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 53 ;
-            sh:path openlabel_v2:trafficFlowRateValue ],
+            sh:order 38 ;
+            sh:path openlabel_v2:particulatesWaterValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficAgentDensity (OddScenery): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 49 ;
+            sh:path openlabel_v2:TrafficAgentDensity ],
+        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+            sh:maxCount 0 ;
+            sh:message "RainType (OddScenery): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:order 39 ;
+            sh:path openlabel_v2:RainType ],
         [ sh:description "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:in ( openlabel_v2:SunPositionBehind openlabel_v2:SunPositionFront openlabel_v2:SunPositionLeft openlabel_v2:SunPositionRight ) ;
             sh:maxCount 0 ;
             sh:message "DaySunPosition (OddScenery): Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:order 4 ;
             sh:path openlabel_v2:DaySunPosition ],
-        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
-            sh:maxCount 1 ;
-            sh:message "SceneryFixedStructure (OddScenery): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:order 39 ;
-            sh:path openlabel_v2:SceneryFixedStructure ],
         [ sh:description "Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
             sh:maxCount 1 ;
             sh:message "DrivableAreaType (OddScenery): Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
+        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:message "SignsRegulatory (OddScenery): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:order 45 ;
+            sh:path openlabel_v2:SignsRegulatory ],
         [ sh:datatype xsd:boolean ;
             sh:description "Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 1 ;
@@ -928,12 +952,6 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 14 ;
             sh:path openlabel_v2:HorizontalStraights ],
-        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
-            sh:maxCount 1 ;
-            sh:message "SceneryZone (OddScenery): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:order 42 ;
-            sh:path openlabel_v2:SceneryZone ],
         [ sh:datatype xsd:decimal ;
             sh:description "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1."@en ;
             sh:maxCount 0 ;
@@ -941,25 +959,27 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path openlabel_v2:daySunElevationValue ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:maxCount 0 ;
-            sh:message "particulatesWaterValue (OddScenery): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 37 ;
-            sh:path openlabel_v2:particulatesWaterValue ],
         [ sh:description "Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c."@en ;
             sh:in ( openlabel_v2:SurfaceConditionContamination openlabel_v2:SurfaceConditionFlooded openlabel_v2:SurfaceConditionIcy openlabel_v2:SurfaceConditionMirage openlabel_v2:SurfaceConditionSnow openlabel_v2:SurfaceConditionStandingWater openlabel_v2:SurfaceConditionWet ) ;
             sh:maxCount 1 ;
             sh:message "DrivableAreaSurfaceCondition (OddScenery): Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c."@en ;
             sh:order 6 ;
             sh:path openlabel_v2:DrivableAreaSurfaceCondition ],
-        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
-            sh:maxCount 1 ;
-            sh:message "SceneryTemporaryStructure (OddScenery): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:order 41 ;
-            sh:path openlabel_v2:SceneryTemporaryStructure ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 0 ;
+            sh:message "TrafficVolume (OddScenery): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 56 ;
+            sh:path openlabel_v2:TrafficVolume ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:maxCount 0 ;
+            sh:message "trafficFlowRateValue (OddScenery): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 54 ;
+            sh:path openlabel_v2:trafficFlowRateValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d."@en ;
             sh:maxCount 0 ;
@@ -967,24 +987,13 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
             sh:path openlabel_v2:ParticulatesPollution ],
-        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (OddScenery): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 51 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
-        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
-            sh:maxCount 1 ;
-            sh:message "SignsRegulatory (OddScenery): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:order 44 ;
-            sh:path openlabel_v2:SignsRegulatory ],
-        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
-            sh:maxCount 0 ;
-            sh:message "RainType (OddScenery): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:order 38 ;
-            sh:path openlabel_v2:RainType ],
+            sh:message "TrafficFlowRate (OddScenery): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 53 ;
+            sh:path openlabel_v2:TrafficFlowRate ],
         [ sh:datatype xsd:boolean ;
             sh:description "Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 1 ;
@@ -992,6 +1001,13 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 28 ;
             sh:path openlabel_v2:LongitudinalDownSlope ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:maxCount 0 ;
+            sh:message "weatherWindValue (OddScenery): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 63 ;
+            sh:path openlabel_v2:weatherWindValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c."@en ;
             sh:maxCount 0 ;
@@ -1000,19 +1016,12 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:order 33 ;
             sh:path openlabel_v2:ParticulatesDust ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:description "Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficFlowRate (OddScenery): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:message "ParticulatesWater (OddScenery): Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 52 ;
-            sh:path openlabel_v2:TrafficFlowRate ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 0 ;
-            sh:message "WeatherRain (OddScenery): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 57 ;
-            sh:path openlabel_v2:WeatherRain ],
+            sh:order 37 ;
+            sh:path openlabel_v2:ParticulatesWater ],
         [ sh:datatype xsd:boolean ;
             sh:description "Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b."@en ;
             sh:maxCount 1 ;
@@ -1020,6 +1029,13 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 25 ;
             sh:path openlabel_v2:LaneSpecificationMarking ],
+        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 0 ;
+            sh:message "subjectVehicleSpeedValue (OddScenery): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 48 ;
+            sh:path openlabel_v2:subjectVehicleSpeedValue ],
         [ sh:description "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a."@en ;
             sh:in ( openlabel_v2:SurfaceTypeLoose openlabel_v2:SurfaceTypeSegmented openlabel_v2:SurfaceTypeUniform ) ;
             sh:maxCount 1 ;
@@ -1033,20 +1049,6 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 36 ;
             sh:path openlabel_v2:ParticulatesVolcanic ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 0 ;
-            sh:message "weatherRainValue (OddScenery): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 58 ;
-            sh:path openlabel_v2:weatherRainValue ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 0 ;
-            sh:message "weatherSnowValue (OddScenery): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 60 ;
-            sh:path openlabel_v2:weatherSnowValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:maxCount 1 ;
@@ -1060,37 +1062,30 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:order 27 ;
             sh:path openlabel_v2:LaneSpecificationType ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficAgentType (OddScenery): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:message "TrafficSpecialVehicle (OddScenery): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 50 ;
-            sh:path openlabel_v2:TrafficAgentType ],
-        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
-            sh:maxCount 1 ;
-            sh:message "SignsInformation (OddScenery): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:order 43 ;
-            sh:path openlabel_v2:SignsInformation ],
+            sh:order 55 ;
+            sh:path openlabel_v2:TrafficSpecialVehicle ],
         [ sh:description "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a."@en ;
             sh:in ( openlabel_v2:CommunicationV2i openlabel_v2:CommunicationV2v openlabel_v2:V2iCellular openlabel_v2:V2iSatellite openlabel_v2:V2iWifi openlabel_v2:V2vCellular openlabel_v2:V2vSatellite openlabel_v2:V2vWifi ) ;
             sh:maxCount 0 ;
             sh:message "ConnectivityCommunication (OddScenery): Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a."@en ;
             sh:order 0 ;
             sh:path openlabel_v2:ConnectivityCommunication ],
+        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+            sh:maxCount 1 ;
+            sh:message "SceneryZone (OddScenery): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:order 43 ;
+            sh:path openlabel_v2:SceneryZone ],
         [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
             sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
             sh:maxCount 1 ;
             sh:message "SignsWarning (OddScenery): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:order 45 ;
+            sh:order 46 ;
             sh:path openlabel_v2:SignsWarning ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "WeatherWind (OddScenery): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 61 ;
-            sh:path openlabel_v2:WeatherWind ],
         [ sh:datatype xsd:boolean ;
             sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c."@en ;
             sh:maxCount 0 ;
@@ -1118,13 +1113,28 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 32 ;
             sh:path openlabel_v2:longitudinalUpSlopeValue ],
-        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:maxCount 0 ;
-            sh:message "subjectVehicleSpeedValue (OddScenery): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:or ( [ sh:datatype xsd:integer ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 47 ;
-            sh:path openlabel_v2:subjectVehicleSpeedValue ],
+            sh:message "weatherRainValue (OddScenery): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 59 ;
+            sh:path openlabel_v2:weatherRainValue ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 0 ;
+            sh:message "trafficVolumeValue (OddScenery): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 57 ;
+            sh:path openlabel_v2:trafficVolumeValue ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:maxCount 0 ;
+            sh:message "WeatherWind (OddScenery): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 62 ;
+            sh:path openlabel_v2:WeatherWind ],
         [ sh:datatype xsd:boolean ;
             sh:description "Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 1 ;
@@ -1146,6 +1156,12 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 23 ;
             sh:path openlabel_v2:LaneSpecificationLaneCount ],
+        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:message "SignsInformation (OddScenery): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:order 44 ;
+            sh:path openlabel_v2:SignsInformation ],
         [ sh:datatype xsd:boolean ;
             sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii."@en ;
             sh:maxCount 1 ;
@@ -1153,13 +1169,13 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 30 ;
             sh:path openlabel_v2:LongitudinalLevelPlane ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficSpecialVehicle (OddScenery): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
+            sh:message "weatherSnowValue (OddScenery): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 54 ;
-            sh:path openlabel_v2:TrafficSpecialVehicle ],
+            sh:order 61 ;
+            sh:path openlabel_v2:weatherSnowValue ],
         [ sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
             sh:in ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
             sh:message "DrivableAreaEdge (OddScenery): Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
@@ -1178,19 +1194,25 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:order 15 ;
             sh:path openlabel_v2:IlluminationArtificial ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:maxCount 0 ;
-            sh:message "SubjectVehicleSpeed (OddScenery): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 46 ;
-            sh:path openlabel_v2:SubjectVehicleSpeed ],
-        [ sh:datatype xsd:boolean ;
             sh:description "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a."@en ;
             sh:maxCount 0 ;
             sh:message "ParticulatesMarine (OddScenery): Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 34 ;
             sh:path openlabel_v2:ParticulatesMarine ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 0 ;
+            sh:message "WeatherSnow (OddScenery): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 60 ;
+            sh:path openlabel_v2:WeatherSnow ],
+        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+            sh:maxCount 1 ;
+            sh:message "ScenerySpecialStructure (OddScenery): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:order 41 ;
+            sh:path openlabel_v2:ScenerySpecialStructure ],
         [ sh:description "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:RoundaboutCompactNosignal openlabel_v2:RoundaboutCompactSignal openlabel_v2:RoundaboutDoubleNosignal openlabel_v2:RoundaboutDoubleSignal openlabel_v2:RoundaboutLargeNosignal openlabel_v2:RoundaboutLargeSignal openlabel_v2:RoundaboutMiniNosignal openlabel_v2:RoundaboutMiniSignal openlabel_v2:RoundaboutNormalNosignal openlabel_v2:RoundaboutNormalSignal ) ;
             sh:maxCount 1 ;
@@ -1204,19 +1226,18 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 17 ;
             sh:path openlabel_v2:illuminationCloudinessValue ],
+        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (OddScenery): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:in ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
             sh:maxCount 0 ;
             sh:message "ConnectivityPositioning (OddScenery): Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:order 1 ;
             sh:path openlabel_v2:ConnectivityPositioning ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 0 ;
-            sh:message "TrafficAgentDensity (OddScenery): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 48 ;
-            sh:path openlabel_v2:TrafficAgentDensity ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 1 ;
@@ -1231,13 +1252,12 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 2 ;
             sh:path openlabel_v2:DaySunElevation ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 0 ;
-            sh:message "WeatherSnow (OddScenery): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 59 ;
-            sh:path openlabel_v2:WeatherSnow ],
+        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+            sh:maxCount 1 ;
+            sh:message "SceneryFixedStructure (OddScenery): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:order 40 ;
+            sh:path openlabel_v2:SceneryFixedStructure ],
         [ sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
             sh:maxCount 1 ;
@@ -1250,32 +1270,33 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:message "DrivableAreaSurfaceFeature (OddScenery): Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b."@en ;
             sh:order 7 ;
             sh:path openlabel_v2:DrivableAreaSurfaceFeature ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+        [ sh:datatype xsd:boolean ;
+            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:maxCount 0 ;
-            sh:message "weatherWindValue (OddScenery): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:message "WeatherRain (OddScenery): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 62 ;
-            sh:path openlabel_v2:weatherWindValue ],
+            sh:order 58 ;
+            sh:path openlabel_v2:WeatherRain ],
+        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+            sh:maxCount 1 ;
+            sh:message "SceneryTemporaryStructure (OddScenery): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:order 42 ;
+            sh:path openlabel_v2:SceneryTemporaryStructure ],
         [ sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
             sh:maxCount 1 ;
             sh:message "GeometryTransverse (OddScenery): Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:order 11 ;
             sh:path openlabel_v2:GeometryTransverse ],
-        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
-            sh:maxCount 1 ;
-            sh:message "ScenerySpecialStructure (OddScenery): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:order 40 ;
-            sh:path openlabel_v2:ScenerySpecialStructure ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+        [ sh:datatype xsd:integer ;
+            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:maxCount 0 ;
-            sh:message "TrafficVolume (OddScenery): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:message "trafficAgentDensityValue (OddScenery): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
+            sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:order 55 ;
-            sh:path openlabel_v2:TrafficVolume ] ;
+            sh:order 50 ;
+            sh:path openlabel_v2:trafficAgentDensityValue ] ;
     sh:targetClass openlabel_v2:OddScenery .
 
 openlabel_v2:Scenario a sh:NodeShape ;
@@ -1635,13 +1656,6 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 31 ;
             sh:path openlabel_v2:LongitudinalUpSlope ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 62 ;
-            sh:path openlabel_v2:weatherWindValue ],
         [ sh:description "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b."@en ;
             sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
             sh:maxCount 1 ;
@@ -1654,24 +1668,19 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:message "IlluminationArtificial (Odd): Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d."@en ;
             sh:order 15 ;
             sh:path openlabel_v2:IlluminationArtificial ],
-        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
-            sh:maxCount 1 ;
-            sh:message "SignsRegulatory (Odd): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
-            sh:order 44 ;
-            sh:path openlabel_v2:SignsRegulatory ],
         [ sh:description "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a."@en ;
             sh:in ( openlabel_v2:SurfaceTypeLoose openlabel_v2:SurfaceTypeSegmented openlabel_v2:SurfaceTypeUniform ) ;
             sh:maxCount 1 ;
             sh:message "DrivableAreaSurfaceType (Odd): Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a."@en ;
             sh:order 8 ;
             sh:path openlabel_v2:DrivableAreaSurfaceType ],
-        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
             sh:maxCount 1 ;
-            sh:message "SceneryFixedStructure (Odd): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
-            sh:order 39 ;
-            sh:path openlabel_v2:SceneryFixedStructure ],
+            sh:message "weatherSnowValue (Odd): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 61 ;
+            sh:path openlabel_v2:weatherSnowValue ],
         [ sh:description "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:RoundaboutCompactNosignal openlabel_v2:RoundaboutCompactSignal openlabel_v2:RoundaboutDoubleNosignal openlabel_v2:RoundaboutDoubleSignal openlabel_v2:RoundaboutLargeNosignal openlabel_v2:RoundaboutLargeSignal openlabel_v2:RoundaboutMiniNosignal openlabel_v2:RoundaboutMiniSignal openlabel_v2:RoundaboutNormalNosignal openlabel_v2:RoundaboutNormalSignal ) ;
             sh:maxCount 1 ;
@@ -1692,6 +1701,18 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 21 ;
             sh:path openlabel_v2:LaneSpecificationDimensions ],
+        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:message "trafficAgentTypeValue (Odd): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
+        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "subjectVehicleSpeedValue (Odd): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:or ( [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 48 ;
+            sh:path openlabel_v2:subjectVehicleSpeedValue ],
         [ sh:description "Road type. Refer to BSI PAS-1883 Section 5.2.3.2."@en ;
             sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
             sh:maxCount 1 ;
@@ -1699,53 +1720,45 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:maxCount 1 ;
-            sh:message "SubjectVehicleSpeed (Odd): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 46 ;
-            sh:path openlabel_v2:SubjectVehicleSpeed ],
-        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
-            sh:maxCount 1 ;
-            sh:message "SignsWarning (Odd): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
-            sh:order 45 ;
-            sh:path openlabel_v2:SignsWarning ],
-        [ sh:datatype xsd:boolean ;
             sh:description "Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:maxCount 1 ;
             sh:message "TrafficFlowRate (Odd): Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 52 ;
+            sh:order 53 ;
             sh:path openlabel_v2:TrafficFlowRate ],
-        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
             sh:maxCount 1 ;
-            sh:message "RainType (Odd): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:order 38 ;
-            sh:path openlabel_v2:RainType ],
+            sh:message "SceneryZone (Odd): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
+            sh:order 43 ;
+            sh:path openlabel_v2:SceneryZone ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:maxCount 1 ;
+            sh:message "WeatherRain (Odd): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 58 ;
+            sh:path openlabel_v2:WeatherRain ],
         [ sh:datatype xsd:boolean ;
             sh:description "Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
             sh:maxCount 1 ;
             sh:message "TrafficVolume (Odd): Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 55 ;
-            sh:path openlabel_v2:TrafficVolume ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "TrafficAgentDensity (Odd): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 48 ;
-            sh:path openlabel_v2:TrafficAgentDensity ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "trafficVolumeValue (Odd): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
             sh:order 56 ;
-            sh:path openlabel_v2:trafficVolumeValue ],
+            sh:path openlabel_v2:TrafficVolume ],
+        [ sh:description "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:message "SignsWarning (Odd): Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c."@en ;
+            sh:order 46 ;
+            sh:path openlabel_v2:SignsWarning ],
+        [ sh:datatype xsd:decimal ;
+            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "particulatesWaterValue (Odd): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 38 ;
+            sh:path openlabel_v2:particulatesWaterValue ],
         [ sh:description "Intersection type. Refer to BSI PAS-1883 Section 5.2.4."@en ;
             sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
             sh:maxCount 1 ;
@@ -1771,13 +1784,26 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:order 2 ;
             sh:path openlabel_v2:DaySunElevation ],
         [ sh:datatype xsd:integer ;
-            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:maxCount 1 ;
-            sh:message "trafficFlowRateValue (Odd): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:message "trafficAgentDensityValue (Odd): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:minInclusive 0 ;
             sh:nodeKind sh:Literal ;
-            sh:order 53 ;
-            sh:path openlabel_v2:trafficFlowRateValue ],
+            sh:order 50 ;
+            sh:path openlabel_v2:trafficAgentDensityValue ],
+        [ sh:description "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:in ( openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:message "SignsRegulatory (Odd): Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b."@en ;
+            sh:order 45 ;
+            sh:path openlabel_v2:SignsRegulatory ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:maxCount 1 ;
+            sh:message "TrafficAgentType (Odd): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 51 ;
+            sh:path openlabel_v2:TrafficAgentType ],
         [ sh:datatype xsd:boolean ;
             sh:description "Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b."@en ;
             sh:maxCount 1 ;
@@ -1785,6 +1811,14 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 25 ;
             sh:path openlabel_v2:LaneSpecificationMarking ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:maxCount 1 ;
+            sh:message "trafficVolumeValue (Odd): Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 57 ;
+            sh:path openlabel_v2:trafficVolumeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii."@en ;
             sh:maxCount 1 ;
@@ -1810,14 +1844,6 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:message "DaySunPosition (Odd): Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2."@en ;
             sh:order 4 ;
             sh:path openlabel_v2:DaySunPosition ],
-        [ sh:datatype xsd:integer ;
-            sh:description "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:maxCount 1 ;
-            sh:message "trafficAgentDensityValue (Odd): Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
-            sh:minInclusive 0 ;
-            sh:nodeKind sh:Literal ;
-            sh:order 49 ;
-            sh:path openlabel_v2:trafficAgentDensityValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i."@en ;
             sh:maxCount 1 ;
@@ -1839,13 +1865,13 @@ openlabel_v2:Odd a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 22 ;
             sh:path openlabel_v2:laneSpecificationDimensionsValue ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+        [ sh:datatype xsd:boolean ;
+            sh:description "Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:maxCount 1 ;
-            sh:message "particulatesWaterValue (Odd): Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:message "TrafficAgentDensity (Odd): Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 37 ;
-            sh:path openlabel_v2:particulatesWaterValue ],
+            sh:order 49 ;
+            sh:path openlabel_v2:TrafficAgentDensity ],
         [ sh:description "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
             sh:in ( openlabel_v2:EdgeLineMarkers openlabel_v2:EdgeNone openlabel_v2:EdgeShoulderGrass openlabel_v2:EdgeShoulderPavedOrGravel openlabel_v2:EdgeSolidBarriers openlabel_v2:EdgeTemporaryLineMarkers ) ;
             sh:message "DrivableAreaEdge (Odd): Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e."@en ;
@@ -1857,13 +1883,6 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:message "DrivableAreaSurfaceFeature (Odd): Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b."@en ;
             sh:order 7 ;
             sh:path openlabel_v2:DrivableAreaSurfaceFeature ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "weatherRainValue (Odd): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 58 ;
-            sh:path openlabel_v2:weatherRainValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
             sh:maxCount 1 ;
@@ -1883,22 +1902,15 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:message "WeatherWind (Odd): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 61 ;
+            sh:order 62 ;
             sh:path openlabel_v2:WeatherWind ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:maxCount 1 ;
-            sh:message "TrafficSpecialVehicle (Odd): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 54 ;
-            sh:path openlabel_v2:TrafficSpecialVehicle ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 1 ;
-            sh:message "WeatherSnow (Odd): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:message "weatherRainValue (Odd): Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 59 ;
-            sh:path openlabel_v2:WeatherSnow ],
+            sh:path openlabel_v2:weatherRainValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii."@en ;
             sh:maxCount 1 ;
@@ -1926,19 +1938,19 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 28 ;
             sh:path openlabel_v2:LongitudinalDownSlope ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "SubjectVehicleSpeed (Odd): Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 47 ;
+            sh:path openlabel_v2:SubjectVehicleSpeed ],
         [ sh:description "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:in ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
             sh:maxCount 1 ;
             sh:message "ConnectivityPositioning (Odd): Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b."@en ;
             sh:order 1 ;
             sh:path openlabel_v2:ConnectivityPositioning ],
-        [ sh:description "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:maxCount 1 ;
-            sh:message "subjectVehicleSpeedValue (Odd): Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b."@en ;
-            sh:or ( [ sh:datatype xsd:integer ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 47 ;
-            sh:path openlabel_v2:subjectVehicleSpeedValue ],
         [ sh:description "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
             sh:maxCount 1 ;
             sh:message "laneSpecificationLaneCountValue (Odd): Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d."@en ;
@@ -1960,12 +1972,25 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:order 14 ;
             sh:path openlabel_v2:HorizontalStraights ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:description "Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:maxCount 1 ;
-            sh:message "TrafficAgentType (Odd): Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
+            sh:message "TrafficSpecialVehicle (Odd): Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5."@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 50 ;
-            sh:path openlabel_v2:TrafficAgentType ],
+            sh:order 55 ;
+            sh:path openlabel_v2:TrafficSpecialVehicle ],
+        [ sh:description "Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
+            sh:maxCount 1 ;
+            sh:message "SceneryFixedStructure (Odd): Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e."@en ;
+            sh:order 40 ;
+            sh:path openlabel_v2:SceneryFixedStructure ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:maxCount 1 ;
+            sh:message "ParticulatesWater (Odd): Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 37 ;
+            sh:path openlabel_v2:ParticulatesWater ],
         [ sh:datatype xsd:decimal ;
             sh:description "Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1."@en ;
             sh:maxCount 1 ;
@@ -1973,17 +1998,14 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path openlabel_v2:daySunElevationValue ],
-        [ sh:description "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:message "trafficAgentTypeValue (Odd): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4."@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 51 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
-        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+        [ sh:datatype xsd:integer ;
+            sh:description "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
             sh:maxCount 1 ;
-            sh:message "SceneryTemporaryStructure (Odd): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
-            sh:order 41 ;
-            sh:path openlabel_v2:SceneryTemporaryStructure ],
+            sh:message "trafficFlowRateValue (Odd): Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3."@en ;
+            sh:minInclusive 0 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 54 ;
+            sh:path openlabel_v2:trafficFlowRateValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3."@en ;
             sh:maxCount 1 ;
@@ -1992,32 +2014,43 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:order 13 ;
             sh:path openlabel_v2:horizontalCurvesValue ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:maxCount 1 ;
-            sh:message "WeatherRain (Odd): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 57 ;
-            sh:path openlabel_v2:WeatherRain ],
-        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
-            sh:maxCount 1 ;
-            sh:message "ScenerySpecialStructure (Odd): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
-            sh:order 40 ;
-            sh:path openlabel_v2:ScenerySpecialStructure ],
-        [ sh:datatype xsd:decimal ;
-            sh:description "Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:maxCount 1 ;
-            sh:message "weatherSnowValue (Odd): Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 60 ;
-            sh:path openlabel_v2:weatherSnowValue ],
-        [ sh:datatype xsd:boolean ;
             sh:description "Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c."@en ;
             sh:maxCount 1 ;
             sh:message "IlluminationCloudiness (Odd): Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c."@en ;
             sh:nodeKind sh:Literal ;
             sh:order 16 ;
             sh:path openlabel_v2:IlluminationCloudiness ],
+        [ sh:description "Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
+            sh:maxCount 1 ;
+            sh:message "RainType (Odd): Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2."@en ;
+            sh:order 39 ;
+            sh:path openlabel_v2:RainType ],
+        [ sh:description "Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:in ( openlabel_v2:TemporaryStructureConstructionDetour openlabel_v2:TemporaryStructureRefuseCollection openlabel_v2:TemporaryStructureRoadSignage openlabel_v2:TemporaryStructureRoadWorks ) ;
+            sh:maxCount 1 ;
+            sh:message "SceneryTemporaryStructure (Odd): Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f."@en ;
+            sh:order 42 ;
+            sh:path openlabel_v2:SceneryTemporaryStructure ],
+        [ sh:description "Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:in ( openlabel_v2:SpecialStructureAutoAccess openlabel_v2:SpecialStructureBridge openlabel_v2:SpecialStructurePedestrianCrossing openlabel_v2:SpecialStructureRailCrossing openlabel_v2:SpecialStructureTollPlaza openlabel_v2:SpecialStructureTunnel ) ;
+            sh:maxCount 1 ;
+            sh:message "ScenerySpecialStructure (Odd): Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d."@en ;
+            sh:order 41 ;
+            sh:path openlabel_v2:ScenerySpecialStructure ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:maxCount 1 ;
+            sh:message "WeatherSnow (Odd): Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 60 ;
+            sh:path openlabel_v2:WeatherSnow ],
+        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
+            sh:maxCount 1 ;
+            sh:message "SignsInformation (Odd): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
+            sh:order 44 ;
+            sh:path openlabel_v2:SignsInformation ],
         [ sh:datatype xsd:boolean ;
             sh:description "Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a."@en ;
             sh:maxCount 1 ;
@@ -2025,12 +2058,6 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 34 ;
             sh:path openlabel_v2:ParticulatesMarine ],
-        [ sh:description "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:in ( openlabel_v2:InformationSignsUniformFullTime openlabel_v2:InformationSignsUniformTemporary openlabel_v2:InformationSignsVariableFullTime openlabel_v2:InformationSignsVariableTemporary ) ;
-            sh:maxCount 1 ;
-            sh:message "SignsInformation (Odd): Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a."@en ;
-            sh:order 43 ;
-            sh:path openlabel_v2:SignsInformation ],
         [ sh:datatype xsd:boolean ;
             sh:description "Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d."@en ;
             sh:maxCount 1 ;
@@ -2038,12 +2065,13 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
             sh:path openlabel_v2:ParticulatesPollution ],
-        [ sh:description "Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
+        [ sh:datatype xsd:decimal ;
+            sh:description "Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
             sh:maxCount 1 ;
-            sh:message "SceneryZone (Odd): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a."@en ;
-            sh:order 42 ;
-            sh:path openlabel_v2:SceneryZone ] ;
+            sh:message "weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 63 ;
+            sh:path openlabel_v2:weatherWindValue ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
             sh:message "If trafficVolumeValue is provided, TrafficVolume must be true. Corresponds to BSI PAS-1883 conditional constraint."@en ;
             sh:select """SELECT $this WHERE {
@@ -2099,6 +2127,16 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If particulatesWaterValue is provided, ParticulatesWater must be true. Corresponds to BSI PAS-1883 Section 5.3.2.b conditional constraint."@en ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/particulatesWaterValue> ?value . }
     FILTER (
         ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
