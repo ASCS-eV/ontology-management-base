@@ -35,7 +35,7 @@
 openlabel_v2:AdminTag a owl:Class , owl:ObjectProperty , linkml:ClassDefinition , linkml:SlotDefinition ;
 	rdfs:label "AdminTag" ;
 	rdfs:range openlabel_v2:AdminTag ;
-	rdfs:subClassOf _:c14n102 , _:c14n107 , _:c14n129 , _:c14n146 , _:c14n183 , _:c14n201 , _:c14n211 , _:c14n216 , _:c14n239 , _:c14n260 , _:c14n270 , _:c14n290 , _:c14n305 , _:c14n315 , _:c14n344 , _:c14n363 , _:c14n366 , _:c14n370 , _:c14n418 , _:c14n454 , _:c14n474 , _:c14n588 , _:c14n62 , _:c14n650 , _:c14n662 , _:c14n668 , _:c14n691 , _:c14n750 , _:c14n769 , _:c14n789 , _:c14n813 , _:c14n817 , _:c14n830 , _:c14n834 , _:c14n873 , _:c14n892 , _:c14n905 , _:c14n907 , _:c14n910 ;
+	rdfs:subClassOf _:c14n102 , _:c14n107 , _:c14n129 , _:c14n146 , _:c14n183 , _:c14n201 , _:c14n211 , _:c14n216 , _:c14n225 , _:c14n240 , _:c14n261 , _:c14n271 , _:c14n291 , _:c14n306 , _:c14n316 , _:c14n345 , _:c14n364 , _:c14n367 , _:c14n371 , _:c14n419 , _:c14n452 , _:c14n456 , _:c14n476 , _:c14n590 , _:c14n62 , _:c14n652 , _:c14n664 , _:c14n670 , _:c14n693 , _:c14n752 , _:c14n771 , _:c14n791 , _:c14n815 , _:c14n819 , _:c14n832 , _:c14n835 , _:c14n837 , _:c14n876 , _:c14n895 , _:c14n908 , _:c14n910 , _:c14n913 ;
 	skos:definition "Administration tag." , "The base tag to use when extending the Administration tags with new classes." ;
 	skos:exactMatch openlabel_v2:AdminTag ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -51,14 +51,14 @@ openlabel_v2:Behaviour a owl:Class , owl:ObjectProperty , linkml:ClassDefinition
 	rdfs:label "Behaviour" ;
 	rdfs:range openlabel_v2:Behaviour ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	rdfs:subClassOf _:c14n10 , _:c14n109 , _:c14n12 , _:c14n126 , _:c14n15 , _:c14n162 , _:c14n195 , _:c14n196 , _:c14n20 , _:c14n226 , _:c14n234 , _:c14n235 , _:c14n243 , _:c14n251 , _:c14n257 , _:c14n261 , _:c14n264 , _:c14n272 , _:c14n31 , _:c14n368 , _:c14n39 , _:c14n395 , _:c14n403 , _:c14n412 , _:c14n425 , _:c14n434 , _:c14n438 , _:c14n445 , _:c14n447 , _:c14n452 , _:c14n453 , _:c14n480 , _:c14n490 , _:c14n497 , _:c14n507 , _:c14n514 , _:c14n531 , _:c14n539 , _:c14n540 , _:c14n546 , _:c14n565 , _:c14n575 , _:c14n592 , _:c14n599 , _:c14n611 , _:c14n646 , _:c14n649 , _:c14n684 , _:c14n685 , _:c14n686 , _:c14n712 , _:c14n722 , _:c14n723 , _:c14n726 , _:c14n73 , _:c14n733 , _:c14n734 , _:c14n736 , _:c14n745 , _:c14n754 , _:c14n763 , _:c14n771 , _:c14n80 , _:c14n805 , _:c14n81 , _:c14n82 , _:c14n850 , _:c14n867 , _:c14n887 , _:c14n890 , _:c14n893 ;
+	rdfs:subClassOf _:c14n10 , _:c14n109 , _:c14n12 , _:c14n126 , _:c14n15 , _:c14n162 , _:c14n195 , _:c14n196 , _:c14n20 , _:c14n227 , _:c14n235 , _:c14n236 , _:c14n244 , _:c14n252 , _:c14n258 , _:c14n262 , _:c14n265 , _:c14n273 , _:c14n31 , _:c14n369 , _:c14n39 , _:c14n396 , _:c14n404 , _:c14n413 , _:c14n426 , _:c14n435 , _:c14n439 , _:c14n446 , _:c14n448 , _:c14n454 , _:c14n455 , _:c14n482 , _:c14n492 , _:c14n499 , _:c14n509 , _:c14n516 , _:c14n533 , _:c14n541 , _:c14n542 , _:c14n548 , _:c14n567 , _:c14n577 , _:c14n594 , _:c14n601 , _:c14n613 , _:c14n648 , _:c14n651 , _:c14n686 , _:c14n687 , _:c14n688 , _:c14n714 , _:c14n724 , _:c14n725 , _:c14n728 , _:c14n73 , _:c14n735 , _:c14n736 , _:c14n738 , _:c14n747 , _:c14n756 , _:c14n765 , _:c14n773 , _:c14n80 , _:c14n807 , _:c14n81 , _:c14n82 , _:c14n853 , _:c14n870 , _:c14n890 , _:c14n893 , _:c14n896 ;
 	skos:definition "An activity performed by a road user." , "Behaviour tag." ;
 	skos:exactMatch openlabel_v2:Behaviour ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:BehaviourCommunication a owl:Class , owl:ObjectProperty , linkml:EnumDefinition , linkml:SlotDefinition ;
 	rdfs:label "BehaviourCommunication" , "BehaviourCommunicationEnum" ;
 	rdfs:range openlabel_v2:BehaviourCommunication ;
-	owl:unionOf _:c14n617 ;
+	owl:unionOf _:c14n619 ;
 	skos:definition "Communication type of road user behaviour." , "Types of communication behaviours by road users." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:CommunicationHeadlightFlash , openlabel_v2:CommunicationHorn , openlabel_v2:CommunicationSignalEmergency , openlabel_v2:CommunicationSignalHazard , openlabel_v2:CommunicationSignalLeft , openlabel_v2:CommunicationSignalRight , openlabel_v2:CommunicationSignalSlowing , openlabel_v2:CommunicationWave .
@@ -106,7 +106,7 @@ openlabel_v2:ConnectivityCommunication a owl:Class , owl:ObjectProperty , linkml
 	rdfs:label "ConnectivityCommunication" , "ConnectivityCommunicationEnum" ;
 	rdfs:range openlabel_v2:ConnectivityCommunication ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n904 ;
+	owl:unionOf _:c14n907 ;
 	skos:definition "Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a." , "Types of communication connectivity. Refer to BSI PAS-1883 Section 5.3.4.a." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:CommunicationV2i , openlabel_v2:CommunicationV2v , openlabel_v2:V2iCellular , openlabel_v2:V2iSatellite , openlabel_v2:V2iWifi , openlabel_v2:V2vCellular , openlabel_v2:V2vSatellite , openlabel_v2:V2vWifi .
@@ -114,7 +114,7 @@ openlabel_v2:ConnectivityPositioning a owl:Class , owl:ObjectProperty , linkml:E
 	rdfs:label "ConnectivityPositioning" , "ConnectivityPositioningEnum" ;
 	rdfs:range openlabel_v2:ConnectivityPositioning ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n313 ;
+	owl:unionOf _:c14n314 ;
 	skos:definition "Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b." , "Types of positioning systems. Refer to BSI PAS-1883 Section 5.3.4.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:PositioningGalileo , openlabel_v2:PositioningGlonass , openlabel_v2:PositioningGps .
@@ -128,7 +128,7 @@ openlabel_v2:DaySunPosition a owl:Class , owl:ObjectProperty , linkml:EnumDefini
 	rdfs:label "DaySunPosition" , "DaySunPositionEnum" ;
 	rdfs:range openlabel_v2:DaySunPosition ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n863 ;
+	owl:unionOf _:c14n866 ;
 	skos:definition "Position of the sun relative to direction of travel. Refer to BSI PAS-1883 Section 5.3.3.a.2." , "Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:SunPositionBehind , openlabel_v2:SunPositionFront , openlabel_v2:SunPositionLeft , openlabel_v2:SunPositionRight .
@@ -136,7 +136,7 @@ openlabel_v2:DrivableAreaEdge a owl:Class , owl:ObjectProperty , linkml:EnumDefi
 	rdfs:label "DrivableAreaEdge" , "DrivableAreaEdgeEnum" ;
 	rdfs:range openlabel_v2:DrivableAreaEdge ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n407 ;
+	owl:unionOf _:c14n408 ;
 	skos:definition "Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e." , "Types of drivable area edges. Refer to BSI PAS-1883 Section 5.2.3.6." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:EdgeLineMarkers , openlabel_v2:EdgeNone , openlabel_v2:EdgeShoulderGrass , openlabel_v2:EdgeShoulderPavedOrGravel , openlabel_v2:EdgeSolidBarriers , openlabel_v2:EdgeTemporaryLineMarkers .
@@ -144,7 +144,7 @@ openlabel_v2:DrivableAreaSurfaceCondition a owl:Class , owl:ObjectProperty , lin
 	rdfs:label "DrivableAreaSurfaceCondition" , "DrivableAreaSurfaceConditionEnum" ;
 	rdfs:range openlabel_v2:DrivableAreaSurfaceCondition ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n468 ;
+	owl:unionOf _:c14n470 ;
 	skos:definition "Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c." , "Road surface conditions. Refer to BSI PAS-1883 Section 5.2.3.7.c." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:SurfaceConditionContamination , openlabel_v2:SurfaceConditionFlooded , openlabel_v2:SurfaceConditionIcy , openlabel_v2:SurfaceConditionMirage , openlabel_v2:SurfaceConditionSnow , openlabel_v2:SurfaceConditionStandingWater , openlabel_v2:SurfaceConditionWet .
@@ -152,7 +152,7 @@ openlabel_v2:DrivableAreaSurfaceFeature a owl:Class , owl:ObjectProperty , linkm
 	rdfs:label "DrivableAreaSurfaceFeature" , "DrivableAreaSurfaceFeatureEnum" ;
 	rdfs:range openlabel_v2:DrivableAreaSurfaceFeature ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n800 ;
+	owl:unionOf _:c14n802 ;
 	skos:definition "Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b." , "Road surface features. Refer to BSI PAS-1883 Section 5.2.3.7.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:SurfaceFeatureCrack , openlabel_v2:SurfaceFeaturePothole , openlabel_v2:SurfaceFeatureRut , openlabel_v2:SurfaceFeatureSwell .
@@ -160,7 +160,7 @@ openlabel_v2:DrivableAreaSurfaceType a owl:Class , owl:ObjectProperty , linkml:E
 	rdfs:label "DrivableAreaSurfaceType" , "DrivableAreaSurfaceTypeEnum" ;
 	rdfs:range openlabel_v2:DrivableAreaSurfaceType ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n713 ;
+	owl:unionOf _:c14n715 ;
 	skos:definition "Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a." , "Road surface types. Refer to BSI PAS-1883 Section 5.2.3.7.a." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:SurfaceTypeLoose , openlabel_v2:SurfaceTypeSegmented , openlabel_v2:SurfaceTypeUniform .
@@ -168,7 +168,7 @@ openlabel_v2:DrivableAreaType a owl:Class , owl:ObjectProperty , linkml:EnumDefi
 	rdfs:label "DrivableAreaType" , "DrivableAreaTypeEnum" ;
 	rdfs:range openlabel_v2:DrivableAreaType ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n551 ;
+	owl:unionOf _:c14n553 ;
 	skos:definition "Road type. Refer to BSI PAS-1883 Section 5.2.3.2." , "Road types. Refer to BSI PAS-1883 Section 5.2.3.2." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:MotorwayManaged , openlabel_v2:MotorwayUnmanaged , openlabel_v2:RoadTypeDistributor , openlabel_v2:RoadTypeMinor , openlabel_v2:RoadTypeMotorway , openlabel_v2:RoadTypeParking , openlabel_v2:RoadTypeRadial , openlabel_v2:RoadTypeShared , openlabel_v2:RoadTypeSlip .
@@ -200,7 +200,7 @@ openlabel_v2:EnvironmentParticulates a owl:Class , owl:ObjectProperty , linkml:E
 	rdfs:label "EnvironmentParticulates" , "EnvironmentParticulatesEnum" ;
 	rdfs:range openlabel_v2:EnvironmentParticulates ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n478 ;
+	owl:unionOf _:c14n480 ;
 	skos:definition "Particulate type. Refer to BSI PAS-1883 Section 5.3.2." , "Types of particulates. Refer to BSI PAS-1883 Section 5.3.2." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:ParticulatesDust , openlabel_v2:ParticulatesMarine , openlabel_v2:ParticulatesPollution , openlabel_v2:ParticulatesVolcanic , openlabel_v2:ParticulatesWater .
@@ -224,7 +224,7 @@ openlabel_v2:GeometryTransverse a owl:Class , owl:ObjectProperty , linkml:EnumDe
 	rdfs:label "GeometryTransverse" , "GeometryTransverseEnum" ;
 	rdfs:range openlabel_v2:GeometryTransverse ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n820 ;
+	owl:unionOf _:c14n822 ;
 	skos:definition "Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b." , "Types of transverse geometry. Refer to BSI PAS-1883 Section 5.2.3.3.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:TransverseBarriers , openlabel_v2:TransverseDivided , openlabel_v2:TransverseLanesTogether , openlabel_v2:TransversePavements , openlabel_v2:TransverseUndivided .
@@ -286,7 +286,7 @@ openlabel_v2:IlluminationLowLight a owl:Class , owl:ObjectProperty , linkml:Enum
 	rdfs:label "IlluminationLowLight" , "IlluminationLowLightEnum" ;
 	rdfs:range openlabel_v2:IlluminationLowLight ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n802 ;
+	owl:unionOf _:c14n804 ;
 	skos:definition "Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b." , "Types of low light conditions. Refer to BSI PAS-1883 Section 5.3.3.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:LowLightAmbient , openlabel_v2:LowLightNight .
@@ -330,7 +330,7 @@ openlabel_v2:JunctionIntersection a owl:Class , owl:ObjectProperty , linkml:Enum
 	rdfs:label "JunctionIntersection" , "JunctionIntersectionEnum" ;
 	rdfs:range openlabel_v2:JunctionIntersection ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n601 ;
+	owl:unionOf _:c14n603 ;
 	skos:definition "Intersection type. Refer to BSI PAS-1883 Section 5.2.4." , "Types of intersections. Refer to BSI PAS-1883 Section 5.2.4." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:IntersectionCrossroad , openlabel_v2:IntersectionGradeSeperated , openlabel_v2:IntersectionStaggered , openlabel_v2:IntersectionTJunction , openlabel_v2:IntersectionYJunction .
@@ -338,7 +338,7 @@ openlabel_v2:JunctionRoundabout a owl:Class , owl:ObjectProperty , linkml:EnumDe
 	rdfs:label "JunctionRoundabout" , "JunctionRoundaboutEnum" ;
 	rdfs:range openlabel_v2:JunctionRoundabout ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n571 ;
+	owl:unionOf _:c14n573 ;
 	skos:definition "Roundabout type. Refer to BSI PAS-1883 Section 5.2.4." , "Types of roundabouts. Refer to BSI PAS-1883 Section 5.2.4." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:RoundaboutCompactNosignal , openlabel_v2:RoundaboutCompactSignal , openlabel_v2:RoundaboutDoubleNosignal , openlabel_v2:RoundaboutDoubleSignal , openlabel_v2:RoundaboutLargeNosignal , openlabel_v2:RoundaboutLargeSignal , openlabel_v2:RoundaboutMiniNosignal , openlabel_v2:RoundaboutMiniSignal , openlabel_v2:RoundaboutNormalNosignal , openlabel_v2:RoundaboutNormalSignal .
@@ -538,25 +538,25 @@ openlabel_v2:Odd a owl:Class , owl:ObjectProperty , linkml:ClassDefinition , lin
 	rdfs:label "Odd" ;
 	rdfs:range openlabel_v2:Odd ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	rdfs:subClassOf _:c14n108 , _:c14n11 , _:c14n110 , _:c14n111 , _:c14n112 , _:c14n116 , _:c14n123 , _:c14n124 , _:c14n125 , _:c14n138 , _:c14n139 , _:c14n143 , _:c14n145 , _:c14n148 , _:c14n149 , _:c14n150 , _:c14n151 , _:c14n154 , _:c14n155 , _:c14n157 , _:c14n161 , _:c14n166 , _:c14n167 , _:c14n169 , _:c14n175 , _:c14n199 , _:c14n210 , _:c14n212 , _:c14n22 , _:c14n232 , _:c14n241 , _:c14n244 , _:c14n248 , _:c14n249 , _:c14n255 , _:c14n256 , _:c14n26 , _:c14n265 , _:c14n268 , _:c14n271 , _:c14n275 , _:c14n279 , _:c14n282 , _:c14n283 , _:c14n288 , _:c14n289 , _:c14n29 , _:c14n298 , _:c14n302 , _:c14n303 , _:c14n309 , _:c14n311 , _:c14n319 , _:c14n323 , _:c14n325 , _:c14n328 , _:c14n333 , _:c14n336 , _:c14n339 , _:c14n353 , _:c14n357 , _:c14n358 , _:c14n359 , _:c14n36 , _:c14n361 , _:c14n369 , _:c14n371 , _:c14n373 , _:c14n378 , _:c14n379 , _:c14n382 , _:c14n392 , _:c14n394 , _:c14n397 , _:c14n4 , _:c14n406 , _:c14n408 , _:c14n414 , _:c14n416 , _:c14n422 , _:c14n423 , _:c14n43 , _:c14n439 , _:c14n440 , _:c14n444 , _:c14n446 , _:c14n455 , _:c14n481 , _:c14n482 , _:c14n486 , _:c14n5 , _:c14n50 , _:c14n503 , _:c14n505 , _:c14n518 , _:c14n52 , _:c14n520 , _:c14n523 , _:c14n538 , _:c14n541 , _:c14n547 , _:c14n552 , _:c14n554 , _:c14n555 , _:c14n556 , _:c14n57 , _:c14n573 , _:c14n576 , _:c14n577 , _:c14n58 , _:c14n581 , _:c14n583 , _:c14n590 , _:c14n591 , _:c14n594 , _:c14n597 , _:c14n598 , _:c14n60 , _:c14n614 , _:c14n618 , _:c14n624 , _:c14n635 , _:c14n636 , _:c14n638 , _:c14n643 , _:c14n655 , _:c14n660 , _:c14n663 , _:c14n67 , _:c14n674 , _:c14n68 , _:c14n681 , _:c14n687 , _:c14n701 , _:c14n706 , _:c14n707 , _:c14n709 , _:c14n714 , _:c14n715 , _:c14n719 , _:c14n720 , _:c14n724 , _:c14n729 , _:c14n730 , _:c14n731 , _:c14n732 , _:c14n740 , _:c14n743 , _:c14n744 , _:c14n757 , _:c14n758 , _:c14n767 , _:c14n775 , _:c14n777 , _:c14n779 , _:c14n780 , _:c14n785 , _:c14n786 , _:c14n791 , _:c14n792 , _:c14n801 , _:c14n807 , _:c14n810 , _:c14n819 , _:c14n824 , _:c14n828 , _:c14n83 , _:c14n84 , _:c14n840 , _:c14n846 , _:c14n852 , _:c14n855 , _:c14n857 , _:c14n858 , _:c14n859 , _:c14n860 , _:c14n861 , _:c14n865 , _:c14n866 , _:c14n877 , _:c14n878 , _:c14n88 , _:c14n881 , _:c14n884 , _:c14n89 , _:c14n897 , _:c14n900 , _:c14n93 , _:c14n97 ;
+	rdfs:subClassOf _:c14n108 , _:c14n11 , _:c14n110 , _:c14n111 , _:c14n112 , _:c14n116 , _:c14n123 , _:c14n124 , _:c14n125 , _:c14n138 , _:c14n139 , _:c14n143 , _:c14n145 , _:c14n148 , _:c14n149 , _:c14n150 , _:c14n151 , _:c14n154 , _:c14n155 , _:c14n157 , _:c14n161 , _:c14n166 , _:c14n167 , _:c14n169 , _:c14n175 , _:c14n199 , _:c14n210 , _:c14n212 , _:c14n22 , _:c14n233 , _:c14n242 , _:c14n245 , _:c14n249 , _:c14n250 , _:c14n256 , _:c14n257 , _:c14n26 , _:c14n266 , _:c14n269 , _:c14n272 , _:c14n276 , _:c14n280 , _:c14n283 , _:c14n284 , _:c14n289 , _:c14n29 , _:c14n290 , _:c14n299 , _:c14n303 , _:c14n304 , _:c14n310 , _:c14n312 , _:c14n320 , _:c14n324 , _:c14n326 , _:c14n329 , _:c14n334 , _:c14n337 , _:c14n340 , _:c14n354 , _:c14n358 , _:c14n359 , _:c14n36 , _:c14n360 , _:c14n362 , _:c14n370 , _:c14n372 , _:c14n374 , _:c14n379 , _:c14n380 , _:c14n383 , _:c14n393 , _:c14n395 , _:c14n398 , _:c14n4 , _:c14n407 , _:c14n409 , _:c14n415 , _:c14n417 , _:c14n423 , _:c14n424 , _:c14n43 , _:c14n440 , _:c14n441 , _:c14n445 , _:c14n447 , _:c14n457 , _:c14n483 , _:c14n484 , _:c14n488 , _:c14n5 , _:c14n50 , _:c14n505 , _:c14n507 , _:c14n52 , _:c14n520 , _:c14n522 , _:c14n525 , _:c14n540 , _:c14n543 , _:c14n549 , _:c14n554 , _:c14n556 , _:c14n557 , _:c14n558 , _:c14n57 , _:c14n575 , _:c14n578 , _:c14n579 , _:c14n58 , _:c14n583 , _:c14n585 , _:c14n592 , _:c14n593 , _:c14n596 , _:c14n599 , _:c14n60 , _:c14n600 , _:c14n616 , _:c14n620 , _:c14n626 , _:c14n637 , _:c14n638 , _:c14n640 , _:c14n645 , _:c14n657 , _:c14n662 , _:c14n665 , _:c14n67 , _:c14n676 , _:c14n68 , _:c14n683 , _:c14n689 , _:c14n703 , _:c14n708 , _:c14n709 , _:c14n711 , _:c14n716 , _:c14n717 , _:c14n721 , _:c14n722 , _:c14n726 , _:c14n731 , _:c14n732 , _:c14n733 , _:c14n734 , _:c14n742 , _:c14n745 , _:c14n746 , _:c14n759 , _:c14n760 , _:c14n769 , _:c14n777 , _:c14n779 , _:c14n781 , _:c14n782 , _:c14n787 , _:c14n788 , _:c14n793 , _:c14n794 , _:c14n803 , _:c14n809 , _:c14n812 , _:c14n821 , _:c14n826 , _:c14n83 , _:c14n830 , _:c14n84 , _:c14n843 , _:c14n849 , _:c14n855 , _:c14n858 , _:c14n860 , _:c14n861 , _:c14n862 , _:c14n863 , _:c14n864 , _:c14n868 , _:c14n869 , _:c14n88 , _:c14n880 , _:c14n881 , _:c14n884 , _:c14n887 , _:c14n89 , _:c14n900 , _:c14n903 , _:c14n93 , _:c14n97 ;
 	skos:definition "Operational Design Domain tag." , "Operational Design Domain. Refer to BSI PAS-1883 Section 5." ;
 	skos:exactMatch openlabel_v2:Odd ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:OddDynamicElements a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "OddDynamicElements" ;
-	rdfs:subClassOf openlabel_v2:Odd , _:c14n100 , _:c14n103 , _:c14n105 , _:c14n113 , _:c14n130 , _:c14n131 , _:c14n136 , _:c14n137 , _:c14n14 , _:c14n140 , _:c14n147 , _:c14n153 , _:c14n156 , _:c14n159 , _:c14n160 , _:c14n17 , _:c14n174 , _:c14n179 , _:c14n18 , _:c14n180 , _:c14n186 , _:c14n197 , _:c14n198 , _:c14n200 , _:c14n204 , _:c14n215 , _:c14n220 , _:c14n222 , _:c14n225 , _:c14n228 , _:c14n242 , _:c14n245 , _:c14n25 , _:c14n253 , _:c14n263 , _:c14n273 , _:c14n277 , _:c14n280 , _:c14n281 , _:c14n296 , _:c14n3 , _:c14n316 , _:c14n320 , _:c14n335 , _:c14n338 , _:c14n341 , _:c14n346 , _:c14n351 , _:c14n360 , _:c14n364 , _:c14n367 , _:c14n37 , _:c14n374 , _:c14n375 , _:c14n383 , _:c14n389 , _:c14n390 , _:c14n399 , _:c14n405 , _:c14n409 , _:c14n41 , _:c14n411 , _:c14n421 , _:c14n429 , _:c14n432 , _:c14n437 , _:c14n44 , _:c14n450 , _:c14n461 , _:c14n464 , _:c14n467 , _:c14n475 , _:c14n49 , _:c14n491 , _:c14n508 , _:c14n51 , _:c14n511 , _:c14n515 , _:c14n524 , _:c14n532 , _:c14n537 , _:c14n54 , _:c14n550 , _:c14n560 , _:c14n561 , _:c14n562 , _:c14n566 , _:c14n567 , _:c14n569 , _:c14n570 , _:c14n574 , _:c14n587 , _:c14n600 , _:c14n602 , _:c14n604 , _:c14n605 , _:c14n608 , _:c14n609 , _:c14n61 , _:c14n610 , _:c14n612 , _:c14n619 , _:c14n622 , _:c14n628 , _:c14n631 , _:c14n637 , _:c14n641 , _:c14n65 , _:c14n654 , _:c14n683 , _:c14n689 , _:c14n697 , _:c14n70 , _:c14n702 , _:c14n703 , _:c14n708 , _:c14n716 , _:c14n72 , _:c14n747 , _:c14n748 , _:c14n75 , _:c14n752 , _:c14n755 , _:c14n762 , _:c14n764 , _:c14n765 , _:c14n766 , _:c14n770 , _:c14n773 , _:c14n78 , _:c14n782 , _:c14n783 , _:c14n784 , _:c14n788 , _:c14n797 , _:c14n815 , _:c14n818 , _:c14n821 , _:c14n823 , _:c14n826 , _:c14n833 , _:c14n837 , _:c14n838 , _:c14n843 , _:c14n844 , _:c14n849 , _:c14n86 , _:c14n868 , _:c14n869 , _:c14n872 , _:c14n874 , _:c14n876 , _:c14n880 , _:c14n888 , _:c14n889 , _:c14n898 , _:c14n902 , _:c14n903 , _:c14n909 ;
+	rdfs:subClassOf openlabel_v2:Odd , _:c14n100 , _:c14n103 , _:c14n105 , _:c14n113 , _:c14n130 , _:c14n131 , _:c14n136 , _:c14n137 , _:c14n14 , _:c14n140 , _:c14n147 , _:c14n153 , _:c14n156 , _:c14n159 , _:c14n160 , _:c14n17 , _:c14n174 , _:c14n179 , _:c14n18 , _:c14n180 , _:c14n186 , _:c14n197 , _:c14n198 , _:c14n200 , _:c14n204 , _:c14n215 , _:c14n220 , _:c14n222 , _:c14n226 , _:c14n229 , _:c14n243 , _:c14n246 , _:c14n25 , _:c14n254 , _:c14n264 , _:c14n274 , _:c14n278 , _:c14n281 , _:c14n282 , _:c14n297 , _:c14n3 , _:c14n317 , _:c14n321 , _:c14n336 , _:c14n339 , _:c14n342 , _:c14n347 , _:c14n352 , _:c14n361 , _:c14n365 , _:c14n368 , _:c14n37 , _:c14n375 , _:c14n376 , _:c14n384 , _:c14n390 , _:c14n391 , _:c14n400 , _:c14n406 , _:c14n41 , _:c14n410 , _:c14n412 , _:c14n422 , _:c14n430 , _:c14n433 , _:c14n438 , _:c14n44 , _:c14n451 , _:c14n463 , _:c14n466 , _:c14n469 , _:c14n477 , _:c14n49 , _:c14n493 , _:c14n51 , _:c14n510 , _:c14n513 , _:c14n517 , _:c14n526 , _:c14n534 , _:c14n539 , _:c14n54 , _:c14n552 , _:c14n562 , _:c14n563 , _:c14n564 , _:c14n568 , _:c14n569 , _:c14n571 , _:c14n572 , _:c14n576 , _:c14n589 , _:c14n602 , _:c14n604 , _:c14n606 , _:c14n607 , _:c14n61 , _:c14n610 , _:c14n611 , _:c14n612 , _:c14n614 , _:c14n621 , _:c14n624 , _:c14n630 , _:c14n633 , _:c14n639 , _:c14n643 , _:c14n65 , _:c14n656 , _:c14n685 , _:c14n691 , _:c14n699 , _:c14n70 , _:c14n704 , _:c14n705 , _:c14n710 , _:c14n718 , _:c14n72 , _:c14n749 , _:c14n75 , _:c14n750 , _:c14n754 , _:c14n757 , _:c14n764 , _:c14n766 , _:c14n767 , _:c14n768 , _:c14n772 , _:c14n775 , _:c14n78 , _:c14n784 , _:c14n785 , _:c14n786 , _:c14n790 , _:c14n799 , _:c14n817 , _:c14n820 , _:c14n823 , _:c14n825 , _:c14n828 , _:c14n836 , _:c14n840 , _:c14n841 , _:c14n846 , _:c14n847 , _:c14n852 , _:c14n86 , _:c14n871 , _:c14n872 , _:c14n875 , _:c14n877 , _:c14n879 , _:c14n883 , _:c14n891 , _:c14n892 , _:c14n901 , _:c14n905 , _:c14n906 , _:c14n912 ;
 	skos:definition "Dynamic elements subset of the Operational Design Domain. Covers traffic agents, flow rates, volume, and subject vehicle speed. Refer to BSI PAS-1883 Section 5.4." ;
 	skos:exactMatch openlabel_v2:OddDynamicElements ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:OddEnvironment a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "OddEnvironment" ;
-	rdfs:subClassOf openlabel_v2:Odd , _:c14n1 , _:c14n121 , _:c14n127 , _:c14n13 , _:c14n163 , _:c14n164 , _:c14n177 , _:c14n181 , _:c14n188 , _:c14n19 , _:c14n193 , _:c14n207 , _:c14n208 , _:c14n21 , _:c14n217 , _:c14n223 , _:c14n23 , _:c14n237 , _:c14n246 , _:c14n254 , _:c14n258 , _:c14n262 , _:c14n269 , _:c14n274 , _:c14n293 , _:c14n295 , _:c14n30 , _:c14n300 , _:c14n304 , _:c14n306 , _:c14n307 , _:c14n314 , _:c14n321 , _:c14n322 , _:c14n330 , _:c14n340 , _:c14n352 , _:c14n354 , _:c14n372 , _:c14n38 , _:c14n380 , _:c14n385 , _:c14n391 , _:c14n398 , _:c14n40 , _:c14n400 , _:c14n415 , _:c14n424 , _:c14n427 , _:c14n431 , _:c14n451 , _:c14n456 , _:c14n458 , _:c14n47 , _:c14n471 , _:c14n479 , _:c14n494 , _:c14n495 , _:c14n504 , _:c14n506 , _:c14n509 , _:c14n510 , _:c14n517 , _:c14n527 , _:c14n528 , _:c14n533 , _:c14n535 , _:c14n536 , _:c14n542 , _:c14n545 , _:c14n553 , _:c14n568 , _:c14n578 , _:c14n585 , _:c14n586 , _:c14n59 , _:c14n607 , _:c14n613 , _:c14n616 , _:c14n633 , _:c14n634 , _:c14n639 , _:c14n644 , _:c14n648 , _:c14n658 , _:c14n661 , _:c14n669 , _:c14n677 , _:c14n678 , _:c14n680 , _:c14n692 , _:c14n698 , _:c14n704 , _:c14n705 , _:c14n71 , _:c14n710 , _:c14n727 , _:c14n737 , _:c14n742 , _:c14n746 , _:c14n749 , _:c14n753 , _:c14n76 , _:c14n761 , _:c14n768 , _:c14n772 , _:c14n774 , _:c14n776 , _:c14n79 , _:c14n790 , _:c14n793 , _:c14n816 , _:c14n839 , _:c14n85 , _:c14n875 , _:c14n882 , _:c14n896 , _:c14n899 , _:c14n90 , _:c14n908 , _:c14n92 , _:c14n94 , _:c14n99 ;
+	rdfs:subClassOf openlabel_v2:Odd , _:c14n1 , _:c14n121 , _:c14n127 , _:c14n13 , _:c14n163 , _:c14n164 , _:c14n177 , _:c14n181 , _:c14n188 , _:c14n19 , _:c14n193 , _:c14n207 , _:c14n208 , _:c14n21 , _:c14n217 , _:c14n223 , _:c14n23 , _:c14n238 , _:c14n247 , _:c14n255 , _:c14n259 , _:c14n263 , _:c14n270 , _:c14n275 , _:c14n294 , _:c14n296 , _:c14n30 , _:c14n301 , _:c14n305 , _:c14n307 , _:c14n308 , _:c14n315 , _:c14n322 , _:c14n323 , _:c14n331 , _:c14n341 , _:c14n353 , _:c14n355 , _:c14n373 , _:c14n38 , _:c14n381 , _:c14n386 , _:c14n392 , _:c14n399 , _:c14n40 , _:c14n401 , _:c14n416 , _:c14n425 , _:c14n428 , _:c14n432 , _:c14n453 , _:c14n458 , _:c14n460 , _:c14n47 , _:c14n473 , _:c14n481 , _:c14n496 , _:c14n497 , _:c14n506 , _:c14n508 , _:c14n511 , _:c14n512 , _:c14n519 , _:c14n529 , _:c14n530 , _:c14n535 , _:c14n537 , _:c14n538 , _:c14n544 , _:c14n547 , _:c14n555 , _:c14n570 , _:c14n580 , _:c14n587 , _:c14n588 , _:c14n59 , _:c14n609 , _:c14n615 , _:c14n618 , _:c14n635 , _:c14n636 , _:c14n641 , _:c14n646 , _:c14n650 , _:c14n660 , _:c14n663 , _:c14n671 , _:c14n679 , _:c14n680 , _:c14n682 , _:c14n694 , _:c14n700 , _:c14n706 , _:c14n707 , _:c14n71 , _:c14n712 , _:c14n729 , _:c14n739 , _:c14n744 , _:c14n748 , _:c14n751 , _:c14n755 , _:c14n76 , _:c14n763 , _:c14n770 , _:c14n774 , _:c14n776 , _:c14n778 , _:c14n79 , _:c14n792 , _:c14n795 , _:c14n818 , _:c14n842 , _:c14n85 , _:c14n878 , _:c14n885 , _:c14n899 , _:c14n90 , _:c14n902 , _:c14n911 , _:c14n92 , _:c14n94 , _:c14n99 ;
 	skos:definition "Environment-related subset of the Operational Design Domain. Covers weather, illumination, connectivity, and particulates. Refer to BSI PAS-1883 Section 5.3." ;
 	skos:exactMatch openlabel_v2:OddEnvironment ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:OddScenery a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "OddScenery" ;
-	rdfs:subClassOf openlabel_v2:Odd , _:c14n0 , _:c14n104 , _:c14n114 , _:c14n119 , _:c14n120 , _:c14n135 , _:c14n144 , _:c14n16 , _:c14n165 , _:c14n178 , _:c14n194 , _:c14n2 , _:c14n203 , _:c14n205 , _:c14n206 , _:c14n229 , _:c14n236 , _:c14n238 , _:c14n24 , _:c14n240 , _:c14n250 , _:c14n266 , _:c14n278 , _:c14n284 , _:c14n285 , _:c14n287 , _:c14n297 , _:c14n299 , _:c14n312 , _:c14n324 , _:c14n327 , _:c14n342 , _:c14n343 , _:c14n35 , _:c14n350 , _:c14n356 , _:c14n362 , _:c14n386 , _:c14n401 , _:c14n404 , _:c14n413 , _:c14n419 , _:c14n428 , _:c14n430 , _:c14n433 , _:c14n436 , _:c14n46 , _:c14n462 , _:c14n466 , _:c14n469 , _:c14n470 , _:c14n48 , _:c14n485 , _:c14n489 , _:c14n492 , _:c14n493 , _:c14n498 , _:c14n499 , _:c14n500 , _:c14n501 , _:c14n512 , _:c14n513 , _:c14n519 , _:c14n529 , _:c14n543 , _:c14n557 , _:c14n56 , _:c14n563 , _:c14n572 , _:c14n595 , _:c14n606 , _:c14n623 , _:c14n630 , _:c14n632 , _:c14n653 , _:c14n656 , _:c14n66 , _:c14n664 , _:c14n666 , _:c14n676 , _:c14n688 , _:c14n69 , _:c14n694 , _:c14n700 , _:c14n718 , _:c14n739 , _:c14n74 , _:c14n751 , _:c14n787 , _:c14n798 , _:c14n799 , _:c14n804 , _:c14n808 , _:c14n811 , _:c14n814 , _:c14n825 , _:c14n836 , _:c14n848 , _:c14n854 , _:c14n879 , _:c14n885 , _:c14n901 ;
+	rdfs:subClassOf openlabel_v2:Odd , _:c14n0 , _:c14n104 , _:c14n114 , _:c14n119 , _:c14n120 , _:c14n135 , _:c14n144 , _:c14n16 , _:c14n165 , _:c14n178 , _:c14n194 , _:c14n2 , _:c14n203 , _:c14n205 , _:c14n206 , _:c14n230 , _:c14n237 , _:c14n239 , _:c14n24 , _:c14n241 , _:c14n251 , _:c14n267 , _:c14n279 , _:c14n285 , _:c14n286 , _:c14n288 , _:c14n298 , _:c14n300 , _:c14n313 , _:c14n325 , _:c14n328 , _:c14n343 , _:c14n344 , _:c14n35 , _:c14n351 , _:c14n357 , _:c14n363 , _:c14n387 , _:c14n402 , _:c14n405 , _:c14n414 , _:c14n420 , _:c14n429 , _:c14n431 , _:c14n434 , _:c14n437 , _:c14n46 , _:c14n464 , _:c14n468 , _:c14n471 , _:c14n472 , _:c14n48 , _:c14n487 , _:c14n491 , _:c14n494 , _:c14n495 , _:c14n500 , _:c14n501 , _:c14n502 , _:c14n503 , _:c14n514 , _:c14n515 , _:c14n521 , _:c14n531 , _:c14n545 , _:c14n559 , _:c14n56 , _:c14n565 , _:c14n574 , _:c14n597 , _:c14n608 , _:c14n625 , _:c14n632 , _:c14n634 , _:c14n655 , _:c14n658 , _:c14n66 , _:c14n666 , _:c14n668 , _:c14n678 , _:c14n69 , _:c14n690 , _:c14n696 , _:c14n702 , _:c14n720 , _:c14n74 , _:c14n741 , _:c14n753 , _:c14n789 , _:c14n800 , _:c14n801 , _:c14n806 , _:c14n810 , _:c14n813 , _:c14n816 , _:c14n827 , _:c14n839 , _:c14n851 , _:c14n857 , _:c14n882 , _:c14n888 , _:c14n904 ;
 	skos:definition "Scenery-related subset of the Operational Design Domain. Covers drivable area, geometry, lane specifications, junctions, signs, and structures. Refer to BSI PAS-1883 Section 5.2." ;
 	skos:exactMatch openlabel_v2:OddScenery ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -609,7 +609,7 @@ openlabel_v2:PositioningGps a owl:Class , openlabel_v2:ConnectivityPositioning ;
 	skos:definition "Global Positioning System (GPS)." .
 openlabel_v2:QuantitativeValue a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "QuantitativeValue" ;
-	rdfs:subClassOf _:c14n122 , _:c14n219 , _:c14n291 , _:c14n384 , _:c14n457 , _:c14n530 , _:c14n794 , _:c14n803 , _:c14n831 , _:c14n864 , _:c14n891 , _:c14n895 ;
+	rdfs:subClassOf _:c14n122 , _:c14n219 , _:c14n292 , _:c14n385 , _:c14n459 , _:c14n532 , _:c14n796 , _:c14n805 , _:c14n833 , _:c14n867 , _:c14n894 , _:c14n898 ;
 	skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue." ;
 	skos:exactMatch sdo:QuantitativeValue ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -681,7 +681,7 @@ openlabel_v2:RoadUser a owl:Class , owl:ObjectProperty , linkml:ClassDefinition 
 	rdfs:label "RoadUser" ;
 	rdfs:range openlabel_v2:RoadUser ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	rdfs:subClassOf _:c14n128 , _:c14n184 , _:c14n190 , _:c14n345 , _:c14n377 , _:c14n549 , _:c14n667 , _:c14n682 , _:c14n827 , _:c14n870 , _:c14n883 , _:c14n894 ;
+	rdfs:subClassOf _:c14n128 , _:c14n184 , _:c14n190 , _:c14n346 , _:c14n378 , _:c14n551 , _:c14n669 , _:c14n684 , _:c14n829 , _:c14n873 , _:c14n886 , _:c14n897 ;
 	skos:definition "Road user tag." , "Something which uses a road to travel." ;
 	skos:exactMatch openlabel_v2:RoadUser ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -693,14 +693,14 @@ openlabel_v2:RoadUserAnimal a owl:ObjectProperty , linkml:SlotDefinition ;
 openlabel_v2:RoadUserHuman a owl:Class , owl:ObjectProperty , linkml:EnumDefinition , linkml:SlotDefinition ;
 	rdfs:label "RoadUserHuman" , "RoadUserHumanEnum" ;
 	rdfs:range openlabel_v2:RoadUserHuman ;
-	owl:unionOf _:c14n231 ;
+	owl:unionOf _:c14n232 ;
 	skos:definition "Human road user type." , "Types of human road users." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:HumanAnimalRider , openlabel_v2:HumanCyclist , openlabel_v2:HumanDriver , openlabel_v2:HumanMotorcyclist , openlabel_v2:HumanPassenger , openlabel_v2:HumanPedestrian , openlabel_v2:HumanWheelchairUser .
 openlabel_v2:RoadUserVehicle a owl:Class , owl:ObjectProperty , linkml:EnumDefinition , linkml:SlotDefinition ;
 	rdfs:label "RoadUserVehicle" , "RoadUserVehicleEnum" ;
 	rdfs:range openlabel_v2:RoadUserVehicle ;
-	owl:unionOf _:c14n460 ;
+	owl:unionOf _:c14n462 ;
 	skos:definition "Types of vehicles." , "Vehicle type." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:VehicleAgricultural , openlabel_v2:VehicleBus , openlabel_v2:VehicleCar , openlabel_v2:VehicleConstruction , openlabel_v2:VehicleCycle , openlabel_v2:VehicleEmergency , openlabel_v2:VehicleMotorcycle , openlabel_v2:VehicleTrailer , openlabel_v2:VehicleTruck , openlabel_v2:VehicleVan , openlabel_v2:VehicleWheelchair .
@@ -746,7 +746,7 @@ openlabel_v2:RoundaboutNormalSignal a owl:Class , openlabel_v2:JunctionRoundabou
 	skos:definition "Normal signalised." .
 openlabel_v2:Scenario a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Scenario" ;
-	rdfs:subClassOf _:c14n227 , _:c14n32 , _:c14n463 ;
+	rdfs:subClassOf _:c14n228 , _:c14n32 , _:c14n465 ;
 	skos:definition "A scenario that can be tagged with OpenLABEL tags." ;
 	skos:exactMatch openlabel_v2:Scenario ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -786,7 +786,7 @@ openlabel_v2:SignsInformation a owl:Class , owl:ObjectProperty , linkml:EnumDefi
 	rdfs:label "SignsInformation" , "SignsInformationEnum" ;
 	rdfs:range openlabel_v2:SignsInformation ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n642 ;
+	owl:unionOf _:c14n644 ;
 	skos:definition "Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a." , "Types of information signs. Refer to BSI PAS-1883 Section 5.2.3.5.a." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:InformationSignsUniformFullTime , openlabel_v2:InformationSignsUniformTemporary , openlabel_v2:InformationSignsVariableFullTime , openlabel_v2:InformationSignsVariableTemporary .
@@ -794,7 +794,7 @@ openlabel_v2:SignsRegulatory a owl:Class , owl:ObjectProperty , linkml:EnumDefin
 	rdfs:label "SignsRegulatory" , "SignsRegulatoryEnum" ;
 	rdfs:range openlabel_v2:SignsRegulatory ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n657 ;
+	owl:unionOf _:c14n659 ;
 	skos:definition "Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b." , "Types of regulatory signs. Refer to BSI PAS-1883 Section 5.2.3.5.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:RegulatorySignsUniformFullTime , openlabel_v2:RegulatorySignsUniformTemporary , openlabel_v2:RegulatorySignsVariableFullTime , openlabel_v2:RegulatorySignsVariableTemporary .
@@ -802,7 +802,7 @@ openlabel_v2:SignsWarning a owl:Class , owl:ObjectProperty , linkml:EnumDefiniti
 	rdfs:label "SignsWarning" , "SignsWarningEnum" ;
 	rdfs:range openlabel_v2:SignsWarning ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
-	owl:unionOf _:c14n584 ;
+	owl:unionOf _:c14n586 ;
 	skos:definition "Types of warning signs. Refer to BSI PAS-1883 Section 5.2.3.5.c." , "Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	linkml:permissible_values openlabel_v2:WarningSignsUniform , openlabel_v2:WarningSignsUniformFullTime , openlabel_v2:WarningSignsUniformTemporary , openlabel_v2:WarningSignsVariableFullTime , openlabel_v2:WarningSignsVariableTemporary .
@@ -910,7 +910,7 @@ openlabel_v2:SurfaceTypeUniform a owl:Class , openlabel_v2:DrivableAreaSurfaceTy
 	skos:definition "Uniform (e.g. asphalt)." .
 openlabel_v2:Tag a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Tag" ;
-	rdfs:subClassOf _:c14n117 , _:c14n132 , _:c14n187 , _:c14n318 , _:c14n388 , _:c14n42 , _:c14n448 , _:c14n487 , _:c14n579 , _:c14n690 , _:c14n906 , _:c14n911 ;
+	rdfs:subClassOf _:c14n117 , _:c14n132 , _:c14n187 , _:c14n319 , _:c14n389 , _:c14n42 , _:c14n449 , _:c14n489 , _:c14n581 , _:c14n692 , _:c14n909 , _:c14n914 ;
 	skos:definition "The base tag." ;
 	skos:exactMatch openlabel_v2:Tag ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -1155,7 +1155,7 @@ openlabel_v2:laneSpecificationDimensionsValue a owl:ObjectProperty , linkml:Slot
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:laneSpecificationLaneCountValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "laneSpecificationLaneCountValue" ;
-	rdfs:range _:c14n629 ;
+	rdfs:range _:c14n631 ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -1193,12 +1193,12 @@ openlabel_v2:motionAccelerateValue a owl:ObjectProperty , linkml:SlotDefinition 
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:motionDecelerateValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "motionDecelerateValue" ;
-	rdfs:range _:c14n756 ;
+	rdfs:range _:c14n758 ;
 	skos:definition "Rate of deceleration (ms-2)." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:motionDriveValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "motionDriveValue" ;
-	rdfs:range _:c14n483 ;
+	rdfs:range _:c14n485 ;
 	skos:definition "Speed (km/h)." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:ownerEmail a owl:ObjectProperty , linkml:SlotDefinition ;
@@ -1221,6 +1221,11 @@ openlabel_v2:particulatesWaterValue a owl:ObjectProperty , linkml:SlotDefinition
 	rdfs:range linkml:Decimal ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b." ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+openlabel_v2:scenarioComment a owl:ObjectProperty , linkml:SlotDefinition ;
+	rdfs:label "scenarioComment" ;
+	rdfs:range linkml:String ;
+	skos:definition "An optional free-text comment for the scenario." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:scenarioCreatedDate a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "scenarioCreatedDate" ;
@@ -1269,25 +1274,25 @@ openlabel_v2:scenarioVisualisationURL a owl:ObjectProperty , linkml:SlotDefiniti
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:subjectVehicleSpeedValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "subjectVehicleSpeedValue" ;
-	rdfs:range _:c14n334 ;
+	rdfs:range _:c14n335 ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:trafficAgentDensityValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "trafficAgentDensityValue" ;
-	rdfs:range _:c14n679 ;
+	rdfs:range _:c14n681 ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:trafficAgentTypeValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "trafficAgentTypeValue" ;
-	rdfs:range _:c14n308 ;
+	rdfs:range _:c14n309 ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Agent type. Refer to BSI PAS-1883 Section 5.4.a.4." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 openlabel_v2:trafficFlowRateValue a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "trafficFlowRateValue" ;
-	rdfs:range _:c14n665 ;
+	rdfs:range _:c14n667 ;
 	rdfs:seeAlso <https://www.bsigroup.com/en-GB/CAV/pas-1883> ;
 	skos:definition "Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3." ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
@@ -1333,157 +1338,157 @@ _:c14n10 a owl:Restriction ;
 _:c14n100 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:horizontalCurvesValue .
-_:c14n1000 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n1000 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n999 .
+_:c14n1001 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
-_:c14n1001 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n1000 .
-_:c14n1002 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n1002 rdf:first _:c14n1003 ;
+	rdf:rest _:c14n1001 .
+_:c14n1003 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1004 .
+_:c14n1004 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1005 .
+_:c14n1005 rdf:first _:c14n1006 ;
 	rdf:rest rdf:nil .
-_:c14n1003 rdf:first _:c14n1004 ;
-	rdf:rest _:c14n1002 .
-_:c14n1004 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1005 .
-_:c14n1005 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1006 .
-_:c14n1006 rdf:first _:c14n1007 ;
-	rdf:rest rdf:nil .
-_:c14n1007 a rdfs:Datatype ;
+_:c14n1006 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1008 .
-_:c14n1008 rdf:first _:c14n1009 ;
+	owl:withRestrictions _:c14n1007 .
+_:c14n1007 rdf:first _:c14n1008 ;
 	rdf:rest rdf:nil .
-_:c14n1009 xsd:minInclusive 0 .
+_:c14n1008 xsd:minInclusive 0 .
+_:c14n1009 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .
 _:c14n101 rdf:first openlabel_v2:SurfaceFeaturePothole ;
-	rdf:rest _:c14n672 .
-_:c14n1010 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest _:c14n674 .
+_:c14n1010 rdf:first _:c14n1011 ;
+	rdf:rest _:c14n1009 .
+_:c14n1011 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1012 .
+_:c14n1012 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1013 .
+_:c14n1013 rdf:first _:c14n1014 ;
 	rdf:rest rdf:nil .
-_:c14n1011 rdf:first _:c14n1012 ;
-	rdf:rest _:c14n1010 .
-_:c14n1012 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1013 .
-_:c14n1013 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1014 .
-_:c14n1014 rdf:first _:c14n1015 ;
-	rdf:rest rdf:nil .
-_:c14n1015 a rdfs:Datatype ;
+_:c14n1014 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1016 .
-_:c14n1016 rdf:first _:c14n1017 ;
+	owl:withRestrictions _:c14n1015 .
+_:c14n1015 rdf:first _:c14n1016 ;
 	rdf:rest rdf:nil .
-_:c14n1017 xsd:minInclusive 1 .
-_:c14n1018 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n1016 xsd:minInclusive 1 .
+_:c14n1017 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
-_:c14n1019 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n1018 .
+_:c14n1018 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n1017 .
+_:c14n1019 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .
 _:c14n102 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ownerURL .
-_:c14n1020 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1024 .
-_:c14n1021 rdf:first _:c14n1020 ;
+_:c14n1020 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n1019 .
+_:c14n1021 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
-_:c14n1022 rdf:first linkml:Integer ;
+_:c14n1022 rdf:first linkml:Decimal ;
 	rdf:rest _:c14n1021 .
 _:c14n1023 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1022 .
-_:c14n1024 rdf:first _:c14n1025 ;
-	rdf:rest rdf:nil .
-_:c14n1025 xsd:minInclusive 0 .
-_:c14n1026 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1029 .
-_:c14n1027 rdf:first _:c14n1026 ;
+	owl:withRestrictions _:c14n1027 .
+_:c14n1024 rdf:first _:c14n1023 ;
 	rdf:rest rdf:nil .
-_:c14n1028 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1027 .
-_:c14n1029 rdf:first _:c14n1030 ;
+_:c14n1025 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1024 .
+_:c14n1026 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1025 .
+_:c14n1027 rdf:first _:c14n1028 ;
 	rdf:rest rdf:nil .
+_:c14n1028 xsd:minInclusive 0 .
+_:c14n1029 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n1032 .
 _:c14n103 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
-_:c14n1030 xsd:minInclusive 0 .
-_:c14n1031 a rdfs:Datatype ;
+_:c14n1030 rdf:first _:c14n1029 ;
+	rdf:rest rdf:nil .
+_:c14n1031 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1030 .
+_:c14n1032 rdf:first _:c14n1033 ;
+	rdf:rest rdf:nil .
+_:c14n1033 xsd:minInclusive 0 .
+_:c14n1034 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1034 .
-_:c14n1032 rdf:first _:c14n1031 ;
+	owl:withRestrictions _:c14n1037 .
+_:c14n1035 rdf:first _:c14n1034 ;
 	rdf:rest rdf:nil .
-_:c14n1033 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1032 .
-_:c14n1034 rdf:first _:c14n1035 ;
+_:c14n1036 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1035 .
+_:c14n1037 rdf:first _:c14n1038 ;
 	rdf:rest rdf:nil .
-_:c14n1035 xsd:minInclusive 0 .
-_:c14n1036 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1040 .
-_:c14n1037 rdf:first _:c14n1036 ;
-	rdf:rest rdf:nil .
-_:c14n1038 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1037 .
+_:c14n1038 xsd:minInclusive 0 .
 _:c14n1039 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1038 .
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n1042 .
 _:c14n104 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n1040 rdf:first _:c14n1041 ;
+_:c14n1040 rdf:first _:c14n1039 ;
 	rdf:rest rdf:nil .
-_:c14n1041 xsd:minInclusive 0 .
-_:c14n1042 a rdfs:Datatype ;
+_:c14n1041 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1040 .
+_:c14n1042 rdf:first _:c14n1043 ;
+	rdf:rest rdf:nil .
+_:c14n1043 xsd:minInclusive 0 .
+_:c14n1044 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1045 .
-_:c14n1043 rdf:first _:c14n1042 ;
+	owl:withRestrictions _:c14n1048 .
+_:c14n1045 rdf:first _:c14n1044 ;
 	rdf:rest rdf:nil .
-_:c14n1044 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1043 .
-_:c14n1045 rdf:first _:c14n1046 ;
-	rdf:rest rdf:nil .
-_:c14n1046 xsd:minInclusive 0 .
+_:c14n1046 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1045 .
 _:c14n1047 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n1051 .
-_:c14n1048 rdf:first _:c14n1047 ;
+	owl:intersectionOf _:c14n1046 .
+_:c14n1048 rdf:first _:c14n1049 ;
 	rdf:rest rdf:nil .
-_:c14n1049 rdf:first linkml:Integer ;
-	rdf:rest _:c14n1048 .
+_:c14n1049 xsd:minInclusive 0 .
 _:c14n105 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaEdge .
 _:c14n1050 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1049 .
-_:c14n1051 rdf:first _:c14n1052 ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n1054 .
+_:c14n1051 rdf:first _:c14n1050 ;
 	rdf:rest rdf:nil .
-_:c14n1052 xsd:minInclusive 0 .
-_:c14n1053 rdf:first _:c14n435 ;
-	rdf:rest _:c14n1055 .
-_:c14n1054 rdfs:subClassOf _:c14n851 ;
-	owl:intersectionOf _:c14n1053 .
-_:c14n1055 rdf:first openlabel_v2:Behaviour ;
+_:c14n1052 rdf:first linkml:Integer ;
+	rdf:rest _:c14n1051 .
+_:c14n1053 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1052 .
+_:c14n1054 rdf:first _:c14n1055 ;
 	rdf:rest rdf:nil .
-_:c14n1056 rdf:first _:c14n580 ;
+_:c14n1055 xsd:minInclusive 0 .
+_:c14n1056 rdf:first _:c14n582 ;
 	rdf:rest _:c14n1058 .
-_:c14n1057 rdfs:subClassOf _:c14n526 ;
+_:c14n1057 rdfs:subClassOf _:c14n528 ;
 	owl:intersectionOf _:c14n1056 .
 _:c14n1058 rdf:first openlabel_v2:Behaviour ;
 	rdf:rest rdf:nil .
-_:c14n1059 rdf:first _:c14n806 ;
+_:c14n1059 rdf:first _:c14n436 ;
 	rdf:rest _:c14n1061 .
 _:c14n106 a owl:Restriction ;
 	owl:onProperty openlabel_v2:subjectVehicleSpeedValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n1060 rdfs:subClassOf _:c14n521 ;
+_:c14n1060 rdfs:subClassOf _:c14n854 ;
 	owl:intersectionOf _:c14n1059 .
 _:c14n1061 rdf:first openlabel_v2:Behaviour ;
 	rdf:rest rdf:nil .
-_:c14n1062 rdf:first openlabel_v2:RoadUserVehicle ;
+_:c14n1062 rdf:first _:c14n808 ;
+	rdf:rest _:c14n1064 .
+_:c14n1063 rdfs:subClassOf _:c14n523 ;
+	owl:intersectionOf _:c14n1062 .
+_:c14n1064 rdf:first openlabel_v2:Behaviour ;
 	rdf:rest rdf:nil .
-_:c14n1063 rdf:first openlabel_v2:RoadUserHuman ;
-	rdf:rest _:c14n1062 .
-_:c14n1064 xsd:pattern "true" .
-_:c14n1065 rdf:first _:c14n1064 ;
+_:c14n1065 rdf:first openlabel_v2:RoadUserVehicle ;
 	rdf:rest rdf:nil .
-_:c14n1066 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:c14n1065 .
+_:c14n1066 rdf:first openlabel_v2:RoadUserHuman ;
+	rdf:rest _:c14n1065 .
 _:c14n1067 xsd:pattern "true" .
 _:c14n1068 rdf:first _:c14n1067 ;
 	rdf:rest rdf:nil .
@@ -1613,6 +1618,12 @@ _:c14n112 a owl:Restriction ;
 _:c14n1120 a rdfs:Datatype ;
 	owl:onDatatype xsd:string ;
 	owl:withRestrictions _:c14n1119 .
+_:c14n1121 xsd:pattern "true" .
+_:c14n1122 rdf:first _:c14n1121 ;
+	rdf:rest rdf:nil .
+_:c14n1123 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:c14n1122 .
 _:c14n113 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
@@ -1629,7 +1640,7 @@ _:c14n117 a owl:Restriction ;
 	owl:onProperty openlabel_v2:AdminTag .
 _:c14n118 a owl:Restriction ;
 	owl:onProperty openlabel_v2:WeatherRain ;
-	owl:someValuesFrom _:c14n1120 .
+	owl:someValuesFrom _:c14n1123 .
 _:c14n119 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficVolume .
@@ -1680,8 +1691,8 @@ _:c14n132 a owl:Restriction ;
 	owl:onProperty openlabel_v2:Odd .
 _:c14n133 a owl:Restriction ;
 	owl:onProperty openlabel_v2:TrafficAgentType ;
-	owl:someValuesFrom _:c14n1066 .
-_:c14n134 owl:unionOf _:c14n1019 .
+	owl:someValuesFrom _:c14n1069 .
+_:c14n134 owl:unionOf _:c14n1020 .
 _:c14n135 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
@@ -1704,9 +1715,9 @@ _:c14n140 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherWind .
 _:c14n141 rdf:first openlabel_v2:RoundaboutMiniSignal ;
-	rdf:rest _:c14n862 .
+	rdf:rest _:c14n865 .
 _:c14n142 rdf:first openlabel_v2:HumanCyclist ;
-	rdf:rest _:c14n294 .
+	rdf:rest _:c14n295 .
 _:c14n143 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
@@ -1756,7 +1767,7 @@ _:c14n157 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
 _:c14n158 rdf:first openlabel_v2:ZoneGeoFenced ;
-	rdf:rest _:c14n337 .
+	rdf:rest _:c14n338 .
 _:c14n159 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalCurves .
@@ -1797,14 +1808,14 @@ _:c14n17 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
 _:c14n170 rdf:first openlabel_v2:SurfaceConditionIcy ;
-	rdf:rest _:c14n472 .
+	rdf:rest _:c14n474 .
 _:c14n171 rdf:first openlabel_v2:EdgeShoulderGrass ;
 	rdf:rest _:c14n192 .
 _:c14n172 a owl:Restriction ;
 	owl:onProperty openlabel_v2:DaySunElevation ;
-	owl:someValuesFrom _:c14n1108 .
+	owl:someValuesFrom _:c14n1117 .
 _:c14n173 rdf:first openlabel_v2:TemporaryStructureConstructionDetour ;
-	rdf:rest _:c14n355 .
+	rdf:rest _:c14n356 .
 _:c14n174 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DaySunPosition .
@@ -1852,7 +1863,7 @@ _:c14n188 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
 _:c14n189 rdf:first openlabel_v2:CommunicationHorn ;
-	rdf:rest _:c14n252 .
+	rdf:rest _:c14n253 .
 _:c14n19 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
@@ -1860,9 +1871,9 @@ _:c14n190 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:RoadUserVehicle .
 _:c14n191 rdf:first openlabel_v2:IntersectionTJunction ;
-	rdf:rest _:c14n652 .
+	rdf:rest _:c14n654 .
 _:c14n192 rdf:first openlabel_v2:EdgeShoulderPavedOrGravel ;
-	rdf:rest _:c14n847 .
+	rdf:rest _:c14n850 .
 _:c14n193 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
@@ -1898,7 +1909,7 @@ _:c14n201 a owl:Restriction ;
 	owl:onProperty openlabel_v2:scenarioUniqueReference .
 _:c14n202 a owl:Restriction ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope ;
-	owl:someValuesFrom _:c14n1081 .
+	owl:someValuesFrom _:c14n1093 .
 _:c14n203 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficFlowRate .
@@ -1918,7 +1929,7 @@ _:c14n208 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficFlowRate .
 _:c14n209 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1028 .
+	owl:intersectionOf _:c14n1031 .
 _:c14n21 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:HorizontalCurves .
@@ -1932,10 +1943,10 @@ _:c14n212 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
 _:c14n213 rdf:first openlabel_v2:HumanPassenger ;
-	rdf:rest _:c14n558 .
+	rdf:rest _:c14n560 .
 _:c14n214 a owl:Restriction ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions ;
-	owl:someValuesFrom _:c14n1075 .
+	owl:someValuesFrom _:c14n1087 .
 _:c14n215 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationArtificial .
@@ -1946,7 +1957,7 @@ _:c14n217 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryZone .
 _:c14n218 rdf:first openlabel_v2:RainTypeConvective ;
-	rdf:rest _:c14n332 .
+	rdf:rest _:c14n333 .
 _:c14n219 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:hasUpperBound .
@@ -1957,7 +1968,7 @@ _:c14n220 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
 _:c14n221 rdf:first openlabel_v2:ZoneSchool ;
-	rdf:rest _:c14n402 .
+	rdf:rest _:c14n403 .
 _:c14n222 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:SceneryZone .
@@ -1965,241 +1976,241 @@ _:c14n223 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
 _:c14n224 rdf:first openlabel_v2:TravelDirectionLeft ;
-	rdf:rest _:c14n835 .
+	rdf:rest _:c14n838 .
 _:c14n225 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioComment .
+_:c14n226 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
-_:c14n226 a owl:Restriction ;
+_:c14n227 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionDrive .
-_:c14n227 a owl:Restriction ;
+_:c14n228 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:hasTag .
-_:c14n228 a owl:Restriction ;
+_:c14n229 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n229 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n23 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n230 rdf:first openlabel_v2:VehicleTruck ;
-	rdf:rest _:c14n420 .
-_:c14n231 rdf:first openlabel_v2:HumanAnimalRider ;
+_:c14n230 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
+_:c14n231 rdf:first openlabel_v2:VehicleTruck ;
+	rdf:rest _:c14n421 .
+_:c14n232 rdf:first openlabel_v2:HumanAnimalRider ;
 	rdf:rest _:c14n142 .
-_:c14n232 a owl:Restriction ;
+_:c14n233 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n233 rdf:first openlabel_v2:RoundaboutDoubleNosignal ;
-	rdf:rest _:c14n310 .
-_:c14n234 a owl:Restriction ;
+_:c14n234 rdf:first openlabel_v2:RoundaboutDoubleNosignal ;
+	rdf:rest _:c14n311 .
+_:c14n235 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionOvertake .
-_:c14n235 a owl:Restriction ;
+_:c14n236 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionReverse .
-_:c14n236 a owl:Restriction ;
+_:c14n237 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:WeatherRain .
-_:c14n237 a owl:Restriction ;
+_:c14n238 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficAgentDensity .
-_:c14n238 a owl:Restriction ;
+_:c14n239 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n239 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioVisualisationURL .
 _:c14n24 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
 _:c14n240 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioVisualisationURL .
+_:c14n241 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n241 a owl:Restriction ;
+_:c14n242 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:JunctionRoundabout ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n242 a owl:Restriction ;
+_:c14n243 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherSnowValue .
-_:c14n243 a owl:Restriction ;
+_:c14n244 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionLaneChangeLeft .
-_:c14n244 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentTypeValue .
 _:c14n245 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
+	owl:onProperty openlabel_v2:trafficAgentTypeValue .
 _:c14n246 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
+_:c14n247 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
-_:c14n247 rdf:first openlabel_v2:PositioningGlonass ;
-	rdf:rest _:c14n695 .
-_:c14n248 a owl:Restriction ;
+_:c14n248 rdf:first openlabel_v2:PositioningGlonass ;
+	rdf:rest _:c14n697 .
+_:c14n249 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n249 a owl:Restriction ;
-	owl:allValuesFrom _:c14n981 ;
-	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n25 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationCloudiness .
 _:c14n250 a owl:Restriction ;
+	owl:allValuesFrom _:c14n990 ;
+	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
+_:c14n251 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
-_:c14n251 a owl:Restriction ;
+_:c14n252 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:BehaviourCommunication ;
 	owl:onProperty openlabel_v2:BehaviourCommunication .
-_:c14n252 rdf:first openlabel_v2:CommunicationSignalEmergency ;
+_:c14n253 rdf:first openlabel_v2:CommunicationSignalEmergency ;
 	rdf:rest _:c14n87 .
-_:c14n253 a owl:Restriction ;
+_:c14n254 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n254 a owl:Restriction ;
+_:c14n255 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n255 a owl:Restriction ;
+_:c14n256 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n256 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
 _:c14n257 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:motionDriveValue .
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
 _:c14n258 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:motionDriveValue .
+_:c14n259 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n259 rdf:first openlabel_v2:SurfaceConditionSnow ;
-	rdf:rest _:c14n329 .
 _:c14n26 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n260 a owl:Restriction ;
+_:c14n260 rdf:first openlabel_v2:SurfaceConditionSnow ;
+	rdf:rest _:c14n330 .
+_:c14n261 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:licenseURI .
-_:c14n261 a owl:Restriction ;
-	owl:allValuesFrom _:c14n963 ;
-	owl:onProperty openlabel_v2:motionDriveValue .
 _:c14n262 a owl:Restriction ;
+	owl:allValuesFrom _:c14n966 ;
+	owl:onProperty openlabel_v2:motionDriveValue .
+_:c14n263 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n263 a owl:Restriction ;
+_:c14n264 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:SignsInformation .
-_:c14n264 a owl:Restriction ;
+_:c14n265 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionTurnRight .
-_:c14n265 a owl:Restriction ;
+_:c14n266 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:weatherRainValue .
-_:c14n266 a owl:Restriction ;
+_:c14n267 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n267 rdf:first openlabel_v2:HumanWheelchairUser ;
+_:c14n268 rdf:first openlabel_v2:HumanWheelchairUser ;
 	rdf:rest rdf:nil .
-_:c14n268 a owl:Restriction ;
+_:c14n269 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:ScenerySpecialStructure ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n269 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:HorizontalCurves .
 _:c14n27 rdf:first openlabel_v2:SurfaceTypeUniform ;
 	rdf:rest rdf:nil .
 _:c14n270 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:HorizontalCurves .
+_:c14n271 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:scenarioName .
-_:c14n271 a owl:Restriction ;
+_:c14n272 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:GeometryTransverse ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
-_:c14n272 a owl:Restriction ;
+_:c14n273 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionStop .
-_:c14n273 a owl:Restriction ;
+_:c14n274 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherSnowValue .
-_:c14n274 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
 _:c14n275 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
+_:c14n276 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n276 rdf:first openlabel_v2:VehicleTrailer ;
-	rdf:rest _:c14n230 .
-_:c14n277 a owl:Restriction ;
+_:c14n277 rdf:first openlabel_v2:VehicleTrailer ;
+	rdf:rest _:c14n231 .
+_:c14n278 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityCommunication .
-_:c14n278 a owl:Restriction ;
+_:c14n279 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:trafficAgentTypeValue .
-_:c14n279 a owl:Restriction ;
+_:c14n28 rdf:first openlabel_v2:ParticulatesPollution ;
+	rdf:rest _:c14n761 .
+_:c14n280 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:DrivableAreaEdge ;
 	owl:onProperty openlabel_v2:DrivableAreaEdge .
-_:c14n28 rdf:first openlabel_v2:ParticulatesPollution ;
-	rdf:rest _:c14n759 .
-_:c14n280 a owl:Restriction ;
+_:c14n281 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:RainType .
-_:c14n281 a owl:Restriction ;
+_:c14n282 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n282 a owl:Restriction ;
+_:c14n283 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n283 a owl:Restriction ;
+_:c14n284 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:trafficAgentDensityValue .
-_:c14n284 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n285 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ParticulatesWater .
+	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n286 a owl:Restriction ;
-	owl:onProperty openlabel_v2:ParticulatesWater ;
-	owl:someValuesFrom _:c14n1099 .
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:ParticulatesWater .
 _:c14n287 a owl:Restriction ;
+	owl:onProperty openlabel_v2:ParticulatesWater ;
+	owl:someValuesFrom _:c14n1072 .
+_:c14n288 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n288 a owl:Restriction ;
-	owl:allValuesFrom _:c14n1039 ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n289 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:ParticulatesVolcanic .
+	owl:allValuesFrom _:c14n1053 ;
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n29 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope .
 _:c14n290 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:ParticulatesVolcanic .
+_:c14n291 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ownerURL .
-_:c14n291 a owl:Restriction ;
+_:c14n292 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty openlabel_v2:minValue .
-_:c14n292 rdf:first openlabel_v2:EdgeTemporaryLineMarkers ;
+_:c14n293 rdf:first openlabel_v2:EdgeTemporaryLineMarkers ;
 	rdf:rest rdf:nil .
-_:c14n293 a owl:Restriction ;
+_:c14n294 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n294 rdf:first openlabel_v2:HumanDriver ;
-	rdf:rest _:c14n326 .
-_:c14n295 a owl:Restriction ;
+_:c14n295 rdf:first openlabel_v2:HumanDriver ;
+	rdf:rest _:c14n327 .
+_:c14n296 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
-_:c14n296 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n297 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:weatherSnowValue .
+	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n298 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:weatherSnowValue .
+_:c14n299 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n299 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
 _:c14n3 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryZone .
@@ -2208,308 +2219,308 @@ _:c14n30 a owl:Restriction ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
 _:c14n300 a owl:Restriction ;
 	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
+_:c14n301 a owl:Restriction ;
+	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n301 rdf:first openlabel_v2:ParticulatesMarine ;
+_:c14n302 rdf:first openlabel_v2:ParticulatesMarine ;
 	rdf:rest _:c14n28 .
-_:c14n302 a owl:Restriction ;
+_:c14n303 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:daySunElevationValue .
-_:c14n303 a owl:Restriction ;
+_:c14n304 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n304 a owl:Restriction ;
+_:c14n305 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
-_:c14n305 a owl:Restriction ;
+_:c14n306 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:scenarioDefinition .
-_:c14n306 a owl:Restriction ;
+_:c14n307 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n307 a owl:Restriction ;
+_:c14n308 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:trafficAgentDensityValue .
-_:c14n308 owl:unionOf _:c14n1063 .
-_:c14n309 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:DaySunPosition ;
-	owl:onProperty openlabel_v2:DaySunPosition .
+_:c14n309 owl:unionOf _:c14n1066 .
 _:c14n31 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionWalk .
-_:c14n310 rdf:first openlabel_v2:RoundaboutDoubleSignal ;
-	rdf:rest _:c14n853 .
-_:c14n311 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:IlluminationLowLight .
+_:c14n310 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:DaySunPosition ;
+	owl:onProperty openlabel_v2:DaySunPosition .
+_:c14n311 rdf:first openlabel_v2:RoundaboutDoubleSignal ;
+	rdf:rest _:c14n856 .
 _:c14n312 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:IlluminationLowLight .
+_:c14n313 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n313 rdf:first openlabel_v2:PositioningGalileo ;
-	rdf:rest _:c14n247 .
-_:c14n314 a owl:Restriction ;
+_:c14n314 rdf:first openlabel_v2:PositioningGalileo ;
+	rdf:rest _:c14n248 .
+_:c14n315 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n315 a owl:Restriction ;
+_:c14n316 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:scenarioUniqueReference .
-_:c14n316 a owl:Restriction ;
+_:c14n317 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationArtificial .
-_:c14n317 rdf:first openlabel_v2:RegulatorySignsVariableFullTime ;
-	rdf:rest _:c14n459 .
-_:c14n318 a owl:Restriction ;
+_:c14n318 rdf:first openlabel_v2:RegulatorySignsVariableFullTime ;
+	rdf:rest _:c14n461 .
+_:c14n319 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:Behaviour .
-_:c14n319 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n32 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:Tag ;
 	owl:onProperty openlabel_v2:hasTag .
 _:c14n320 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaEdge .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n321 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficFlowRateValue .
+	owl:onProperty openlabel_v2:DrivableAreaEdge .
 _:c14n322 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficFlowRateValue .
+_:c14n323 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n323 a owl:Restriction ;
+_:c14n324 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n324 a owl:Restriction ;
+_:c14n325 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n325 a owl:Restriction ;
+_:c14n326 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n326 rdf:first openlabel_v2:HumanMotorcyclist ;
+_:c14n327 rdf:first openlabel_v2:HumanMotorcyclist ;
 	rdf:rest _:c14n213 .
-_:c14n327 a owl:Restriction ;
+_:c14n328 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationCloudiness .
-_:c14n328 a owl:Restriction ;
+_:c14n329 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherSnow .
-_:c14n329 rdf:first openlabel_v2:SurfaceConditionStandingWater ;
-	rdf:rest _:c14n516 .
 _:c14n33 rdf:first openlabel_v2:FixedStructureBuilding ;
-	rdf:rest _:c14n347 .
-_:c14n330 a owl:Restriction ;
+	rdf:rest _:c14n348 .
+_:c14n330 rdf:first openlabel_v2:SurfaceConditionStandingWater ;
+	rdf:rest _:c14n518 .
+_:c14n331 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
-_:c14n331 a owl:Restriction ;
+_:c14n332 a owl:Restriction ;
 	owl:onProperty openlabel_v2:WeatherWind ;
-	owl:someValuesFrom _:c14n1069 .
-_:c14n332 rdf:first openlabel_v2:RainTypeDynamic ;
-	rdf:rest _:c14n645 .
-_:c14n333 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1075 .
+_:c14n333 rdf:first openlabel_v2:RainTypeDynamic ;
+	rdf:rest _:c14n647 .
+_:c14n334 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n334 owl:unionOf _:c14n1003 .
-_:c14n335 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:JunctionRoundabout .
+_:c14n335 owl:unionOf _:c14n1002 .
 _:c14n336 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:JunctionRoundabout .
+_:c14n337 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n337 rdf:first openlabel_v2:ZoneInterference ;
-	rdf:rest _:c14n760 .
-_:c14n338 a owl:Restriction ;
+_:c14n338 rdf:first openlabel_v2:ZoneInterference ;
+	rdf:rest _:c14n762 .
+_:c14n339 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:IlluminationCloudiness .
-_:c14n339 a owl:Restriction ;
+_:c14n34 rdf:first openlabel_v2:ArtificialStreetLighting ;
+	rdf:rest _:c14n598 .
+_:c14n340 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n34 rdf:first openlabel_v2:ArtificialStreetLighting ;
-	rdf:rest _:c14n596 .
-_:c14n340 a owl:Restriction ;
+_:c14n341 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaEdge .
-_:c14n341 a owl:Restriction ;
+_:c14n342 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n342 a owl:Restriction ;
+_:c14n343 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:WeatherSnow .
-_:c14n343 a owl:Restriction ;
+_:c14n344 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityCommunication .
-_:c14n344 a owl:Restriction ;
+_:c14n345 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ownerEmail .
-_:c14n345 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:RoadUserVehicle .
 _:c14n346 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:RoadUserVehicle .
+_:c14n347 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n347 rdf:first openlabel_v2:FixedStructureStreetFurniture ;
-	rdf:rest _:c14n626 .
-_:c14n348 a owl:Restriction ;
+_:c14n348 rdf:first openlabel_v2:FixedStructureStreetFurniture ;
+	rdf:rest _:c14n628 .
+_:c14n349 a owl:Restriction ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n349 rdf:first openlabel_v2:TemporaryStructureRoadWorks ;
-	rdf:rest rdf:nil .
 _:c14n35 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n350 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
+_:c14n350 rdf:first openlabel_v2:TemporaryStructureRoadWorks ;
+	rdf:rest rdf:nil .
 _:c14n351 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationType .
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n352 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationType .
+_:c14n353 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n353 a owl:Restriction ;
+_:c14n354 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n354 a owl:Restriction ;
+_:c14n355 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n355 rdf:first openlabel_v2:TemporaryStructureRefuseCollection ;
-	rdf:rest _:c14n484 .
-_:c14n356 a owl:Restriction ;
+_:c14n356 rdf:first openlabel_v2:TemporaryStructureRefuseCollection ;
+	rdf:rest _:c14n486 .
+_:c14n357 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationArtificial .
-_:c14n357 a owl:Restriction ;
+_:c14n358 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n358 a owl:Restriction ;
+_:c14n359 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n359 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n36 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:WeatherRain .
 _:c14n360 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
+_:c14n361 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:RainType .
-_:c14n361 a owl:Restriction ;
+_:c14n362 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n362 a owl:Restriction ;
+_:c14n363 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficVolume .
-_:c14n363 a owl:Restriction ;
+_:c14n364 a owl:Restriction ;
 	owl:allValuesFrom linkml:Datetime ;
 	owl:onProperty openlabel_v2:scenarioCreatedDate .
-_:c14n364 a owl:Restriction ;
+_:c14n365 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:illuminationCloudinessValue .
-_:c14n365 rdf:first openlabel_v2:TransverseDivided ;
-	rdf:rest _:c14n725 .
-_:c14n366 a owl:Restriction ;
+_:c14n366 rdf:first openlabel_v2:TransverseDivided ;
+	rdf:rest _:c14n727 .
+_:c14n367 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:scenarioUniqueReference .
-_:c14n367 a owl:Restriction ;
+_:c14n368 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n368 a owl:Restriction ;
+_:c14n369 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionAway .
-_:c14n369 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficVolumeValue .
 _:c14n37 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
 _:c14n370 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioDefinition .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficVolumeValue .
 _:c14n371 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:RainType .
+	owl:onProperty openlabel_v2:scenarioDefinition .
 _:c14n372 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:RainType .
 _:c14n373 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:IlluminationArtificial .
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
 _:c14n374 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:IlluminationArtificial .
+_:c14n375 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n375 a owl:Restriction ;
+_:c14n376 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n376 rdf:first openlabel_v2:RoadTypeMotorway ;
-	rdf:rest _:c14n856 .
-_:c14n377 a owl:Restriction ;
+_:c14n377 rdf:first openlabel_v2:RoadTypeMotorway ;
+	rdf:rest _:c14n859 .
+_:c14n378 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:RoadUserHuman ;
 	owl:onProperty openlabel_v2:RoadUserHuman .
-_:c14n378 a owl:Restriction ;
+_:c14n379 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n379 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:TrafficVolume .
 _:c14n38 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
 _:c14n380 a owl:Restriction ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:TrafficVolume .
+_:c14n381 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
-_:c14n381 rdf:first openlabel_v2:TransverseUndivided ;
+_:c14n382 rdf:first openlabel_v2:TransverseUndivided ;
 	rdf:rest rdf:nil .
-_:c14n382 a owl:Restriction ;
+_:c14n383 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n383 a owl:Restriction ;
+_:c14n384 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n384 a owl:Restriction ;
+_:c14n385 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:hasLowerBound .
-_:c14n385 a owl:Restriction ;
+_:c14n386 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n386 a owl:Restriction ;
+_:c14n387 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
-_:c14n387 rdf:first openlabel_v2:V2iWifi ;
-	rdf:rest _:c14n696 .
-_:c14n388 a owl:Restriction ;
+_:c14n388 rdf:first openlabel_v2:V2iWifi ;
+	rdf:rest _:c14n698 .
+_:c14n389 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:Odd .
-_:c14n389 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
 _:c14n39 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:motionAccelerateValue .
 _:c14n390 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ConnectivityCommunication .
+	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
 _:c14n391 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:ConnectivityCommunication .
+_:c14n392 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalCurves .
-_:c14n392 a owl:Restriction ;
+_:c14n393 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryZone .
-_:c14n393 rdf:first openlabel_v2:RegulatorySignsUniformTemporary ;
-	rdf:rest _:c14n317 .
-_:c14n394 a owl:Restriction ;
+_:c14n394 rdf:first openlabel_v2:RegulatorySignsUniformTemporary ;
+	rdf:rest _:c14n318 .
+_:c14n395 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:JunctionIntersection ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n395 a owl:Restriction ;
+_:c14n396 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionCutOut .
-_:c14n396 rdf:first openlabel_v2:VehicleBus ;
-	rdf:rest _:c14n671 .
-_:c14n397 a owl:Restriction ;
+_:c14n397 rdf:first openlabel_v2:VehicleBus ;
+	rdf:rest _:c14n673 .
+_:c14n398 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:DrivableAreaType ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
-_:c14n398 a owl:Restriction ;
+_:c14n399 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsInformation .
-_:c14n399 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:weatherWindValue .
 _:c14n4 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DaySunElevation .
@@ -2517,312 +2528,312 @@ _:c14n40 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
 _:c14n400 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:weatherWindValue .
+_:c14n401 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n401 a owl:Restriction ;
+_:c14n402 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n402 rdf:first openlabel_v2:ZoneTrafficManagement ;
+_:c14n403 rdf:first openlabel_v2:ZoneTrafficManagement ;
 	rdf:rest rdf:nil .
-_:c14n403 a owl:Restriction ;
+_:c14n404 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:BehaviourCommunication .
-_:c14n404 a owl:Restriction ;
+_:c14n405 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n405 a owl:Restriction ;
+_:c14n406 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n406 a owl:Restriction ;
+_:c14n407 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n407 rdf:first openlabel_v2:EdgeLineMarkers ;
+_:c14n408 rdf:first openlabel_v2:EdgeLineMarkers ;
 	rdf:rest _:c14n115 .
-_:c14n408 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SignsInformation .
 _:c14n409 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
+	owl:onProperty openlabel_v2:SignsInformation .
 _:c14n41 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherRain .
-_:c14n410 rdf:first openlabel_v2:RoundaboutMiniNosignal ;
+_:c14n410 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
+_:c14n411 rdf:first openlabel_v2:RoundaboutMiniNosignal ;
 	rdf:rest _:c14n141 .
-_:c14n411 a owl:Restriction ;
+_:c14n412 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n412 a owl:Restriction ;
+_:c14n413 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionRun .
-_:c14n413 a owl:Restriction ;
+_:c14n414 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
-_:c14n414 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:HorizontalCurves .
 _:c14n415 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+	owl:onProperty openlabel_v2:HorizontalCurves .
 _:c14n416 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
-_:c14n417 a owl:Restriction ;
-	owl:onProperty openlabel_v2:daySunElevationValue ;
-	owl:someValuesFrom linkml:String .
-_:c14n418 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioName .
-_:c14n419 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+_:c14n417 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
+_:c14n418 a owl:Restriction ;
+	owl:onProperty openlabel_v2:daySunElevationValue ;
+	owl:someValuesFrom linkml:String .
+_:c14n419 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioName .
 _:c14n42 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:AdminTag .
-_:c14n420 rdf:first openlabel_v2:VehicleVan ;
-	rdf:rest _:c14n693 .
-_:c14n421 a owl:Restriction ;
+_:c14n420 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ConnectivityCommunication .
+	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+_:c14n421 rdf:first openlabel_v2:VehicleVan ;
+	rdf:rest _:c14n695 .
 _:c14n422 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaEdge .
+	owl:onProperty openlabel_v2:ConnectivityCommunication .
 _:c14n423 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:SceneryZone ;
-	owl:onProperty openlabel_v2:SceneryZone .
-_:c14n424 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficVolumeValue .
-_:c14n425 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionUTurn .
-_:c14n426 rdf:first openlabel_v2:SpecialStructureBridge ;
-	rdf:rest _:c14n795 .
-_:c14n427 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:trafficAgentTypeValue .
-_:c14n428 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:daySunElevationValue .
-_:c14n429 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaEdge .
+_:c14n424 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:SceneryZone ;
+	owl:onProperty openlabel_v2:SceneryZone .
+_:c14n425 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficVolumeValue .
+_:c14n426 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:MotionUTurn .
+_:c14n427 rdf:first openlabel_v2:SpecialStructureBridge ;
+	rdf:rest _:c14n797 .
+_:c14n428 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+_:c14n429 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n43 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
 _:c14n430 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:DrivableAreaEdge .
+_:c14n431 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:weatherRainValue .
-_:c14n431 a owl:Restriction ;
+_:c14n432 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n432 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherWindValue .
 _:c14n433 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherSnowValue .
+	owl:onProperty openlabel_v2:weatherWindValue .
 _:c14n434 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:weatherSnowValue .
+_:c14n435 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionOvertake .
-_:c14n435 a owl:Restriction ;
+_:c14n436 a owl:Restriction ;
 	owl:onProperty openlabel_v2:motionDecelerateValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n436 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n437 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryZone .
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n438 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionStop .
+	owl:onProperty openlabel_v2:SceneryZone .
 _:c14n439 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficAgentDensity .
+	owl:onProperty openlabel_v2:MotionStop .
 _:c14n44 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
 _:c14n440 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:TrafficAgentDensity .
+_:c14n441 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:ParticulatesVolcanic .
-_:c14n441 rdf:first openlabel_v2:SunPositionRight ;
+_:c14n442 rdf:first openlabel_v2:SunPositionRight ;
 	rdf:rest rdf:nil .
-_:c14n442 rdf:first openlabel_v2:WarningSignsUniformTemporary ;
+_:c14n443 rdf:first openlabel_v2:WarningSignsUniformTemporary ;
 	rdf:rest _:c14n53 .
-_:c14n443 rdf:first openlabel_v2:V2iSatellite ;
-	rdf:rest _:c14n387 .
-_:c14n444 a owl:Restriction ;
+_:c14n444 rdf:first openlabel_v2:V2iSatellite ;
+	rdf:rest _:c14n388 .
+_:c14n445 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
-_:c14n445 a owl:Restriction ;
+_:c14n446 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionCutIn .
-_:c14n446 a owl:Restriction ;
+_:c14n447 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n447 a owl:Restriction ;
+_:c14n448 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionCutOut .
-_:c14n448 a owl:Restriction ;
+_:c14n449 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:Behaviour ;
 	owl:onProperty openlabel_v2:Behaviour .
-_:c14n449 a owl:Restriction ;
-	owl:onProperty openlabel_v2:TrafficVolume ;
-	owl:someValuesFrom _:c14n1084 .
 _:c14n45 rdf:first openlabel_v2:SpecialStructureAutoAccess ;
-	rdf:rest _:c14n426 .
+	rdf:rest _:c14n427 .
 _:c14n450 a owl:Restriction ;
+	owl:onProperty openlabel_v2:TrafficVolume ;
+	owl:someValuesFrom _:c14n1096 .
+_:c14n451 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationCloudiness .
-_:c14n451 a owl:Restriction ;
+_:c14n452 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:scenarioComment .
+_:c14n453 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
-_:c14n452 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionDecelerate .
-_:c14n453 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:MotionTurnRight .
 _:c14n454 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioParentReference .
+	owl:onProperty openlabel_v2:MotionDecelerate .
 _:c14n455 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficVolume .
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:MotionTurnRight .
 _:c14n456 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaEdge .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioParentReference .
 _:c14n457 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:hasUpperBound .
+	owl:onProperty openlabel_v2:TrafficVolume .
 _:c14n458 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:DrivableAreaEdge .
+_:c14n459 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficVolumeValue .
-_:c14n459 rdf:first openlabel_v2:RegulatorySignsVariableTemporary ;
-	rdf:rest rdf:nil .
+	owl:onProperty openlabel_v2:hasUpperBound .
 _:c14n46 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherSnow .
-_:c14n460 rdf:first openlabel_v2:VehicleAgricultural ;
-	rdf:rest _:c14n396 .
-_:c14n461 a owl:Restriction ;
+_:c14n460 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficVolumeValue .
+_:c14n461 rdf:first openlabel_v2:RegulatorySignsVariableTemporary ;
+	rdf:rest rdf:nil .
+_:c14n462 rdf:first openlabel_v2:VehicleAgricultural ;
+	rdf:rest _:c14n397 .
+_:c14n463 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n462 a owl:Restriction ;
+_:c14n464 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesVolcanic .
-_:c14n463 a owl:Restriction ;
+_:c14n465 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:hasTag .
-_:c14n464 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
-_:c14n465 a owl:Restriction ;
-	owl:onProperty openlabel_v2:trafficFlowRateValue ;
-	owl:someValuesFrom linkml:String .
 _:c14n466 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherRainValue .
+	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
 _:c14n467 a owl:Restriction ;
+	owl:onProperty openlabel_v2:trafficFlowRateValue ;
+	owl:someValuesFrom linkml:String .
+_:c14n468 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:weatherRainValue .
+_:c14n469 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
-_:c14n468 rdf:first openlabel_v2:SurfaceConditionContamination ;
-	rdf:rest _:c14n182 .
-_:c14n469 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:trafficVolumeValue .
 _:c14n47 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n470 a owl:Restriction ;
+_:c14n470 rdf:first openlabel_v2:SurfaceConditionContamination ;
+	rdf:rest _:c14n182 .
+_:c14n471 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:trafficVolumeValue .
+_:c14n472 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficFlowRate .
-_:c14n471 a owl:Restriction ;
+_:c14n473 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n472 rdf:first openlabel_v2:SurfaceConditionMirage ;
-	rdf:rest _:c14n259 .
-_:c14n473 a owl:Restriction ;
+_:c14n474 rdf:first openlabel_v2:SurfaceConditionMirage ;
+	rdf:rest _:c14n260 .
+_:c14n475 a owl:Restriction ;
 	owl:onProperty openlabel_v2:HorizontalCurves ;
-	owl:someValuesFrom _:c14n1102 .
-_:c14n474 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1081 .
+_:c14n476 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI .
-_:c14n475 a owl:Restriction ;
+_:c14n477 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n476 rdf:first openlabel_v2:CommunicationWave ;
+_:c14n478 rdf:first openlabel_v2:CommunicationWave ;
 	rdf:rest rdf:nil .
-_:c14n477 rdf:first openlabel_v2:FixedStructureVegetation ;
+_:c14n479 rdf:first openlabel_v2:FixedStructureVegetation ;
 	rdf:rest rdf:nil .
-_:c14n478 rdf:first openlabel_v2:ParticulatesDust ;
-	rdf:rest _:c14n301 .
-_:c14n479 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
 _:c14n48 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n480 a owl:Restriction ;
+_:c14n480 rdf:first openlabel_v2:ParticulatesDust ;
+	rdf:rest _:c14n302 .
+_:c14n481 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
+_:c14n482 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionCutIn .
-_:c14n481 a owl:Restriction ;
+_:c14n483 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n482 a owl:Restriction ;
+_:c14n484 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n483 owl:unionOf _:c14n999 .
-_:c14n484 rdf:first openlabel_v2:TemporaryStructureRoadSignage ;
-	rdf:rest _:c14n349 .
-_:c14n485 a owl:Restriction ;
+_:c14n485 owl:unionOf _:c14n1018 .
+_:c14n486 rdf:first openlabel_v2:TemporaryStructureRoadSignage ;
+	rdf:rest _:c14n350 .
+_:c14n487 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n486 a owl:Restriction ;
+_:c14n488 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:WeatherRain .
-_:c14n487 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:RoadUser .
-_:c14n488 a owl:Restriction ;
-	owl:onProperty openlabel_v2:longitudinalDownSlopeValue ;
-	owl:someValuesFrom linkml:String .
 _:c14n489 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ParticulatesPollution .
+	owl:onProperty openlabel_v2:RoadUser .
 _:c14n49 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope .
 _:c14n490 a owl:Restriction ;
+	owl:onProperty openlabel_v2:longitudinalDownSlopeValue ;
+	owl:someValuesFrom linkml:String .
+_:c14n491 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:ParticulatesPollution .
+_:c14n492 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:motionDriveValue .
-_:c14n491 a owl:Restriction ;
+_:c14n493 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesVolcanic .
-_:c14n492 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:RainType .
-_:c14n493 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherSnowValue .
 _:c14n494 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationMarking .
+	owl:onProperty openlabel_v2:RainType .
 _:c14n495 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:weatherSnowValue .
+_:c14n496 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationMarking .
+_:c14n497 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n496 rdf:first openlabel_v2:SunPositionFront ;
-	rdf:rest _:c14n735 .
-_:c14n497 a owl:Restriction ;
+_:c14n498 rdf:first openlabel_v2:SunPositionFront ;
+	rdf:rest _:c14n737 .
+_:c14n499 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionTurn .
-_:c14n498 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n499 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
 _:c14n5 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
@@ -2830,619 +2841,620 @@ _:c14n50 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:TrafficAgentDensity .
 _:c14n500 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:TrafficAgentType .
+_:c14n501 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
+_:c14n502 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityCommunication .
-_:c14n501 a owl:Restriction ;
+_:c14n503 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n502 a owl:Restriction ;
+_:c14n504 a owl:Restriction ;
 	owl:onProperty openlabel_v2:trafficAgentDensityValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n503 a owl:Restriction ;
+_:c14n505 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n504 a owl:Restriction ;
+_:c14n506 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n505 a owl:Restriction ;
+_:c14n507 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n506 a owl:Restriction ;
+_:c14n508 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n507 a owl:Restriction ;
+_:c14n509 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:motionDecelerateValue .
-_:c14n508 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:IlluminationArtificial .
-_:c14n509 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficFlowRate .
 _:c14n51 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
 _:c14n510 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:LongitudinalDownSlope .
+	owl:onProperty openlabel_v2:IlluminationArtificial .
 _:c14n511 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
+	owl:onProperty openlabel_v2:TrafficFlowRate .
 _:c14n512 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DaySunElevation .
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:LongitudinalDownSlope .
 _:c14n513 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherWindValue .
+	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
 _:c14n514 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:DaySunElevation .
+_:c14n515 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:weatherWindValue .
+_:c14n516 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionTurnLeft .
-_:c14n515 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
-_:c14n516 rdf:first openlabel_v2:SurfaceConditionWet ;
-	rdf:rest rdf:nil .
 _:c14n517 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
-_:c14n518 a owl:Restriction ;
-	owl:allValuesFrom _:c14n1050 ;
-	owl:onProperty openlabel_v2:trafficFlowRateValue .
+	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
+_:c14n518 rdf:first openlabel_v2:SurfaceConditionWet ;
+	rdf:rest rdf:nil .
 _:c14n519 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
+	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
 _:c14n52 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:IlluminationCloudiness .
 _:c14n520 a owl:Restriction ;
+	owl:allValuesFrom _:c14n1047 ;
+	owl:onProperty openlabel_v2:trafficFlowRateValue .
+_:c14n521 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
+_:c14n522 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityCommunication .
-_:c14n521 a owl:Restriction ;
-	owl:onProperty openlabel_v2:MotionAccelerate ;
-	owl:someValuesFrom _:c14n1078 .
-_:c14n522 rdf:first openlabel_v2:RoadTypeParking ;
-	rdf:rest _:c14n728 .
 _:c14n523 a owl:Restriction ;
+	owl:onProperty openlabel_v2:MotionAccelerate ;
+	owl:someValuesFrom _:c14n1111 .
+_:c14n524 rdf:first openlabel_v2:RoadTypeParking ;
+	rdf:rest _:c14n730 .
+_:c14n525 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
-_:c14n524 a owl:Restriction ;
+_:c14n526 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n525 rdf:first openlabel_v2:RoundaboutLargeSignal ;
-	rdf:rest _:c14n410 .
-_:c14n526 a owl:Restriction ;
+_:c14n527 rdf:first openlabel_v2:RoundaboutLargeSignal ;
+	rdf:rest _:c14n411 .
+_:c14n528 a owl:Restriction ;
 	owl:onProperty openlabel_v2:MotionDrive ;
-	owl:someValuesFrom _:c14n1114 .
-_:c14n527 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1102 .
+_:c14n529 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
-_:c14n528 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n529 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:IlluminationCloudiness .
 _:c14n53 rdf:first openlabel_v2:WarningSignsVariableFullTime ;
-	rdf:rest _:c14n627 .
+	rdf:rest _:c14n629 .
 _:c14n530 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:hasLowerBound .
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
 _:c14n531 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:IlluminationCloudiness .
+_:c14n532 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:hasLowerBound .
+_:c14n533 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:motionAccelerateValue .
-_:c14n532 a owl:Restriction ;
+_:c14n534 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
-_:c14n533 a owl:Restriction ;
+_:c14n535 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationMarking .
-_:c14n534 rdf:first openlabel_v2:SpecialStructureTunnel ;
+_:c14n536 rdf:first openlabel_v2:SpecialStructureTunnel ;
 	rdf:rest rdf:nil .
-_:c14n535 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
-_:c14n536 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n537 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DaySunPosition .
+	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n538 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:DaySunElevation .
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n539 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:MotionSlide .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:DaySunPosition .
 _:c14n54 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalCurves .
 _:c14n540 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionRun .
+	owl:onProperty openlabel_v2:DaySunElevation .
 _:c14n541 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:HorizontalCurves .
+	owl:onProperty openlabel_v2:MotionSlide .
 _:c14n542 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:MotionRun .
+_:c14n543 a owl:Restriction ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:HorizontalCurves .
+_:c14n544 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n543 a owl:Restriction ;
+_:c14n545 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ConnectivityCommunication .
-_:c14n544 rdf:first openlabel_v2:VehicleConstruction ;
+_:c14n546 rdf:first openlabel_v2:VehicleConstruction ;
 	rdf:rest _:c14n63 .
-_:c14n545 a owl:Restriction ;
+_:c14n547 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n546 a owl:Restriction ;
+_:c14n548 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionTurn .
-_:c14n547 a owl:Restriction ;
+_:c14n549 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
-_:c14n548 rdf:first openlabel_v2:VehicleMotorcycle ;
-	rdf:rest _:c14n276 .
-_:c14n549 a owl:Restriction ;
+_:c14n55 owl:unionOf _:c14n1000 .
+_:c14n550 rdf:first openlabel_v2:VehicleMotorcycle ;
+	rdf:rest _:c14n277 .
+_:c14n551 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:RoadUserAnimal .
-_:c14n55 owl:unionOf _:c14n1001 .
-_:c14n550 a owl:Restriction ;
+_:c14n552 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n551 rdf:first openlabel_v2:RoadTypeDistributor ;
-	rdf:rest _:c14n711 .
-_:c14n552 a owl:Restriction ;
+_:c14n553 rdf:first openlabel_v2:RoadTypeDistributor ;
+	rdf:rest _:c14n713 .
+_:c14n554 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:IlluminationArtificial .
-_:c14n553 a owl:Restriction ;
+_:c14n555 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:SceneryZone .
-_:c14n554 a owl:Restriction ;
+_:c14n556 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:RainType ;
 	owl:onProperty openlabel_v2:RainType .
-_:c14n555 a owl:Restriction ;
+_:c14n557 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n556 a owl:Restriction ;
+_:c14n558 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:DaySunElevation .
-_:c14n557 a owl:Restriction ;
+_:c14n559 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:weatherWindValue .
-_:c14n558 rdf:first openlabel_v2:HumanPedestrian ;
-	rdf:rest _:c14n267 .
-_:c14n559 rdf:first openlabel_v2:IntersectionStaggered ;
-	rdf:rest _:c14n191 .
 _:c14n56 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n560 a owl:Restriction ;
+_:c14n560 rdf:first openlabel_v2:HumanPedestrian ;
+	rdf:rest _:c14n268 .
+_:c14n561 rdf:first openlabel_v2:IntersectionStaggered ;
+	rdf:rest _:c14n191 .
+_:c14n562 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
-_:c14n561 a owl:Restriction ;
+_:c14n563 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n562 a owl:Restriction ;
+_:c14n564 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n563 a owl:Restriction ;
+_:c14n565 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n564 rdf:first openlabel_v2:LaneTypeSpecial ;
+_:c14n566 rdf:first openlabel_v2:LaneTypeSpecial ;
 	rdf:rest _:c14n77 .
-_:c14n565 a owl:Restriction ;
+_:c14n567 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionLaneChangeRight .
-_:c14n566 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n567 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ParticulatesVolcanic .
 _:c14n568 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SignsRegulatory .
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
 _:c14n569 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
+	owl:onProperty openlabel_v2:ParticulatesVolcanic .
 _:c14n57 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:WeatherSnow .
 _:c14n570 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:SignsRegulatory .
+_:c14n571 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
+_:c14n572 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n571 rdf:first openlabel_v2:RoundaboutCompactNosignal ;
-	rdf:rest _:c14n841 .
-_:c14n572 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:daySunElevationValue .
-_:c14n573 a owl:Restriction ;
-	owl:allValuesFrom _:c14n960 ;
-	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+_:c14n573 rdf:first openlabel_v2:RoundaboutCompactNosignal ;
+	rdf:rest _:c14n844 .
 _:c14n574 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
+	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n575 a owl:Restriction ;
+	owl:allValuesFrom _:c14n972 ;
+	owl:onProperty openlabel_v2:trafficAgentTypeValue .
+_:c14n576 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
+_:c14n577 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionCross .
-_:c14n576 a owl:Restriction ;
+_:c14n578 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:SceneryFixedStructure ;
 	owl:onProperty openlabel_v2:SceneryFixedStructure .
-_:c14n577 a owl:Restriction ;
+_:c14n579 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:RainType .
-_:c14n578 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaEdge .
-_:c14n579 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:AdminTag ;
-	owl:onProperty openlabel_v2:AdminTag .
 _:c14n58 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:illuminationCloudinessValue .
 _:c14n580 a owl:Restriction ;
-	owl:onProperty openlabel_v2:motionDriveValue ;
-	owl:someValuesFrom linkml:String .
-_:c14n581 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
+	owl:onProperty openlabel_v2:DrivableAreaEdge .
+_:c14n581 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:AdminTag ;
+	owl:onProperty openlabel_v2:AdminTag .
 _:c14n582 a owl:Restriction ;
-	owl:onProperty openlabel_v2:particulatesWaterValue ;
+	owl:onProperty openlabel_v2:motionDriveValue ;
 	owl:someValuesFrom linkml:String .
 _:c14n583 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationType .
-_:c14n584 rdf:first openlabel_v2:WarningSignsUniform ;
-	rdf:rest _:c14n781 .
+	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
+_:c14n584 a owl:Restriction ;
+	owl:onProperty openlabel_v2:particulatesWaterValue ;
+	owl:someValuesFrom linkml:String .
 _:c14n585 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationType .
+_:c14n586 rdf:first openlabel_v2:WarningSignsUniform ;
+	rdf:rest _:c14n783 .
+_:c14n587 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n586 a owl:Restriction ;
+_:c14n588 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n587 a owl:Restriction ;
+_:c14n589 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
-_:c14n588 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:scenarioParentReference .
-_:c14n589 rdf:first openlabel_v2:SpecialStructureRailCrossing ;
-	rdf:rest _:c14n812 .
 _:c14n59 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
 _:c14n590 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:scenarioParentReference .
+_:c14n591 rdf:first openlabel_v2:SpecialStructureRailCrossing ;
+	rdf:rest _:c14n814 .
+_:c14n592 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n591 a owl:Restriction ;
+_:c14n593 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n592 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionAway .
-_:c14n593 rdf:first openlabel_v2:RoundaboutNormalSignal ;
-	rdf:rest rdf:nil .
 _:c14n594 a owl:Restriction ;
 	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:MotionAway .
+_:c14n595 rdf:first openlabel_v2:RoundaboutNormalSignal ;
+	rdf:rest rdf:nil .
+_:c14n596 a owl:Restriction ;
+	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:SignsInformation .
-_:c14n595 a owl:Restriction ;
+_:c14n597 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n596 rdf:first openlabel_v2:ArtificialVehicleLighting ;
+_:c14n598 rdf:first openlabel_v2:ArtificialVehicleLighting ;
 	rdf:rest rdf:nil .
-_:c14n597 a owl:Restriction ;
+_:c14n599 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:horizontalCurvesValue .
-_:c14n598 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
-_:c14n599 a owl:Restriction ;
-	owl:allValuesFrom _:c14n978 ;
-	owl:onProperty openlabel_v2:motionAccelerateValue .
 _:c14n6 a owl:Restriction ;
 	owl:onProperty openlabel_v2:WeatherSnow ;
-	owl:someValuesFrom _:c14n1105 .
+	owl:someValuesFrom _:c14n1114 .
 _:c14n60 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:SignsRegulatory ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
 _:c14n600 a owl:Restriction ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
+_:c14n601 a owl:Restriction ;
+	owl:allValuesFrom _:c14n963 ;
+	owl:onProperty openlabel_v2:motionAccelerateValue .
+_:c14n602 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n601 rdf:first openlabel_v2:IntersectionCrossroad ;
-	rdf:rest _:c14n625 .
-_:c14n602 a owl:Restriction ;
+_:c14n603 rdf:first openlabel_v2:IntersectionCrossroad ;
+	rdf:rest _:c14n627 .
+_:c14n604 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
-_:c14n603 rdf:first openlabel_v2:ParticulatesWater ;
+_:c14n605 rdf:first openlabel_v2:ParticulatesWater ;
 	rdf:rest rdf:nil .
-_:c14n604 a owl:Restriction ;
+_:c14n606 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:daySunElevationValue .
-_:c14n605 a owl:Restriction ;
+_:c14n607 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n606 a owl:Restriction ;
+_:c14n608 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n607 a owl:Restriction ;
+_:c14n609 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:trafficVolumeValue .
-_:c14n608 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
-_:c14n609 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
 _:c14n61 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherRain .
 _:c14n610 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
+_:c14n611 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
+_:c14n612 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DaySunPosition .
-_:c14n611 a owl:Restriction ;
+_:c14n613 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionDrive .
-_:c14n612 a owl:Restriction ;
+_:c14n614 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n613 a owl:Restriction ;
+_:c14n615 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationType .
-_:c14n614 a owl:Restriction ;
+_:c14n616 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:HorizontalCurves .
-_:c14n615 rdf:first openlabel_v2:CommunicationSignalLeft ;
-	rdf:rest _:c14n796 .
-_:c14n616 a owl:Restriction ;
+_:c14n617 rdf:first openlabel_v2:CommunicationSignalLeft ;
+	rdf:rest _:c14n798 .
+_:c14n618 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficAgentType .
-_:c14n617 rdf:first openlabel_v2:CommunicationHeadlightFlash ;
+_:c14n619 rdf:first openlabel_v2:CommunicationHeadlightFlash ;
 	rdf:rest _:c14n189 .
-_:c14n618 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceType ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
-_:c14n619 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:GeometryTransverse .
 _:c14n62 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:scenarioDefinition .
-_:c14n620 rdf:first openlabel_v2:VehicleEmergency ;
-	rdf:rest _:c14n548 .
-_:c14n621 rdf:first openlabel_v2:LaneTypeCycle ;
+_:c14n620 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceType ;
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
+_:c14n621 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:GeometryTransverse .
+_:c14n622 rdf:first openlabel_v2:VehicleEmergency ;
+	rdf:rest _:c14n550 .
+_:c14n623 rdf:first openlabel_v2:LaneTypeCycle ;
 	rdf:rest _:c14n95 .
-_:c14n622 a owl:Restriction ;
+_:c14n624 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n623 a owl:Restriction ;
+_:c14n625 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficAgentTypeValue .
-_:c14n624 a owl:Restriction ;
+_:c14n626 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherSnowValue .
-_:c14n625 rdf:first openlabel_v2:IntersectionGradeSeperated ;
-	rdf:rest _:c14n559 .
-_:c14n626 rdf:first openlabel_v2:FixedStructureStreetlight ;
-	rdf:rest _:c14n477 .
-_:c14n627 rdf:first openlabel_v2:WarningSignsVariableTemporary ;
+_:c14n627 rdf:first openlabel_v2:IntersectionGradeSeperated ;
+	rdf:rest _:c14n561 .
+_:c14n628 rdf:first openlabel_v2:FixedStructureStreetlight ;
+	rdf:rest _:c14n479 .
+_:c14n629 rdf:first openlabel_v2:WarningSignsVariableTemporary ;
 	rdf:rest rdf:nil .
-_:c14n628 a owl:Restriction ;
+_:c14n63 rdf:first openlabel_v2:VehicleCycle ;
+	rdf:rest _:c14n622 .
+_:c14n630 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n629 owl:unionOf _:c14n1011 .
-_:c14n63 rdf:first openlabel_v2:VehicleCycle ;
-	rdf:rest _:c14n620 .
-_:c14n630 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n631 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ConnectivityPositioning .
+_:c14n631 owl:unionOf _:c14n1010 .
 _:c14n632 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:EnvironmentParticulates .
+	owl:onProperty openlabel_v2:trafficFlowRateValue .
 _:c14n633 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:ConnectivityPositioning .
+_:c14n634 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:EnvironmentParticulates .
+_:c14n635 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
-_:c14n634 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:horizontalCurvesValue .
-_:c14n635 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:ConnectivityCommunication .
 _:c14n636 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ParticulatesMarine .
+	owl:onProperty openlabel_v2:horizontalCurvesValue .
 _:c14n637 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:GeometryTransverse .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:ConnectivityCommunication .
 _:c14n638 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
+	owl:onProperty openlabel_v2:ParticulatesMarine .
 _:c14n639 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SignsWarning .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:GeometryTransverse .
 _:c14n64 rdf:first openlabel_v2:V2vWifi ;
 	rdf:rest rdf:nil .
 _:c14n640 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
+_:c14n641 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:SignsWarning .
+_:c14n642 a owl:Restriction ;
 	owl:onProperty openlabel_v2:trafficAgentTypeValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n641 a owl:Restriction ;
+_:c14n643 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n642 rdf:first openlabel_v2:InformationSignsUniformFullTime ;
+_:c14n644 rdf:first openlabel_v2:InformationSignsUniformFullTime ;
 	rdf:rest _:c14n91 .
-_:c14n643 a owl:Restriction ;
+_:c14n645 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficAgentDensityValue .
-_:c14n644 a owl:Restriction ;
+_:c14n646 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
-_:c14n645 rdf:first openlabel_v2:RainTypeOrographic ;
-	rdf:rest rdf:nil .
-_:c14n646 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionLaneChangeRight .
-_:c14n647 rdf:first openlabel_v2:InformationSignsVariableTemporary ;
+_:c14n647 rdf:first openlabel_v2:RainTypeOrographic ;
 	rdf:rest rdf:nil .
 _:c14n648 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n649 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionCross .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:MotionLaneChangeRight .
+_:c14n649 rdf:first openlabel_v2:InformationSignsVariableTemporary ;
+	rdf:rest rdf:nil .
 _:c14n65 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope .
 _:c14n650 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:scenarioVersion .
+	owl:onProperty openlabel_v2:LongitudinalUpSlope .
 _:c14n651 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:MotionCross .
+_:c14n652 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:scenarioVersion .
+_:c14n653 a owl:Restriction ;
 	owl:onProperty openlabel_v2:weatherSnowValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n652 rdf:first openlabel_v2:IntersectionYJunction ;
+_:c14n654 rdf:first openlabel_v2:IntersectionYJunction ;
 	rdf:rest rdf:nil .
-_:c14n653 a owl:Restriction ;
+_:c14n655 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesWater .
-_:c14n654 a owl:Restriction ;
+_:c14n656 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n655 a owl:Restriction ;
+_:c14n657 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n656 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherWindValue .
-_:c14n657 rdf:first openlabel_v2:RegulatorySignsUniformFullTime ;
-	rdf:rest _:c14n393 .
 _:c14n658 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
-_:c14n659 rdf:first openlabel_v2:TransversePavements ;
-	rdf:rest _:c14n381 .
+	owl:onProperty openlabel_v2:weatherWindValue .
+_:c14n659 rdf:first openlabel_v2:RegulatorySignsUniformFullTime ;
+	rdf:rest _:c14n394 .
 _:c14n66 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:illuminationCloudinessValue .
 _:c14n660 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
+_:c14n661 rdf:first openlabel_v2:TransversePavements ;
+	rdf:rest _:c14n382 .
+_:c14n662 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceCondition ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n661 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficAgentDensityValue .
-_:c14n662 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:scenarioParentReference .
 _:c14n663 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:JunctionIntersection .
+	owl:onProperty openlabel_v2:trafficAgentDensityValue .
 _:c14n664 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:scenarioParentReference .
+_:c14n665 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:JunctionIntersection .
+_:c14n666 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesVolcanic .
-_:c14n665 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1044 .
-_:c14n666 a owl:Restriction ;
+_:c14n667 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1041 .
+_:c14n668 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficFlowRate .
-_:c14n667 a owl:Restriction ;
-	owl:allValuesFrom _:c14n993 ;
-	owl:onProperty openlabel_v2:motionDriveValue .
-_:c14n668 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI .
 _:c14n669 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
+	owl:allValuesFrom _:c14n969 ;
+	owl:onProperty openlabel_v2:motionDriveValue .
 _:c14n67 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
 _:c14n670 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI .
+_:c14n671 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
+_:c14n672 a owl:Restriction ;
 	owl:onProperty openlabel_v2:longitudinalUpSlopeValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n671 rdf:first openlabel_v2:VehicleCar ;
-	rdf:rest _:c14n544 .
-_:c14n672 rdf:first openlabel_v2:SurfaceFeatureRut ;
-	rdf:rest _:c14n832 .
-_:c14n673 a owl:Restriction ;
+_:c14n673 rdf:first openlabel_v2:VehicleCar ;
+	rdf:rest _:c14n546 .
+_:c14n674 rdf:first openlabel_v2:SurfaceFeatureRut ;
+	rdf:rest _:c14n834 .
+_:c14n675 a owl:Restriction ;
 	owl:onProperty openlabel_v2:TrafficFlowRate ;
-	owl:someValuesFrom _:c14n1090 .
-_:c14n674 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n675 rdf:first openlabel_v2:InformationSignsVariableFullTime ;
-	rdf:rest _:c14n647 .
+	owl:someValuesFrom _:c14n1120 .
 _:c14n676 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:IlluminationArtificial .
-_:c14n677 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
+	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
+_:c14n677 rdf:first openlabel_v2:InformationSignsVariableFullTime ;
+	rdf:rest _:c14n649 .
 _:c14n678 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n679 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n1033 .
+	owl:onProperty openlabel_v2:IlluminationArtificial .
+_:c14n679 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
 _:c14n68 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:illuminationCloudinessValue .
 _:c14n680 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
+_:c14n681 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n1036 .
+_:c14n682 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n681 a owl:Restriction ;
+_:c14n683 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n682 a owl:Restriction ;
+_:c14n684 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:RoadUserHuman .
-_:c14n683 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
-_:c14n684 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:MotionTurn .
 _:c14n685 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionDecelerate .
+	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
 _:c14n686 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionCross .
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:MotionTurn .
 _:c14n687 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:SignsRegulatory .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:MotionDecelerate .
 _:c14n688 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:DaySunElevation .
+	owl:onProperty openlabel_v2:MotionCross .
 _:c14n689 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:RainType .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:SignsRegulatory .
 _:c14n69 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficVolumeValue .
 _:c14n690 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:Behaviour .
+	owl:onProperty openlabel_v2:DaySunElevation .
 _:c14n691 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:RainType .
+_:c14n692 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:Behaviour .
+_:c14n693 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ownerName .
-_:c14n692 a owl:Restriction ;
+_:c14n694 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n693 rdf:first openlabel_v2:VehicleWheelchair ;
+_:c14n695 rdf:first openlabel_v2:VehicleWheelchair ;
 	rdf:rest rdf:nil .
-_:c14n694 a owl:Restriction ;
+_:c14n696 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficAgentDensity .
-_:c14n695 rdf:first openlabel_v2:PositioningGps ;
+_:c14n697 rdf:first openlabel_v2:PositioningGps ;
 	rdf:rest rdf:nil .
-_:c14n696 rdf:first openlabel_v2:CommunicationV2v ;
-	rdf:rest _:c14n738 .
-_:c14n697 a owl:Restriction ;
+_:c14n698 rdf:first openlabel_v2:CommunicationV2v ;
+	rdf:rest _:c14n740 .
+_:c14n699 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
-_:c14n698 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n699 rdf:first openlabel_v2:LowLightNight ;
-	rdf:rest rdf:nil .
 _:c14n7 a owl:Restriction ;
 	owl:onProperty openlabel_v2:horizontalCurvesValue ;
 	owl:someValuesFrom linkml:String .
@@ -3451,710 +3463,712 @@ _:c14n70 a owl:Restriction ;
 	owl:onProperty openlabel_v2:LaneSpecificationMarking .
 _:c14n700 a owl:Restriction ;
 	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LongitudinalDownSlope .
+_:c14n701 rdf:first openlabel_v2:LowLightNight ;
+	rdf:rest rdf:nil .
+_:c14n702 a owl:Restriction ;
+	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
-_:c14n701 a owl:Restriction ;
+_:c14n703 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:DaySunPosition .
-_:c14n702 a owl:Restriction ;
+_:c14n704 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherRainValue .
-_:c14n703 a owl:Restriction ;
+_:c14n705 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n704 a owl:Restriction ;
+_:c14n706 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficAgentTypeValue .
-_:c14n705 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationType .
-_:c14n706 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:SceneryZone .
 _:c14n707 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
+	owl:onProperty openlabel_v2:LaneSpecificationType .
 _:c14n708 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n709 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
+	owl:onProperty openlabel_v2:SceneryZone .
+_:c14n709 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
 _:c14n71 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:HorizontalStraights .
 _:c14n710 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
+_:c14n711 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
+_:c14n712 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n711 rdf:first openlabel_v2:RoadTypeMinor ;
-	rdf:rest _:c14n376 .
-_:c14n712 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionAway .
-_:c14n713 rdf:first openlabel_v2:SurfaceTypeLoose ;
-	rdf:rest _:c14n809 .
+_:c14n713 rdf:first openlabel_v2:RoadTypeMinor ;
+	rdf:rest _:c14n377 .
 _:c14n714 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:MotionAway .
+_:c14n715 rdf:first openlabel_v2:SurfaceTypeLoose ;
+	rdf:rest _:c14n811 .
+_:c14n716 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
-_:c14n715 a owl:Restriction ;
+_:c14n717 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:daySunElevationValue .
-_:c14n716 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:illuminationCloudinessValue .
-_:c14n717 rdf:first openlabel_v2:LaneTypeTram ;
-	rdf:rest rdf:nil .
 _:c14n718 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:TrafficAgentDensity .
-_:c14n719 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:TrafficFlowRate .
+	owl:onProperty openlabel_v2:illuminationCloudinessValue .
+_:c14n719 rdf:first openlabel_v2:LaneTypeTram ;
+	rdf:rest rdf:nil .
 _:c14n72 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n720 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:TrafficAgentDensity .
+_:c14n721 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:TrafficFlowRate .
+_:c14n722 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n721 a owl:Restriction ;
+_:c14n723 a owl:Restriction ;
 	owl:onProperty openlabel_v2:TrafficAgentDensity ;
-	owl:someValuesFrom _:c14n1096 .
-_:c14n722 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1084 .
+_:c14n724 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionTowards .
-_:c14n723 a owl:Restriction ;
+_:c14n725 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionWalk .
-_:c14n724 a owl:Restriction ;
+_:c14n726 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:SceneryTemporaryStructure ;
 	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
-_:c14n725 rdf:first openlabel_v2:TransverseLanesTogether ;
-	rdf:rest _:c14n659 .
-_:c14n726 a owl:Restriction ;
+_:c14n727 rdf:first openlabel_v2:TransverseLanesTogether ;
+	rdf:rest _:c14n661 .
+_:c14n728 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionCutIn .
-_:c14n727 a owl:Restriction ;
+_:c14n729 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryZone .
-_:c14n728 rdf:first openlabel_v2:RoadTypeRadial ;
-	rdf:rest _:c14n845 .
-_:c14n729 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
 _:c14n73 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:MotionWalk .
-_:c14n730 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficAgentType .
+_:c14n730 rdf:first openlabel_v2:RoadTypeRadial ;
+	rdf:rest _:c14n848 .
 _:c14n731 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
+	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
 _:c14n732 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n733 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:MotionReverse .
+	owl:onProperty openlabel_v2:TrafficAgentType .
+_:c14n733 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
 _:c14n734 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:MotionAccelerate .
-_:c14n735 rdf:first openlabel_v2:SunPositionLeft ;
-	rdf:rest _:c14n441 .
+	owl:onProperty openlabel_v2:LongitudinalUpSlope .
+_:c14n735 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:MotionReverse .
 _:c14n736 a owl:Restriction ;
-	owl:allValuesFrom _:c14n975 ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:MotionAccelerate .
+_:c14n737 rdf:first openlabel_v2:SunPositionLeft ;
+	rdf:rest _:c14n442 .
+_:c14n738 a owl:Restriction ;
+	owl:allValuesFrom _:c14n987 ;
 	owl:onProperty openlabel_v2:motionDecelerateValue .
-_:c14n737 a owl:Restriction ;
+_:c14n739 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficFlowRate .
-_:c14n738 rdf:first openlabel_v2:V2vCellular ;
-	rdf:rest _:c14n829 .
-_:c14n739 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n74 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n740 a owl:Restriction ;
+_:c14n740 rdf:first openlabel_v2:V2vCellular ;
+	rdf:rest _:c14n831 .
+_:c14n741 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
+_:c14n742 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationMarking .
-_:c14n741 a owl:Restriction ;
+_:c14n743 a owl:Restriction ;
 	owl:onProperty openlabel_v2:LaneSpecificationLaneCount ;
-	owl:someValuesFrom _:c14n1111 .
-_:c14n742 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1090 .
+_:c14n744 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:TrafficVolume .
-_:c14n743 a owl:Restriction ;
+_:c14n745 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
-_:c14n744 a owl:Restriction ;
+_:c14n746 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n745 a owl:Restriction ;
+_:c14n747 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:motionDecelerateValue .
-_:c14n746 a owl:Restriction ;
+_:c14n748 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n747 a owl:Restriction ;
+_:c14n749 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n748 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
-_:c14n749 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:horizontalCurvesValue .
 _:c14n75 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:horizontalCurvesValue .
 _:c14n750 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationLaneCount .
+_:c14n751 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:horizontalCurvesValue .
+_:c14n752 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ownerEmail .
-_:c14n751 a owl:Restriction ;
+_:c14n753 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
-_:c14n752 a owl:Restriction ;
+_:c14n754 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsInformation .
-_:c14n753 a owl:Restriction ;
+_:c14n755 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:trafficFlowRateValue .
-_:c14n754 a owl:Restriction ;
+_:c14n756 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionOvertake .
-_:c14n755 a owl:Restriction ;
+_:c14n757 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n756 owl:unionOf _:c14n997 .
-_:c14n757 a owl:Restriction ;
+_:c14n758 owl:unionOf _:c14n1022 .
+_:c14n759 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:weatherSnowValue .
-_:c14n758 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:IlluminationCloudiness .
-_:c14n759 rdf:first openlabel_v2:ParticulatesVolcanic ;
-	rdf:rest _:c14n603 .
 _:c14n76 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n760 rdf:first openlabel_v2:ZoneRegion ;
+_:c14n760 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:IlluminationCloudiness .
+_:c14n761 rdf:first openlabel_v2:ParticulatesVolcanic ;
+	rdf:rest _:c14n605 .
+_:c14n762 rdf:first openlabel_v2:ZoneRegion ;
 	rdf:rest _:c14n221 .
-_:c14n761 a owl:Restriction ;
+_:c14n763 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
-_:c14n762 a owl:Restriction ;
+_:c14n764 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n763 a owl:Restriction ;
+_:c14n765 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionTowards .
-_:c14n764 a owl:Restriction ;
+_:c14n766 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:illuminationCloudinessValue .
-_:c14n765 a owl:Restriction ;
+_:c14n767 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n766 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n767 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:IlluminationArtificial ;
-	owl:onProperty openlabel_v2:IlluminationArtificial .
 _:c14n768 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
 _:c14n769 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:IlluminationArtificial ;
+	owl:onProperty openlabel_v2:IlluminationArtificial .
+_:c14n77 rdf:first openlabel_v2:LaneTypeTraffic ;
+	rdf:rest _:c14n719 .
+_:c14n770 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
+_:c14n771 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:scenarioCreatedDate .
-_:c14n77 rdf:first openlabel_v2:LaneTypeTraffic ;
-	rdf:rest _:c14n717 .
-_:c14n770 a owl:Restriction ;
+_:c14n772 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherWindValue .
-_:c14n771 a owl:Restriction ;
+_:c14n773 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionDecelerate .
-_:c14n772 a owl:Restriction ;
+_:c14n774 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
-_:c14n773 a owl:Restriction ;
+_:c14n775 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
-_:c14n774 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SignsInformation .
-_:c14n775 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:TrafficVolume .
 _:c14n776 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
+	owl:onProperty openlabel_v2:SignsInformation .
 _:c14n777 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:TrafficVolume .
+_:c14n778 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
+_:c14n779 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n778 a owl:Restriction ;
-	owl:onProperty openlabel_v2:weatherWindValue ;
-	owl:someValuesFrom linkml:String .
-_:c14n779 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
 _:c14n78 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
 _:c14n780 a owl:Restriction ;
+	owl:onProperty openlabel_v2:weatherWindValue ;
+	owl:someValuesFrom linkml:String .
+_:c14n781 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceType .
+_:c14n782 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:longitudinalDownSlopeValue .
-_:c14n781 rdf:first openlabel_v2:WarningSignsUniformFullTime ;
-	rdf:rest _:c14n442 .
-_:c14n782 a owl:Restriction ;
+_:c14n783 rdf:first openlabel_v2:WarningSignsUniformFullTime ;
+	rdf:rest _:c14n443 .
+_:c14n784 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:ScenerySpecialStructure .
-_:c14n783 a owl:Restriction ;
+_:c14n785 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
-_:c14n784 a owl:Restriction ;
+_:c14n786 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:LaneSpecificationDimensions .
-_:c14n785 a owl:Restriction ;
+_:c14n787 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
-_:c14n786 a owl:Restriction ;
+_:c14n788 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:IlluminationLowLight .
-_:c14n787 a owl:Restriction ;
+_:c14n789 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherSnow .
-_:c14n788 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
-_:c14n789 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:licenseURI .
 _:c14n79 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:horizontalCurvesValue .
 _:c14n790 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
+_:c14n791 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:licenseURI .
+_:c14n792 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
-_:c14n791 a owl:Restriction ;
+_:c14n793 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:weatherSnowValue .
-_:c14n792 a owl:Restriction ;
+_:c14n794 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherRain .
-_:c14n793 a owl:Restriction ;
+_:c14n795 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
-_:c14n794 a owl:Restriction ;
+_:c14n796 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty openlabel_v2:maxValue .
-_:c14n795 rdf:first openlabel_v2:SpecialStructurePedestrianCrossing ;
-	rdf:rest _:c14n589 .
-_:c14n796 rdf:first openlabel_v2:CommunicationSignalRight ;
+_:c14n797 rdf:first openlabel_v2:SpecialStructurePedestrianCrossing ;
+	rdf:rest _:c14n591 .
+_:c14n798 rdf:first openlabel_v2:CommunicationSignalRight ;
 	rdf:rest _:c14n9 .
-_:c14n797 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n798 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:particulatesWaterValue .
 _:c14n799 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:WeatherRain .
+	owl:onProperty openlabel_v2:LongitudinalDownSlope .
 _:c14n8 a owl:Restriction ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed ;
-	owl:someValuesFrom _:c14n1093 .
+	owl:someValuesFrom _:c14n1099 .
 _:c14n80 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionRun .
-_:c14n800 rdf:first openlabel_v2:SurfaceFeatureCrack ;
-	rdf:rest _:c14n101 .
+_:c14n800 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:particulatesWaterValue .
 _:c14n801 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:WeatherRain .
+_:c14n802 rdf:first openlabel_v2:SurfaceFeatureCrack ;
+	rdf:rest _:c14n101 .
+_:c14n803 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:DrivableAreaSurfaceFeature ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n802 rdf:first openlabel_v2:LowLightAmbient ;
-	rdf:rest _:c14n699 .
-_:c14n803 a owl:Restriction ;
+_:c14n804 rdf:first openlabel_v2:LowLightAmbient ;
+	rdf:rest _:c14n701 .
+_:c14n805 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:minValue .
-_:c14n804 a owl:Restriction ;
+_:c14n806 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:WeatherRain .
-_:c14n805 a owl:Restriction ;
+_:c14n807 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionReverse .
-_:c14n806 a owl:Restriction ;
+_:c14n808 a owl:Restriction ;
 	owl:onProperty openlabel_v2:motionAccelerateValue ;
 	owl:someValuesFrom linkml:String .
-_:c14n807 a owl:Restriction ;
+_:c14n809 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n808 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficAgentDensity .
-_:c14n809 rdf:first openlabel_v2:SurfaceTypeSegmented ;
-	rdf:rest _:c14n27 .
 _:c14n81 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionSlide .
 _:c14n810 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:TrafficAgentDensity .
+_:c14n811 rdf:first openlabel_v2:SurfaceTypeSegmented ;
+	rdf:rest _:c14n27 .
+_:c14n812 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:weatherWindValue .
-_:c14n811 a owl:Restriction ;
+_:c14n813 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n812 rdf:first openlabel_v2:SpecialStructureTollPlaza ;
-	rdf:rest _:c14n534 .
-_:c14n813 a owl:Restriction ;
+_:c14n814 rdf:first openlabel_v2:SpecialStructureTollPlaza ;
+	rdf:rest _:c14n536 .
+_:c14n815 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:scenarioDefinitionLanguageURI .
-_:c14n814 a owl:Restriction ;
+_:c14n816 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:RainType .
-_:c14n815 a owl:Restriction ;
+_:c14n817 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:SignsRegulatory .
-_:c14n816 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LongitudinalUpSlope .
-_:c14n817 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:scenarioVisualisationURL .
 _:c14n818 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DaySunElevation .
+	owl:onProperty openlabel_v2:LongitudinalUpSlope .
 _:c14n819 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:TrafficAgentDensity .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:scenarioVisualisationURL .
 _:c14n82 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:MotionCutOut .
-_:c14n820 rdf:first openlabel_v2:TransverseBarriers ;
-	rdf:rest _:c14n365 .
+_:c14n820 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:DaySunElevation .
 _:c14n821 a owl:Restriction ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:TrafficAgentDensity .
+_:c14n822 rdf:first openlabel_v2:TransverseBarriers ;
+	rdf:rest _:c14n366 .
+_:c14n823 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DrivableAreaType .
-_:c14n822 a owl:Restriction ;
+_:c14n824 a owl:Restriction ;
 	owl:onProperty openlabel_v2:LongitudinalUpSlope ;
-	owl:someValuesFrom _:c14n1117 .
-_:c14n823 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1105 .
+_:c14n825 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n824 a owl:Restriction ;
+_:c14n826 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n825 a owl:Restriction ;
+_:c14n827 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
-_:c14n826 a owl:Restriction ;
+_:c14n828 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionIntersection .
-_:c14n827 a owl:Restriction ;
+_:c14n829 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:RoadUserAnimal .
-_:c14n828 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:HorizontalStraights .
-_:c14n829 rdf:first openlabel_v2:V2vSatellite ;
-	rdf:rest _:c14n64 .
 _:c14n83 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:LongitudinalLevelPlane .
 _:c14n830 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:HorizontalStraights .
+_:c14n831 rdf:first openlabel_v2:V2vSatellite ;
+	rdf:rest _:c14n64 .
+_:c14n832 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:scenarioDescription .
-_:c14n831 a owl:Restriction ;
+_:c14n833 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:maxValue .
-_:c14n832 rdf:first openlabel_v2:SurfaceFeatureSwell ;
+_:c14n834 rdf:first openlabel_v2:SurfaceFeatureSwell ;
 	rdf:rest rdf:nil .
-_:c14n833 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n834 a owl:Restriction ;
+_:c14n835 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:scenarioVersion .
-_:c14n835 rdf:first openlabel_v2:TravelDirectionRight ;
-	rdf:rest rdf:nil .
+	owl:onProperty openlabel_v2:scenarioComment .
 _:c14n836 a owl:Restriction ;
 	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DaySunPosition .
+	owl:onProperty openlabel_v2:EnvironmentParticulates .
 _:c14n837 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ParticulatesVolcanic .
-_:c14n838 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:WeatherSnow .
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:scenarioVersion .
+_:c14n838 rdf:first openlabel_v2:TravelDirectionRight ;
+	rdf:rest rdf:nil .
 _:c14n839 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SceneryFixedStructure .
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:DaySunPosition .
 _:c14n84 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:SubjectVehicleSpeed .
 _:c14n840 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:ParticulatesVolcanic .
+_:c14n841 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:WeatherSnow .
+_:c14n842 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:SceneryFixedStructure .
+_:c14n843 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
-_:c14n841 rdf:first openlabel_v2:RoundaboutCompactSignal ;
-	rdf:rest _:c14n233 .
-_:c14n842 rdf:first openlabel_v2:MotorwayUnmanaged ;
-	rdf:rest _:c14n522 .
-_:c14n843 a owl:Restriction ;
+_:c14n844 rdf:first openlabel_v2:RoundaboutCompactSignal ;
+	rdf:rest _:c14n234 .
+_:c14n845 rdf:first openlabel_v2:MotorwayUnmanaged ;
+	rdf:rest _:c14n524 .
+_:c14n846 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:WeatherSnow .
-_:c14n844 a owl:Restriction ;
+_:c14n847 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DaySunElevation .
-_:c14n845 rdf:first openlabel_v2:RoadTypeShared ;
+_:c14n848 rdf:first openlabel_v2:RoadTypeShared ;
 	rdf:rest _:c14n176 .
-_:c14n846 a owl:Restriction ;
+_:c14n849 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceCondition .
-_:c14n847 rdf:first openlabel_v2:EdgeSolidBarriers ;
-	rdf:rest _:c14n292 .
-_:c14n848 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:WeatherWind .
-_:c14n849 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:WeatherSnow .
 _:c14n85 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LaneSpecificationType .
-_:c14n850 a owl:Restriction ;
+_:c14n850 rdf:first openlabel_v2:EdgeSolidBarriers ;
+	rdf:rest _:c14n293 .
+_:c14n851 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:WeatherWind .
+_:c14n852 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:WeatherSnow .
+_:c14n853 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionLaneChangeLeft .
-_:c14n851 a owl:Restriction ;
+_:c14n854 a owl:Restriction ;
 	owl:onProperty openlabel_v2:MotionDecelerate ;
-	owl:someValuesFrom _:c14n1072 .
-_:c14n852 a owl:Restriction ;
+	owl:someValuesFrom _:c14n1078 .
+_:c14n855 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:EnvironmentParticulates ;
 	owl:onProperty openlabel_v2:EnvironmentParticulates .
-_:c14n853 rdf:first openlabel_v2:RoundaboutLargeNosignal ;
-	rdf:rest _:c14n525 .
-_:c14n854 a owl:Restriction ;
+_:c14n856 rdf:first openlabel_v2:RoundaboutLargeNosignal ;
+	rdf:rest _:c14n527 .
+_:c14n857 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:DaySunPosition .
-_:c14n855 a owl:Restriction ;
+_:c14n858 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:particulatesWaterValue .
-_:c14n856 rdf:first openlabel_v2:MotorwayManaged ;
-	rdf:rest _:c14n842 .
-_:c14n857 a owl:Restriction ;
-	owl:allValuesFrom _:c14n966 ;
-	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n858 a owl:Restriction ;
-	owl:allValuesFrom openlabel_v2:ConnectivityPositioning ;
-	owl:onProperty openlabel_v2:ConnectivityPositioning .
-_:c14n859 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
+_:c14n859 rdf:first openlabel_v2:MotorwayManaged ;
+	rdf:rest _:c14n845 .
 _:c14n86 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:daySunElevationValue .
 _:c14n860 a owl:Restriction ;
+	owl:allValuesFrom _:c14n975 ;
+	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
+_:c14n861 a owl:Restriction ;
+	owl:allValuesFrom openlabel_v2:ConnectivityPositioning ;
+	owl:onProperty openlabel_v2:ConnectivityPositioning .
+_:c14n862 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:TrafficSpecialVehicle .
+_:c14n863 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:LaneSpecificationTravelDirection ;
 	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n861 a owl:Restriction ;
+_:c14n864 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:ParticulatesPollution .
-_:c14n862 rdf:first openlabel_v2:RoundaboutNormalNosignal ;
-	rdf:rest _:c14n593 .
-_:c14n863 rdf:first openlabel_v2:SunPositionBehind ;
-	rdf:rest _:c14n496 .
-_:c14n864 a owl:Restriction ;
+_:c14n865 rdf:first openlabel_v2:RoundaboutNormalNosignal ;
+	rdf:rest _:c14n595 .
+_:c14n866 rdf:first openlabel_v2:SunPositionBehind ;
+	rdf:rest _:c14n498 .
+_:c14n867 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:maxValue .
-_:c14n865 a owl:Restriction ;
+_:c14n868 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:ParticulatesMarine .
-_:c14n866 a owl:Restriction ;
+_:c14n869 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n867 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionTurnRight .
-_:c14n868 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:SignsWarning .
-_:c14n869 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:weatherRainValue .
 _:c14n87 rdf:first openlabel_v2:CommunicationSignalHazard ;
-	rdf:rest _:c14n615 .
+	rdf:rest _:c14n617 .
 _:c14n870 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:motionDriveValue .
+	owl:onProperty openlabel_v2:MotionTurnRight .
 _:c14n871 a owl:Restriction ;
-	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ;
-	owl:someValuesFrom linkml:String .
-_:c14n872 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ParticulatesDust .
+	owl:onProperty openlabel_v2:SignsWarning .
+_:c14n872 a owl:Restriction ;
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:weatherRainValue .
 _:c14n873 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:scenarioDescription .
+	owl:onProperty openlabel_v2:motionDriveValue .
 _:c14n874 a owl:Restriction ;
+	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ;
+	owl:someValuesFrom linkml:String .
+_:c14n875 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:ParticulatesDust .
+_:c14n876 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:scenarioDescription .
+_:c14n877 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n875 a owl:Restriction ;
+_:c14n878 a owl:Restriction ;
 	owl:maxCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficVolume .
-_:c14n876 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n877 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
-_:c14n878 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:IlluminationCloudiness .
 _:c14n879 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:trafficVolumeValue .
+	owl:onProperty openlabel_v2:ParticulatesDust .
 _:c14n88 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherWindValue .
 _:c14n880 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:DrivableAreaSurfaceFeature .
+_:c14n881 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:IlluminationCloudiness .
+_:c14n882 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:trafficVolumeValue .
+_:c14n883 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:LongitudinalDownSlope .
-_:c14n881 a owl:Restriction ;
+_:c14n884 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:ParticulatesDust .
-_:c14n882 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:TrafficAgentDensity .
-_:c14n883 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:RoadUserAnimal .
-_:c14n884 a owl:Restriction ;
-	owl:allValuesFrom _:c14n990 ;
-	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
 _:c14n885 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ParticulatesVolcanic .
+	owl:onProperty openlabel_v2:TrafficAgentDensity .
 _:c14n886 a owl:Restriction ;
-	owl:onProperty openlabel_v2:IlluminationCloudiness ;
-	owl:someValuesFrom _:c14n1087 .
-_:c14n887 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:MotionTurnLeft .
+	owl:onProperty openlabel_v2:RoadUserAnimal .
+_:c14n887 a owl:Restriction ;
+	owl:allValuesFrom _:c14n984 ;
+	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
 _:c14n888 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
-_:c14n889 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:weatherSnowValue .
+	owl:onProperty openlabel_v2:ParticulatesVolcanic .
+_:c14n889 a owl:Restriction ;
+	owl:onProperty openlabel_v2:IlluminationCloudiness ;
+	owl:someValuesFrom _:c14n1108 .
 _:c14n89 a owl:Restriction ;
-	owl:allValuesFrom _:c14n1023 ;
+	owl:allValuesFrom _:c14n1026 ;
 	owl:onProperty openlabel_v2:trafficVolumeValue .
 _:c14n890 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:MotionAccelerate .
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:MotionTurnLeft .
 _:c14n891 a owl:Restriction ;
-	owl:allValuesFrom linkml:Decimal ;
-	owl:onProperty openlabel_v2:hasLowerBound .
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationTravelDirection .
 _:c14n892 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:scenarioVisualisationURL .
+	owl:onProperty openlabel_v2:weatherSnowValue .
 _:c14n893 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:MotionAccelerate .
+_:c14n894 a owl:Restriction ;
+	owl:allValuesFrom linkml:Decimal ;
+	owl:onProperty openlabel_v2:hasLowerBound .
+_:c14n895 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:scenarioVisualisationURL .
+_:c14n896 a owl:Restriction ;
 	owl:allValuesFrom linkml:Boolean ;
 	owl:onProperty openlabel_v2:MotionStop .
-_:c14n894 a owl:Restriction ;
+_:c14n897 a owl:Restriction ;
 	owl:allValuesFrom openlabel_v2:RoadUserVehicle ;
 	owl:onProperty openlabel_v2:RoadUserVehicle .
-_:c14n895 a owl:Restriction ;
+_:c14n898 a owl:Restriction ;
 	owl:allValuesFrom linkml:Decimal ;
 	owl:onProperty openlabel_v2:minValue .
-_:c14n896 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
-_:c14n897 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
-_:c14n898 a owl:Restriction ;
-	owl:maxCardinality 0 ;
-	owl:onProperty openlabel_v2:DrivableAreaType .
 _:c14n899 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:JunctionRoundabout .
+	owl:onProperty openlabel_v2:laneSpecificationLaneCountValue .
 _:c14n9 rdf:first openlabel_v2:CommunicationSignalSlowing ;
-	rdf:rest _:c14n476 .
+	rdf:rest _:c14n478 .
 _:c14n90 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:JunctionRoundabout .
 _:c14n900 a owl:Restriction ;
-	owl:allValuesFrom linkml:Boolean ;
-	owl:onProperty openlabel_v2:LaneSpecificationMarking .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:laneSpecificationDimensionsValue .
 _:c14n901 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:IlluminationArtificial .
+	owl:maxCardinality 0 ;
+	owl:onProperty openlabel_v2:DrivableAreaType .
 _:c14n902 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:HorizontalCurves .
+	owl:onProperty openlabel_v2:JunctionRoundabout .
 _:c14n903 a owl:Restriction ;
+	owl:allValuesFrom linkml:Boolean ;
+	owl:onProperty openlabel_v2:LaneSpecificationMarking .
+_:c14n904 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:IlluminationArtificial .
+_:c14n905 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:HorizontalCurves .
+_:c14n906 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
 	owl:onProperty openlabel_v2:weatherRainValue .
-_:c14n904 rdf:first openlabel_v2:CommunicationV2i ;
+_:c14n907 rdf:first openlabel_v2:CommunicationV2i ;
 	rdf:rest _:c14n96 .
-_:c14n905 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:scenarioName .
-_:c14n906 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty openlabel_v2:RoadUser .
-_:c14n907 a owl:Restriction ;
-	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ownerURL .
 _:c14n908 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
+	owl:onProperty openlabel_v2:scenarioName .
 _:c14n909 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty openlabel_v2:LaneSpecificationType .
+	owl:maxCardinality 1 ;
+	owl:onProperty openlabel_v2:RoadUser .
 _:c14n91 rdf:first openlabel_v2:InformationSignsUniformTemporary ;
-	rdf:rest _:c14n675 .
+	rdf:rest _:c14n677 .
 _:c14n910 a owl:Restriction ;
 	owl:allValuesFrom linkml:String ;
-	owl:onProperty openlabel_v2:ownerName .
+	owl:onProperty openlabel_v2:ownerURL .
 _:c14n911 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:longitudinalUpSlopeValue .
+_:c14n912 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty openlabel_v2:LaneSpecificationType .
+_:c14n913 a owl:Restriction ;
+	owl:allValuesFrom linkml:String ;
+	owl:onProperty openlabel_v2:ownerName .
+_:c14n914 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty openlabel_v2:Odd .
-_:c14n912 rdf:first openlabel_v2:Odd ;
-	rdf:rest rdf:nil .
-_:c14n913 rdf:first _:c14n670 ;
-	rdf:rest _:c14n912 .
-_:c14n914 rdfs:subClassOf _:c14n822 ;
-	owl:intersectionOf _:c14n913 .
 _:c14n915 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n916 rdf:first _:c14n871 ;
+_:c14n916 rdf:first _:c14n349 ;
 	rdf:rest _:c14n915 .
-_:c14n917 rdfs:subClassOf _:c14n214 ;
+_:c14n917 rdfs:subClassOf _:c14n743 ;
 	owl:intersectionOf _:c14n916 .
 _:c14n918 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n919 rdf:first _:c14n7 ;
+_:c14n919 rdf:first _:c14n490 ;
 	rdf:rest _:c14n918 .
 _:c14n92 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:SceneryTemporaryStructure .
-_:c14n920 rdfs:subClassOf _:c14n473 ;
+_:c14n920 rdfs:subClassOf _:c14n202 ;
 	owl:intersectionOf _:c14n919 .
 _:c14n921 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n922 rdf:first _:c14n465 ;
+_:c14n922 rdf:first _:c14n584 ;
 	rdf:rest _:c14n921 .
-_:c14n923 rdfs:subClassOf _:c14n673 ;
+_:c14n923 rdfs:subClassOf _:c14n287 ;
 	owl:intersectionOf _:c14n922 .
 _:c14n924 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n925 rdf:first _:c14n152 ;
+_:c14n925 rdf:first _:c14n7 ;
 	rdf:rest _:c14n924 .
-_:c14n926 rdfs:subClassOf _:c14n449 ;
+_:c14n926 rdfs:subClassOf _:c14n475 ;
 	owl:intersectionOf _:c14n925 .
 _:c14n927 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n928 rdf:first _:c14n640 ;
+_:c14n928 rdf:first _:c14n642 ;
 	rdf:rest _:c14n927 .
 _:c14n929 rdfs:subClassOf _:c14n133 ;
 	owl:intersectionOf _:c14n928 .
@@ -4163,148 +4177,148 @@ _:c14n93 a owl:Restriction ;
 	owl:onProperty openlabel_v2:GeometryTransverse .
 _:c14n930 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n931 rdf:first _:c14n106 ;
+_:c14n931 rdf:first _:c14n653 ;
 	rdf:rest _:c14n930 .
-_:c14n932 rdfs:subClassOf _:c14n8 ;
+_:c14n932 rdfs:subClassOf _:c14n6 ;
 	owl:intersectionOf _:c14n931 .
 _:c14n933 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n934 rdf:first _:c14n651 ;
+_:c14n934 rdf:first _:c14n185 ;
 	rdf:rest _:c14n933 .
-_:c14n935 rdfs:subClassOf _:c14n6 ;
+_:c14n935 rdfs:subClassOf _:c14n889 ;
 	owl:intersectionOf _:c14n934 .
 _:c14n936 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n937 rdf:first _:c14n502 ;
+_:c14n937 rdf:first _:c14n418 ;
 	rdf:rest _:c14n936 .
-_:c14n938 rdfs:subClassOf _:c14n721 ;
+_:c14n938 rdfs:subClassOf _:c14n172 ;
 	owl:intersectionOf _:c14n937 .
 _:c14n939 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
 _:c14n94 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:TrafficVolume .
-_:c14n940 rdf:first _:c14n417 ;
+_:c14n940 rdf:first _:c14n106 ;
 	rdf:rest _:c14n939 .
-_:c14n941 rdfs:subClassOf _:c14n172 ;
+_:c14n941 rdfs:subClassOf _:c14n8 ;
 	owl:intersectionOf _:c14n940 .
 _:c14n942 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n943 rdf:first _:c14n488 ;
+_:c14n943 rdf:first _:c14n780 ;
 	rdf:rest _:c14n942 .
-_:c14n944 rdfs:subClassOf _:c14n202 ;
+_:c14n944 rdfs:subClassOf _:c14n332 ;
 	owl:intersectionOf _:c14n943 .
 _:c14n945 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n946 rdf:first _:c14n582 ;
+_:c14n946 rdf:first _:c14n874 ;
 	rdf:rest _:c14n945 .
-_:c14n947 rdfs:subClassOf _:c14n286 ;
+_:c14n947 rdfs:subClassOf _:c14n214 ;
 	owl:intersectionOf _:c14n946 .
 _:c14n948 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n949 rdf:first _:c14n168 ;
+_:c14n949 rdf:first _:c14n504 ;
 	rdf:rest _:c14n948 .
 _:c14n95 rdf:first openlabel_v2:LaneTypeEmergency ;
-	rdf:rest _:c14n564 .
-_:c14n950 rdfs:subClassOf _:c14n118 ;
+	rdf:rest _:c14n566 .
+_:c14n950 rdfs:subClassOf _:c14n723 ;
 	owl:intersectionOf _:c14n949 .
 _:c14n951 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n952 rdf:first _:c14n185 ;
+_:c14n952 rdf:first _:c14n168 ;
 	rdf:rest _:c14n951 .
-_:c14n953 rdfs:subClassOf _:c14n886 ;
+_:c14n953 rdfs:subClassOf _:c14n118 ;
 	owl:intersectionOf _:c14n952 .
 _:c14n954 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n955 rdf:first _:c14n778 ;
+_:c14n955 rdf:first _:c14n152 ;
 	rdf:rest _:c14n954 .
-_:c14n956 rdfs:subClassOf _:c14n331 ;
+_:c14n956 rdfs:subClassOf _:c14n450 ;
 	owl:intersectionOf _:c14n955 .
 _:c14n957 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
-_:c14n958 rdf:first _:c14n348 ;
+_:c14n958 rdf:first _:c14n672 ;
 	rdf:rest _:c14n957 .
-_:c14n959 rdfs:subClassOf _:c14n741 ;
+_:c14n959 rdfs:subClassOf _:c14n824 ;
 	owl:intersectionOf _:c14n958 .
 _:c14n96 rdf:first openlabel_v2:V2iCellular ;
-	rdf:rest _:c14n443 .
-_:c14n960 owl:unionOf _:c14n961 .
-_:c14n961 rdf:first openlabel_v2:RoadUserHuman ;
-	rdf:rest _:c14n962 .
-_:c14n962 rdf:first openlabel_v2:RoadUserVehicle ;
+	rdf:rest _:c14n444 .
+_:c14n960 rdf:first openlabel_v2:Odd ;
 	rdf:rest rdf:nil .
+_:c14n961 rdf:first _:c14n467 ;
+	rdf:rest _:c14n960 .
+_:c14n962 rdfs:subClassOf _:c14n675 ;
+	owl:intersectionOf _:c14n961 .
 _:c14n963 owl:unionOf _:c14n964 .
 _:c14n964 rdf:first linkml:Decimal ;
 	rdf:rest _:c14n965 .
 _:c14n965 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
 _:c14n966 owl:unionOf _:c14n967 .
-_:c14n967 rdf:first _:c14n968 ;
-	rdf:rest _:c14n974 .
-_:c14n968 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n969 .
-_:c14n969 rdf:first linkml:Integer ;
-	rdf:rest _:c14n970 .
+_:c14n967 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n968 .
+_:c14n968 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .
+_:c14n969 owl:unionOf _:c14n970 .
 _:c14n97 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:weatherRainValue .
-_:c14n970 rdf:first _:c14n971 ;
+_:c14n970 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n971 .
+_:c14n971 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
-_:c14n971 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n972 .
-_:c14n972 rdf:first _:c14n973 ;
-	rdf:rest rdf:nil .
-_:c14n973 xsd:minInclusive 1 .
-_:c14n974 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n972 owl:unionOf _:c14n973 .
+_:c14n973 rdf:first openlabel_v2:RoadUserHuman ;
+	rdf:rest _:c14n974 .
+_:c14n974 rdf:first openlabel_v2:RoadUserVehicle ;
 	rdf:rest rdf:nil .
 _:c14n975 owl:unionOf _:c14n976 .
-_:c14n976 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n977 .
-_:c14n977 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n976 rdf:first _:c14n977 ;
+	rdf:rest _:c14n983 .
+_:c14n977 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n978 .
+_:c14n978 rdf:first linkml:Integer ;
+	rdf:rest _:c14n979 .
+_:c14n979 rdf:first _:c14n980 ;
 	rdf:rest rdf:nil .
-_:c14n978 owl:unionOf _:c14n979 .
-_:c14n979 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n980 .
 _:c14n98 rdf:first openlabel_v2:LaneTypeBus ;
-	rdf:rest _:c14n621 .
-_:c14n980 rdf:first openlabel_v2:QuantitativeValue ;
-	rdf:rest rdf:nil .
-_:c14n981 owl:unionOf _:c14n982 .
-_:c14n982 rdf:first _:c14n983 ;
-	rdf:rest _:c14n989 .
-_:c14n983 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n984 .
-_:c14n984 rdf:first linkml:Integer ;
-	rdf:rest _:c14n985 .
-_:c14n985 rdf:first _:c14n986 ;
-	rdf:rest rdf:nil .
-_:c14n986 a rdfs:Datatype ;
+	rdf:rest _:c14n623 .
+_:c14n980 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n987 .
-_:c14n987 rdf:first _:c14n988 ;
+	owl:withRestrictions _:c14n981 .
+_:c14n981 rdf:first _:c14n982 ;
 	rdf:rest rdf:nil .
-_:c14n988 xsd:minInclusive 0 .
+_:c14n982 xsd:minInclusive 1 .
+_:c14n983 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .
+_:c14n984 owl:unionOf _:c14n985 .
+_:c14n985 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n986 .
+_:c14n986 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .
+_:c14n987 owl:unionOf _:c14n988 .
+_:c14n988 rdf:first linkml:Decimal ;
+	rdf:rest _:c14n989 .
 _:c14n989 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
 _:c14n99 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty openlabel_v2:subjectVehicleSpeedValue .
 _:c14n990 owl:unionOf _:c14n991 .
-_:c14n991 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n992 .
-_:c14n992 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n991 rdf:first _:c14n992 ;
+	rdf:rest _:c14n998 .
+_:c14n992 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n993 .
+_:c14n993 rdf:first linkml:Integer ;
+	rdf:rest _:c14n994 .
+_:c14n994 rdf:first _:c14n995 ;
 	rdf:rest rdf:nil .
-_:c14n993 owl:unionOf _:c14n994 .
-_:c14n994 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n995 .
-_:c14n995 rdf:first openlabel_v2:QuantitativeValue ;
+_:c14n995 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n996 .
+_:c14n996 rdf:first _:c14n997 ;
 	rdf:rest rdf:nil .
-_:c14n996 rdf:first openlabel_v2:QuantitativeValue ;
-	rdf:rest rdf:nil .
-_:c14n997 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n996 .
+_:c14n997 xsd:minInclusive 0 .
 _:c14n998 rdf:first openlabel_v2:QuantitativeValue ;
 	rdf:rest rdf:nil .
-_:c14n999 rdf:first linkml:Decimal ;
-	rdf:rest _:c14n998 .
+_:c14n999 rdf:first openlabel_v2:QuantitativeValue ;
+	rdf:rest rdf:nil .

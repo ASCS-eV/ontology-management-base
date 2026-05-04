@@ -74,6 +74,7 @@ classes:
       - scenarioUniqueReference
       - scenarioVersion
       - scenarioVisualisationURL
+      - scenarioComment
 
   # ---------------------------------------------------------------------------
   # Behaviour
@@ -962,6 +963,11 @@ slots:
       Relative or absolute URL of a static image or animation of the scenario
       to allow users to easily see what the scenario represents.
     slot_uri: openlabel_v2:scenarioVisualisationURL
+    range: string
+
+  scenarioComment:
+    description: An optional free-text comment for the scenario.
+    slot_uri: openlabel_v2:scenarioComment
     range: string
 
   # ---------------------------------------------------------------------------
