@@ -9,13 +9,14 @@ import json
 from pathlib import Path
 
 import pytest
-from rdflib import BNode, Graph, Namespace, URIRef
-from rdflib.namespace import OWL, RDF, XSD
+from rdflib import BNode, Graph, Literal, Namespace, URIRef
+from rdflib.namespace import OWL, RDF, RDFS, XSD
 
 from src.tools.utils.context_generator import (
     _analyze_or_branches,
     _build_ns_prefix_lookup,
     _lookup_prefix,
+    _sh_in_has_iris,
     extract_classes,
     extract_ontology_iri,
     extract_property_datatypes,
@@ -312,6 +313,84 @@ class TestExtractPropertyDatatypes:
         assert "hasManifest" in result
         assert result["hasManifest"]["@type"] == "@id"
 
+    def test_extract_property_datatypes_sh_in_iris_returns_vocab(self):
+        """Should detect @vocab coercion for sh:in with IRI enum members."""
+        g = Graph()
+        domain_iri = "https://example.org/test/"
+
+        shape = URIRef(domain_iri + "VehicleShape")
+        prop_node = BNode()
+        prop_path = URIRef(domain_iri + "vehicleType")
+
+        g.add((shape, RDF.type, SH.NodeShape))
+        g.add((shape, SH.property, prop_node))
+        g.add((prop_node, SH.path, prop_path))
+
+        # Build sh:in (ex:Car ex:Truck ex:Bus)
+        item3 = BNode()
+        g.add((item3, RDF.first, URIRef(domain_iri + "Bus")))
+        g.add((item3, RDF.rest, RDF.nil))
+
+        item2 = BNode()
+        g.add((item2, RDF.first, URIRef(domain_iri + "Truck")))
+        g.add((item2, RDF.rest, item3))
+
+        item1 = BNode()
+        g.add((item1, RDF.first, URIRef(domain_iri + "Car")))
+        g.add((item1, RDF.rest, item2))
+
+        g.add((prop_node, SH["in"], item1))
+
+        result = extract_property_datatypes(g, "test", domain_iri)
+
+        assert "vehicleType" in result
+        assert result["vehicleType"]["@type"] == "@vocab"
+
+
+class TestShInHasIris:
+    """Tests for _sh_in_has_iris helper function."""
+
+    def test_sh_in_with_iris_returns_true(self):
+        """Should return True when sh:in has URIRef members."""
+        g = Graph()
+        prop_node = BNode()
+
+        item2 = BNode()
+        g.add((item2, RDF.first, URIRef("https://example.org/Bar")))
+        g.add((item2, RDF.rest, RDF.nil))
+
+        item1 = BNode()
+        g.add((item1, RDF.first, URIRef("https://example.org/Foo")))
+        g.add((item1, RDF.rest, item2))
+
+        g.add((prop_node, SH["in"], item1))
+
+        assert _sh_in_has_iris(g, prop_node) is True
+
+    def test_sh_in_without_returns_false(self):
+        """Should return False when no sh:in is present."""
+        g = Graph()
+        prop_node = BNode()
+
+        assert _sh_in_has_iris(g, prop_node) is False
+
+    def test_sh_in_with_literals_only_returns_false(self):
+        """Should return False when sh:in contains only Literal members."""
+        g = Graph()
+        prop_node = BNode()
+
+        item2 = BNode()
+        g.add((item2, RDF.first, Literal("high")))
+        g.add((item2, RDF.rest, RDF.nil))
+
+        item1 = BNode()
+        g.add((item1, RDF.first, Literal("low")))
+        g.add((item1, RDF.rest, item2))
+
+        g.add((prop_node, SH["in"], item1))
+
+        assert _sh_in_has_iris(g, prop_node) is False
+
 
 class TestExtractClasses:
     """Tests for extract_classes function."""
@@ -327,6 +406,17 @@ class TestExtractClasses:
 
         result = extract_classes(g, domain_iri)
         assert result == {"Foo", "Bar"}
+
+    def test_extract_classes_includes_rdfs_class(self):
+        """Should extract rdfs:Class declarations (e.g., OpenLABEL v1 style)."""
+        g = Graph()
+        domain_iri = "https://example.org/test"
+
+        g.add((URIRef(domain_iri + "/OwlThing"), RDF.type, OWL.Class))
+        g.add((URIRef(domain_iri + "/RdfsThing"), RDF.type, RDFS.Class))
+
+        result = extract_classes(g, domain_iri)
+        assert result == {"OwlThing", "RdfsThing"}
 
     def test_extract_classes_ignores_other_namespace(self):
         """Should not include classes from other namespaces."""
