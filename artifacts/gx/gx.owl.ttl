@@ -996,7 +996,7 @@ gx:exposedThrough a owl:ObjectProperty ;
 gx:gaia-x.owl.ttl a owl:Ontology ;
     rdfs:label "gaia-x" ;
     rdfs:comment "ASCS/OMB profile of the Gaia-X Trust Framework ontology, regenerated via LinkML from service-characteristics. See artifacts/gx/VERSIONING.md for provenance details." ;
-    owl:versionInfo "2.1.7-ascs.7" .
+    owl:versionInfo "2.1.8-ascs.7" .
 
 gx:hotfixHours a owl:DatatypeProperty ;
     rdfs:label "hotfixHours" ;
@@ -1466,19 +1466,19 @@ gx:FileStorageConfiguration a owl:Class ;
 gx:MemoryCapabilities a owl:Class ;
     rdfs:label "MemoryCapabilities" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty gx:overProvisioningRatio ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:memory ],
-        [ a owl:Restriction ;
             owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:decimal [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
                                 owl:onDatatype xsd:integer ;
                                 owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] [ a rdfs:Datatype ;
                                 owl:onDatatype xsd:integer ;
                                 owl:withRestrictions ( [ xsd:maxInclusive 3 ] ) ] ) ] ;
             owl:onProperty gx:overProvisioningRatio ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty gx:overProvisioningRatio ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:memory ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty gx:overProvisioningRatio ],
@@ -6003,12 +6003,6 @@ gx:CpuCapabilities a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty gx:overProvisioningRatio ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( xsd:decimal [ a rdfs:Datatype ;
-                                owl:onDatatype xsd:integer ;
-                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
-            owl:onProperty gx:overProvisioningRatio ],
-        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:pCPU ],
         [ a owl:Restriction ;
@@ -6022,7 +6016,13 @@ gx:CpuCapabilities a owl:Class ;
             owl:onProperty gx:overProvisioningRatio ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
-            owl:onProperty gx:vCPUs ] ;
+            owl:onProperty gx:vCPUs ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:float [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:integer ;
+                                owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ;
+            owl:onProperty gx:overProvisioningRatio ] ;
     skos:inScheme gx:server-flavor .
 
 <https://w3id.org/gaia-x/development#CryptographicSecurityStandards/FIPS180-4> a owl:Class ;
@@ -45304,7 +45304,10 @@ gx:involvedParties a owl:ObjectProperty ;
 gx:license a owl:DatatypeProperty ;
     rdfs:label "license" ;
     rdfs:range [ a rdfs:Datatype ;
-            owl:intersectionOf ( gx:SPDX xsd:string ) ] ;
+            owl:intersectionOf ( [ a rdfs:Datatype ;
+                        owl:unionOf ( [ a rdfs:Datatype ;
+                                    owl:onDatatype xsd:string ;
+                                    owl:withRestrictions ( [ xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" ] ) ] gx:SPDX ) ] xsd:string ) ] ;
     skos:definition "A list of SPDX identifiers or URL to document." ;
     skos:inScheme gx:slots .
 
@@ -48232,14 +48235,17 @@ gx:VirtualResource a owl:Class ;
             owl:minCardinality 1 ;
             owl:onProperty gx:resourcePolicy ],
         [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( [ a rdfs:Datatype ;
+                                owl:unionOf ( [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:string ;
+                                            owl:withRestrictions ( [ xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" ] ) ] gx:SPDX ) ] xsd:string ) ] ;
+            owl:onProperty gx:license ],
+        [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:copyrightOwnedBy ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
-            owl:onProperty gx:license ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ a rdfs:Datatype ;
-                    owl:intersectionOf ( gx:SPDX xsd:string ) ] ;
             owl:onProperty gx:license ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:string ;
