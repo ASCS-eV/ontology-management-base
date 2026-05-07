@@ -209,10 +209,9 @@ hdmap:ContentOrOddSceneryShape a sh:NodeShape ;
     sh:description "HDMap Content or OpenLABEL ODD Scenery Union Shape"@en ;
     sh:or (
         [ sh:node hdmap:ContentShape ]
-        [ sh:node openlabel:OddShape ] # Validates against the external OpenLABEL shape
-        [ sh:node xsd:boolean ]
+        [ sh:node openlabel:OddSceneryShape ]
     ) ;
-    sh:message "Each item of hasContent must conform to either Scenario Content or OpenLABEL Tag."@en .
+    sh:message "Each item of hasContent must conform to either HDMap Content or OpenLABEL OddScenery."@en .
 
 hdmap:ContentShape a sh:NodeShape ;
     sh:closed false ;

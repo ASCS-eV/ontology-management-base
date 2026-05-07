@@ -446,6 +446,30 @@ openlabel:BehaviourShape a sh:NodeShape ;
 # ODD Shape
 ##############################################################################
 
+##############################################################################
+# ODD Sub-Shapes (for use in domain union shapes)
+# Property validation is inherited from OddShape via rdfs:subClassOf inference.
+##############################################################################
+
+openlabel:OddSceneryShape a sh:NodeShape ;
+    sh:targetClass openlabel:OddScenery ;
+    sh:closed false ;
+    sh:description "Shape for ODD Scenery data (BSI PAS-1883 §5.2: road geometry, lane specs, signs, junctions, structures)."@en .
+
+openlabel:OddEnvironmentShape a sh:NodeShape ;
+    sh:targetClass openlabel:OddEnvironment ;
+    sh:closed false ;
+    sh:description "Shape for ODD Environment data (BSI PAS-1883 §5.3: weather, illumination, connectivity, particulates)."@en .
+
+openlabel:OddDynamicElementsShape a sh:NodeShape ;
+    sh:targetClass openlabel:OddDynamicElements ;
+    sh:closed false ;
+    sh:description "Shape for ODD Dynamic Elements data (BSI PAS-1883 §5.4: traffic density, flow, subject vehicle speed)."@en .
+
+##############################################################################
+# ODD Shape (flat, validates all Odd properties)
+##############################################################################
+
 openlabel:OddShape a sh:NodeShape ;
     sh:targetClass openlabel:Odd ;
     sh:property

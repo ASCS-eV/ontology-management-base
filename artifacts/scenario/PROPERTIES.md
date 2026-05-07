@@ -11,7 +11,7 @@ class Class_definition_for_Format
 class Class_definition_for_Quality
 class Class_definition_for_Quantity
 class Class_definition_for_Scenario
-class Content_or_OpenLabel_Tag
+class Content_or_OpenLABEL_Dynamic_Annotation
 ```
 
 ### Class Hierarchy
@@ -23,7 +23,7 @@ class Content_or_OpenLabel_Tag
 - Class definition for Quality (https://w3id.org/ascs-ev/envited-x/scenario/v6/Quality)
 - Class definition for Quantity (https://w3id.org/ascs-ev/envited-x/scenario/v6/Quantity)
 - Class definition for Scenario (https://w3id.org/ascs-ev/envited-x/scenario/v6/Scenario)
-- Content or OpenLabel Tag (https://w3id.org/ascs-ev/envited-x/scenario/v6/ContentOrTag)
+- Content or OpenLABEL Dynamic Annotation (https://w3id.org/ascs-ev/envited-x/scenario/v6/ContentOrDynamicAnnotation)
 
 ### Class Definitions
 
@@ -35,8 +35,8 @@ class Content_or_OpenLabel_Tag
 |Class definition for Format|https://w3id.org/ascs-ev/envited-x/scenario/v6/Format|Contains properties that describe the format of the scenario asset.|Format|
 |Class definition for Quality|https://w3id.org/ascs-ev/envited-x/scenario/v6/Quality|Contains properties that describe the accuracy of objects and the calibration of the scenario asset.|Quality|
 |Class definition for Quantity|https://w3id.org/ascs-ev/envited-x/scenario/v6/Quantity|Contains properties that describe the quantity of the scenario asset (e.g., number of traffic objects, controllers).|Quantity|
-|Class definition for Scenario|https://w3id.org/ascs-ev/envited-x/scenario/v6/Scenario|General properties for defining a scenario asset, including format, content, data sources, quantity, and quality attributes.|Scenario, SimulationAsset|
-|Content or OpenLabel Tag|https://w3id.org/ascs-ev/envited-x/scenario/v6/ContentOrTag|Combines Scenario content with OpenLABEL's Tag.||
+|Class definition for Scenario|https://w3id.org/ascs-ev/envited-x/scenario/v6/Scenario|General properties for defining a scenario asset, including format, content, data sources, quantity, and quality attributes.|SimulationAsset|
+|Content or OpenLABEL Dynamic Annotation|https://w3id.org/ascs-ev/envited-x/scenario/v6/ContentOrDynamicAnnotation|Combines Scenario content with OpenLABEL's dynamic annotation types: OddEnvironment, OddDynamicElements, Behaviour, and RoadUser.||
 
 ## Prefixes
 

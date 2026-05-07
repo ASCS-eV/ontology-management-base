@@ -10,7 +10,7 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.scenario.net:Scenario:test_valid_scenario_instance",
+   "@id": "did:web:test.scenario.net:Scenario:test_invalid_fail12_wrong_enum_value_flat_context",
    "@type": "scenario:Scenario",
    "scenario:hasResourceDescription": {
       "@id": "did:web:registry.envited-x.net::ResourceDescription:kdHiux4L4it3ZsaBTMWWCX9v2sSuH3XCHPaN",
@@ -46,27 +46,7 @@
             "@type": "openlabel:OddEnvironment",
             "WeatherRain": true,
             "weatherRainValue": 5.2,
-            "WeatherWind": true,
-            "weatherWindValue": 12.5,
-            "IlluminationCloudiness": true,
-            "illuminationCloudinessValue": 6.0,
-            "ConnectivityCommunication": "V2vCellular",
-            "ConnectivityPositioning": "PositioningGps"
-         },
-         {
-            "@type": "openlabel:Behaviour",
-            "MotionDecelerate": true,
-            "motionDecelerateValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": "4.444",
-               "schema:minValue": "0.053"
-            },
-            "MotionDrive": true,
-            "motionDriveValue": {
-               "@type": "schema:QuantitativeValue",
-               "schema:maxValue": "60.001",
-               "schema:minValue": "0.01"
-            }
+            "ConnectivityCommunication": "InvalidEnumValue"
          }
       ],
       "scenario:hasQuality": {

@@ -16,6 +16,7 @@
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "schema": "https://schema.org/",
       "scenario": "https://w3id.org/ascs-ev/envited-x/scenario/v6/",
+      "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
       "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
       "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
       "abstractionLevel": {
@@ -133,7 +134,7 @@
          "@id": "scenario:weatherSummary"
       },
       "Content": "scenario:Content",
-      "ContentOrTag": "scenario:ContentOrTag",
+      "ContentOrDynamicAnnotation": "scenario:ContentOrDynamicAnnotation",
       "DataSource": "scenario:DataSource",
       "DomainSpecification": "scenario:DomainSpecification",
       "Format": "scenario:Format",

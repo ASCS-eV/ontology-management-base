@@ -47,6 +47,11 @@ local = "imports/rdf/rdf.owl.ttl"
 uri = "http://www.w3.org/2000/01/rdf-schema#"
 local = "imports/rdfs/rdfs.owl.ttl"
 
+[dependencies.safetypooldb]
+uri = "https://live.safetypooldb.ai/api/ontologies/v1.6/"
+local = "imports/safetypooldb/safetypooldb.owl.ttl"
+description = "Safety Pool DB V1.6 Scenario Tagging Ontology"
+
 [dependencies.schema]
 uri = "https://schema.org/"
 local = "imports/schema/schema.owl.ttl"

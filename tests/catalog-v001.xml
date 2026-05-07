@@ -34,6 +34,7 @@
   <uri name="did:web:test.gx.net:ServiceOffering:test_valid_gx_service_offering" uri="tests/data/gx/valid/gx_data_resource_instance.json" domain="gx" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_invalid_custom_v15_objecttype" uri="tests/data/hdmap/invalid/fail02_custom_v15_objecttype.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_invalid_fail01_false_value_hdmap_instance" uri="tests/data/hdmap/invalid/fail01_false_value_hdmap_instance.json" domain="hdmap" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.hdmap.net:HdMap:test_invalid_fail03_false_value_flat_context" uri="tests/data/hdmap/invalid/fail03_false_value_flat_context.json" domain="hdmap" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance" uri="tests/data/hdmap/valid/hdmap_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_hdmap_no_georeference" uri="tests/data/hdmap/valid/hdmap_no_georeference_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
   <uri name="did:web:test.hdmap.net:HdMap:test_valid_v14_custom_objecttype" uri="tests/data/hdmap/valid/hdmap_v14_custom_objecttype_instance.json" domain="hdmap" test-type="valid" category="test-data"/>
@@ -77,6 +78,7 @@
   <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail08_string_value_for_integer" uri="tests/data/scenario/invalid/fail08_string_value_for_integer.json" domain="scenario" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail09_float_value_for_integer" uri="tests/data/scenario/invalid/fail09_float_value_for_integer.json" domain="scenario" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail11_object_value_for_literal" uri="tests/data/scenario/invalid/fail11_object_value_for_literal.json" domain="scenario" test-type="invalid" category="test-data"/>
+  <uri name="did:web:test.scenario.net:Scenario:test_invalid_fail12_wrong_enum_value_flat_context" uri="tests/data/scenario/invalid/fail12_wrong_enum_value_flat_context.json" domain="scenario" test-type="invalid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_minimal_scenario_instance" uri="tests/data/scenario/valid/scenario_minimal_instance.json" domain="scenario" test-type="valid" category="test-data"/>
   <uri name="did:web:test.scenario.net:Scenario:test_valid_scenario_instance" uri="tests/data/scenario/valid/scenario_instance.json" domain="scenario" test-type="valid" category="test-data"/>
   <uri name="did:web:test.service.net:Service:test_valid_service_instance" uri="tests/data/service/valid/service_instance.json" domain="service" test-type="valid" category="test-data"/>
