@@ -48,7 +48,9 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 
 from rdflib import RDF, Graph, Namespace, URIRef
-from rdflib.namespace import OWL, XSD
+from rdflib.collection import Collection
+from rdflib.namespace import OWL, RDFS, XSD
+from rdflib.term import Node
 
 from src.tools.core.constants import FAST_STORE, Extensions
 from src.tools.core.iri_utils import get_local_name, normalize_iri
@@ -198,6 +200,21 @@ def _analyze_or_branches(
     return literal_datatype, has_object
 
 
+def _sh_in_has_iris(graph: Graph, prop_node: Node) -> bool:
+    """Check whether a property constraint has sh:in with IRI members.
+
+    Returns True if the sh:in list contains at least one URIRef member,
+    indicating an enumeration of named individuals (not string literals).
+    """
+    in_list = graph.value(prop_node, SH["in"])
+    if not in_list:
+        return False
+
+    # Walk the RDF list to check if members are IRIs
+    members = Collection(graph, in_list)
+    return any(isinstance(m, URIRef) for m in members)
+
+
 def extract_property_datatypes(
     shacl_graph: Graph, domain_prefix: str, domain_iri: str
 ) -> Dict[str, Dict[str, Any]]:
@@ -272,6 +289,12 @@ def extract_property_datatypes(
             elif node_kind == SH.IRI or class_ref or node_ref:
                 # Object property - reference to another node
                 prop_def["@type"] = "@id"
+
+            elif _sh_in_has_iris(shacl_graph, prop_node):
+                # sh:in with IRI members (enum of named individuals).
+                # Use @vocab (not @id) so rdflib resolves bare term names
+                # through context definitions rather than against @base.
+                prop_def["@type"] = "@vocab"
 
             else:
                 # Polymorphic: sh:or may mix literal datatypes and object refs.
@@ -366,20 +389,25 @@ def extract_property_datatypes(
 
 
 def extract_classes(owl_graph: Graph, domain_iri: str) -> Set[str]:
-    """Extract class local names from the OWL ontology."""
+    """Extract class local names from the OWL ontology.
+
+    Looks for both owl:Class and rdfs:Class declarations to support
+    ontologies like OpenLABEL v1 that use rdfs:Class instead of owl:Class.
+    """
     classes = set()
     domain_ns = normalize_iri(domain_iri, trailing_slash=True)
 
-    for cls in owl_graph.subjects(RDF.type, OWL.Class):
-        cls_str = str(cls)
-        if cls_str.startswith(domain_ns):
-            local_name = cls_str[len(domain_ns) :]
-            if local_name and "/" not in local_name:
-                classes.add(local_name)
-        elif cls_str.startswith(domain_iri) and not cls_str.startswith("http", 1):
-            local_name = get_local_name(cls_str)
-            if local_name:
-                classes.add(local_name)
+    for cls_type in (OWL.Class, RDFS.Class):
+        for cls in owl_graph.subjects(RDF.type, cls_type):
+            cls_str = str(cls)
+            if cls_str.startswith(domain_ns):
+                local_name = cls_str[len(domain_ns) :]
+                if local_name and "/" not in local_name:
+                    classes.add(local_name)
+            elif cls_str.startswith(domain_iri) and not cls_str.startswith("http", 1):
+                local_name = get_local_name(cls_str)
+                if local_name:
+                    classes.add(local_name)
 
     return classes
 
@@ -507,6 +535,9 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
 
     # Extract and add class term mappings for compact @type usage
     # This allows: "@type": "Manifest" instead of "@type": "manifest:Manifest"
+    # Skip classes that already have a property definition — the property's
+    # {"@id": ..., "@type": ...} form is strictly more informative and also
+    # provides IRI expansion for @type usage.
     classes = extract_classes(owl_graph, ontology_iri)
     for class_name in sorted(classes):
         if class_name in reserved_keys:
@@ -515,6 +546,9 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
                 class_name,
                 domain,
             )
+            continue
+        if class_name in context:
+            # Property definition already provides IRI expansion
             continue
         # Map bare class names to full IRIs for @type expansion
         context[class_name] = f"{prefix}:{class_name}"
