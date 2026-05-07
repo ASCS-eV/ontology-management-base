@@ -25,41 +25,52 @@
          "@type": "@id"
       },
       "BehaviourCommunication": {
-         "@id": "openlabel:BehaviourCommunication"
+         "@id": "openlabel:BehaviourCommunication",
+         "@type": "@vocab"
       },
       "ConnectivityCommunication": {
-         "@id": "openlabel:ConnectivityCommunication"
+         "@id": "openlabel:ConnectivityCommunication",
+         "@type": "@vocab"
       },
       "ConnectivityPositioning": {
-         "@id": "openlabel:ConnectivityPositioning"
+         "@id": "openlabel:ConnectivityPositioning",
+         "@type": "@vocab"
       },
       "DaySunElevation": {
          "@id": "openlabel:DaySunElevation",
          "@type": "xsd:boolean"
       },
       "DaySunPosition": {
-         "@id": "openlabel:DaySunPosition"
+         "@id": "openlabel:DaySunPosition",
+         "@type": "@vocab"
       },
       "DrivableAreaEdge": {
-         "@id": "openlabel:DrivableAreaEdge"
+         "@id": "openlabel:DrivableAreaEdge",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceCondition": {
-         "@id": "openlabel:DrivableAreaSurfaceCondition"
+         "@id": "openlabel:DrivableAreaSurfaceCondition",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceFeature": {
-         "@id": "openlabel:DrivableAreaSurfaceFeature"
+         "@id": "openlabel:DrivableAreaSurfaceFeature",
+         "@type": "@vocab"
       },
       "DrivableAreaSurfaceType": {
-         "@id": "openlabel:DrivableAreaSurfaceType"
+         "@id": "openlabel:DrivableAreaSurfaceType",
+         "@type": "@vocab"
       },
       "DrivableAreaType": {
-         "@id": "openlabel:DrivableAreaType"
+         "@id": "openlabel:DrivableAreaType",
+         "@type": "@vocab"
       },
       "EnvironmentParticulates": {
-         "@id": "openlabel:EnvironmentParticulates"
+         "@id": "openlabel:EnvironmentParticulates",
+         "@type": "@vocab"
       },
       "GeometryTransverse": {
-         "@id": "openlabel:GeometryTransverse"
+         "@id": "openlabel:GeometryTransverse",
+         "@type": "@vocab"
       },
       "HorizontalCurves": {
          "@id": "openlabel:HorizontalCurves",
@@ -70,20 +81,24 @@
          "@type": "xsd:boolean"
       },
       "IlluminationArtificial": {
-         "@id": "openlabel:IlluminationArtificial"
+         "@id": "openlabel:IlluminationArtificial",
+         "@type": "@vocab"
       },
       "IlluminationCloudiness": {
          "@id": "openlabel:IlluminationCloudiness",
          "@type": "xsd:boolean"
       },
       "IlluminationLowLight": {
-         "@id": "openlabel:IlluminationLowLight"
+         "@id": "openlabel:IlluminationLowLight",
+         "@type": "@vocab"
       },
       "JunctionIntersection": {
-         "@id": "openlabel:JunctionIntersection"
+         "@id": "openlabel:JunctionIntersection",
+         "@type": "@vocab"
       },
       "JunctionRoundabout": {
-         "@id": "openlabel:JunctionRoundabout"
+         "@id": "openlabel:JunctionRoundabout",
+         "@type": "@vocab"
       },
       "LaneSpecificationDimensions": {
          "@id": "openlabel:LaneSpecificationDimensions",
@@ -98,10 +113,12 @@
          "@type": "xsd:boolean"
       },
       "LaneSpecificationTravelDirection": {
-         "@id": "openlabel:LaneSpecificationTravelDirection"
+         "@id": "openlabel:LaneSpecificationTravelDirection",
+         "@type": "@vocab"
       },
       "LaneSpecificationType": {
-         "@id": "openlabel:LaneSpecificationType"
+         "@id": "openlabel:LaneSpecificationType",
+         "@type": "@vocab"
       },
       "LongitudinalDownSlope": {
          "@id": "openlabel:LongitudinalDownSlope",
@@ -216,7 +233,8 @@
          "@type": "xsd:boolean"
       },
       "RainType": {
-         "@id": "openlabel:RainType"
+         "@id": "openlabel:RainType",
+         "@type": "@vocab"
       },
       "RoadUser": {
          "@id": "openlabel:RoadUser",
@@ -227,31 +245,40 @@
          "@type": "xsd:boolean"
       },
       "RoadUserHuman": {
-         "@id": "openlabel:RoadUserHuman"
+         "@id": "openlabel:RoadUserHuman",
+         "@type": "@vocab"
       },
       "RoadUserVehicle": {
-         "@id": "openlabel:RoadUserVehicle"
+         "@id": "openlabel:RoadUserVehicle",
+         "@type": "@vocab"
       },
       "SceneryFixedStructure": {
-         "@id": "openlabel:SceneryFixedStructure"
+         "@id": "openlabel:SceneryFixedStructure",
+         "@type": "@vocab"
       },
       "ScenerySpecialStructure": {
-         "@id": "openlabel:ScenerySpecialStructure"
+         "@id": "openlabel:ScenerySpecialStructure",
+         "@type": "@vocab"
       },
       "SceneryTemporaryStructure": {
-         "@id": "openlabel:SceneryTemporaryStructure"
+         "@id": "openlabel:SceneryTemporaryStructure",
+         "@type": "@vocab"
       },
       "SceneryZone": {
-         "@id": "openlabel:SceneryZone"
+         "@id": "openlabel:SceneryZone",
+         "@type": "@vocab"
       },
       "SignsInformation": {
-         "@id": "openlabel:SignsInformation"
+         "@id": "openlabel:SignsInformation",
+         "@type": "@vocab"
       },
       "SignsRegulatory": {
-         "@id": "openlabel:SignsRegulatory"
+         "@id": "openlabel:SignsRegulatory",
+         "@type": "@vocab"
       },
       "SignsWarning": {
-         "@id": "openlabel:SignsWarning"
+         "@id": "openlabel:SignsWarning",
+         "@type": "@vocab"
       },
       "SubjectVehicleSpeed": {
          "@id": "openlabel:SubjectVehicleSpeed",
@@ -408,6 +435,175 @@
       "weatherWindValue": {
          "@id": "openlabel:weatherWindValue",
          "@type": "xsd:decimal"
-      }
+      },
+      "ArtificialStreetLighting": "openlabel:ArtificialStreetLighting",
+      "ArtificialVehicleLighting": "openlabel:ArtificialVehicleLighting",
+      "BehaviourMotion": "openlabel:BehaviourMotion",
+      "CommunicationHeadlightFlash": "openlabel:CommunicationHeadlightFlash",
+      "CommunicationHorn": "openlabel:CommunicationHorn",
+      "CommunicationSignalEmergency": "openlabel:CommunicationSignalEmergency",
+      "CommunicationSignalHazard": "openlabel:CommunicationSignalHazard",
+      "CommunicationSignalLeft": "openlabel:CommunicationSignalLeft",
+      "CommunicationSignalRight": "openlabel:CommunicationSignalRight",
+      "CommunicationSignalSlowing": "openlabel:CommunicationSignalSlowing",
+      "CommunicationV2i": "openlabel:CommunicationV2i",
+      "CommunicationV2v": "openlabel:CommunicationV2v",
+      "CommunicationWave": "openlabel:CommunicationWave",
+      "DrivableAreaGeometry": "openlabel:DrivableAreaGeometry",
+      "DrivableAreaLaneSpecification": "openlabel:DrivableAreaLaneSpecification",
+      "DrivableAreaSigns": "openlabel:DrivableAreaSigns",
+      "DrivableAreaSurface": "openlabel:DrivableAreaSurface",
+      "DynamicElementsSubjectVehicle": "openlabel:DynamicElementsSubjectVehicle",
+      "DynamicElementsTraffic": "openlabel:DynamicElementsTraffic",
+      "EdgeLineMarkers": "openlabel:EdgeLineMarkers",
+      "EdgeNone": "openlabel:EdgeNone",
+      "EdgeShoulderGrass": "openlabel:EdgeShoulderGrass",
+      "EdgeShoulderPavedOrGravel": "openlabel:EdgeShoulderPavedOrGravel",
+      "EdgeSolidBarriers": "openlabel:EdgeSolidBarriers",
+      "EdgeTemporaryLineMarkers": "openlabel:EdgeTemporaryLineMarkers",
+      "EnvironmentConnectivity": "openlabel:EnvironmentConnectivity",
+      "EnvironmentIllumination": "openlabel:EnvironmentIllumination",
+      "EnvironmentWeather": "openlabel:EnvironmentWeather",
+      "FixedStructureBuilding": "openlabel:FixedStructureBuilding",
+      "FixedStructureStreetFurniture": "openlabel:FixedStructureStreetFurniture",
+      "FixedStructureStreetlight": "openlabel:FixedStructureStreetlight",
+      "FixedStructureVegetation": "openlabel:FixedStructureVegetation",
+      "GeometryHorizontal": "openlabel:GeometryHorizontal",
+      "GeometryLongitudinal": "openlabel:GeometryLongitudinal",
+      "HumanAnimalRider": "openlabel:HumanAnimalRider",
+      "HumanCyclist": "openlabel:HumanCyclist",
+      "HumanDriver": "openlabel:HumanDriver",
+      "HumanMotorcyclist": "openlabel:HumanMotorcyclist",
+      "HumanPassenger": "openlabel:HumanPassenger",
+      "HumanPedestrian": "openlabel:HumanPedestrian",
+      "HumanWheelchairUser": "openlabel:HumanWheelchairUser",
+      "IlluminationDay": "openlabel:IlluminationDay",
+      "InformationSignsUniform": "openlabel:InformationSignsUniform",
+      "InformationSignsUniformFullTime": "openlabel:InformationSignsUniformFullTime",
+      "InformationSignsUniformTemporary": "openlabel:InformationSignsUniformTemporary",
+      "InformationSignsVariable": "openlabel:InformationSignsVariable",
+      "InformationSignsVariableFullTime": "openlabel:InformationSignsVariableFullTime",
+      "InformationSignsVariableTemporary": "openlabel:InformationSignsVariableTemporary",
+      "IntersectionCrossroad": "openlabel:IntersectionCrossroad",
+      "IntersectionGradeSeperated": "openlabel:IntersectionGradeSeperated",
+      "IntersectionStaggered": "openlabel:IntersectionStaggered",
+      "IntersectionTJunction": "openlabel:IntersectionTJunction",
+      "IntersectionYJunction": "openlabel:IntersectionYJunction",
+      "LaneTypeBus": "openlabel:LaneTypeBus",
+      "LaneTypeCycle": "openlabel:LaneTypeCycle",
+      "LaneTypeEmergency": "openlabel:LaneTypeEmergency",
+      "LaneTypeSpecial": "openlabel:LaneTypeSpecial",
+      "LaneTypeTraffic": "openlabel:LaneTypeTraffic",
+      "LaneTypeTram": "openlabel:LaneTypeTram",
+      "LowLightAmbient": "openlabel:LowLightAmbient",
+      "LowLightNight": "openlabel:LowLightNight",
+      "MotorwayManaged": "openlabel:MotorwayManaged",
+      "MotorwayUnmanaged": "openlabel:MotorwayUnmanaged",
+      "OddDynamicElements": "openlabel:OddDynamicElements",
+      "OddEnvironment": "openlabel:OddEnvironment",
+      "OddScenery": "openlabel:OddScenery",
+      "ParticulatesWater": "openlabel:ParticulatesWater",
+      "PositioningGalileo": "openlabel:PositioningGalileo",
+      "PositioningGlonass": "openlabel:PositioningGlonass",
+      "PositioningGps": "openlabel:PositioningGps",
+      "RainTypeConvective": "openlabel:RainTypeConvective",
+      "RainTypeDynamic": "openlabel:RainTypeDynamic",
+      "RainTypeOrographic": "openlabel:RainTypeOrographic",
+      "RegulatorySignsUniform": "openlabel:RegulatorySignsUniform",
+      "RegulatorySignsUniformFullTime": "openlabel:RegulatorySignsUniformFullTime",
+      "RegulatorySignsUniformTemporary": "openlabel:RegulatorySignsUniformTemporary",
+      "RegulatorySignsVariable": "openlabel:RegulatorySignsVariable",
+      "RegulatorySignsVariableFullTime": "openlabel:RegulatorySignsVariableFullTime",
+      "RegulatorySignsVariableTemporary": "openlabel:RegulatorySignsVariableTemporary",
+      "RoadTypeDistributor": "openlabel:RoadTypeDistributor",
+      "RoadTypeMinor": "openlabel:RoadTypeMinor",
+      "RoadTypeMotorway": "openlabel:RoadTypeMotorway",
+      "RoadTypeParking": "openlabel:RoadTypeParking",
+      "RoadTypeRadial": "openlabel:RoadTypeRadial",
+      "RoadTypeShared": "openlabel:RoadTypeShared",
+      "RoadTypeSlip": "openlabel:RoadTypeSlip",
+      "RoundaboutCompact": "openlabel:RoundaboutCompact",
+      "RoundaboutCompactNosignal": "openlabel:RoundaboutCompactNosignal",
+      "RoundaboutCompactSignal": "openlabel:RoundaboutCompactSignal",
+      "RoundaboutDouble": "openlabel:RoundaboutDouble",
+      "RoundaboutDoubleNosignal": "openlabel:RoundaboutDoubleNosignal",
+      "RoundaboutDoubleSignal": "openlabel:RoundaboutDoubleSignal",
+      "RoundaboutLarge": "openlabel:RoundaboutLarge",
+      "RoundaboutLargeNosignal": "openlabel:RoundaboutLargeNosignal",
+      "RoundaboutLargeSignal": "openlabel:RoundaboutLargeSignal",
+      "RoundaboutMini": "openlabel:RoundaboutMini",
+      "RoundaboutMiniNosignal": "openlabel:RoundaboutMiniNosignal",
+      "RoundaboutMiniSignal": "openlabel:RoundaboutMiniSignal",
+      "RoundaboutNormal": "openlabel:RoundaboutNormal",
+      "RoundaboutNormalNosignal": "openlabel:RoundaboutNormalNosignal",
+      "RoundaboutNormalSignal": "openlabel:RoundaboutNormalSignal",
+      "Scenario": "openlabel:Scenario",
+      "SceneryDrivableArea": "openlabel:SceneryDrivableArea",
+      "SceneryJunction": "openlabel:SceneryJunction",
+      "SpecialStructureAutoAccess": "openlabel:SpecialStructureAutoAccess",
+      "SpecialStructureBridge": "openlabel:SpecialStructureBridge",
+      "SpecialStructurePedestrianCrossing": "openlabel:SpecialStructurePedestrianCrossing",
+      "SpecialStructureRailCrossing": "openlabel:SpecialStructureRailCrossing",
+      "SpecialStructureTollPlaza": "openlabel:SpecialStructureTollPlaza",
+      "SpecialStructureTunnel": "openlabel:SpecialStructureTunnel",
+      "SunPositionBehind": "openlabel:SunPositionBehind",
+      "SunPositionFront": "openlabel:SunPositionFront",
+      "SunPositionLeft": "openlabel:SunPositionLeft",
+      "SunPositionRight": "openlabel:SunPositionRight",
+      "SurfaceConditionContamination": "openlabel:SurfaceConditionContamination",
+      "SurfaceConditionFlooded": "openlabel:SurfaceConditionFlooded",
+      "SurfaceConditionIcy": "openlabel:SurfaceConditionIcy",
+      "SurfaceConditionMirage": "openlabel:SurfaceConditionMirage",
+      "SurfaceConditionSnow": "openlabel:SurfaceConditionSnow",
+      "SurfaceConditionStandingWater": "openlabel:SurfaceConditionStandingWater",
+      "SurfaceConditionWet": "openlabel:SurfaceConditionWet",
+      "SurfaceFeatureCrack": "openlabel:SurfaceFeatureCrack",
+      "SurfaceFeaturePothole": "openlabel:SurfaceFeaturePothole",
+      "SurfaceFeatureRut": "openlabel:SurfaceFeatureRut",
+      "SurfaceFeatureSwell": "openlabel:SurfaceFeatureSwell",
+      "SurfaceTypeLoose": "openlabel:SurfaceTypeLoose",
+      "SurfaceTypeSegmented": "openlabel:SurfaceTypeSegmented",
+      "SurfaceTypeUniform": "openlabel:SurfaceTypeUniform",
+      "Tag": "openlabel:Tag",
+      "TemporaryStructureConstructionDetour": "openlabel:TemporaryStructureConstructionDetour",
+      "TemporaryStructureRefuseCollection": "openlabel:TemporaryStructureRefuseCollection",
+      "TemporaryStructureRoadSignage": "openlabel:TemporaryStructureRoadSignage",
+      "TemporaryStructureRoadWorks": "openlabel:TemporaryStructureRoadWorks",
+      "TrafficAgentType": "openlabel:TrafficAgentType",
+      "TransverseBarriers": "openlabel:TransverseBarriers",
+      "TransverseDivided": "openlabel:TransverseDivided",
+      "TransverseLanesTogether": "openlabel:TransverseLanesTogether",
+      "TransversePavements": "openlabel:TransversePavements",
+      "TransverseUndivided": "openlabel:TransverseUndivided",
+      "TravelDirectionLeft": "openlabel:TravelDirectionLeft",
+      "TravelDirectionRight": "openlabel:TravelDirectionRight",
+      "V2iCellular": "openlabel:V2iCellular",
+      "V2iSatellite": "openlabel:V2iSatellite",
+      "V2iWifi": "openlabel:V2iWifi",
+      "V2vCellular": "openlabel:V2vCellular",
+      "V2vSatellite": "openlabel:V2vSatellite",
+      "V2vWifi": "openlabel:V2vWifi",
+      "VehicleAgricultural": "openlabel:VehicleAgricultural",
+      "VehicleBus": "openlabel:VehicleBus",
+      "VehicleCar": "openlabel:VehicleCar",
+      "VehicleConstruction": "openlabel:VehicleConstruction",
+      "VehicleCycle": "openlabel:VehicleCycle",
+      "VehicleEmergency": "openlabel:VehicleEmergency",
+      "VehicleMotorcycle": "openlabel:VehicleMotorcycle",
+      "VehicleTrailer": "openlabel:VehicleTrailer",
+      "VehicleTruck": "openlabel:VehicleTruck",
+      "VehicleVan": "openlabel:VehicleVan",
+      "VehicleWheelchair": "openlabel:VehicleWheelchair",
+      "WarningSignsUniform": "openlabel:WarningSignsUniform",
+      "WarningSignsUniformFullTime": "openlabel:WarningSignsUniformFullTime",
+      "WarningSignsUniformTemporary": "openlabel:WarningSignsUniformTemporary",
+      "WarningSignsVariable": "openlabel:WarningSignsVariable",
+      "WarningSignsVariableFullTime": "openlabel:WarningSignsVariableFullTime",
+      "WarningSignsVariableTemporary": "openlabel:WarningSignsVariableTemporary",
+      "ZoneGeoFenced": "openlabel:ZoneGeoFenced",
+      "ZoneInterference": "openlabel:ZoneInterference",
+      "ZoneRegion": "openlabel:ZoneRegion",
+      "ZoneSchool": "openlabel:ZoneSchool",
+      "ZoneTrafficManagement": "openlabel:ZoneTrafficManagement"
    }
 }
