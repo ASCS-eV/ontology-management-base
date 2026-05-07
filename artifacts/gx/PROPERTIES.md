@@ -18596,8 +18596,8 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |CodeArtifactShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |CodeArtifactShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-checksum"></a>checkSum||1|Details on checksum of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-license"></a>license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
+|CodeArtifactShape|gx|<a id="prop-https---w3id-org-gaia-x-development-copyrightownedby"></a>copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |CodeArtifactShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |ComplianceAssuranceShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
 |ComplianceAssuranceShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
@@ -18659,9 +18659,9 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ComputeFunctionServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComputeFunctionTemplateShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctiontemplateruntime"></a>computeFunctionTemplateRuntime|1||Runtime(s) available for this function template|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ComputeFunctionTemplateShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ComputeFunctionTemplateShape|gx|checkSum||1|Details on checksum of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionTemplateShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18742,11 +18742,11 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ContainerImageShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |ContainerImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerImageShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ContainerImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-encryption"></a>encryption||1|Details with respect to encryption of the images.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-secureboot"></a>secureBoot||1|If true, instances of the image are only started, if signature of software, such as firmware or operating system, are valid. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ContainerImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-licenseincluded"></a>licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
+|ContainerImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ContainerImageShape|gx|checkSum||1|Details on checksum of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerImageShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |ContainerImageShape|gx|<a id="prop-https---w3id-org-gaia-x-development-maintenance"></a>maintenance||1|Details on maintenance capabilities of vendor of image's operating system.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18808,10 +18808,10 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |CountryCompanyNumberShape|gx|countryCode|1|1|Unique code identifying a country.||gx.shacl.ttl|
 |CpuCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-pcpu"></a>pCPU|1|1|Hardware capabilities of phyisical CPU used by given flavor.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |CpuCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-vcpus"></a>vCPUs|1|1|A Non-negative integer (beeing equal or greater than 1) defining the number of virtual CPUs availabe in given flavor.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
-|CpuCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-overprovisioningratio"></a>overProvisioningRatio||1|A Non-negative integer (being equal or greater than 1) defining the amount of overprovisioning. 
+|CpuCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-overprovisioningratio"></a>overProvisioningRatio||1|A non-negative number (being equal or greater than 1) defining the amount of overprovisioning. 
 1 means no over-provisioning.
 > 1 means the physical CPU/thread is over-provisioned by the given factor, e.g. factor 2 means one physical CPU is used by two virtual CPUs.
-|<http://www.w3.org/2001/XMLSchema#decimal>|gx.shacl.ttl|
+|<http://www.w3.org/2001/XMLSchema#float>|gx.shacl.ttl|
 |CustomerAuditingRightsShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |CustomerAuditingRightsShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
 |CustomerAuditingRightsShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
@@ -19067,7 +19067,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |GovernmentInvestigationManagementShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |GovernmentInvestigationManagementShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
 |HypervisorShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|HypervisorShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |HypervisorShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |HypervisorShape|gx|<a id="prop-https---w3id-org-gaia-x-development-hypervisortype"></a>hypervisorType|1|1|The common name of the distribution of the operating system as defined in http://libosinfo.org/.||gx.shacl.ttl|
 |HypervisorShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
@@ -19078,6 +19077,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |HypervisorShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |HypervisorShape|gx|checkSum||1|Details on checksum of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |HypervisorShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|HypervisorShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |HypervisorShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |IOPSShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
 |IOPSShape|gx|metric|1|1|Input/output operations per second expressed as a data-rate.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19089,12 +19089,12 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ImageShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ImageShape|gx|rootDiskReq||1|Minimal size of root disk required to run the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ImageShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
 |ImageShape|gx|secureBoot||1|If true, instances of the image are only started, if signature of software, such as firmware or operating system, are valid. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ImageShape|gx|maintenance||1|Details on maintenance capabilities of vendor of image's operating system.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ImageShape|gx|operatingSystem||1|A resolvable link to Gaia-X credential of operation system offered by this image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ImageShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |ImageShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |ImageShape|gx|gpuReq||1|Details with respect to GPU capabilities required to run the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ImageShape|gx|licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
@@ -19275,11 +19275,11 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |MaintenanceSubscriptionShape|gx|<a id="prop-https---w3id-org-gaia-x-development-subscriptionincluded"></a>subscriptionIncluded||1|True, if cloud  service provider prepared already the image to reviece bug fixes, security fixes and (minor) function updates. Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |MeasureShape|gx|legalDocuments|1||Legal documents associated with the measure.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |MeasureShape|schema|description|1|1|Description of the measure.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|MemoryCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-memory"></a>memory|1|1|Amount of virtual RAM available in given flavor.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|MemoryCapabilitiesShape|gx|overProvisioningRatio||1|A Non-negative number (being equal or greater than 1) defining the amount of overprovisioning. 
+|MemoryCapabilitiesShape|gx|overProvisioningRatio||1|A non-negative number (being equal or greater than 1) defining the amount of overprovisioning. 
 1 means no over-provisioning.
 > 1 means physical memory is over-provisioned by the given factor, e.g. factor 2 means available virtual RAM size is twice as big as physical RAM size. Maximum value is 3.
-|<http://www.w3.org/2001/XMLSchema#decimal>|gx.shacl.ttl|
+|<http://www.w3.org/2001/XMLSchema#float>|gx.shacl.ttl|
+|MemoryCapabilitiesShape|gx|<a id="prop-https---w3id-org-gaia-x-development-memory"></a>memory|1|1|Amount of virtual RAM available in given flavor.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |MemoryShape|gx|<a id="prop-https---w3id-org-gaia-x-development-eccenabled"></a>eccEnabled||1|Error connection code allows to detect and correct bit errors in data. True, if error-correction-code is supported by the ram, false otherwise. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |MemoryShape|gx|defaultOversubscriptionRatio||1|Over-subscription means assigning more capacity to virtual machines that the physical device has. Default over-subscription ratio defines the amount of default over-subscription as a value larger or equal to 1.0. 1.0 means no over-subscription.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
 |MemoryShape|gx|<a id="prop-https---w3id-org-gaia-x-development-memorysize"></a>memorySize|1|1|Memory size of RAM.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19361,9 +19361,9 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |OperatingSystemShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|gx|buildDate||1|Date and time the software was build, formated according to ISO 8601 (UTC - 24 hours).|<http://www.w3.org/2001/XMLSchema#dateTime>|gx.shacl.ttl|
+|OperatingSystemShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |OperatingSystemShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |OperatingSystemShape|gx|<a id="prop-https---w3id-org-gaia-x-development-osdistribution"></a>osDistribution|1|1|The common name of the distribution of the operating system as defined in http://libosinfo.org/.||gx.shacl.ttl|
-|OperatingSystemShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |OperatingSystemShape|gx|signature||1|Details with respect to signature of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |OperatingSystemShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
 |OperatingSystemShape|gx|patchLevel||1|Software specific patch number describing patch level of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19380,6 +19380,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |PXEImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|ramReq||1|Minimal size of RAM required to run the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PXEImageShape|gx|vPMU||1|If true, a virtual performance monitoring unit (vPMU) is enable in guest. Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
+|PXEImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |PXEImageShape|gx|multiQueues||1|If true, one queue is set for each virtual CPU.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |PXEImageShape|gx|secureBoot||1|If true, instances of the image are only started, if signature of software, such as firmware or operating system, are valid. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |PXEImageShape|gx|maintenance||1|Details on maintenance capabilities of vendor of image's operating system.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19393,7 +19394,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |PXEImageShape|gx|fileSize||1|Size of the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PXEImageShape|gx|version||1|Version of the software.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|cpuReq||1|Details with respect to CPU capabilities required to run the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|PXEImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |PXEImageShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PXEImageShape|gx|videoRamSize||1|Maximum amount of RAM for the video image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PXEImageShape|gx|checkSum||1|Details on checksum of the software.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19682,9 +19682,9 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |VMImageShape|gx|maintenance||1|Details on maintenance capabilities of vendor of image's operating system.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VMImageShape|gx|secureBoot||1|If true, instances of the image are only started, if signature of software, such as firmware or operating system, are valid. Default: False.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |VMImageShape|gx|licenseIncluded||1|In case an image requires a commercial license to be used (No Freeware), this attribute indicates, if service usage fee includes that license (true) or customer has to bring its own commercial license (False). Default: False|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
+|VMImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VMImageShape|gx|encryption||1|Details with respect to encryption of the images.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VMImageShape|gx|videoRamSize||1|Maximum amount of RAM for the video image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|VMImageShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VMImageShape|gx|cpuReq||1|Details with respect to CPU capabilities required to run the image.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VMImageShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VMImageShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19695,12 +19695,12 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |VirtualInterconnectionPointIdentifierShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
-|VirtualInterconnectionPointIdentifierShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|interconnectedParticipants|1||Legal persons participating within a concept.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|interconnectionPointIdentifier|1|1|Definition of the location where resources can interconnect.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |VirtualInterconnectionPointIdentifierShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualInterconnectionPointIdentifierShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19730,9 +19730,9 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |VirtualResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualResourceShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualResourceShape|gx|resourcePolicy|1||A  list of policy expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...). If there is no specified usage policy constraints on the VirtualResource, the  policy should express a simple default: allow intent|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|VirtualResourceShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |VirtualResourceShape|gx|aggregationOfResources|||A resolvable link of resources related to the resource and that can exist independently of it.||gx.shacl.ttl|
 |VirtualResourceShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |VirtualResourceShape|gx|copyrightOwnedBy|1||A list of copyright owners either as a free form string or as resolvable link to Gaia-X Credential of participants. A copyright owner is a person or organization that has the right to exploit the resource. Copyright owner does not necessarily refer to the author of the resource, who is a natural person and may differ from copyright owner.||gx.shacl.ttl|
-|VirtualResourceShape|gx|license|1||A list of SPDX identifiers or URL to document.||gx.shacl.ttl|
 |WaterUsageEffectivenessShape|gx|<a id="prop-https---w3id-org-gaia-x-development-waterusageeffectivenessvalue"></a>waterUsageEffectivenessValue|1|1|The effectiveness of water usage, represented as a float.|<http://www.w3.org/2001/XMLSchema#float>|gx.shacl.ttl|
 |WaterUsageEffectivenessShape|gx|certifications|||Legal documents certifying the water usage effectiveness.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
