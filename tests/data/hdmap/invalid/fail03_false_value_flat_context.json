@@ -1,0 +1,138 @@
+{
+   "@context": [
+      "https://w3id.org/gaia-x/development#",
+      "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://openlabel.asam.net/V1-0-0/ontologies/",
+      {
+         "@vocab": null
+      }
+   ],
+   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_fail03_false_value_flat_context",
+   "@type": "hdmap:HdMap",
+   "hdmap:hasResourceDescription": {
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:vP8mX2qL9kR5wJ3zN7bH4dC1fG0tY6",
+      "@type": "envited-x:ResourceDescription",
+      "name": "Test HD Map Dataset",
+      "description": "A sample HD map dataset for testing.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+      },
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+   },
+   "hdmap:hasDomainSpecification": {
+      "@type": "hdmap:DomainSpecification",
+      "hdmap:hasFormat": {
+         "@type": "hdmap:Format",
+         "formatType": "ASAM OpenDRIVE",
+         "version": "1.6"
+      },
+      "hdmap:hasContent": [
+         {
+            "@type": "hdmap:Content",
+            "roadTypes": "town",
+            "laneTypes": [
+               "driving",
+               "walking"
+            ],
+            "levelOfDetail": "crosswalk",
+            "trafficDirection": "right-hand"
+         },
+         {
+            "@type": "openlabel:OddScenery",
+            "LaneSpecificationDimensions": false,
+            "laneSpecificationDimensionsValue": 3.5
+         }
+      ],
+      "hdmap:hasQuantity": {
+         "@type": "hdmap:Quantity",
+         "length": 1.46,
+         "elevationRange": 2.22,
+         "numberIntersections": 5,
+         "numberTrafficLights": 0,
+         "numberTrafficSigns": 155,
+         "numberObjects": 200,
+         "numberOutlines": 100,
+         "speedLimit": {
+            "@type": "hdmap:Range2D",
+            "min": 10.0,
+            "max": 50.0
+         },
+         "rangeOfModeling": 20.0
+      },
+      "hdmap:hasQuality": {
+         "@type": "hdmap:Quality",
+         "precision": 0.01,
+         "accuracyLaneModel2d": 0.1,
+         "accuracyLaneModelHeight": 0.1,
+         "accuracySignals": 0.1,
+         "accuracyObjects": 0.1
+      },
+      "hdmap:hasDataSource": {
+         "@type": "hdmap:DataSource",
+         "usedDataSources": "scanner",
+         "measurementSystem": "3DMS system"
+      },
+      "hasGeoreference": {
+         "@type": "georeference:Georeference",
+         "hasProjectLocation": {
+            "@type": "georeference:ProjectLocation",
+            "country": "DE",
+            "state": "DE-BY",
+            "region": "Upper Bavaria",
+            "city": "Grafing",
+            "relationOrArea": "Town of Grafing",
+            "hasBoundingBox": {
+               "@type": "georeference:BoundingBox",
+               "xMin": 11.964,
+               "yMin": 48.043,
+               "xMax": 11.968274,
+               "yMax": 48.046836
+            }
+         },
+         "hasGeodeticReferenceSystem": {
+            "@type": "georeference:GeodeticReferenceSystem",
+            "codeEPSG": 32632,
+            "hasOrigin": {
+               "@type": "georeference:LatLonCoordinate",
+               "lat": 48.045414,
+               "lon": 11.966206
+            },
+            "hasViewPoint": {
+               "@type": "georeference:LatLonCoordinate",
+               "lat": 48.046,
+               "lon": 11.967
+            },
+            "heightSystem": "Ellipsoidal height"
+         }
+      }
+   },
+   "hdmap:hasManifest": {
+      "@type": "manifest:Link",
+      "iri": "did:web:test.fixture.net:Manifest:test_hdmap_manifest_reference",
+      "note": "Reference to the hdmap manifest.",
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+      ],
+      "hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
+      },
+      "hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
+      },
+      "hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "filePath": "./base-references/hdmap_manifest_reference.json",
+         "mimeType": "application/ld+json"
+      }
+   }
+}

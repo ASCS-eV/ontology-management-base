@@ -1,10 +1,12 @@
 {
-   "@context": {
-      "example_ontology": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
-      "gx": "https://w3id.org/gaia-x/development#",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
-   },
+   "@context": [
+      "https://openlabel.asam.net/V1-0-0/ontologies/",
+      {
+         "example_ontology": "https://w3id.org/gaia-x4plcaad/ontologies/example/v1/",
+         "gx": "https://w3id.org/gaia-x/development#",
+         "xsd": "http://www.w3.org/2001/XMLSchema#"
+      }
+   ],
    "@id": "did:web:registry.gaia-x.eu:RelatedSelfDescription:123456789",
    "@type": "example_ontology:ExampleServiceOffering",
    "example_ontology:property1": {

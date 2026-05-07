@@ -103,7 +103,7 @@ scenario:DomainSpecificationShape a sh:NodeShape ;
     sh:property 
         [ 
           sh:minCount 1 ;
-          sh:node scenario:ContentOrTagShape ;
+          sh:node scenario:ContentOrDynamicAnnotationShape ;
           sh:name "content"@en ;
           sh:description "Attributes describing the content of the scenario."@en ;
           sh:order 1 ;
@@ -156,15 +156,17 @@ scenario:DomainSpecificationShape a sh:NodeShape ;
         ] ;
     sh:targetClass scenario:DomainSpecification .
 
-### New Union Shape for Content
-scenario:ContentOrTagShape a sh:NodeShape ;
-    sh:description "Scenario Content or OpenLABEL Tag Union Shape"@en ;
+### Union Shape for Content or Dynamic Annotations
+scenario:ContentOrDynamicAnnotationShape a sh:NodeShape ;
+    sh:description "Scenario Content or OpenLABEL Dynamic Annotation Union Shape"@en ;
     sh:or (
         [ sh:node scenario:ContentShape ]
-        [ sh:node openlabel:TagShape ]
-        [ sh:node xsd:boolean ]
+        [ sh:node openlabel:OddEnvironmentShape ]
+        [ sh:node openlabel:OddDynamicElementsShape ]
+        [ sh:node openlabel:BehaviourShape ]
+        [ sh:node openlabel:RoadUserShape ]
     ) ;
-    sh:message "Each item of hasContent must conform to either Scenario Content, an OpenLABEL Tag, or a boolean."@en .
+    sh:message "Each item of hasContent must conform to Scenario Content, OddEnvironment, OddDynamicElements, Behaviour, or RoadUser."@en .
 
 ### Detailed Shapes (Expanded based on Instance Data)
 scenario:FormatShape a sh:NodeShape ;

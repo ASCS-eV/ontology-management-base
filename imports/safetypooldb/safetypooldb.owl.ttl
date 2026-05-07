@@ -1,0 +1,845 @@
+# Safety Pool DB V1.6 Scenario Tagging Ontology
+# Generated: 2026-05-05 19:45:46Z
+
+@base <https://live.safetypooldb.ai/api/ontologies/v1.6/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix asam: <https://openlabel.asam.net/V1-0-0/ontologies/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://live.safetypooldb.ai/api/ontologies/v1.6/> a owl:Ontology ;
+    rdfs:label "Safety Pool DB V1.6 Scenario Tagging Ontology" .
+
+<SourceApprovalAuthority> a rdfs:Class ;
+	rdfs:label "Approval Authority" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceCrashIncident> a rdfs:Class ;
+	rdfs:label "Crash Incident" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceISMR> a rdfs:Class ;
+	rdfs:label "In-Service Monitoring and Reporting" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceGeneral> a rdfs:Class ;
+	rdfs:label "General" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<MutationHumanWheelchairUser> a rdfs:Class ;
+	rdfs:label "Wheelchair user" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanPedestrian> a rdfs:Class ;
+	rdfs:label "Pedestrian" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanPassenger> a rdfs:Class ;
+	rdfs:label "Passenger" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanMotorcyclist> a rdfs:Class ;
+	rdfs:label "Motorcyclist" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanDriver> a rdfs:Class ;
+	rdfs:label "Driver" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanCyclist> a rdfs:Class ;
+	rdfs:label "Cyclist" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationHumanAnimalRider> a rdfs:Class ;
+	rdfs:label "Animal Rider" ;
+	rdfs:subClassOf <MutationTrafficAgentHuman> .
+
+<MutationVehicleWheelchair> a rdfs:Class ;
+	rdfs:label "Wheelchair" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleVan> a rdfs:Class ;
+	rdfs:label "Van" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleTruck> a rdfs:Class ;
+	rdfs:label "Truck" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleTrailer> a rdfs:Class ;
+	rdfs:label "Trailer" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleMotorcycle> a rdfs:Class ;
+	rdfs:label "Motorcycle" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleEmergency> a rdfs:Class ;
+	rdfs:label "Emergency vehicle" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleCycle> a rdfs:Class ;
+	rdfs:label "Cycle" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleConstruction> a rdfs:Class ;
+	rdfs:label "Construction vehicle" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleCar> a rdfs:Class ;
+	rdfs:label "Car" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleBus> a rdfs:Class ;
+	rdfs:label "Bus" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationVehicleAgricultural> a rdfs:Class ;
+	rdfs:label "Agricultural vehicle" ;
+	rdfs:subClassOf <MutationTrafficAgentVehicle> .
+
+<MutationTrafficAgentVehicle> a rdfs:Class ;
+	rdfs:label "Vehicle" ;
+	rdfs:subClassOf <MutationTrafficAgent> .
+
+<MutationTrafficAgentHuman> a rdfs:Class ;
+	rdfs:label "Human" ;
+	rdfs:subClassOf <MutationTrafficAgent> .
+
+<MutationTrafficAgentAnimal> a rdfs:Class ;
+	rdfs:label "Animal" ;
+	rdfs:subClassOf <MutationTrafficAgent> .
+
+<MutationSubjectVehicleWheelchair> a rdfs:Class ;
+	rdfs:label "Wheelchair" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleVan> a rdfs:Class ;
+	rdfs:label "Van" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleTruck> a rdfs:Class ;
+	rdfs:label "Truck" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleTrailer> a rdfs:Class ;
+	rdfs:label "Trailer" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleMotorcycle> a rdfs:Class ;
+	rdfs:label "Motorcycle" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleEmergency> a rdfs:Class ;
+	rdfs:label "Emergency vehicle" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleCycle> a rdfs:Class ;
+	rdfs:label "Cycle" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleConstruction> a rdfs:Class ;
+	rdfs:label "Construction vehicle" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleCar> a rdfs:Class ;
+	rdfs:label "Car" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleBus> a rdfs:Class ;
+	rdfs:label "Bus" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationSubjectVehicleAgricultural> a rdfs:Class ;
+	rdfs:label "Agricultural vehicle" ;
+	rdfs:subClassOf <MutationSubjectVehicle> .
+
+<MutationTrafficAgent> a rdfs:Class ;
+	rdfs:label "Road user" ;
+	rdfs:subClassOf <MetaMutationType> .
+
+<MutationSubjectVehicle> a rdfs:Class ;
+	rdfs:label "Vehicle" ;
+	rdfs:subClassOf <MetaMutationType> .
+
+<MutationActorTypeIncompatibleList> a rdfs:Class ;
+	rdfs:label "List of Actor ID pairs incompatible for mutation" ;
+	rdfs:subClassOf <MetaMutationType> .
+
+<CommunicationWaveTrafficAgent> a rdfs:Class ;
+	rdfs:label "Wave (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationWave> .
+
+<CommunicationWaveEgo> a rdfs:Class ;
+	rdfs:label "Wave (Ego)" ;
+	rdfs:subClassOf <CommunicationWave> .
+
+<CommunicationHornTrafficAgent> a rdfs:Class ;
+	rdfs:label "Sound horn (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationHorn> .
+
+<CommunicationHornEgo> a rdfs:Class ;
+	rdfs:label "Sound horn (Ego)" ;
+	rdfs:subClassOf <CommunicationHorn> .
+
+<CommunicationSignalHazardTrafficAgent> a rdfs:Class ;
+	rdfs:label "Signal hazard (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationSignalHazard> .
+
+<CommunicationSignalHazardEgo> a rdfs:Class ;
+	rdfs:label "Signal hazard (Ego)" ;
+	rdfs:subClassOf <CommunicationSignalHazard> .
+
+<CommunicationSignalSlowingTrafficAgent> a rdfs:Class ;
+	rdfs:label "Signal slowing (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationSignalSlowing> .
+
+<CommunicationSignalSlowingEgo> a rdfs:Class ;
+	rdfs:label "Signal slowing (Ego)" ;
+	rdfs:subClassOf <CommunicationSignalSlowing> .
+
+<CommunicationSignalRightTrafficAgent> a rdfs:Class ;
+	rdfs:label "Signal right (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationSignalRight> .
+
+<CommunicationSignalRightEgo> a rdfs:Class ;
+	rdfs:label "Signal right (Ego)" ;
+	rdfs:subClassOf <CommunicationSignalRight> .
+
+<CommunicationSignalLeftTrafficAgent> a rdfs:Class ;
+	rdfs:label "Signal left (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationSignalLeft> .
+
+<CommunicationSignalLeftEgo> a rdfs:Class ;
+	rdfs:label "Signal left (Ego)" ;
+	rdfs:subClassOf <CommunicationSignalLeft> .
+
+<CommunicationSignalEmergencyTrafficAgent> a rdfs:Class ;
+	rdfs:label "Signal emergency (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationSignalEmergency> .
+
+<CommunicationSignalEmergencyEgo> a rdfs:Class ;
+	rdfs:label "Signal emergency (Ego)" ;
+	rdfs:subClassOf <CommunicationSignalEmergency> .
+
+<CommunicationHeadlightFlashTrafficAgent> a rdfs:Class ;
+	rdfs:label "Flash headlight (Traffic Agent)" ;
+	rdfs:subClassOf <CommunicationHeadlightFlash> .
+
+<CommunicationHeadlightFlashEgo> a rdfs:Class ;
+	rdfs:label "Flash headlight (Ego)" ;
+	rdfs:subClassOf <CommunicationHeadlightFlash> .
+
+<MotionUTurnTrafficAgent> a rdfs:Class ;
+	rdfs:label "U-turn (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionUTurn .
+
+<MotionUTurnEgo> a rdfs:Class ;
+	rdfs:label "U-turn (Ego)" ;
+	rdfs:subClassOf asam:MotionUTurn .
+
+<MotionOvertakeTrafficAgent> a rdfs:Class ;
+	rdfs:label "Overtake (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionOvertake .
+
+<MotionOvertakeEgo> a rdfs:Class ;
+	rdfs:label "Overtake (Ego)" ;
+	rdfs:subClassOf asam:MotionOvertake .
+
+<MotionTowardsTrafficAgent> a rdfs:Class ;
+	rdfs:label "Move towards (Traffic Agent)" ;
+	rdfs:subClassOf <MotionTowards> .
+
+<MotionTowardsEgo> a rdfs:Class ;
+	rdfs:label "Move towards (Ego)" ;
+	rdfs:subClassOf <MotionTowards> .
+
+<MotionAwayTrafficAgent> a rdfs:Class ;
+	rdfs:label "Move away (Traffic Agent)" ;
+	rdfs:subClassOf <MotionAway> .
+
+<MotionAwayEgo> a rdfs:Class ;
+	rdfs:label "Move away (Ego)" ;
+	rdfs:subClassOf <MotionAway> .
+
+<MotionCutOutTrafficAgent> a rdfs:Class ;
+	rdfs:label "Cut-out (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionCutOut .
+
+<MotionCutOutEgo> a rdfs:Class ;
+	rdfs:label "Cut-out (Ego)" ;
+	rdfs:subClassOf asam:MotionCutOut .
+
+<MotionCutInTrafficAgent> a rdfs:Class ;
+	rdfs:label "Cut-in (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionCutIn .
+
+<MotionCutInEgo> a rdfs:Class ;
+	rdfs:label "Cut-in (Ego)" ;
+	rdfs:subClassOf asam:MotionCutIn .
+
+<MotionTurnRightTrafficAgent> a rdfs:Class ;
+	rdfs:label "Turn right (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionTurnRight .
+
+<MotionTurnRightEgo> a rdfs:Class ;
+	rdfs:label "Turn right (Ego)" ;
+	rdfs:subClassOf asam:MotionTurnRight .
+
+<MotionTurnLeftTrafficAgent> a rdfs:Class ;
+	rdfs:label "Turn left (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionTurnLeft .
+
+<MotionTurnLeftEgo> a rdfs:Class ;
+	rdfs:label "Turn left (Ego)" ;
+	rdfs:subClassOf asam:MotionTurnLeft .
+
+<MotionTurnTrafficAgent> a rdfs:Class ;
+	rdfs:label "Turn (Traffic Agent)" ;
+	rdfs:subClassOf <MotionTurn> .
+
+<MotionTurnEgo> a rdfs:Class ;
+	rdfs:label "Turn (Ego)" ;
+	rdfs:subClassOf <MotionTurn> .
+
+<MotionStopTrafficAgent> a rdfs:Class ;
+	rdfs:label "Stop (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionStop .
+
+<MotionStopEgo> a rdfs:Class ;
+	rdfs:label "Stop (Ego)" ;
+	rdfs:subClassOf asam:MotionStop .
+
+<MotionReverseTrafficAgent> a rdfs:Class ;
+	rdfs:label "Reverse (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionReverse .
+
+<MotionReverseEgo> a rdfs:Class ;
+	rdfs:label "Reverse (Ego)" ;
+	rdfs:subClassOf asam:MotionReverse .
+
+<MotionLaneChangeRightTrafficAgent> a rdfs:Class ;
+	rdfs:label "Lane change right (Traffic Agent)" ;
+	rdfs:subClassOf <MotionLaneChangeRight> .
+
+<MotionLaneChangeRightEgo> a rdfs:Class ;
+	rdfs:label "Lane change right (Ego)" ;
+	rdfs:subClassOf <MotionLaneChangeRight> .
+
+<MotionLaneChangeLeftTrafficAgent> a rdfs:Class ;
+	rdfs:label "Lane change left (Traffic Agent)" ;
+	rdfs:subClassOf <MotionLaneChangeLeft> .
+
+<MotionLaneChangeLeftEgo> a rdfs:Class ;
+	rdfs:label "Lane change left (Ego)" ;
+	rdfs:subClassOf <MotionLaneChangeLeft> .
+
+<MotionDecelerateTrafficAgent> a rdfs:Class ;
+	rdfs:label "Decelerate (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionDecelerate .
+
+<motionDecelerateTrafficAgentValue> a rdfs:Property ;
+	rdfs:label "Rate (ms⁻²)" ;
+	rdfs:domain <MotionDecelerateTrafficAgent> ;
+	rdfs:range xsd:decimal .
+<MotionDecelerateEgo> a rdfs:Class ;
+	rdfs:label "Decelerate (Ego)" ;
+	rdfs:subClassOf asam:MotionDecelerate .
+
+<motionDecelerateEgoValue> a rdfs:Property ;
+	rdfs:label "Rate (ms⁻²)" ;
+	rdfs:domain <MotionDecelerateEgo> ;
+	rdfs:range xsd:decimal .
+<MotionDriveTrafficAgent> a rdfs:Class ;
+	rdfs:label "Drive (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionDrive .
+
+<motionDriveTrafficAgentValue> a rdfs:Property ;
+	rdfs:label "Speed (km/h)" ;
+	rdfs:domain <MotionDriveTrafficAgent> ;
+	rdfs:range xsd:decimal .
+<MotionDriveEgo> a rdfs:Class ;
+	rdfs:label "Drive (Ego)" ;
+	rdfs:subClassOf asam:MotionDrive .
+
+<motionDriveEgoValue> a rdfs:Property ;
+	rdfs:label "Speed (km/h)" ;
+	rdfs:domain <MotionDriveEgo> ;
+	rdfs:range xsd:decimal .
+<MotionAccelerateTrafficAgent> a rdfs:Class ;
+	rdfs:label "Accelerate (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionAccelerate .
+
+<motionAccelerateTrafficAgentValue> a rdfs:Property ;
+	rdfs:label "Rate (ms⁻²)" ;
+	rdfs:domain <MotionAccelerateTrafficAgent> ;
+	rdfs:range xsd:decimal .
+<MotionAccelerateEgo> a rdfs:Class ;
+	rdfs:label "Accelerate (Ego)" ;
+	rdfs:subClassOf asam:MotionAccelerate .
+
+<motionAccelerateEgoValue> a rdfs:Property ;
+	rdfs:label "Rate (ms⁻²)" ;
+	rdfs:domain <MotionAccelerateEgo> ;
+	rdfs:range xsd:decimal .
+<SubjectVehicleWheelchair> a rdfs:Class ;
+	rdfs:label "Wheelchair" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleVan> a rdfs:Class ;
+	rdfs:label "Van" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleTruck> a rdfs:Class ;
+	rdfs:label "Truck" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleTrailer> a rdfs:Class ;
+	rdfs:label "Trailer" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleMotorcycle> a rdfs:Class ;
+	rdfs:label "Motorcycle" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleEmergency> a rdfs:Class ;
+	rdfs:label "Emergency vehicle" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleCycle> a rdfs:Class ;
+	rdfs:label "Cycle" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleConstruction> a rdfs:Class ;
+	rdfs:label "Construction vehicle" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleCar> a rdfs:Class ;
+	rdfs:label "Car" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleBus> a rdfs:Class ;
+	rdfs:label "Bus" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicleAgricultural> a rdfs:Class ;
+	rdfs:label "Agricultural vehicle" ;
+	rdfs:subClassOf <SubjectVehicle> .
+
+<SubjectVehicle> a rdfs:Class ;
+	rdfs:label "Vehicle" ;
+	rdfs:subClassOf asam:DynamicElementsSubjectVehicle .
+
+<CommunicationWave> a rdfs:Class ;
+	rdfs:label "Wave" ;
+	rdfs:subClassOf asam:ExternalIntentSignalling .
+
+<CommunicationHorn> a rdfs:Class ;
+	rdfs:label "Sound horn" ;
+	rdfs:subClassOf asam:ExternalWarningSignalling .
+
+<CommunicationSignalHazard> a rdfs:Class ;
+	rdfs:label "Signal hazard" ;
+	rdfs:subClassOf asam:ExternalWarningSignalling .
+
+<CommunicationSignalSlowing> a rdfs:Class ;
+	rdfs:label "Signal slowing" ;
+	rdfs:subClassOf asam:ExternalIntentSignalling .
+
+<CommunicationSignalRight> a rdfs:Class ;
+	rdfs:label "Signal right" ;
+	rdfs:subClassOf asam:ExternalIntentSignalling .
+
+<CommunicationSignalLeft> a rdfs:Class ;
+	rdfs:label "Signal left" ;
+	rdfs:subClassOf asam:ExternalIntentSignalling .
+
+<CommunicationSignalEmergency> a rdfs:Class ;
+	rdfs:label "Signal emergency" ;
+	rdfs:subClassOf asam:ExternalEmergencySignalling .
+
+<CommunicationHeadlightFlash> a rdfs:Class ;
+	rdfs:label "Flash headlight" ;
+	rdfs:subClassOf asam:ExternalIntentSignalling .
+
+<MotionTurn> a rdfs:Class ;
+	rdfs:label "Turn" ;
+	rdfs:subClassOf asam:VehicleAbsoluteTacticalManoeuvre .
+
+<VehicleWheelchair> a rdfs:Class ;
+	rdfs:label "Wheelchair" ;
+	rdfs:subClassOf asam:TrafficAgentTypeHuman .
+
+<VehicleTrailer> a rdfs:Class ;
+	rdfs:label "Trailer" ;
+	rdfs:subClassOf asam:TrafficAgentTypeVehicle .
+
+<VehicleCycle> a rdfs:Class ;
+	rdfs:label "Cycle" ;
+	rdfs:subClassOf asam:TrafficAgentTypeVehicle .
+
+<HumanWheelchairUser> a rdfs:Class ;
+	rdfs:label "Wheelchair user" ;
+	rdfs:subClassOf asam:TrafficAgentTypeHuman .
+
+<HumanPassenger> a rdfs:Class ;
+	rdfs:label "Passenger" ;
+	rdfs:subClassOf asam:TrafficAgentTypeHuman .
+
+<HumanMotorcyclist> a rdfs:Class ;
+	rdfs:label "Motorcyclist" ;
+	rdfs:subClassOf asam:TrafficAgentTypeHuman .
+
+<HumanDriver> a rdfs:Class ;
+	rdfs:label "Driver" ;
+	rdfs:subClassOf asam:TrafficAgentTypeHuman .
+
+<AccidentCauseGod> a rdfs:Class ;
+	rdfs:label "Act of God" ;
+	rdfs:subClassOf <MetaAccidentCause> .
+
+<AccidentCauseAnimal> a rdfs:Class ;
+	rdfs:label "Animal" ;
+	rdfs:subClassOf <MetaAccidentCause> .
+
+<AccidentCauseMechanical> a rdfs:Class ;
+	rdfs:label "Mechanical" ;
+	rdfs:subClassOf <MetaAccidentCause> .
+
+<AccidentCauseAi> a rdfs:Class ;
+	rdfs:label "AI" ;
+	rdfs:subClassOf <MetaAccidentCause> .
+
+<AccidentCauseHuman> a rdfs:Class ;
+	rdfs:label "Human" ;
+	rdfs:subClassOf <MetaAccidentCause> .
+
+<TestEnvironmentTrack> a rdfs:Class ;
+	rdfs:label "Test track" ;
+	rdfs:subClassOf <MetaTestEnvironment> .
+
+<TestEnvironmentLaboratory> a rdfs:Class ;
+	rdfs:label "Test laboratory" ;
+	rdfs:subClassOf <MetaTestEnvironment> .
+
+<TestEnvironmentSimulator> a rdfs:Class ;
+	rdfs:label "Simulator" ;
+	rdfs:subClassOf <MetaTestEnvironment> .
+
+<TestEnvironmentRoad> a rdfs:Class ;
+	rdfs:label "Public road" ;
+	rdfs:subClassOf <MetaTestEnvironment> .
+
+<VehicleTypeTractor> a rdfs:Class ;
+	rdfs:label "Tractor" ;
+	rdfs:subClassOf <MetaVehicleType> .
+
+<VehicleTypeHgv> a rdfs:Class ;
+	rdfs:label "HGV" ;
+	rdfs:subClassOf <MetaVehicleType> .
+
+<VehicleTypeBus> a rdfs:Class ;
+	rdfs:label "Bus" ;
+	rdfs:subClassOf <MetaVehicleType> .
+
+<VehicleTypeCar> a rdfs:Class ;
+	rdfs:label "Car" ;
+	rdfs:subClassOf <MetaVehicleType> .
+
+<CertificationCEcap> a rdfs:Class ;
+	rdfs:label "C-ECAP" ;
+	rdfs:subClassOf <MetaCertificationStandard> .
+
+<CertificationEuroNcap> a rdfs:Class ;
+	rdfs:label "EURO-NCAP" ;
+	rdfs:subClassOf <MetaCertificationStandard> .
+
+<AdasFeatureTsr> a rdfs:Class ;
+	rdfs:label "Traffic sign recognition" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureAeb> a rdfs:Class ;
+	rdfs:label "Automatic emergency braking" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureLca> a rdfs:Class ;
+	rdfs:label "Lane centering assist" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureLdw> a rdfs:Class ;
+	rdfs:label "Lane departure warning" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureAcc> a rdfs:Class ;
+	rdfs:label "Adaptive cruise control" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureAps> a rdfs:Class ;
+	rdfs:label "Automatic parking system" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AdasFeatureLka> a rdfs:Class ;
+	rdfs:label "Lane keep assist" ;
+	rdfs:subClassOf <MetaAdasFeature> .
+
+<AutonomyLevel5> a rdfs:Class ;
+	rdfs:label "SAE level 5" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<AutonomyLevel4> a rdfs:Class ;
+	rdfs:label "SAE level 4" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<AutonomyLevel3> a rdfs:Class ;
+	rdfs:label "SAE level 3" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<AutonomyLevel2> a rdfs:Class ;
+	rdfs:label "SAE level 2" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<AutonomyLevel1> a rdfs:Class ;
+	rdfs:label "SAE level 1" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<AutonomyLevel0> a rdfs:Class ;
+	rdfs:label "SAE level 0" ;
+	rdfs:subClassOf <MetaAutonomyLevel> .
+
+<SourceMachineLearning> a rdfs:Class ;
+	rdfs:label "Machine learning" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceHandCrafted> a rdfs:Class ;
+	rdfs:label "Hand crafted" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceSimulation> a rdfs:Class ;
+	rdfs:label "Simulation" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<SourceRealWorld> a rdfs:Class ;
+	rdfs:label "Real-world" ;
+	rdfs:subClassOf <MetaSourceType> .
+
+<HazardFatal> a rdfs:Class ;
+	rdfs:label "Fatal collision" ;
+	rdfs:subClassOf <MetaHazardLevel> .
+
+<HazardMajor> a rdfs:Class ;
+	rdfs:label "Major collision" ;
+	rdfs:subClassOf <MetaHazardLevel> .
+
+<HazardMinor> a rdfs:Class ;
+	rdfs:label "Minor collision" ;
+	rdfs:subClassOf <MetaHazardLevel> .
+
+<HazardNearMiss> a rdfs:Class ;
+	rdfs:label "Near miss" ;
+	rdfs:subClassOf <MetaHazardLevel> .
+
+<HazardNone> a rdfs:Class ;
+	rdfs:label "Non-hazardous" ;
+	rdfs:subClassOf <MetaHazardLevel> .
+
+<AbstractionLevelConcrete> a rdfs:Class ;
+	rdfs:label "Concrete" ;
+	rdfs:subClassOf <MetaAbstractionLevel> .
+
+<AbstractionLevelLogical> a rdfs:Class ;
+	rdfs:label "Logical" ;
+	rdfs:subClassOf <MetaAbstractionLevel> .
+
+<AbstractionLevelFunctional> a rdfs:Class ;
+	rdfs:label "Functional" ;
+	rdfs:subClassOf <MetaAbstractionLevel> .
+
+<LaneMarkingBottsDots> a rdfs:Class ;
+	rdfs:label "Botts dots" ;
+	rdfs:subClassOf asam:LaneSpecificationMarking .
+
+<LaneMarkingDoubleSolidLine> a rdfs:Class ;
+	rdfs:label "Double solid line" ;
+	rdfs:subClassOf asam:LaneSpecificationMarking .
+
+<LaneMarkingSolidLine> a rdfs:Class ;
+	rdfs:label "Solid line" ;
+	rdfs:subClassOf asam:LaneSpecificationMarking .
+
+<LaneMarkingBrokenLine> a rdfs:Class ;
+	rdfs:label "Broken line" ;
+	rdfs:subClassOf asam:LaneSpecificationMarking .
+
+<V2iGlosa> a rdfs:Class ;
+	rdfs:label "GLOSA" ;
+	rdfs:subClassOf asam:CommunicationV2i .
+
+<StreetFurnitureTrafficIsland> a rdfs:Class ;
+	rdfs:label "Traffic island" ;
+	rdfs:subClassOf asam:SpecialStructuresType .
+
+<StreetFurnitureLayby> a rdfs:Class ;
+	rdfs:label "Layby" ;
+	rdfs:subClassOf asam:SpecialStructuresType .
+
+<SpecialStructureCentralReservation> a rdfs:Class ;
+	rdfs:label "Central reservation" ;
+	rdfs:subClassOf asam:SpecialStructuresType .
+
+<TrafficLaneSplitting> a rdfs:Class ;
+	rdfs:label "Splitting lanes" ;
+	rdfs:subClassOf asam:LaneTypeTraffic .
+
+<TrafficLaneMerging> a rdfs:Class ;
+	rdfs:label "Merging lanes" ;
+	rdfs:subClassOf asam:LaneTypeTraffic .
+
+<LaneTypeCarPool> a rdfs:Class ;
+	rdfs:label "Car pool" ;
+	rdfs:subClassOf asam:LaneSpecificationType .
+
+<StreetFurnitureSpeedCamera> a rdfs:Class ;
+	rdfs:label "Speed camera" ;
+	rdfs:subClassOf asam:FixedStructureStreetFurniture .
+
+<StreetFurnitureBusStop> a rdfs:Class ;
+	rdfs:label "Bus stop" ;
+	rdfs:subClassOf asam:FixedStructureStreetFurniture .
+
+<PedestrianCrossingJunctionControlled> a rdfs:Class ;
+	rdfs:label "Junction controlled crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingUncontrolled> a rdfs:Class ;
+	rdfs:label "Uncontrolled crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingZebraIsland> a rdfs:Class ;
+	rdfs:label "Zebra island crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingZebra> a rdfs:Class ;
+	rdfs:label "Zebra crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingToucan> a rdfs:Class ;
+	rdfs:label "Toucan crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingPuffin> a rdfs:Class ;
+	rdfs:label "Puffin crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<PedestrianCrossingPelican> a rdfs:Class ;
+	rdfs:label "Pelican crossing" ;
+	rdfs:subClassOf asam:SpecialStructurePedestrianCrossing .
+
+<LaneSpecificationLaneCount> a rdfs:Class ;
+	rdfs:label "Number of lanes" ;
+	rdfs:subClassOf asam:DrivableAreaLaneSpecification .
+
+<laneSpecificationLaneCountValue> a rdfs:Property ;
+	rdfs:label "Lanes" ;
+	rdfs:domain <LaneSpecificationLaneCount> ;
+	rdfs:range xsd:decimal .
+<ParticulatesMarine> a rdfs:Class ;
+	rdfs:label "Marine" ;
+	rdfs:subClassOf asam:ParticulatesType .
+
+<MotionParkingManoeuvreEgo> a rdfs:Class ;
+	rdfs:label "Parking manoeuvre (Ego)" ;
+	rdfs:subClassOf asam:MotionParkingManoeuvre .
+
+<MotionParkingManoeuvreTrafficAgent> a rdfs:Class ;
+	rdfs:label "Parking manoeuvre (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionParkingManoeuvre .
+
+<MotionPassEgo> a rdfs:Class ;
+	rdfs:label "Pass (Ego)" ;
+	rdfs:subClassOf asam:MotionPass .
+
+<MotionPassTrafficAgent> a rdfs:Class ;
+	rdfs:label "Pass (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionPass .
+
+<MotionCutAcrossEgo> a rdfs:Class ;
+	rdfs:label "Cut across (Ego)" ;
+	rdfs:subClassOf asam:MotionCutAcross .
+
+<MotionCutAcrossTrafficAgent> a rdfs:Class ;
+	rdfs:label "Cut across (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionCutAcross .
+
+<MotionYieldEgo> a rdfs:Class ;
+	rdfs:label "Yield (Ego)" ;
+	rdfs:subClassOf asam:MotionYield .
+
+<MotionYieldTrafficAgent> a rdfs:Class ;
+	rdfs:label "Yield (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionYield .
+
+<MotionLaneChangeEgo> a rdfs:Class ;
+	rdfs:label "Lane change (Ego)" ;
+	rdfs:subClassOf asam:MotionLaneChange .
+
+<MotionLaneChangeTrafficAgent> a rdfs:Class ;
+	rdfs:label "Lane change (Traffic Agent)" ;
+	rdfs:subClassOf asam:MotionLaneChange .
+
+<MotionLaneChangeRight> a rdfs:Class ;
+	rdfs:label "Lane change right" ;
+	rdfs:subClassOf asam:VehicleAbsoluteTacticalManoeuvre .
+
+<MotionLaneChangeLeft> a rdfs:Class ;
+	rdfs:label "Lane change left" ;
+	rdfs:subClassOf asam:VehicleAbsoluteTacticalManoeuvre .
+
+<MotionTowards> a rdfs:Class ;
+	rdfs:label "Move towards" ;
+	rdfs:subClassOf asam:VehicleAbsoluteTacticalManoeuvre .
+
+<MotionAway> a rdfs:Class ;
+	rdfs:label "Move away" ;
+	rdfs:subClassOf asam:VehicleAbsoluteTacticalManoeuvre .
+
+<MetaAbstractionLevel> a rdfs:Class ;
+	rdfs:label "Scenario type" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaHazardLevel> a rdfs:Class ;
+	rdfs:label "Hazard level" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaSourceType> a rdfs:Class ;
+	rdfs:label "Source" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaAutonomyLevel> a rdfs:Class ;
+	rdfs:label "Autonomy level" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaAdasFeature> a rdfs:Class ;
+	rdfs:label "ADAS feature" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaCertificationStandard> a rdfs:Class ;
+	rdfs:label "Certification standard" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaVehicleType> a rdfs:Class ;
+	rdfs:label "Vehicle type" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaTestEnvironment> a rdfs:Class ;
+	rdfs:label "Test environment" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaAccidentCause> a rdfs:Class ;
+	rdfs:label "Accident cause" ;
+	rdfs:subClassOf asam:AdminTag .
+
+<MetaMutationType> a rdfs:Class ;
+	rdfs:label "Can have mutation" ;
+	rdfs:subClassOf asam:AdminTag .
+
