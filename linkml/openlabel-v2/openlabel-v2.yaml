@@ -2,15 +2,103 @@
 # Modeled in LinkML as single source of truth.
 # Generates: OWL ontology, SHACL shapes, JSON-LD context.
 #
-# Based on ASAM OpenLABEL V1.0.0 (BSI PAS-1883) with ASCS-eV namespace.
+# Based on ASAM OpenLABEL V1.0.0 (ISO 34503:2023, formerly BSI PAS 1883:2020) with ASCS-eV namespace.
 # For details, see https://www.asam.net/project-detail/asam-openlabel-v100
+#
+# =============================================================================
+# Field Usage Convention
+# =============================================================================
+#
+# Each slot, class, and enum in this schema uses LinkML metadata fields with
+# the following strict semantics:
+#
+#   description   Clean semantic definition of the concept. No references,
+#                 no provenance, no section numbers. Should be understandable
+#                 without consulting any standard.
+#
+#   comments      Normative reference: the precise clause or sub-item in the
+#                 governing standard. Format: "ISO 34503:2023, Clause N" for
+#                 top-level clauses or "ISO 34503:2023, N.N.N" for subclauses,
+#                 with lettered items as "N.N.N x)" per ISO numbering.
+#                 (LinkML's `source` field requires a URI; `comments` is used
+#                 for free-text citations instead.)
+#
+#   see_also      Resolvable URL(s) for the referenced standard's catalog page.
+#                 Generates rdfs:seeAlso in OWL output.
+#
+#   aliases       Previous formal identifiers or labels for this element
+#                 (e.g. the v1 OWL IRI local-name when an element was renamed).
+#                 Generates skos:altLabel. Only actual names that existed in
+#                 code/data — never paraphrased natural-language descriptions.
+#
+#   notes         Migration provenance and editorial context for maintainers.
+#                 Documents what changed between versions and why.
+#                 Not rendered in end-user documentation.
+#
+# =============================================================================
+# Migration Context — PAS 1883:2020 → ISO 34503:2023
+# =============================================================================
+#
+# The v1 ontology (openlabel.owl.ttl) referenced:
+#
+#   BSI PAS 1883:2020 — Operational Design Domain (ODD) taxonomy for
+#   automated driving systems. Published by BSI (British Standards Institution).
+#   URL: https://www.bsigroup.com/en-GB/CAV/pas-1883
+#
+# PAS 1883:2020 has since been superseded by the international standard:
+#
+#   ISO 34503:2023 — Road vehicles — Test scenarios for automated driving
+#   systems — Specification for operational design domain.
+#   ISO/TC 22/SC 33. Geneva: International Organization for Standardization.
+#   URL: https://www.iso.org/standard/78952.html
+#
+# Additional normative references for dynamic elements (Behaviour, RoadUser):
+#
+#   ISO 34504:2023 — Road vehicles — Test scenarios for automated driving
+#   systems — Scenario categorization.
+#   Section 4.4.4: Tags for a dynamic entity (road user type, longitudinal/
+#   lateral/mixed actions, state).
+#   URL: https://www.iso.org/standard/78953.html
+#
+#   ISO 34501:2022 — Road vehicles — Test scenarios for automated driving
+#   systems — Vocabulary.
+#   Term 2.15: "action/activity" — single purposeful act or behaviour
+#   executed by any actor in a scenario.
+#   Term 2.16: "actor" — traffic participant with the capability to act
+#   and react in the scenario.
+#   URL: https://www.iso.org/standard/78951.html
+#
+# Structural correspondence:
+#
+#   PAS 1883:2020 Section 5     →  ISO 34503:2023 Clauses 8–11 (ODD taxonomy)
+#   PAS 1883:2020 Section 5.2   →  ISO 34503:2023 Clause 9  (Scenery elements)
+#   PAS 1883:2020 Section 5.3   →  ISO 34503:2023 Clause 10 (Environmental conditions)
+#   PAS 1883:2020 Section 5.4   →  ISO 34503:2023 Clause 11 (Dynamic elements)
+#
+# Key terminology changes:
+#
+#   PAS 1883 term                  →  ISO 34503 term
+#   ─────────────────────────────────────────────────────────────────────
+#   "fixed road structures"        →  "basic road structures" (Sec. 9.5)
+#   "temporary road structures"    →  "temporary drivable area structures" (Sec. 9.7)
+#   "special structures"           →  "special structures" (Sec. 9.6, unchanged)
+#   "road type"                    →  "drivable area type" (Sec. 9.3.2)
+#   "road geometry"                →  "drivable area geometry" (Sec. 9.3.3)
+#
+# Identifier renaming policy (v1 → v2):
+#   Where ISO 34503 introduced new terminology, v2 adopts the ISO term as the
+#   canonical identifier and records the v1 identifier in `aliases`. This
+#   enables forward alignment with the international standard while preserving
+#   discoverability of the legacy name via skos:altLabel.
+#
+# =============================================================================
 
 id: https://w3id.org/ascs-ev/envited-x/openlabel/v2
 name: openlabel-v2
 title: ASAM OpenLABEL Scenario Tagging Ontology
 description: >-
   Ontology for scenario tagging based on the ASAM OpenLABEL standard
-  and BSI PAS-1883 Operational Design Domain taxonomy.
+  and ISO 34503:2023 Operational Design Domain taxonomy.
 version: "2.0.0"
 license: https://www.eclipse.org/legal/epl-2.0/
 
@@ -80,8 +168,13 @@ classes:
   # ---------------------------------------------------------------------------
   Behaviour:
     description: An activity performed by a road user.
+    comments:
+      - "ISO 34504:2023, 4.4.4 (Tags for a dynamic entity — longitudinal, lateral, and mixed actions); ISO 34501:2022, Term 2.15 (action/activity)"
+    notes:
+      - "v1 had no normative reference; was attributed solely to ASAM OpenLABEL. ISO 34504 Section 4.4.4 defines the same action taxonomy (accelerating, decelerating, lane change, etc.) as tags for dynamic entities. ISO 34501 Term 2.15 formally defines 'action/activity' as 'single purposeful act or behaviour executed by any actor'."
+      - "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78953.html
     class_uri: openlabel_v2:Behaviour
     slots:
       - BehaviourCommunication
@@ -111,7 +204,6 @@ classes:
     rules:
       - description: >-
           If motionAccelerateValue is provided, MotionAccelerate must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             motionAccelerateValue:
@@ -122,7 +214,6 @@ classes:
               equals_string: "true"
       - description: >-
           If motionDecelerateValue is provided, MotionDecelerate must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             motionDecelerateValue:
@@ -133,7 +224,6 @@ classes:
               equals_string: "true"
       - description: >-
           If motionDriveValue is provided, MotionDrive must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             motionDriveValue:
@@ -147,10 +237,16 @@ classes:
   # Odd (Operational Design Domain)
   # ---------------------------------------------------------------------------
   Odd:
-    description: >-
-      Operational Design Domain. Refer to BSI PAS-1883 Section 5.
+    description: Operational design domain.
+    comments:
+      - "ISO 34503:2023, Clauses 8–11"
+    aliases:
+      - "ODD"
+    notes:
+      - "v1 label: \"ODD\"."
+      - "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     class_uri: openlabel_v2:Odd
     slots:
       - ConnectivityCommunication
@@ -220,7 +316,6 @@ classes:
     rules:
       - description: >-
           If weatherWindValue is provided, WeatherWind must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             weatherWindValue:
@@ -231,7 +326,6 @@ classes:
               equals_string: "true"
       - description: >-
           If weatherRainValue is provided, WeatherRain must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             weatherRainValue:
@@ -242,7 +336,6 @@ classes:
               equals_string: "true"
       - description: >-
           If weatherSnowValue is provided, WeatherSnow must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             weatherSnowValue:
@@ -253,7 +346,6 @@ classes:
               equals_string: "true"
       - description: >-
           If illuminationCloudinessValue is provided, IlluminationCloudiness must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             illuminationCloudinessValue:
@@ -264,7 +356,6 @@ classes:
               equals_string: "true"
       - description: >-
           If daySunElevationValue is provided, DaySunElevation must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             daySunElevationValue:
@@ -275,7 +366,6 @@ classes:
               equals_string: "true"
       - description: >-
           If trafficAgentDensityValue is provided, TrafficAgentDensity must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             trafficAgentDensityValue:
@@ -286,7 +376,6 @@ classes:
               equals_string: "true"
       - description: >-
           If trafficAgentTypeValue is provided, TrafficAgentType must be true.
-          Corresponds to BSI PAS-1883 Section 5.4.a.4 conditional constraint.
         preconditions:
           slot_conditions:
             trafficAgentTypeValue:
@@ -297,7 +386,6 @@ classes:
               equals_string: "true"
       - description: >-
           If trafficFlowRateValue is provided, TrafficFlowRate must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             trafficFlowRateValue:
@@ -308,7 +396,6 @@ classes:
               equals_string: "true"
       - description: >-
           If trafficVolumeValue is provided, TrafficVolume must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             trafficVolumeValue:
@@ -319,7 +406,6 @@ classes:
               equals_string: "true"
       - description: >-
           If laneSpecificationDimensionsValue is provided, LaneSpecificationDimensions must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             laneSpecificationDimensionsValue:
@@ -330,7 +416,6 @@ classes:
               equals_string: "true"
       - description: >-
           If laneSpecificationLaneCountValue is provided, LaneSpecificationLaneCount must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             laneSpecificationLaneCountValue:
@@ -341,7 +426,6 @@ classes:
               equals_string: "true"
       - description: >-
           If horizontalCurvesValue is provided, HorizontalCurves must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             horizontalCurvesValue:
@@ -352,7 +436,6 @@ classes:
               equals_string: "true"
       - description: >-
           If longitudinalDownSlopeValue is provided, LongitudinalDownSlope must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             longitudinalDownSlopeValue:
@@ -363,7 +446,6 @@ classes:
               equals_string: "true"
       - description: >-
           If longitudinalUpSlopeValue is provided, LongitudinalUpSlope must be true.
-          Corresponds to BSI PAS-1883 conditional constraint.
         preconditions:
           slot_conditions:
             longitudinalUpSlopeValue:
@@ -374,7 +456,6 @@ classes:
               equals_string: "true"
       - description: >-
           If subjectVehicleSpeedValue is provided, SubjectVehicleSpeed must be true.
-          Corresponds to BSI PAS-1883 Section 5.4.b conditional constraint.
         preconditions:
           slot_conditions:
             subjectVehicleSpeedValue:
@@ -385,7 +466,6 @@ classes:
               equals_string: "true"
       - description: >-
           If particulatesWaterValue is provided, ParticulatesWater must be true.
-          Corresponds to BSI PAS-1883 Section 5.3.2.b conditional constraint.
         preconditions:
           slot_conditions:
             particulatesWaterValue:
@@ -394,19 +474,35 @@ classes:
           slot_conditions:
             ParticulatesWater:
               equals_string: "true"
+      - description: >-
+          EdgeNone is mutually exclusive with other drivable area edge types.
+          If DrivableAreaEdge includes EdgeNone, no other edge values are allowed.
+        comments:
+          - "ISO 34503:2023, 9.3.6 — EdgeNone denotes absence of a defined edge boundary."
+        preconditions:
+          slot_conditions:
+            DrivableAreaEdge:
+              equals_string: "EdgeNone"
+        postconditions:
+          slot_conditions:
+            DrivableAreaEdge:
+              maximum_cardinality: 1
 
   # ---------------------------------------------------------------------------
-  # OddScenery (Scenery subset of ODD — BSI PAS-1883 Section 5.2)
+  # OddScenery (Scenery subset of ODD — ISO 34503:2023, 9)
   # ---------------------------------------------------------------------------
   OddScenery:
-    description: >-
-      Scenery-related subset of the Operational Design Domain.
-      Covers drivable area, geometry, lane specifications, junctions,
-      signs, and structures. Refer to BSI PAS-1883 Section 5.2.
+    description: Scenery-related subset of the operational design domain.
+    comments:
+      - "ISO 34503:2023, Clause 9"
+    aliases:
+      - "Scenery"
+    notes:
+      - "v1 label: \"Scenery\" (PAS 1883:2020, Section 5.1.a)."
     is_a: Odd
     class_uri: openlabel_v2:OddScenery
     slot_usage:
-      # --- Restrict Environment slots (§5.3) ---
+      # --- Restrict Environment slots (ISO 34503 Clause 10) ---
       ConnectivityCommunication:
         maximum_cardinality: 0
         multivalued: true
@@ -476,7 +572,7 @@ classes:
       weatherWindValue:
         maximum_cardinality: 0
         multivalued: true
-      # --- Restrict DynamicElements slots (§5.4) ---
+      # --- Restrict DynamicElements slots (ISO 34503 Clause 11) ---
       SubjectVehicleSpeed:
         maximum_cardinality: 0
         multivalued: true
@@ -512,17 +608,20 @@ classes:
         multivalued: true
 
   # ---------------------------------------------------------------------------
-  # OddEnvironment (Environment subset of ODD — BSI PAS-1883 Section 5.3)
+  # OddEnvironment (Environment subset of ODD — ISO 34503:2023, 10)
   # ---------------------------------------------------------------------------
   OddEnvironment:
-    description: >-
-      Environment-related subset of the Operational Design Domain.
-      Covers weather, illumination, connectivity, and particulates.
-      Refer to BSI PAS-1883 Section 5.3.
+    description: Environment-related subset of the operational design domain.
+    comments:
+      - "ISO 34503:2023, Clause 10"
+    aliases:
+      - "Environmental Conditions"
+    notes:
+      - "v1 label: \"Environmental Conditions\" (PAS 1883:2020, Section 5.1.b)."
     is_a: Odd
     class_uri: openlabel_v2:OddEnvironment
     slot_usage:
-      # --- Restrict Scenery slots (§5.2) ---
+      # --- Restrict Scenery slots (ISO 34503 Clause 9) ---
       DrivableAreaEdge:
         maximum_cardinality: 0
         multivalued: true
@@ -613,7 +712,7 @@ classes:
       SignsWarning:
         maximum_cardinality: 0
         multivalued: true
-      # --- Restrict DynamicElements slots (§5.4) ---
+      # --- Restrict DynamicElements slots (ISO 34503 Clause 11) ---
       SubjectVehicleSpeed:
         maximum_cardinality: 0
         multivalued: true
@@ -649,17 +748,20 @@ classes:
         multivalued: true
 
   # ---------------------------------------------------------------------------
-  # OddDynamicElements (Dynamic Elements subset — BSI PAS-1883 Section 5.4)
+  # OddDynamicElements (Dynamic Elements subset — ISO 34503:2023, 11)
   # ---------------------------------------------------------------------------
   OddDynamicElements:
-    description: >-
-      Dynamic elements subset of the Operational Design Domain.
-      Covers traffic agents, flow rates, volume, and subject vehicle speed.
-      Refer to BSI PAS-1883 Section 5.4.
+    description: Dynamic elements subset of the operational design domain.
+    comments:
+      - "ISO 34503:2023, Clause 11"
+    aliases:
+      - "Dynamic elements"
+    notes:
+      - "v1 label: \"Dynamic elements\" (PAS 1883:2020, Section 5.1.c)."
     is_a: Odd
     class_uri: openlabel_v2:OddDynamicElements
     slot_usage:
-      # --- Restrict Scenery slots (§5.2) ---
+      # --- Restrict Scenery slots (ISO 34503 Clause 9) ---
       DrivableAreaEdge:
         maximum_cardinality: 0
         multivalued: true
@@ -750,7 +852,7 @@ classes:
       SignsWarning:
         maximum_cardinality: 0
         multivalued: true
-      # --- Restrict Environment slots (§5.3) ---
+      # --- Restrict Environment slots (ISO 34503 Clause 10) ---
       ConnectivityCommunication:
         maximum_cardinality: 0
         multivalued: true
@@ -825,9 +927,14 @@ classes:
   # RoadUser
   # ---------------------------------------------------------------------------
   RoadUser:
-    description: Something which uses a road to travel.
+    description: A road user participating in the scenario.
+    comments:
+      - "ISO 34503:2023, 11.1; ISO 34504:2023, 4.4.4.1 (Road user type)"
+    notes:
+      - "ISO 34503 Section 11.1 references dynamic elements including traffic agents. ISO 34504 Section 4.4.4.1 provides the detailed road user type taxonomy (vehicle, pedestrian, cyclist, animal, inanimate obstacle) with sub-tags. ISO 34501 Term 2.16 defines 'actor' as 'traffic participant with the capability to act and react'."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
+      - https://www.iso.org/standard/78953.html
     class_uri: openlabel_v2:RoadUser
     slots:
       - RoadUserAnimal
@@ -969,6 +1076,10 @@ slots:
   # ---------------------------------------------------------------------------
   BehaviourCommunication:
     description: Communication type of road user behaviour.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "Communication signals (horn, headlight flash, indicators) are not explicitly covered by ISO 34504 action tags. Retained from ASAM OpenLABEL as scenario-relevant communication modality."
     slot_uri: openlabel_v2:BehaviourCommunication
     range: BehaviourCommunicationEnum
     multivalued: true
@@ -978,101 +1089,155 @@ slots:
   # ---------------------------------------------------------------------------
   MotionAccelerate:
     description: An activity where the road user increases their velocity.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
     slot_uri: openlabel_v2:MotionAccelerate
     range: boolean
 
   MotionAway:
     description: An activity where the road user is further away from the object by the end.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "ISO 34504, 4.4.4.5 defines static longitudinal position tags (in front, beside, behind) and relative speed tags (faster, slower, similar). 'Moving away' is an ASAM OpenLABEL extension describing dynamic position change — derivable from combining ISO 34504 position + speed tags but not directly defined."
     slot_uri: openlabel_v2:MotionAway
     range: boolean
 
   MotionCross:
     description: An activity where the trajectory of the road user crosses the trajectory of the object.
+    comments:
+      - "ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing)"
+    notes:
+      - "ISO 34504 models 'crossing' as a direction state tag (4.4.4.5), not as a lateral action. ASAM OpenLABEL treats it as an activity for scenario tagging. The semantic intent aligns with ISO 34504's 'crossing' direction tag."
     slot_uri: openlabel_v2:MotionCross
     range: boolean
 
   MotionCutIn:
     description: An activity where the subject vehicle ends up directly in front of the object vehicle.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
     slot_uri: openlabel_v2:MotionCutIn
     range: boolean
 
   MotionCutOut:
     description: An activity where the object vehicle suddenly moves out of the lane.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
     slot_uri: openlabel_v2:MotionCutOut
     range: boolean
 
   MotionDecelerate:
     description: An activity where the road user decreases their velocity.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating)"
     slot_uri: openlabel_v2:MotionDecelerate
     range: boolean
 
   MotionDrive:
     description: An activity where the subject vehicle is moving in the direction it is facing.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — driving forward)"
     slot_uri: openlabel_v2:MotionDrive
     range: boolean
 
   MotionLaneChangeLeft:
     description: An activity where the subject vehicle is in a lane left of the original.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, left)"
     slot_uri: openlabel_v2:MotionLaneChangeLeft
     range: boolean
 
   MotionLaneChangeRight:
     description: An activity where the subject vehicle is in a lane right of the original.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, right)"
     slot_uri: openlabel_v2:MotionLaneChangeRight
     range: boolean
 
   MotionOvertake:
     description: An activity where the subject starts behind and ends up in front by changing lanes.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
+    notes:
+      - "Overtake is a composite action combining longitudinal and lateral motion. ISO 34504 models this as a combination of 'changing lane' tags."
     slot_uri: openlabel_v2:MotionOvertake
     range: boolean
 
   MotionReverse:
     description: An activity where the subject vehicle is moving in the opposite direction to which it is facing.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — reversing)"
     slot_uri: openlabel_v2:MotionReverse
     range: boolean
 
   MotionRun:
     description: Locomotion mode where at a specific point no foot touches the ground.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "Pedestrian locomotion mode not explicitly tagged in ISO 34504; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
     slot_uri: openlabel_v2:MotionRun
     range: boolean
 
   MotionSlide:
     description: An activity where a pedestrian is slipping/sliding on the road.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "Not covered by ISO 34504 action tags; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
     slot_uri: openlabel_v2:MotionSlide
     range: boolean
 
   MotionStop:
     description: An activity where the road user is stationary.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still)"
     slot_uri: openlabel_v2:MotionStop
     range: boolean
 
   MotionTowards:
     description: An activity where the road user is closer to the object by the end.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "ISO 34504, 4.4.4.5 defines static longitudinal position tags (in front, beside, behind) and relative speed tags (faster, slower, similar). 'Moving towards' is an ASAM OpenLABEL extension describing dynamic position change — derivable from combining ISO 34504 position + speed tags but not directly defined."
     slot_uri: openlabel_v2:MotionTowards
     range: boolean
 
   MotionTurn:
     description: An activity where the road user changes their heading.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning)"
     slot_uri: openlabel_v2:MotionTurn
     range: boolean
 
   MotionTurnLeft:
     description: Subject exits the intersection on a road to the left of the original.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left)"
     slot_uri: openlabel_v2:MotionTurnLeft
     range: boolean
 
   MotionTurnRight:
     description: Subject exits the intersection on a road to the right of the original.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right)"
     slot_uri: openlabel_v2:MotionTurnRight
     range: boolean
 
   MotionUTurn:
     description: Subject performs a turn resulting in heading in the opposite direction.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn)"
     slot_uri: openlabel_v2:MotionUTurn
     range: boolean
 
   MotionWalk:
     description: Locomotion mode where at least one foot is always on the ground.
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "Pedestrian locomotion mode not explicitly tagged in ISO 34504; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
     slot_uri: openlabel_v2:MotionWalk
     range: boolean
 
@@ -1080,14 +1245,22 @@ slots:
   # Behaviour value slots (decimal measurements)
   # ---------------------------------------------------------------------------
   motionAccelerateValue:
-    description: Rate of acceleration (ms-2).
+    description: Rate of acceleration (ms⁻²).
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"
+    notes:
+      - "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. acceleration rate)."
     slot_uri: openlabel_v2:motionAccelerateValue
     any_of:
       - range: decimal
       - range: QuantitativeValue
 
   motionDecelerateValue:
-    description: Rate of deceleration (ms-2).
+    description: Rate of deceleration (ms⁻²).
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating, quantification)"
+    notes:
+      - "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. deceleration rate)."
     slot_uri: openlabel_v2:motionDecelerateValue
     any_of:
       - range: decimal
@@ -1095,6 +1268,10 @@ slots:
 
   motionDriveValue:
     description: Speed (km/h).
+    comments:
+      - "ISO 34504:2023, 4.4.4.5 (State or initial state — relative speed)"
+    notes:
+      - "ISO 34504 Section 4.4.4.5 lists 'relative speed' as a state tag for dynamic entities."
     slot_uri: openlabel_v2:motionDriveValue
     any_of:
       - range: decimal
@@ -1104,399 +1281,654 @@ slots:
   # ODD enum slots
   # ---------------------------------------------------------------------------
   ConnectivityCommunication:
-    description: Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.
+    description: Type of communication connectivity.
+    comments:
+      - "ISO 34503:2023, 10.5 a)"
+    aliases:
+      - "Communication"
+    notes:
+      - "v1 label: \"Communication\" (PAS 1883:2020, Section 5.3.4.a)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ConnectivityCommunication
     range: ConnectivityCommunicationEnum
-
   ConnectivityPositioning:
-    description: Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.
+    description: Type of positioning system.
+    comments:
+      - "ISO 34503:2023, 10.5 b)"
+    aliases:
+      - "Positioning"
+    notes:
+      - "v1 label: \"Positioning\" (PAS 1883:2020, Section 5.3.4.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ConnectivityPositioning
     range: ConnectivityPositioningEnum
-
   DrivableAreaEdge:
-    description: Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.
+    description: Type of drivable area edge.
+    comments:
+      - "ISO 34503:2023, 9.3.6"
+    aliases:
+      - "Drivable area edge"
+    notes:
+      - "v1 label: \"Drivable area edge\" (PAS 1883:2020, Section 5.2.3.1.e)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DrivableAreaEdge
     range: DrivableAreaEdgeEnum
     multivalued: true
-
   DrivableAreaSurfaceCondition:
-    description: Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.
+    description: Type of drivable area surface condition.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface condition"
+    notes:
+      - "v1 label: \"Road surface condition\" (PAS 1883:2020, Section 5.2.3.7.c). ISO 34503:2023 uses the term \"drivable area surface condition\"."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DrivableAreaSurfaceCondition
     range: DrivableAreaSurfaceConditionEnum
-
   DrivableAreaSurfaceFeature:
-    description: Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.
+    description: Type of drivable area surface feature.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface feature"
+    notes:
+      - "v1 label: \"Road surface feature\" (PAS 1883:2020, Section 5.2.3.7.b). ISO 34503:2023 uses the term \"drivable area surface feature\"."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DrivableAreaSurfaceFeature
     range: DrivableAreaSurfaceFeatureEnum
-
   DrivableAreaSurfaceType:
-    description: Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.
+    description: Type of drivable area surface.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface type"
+    notes:
+      - "v1 label: \"Road surface type\" (PAS 1883:2020, Section 5.2.3.7.a). ISO 34503:2023 uses the term \"drivable area surface type\"."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DrivableAreaSurfaceType
     range: DrivableAreaSurfaceTypeEnum
-
   DrivableAreaType:
-    description: Road type. Refer to BSI PAS-1883 Section 5.2.3.2.
+    description: Type of drivable area.
+    comments:
+      - "ISO 34503:2023, 9.3.2"
+    aliases:
+      - "Drivable area type"
+    notes:
+      - "v1 label: \"Drivable area type\" (PAS 1883:2020, Section 5.2.3.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DrivableAreaType
     range: DrivableAreaTypeEnum
-
   EnvironmentParticulates:
-    description: Particulate type. Refer to BSI PAS-1883 Section 5.3.2.
+    description: Type of particulates present in the environment.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Particulates (obscuration by nonPrecipitating water droplets and other particulates)"
+    notes:
+      - "v1 label: \"Particulates (obscuration by nonPrecipitating water droplets and other particulates)\" (PAS 1883:2020, Section 5.3.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:EnvironmentParticulates
     range: EnvironmentParticulatesEnum
-
   GeometryTransverse:
-    description: Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.
+    description: Type of transverse geometry.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Transverse plane"
+    notes:
+      - "v1 label: \"Transverse plane\" (PAS 1883:2020, Section 5.2.3.3.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:GeometryTransverse
     range: GeometryTransverseEnum
-
   IlluminationArtificial:
-    description: Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.
+    description: Type of artificial illumination.
+    comments:
+      - "ISO 34503:2023, 10.4 b)"
+    aliases:
+      - "Artificial illumination"
+    notes:
+      - "v1 label: \"Artificial illumination\" (PAS 1883:2020, Section 5.3.3.d)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:IlluminationArtificial
     range: IlluminationArtificialEnum
-
   IlluminationLowLight:
-    description: Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.
+    description: Type of low-light condition.
+    comments:
+      - "ISO 34503:2023, 10.4 a) 2)"
+    aliases:
+      - "Night or lowAmbient lighting condition"
+    notes:
+      - "v1 label: \"Night or lowAmbient lighting condition\" (PAS 1883:2020, Section 5.3.3.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:IlluminationLowLight
     range: IlluminationLowLightEnum
-
   JunctionIntersection:
-    description: Intersection type. Refer to BSI PAS-1883 Section 5.2.4.
+    description: Type of intersection.
+    comments:
+      - "ISO 34503:2023, 9.4.3"
+    aliases:
+      - "Intersection"
+    notes:
+      - "v1 label: \"Intersection\" (PAS 1883:2020, Section 5.2.4)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:JunctionIntersection
     range: JunctionIntersectionEnum
-
   JunctionRoundabout:
-    description: Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.
+    description: Type of roundabout.
+    comments:
+      - "ISO 34503:2023, 9.4.2"
+    aliases:
+      - "Roundabout"
+    notes:
+      - "v1 label: \"Roundabout\" (PAS 1883:2020, Section 5.2.4)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:JunctionRoundabout
     range: JunctionRoundaboutEnum
-
   LaneSpecificationTravelDirection:
-    description: Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.
+    description: Direction of travel.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Direction of travel"
+    notes:
+      - "v1 label: \"Direction of travel\" (PAS 1883:2020, Section 5.2.3.4.e)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationTravelDirection
     range: LaneSpecificationTravelDirectionEnum
-
   LaneSpecificationType:
-    description: Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.
+    description: Type of lane.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Lane type"
+    notes:
+      - "v1 label: \"Lane type\" (PAS 1883:2020, Section 5.2.3.4.c)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationType
     range: LaneSpecificationTypeEnum
     multivalued: true
-
   RainType:
-    description: Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.
+    description: Type of rainfall.
+    comments:
+      - "ISO 34503:2023, 10.2.4"
+    aliases:
+      - "Rainfall type"
+    notes:
+      - "v1 label: \"Rainfall type\" (PAS 1883:2020, Section 5.3.1.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:RainType
     range: RainTypeEnum
-
   SceneryFixedStructure:
-    description: Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.
+    description: Type of basic road structure present in the scenery.
+    comments:
+      - "ISO 34503:2023, 9.5"
+    aliases:
+      - "Fixed road structures"
+    notes:
+      - "v1 label: \"Fixed road structures\" (PAS 1883:2020, Section 5.2.1.e). ISO 34503:2023 renamed this category to \"basic road structures\"."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SceneryFixedStructure
     range: SceneryFixedStructureEnum
-
   ScenerySpecialStructure:
-    description: Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.
+    description: Type of special structure present in the scenery.
+    comments:
+      - "ISO 34503:2023, 9.6"
+    aliases:
+      - "Special structures"
+    notes:
+      - "v1 label: \"Special structures\" (PAS 1883:2020, Section 5.2.1.d)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ScenerySpecialStructure
     range: ScenerySpecialStructureEnum
-
   SceneryTemporaryStructure:
-    description: Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.
+    description: Type of temporary drivable area structure present in the scenery.
+    comments:
+      - "ISO 34503:2023, 9.7"
+    aliases:
+      - "Temporary road structures"
+    notes:
+      - "v1 label: \"Temporary road structures\" (PAS 1883:2020, Section 5.2.1.f). ISO 34503:2023 renamed this category to \"temporary drivable area structures\"."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SceneryTemporaryStructure
     range: SceneryTemporaryStructureEnum
-
   SceneryZone:
-    description: Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.
+    description: Type of zone.
+    comments:
+      - "ISO 34503:2023, 9.2"
+    aliases:
+      - "Zones"
+    notes:
+      - "v1 label: \"Zones\" (PAS 1883:2020, Section 5.2.1.a)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SceneryZone
     range: SceneryZoneEnum
-
   SignsInformation:
-    description: Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.
+    description: Type of information sign.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Information signs"
+    notes:
+      - "v1 label: \"Information signs\" (PAS 1883:2020, Section 5.2.3.5.a)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SignsInformation
     range: SignsInformationEnum
-
   SignsRegulatory:
-    description: Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.
+    description: Type of regulatory sign.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Regulatory signs"
+    notes:
+      - "v1 label: \"Regulatory signs\" (PAS 1883:2020, Section 5.2.3.5.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SignsRegulatory
     range: SignsRegulatoryEnum
-
   SignsWarning:
-    description: Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.
+    description: Type of warning sign.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Warning signs"
+    notes:
+      - "v1 label: \"Warning signs\" (PAS 1883:2020, Section 5.2.3.5.c)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SignsWarning
     range: SignsWarningEnum
-
-  # ---------------------------------------------------------------------------
-  # ODD boolean slots
-  # ---------------------------------------------------------------------------
   DaySunElevation:
-    description: Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    description: Presence of a specified sun elevation above the horizon.
+    comments:
+      - "ISO 34503:2023, 10.4 d)"
+    aliases:
+      - "Elevation of the sun above the horizon"
+    notes:
+      - "v1 label: \"Elevation of the sun above the horizon\" (PAS 1883:2020, Section 5.3.3.a.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DaySunElevation
     range: boolean
-
   DaySunPosition:
-    description: Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.
+    description: Position of the sun relative to the direction of travel.
+    comments:
+      - "ISO 34503:2023, 10.4 a) 1)"
+    aliases:
+      - "Position of the sun"
+    notes:
+      - "v1 label: \"Position of the sun\" (PAS 1883:2020, Section 5.3.3.a.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:DaySunPosition
     range: DaySunPositionEnum
-
   HorizontalCurves:
-    description: Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    description: Presence of curved roadway geometry.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Curves"
+    notes:
+      - "v1 label: \"Curves\" (PAS 1883:2020, Section 5.2.3.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:HorizontalCurves
     range: boolean
-
   HorizontalStraights:
-    description: Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.
+    description: Presence of straight roadway geometry.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Straight lines"
+    notes:
+      - "v1 label: \"Straight lines\" (PAS 1883:2020, Section 5.2.3.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:HorizontalStraights
     range: boolean
-
   IlluminationCloudiness:
-    description: Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.
+    description: Presence of cloudiness.
+    comments:
+      - "ISO 34503:2023, 10.4 c)"
+    aliases:
+      - "Cloudiness"
+    notes:
+      - "v1 label: \"Cloudiness\" (PAS 1883:2020, Section 5.3.3.c)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:IlluminationCloudiness
     range: boolean
-
   LaneSpecificationDimensions:
-    description: Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    description: Presence of specified lane dimensions.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Lane dimensions"
+    notes:
+      - "v1 label: \"Lane dimensions\" (PAS 1883:2020, Section 5.2.3.4.a)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationDimensions
     range: boolean
-
   LaneSpecificationLaneCount:
-    description: Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    description: Presence of a specified lane count.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Number of lanes"
+    notes:
+      - "v1 label: \"Number of lanes\" (PAS 1883:2020, Section 5.2.3.4.d)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationLaneCount
     range: boolean
-
   LaneSpecificationMarking:
-    description: Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.
+    description: Presence of lane markings.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Lane marking"
+    notes:
+      - "v1 label: \"Lane marking\" (PAS 1883:2020, Section 5.2.3.4.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationMarking
     range: boolean
-
   LongitudinalDownSlope:
-    description: Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    description: Presence of a downhill gradient.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Dow-slope (negativeGradient)"
+    notes:
+      - "v1 label: \"Dow-slope (negativeGradient)\" (PAS 1883:2020, Section 5.2.3.3.ii). Note: v1 label contained typo 'Dow-slope' (should be 'Down-slope'); alias preserves original exactly."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LongitudinalDownSlope
     range: boolean
-
   LongitudinalLevelPlane:
-    description: Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.
+    description: Presence of a level longitudinal plane.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Level plane"
+    notes:
+      - "v1 label: \"Level plane\" (PAS 1883:2020, Section 5.2.3.3.iii)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LongitudinalLevelPlane
     range: boolean
-
   LongitudinalUpSlope:
-    description: Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    description: Presence of an uphill gradient.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Up-slope (positive gradient)"
+    notes:
+      - "v1 label: \"Up-slope (positive gradient)\" (PAS 1883:2020, Section 5.2.3.3.i)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LongitudinalUpSlope
     range: boolean
-
   longitudinalUpSlopeValue:
-    description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.
+    description: Upward gradient as a percentage.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    notes:
+      - "v1 description: \"Gradient (%)\" (PAS 1883:2020, Section 5.2.3.3.i)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:longitudinalUpSlopeValue
     range: decimal
-
   ParticulatesDust:
-    description: Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.
+    description: Presence of sand or dust particulates.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Sand and dust"
+    notes:
+      - "v1 label: \"Sand and dust\" (PAS 1883:2020, Section 5.3.2.c)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesDust
     range: boolean
-
   ParticulatesMarine:
-    description: Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.
+    description: Presence of marine spray in coastal areas.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Marine (coastal areas only)"
+    notes:
+      - "v1 label: \"Marine (coastal areas only)\" (PAS 1883:2020, Section 5.3.2.a). PAS 1883:2020 legacy value; ISO 34503:2023 uses \"water spray\" instead."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesMarine
     range: boolean
-
   ParticulatesPollution:
-    description: Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.
+    description: Presence of smoke or pollution particulates.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Smoke and pollution"
+    notes:
+      - "v1 label: \"Smoke and pollution\" (PAS 1883:2020, Section 5.3.2.d)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesPollution
     range: boolean
-
   ParticulatesVolcanic:
-    description: Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.
+    description: Presence of volcanic ash particulates.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Volcanic ash"
+    notes:
+      - "v1 label: \"Volcanic ash\" (PAS 1883:2020, Section 5.3.2.e)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesVolcanic
     range: boolean
-
   ParticulatesWater:
-    description: >-
-      Non-precipitating water droplets or ice crystals (mist/fog) flag.
-      Refer to BSI PAS-1883 Section 5.3.2.b.
+    description: Presence of non-precipitating water droplets or ice crystals.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Non-precipitating water droplets or ice crystals (i.e. mist/fog)"
+    notes:
+      - "v1 label: \"Non-precipitating water droplets or ice crystals (i.e. mist/fog)\" (PAS 1883:2020, Section 5.3.2.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesWater
     range: boolean
-
   particulatesWaterValue:
-    description: Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.
+    description: Meteorological optical range in metres.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    notes:
+      - "v1 description: \"Meteorological Optical Range (MOR) (m)\" (PAS 1883:2020, Section 5.3.2.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:particulatesWaterValue
     range: decimal
-
   SubjectVehicleSpeed:
-    description: Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.
+    description: Presence of a specified subject vehicle speed.
+    comments:
+      - "ISO 34503:2023, 11.2"
+    aliases:
+      - "Speed"
+    notes:
+      - "v1 label: \"Speed\" (PAS 1883:2020, Section 5.4.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SubjectVehicleSpeed
     range: boolean
-
   TrafficAgentDensity:
-    description: Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.
+    description: Presence of a specified traffic agent density.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Density of agents"
+    notes:
+      - "v1 label: \"Density of agents\" (PAS 1883:2020, Section 5.4.a.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:TrafficAgentDensity
     range: boolean
-
   TrafficAgentType:
-    description: Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.
+    description: Presence of a specified traffic agent type.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Agent type"
+    notes:
+      - "v1 label: \"Agent type\" (PAS 1883:2020, Section 5.4.a.4)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:TrafficAgentType
     range: boolean
-
   TrafficFlowRate:
-    description: Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.
+    description: Presence of a specified traffic flow rate.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Flow rate"
+    notes:
+      - "v1 label: \"Flow rate\" (PAS 1883:2020, Section 5.4.a.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:TrafficFlowRate
     range: boolean
-
   TrafficSpecialVehicle:
-    description: Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.
+    description: Presence of special vehicles.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Presence of special vehicles (e.g. ambulances or police vehicles)."
+    notes:
+      - "v1 label: \"Presence of special vehicles (e.g. ambulances or police vehicles).\" (PAS 1883:2020, Section 5.4.a.5)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:TrafficSpecialVehicle
     range: boolean
-
   TrafficVolume:
-    description: Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.
+    description: Presence of a specified traffic volume.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Volume of traffic"
+    notes:
+      - "v1 label: \"Volume of traffic\" (PAS 1883:2020, Section 5.4.a.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:TrafficVolume
     range: boolean
-
   WeatherRain:
-    description: Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.
+    description: Presence of rainfall.
+    comments:
+      - "ISO 34503:2023, 10.2.4"
+    aliases:
+      - "Rainfall"
+    notes:
+      - "v1 label: \"Rainfall\" (PAS 1883:2020, Section 5.3.1.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:WeatherRain
     range: boolean
-
   WeatherSnow:
-    description: Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.
+    description: Presence of snowfall.
+    comments:
+      - "ISO 34503:2023, 10.2.5"
+    aliases:
+      - "Snowfall"
+    notes:
+      - "v1 label: \"Snowfall\" (PAS 1883:2020, Section 5.3.1.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:WeatherSnow
     range: boolean
-
   WeatherWind:
-    description: Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.
+    description: Presence of wind.
+    comments:
+      - "ISO 34503:2023, 10.2.3"
+    aliases:
+      - "Wind"
+    notes:
+      - "v1 label: \"Wind\" (PAS 1883:2020, Section 5.3.1.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:WeatherWind
     range: boolean
-
-  # ---------------------------------------------------------------------------
-  # ODD value slots (decimal/integer measurements)
-  # ---------------------------------------------------------------------------
   daySunElevationValue:
-    description: Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.
+    description: Sun elevation in degrees.
+    comments:
+      - "ISO 34503:2023, 10.4 d)"
+    notes:
+      - "v1 description: \"Sun elevation (degrees)\" (PAS 1883:2020, Section 5.3.3.a.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:daySunElevationValue
     range: decimal
-
   horizontalCurvesValue:
-    description: Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.
+    description: Curve radius in metres.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    notes:
+      - "v1 description: \"Curve radius (m)\" (PAS 1883:2020, Section 5.2.3.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:horizontalCurvesValue
     range: decimal
-
   illuminationCloudinessValue:
-    description: Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.
+    description: Cloud cover in okta.
+    comments:
+      - "ISO 34503:2023, 10.4 c)"
+    notes:
+      - "v1 description: \"Cloud cover (okta)\" (PAS 1883:2020, Section 5.3.3.c)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:illuminationCloudinessValue
     range: decimal
-
   laneSpecificationDimensionsValue:
-    description: Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.
+    description: Lane width in metres.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    notes:
+      - "v1 description: \"Lane width (m)\" (PAS 1883:2020, Section 5.2.3.4.a)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:laneSpecificationDimensionsValue
     any_of:
       - range: decimal
       - range: QuantitativeValue
 
   laneSpecificationLaneCountValue:
-    description: Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.
+    description: Number of lanes.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    notes:
+      - "v1 description: \"Number of lanes (unit)\" (PAS 1883:2020, Section 5.2.3.4.d)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:laneSpecificationLaneCountValue
     any_of:
       - range: integer
@@ -1504,16 +1936,23 @@ slots:
       - range: QuantitativeValue
 
   longitudinalDownSlopeValue:
-    description: Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.
+    description: Downward gradient as a percentage.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    notes:
+      - "v1 description: \"Gradient (%)\" (PAS 1883:2020, Section 5.2.3.3.ii)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:longitudinalDownSlopeValue
     range: decimal
-
   subjectVehicleSpeedValue:
-    description: Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.
+    description: Subject vehicle speed in kilometres per hour.
+    comments:
+      - "ISO 34503:2023, 11.2"
+    notes:
+      - "v1 description: \"Speed (km/h)\" (PAS 1883:2020, Section 5.4.b)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:subjectVehicleSpeedValue
     any_of:
       - range: integer
@@ -1521,75 +1960,99 @@ slots:
       - range: QuantitativeValue
 
   trafficAgentDensityValue:
-    description: Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.
+    description: Traffic agent density in vehicles per kilometre.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    notes:
+      - "v1 description: \"Density (vehicles/km)\" (PAS 1883:2020, Section 5.4.a.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficAgentDensityValue
     range: integer
     minimum_value: 0
-
   trafficAgentTypeValue:
-    description: Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.
+    description: Types of traffic agents present.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    notes:
+      - "v1 description: \"Agent type\" (PAS 1883:2020, Section 5.4.a.4)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficAgentTypeValue
     any_of:
       - range: RoadUserHumanEnum
       - range: RoadUserVehicleEnum
     multivalued: true
-
   trafficFlowRateValue:
-    description: Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.
+    description: Traffic flow rate in vehicles per hour.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    notes:
+      - "v1 description: \"Rate (vehicles/h)\" (PAS 1883:2020, Section 5.4.a.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficFlowRateValue
     range: integer
     minimum_value: 0
-
   trafficVolumeValue:
-    description: Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.
+    description: Traffic volume in vehicle kilometres.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    notes:
+      - "v1 description: \"Volume (vehicle km)\" (PAS 1883:2020, Section 5.4.a.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficVolumeValue
     range: integer
     minimum_value: 0
-
   weatherRainValue:
-    description: Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.
+    description: Rainfall intensity in millimetres per hour.
+    comments:
+      - "ISO 34503:2023, 10.2.4"
+    notes:
+      - "v1 description: \"Rainfall intensity (mm/h)\" (PAS 1883:2020, Section 5.3.1.2)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:weatherRainValue
     range: decimal
-
   weatherSnowValue:
-    description: Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.
+    description: Visibility in kilometres.
+    comments:
+      - "ISO 34503:2023, 10.2.5"
+    notes:
+      - "v1 description: \"Visibility (km)\" (PAS 1883:2020, Section 5.3.1.3)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:weatherSnowValue
     range: decimal
-
   weatherWindValue:
-    description: Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.
+    description: Wind speed in metres per second.
+    comments:
+      - "ISO 34503:2023, 10.2.3"
+    notes:
+      - "v1 description: \"Wind speed (m/s)\" (PAS 1883:2020, Section 5.3.1.1)."
     see_also:
-      - https://www.bsigroup.com/en-GB/CAV/pas-1883
+      - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:weatherWindValue
     range: decimal
-
-  # ---------------------------------------------------------------------------
-  # RoadUser slots
-  # ---------------------------------------------------------------------------
   RoadUserAnimal:
     description: Animal road user flag.
+    comments:
+      - "ISO 34504:2023, 4.4.4.1 (Road user type — animal)"
     slot_uri: openlabel_v2:RoadUserAnimal
     range: boolean
 
   RoadUserHuman:
     description: Human road user type.
+    comments:
+      - "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian, cyclist)"
     slot_uri: openlabel_v2:RoadUserHuman
     range: RoadUserHumanEnum
 
   RoadUserVehicle:
     description: Vehicle type.
+    comments:
+      - "ISO 34504:2023, 4.4.4.1 (Road user type — vehicle)"
     slot_uri: openlabel_v2:RoadUserVehicle
     range: RoadUserVehicleEnum
 
@@ -1635,7 +2098,10 @@ enums:
   # ---------------------------------------------------------------------------
   BehaviourCommunicationEnum:
     description: Types of communication behaviours by road users.
-    enum_uri: openlabel_v2:BehaviourCommunication
+    comments:
+      - "ASAM OpenLABEL V1.0.0"
+    notes:
+      - "Communication signals are not covered by ISO 34504 action tags. These are ASAM OpenLABEL-specific extensions for scenario description fidelity."
     permissible_values:
       CommunicationHeadlightFlash:
         description: Flash headlight.
@@ -1667,7 +2133,10 @@ enums:
   # ---------------------------------------------------------------------------
   RoadUserVehicleEnum:
     description: Types of vehicles.
-    enum_uri: openlabel_v2:RoadUserVehicle
+    comments:
+      - "ISO 34504:2023, 4.4.4.1 (Road user type — vehicle sub-tags)"
+    notes:
+      - "ISO 34504 lists: passenger car, bus, school bus, truck, tram, goods vehicle, dangerous goods vehicle, long/large vehicle, agricultural vehicle, fire truck, ambulance, police vehicle, rescue vehicle, crane/NRMM, disabled vehicle, etc. ASAM OpenLABEL uses a simplified aggregation."
     permissible_values:
       VehicleAgricultural:
         description: Agricultural vehicle.
@@ -1708,7 +2177,10 @@ enums:
   # ---------------------------------------------------------------------------
   RoadUserHumanEnum:
     description: Types of human road users.
-    enum_uri: openlabel_v2:RoadUserHuman
+    comments:
+      - "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian/cyclist sub-tags)"
+    notes:
+      - "ISO 34504 lists pedestrian sub-tags: child, adult, person with disabilities, hearing-impaired, visually-impaired, road-works crew, person pushing stroller, person in wheelchair, etc. Cyclist sub-tags: bicyclist, e-Bike user, skater, motorcycle, moped/scooter. ASAM OpenLABEL uses role-based categories."
     permissible_values:
       HumanAnimalRider:
         description: Animal rider (e.g. horse rider).
@@ -1736,8 +2208,13 @@ enums:
   # Drivable Area Edge
   # ---------------------------------------------------------------------------
   DrivableAreaEdgeEnum:
-    description: Types of drivable area edges. Refer to BSI PAS-1883 Section 5.2.3.6.
-    enum_uri: openlabel_v2:DrivableAreaEdge
+    description: Types of drivable area edges.
+    comments:
+      - "ISO 34503:2023, 9.3.6"
+    aliases:
+      - "Drivable area edge"
+    notes:
+      - "v1 label: \"Drivable area edge\" (PAS 1883:2020, Section 5.2.3.1.e)."
     permissible_values:
       EdgeLineMarkers:
         description: Line markers.
@@ -1762,8 +2239,13 @@ enums:
   # Geometry Transverse
   # ---------------------------------------------------------------------------
   GeometryTransverseEnum:
-    description: Types of transverse geometry. Refer to BSI PAS-1883 Section 5.2.3.3.b.
-    enum_uri: openlabel_v2:GeometryTransverse
+    description: Types of transverse geometry.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Transverse plane"
+    notes:
+      - "v1 label: \"Transverse plane\" (PAS 1883:2020, Section 5.2.3.3.b)."
     permissible_values:
       TransverseBarriers:
         description: Barriers on edges.
@@ -1785,8 +2267,13 @@ enums:
   # Lane Specification Travel Direction
   # ---------------------------------------------------------------------------
   LaneSpecificationTravelDirectionEnum:
-    description: Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.
-    enum_uri: openlabel_v2:LaneSpecificationTravelDirection
+    description: Directions of travel.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Direction of travel"
+    notes:
+      - "v1 label: \"Direction of travel\" (PAS 1883:2020, Section 5.2.3.4.e)."
     permissible_values:
       TravelDirectionLeft:
         description: Left.
@@ -1799,8 +2286,13 @@ enums:
   # Lane Specification Type
   # ---------------------------------------------------------------------------
   LaneSpecificationTypeEnum:
-    description: Types of lanes. Refer to BSI PAS-1883 Section 5.2.3.4.c.
-    enum_uri: openlabel_v2:LaneSpecificationType
+    description: Types of lanes.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Lane type"
+    notes:
+      - "v1 label: \"Lane type\" (PAS 1883:2020, Section 5.2.3.4.c)."
     permissible_values:
       LaneTypeBus:
         description: Bus lane.
@@ -1825,8 +2317,13 @@ enums:
   # Signs Information
   # ---------------------------------------------------------------------------
   SignsInformationEnum:
-    description: Types of information signs. Refer to BSI PAS-1883 Section 5.2.3.5.a.
-    enum_uri: openlabel_v2:SignsInformation
+    description: Types of information signs.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Information signs"
+    notes:
+      - "v1 label: \"Information signs\" (PAS 1883:2020, Section 5.2.3.5.a)."
     permissible_values:
       InformationSignsUniformFullTime:
         description: Uniform full-time.
@@ -1845,8 +2342,13 @@ enums:
   # Signs Regulatory
   # ---------------------------------------------------------------------------
   SignsRegulatoryEnum:
-    description: Types of regulatory signs. Refer to BSI PAS-1883 Section 5.2.3.5.b.
-    enum_uri: openlabel_v2:SignsRegulatory
+    description: Types of regulatory signs.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Regulatory signs"
+    notes:
+      - "v1 label: \"Regulatory signs\" (PAS 1883:2020, Section 5.2.3.5.b)."
     permissible_values:
       RegulatorySignsUniformFullTime:
         description: Uniform full-time.
@@ -1865,8 +2367,13 @@ enums:
   # Signs Warning
   # ---------------------------------------------------------------------------
   SignsWarningEnum:
-    description: Types of warning signs. Refer to BSI PAS-1883 Section 5.2.3.5.c.
-    enum_uri: openlabel_v2:SignsWarning
+    description: Types of warning signs.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Warning signs"
+    notes:
+      - "v1 label: \"Warning signs\" (PAS 1883:2020, Section 5.2.3.5.c)."
     permissible_values:
       WarningSignsUniform:
         description: Uniform.
@@ -1888,8 +2395,13 @@ enums:
   # Drivable Area Surface Condition
   # ---------------------------------------------------------------------------
   DrivableAreaSurfaceConditionEnum:
-    description: Road surface conditions. Refer to BSI PAS-1883 Section 5.2.3.7.c.
-    enum_uri: openlabel_v2:DrivableAreaSurfaceCondition
+    description: Types of drivable area surface conditions.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface condition"
+    notes:
+      - "v1 label: \"Road surface condition\" (PAS 1883:2020, Section 5.2.3.7.c). ISO 34503:2023 uses the term \"drivable area surface condition\"."
     permissible_values:
       SurfaceConditionContamination:
         description: Surface contamination.
@@ -1901,7 +2413,9 @@ enums:
         description: Icy.
         meaning: openlabel_v2:SurfaceConditionIcy
       SurfaceConditionMirage:
-        description: Mirage.
+        description: Mirage effect on the drivable area surface.
+        notes:
+          - "PAS 1883:2020 legacy value; not listed in ISO 34503:2023."
         meaning: openlabel_v2:SurfaceConditionMirage
       SurfaceConditionSnow:
         description: Snow on drivable area.
@@ -1917,8 +2431,13 @@ enums:
   # Drivable Area Surface Feature
   # ---------------------------------------------------------------------------
   DrivableAreaSurfaceFeatureEnum:
-    description: Road surface features. Refer to BSI PAS-1883 Section 5.2.3.7.b.
-    enum_uri: openlabel_v2:DrivableAreaSurfaceFeature
+    description: Types of drivable area surface features.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface feature"
+    notes:
+      - "v1 label: \"Road surface feature\" (PAS 1883:2020, Section 5.2.3.7.b). ISO 34503:2023 uses the term \"drivable area surface feature\"."
     permissible_values:
       SurfaceFeatureCrack:
         description: Cracks.
@@ -1937,8 +2456,13 @@ enums:
   # Drivable Area Surface Type
   # ---------------------------------------------------------------------------
   DrivableAreaSurfaceTypeEnum:
-    description: Road surface types. Refer to BSI PAS-1883 Section 5.2.3.7.a.
-    enum_uri: openlabel_v2:DrivableAreaSurfaceType
+    description: Types of drivable area surfaces.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Road surface type"
+    notes:
+      - "v1 label: \"Road surface type\" (PAS 1883:2020, Section 5.2.3.7.a). ISO 34503:2023 uses the term \"drivable area surface type\"."
     permissible_values:
       SurfaceTypeLoose:
         description: Loose (e.g. gravel, earth, sand).
@@ -1954,8 +2478,13 @@ enums:
   # Drivable Area Type (Road Types)
   # ---------------------------------------------------------------------------
   DrivableAreaTypeEnum:
-    description: Road types. Refer to BSI PAS-1883 Section 5.2.3.2.
-    enum_uri: openlabel_v2:DrivableAreaType
+    description: Types of drivable areas.
+    comments:
+      - "ISO 34503:2023, 9.3.2"
+    aliases:
+      - "Drivable area type"
+    notes:
+      - "v1 label: \"Drivable area type\" (PAS 1883:2020, Section 5.2.3.2)."
     permissible_values:
       RoadTypeDistributor:
         description: Distributor roads.
@@ -1989,8 +2518,13 @@ enums:
   # Scenery Fixed Structure
   # ---------------------------------------------------------------------------
   SceneryFixedStructureEnum:
-    description: Types of fixed road structures. Refer to BSI PAS-1883 Section 5.2.6.
-    enum_uri: openlabel_v2:SceneryFixedStructure
+    description: Types of basic road structures.
+    comments:
+      - "ISO 34503:2023, 9.5"
+    aliases:
+      - "Fixed road structures"
+    notes:
+      - "v1 label: \"Fixed road structures\" (PAS 1883:2020, Section 5.2.1.e). ISO 34503:2023 renamed this category to \"basic road structures\"."
     permissible_values:
       FixedStructureBuilding:
         description: Buildings.
@@ -2009,14 +2543,23 @@ enums:
   # Junction Intersection
   # ---------------------------------------------------------------------------
   JunctionIntersectionEnum:
-    description: Types of intersections. Refer to BSI PAS-1883 Section 5.2.4.
-    enum_uri: openlabel_v2:JunctionIntersection
+    description: Types of intersections.
+    comments:
+      - "ISO 34503:2023, 9.4.3"
+    aliases:
+      - "Intersection"
+    notes:
+      - "v1 label: \"Intersection\" (PAS 1883:2020, Section 5.2.4)."
     permissible_values:
       IntersectionCrossroad:
         description: Crossroads.
         meaning: openlabel_v2:IntersectionCrossroad
       IntersectionGradeSeperated:
         description: Grade separated.
+        aliases:
+          - "GradeSeparated"
+        notes:
+          - "IRI preserves v1 misspelling 'Seperated' (correct: 'Separated') to maintain backward compatibility. Alias provides correct spelling for discoverability."
         meaning: openlabel_v2:IntersectionGradeSeperated
       IntersectionStaggered:
         description: Staggered.
@@ -2032,8 +2575,13 @@ enums:
   # Junction Roundabout
   # ---------------------------------------------------------------------------
   JunctionRoundaboutEnum:
-    description: Types of roundabouts. Refer to BSI PAS-1883 Section 5.2.4.
-    enum_uri: openlabel_v2:JunctionRoundabout
+    description: Types of roundabouts.
+    comments:
+      - "ISO 34503:2023, 9.4.2"
+    aliases:
+      - "Roundabout"
+    notes:
+      - "v1 label: \"Roundabout\" (PAS 1883:2020, Section 5.2.4)."
     permissible_values:
       RoundaboutCompactNosignal:
         description: Compact non-signalised.
@@ -2070,8 +2618,13 @@ enums:
   # Scenery Special Structure
   # ---------------------------------------------------------------------------
   ScenerySpecialStructureEnum:
-    description: Types of special road structures. Refer to BSI PAS-1883 Section 5.2.5.
-    enum_uri: openlabel_v2:ScenerySpecialStructure
+    description: Types of special structures.
+    comments:
+      - "ISO 34503:2023, 9.6"
+    aliases:
+      - "Special structures"
+    notes:
+      - "v1 label: \"Special structures\" (PAS 1883:2020, Section 5.2.1.d)."
     permissible_values:
       SpecialStructureAutoAccess:
         description: Automatic access control.
@@ -2096,8 +2649,13 @@ enums:
   # Scenery Temporary Structure
   # ---------------------------------------------------------------------------
   SceneryTemporaryStructureEnum:
-    description: Types of temporary road structures. Refer to BSI PAS-1883 Section 5.2.7.
-    enum_uri: openlabel_v2:SceneryTemporaryStructure
+    description: Types of temporary drivable area structures.
+    comments:
+      - "ISO 34503:2023, 9.7"
+    aliases:
+      - "Temporary road structures"
+    notes:
+      - "v1 label: \"Temporary road structures\" (PAS 1883:2020, Section 5.2.1.f). ISO 34503:2023 renamed this category to \"temporary drivable area structures\"."
     permissible_values:
       TemporaryStructureConstructionDetour:
         description: Construction site detours.
@@ -2116,8 +2674,13 @@ enums:
   # Scenery Zone
   # ---------------------------------------------------------------------------
   SceneryZoneEnum:
-    description: Types of zones. Refer to BSI PAS-1883 Section 5.2.2.
-    enum_uri: openlabel_v2:SceneryZone
+    description: Types of zones.
+    comments:
+      - "ISO 34503:2023, 9.2"
+    aliases:
+      - "Zones"
+    notes:
+      - "v1 label: \"Zones\" (PAS 1883:2020, Section 5.2.1.a)."
     permissible_values:
       ZoneGeoFenced:
         description: GeoFenced areas.
@@ -2139,8 +2702,13 @@ enums:
   # Connectivity Communication
   # ---------------------------------------------------------------------------
   ConnectivityCommunicationEnum:
-    description: Types of communication connectivity. Refer to BSI PAS-1883 Section 5.3.4.a.
-    enum_uri: openlabel_v2:ConnectivityCommunication
+    description: Types of communication connectivity.
+    comments:
+      - "ISO 34503:2023, 10.5 a)"
+    aliases:
+      - "Communication"
+    notes:
+      - "v1 label: \"Communication\" (PAS 1883:2020, Section 5.3.4.a)."
     permissible_values:
       CommunicationV2i:
         description: Vehicle to infrastructure communication (V2I).
@@ -2171,8 +2739,13 @@ enums:
   # Connectivity Positioning
   # ---------------------------------------------------------------------------
   ConnectivityPositioningEnum:
-    description: Types of positioning systems. Refer to BSI PAS-1883 Section 5.3.4.b.
-    enum_uri: openlabel_v2:ConnectivityPositioning
+    description: Types of positioning systems.
+    comments:
+      - "ISO 34503:2023, 10.5 b)"
+    aliases:
+      - "Positioning"
+    notes:
+      - "v1 label: \"Positioning\" (PAS 1883:2020, Section 5.3.4.b)."
     permissible_values:
       PositioningGalileo:
         description: Galileo.
@@ -2188,8 +2761,13 @@ enums:
   # Day Sun Position
   # ---------------------------------------------------------------------------
   DaySunPositionEnum:
-    description: Position of the sun relative to direction of travel. Refer to BSI PAS-1883 Section 5.3.3.a.2.
-    enum_uri: openlabel_v2:DaySunPosition
+    description: Positions of the sun relative to the direction of travel.
+    comments:
+      - "ISO 34503:2023, 10.4 a) 1)"
+    aliases:
+      - "Position of the sun"
+    notes:
+      - "v1 label: \"Position of the sun\" (PAS 1883:2020, Section 5.3.3.a.2)."
     permissible_values:
       SunPositionBehind:
         description: Sun behind.
@@ -2208,8 +2786,13 @@ enums:
   # Illumination Artificial
   # ---------------------------------------------------------------------------
   IlluminationArtificialEnum:
-    description: Types of artificial illumination. Refer to BSI PAS-1883 Section 5.3.3.d.
-    enum_uri: openlabel_v2:IlluminationArtificial
+    description: Types of artificial illumination.
+    comments:
+      - "ISO 34503:2023, 10.4 b)"
+    aliases:
+      - "Artificial illumination"
+    notes:
+      - "v1 label: \"Artificial illumination\" (PAS 1883:2020, Section 5.3.3.d)."
     permissible_values:
       ArtificialStreetLighting:
         description: Streetlights.
@@ -2222,8 +2805,13 @@ enums:
   # Illumination Low Light
   # ---------------------------------------------------------------------------
   IlluminationLowLightEnum:
-    description: Types of low light conditions. Refer to BSI PAS-1883 Section 5.3.3.b.
-    enum_uri: openlabel_v2:IlluminationLowLight
+    description: Types of low-light conditions.
+    comments:
+      - "ISO 34503:2023, 10.4 a) 2)"
+    aliases:
+      - "Night or lowAmbient lighting condition"
+    notes:
+      - "v1 label: \"Night or lowAmbient lighting condition\" (PAS 1883:2020, Section 5.3.3.b)."
     permissible_values:
       LowLightAmbient:
         description: Low ambient lighting.
@@ -2236,8 +2824,13 @@ enums:
   # Rain Type
   # ---------------------------------------------------------------------------
   RainTypeEnum:
-    description: Types of rainfall. Refer to BSI PAS-1883 Section 5.3.1.2.
-    enum_uri: openlabel_v2:RainType
+    description: Types of rainfall.
+    comments:
+      - "ISO 34503:2023, 10.2.4"
+    aliases:
+      - "Rainfall type"
+    notes:
+      - "v1 label: \"Rainfall type\" (PAS 1883:2020, Section 5.3.1.2)."
     permissible_values:
       RainTypeConvective:
         description: Convective.
@@ -2253,14 +2846,21 @@ enums:
   # Environment Particulates
   # ---------------------------------------------------------------------------
   EnvironmentParticulatesEnum:
-    description: Types of particulates. Refer to BSI PAS-1883 Section 5.3.2.
-    enum_uri: openlabel_v2:EnvironmentParticulates
+    description: Types of particulates.
+    comments:
+      - "ISO 34503:2023, 10.3"
+    aliases:
+      - "Particulates (obscuration by nonPrecipitating water droplets and other particulates)"
+    notes:
+      - "v1 label: \"Particulates (obscuration by nonPrecipitating water droplets and other particulates)\" (PAS 1883:2020, Section 5.3.2)."
     permissible_values:
       ParticulatesDust:
         description: Sand and dust.
         meaning: openlabel_v2:ParticulatesDust
       ParticulatesMarine:
-        description: Marine (coastal areas only).
+        description: Marine spray in coastal areas.
+        notes:
+          - "PAS 1883:2020 legacy value; ISO 34503:2023 uses \"water spray\" instead."
         meaning: openlabel_v2:ParticulatesMarine
       ParticulatesPollution:
         description: Smoke and pollution.

@@ -48,6 +48,62 @@ Read these before making changes; they are authoritative for repo workflows.
 - `registry_updater.py` writes catalogs (and is the only place using `file_collector.py`); `registry_resolver.py` reads catalogs.
 - Missing catalog entries should fail fast with clear errors; no silent fallbacks.
 
+## Generated Artifacts & Line Endings (Windows/Linux CI)
+
+This repo's CI runs on Linux and verifies that committed artifacts exactly match
+`make generate` output. When developing on **Windows**, the LinkML generators
+(`gen-owl`, `gen-shacl`, `gen-jsonld-context`) produce CRLF line endings and
+sometimes trailing newlines that differ from Linux output.
+
+**Pre-commit hooks involved:**
+- `generate-linkml` — regenerates artifacts (produces CRLF on Windows)
+- `mixed-line-ending` — normalizes to LF
+- `pretty-format-json` — reformats `.context.jsonld` (may add/remove trailing newline)
+
+**The problem:** On Windows, committing triggers a loop:
+1. `generate-linkml` hook produces CRLF artifacts → hook reports "files modified"
+2. `mixed-line-ending` fixes to LF → hook reports "files modified"
+3. Commit fails because hooks modified files; retry triggers step 1 again
+
+**Correct workflow when committing generated artifacts on Windows:**
+
+```bash
+# 1. Generate artifacts
+make generate DOMAIN=openlabel-v2
+
+# 2. Normalize line endings manually (Python one-liner)
+python -c "
+import glob
+for f in glob.glob('artifacts/openlabel-v2/*'):
+    with open(f, 'rb') as fh: c = fh.read()
+    c = c.replace(b'\r\n', b'\n')
+    with open(f, 'wb') as fh: fh.write(c)
+"
+
+# 3. For .context.jsonld specifically: ensure no trailing empty line
+#    (gen-jsonld-context adds one; pretty-format-json removes it)
+python -c "
+f = 'artifacts/openlabel-v2/openlabel-v2.context.jsonld'
+with open(f, 'rb') as fh: c = fh.read()
+c = c.rstrip() + b'\n'
+with open(f, 'wb') as fh: fh.write(c)
+"
+
+# 4. Stage and commit (hooks should now pass cleanly)
+git add artifacts/
+git commit -s -S -m "feat: ..."
+```
+
+**If hooks still loop**, use `--no-verify` but then immediately verify:
+```bash
+git commit -s -S --no-verify -m "feat: ..."
+# Push and check that CI "Generate Artifacts" job passes
+```
+
+**Key rule:** The committed state must be byte-identical to what Linux
+`make generate` + pre-commit normalization produces. CI enforces this via
+the "Verify no changes" step.
+
 ## Commit & Pull Request Guidelines
 
 - Recent history favors short, imperative subjects with optional prefixes like `feat:`, `fix:`, `docs:`, or scoped forms like `feat(ontology): ...`.

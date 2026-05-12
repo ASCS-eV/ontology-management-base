@@ -9,5 +9,5 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication                                                        =
-=    Error:            BehaviourCommunication (Behaviour): Communication type of road user behaviour.                                                =
+=    Error:            BehaviourCommunication (Behaviour): Communication type of road user behaviour. ASAM OpenLABEL V1.0.0                          =
 ======================================================================================================================================================

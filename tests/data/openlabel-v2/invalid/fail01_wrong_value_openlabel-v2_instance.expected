@@ -13,5 +13,5 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.                                              =
+=    Error:            weatherWindValue (Odd): Wind speed in metres per second. ISO 34503:2023, 10.2.3                                               =
 ======================================================================================================================================================

@@ -1,16 +1,13 @@
 {
    "@context": [
-      "https://w3id.org/gaia-x/development#",
       "https://openlabel.asam.net/V1-0-0/ontologies/",
       {
-         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
-      },
-      {
-         "@vocab": null
+         "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
+         "schema": "https://schema.org/"
       }
    ],
    "@id": "did:web:test.openlabel.net:Tag:test_valid_openlabel_instance",
-   "@type": "openlabel:Tag",
+   "@type": "Tag",
    "AdminTag": {
       "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
@@ -30,12 +27,8 @@
    "Behaviour": {
       "@type": "Behaviour",
       "BehaviourCommunication": [
-         {
-            "@id": "openlabel:CommunicationHeadlightFlash"
-         },
-         {
-            "@id": "openlabel:CommunicationSignalLeft"
-         }
+         "CommunicationHeadlightFlash",
+         "CommunicationSignalLeft"
       ],
       "MotionAccelerate": true,
       "motionAccelerateValue": {
@@ -76,40 +69,22 @@
    "Odd": {
       "@type": "Odd",
       "DrivableAreaEdge": [
-         {
-            "@id": "openlabel:EdgeShoulderPavedOrGravel"
-         },
-         {
-            "@id": "openlabel:EdgeLineMarkers"
-         }
+         "EdgeShoulderPavedOrGravel",
+         "EdgeLineMarkers"
       ],
-      "DrivableAreaType": {
-         "@id": "openlabel:RoadTypeMotorway"
-      },
-      "DrivableAreaSurfaceType": {
-         "@id": "openlabel:SurfaceTypeUniform"
-      },
-      "DrivableAreaSurfaceCondition": {
-         "@id": "openlabel:SurfaceConditionWet"
-      },
-      "DrivableAreaSurfaceFeature": {
-         "@id": "openlabel:SurfaceFeatureRut"
-      },
-      "GeometryTransverse": {
-         "@id": "openlabel:TransverseDivided"
-      },
+      "DrivableAreaType": "RoadTypeMotorway",
+      "DrivableAreaSurfaceType": "SurfaceTypeUniform",
+      "DrivableAreaSurfaceCondition": "SurfaceConditionWet",
+      "DrivableAreaSurfaceFeature": "SurfaceFeatureRut",
+      "GeometryTransverse": "TransverseDivided",
       "LaneSpecificationDimensions": true,
       "laneSpecificationDimensionsValue": "3.5",
       "LaneSpecificationLaneCount": true,
       "laneSpecificationLaneCountValue": "3",
       "LaneSpecificationMarking": true,
-      "LaneSpecificationTravelDirection": {
-         "@id": "openlabel:TravelDirectionRight"
-      },
+      "LaneSpecificationTravelDirection": "TravelDirectionRight",
       "LaneSpecificationType": [
-         {
-            "@id": "openlabel:LaneTypeTraffic"
-         }
+         "LaneTypeTraffic"
       ],
       "HorizontalStraights": true,
       "HorizontalCurves": true,
@@ -118,50 +93,22 @@
       "LongitudinalDownSlope": true,
       "longitudinalDownSlopeValue": 2.5,
       "LongitudinalUpSlope": false,
-      "SceneryFixedStructure": {
-         "@id": "openlabel:FixedStructureStreetlight"
-      },
-      "ScenerySpecialStructure": {
-         "@id": "openlabel:SpecialStructureBridge"
-      },
-      "SceneryTemporaryStructure": {
-         "@id": "openlabel:TemporaryStructureRoadWorks"
-      },
-      "SceneryZone": {
-         "@id": "openlabel:ZoneTrafficManagement"
-      },
-      "JunctionIntersection": {
-         "@id": "openlabel:IntersectionTJunction"
-      },
-      "JunctionRoundabout": {
-         "@id": "openlabel:RoundaboutNormalSignal"
-      },
-      "SignsInformation": {
-         "@id": "openlabel:InformationSignsUniformFullTime"
-      },
-      "SignsRegulatory": {
-         "@id": "openlabel:RegulatorySignsUniformFullTime"
-      },
-      "SignsWarning": {
-         "@id": "openlabel:WarningSignsUniform"
-      },
-      "ConnectivityCommunication": {
-         "@id": "openlabel:CommunicationV2v"
-      },
-      "ConnectivityPositioning": {
-         "@id": "openlabel:PositioningGps"
-      },
-      "IlluminationArtificial": {
-         "@id": "openlabel:ArtificialStreetLighting"
-      },
-      "IlluminationLowLight": {
-         "@id": "openlabel:LowLightNight"
-      },
+      "SceneryFixedStructure": "FixedStructureStreetlight",
+      "ScenerySpecialStructure": "SpecialStructureBridge",
+      "SceneryTemporaryStructure": "TemporaryStructureRoadWorks",
+      "SceneryZone": "ZoneTrafficManagement",
+      "JunctionIntersection": "IntersectionTJunction",
+      "JunctionRoundabout": "RoundaboutNormalSignal",
+      "SignsInformation": "InformationSignsUniformFullTime",
+      "SignsRegulatory": "RegulatorySignsUniformFullTime",
+      "SignsWarning": "WarningSignsUniform",
+      "ConnectivityCommunication": "CommunicationV2v",
+      "ConnectivityPositioning": "PositioningGps",
+      "IlluminationArtificial": "ArtificialStreetLighting",
+      "IlluminationLowLight": "LowLightNight",
       "IlluminationCloudiness": true,
       "illuminationCloudinessValue": 6.0,
-      "DaySunPosition": {
-         "@id": "openlabel:SunPositionFront"
-      },
+      "DaySunPosition": "SunPositionFront",
       "DaySunElevation": true,
       "daySunElevationValue": 45.0,
       "WeatherRain": true,
@@ -169,12 +116,8 @@
       "WeatherSnow": false,
       "WeatherWind": true,
       "weatherWindValue": 12.5,
-      "RainType": {
-         "@id": "openlabel:RainTypeDynamic"
-      },
-      "EnvironmentParticulates": {
-         "@id": "openlabel:ParticulatesWater"
-      },
+      "RainType": "RainTypeDynamic",
+      "EnvironmentParticulates": "ParticulatesWater",
       "ParticulatesDust": false,
       "ParticulatesMarine": false,
       "ParticulatesPollution": false,
@@ -191,13 +134,9 @@
    },
    "RoadUser": {
       "@type": "RoadUser",
-      "RoadUserVehicle": {
-         "@id": "openlabel:VehicleCar"
-      },
+      "RoadUserVehicle": "VehicleCar",
       "RoadUserAnimal": false,
-      "RoadUserHuman": {
-         "@id": "openlabel:HumanPedestrian"
-      },
+      "RoadUserHuman": "HumanPedestrian",
       "MotionDrive": true,
       "motionDriveValue": "50.0"
    }
