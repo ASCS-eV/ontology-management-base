@@ -171,9 +171,9 @@ scenario:ContentOrDynamicAnnotationShape a sh:NodeShape ;
 ### Detailed Shapes (Expanded based on Instance Data)
 scenario:FormatShape a sh:NodeShape ;
     sh:closed false ;
-    sh:property [ skos:example "ASAM OpenSCENARIO" ;
+    sh:property [ skos:example "ASAM OpenSCENARIO XML" ;
             sh:description "Defines the type of data format used for the scenario asset."@en ;
-            sh:in ("ASAM OpenSCENARIO" "ASAM OpenSCENARIO DSL" "Other") ;
+            sh:in ("ASAM OpenSCENARIO XML" "ASAM OpenSCENARIO DSL" "Other") ;
             sh:maxCount 1 ;
             sh:message "Validation of type failed!"@en ;
             sh:name "type"@en ;
