@@ -36,7 +36,7 @@
       "@type": "scenario:DomainSpecification",
       "scenario:hasFormat": {
          "@type": "scenario:Format",
-         "scenario:formatType": "ASAM OpenSCENARIO",
+         "scenario:formatType": "ASAM OpenSCENARIO XML",
          "scenario:version": {
             "@value": "1.2",
             "@type": "xsd:string"
