@@ -32,7 +32,7 @@
       "@type": "scenario:DomainSpecification",
       "scenario:hasFormat": {
          "@type": "scenario:Format",
-         "scenario:formatType": "ASAM OpenSCENARIO",
+         "scenario:formatType": "ASAM OpenSCENARIO XML",
          "scenario:version": "1.3"
       },
       "scenario:hasContent": {
