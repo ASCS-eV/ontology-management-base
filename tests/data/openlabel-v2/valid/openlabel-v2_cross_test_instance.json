@@ -1,0 +1,145 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "https://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel.net:Tag:test_comprehensive_cross_v1_to_v2",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "ownerEmail": "validation-test@example.org",
+      "ownerName": "Comprehensive Test Organization GmbH",
+      "ownerURL": "https://www.example.org/comprehensive-test",
+      "scenarioCreatedDate": "2025-12-31T23:59:59",
+      "scenarioDefinition": "Cross-test: v1 content structure validated against v2 SHACL shapes",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario-v2/",
+      "scenarioDescription": "Tests that v1 data patterns (QuantitativeValue ranges, enum values, boolean flags) remain valid under the v2 LinkML-derived SHACL shapes.",
+      "scenarioName": "CrossTest_v1content_v2shapes",
+      "scenarioParentReference": "550e8400-e29b-41d4-a716-446655440000",
+      "scenarioUniqueReference": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      "scenarioVersion": "1.0.0",
+      "scenarioVisualisationURL": "https://example.org/vis/cross-test.webp"
+   },
+   "Behaviour": {
+      "@type": "Behaviour",
+      "BehaviourCommunication": [
+         "CommunicationSignalLeft",
+         "CommunicationSignalRight",
+         "CommunicationHorn"
+      ],
+      "MotionAccelerate": true,
+      "motionAccelerateValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "0.001",
+         "maxValue": "9.81"
+      },
+      "MotionDecelerate": true,
+      "motionDecelerateValue": "5.5",
+      "MotionDrive": true,
+      "motionDriveValue": "130.5",
+      "MotionAway": false,
+      "MotionCross": false,
+      "MotionCutIn": true,
+      "MotionCutOut": false,
+      "MotionLaneChangeLeft": true,
+      "MotionLaneChangeRight": false,
+      "MotionOvertake": true,
+      "MotionReverse": false,
+      "MotionRun": false,
+      "MotionSlide": false,
+      "MotionStop": true,
+      "MotionTowards": false,
+      "MotionTurn": false,
+      "MotionTurnLeft": true,
+      "MotionTurnRight": false,
+      "MotionUTurn": false,
+      "MotionWalk": false
+   },
+   "Odd": {
+      "@type": "Odd",
+      "ConnectivityCommunication": "CommunicationV2v",
+      "ConnectivityPositioning": "PositioningGps",
+      "DaySunElevation": true,
+      "daySunElevationValue": 45.0,
+      "DaySunPosition": "SunPositionFront",
+      "DrivableAreaEdge": [
+         "EdgeSolidBarriers",
+         "EdgeShoulderGrass"
+      ],
+      "DrivableAreaSurfaceCondition": "SurfaceConditionWet",
+      "DrivableAreaSurfaceFeature": "SurfaceFeatureRut",
+      "DrivableAreaSurfaceType": "SurfaceTypeUniform",
+      "DrivableAreaType": "RoadTypeMotorway",
+      "EnvironmentParticulates": "ParticulatesDust",
+      "GeometryTransverse": "TransverseUndivided",
+      "HorizontalCurves": true,
+      "horizontalCurvesValue": 200.0,
+      "HorizontalStraights": true,
+      "IlluminationArtificial": "ArtificialStreetLighting",
+      "IlluminationCloudiness": true,
+      "illuminationCloudinessValue": 5.0,
+      "IlluminationLowLight": "LowLightNight",
+      "JunctionIntersection": "IntersectionTJunction",
+      "JunctionRoundabout": "RoundaboutNormalSignal",
+      "LaneSpecificationDimensions": true,
+      "laneSpecificationDimensionsValue": "3.5",
+      "LaneSpecificationLaneCount": true,
+      "laneSpecificationLaneCountValue": 3,
+      "LaneSpecificationMarking": true,
+      "LaneSpecificationTravelDirection": "TravelDirectionRight",
+      "LaneSpecificationType": [
+         "LaneTypeTraffic",
+         "LaneTypeEmergency"
+      ],
+      "LongitudinalDownSlope": false,
+      "LongitudinalLevelPlane": true,
+      "LongitudinalUpSlope": false,
+      "ParticulatesDust": true,
+      "ParticulatesMarine": false,
+      "ParticulatesPollution": true,
+      "ParticulatesVolcanic": false,
+      "ParticulatesWater": false,
+      "RainType": "RainTypeConvective",
+      "SceneryFixedStructure": "FixedStructureBuilding",
+      "ScenerySpecialStructure": "SpecialStructureBridge",
+      "SceneryTemporaryStructure": "TemporaryStructureRoadWorks",
+      "SceneryZone": "ZoneTrafficManagement",
+      "SignsInformation": "InformationSignsUniformFullTime",
+      "SignsRegulatory": "RegulatorySignsUniformFullTime",
+      "SignsWarning": "WarningSignsUniformFullTime",
+      "SubjectVehicleSpeed": true,
+      "subjectVehicleSpeedValue": 80,
+      "TrafficAgentDensity": true,
+      "trafficAgentDensityValue": 5,
+      "TrafficAgentType": true,
+      "trafficAgentTypeValue": [
+         {
+            "@id": "openlabel_v2:VehicleCar"
+         },
+         {
+            "@id": "openlabel_v2:HumanPedestrian"
+         }
+      ],
+      "TrafficFlowRate": true,
+      "trafficFlowRateValue": 500,
+      "TrafficSpecialVehicle": false,
+      "TrafficVolume": true,
+      "trafficVolumeValue": 2000,
+      "WeatherRain": true,
+      "weatherRainValue": 10.0,
+      "WeatherSnow": false,
+      "WeatherWind": true,
+      "weatherWindValue": 15.0
+   },
+   "RoadUser": {
+      "@type": "RoadUser",
+      "RoadUserAnimal": false,
+      "RoadUserHuman": "HumanPedestrian",
+      "RoadUserVehicle": "VehicleCar",
+      "motionDriveValue": "50.0"
+   }
+}

@@ -8,7 +8,7 @@ class AdminTag
 class ArtificialStreetLighting
 class ArtificialVehicleLighting
 class Behaviour
-class BehaviourCommunication
+class BehaviourCommunicationEnum
 class CommunicationHeadlightFlash
 class CommunicationHorn
 class CommunicationSignalEmergency
@@ -19,26 +19,26 @@ class CommunicationSignalSlowing
 class CommunicationV2i
 class CommunicationV2v
 class CommunicationWave
-class ConnectivityCommunication
-class ConnectivityPositioning
-class DaySunPosition
-class DrivableAreaEdge
-class DrivableAreaSurfaceCondition
-class DrivableAreaSurfaceFeature
-class DrivableAreaSurfaceType
-class DrivableAreaType
+class ConnectivityCommunicationEnum
+class ConnectivityPositioningEnum
+class DaySunPositionEnum
+class DrivableAreaEdgeEnum
+class DrivableAreaSurfaceConditionEnum
+class DrivableAreaSurfaceFeatureEnum
+class DrivableAreaSurfaceTypeEnum
+class DrivableAreaTypeEnum
 class EdgeLineMarkers
 class EdgeNone
 class EdgeShoulderGrass
 class EdgeShoulderPavedOrGravel
 class EdgeSolidBarriers
 class EdgeTemporaryLineMarkers
-class EnvironmentParticulates
+class EnvironmentParticulatesEnum
 class FixedStructureBuilding
 class FixedStructureStreetFurniture
 class FixedStructureStreetlight
 class FixedStructureVegetation
-class GeometryTransverse
+class GeometryTransverseEnum
 class HumanAnimalRider
 class HumanCyclist
 class HumanDriver
@@ -46,8 +46,8 @@ class HumanMotorcyclist
 class HumanPassenger
 class HumanPedestrian
 class HumanWheelchairUser
-class IlluminationArtificial
-class IlluminationLowLight
+class IlluminationArtificialEnum
+class IlluminationLowLightEnum
 class InformationSignsUniformFullTime
 class InformationSignsUniformTemporary
 class InformationSignsVariableFullTime
@@ -57,10 +57,10 @@ class IntersectionGradeSeperated
 class IntersectionStaggered
 class IntersectionTJunction
 class IntersectionYJunction
-class JunctionIntersection
-class JunctionRoundabout
-class LaneSpecificationTravelDirection
-class LaneSpecificationType
+class JunctionIntersectionEnum
+class JunctionRoundaboutEnum
+class LaneSpecificationTravelDirectionEnum
+class LaneSpecificationTypeEnum
 class LaneTypeBus
 class LaneTypeCycle
 class LaneTypeEmergency
@@ -84,9 +84,9 @@ class PositioningGalileo
 class PositioningGlonass
 class PositioningGps
 class QuantitativeValue
-class RainType
 class RainTypeConvective
 class RainTypeDynamic
+class RainTypeEnum
 class RainTypeOrographic
 class RegulatorySignsUniformFullTime
 class RegulatorySignsUniformTemporary
@@ -100,8 +100,8 @@ class RoadTypeRadial
 class RoadTypeShared
 class RoadTypeSlip
 class RoadUser
-class RoadUserHuman
-class RoadUserVehicle
+class RoadUserHumanEnum
+class RoadUserVehicleEnum
 class RoundaboutCompactNosignal
 class RoundaboutCompactSignal
 class RoundaboutDoubleNosignal
@@ -113,13 +113,13 @@ class RoundaboutMiniSignal
 class RoundaboutNormalNosignal
 class RoundaboutNormalSignal
 class Scenario
-class SceneryFixedStructure
-class ScenerySpecialStructure
-class SceneryTemporaryStructure
-class SceneryZone
-class SignsInformation
-class SignsRegulatory
-class SignsWarning
+class SceneryFixedStructureEnum
+class ScenerySpecialStructureEnum
+class SceneryTemporaryStructureEnum
+class SceneryZoneEnum
+class SignsInformationEnum
+class SignsRegulatoryEnum
+class SignsWarningEnum
 class SpecialStructureAutoAccess
 class SpecialStructureBridge
 class SpecialStructurePedestrianCrossing
@@ -183,158 +183,158 @@ class ZoneInterference
 class ZoneRegion
 class ZoneSchool
 class ZoneTrafficManagement
-IlluminationArtificial <|-- ArtificialStreetLighting
-IlluminationArtificial <|-- ArtificialVehicleLighting
-BehaviourCommunication <|-- CommunicationHeadlightFlash
-BehaviourCommunication <|-- CommunicationHorn
-BehaviourCommunication <|-- CommunicationSignalEmergency
-BehaviourCommunication <|-- CommunicationSignalHazard
-BehaviourCommunication <|-- CommunicationSignalLeft
-BehaviourCommunication <|-- CommunicationSignalRight
-BehaviourCommunication <|-- CommunicationSignalSlowing
-ConnectivityCommunication <|-- CommunicationV2i
-ConnectivityCommunication <|-- CommunicationV2v
-BehaviourCommunication <|-- CommunicationWave
-DrivableAreaEdge <|-- EdgeLineMarkers
-DrivableAreaEdge <|-- EdgeNone
-DrivableAreaEdge <|-- EdgeShoulderGrass
-DrivableAreaEdge <|-- EdgeShoulderPavedOrGravel
-DrivableAreaEdge <|-- EdgeSolidBarriers
-DrivableAreaEdge <|-- EdgeTemporaryLineMarkers
-SceneryFixedStructure <|-- FixedStructureBuilding
-SceneryFixedStructure <|-- FixedStructureStreetFurniture
-SceneryFixedStructure <|-- FixedStructureStreetlight
-SceneryFixedStructure <|-- FixedStructureVegetation
-RoadUserHuman <|-- HumanAnimalRider
-RoadUserHuman <|-- HumanCyclist
-RoadUserHuman <|-- HumanDriver
-RoadUserHuman <|-- HumanMotorcyclist
-RoadUserHuman <|-- HumanPassenger
-RoadUserHuman <|-- HumanPedestrian
-RoadUserHuman <|-- HumanWheelchairUser
-SignsInformation <|-- InformationSignsUniformFullTime
-SignsInformation <|-- InformationSignsUniformTemporary
-SignsInformation <|-- InformationSignsVariableFullTime
-SignsInformation <|-- InformationSignsVariableTemporary
-JunctionIntersection <|-- IntersectionCrossroad
-JunctionIntersection <|-- IntersectionGradeSeperated
-JunctionIntersection <|-- IntersectionStaggered
-JunctionIntersection <|-- IntersectionTJunction
-JunctionIntersection <|-- IntersectionYJunction
-LaneSpecificationType <|-- LaneTypeBus
-LaneSpecificationType <|-- LaneTypeCycle
-LaneSpecificationType <|-- LaneTypeEmergency
-LaneSpecificationType <|-- LaneTypeSpecial
-LaneSpecificationType <|-- LaneTypeTraffic
-LaneSpecificationType <|-- LaneTypeTram
-IlluminationLowLight <|-- LowLightAmbient
-IlluminationLowLight <|-- LowLightNight
-DrivableAreaType <|-- MotorwayManaged
-DrivableAreaType <|-- MotorwayUnmanaged
+IlluminationArtificialEnum <|-- ArtificialStreetLighting
+IlluminationArtificialEnum <|-- ArtificialVehicleLighting
+BehaviourCommunicationEnum <|-- CommunicationHeadlightFlash
+BehaviourCommunicationEnum <|-- CommunicationHorn
+BehaviourCommunicationEnum <|-- CommunicationSignalEmergency
+BehaviourCommunicationEnum <|-- CommunicationSignalHazard
+BehaviourCommunicationEnum <|-- CommunicationSignalLeft
+BehaviourCommunicationEnum <|-- CommunicationSignalRight
+BehaviourCommunicationEnum <|-- CommunicationSignalSlowing
+ConnectivityCommunicationEnum <|-- CommunicationV2i
+ConnectivityCommunicationEnum <|-- CommunicationV2v
+BehaviourCommunicationEnum <|-- CommunicationWave
+DrivableAreaEdgeEnum <|-- EdgeLineMarkers
+DrivableAreaEdgeEnum <|-- EdgeNone
+DrivableAreaEdgeEnum <|-- EdgeShoulderGrass
+DrivableAreaEdgeEnum <|-- EdgeShoulderPavedOrGravel
+DrivableAreaEdgeEnum <|-- EdgeSolidBarriers
+DrivableAreaEdgeEnum <|-- EdgeTemporaryLineMarkers
+SceneryFixedStructureEnum <|-- FixedStructureBuilding
+SceneryFixedStructureEnum <|-- FixedStructureStreetFurniture
+SceneryFixedStructureEnum <|-- FixedStructureStreetlight
+SceneryFixedStructureEnum <|-- FixedStructureVegetation
+RoadUserHumanEnum <|-- HumanAnimalRider
+RoadUserHumanEnum <|-- HumanCyclist
+RoadUserHumanEnum <|-- HumanDriver
+RoadUserHumanEnum <|-- HumanMotorcyclist
+RoadUserHumanEnum <|-- HumanPassenger
+RoadUserHumanEnum <|-- HumanPedestrian
+RoadUserHumanEnum <|-- HumanWheelchairUser
+SignsInformationEnum <|-- InformationSignsUniformFullTime
+SignsInformationEnum <|-- InformationSignsUniformTemporary
+SignsInformationEnum <|-- InformationSignsVariableFullTime
+SignsInformationEnum <|-- InformationSignsVariableTemporary
+JunctionIntersectionEnum <|-- IntersectionCrossroad
+JunctionIntersectionEnum <|-- IntersectionGradeSeperated
+JunctionIntersectionEnum <|-- IntersectionStaggered
+JunctionIntersectionEnum <|-- IntersectionTJunction
+JunctionIntersectionEnum <|-- IntersectionYJunction
+LaneSpecificationTypeEnum <|-- LaneTypeBus
+LaneSpecificationTypeEnum <|-- LaneTypeCycle
+LaneSpecificationTypeEnum <|-- LaneTypeEmergency
+LaneSpecificationTypeEnum <|-- LaneTypeSpecial
+LaneSpecificationTypeEnum <|-- LaneTypeTraffic
+LaneSpecificationTypeEnum <|-- LaneTypeTram
+IlluminationLowLightEnum <|-- LowLightAmbient
+IlluminationLowLightEnum <|-- LowLightNight
+DrivableAreaTypeEnum <|-- MotorwayManaged
+DrivableAreaTypeEnum <|-- MotorwayUnmanaged
 Odd <|-- OddDynamicElements
 Odd <|-- OddEnvironment
 Odd <|-- OddScenery
-EnvironmentParticulates <|-- ParticulatesDust
-EnvironmentParticulates <|-- ParticulatesMarine
-EnvironmentParticulates <|-- ParticulatesPollution
-EnvironmentParticulates <|-- ParticulatesVolcanic
-EnvironmentParticulates <|-- ParticulatesWater
-ConnectivityPositioning <|-- PositioningGalileo
-ConnectivityPositioning <|-- PositioningGlonass
-ConnectivityPositioning <|-- PositioningGps
-RainType <|-- RainTypeConvective
-RainType <|-- RainTypeDynamic
-RainType <|-- RainTypeOrographic
-SignsRegulatory <|-- RegulatorySignsUniformFullTime
-SignsRegulatory <|-- RegulatorySignsUniformTemporary
-SignsRegulatory <|-- RegulatorySignsVariableFullTime
-SignsRegulatory <|-- RegulatorySignsVariableTemporary
-DrivableAreaType <|-- RoadTypeDistributor
-DrivableAreaType <|-- RoadTypeMinor
-DrivableAreaType <|-- RoadTypeMotorway
-DrivableAreaType <|-- RoadTypeParking
-DrivableAreaType <|-- RoadTypeRadial
-DrivableAreaType <|-- RoadTypeShared
-DrivableAreaType <|-- RoadTypeSlip
-JunctionRoundabout <|-- RoundaboutCompactNosignal
-JunctionRoundabout <|-- RoundaboutCompactSignal
-JunctionRoundabout <|-- RoundaboutDoubleNosignal
-JunctionRoundabout <|-- RoundaboutDoubleSignal
-JunctionRoundabout <|-- RoundaboutLargeNosignal
-JunctionRoundabout <|-- RoundaboutLargeSignal
-JunctionRoundabout <|-- RoundaboutMiniNosignal
-JunctionRoundabout <|-- RoundaboutMiniSignal
-JunctionRoundabout <|-- RoundaboutNormalNosignal
-JunctionRoundabout <|-- RoundaboutNormalSignal
-ScenerySpecialStructure <|-- SpecialStructureAutoAccess
-ScenerySpecialStructure <|-- SpecialStructureBridge
-ScenerySpecialStructure <|-- SpecialStructurePedestrianCrossing
-ScenerySpecialStructure <|-- SpecialStructureRailCrossing
-ScenerySpecialStructure <|-- SpecialStructureTollPlaza
-ScenerySpecialStructure <|-- SpecialStructureTunnel
-DaySunPosition <|-- SunPositionBehind
-DaySunPosition <|-- SunPositionFront
-DaySunPosition <|-- SunPositionLeft
-DaySunPosition <|-- SunPositionRight
-DrivableAreaSurfaceCondition <|-- SurfaceConditionContamination
-DrivableAreaSurfaceCondition <|-- SurfaceConditionFlooded
-DrivableAreaSurfaceCondition <|-- SurfaceConditionIcy
-DrivableAreaSurfaceCondition <|-- SurfaceConditionMirage
-DrivableAreaSurfaceCondition <|-- SurfaceConditionSnow
-DrivableAreaSurfaceCondition <|-- SurfaceConditionStandingWater
-DrivableAreaSurfaceCondition <|-- SurfaceConditionWet
-DrivableAreaSurfaceFeature <|-- SurfaceFeatureCrack
-DrivableAreaSurfaceFeature <|-- SurfaceFeaturePothole
-DrivableAreaSurfaceFeature <|-- SurfaceFeatureRut
-DrivableAreaSurfaceFeature <|-- SurfaceFeatureSwell
-DrivableAreaSurfaceType <|-- SurfaceTypeLoose
-DrivableAreaSurfaceType <|-- SurfaceTypeSegmented
-DrivableAreaSurfaceType <|-- SurfaceTypeUniform
-SceneryTemporaryStructure <|-- TemporaryStructureConstructionDetour
-SceneryTemporaryStructure <|-- TemporaryStructureRefuseCollection
-SceneryTemporaryStructure <|-- TemporaryStructureRoadSignage
-SceneryTemporaryStructure <|-- TemporaryStructureRoadWorks
-GeometryTransverse <|-- TransverseBarriers
-GeometryTransverse <|-- TransverseDivided
-GeometryTransverse <|-- TransverseLanesTogether
-GeometryTransverse <|-- TransversePavements
-GeometryTransverse <|-- TransverseUndivided
-LaneSpecificationTravelDirection <|-- TravelDirectionLeft
-LaneSpecificationTravelDirection <|-- TravelDirectionRight
-ConnectivityCommunication <|-- V2iCellular
-ConnectivityCommunication <|-- V2iSatellite
-ConnectivityCommunication <|-- V2iWifi
-ConnectivityCommunication <|-- V2vCellular
-ConnectivityCommunication <|-- V2vSatellite
-ConnectivityCommunication <|-- V2vWifi
-RoadUserVehicle <|-- VehicleAgricultural
-RoadUserVehicle <|-- VehicleBus
-RoadUserVehicle <|-- VehicleCar
-RoadUserVehicle <|-- VehicleConstruction
-RoadUserVehicle <|-- VehicleCycle
-RoadUserVehicle <|-- VehicleEmergency
-RoadUserVehicle <|-- VehicleMotorcycle
-RoadUserVehicle <|-- VehicleTrailer
-RoadUserVehicle <|-- VehicleTruck
-RoadUserVehicle <|-- VehicleVan
-RoadUserVehicle <|-- VehicleWheelchair
-SignsWarning <|-- WarningSignsUniform
-SignsWarning <|-- WarningSignsUniformFullTime
-SignsWarning <|-- WarningSignsUniformTemporary
-SignsWarning <|-- WarningSignsVariableFullTime
-SignsWarning <|-- WarningSignsVariableTemporary
-SceneryZone <|-- ZoneGeoFenced
-SceneryZone <|-- ZoneInterference
-SceneryZone <|-- ZoneRegion
-SceneryZone <|-- ZoneSchool
-SceneryZone <|-- ZoneTrafficManagement
+EnvironmentParticulatesEnum <|-- ParticulatesDust
+EnvironmentParticulatesEnum <|-- ParticulatesMarine
+EnvironmentParticulatesEnum <|-- ParticulatesPollution
+EnvironmentParticulatesEnum <|-- ParticulatesVolcanic
+EnvironmentParticulatesEnum <|-- ParticulatesWater
+ConnectivityPositioningEnum <|-- PositioningGalileo
+ConnectivityPositioningEnum <|-- PositioningGlonass
+ConnectivityPositioningEnum <|-- PositioningGps
+RainTypeEnum <|-- RainTypeConvective
+RainTypeEnum <|-- RainTypeDynamic
+RainTypeEnum <|-- RainTypeOrographic
+SignsRegulatoryEnum <|-- RegulatorySignsUniformFullTime
+SignsRegulatoryEnum <|-- RegulatorySignsUniformTemporary
+SignsRegulatoryEnum <|-- RegulatorySignsVariableFullTime
+SignsRegulatoryEnum <|-- RegulatorySignsVariableTemporary
+DrivableAreaTypeEnum <|-- RoadTypeDistributor
+DrivableAreaTypeEnum <|-- RoadTypeMinor
+DrivableAreaTypeEnum <|-- RoadTypeMotorway
+DrivableAreaTypeEnum <|-- RoadTypeParking
+DrivableAreaTypeEnum <|-- RoadTypeRadial
+DrivableAreaTypeEnum <|-- RoadTypeShared
+DrivableAreaTypeEnum <|-- RoadTypeSlip
+JunctionRoundaboutEnum <|-- RoundaboutCompactNosignal
+JunctionRoundaboutEnum <|-- RoundaboutCompactSignal
+JunctionRoundaboutEnum <|-- RoundaboutDoubleNosignal
+JunctionRoundaboutEnum <|-- RoundaboutDoubleSignal
+JunctionRoundaboutEnum <|-- RoundaboutLargeNosignal
+JunctionRoundaboutEnum <|-- RoundaboutLargeSignal
+JunctionRoundaboutEnum <|-- RoundaboutMiniNosignal
+JunctionRoundaboutEnum <|-- RoundaboutMiniSignal
+JunctionRoundaboutEnum <|-- RoundaboutNormalNosignal
+JunctionRoundaboutEnum <|-- RoundaboutNormalSignal
+ScenerySpecialStructureEnum <|-- SpecialStructureAutoAccess
+ScenerySpecialStructureEnum <|-- SpecialStructureBridge
+ScenerySpecialStructureEnum <|-- SpecialStructurePedestrianCrossing
+ScenerySpecialStructureEnum <|-- SpecialStructureRailCrossing
+ScenerySpecialStructureEnum <|-- SpecialStructureTollPlaza
+ScenerySpecialStructureEnum <|-- SpecialStructureTunnel
+DaySunPositionEnum <|-- SunPositionBehind
+DaySunPositionEnum <|-- SunPositionFront
+DaySunPositionEnum <|-- SunPositionLeft
+DaySunPositionEnum <|-- SunPositionRight
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionContamination
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionFlooded
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionIcy
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionMirage
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionSnow
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionStandingWater
+DrivableAreaSurfaceConditionEnum <|-- SurfaceConditionWet
+DrivableAreaSurfaceFeatureEnum <|-- SurfaceFeatureCrack
+DrivableAreaSurfaceFeatureEnum <|-- SurfaceFeaturePothole
+DrivableAreaSurfaceFeatureEnum <|-- SurfaceFeatureRut
+DrivableAreaSurfaceFeatureEnum <|-- SurfaceFeatureSwell
+DrivableAreaSurfaceTypeEnum <|-- SurfaceTypeLoose
+DrivableAreaSurfaceTypeEnum <|-- SurfaceTypeSegmented
+DrivableAreaSurfaceTypeEnum <|-- SurfaceTypeUniform
+SceneryTemporaryStructureEnum <|-- TemporaryStructureConstructionDetour
+SceneryTemporaryStructureEnum <|-- TemporaryStructureRefuseCollection
+SceneryTemporaryStructureEnum <|-- TemporaryStructureRoadSignage
+SceneryTemporaryStructureEnum <|-- TemporaryStructureRoadWorks
+GeometryTransverseEnum <|-- TransverseBarriers
+GeometryTransverseEnum <|-- TransverseDivided
+GeometryTransverseEnum <|-- TransverseLanesTogether
+GeometryTransverseEnum <|-- TransversePavements
+GeometryTransverseEnum <|-- TransverseUndivided
+LaneSpecificationTravelDirectionEnum <|-- TravelDirectionLeft
+LaneSpecificationTravelDirectionEnum <|-- TravelDirectionRight
+ConnectivityCommunicationEnum <|-- V2iCellular
+ConnectivityCommunicationEnum <|-- V2iSatellite
+ConnectivityCommunicationEnum <|-- V2iWifi
+ConnectivityCommunicationEnum <|-- V2vCellular
+ConnectivityCommunicationEnum <|-- V2vSatellite
+ConnectivityCommunicationEnum <|-- V2vWifi
+RoadUserVehicleEnum <|-- VehicleAgricultural
+RoadUserVehicleEnum <|-- VehicleBus
+RoadUserVehicleEnum <|-- VehicleCar
+RoadUserVehicleEnum <|-- VehicleConstruction
+RoadUserVehicleEnum <|-- VehicleCycle
+RoadUserVehicleEnum <|-- VehicleEmergency
+RoadUserVehicleEnum <|-- VehicleMotorcycle
+RoadUserVehicleEnum <|-- VehicleTrailer
+RoadUserVehicleEnum <|-- VehicleTruck
+RoadUserVehicleEnum <|-- VehicleVan
+RoadUserVehicleEnum <|-- VehicleWheelchair
+SignsWarningEnum <|-- WarningSignsUniform
+SignsWarningEnum <|-- WarningSignsUniformFullTime
+SignsWarningEnum <|-- WarningSignsUniformTemporary
+SignsWarningEnum <|-- WarningSignsVariableFullTime
+SignsWarningEnum <|-- WarningSignsVariableTemporary
+SceneryZoneEnum <|-- ZoneGeoFenced
+SceneryZoneEnum <|-- ZoneInterference
+SceneryZoneEnum <|-- ZoneRegion
+SceneryZoneEnum <|-- ZoneSchool
+SceneryZoneEnum <|-- ZoneTrafficManagement
 ```
 
 ### Class Hierarchy
 
 - AdminTag (https://w3id.org/ascs-ev/envited-x/openlabel/v2/AdminTag)
 - Behaviour (https://w3id.org/ascs-ev/envited-x/openlabel/v2/Behaviour)
-- BehaviourCommunication (https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication)
+- BehaviourCommunicationEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunicationEnum)
   - CommunicationHeadlightFlash (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHeadlightFlash)
   - CommunicationHorn (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHorn)
   - CommunicationSignalEmergency (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalEmergency)
@@ -343,7 +343,7 @@ SceneryZone <|-- ZoneTrafficManagement
   - CommunicationSignalRight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalRight)
   - CommunicationSignalSlowing (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalSlowing)
   - CommunicationWave (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationWave)
-- ConnectivityCommunication (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityCommunication)
+- ConnectivityCommunicationEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityCommunicationEnum)
   - CommunicationV2i (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2i)
   - CommunicationV2v (https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2v)
   - V2iCellular (https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iCellular)
@@ -352,23 +352,23 @@ SceneryZone <|-- ZoneTrafficManagement
   - V2vCellular (https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vCellular)
   - V2vSatellite (https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vSatellite)
   - V2vWifi (https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vWifi)
-- ConnectivityPositioning (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioning)
+- ConnectivityPositioningEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioningEnum)
   - PositioningGalileo (https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGalileo)
   - PositioningGlonass (https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGlonass)
   - PositioningGps (https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGps)
-- DaySunPosition (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition)
+- DaySunPositionEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPositionEnum)
   - SunPositionBehind (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionBehind)
   - SunPositionFront (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionFront)
   - SunPositionLeft (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionLeft)
   - SunPositionRight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionRight)
-- DrivableAreaEdge (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge)
+- DrivableAreaEdgeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdgeEnum)
   - EdgeLineMarkers (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeLineMarkers)
   - EdgeNone (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeNone)
   - EdgeShoulderGrass (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderGrass)
   - EdgeShoulderPavedOrGravel (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderPavedOrGravel)
   - EdgeSolidBarriers (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeSolidBarriers)
   - EdgeTemporaryLineMarkers (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeTemporaryLineMarkers)
-- DrivableAreaSurfaceCondition (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition)
+- DrivableAreaSurfaceConditionEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceConditionEnum)
   - SurfaceConditionContamination (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionContamination)
   - SurfaceConditionFlooded (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionFlooded)
   - SurfaceConditionIcy (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionIcy)
@@ -376,16 +376,16 @@ SceneryZone <|-- ZoneTrafficManagement
   - SurfaceConditionSnow (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionSnow)
   - SurfaceConditionStandingWater (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionStandingWater)
   - SurfaceConditionWet (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionWet)
-- DrivableAreaSurfaceFeature (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature)
+- DrivableAreaSurfaceFeatureEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeatureEnum)
   - SurfaceFeatureCrack (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureCrack)
   - SurfaceFeaturePothole (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeaturePothole)
   - SurfaceFeatureRut (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureRut)
   - SurfaceFeatureSwell (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureSwell)
-- DrivableAreaSurfaceType (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceType)
+- DrivableAreaSurfaceTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceTypeEnum)
   - SurfaceTypeLoose (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeLoose)
   - SurfaceTypeSegmented (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeSegmented)
   - SurfaceTypeUniform (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeUniform)
-- DrivableAreaType (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType)
+- DrivableAreaTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaTypeEnum)
   - MotorwayManaged (https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayManaged)
   - MotorwayUnmanaged (https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayUnmanaged)
   - RoadTypeDistributor (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeDistributor)
@@ -395,31 +395,31 @@ SceneryZone <|-- ZoneTrafficManagement
   - RoadTypeRadial (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeRadial)
   - RoadTypeShared (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeShared)
   - RoadTypeSlip (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeSlip)
-- EnvironmentParticulates (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulates)
+- EnvironmentParticulatesEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulatesEnum)
   - ParticulatesDust (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust)
   - ParticulatesMarine (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine)
   - ParticulatesPollution (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesPollution)
   - ParticulatesVolcanic (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesVolcanic)
   - ParticulatesWater (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater)
-- GeometryTransverse (https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverse)
+- GeometryTransverseEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverseEnum)
   - TransverseBarriers (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseBarriers)
   - TransverseDivided (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseDivided)
   - TransverseLanesTogether (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseLanesTogether)
   - TransversePavements (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransversePavements)
   - TransverseUndivided (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseUndivided)
-- IlluminationArtificial (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificial)
+- IlluminationArtificialEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificialEnum)
   - ArtificialStreetLighting (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialStreetLighting)
   - ArtificialVehicleLighting (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialVehicleLighting)
-- IlluminationLowLight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLight)
+- IlluminationLowLightEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLightEnum)
   - LowLightAmbient (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightAmbient)
   - LowLightNight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightNight)
-- JunctionIntersection (https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection)
+- JunctionIntersectionEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersectionEnum)
   - IntersectionCrossroad (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionCrossroad)
   - IntersectionGradeSeperated (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionGradeSeperated)
   - IntersectionStaggered (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionStaggered)
   - IntersectionTJunction (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionTJunction)
   - IntersectionYJunction (https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionYJunction)
-- JunctionRoundabout (https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout)
+- JunctionRoundaboutEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundaboutEnum)
   - RoundaboutCompactNosignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactNosignal)
   - RoundaboutCompactSignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactSignal)
   - RoundaboutDoubleNosignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutDoubleNosignal)
@@ -430,10 +430,10 @@ SceneryZone <|-- ZoneTrafficManagement
   - RoundaboutMiniSignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutMiniSignal)
   - RoundaboutNormalNosignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalNosignal)
   - RoundaboutNormalSignal (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalSignal)
-- LaneSpecificationTravelDirection (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection)
+- LaneSpecificationTravelDirectionEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirectionEnum)
   - TravelDirectionLeft (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionLeft)
   - TravelDirectionRight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionRight)
-- LaneSpecificationType (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType)
+- LaneSpecificationTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTypeEnum)
   - LaneTypeBus (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeBus)
   - LaneTypeCycle (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeCycle)
   - LaneTypeEmergency (https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeEmergency)
@@ -445,12 +445,12 @@ SceneryZone <|-- ZoneTrafficManagement
   - OddEnvironment (https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddEnvironment)
   - OddScenery (https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddScenery)
 - QuantitativeValue (https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue)
-- RainType (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType)
+- RainTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum)
   - RainTypeConvective (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective)
   - RainTypeDynamic (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeDynamic)
   - RainTypeOrographic (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeOrographic)
 - RoadUser (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUser)
-- RoadUserHuman (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHuman)
+- RoadUserHumanEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHumanEnum)
   - HumanAnimalRider (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider)
   - HumanCyclist (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist)
   - HumanDriver (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver)
@@ -458,7 +458,7 @@ SceneryZone <|-- ZoneTrafficManagement
   - HumanPassenger (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger)
   - HumanPedestrian (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian)
   - HumanWheelchairUser (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser)
-- RoadUserVehicle (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicle)
+- RoadUserVehicleEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicleEnum)
   - VehicleAgricultural (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural)
   - VehicleBus (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus)
   - VehicleCar (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar)
@@ -471,40 +471,40 @@ SceneryZone <|-- ZoneTrafficManagement
   - VehicleVan (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan)
   - VehicleWheelchair (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair)
 - Scenario (https://w3id.org/ascs-ev/envited-x/openlabel/v2/Scenario)
-- SceneryFixedStructure (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure)
+- SceneryFixedStructureEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructureEnum)
   - FixedStructureBuilding (https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureBuilding)
   - FixedStructureStreetFurniture (https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetFurniture)
   - FixedStructureStreetlight (https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetlight)
   - FixedStructureVegetation (https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureVegetation)
-- ScenerySpecialStructure (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructure)
+- ScenerySpecialStructureEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructureEnum)
   - SpecialStructureAutoAccess (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureAutoAccess)
   - SpecialStructureBridge (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureBridge)
   - SpecialStructurePedestrianCrossing (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructurePedestrianCrossing)
   - SpecialStructureRailCrossing (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureRailCrossing)
   - SpecialStructureTollPlaza (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTollPlaza)
   - SpecialStructureTunnel (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTunnel)
-- SceneryTemporaryStructure (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructure)
+- SceneryTemporaryStructureEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructureEnum)
   - TemporaryStructureConstructionDetour (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureConstructionDetour)
   - TemporaryStructureRefuseCollection (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRefuseCollection)
   - TemporaryStructureRoadSignage (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadSignage)
   - TemporaryStructureRoadWorks (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadWorks)
-- SceneryZone (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone)
+- SceneryZoneEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZoneEnum)
   - ZoneGeoFenced (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneGeoFenced)
   - ZoneInterference (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneInterference)
   - ZoneRegion (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneRegion)
   - ZoneSchool (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneSchool)
   - ZoneTrafficManagement (https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneTrafficManagement)
-- SignsInformation (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation)
+- SignsInformationEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformationEnum)
   - InformationSignsUniformFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformFullTime)
   - InformationSignsUniformTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformTemporary)
   - InformationSignsVariableFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableFullTime)
   - InformationSignsVariableTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableTemporary)
-- SignsRegulatory (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory)
+- SignsRegulatoryEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatoryEnum)
   - RegulatorySignsUniformFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformFullTime)
   - RegulatorySignsUniformTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformTemporary)
   - RegulatorySignsVariableFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableFullTime)
   - RegulatorySignsVariableTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableTemporary)
-- SignsWarning (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarning)
+- SignsWarningEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarningEnum)
   - WarningSignsUniform (https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniform)
   - WarningSignsUniformFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformFullTime)
   - WarningSignsUniformTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformTemporary)
@@ -517,184 +517,184 @@ SceneryZone <|-- ZoneTrafficManagement
 |Class|IRI|Description|Parents|
 |---|---|---|---|
 |AdminTag|https://w3id.org/ascs-ev/envited-x/openlabel/v2/AdminTag|||
-|ArtificialStreetLighting|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialStreetLighting||IlluminationArtificial|
-|ArtificialVehicleLighting|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialVehicleLighting||IlluminationArtificial|
+|ArtificialStreetLighting|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialStreetLighting||IlluminationArtificialEnum|
+|ArtificialVehicleLighting|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ArtificialVehicleLighting||IlluminationArtificialEnum|
 |Behaviour|https://w3id.org/ascs-ev/envited-x/openlabel/v2/Behaviour|||
-|BehaviourCommunication|https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication|||
-|CommunicationHeadlightFlash|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHeadlightFlash||BehaviourCommunication|
-|CommunicationHorn|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHorn||BehaviourCommunication|
-|CommunicationSignalEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalEmergency||BehaviourCommunication|
-|CommunicationSignalHazard|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalHazard||BehaviourCommunication|
-|CommunicationSignalLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalLeft||BehaviourCommunication|
-|CommunicationSignalRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalRight||BehaviourCommunication|
-|CommunicationSignalSlowing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalSlowing||BehaviourCommunication|
-|CommunicationV2i|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2i||ConnectivityCommunication|
-|CommunicationV2v|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2v||ConnectivityCommunication|
-|CommunicationWave|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationWave||BehaviourCommunication|
-|ConnectivityCommunication|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityCommunication|||
-|ConnectivityPositioning|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioning|||
-|DaySunPosition|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition|||
-|DrivableAreaEdge|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge|||
-|DrivableAreaSurfaceCondition|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition|||
-|DrivableAreaSurfaceFeature|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature|||
-|DrivableAreaSurfaceType|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceType|||
-|DrivableAreaType|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType|||
-|EdgeLineMarkers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeLineMarkers||DrivableAreaEdge|
-|EdgeNone|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeNone||DrivableAreaEdge|
-|EdgeShoulderGrass|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderGrass||DrivableAreaEdge|
-|EdgeShoulderPavedOrGravel|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderPavedOrGravel||DrivableAreaEdge|
-|EdgeSolidBarriers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeSolidBarriers||DrivableAreaEdge|
-|EdgeTemporaryLineMarkers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeTemporaryLineMarkers||DrivableAreaEdge|
-|EnvironmentParticulates|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulates|||
-|FixedStructureBuilding|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureBuilding||SceneryFixedStructure|
-|FixedStructureStreetFurniture|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetFurniture||SceneryFixedStructure|
-|FixedStructureStreetlight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetlight||SceneryFixedStructure|
-|FixedStructureVegetation|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureVegetation||SceneryFixedStructure|
-|GeometryTransverse|https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverse|||
-|HumanAnimalRider|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider||RoadUserHuman|
-|HumanCyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist||RoadUserHuman|
-|HumanDriver|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver||RoadUserHuman|
-|HumanMotorcyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanMotorcyclist||RoadUserHuman|
-|HumanPassenger|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger||RoadUserHuman|
-|HumanPedestrian|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian||RoadUserHuman|
-|HumanWheelchairUser|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser||RoadUserHuman|
-|IlluminationArtificial|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificial|||
-|IlluminationLowLight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLight|||
-|InformationSignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformFullTime||SignsInformation|
-|InformationSignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformTemporary||SignsInformation|
-|InformationSignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableFullTime||SignsInformation|
-|InformationSignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableTemporary||SignsInformation|
-|IntersectionCrossroad|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionCrossroad||JunctionIntersection|
-|IntersectionGradeSeperated|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionGradeSeperated||JunctionIntersection|
-|IntersectionStaggered|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionStaggered||JunctionIntersection|
-|IntersectionTJunction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionTJunction||JunctionIntersection|
-|IntersectionYJunction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionYJunction||JunctionIntersection|
-|JunctionIntersection|https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection|||
-|JunctionRoundabout|https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout|||
-|LaneSpecificationTravelDirection|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection|||
-|LaneSpecificationType|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType|||
-|LaneTypeBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeBus||LaneSpecificationType|
-|LaneTypeCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeCycle||LaneSpecificationType|
-|LaneTypeEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeEmergency||LaneSpecificationType|
-|LaneTypeSpecial|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeSpecial||LaneSpecificationType|
-|LaneTypeTraffic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTraffic||LaneSpecificationType|
-|LaneTypeTram|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTram||LaneSpecificationType|
-|LowLightAmbient|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightAmbient||IlluminationLowLight|
-|LowLightNight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightNight||IlluminationLowLight|
-|MotorwayManaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayManaged||DrivableAreaType|
-|MotorwayUnmanaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayUnmanaged||DrivableAreaType|
+|BehaviourCommunicationEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunicationEnum|||
+|CommunicationHeadlightFlash|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHeadlightFlash||BehaviourCommunicationEnum|
+|CommunicationHorn|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationHorn||BehaviourCommunicationEnum|
+|CommunicationSignalEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalEmergency||BehaviourCommunicationEnum|
+|CommunicationSignalHazard|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalHazard||BehaviourCommunicationEnum|
+|CommunicationSignalLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalLeft||BehaviourCommunicationEnum|
+|CommunicationSignalRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalRight||BehaviourCommunicationEnum|
+|CommunicationSignalSlowing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationSignalSlowing||BehaviourCommunicationEnum|
+|CommunicationV2i|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2i||ConnectivityCommunicationEnum|
+|CommunicationV2v|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationV2v||ConnectivityCommunicationEnum|
+|CommunicationWave|https://w3id.org/ascs-ev/envited-x/openlabel/v2/CommunicationWave||BehaviourCommunicationEnum|
+|ConnectivityCommunicationEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityCommunicationEnum|||
+|ConnectivityPositioningEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioningEnum|||
+|DaySunPositionEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPositionEnum|||
+|DrivableAreaEdgeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdgeEnum|||
+|DrivableAreaSurfaceConditionEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceConditionEnum|||
+|DrivableAreaSurfaceFeatureEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeatureEnum|||
+|DrivableAreaSurfaceTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceTypeEnum|||
+|DrivableAreaTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaTypeEnum|||
+|EdgeLineMarkers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeLineMarkers||DrivableAreaEdgeEnum|
+|EdgeNone|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeNone||DrivableAreaEdgeEnum|
+|EdgeShoulderGrass|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderGrass||DrivableAreaEdgeEnum|
+|EdgeShoulderPavedOrGravel|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeShoulderPavedOrGravel||DrivableAreaEdgeEnum|
+|EdgeSolidBarriers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeSolidBarriers||DrivableAreaEdgeEnum|
+|EdgeTemporaryLineMarkers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeTemporaryLineMarkers||DrivableAreaEdgeEnum|
+|EnvironmentParticulatesEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulatesEnum|||
+|FixedStructureBuilding|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureBuilding||SceneryFixedStructureEnum|
+|FixedStructureStreetFurniture|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetFurniture||SceneryFixedStructureEnum|
+|FixedStructureStreetlight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureStreetlight||SceneryFixedStructureEnum|
+|FixedStructureVegetation|https://w3id.org/ascs-ev/envited-x/openlabel/v2/FixedStructureVegetation||SceneryFixedStructureEnum|
+|GeometryTransverseEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverseEnum|||
+|HumanAnimalRider|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider||RoadUserHumanEnum|
+|HumanCyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist||RoadUserHumanEnum|
+|HumanDriver|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver||RoadUserHumanEnum|
+|HumanMotorcyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanMotorcyclist||RoadUserHumanEnum|
+|HumanPassenger|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger||RoadUserHumanEnum|
+|HumanPedestrian|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian||RoadUserHumanEnum|
+|HumanWheelchairUser|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser||RoadUserHumanEnum|
+|IlluminationArtificialEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificialEnum|||
+|IlluminationLowLightEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLightEnum|||
+|InformationSignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformFullTime||SignsInformationEnum|
+|InformationSignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsUniformTemporary||SignsInformationEnum|
+|InformationSignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableFullTime||SignsInformationEnum|
+|InformationSignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/InformationSignsVariableTemporary||SignsInformationEnum|
+|IntersectionCrossroad|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionCrossroad||JunctionIntersectionEnum|
+|IntersectionGradeSeperated|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionGradeSeperated||JunctionIntersectionEnum|
+|IntersectionStaggered|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionStaggered||JunctionIntersectionEnum|
+|IntersectionTJunction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionTJunction||JunctionIntersectionEnum|
+|IntersectionYJunction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IntersectionYJunction||JunctionIntersectionEnum|
+|JunctionIntersectionEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersectionEnum|||
+|JunctionRoundaboutEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundaboutEnum|||
+|LaneSpecificationTravelDirectionEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirectionEnum|||
+|LaneSpecificationTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTypeEnum|||
+|LaneTypeBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeBus||LaneSpecificationTypeEnum|
+|LaneTypeCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeCycle||LaneSpecificationTypeEnum|
+|LaneTypeEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeEmergency||LaneSpecificationTypeEnum|
+|LaneTypeSpecial|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeSpecial||LaneSpecificationTypeEnum|
+|LaneTypeTraffic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTraffic||LaneSpecificationTypeEnum|
+|LaneTypeTram|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneTypeTram||LaneSpecificationTypeEnum|
+|LowLightAmbient|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightAmbient||IlluminationLowLightEnum|
+|LowLightNight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/LowLightNight||IlluminationLowLightEnum|
+|MotorwayManaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayManaged||DrivableAreaTypeEnum|
+|MotorwayUnmanaged|https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotorwayUnmanaged||DrivableAreaTypeEnum|
 |Odd|https://w3id.org/ascs-ev/envited-x/openlabel/v2/Odd|||
 |OddDynamicElements|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddDynamicElements||Odd|
 |OddEnvironment|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddEnvironment||Odd|
 |OddScenery|https://w3id.org/ascs-ev/envited-x/openlabel/v2/OddScenery||Odd|
-|ParticulatesDust|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust||EnvironmentParticulates|
-|ParticulatesMarine|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine||EnvironmentParticulates|
-|ParticulatesPollution|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesPollution||EnvironmentParticulates|
-|ParticulatesVolcanic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesVolcanic||EnvironmentParticulates|
-|ParticulatesWater|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater||EnvironmentParticulates|
-|PositioningGalileo|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGalileo||ConnectivityPositioning|
-|PositioningGlonass|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGlonass||ConnectivityPositioning|
-|PositioningGps|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGps||ConnectivityPositioning|
+|ParticulatesDust|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust||EnvironmentParticulatesEnum|
+|ParticulatesMarine|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine||EnvironmentParticulatesEnum|
+|ParticulatesPollution|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesPollution||EnvironmentParticulatesEnum|
+|ParticulatesVolcanic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesVolcanic||EnvironmentParticulatesEnum|
+|ParticulatesWater|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater||EnvironmentParticulatesEnum|
+|PositioningGalileo|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGalileo||ConnectivityPositioningEnum|
+|PositioningGlonass|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGlonass||ConnectivityPositioningEnum|
+|PositioningGps|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGps||ConnectivityPositioningEnum|
 |QuantitativeValue|https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue|||
-|RainType|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType|||
-|RainTypeConvective|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective||RainType|
-|RainTypeDynamic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeDynamic||RainType|
-|RainTypeOrographic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeOrographic||RainType|
-|RegulatorySignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformFullTime||SignsRegulatory|
-|RegulatorySignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformTemporary||SignsRegulatory|
-|RegulatorySignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableFullTime||SignsRegulatory|
-|RegulatorySignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableTemporary||SignsRegulatory|
-|RoadTypeDistributor|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeDistributor||DrivableAreaType|
-|RoadTypeMinor|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeMinor||DrivableAreaType|
-|RoadTypeMotorway|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeMotorway||DrivableAreaType|
-|RoadTypeParking|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeParking||DrivableAreaType|
-|RoadTypeRadial|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeRadial||DrivableAreaType|
-|RoadTypeShared|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeShared||DrivableAreaType|
-|RoadTypeSlip|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeSlip||DrivableAreaType|
+|RainTypeConvective|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective||RainTypeEnum|
+|RainTypeDynamic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeDynamic||RainTypeEnum|
+|RainTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum|||
+|RainTypeOrographic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeOrographic||RainTypeEnum|
+|RegulatorySignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformFullTime||SignsRegulatoryEnum|
+|RegulatorySignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsUniformTemporary||SignsRegulatoryEnum|
+|RegulatorySignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableFullTime||SignsRegulatoryEnum|
+|RegulatorySignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RegulatorySignsVariableTemporary||SignsRegulatoryEnum|
+|RoadTypeDistributor|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeDistributor||DrivableAreaTypeEnum|
+|RoadTypeMinor|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeMinor||DrivableAreaTypeEnum|
+|RoadTypeMotorway|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeMotorway||DrivableAreaTypeEnum|
+|RoadTypeParking|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeParking||DrivableAreaTypeEnum|
+|RoadTypeRadial|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeRadial||DrivableAreaTypeEnum|
+|RoadTypeShared|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeShared||DrivableAreaTypeEnum|
+|RoadTypeSlip|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadTypeSlip||DrivableAreaTypeEnum|
 |RoadUser|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUser|||
-|RoadUserHuman|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHuman|||
-|RoadUserVehicle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicle|||
-|RoundaboutCompactNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactNosignal||JunctionRoundabout|
-|RoundaboutCompactSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactSignal||JunctionRoundabout|
-|RoundaboutDoubleNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutDoubleNosignal||JunctionRoundabout|
-|RoundaboutDoubleSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutDoubleSignal||JunctionRoundabout|
-|RoundaboutLargeNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutLargeNosignal||JunctionRoundabout|
-|RoundaboutLargeSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutLargeSignal||JunctionRoundabout|
-|RoundaboutMiniNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutMiniNosignal||JunctionRoundabout|
-|RoundaboutMiniSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutMiniSignal||JunctionRoundabout|
-|RoundaboutNormalNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalNosignal||JunctionRoundabout|
-|RoundaboutNormalSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalSignal||JunctionRoundabout|
+|RoadUserHumanEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHumanEnum|||
+|RoadUserVehicleEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicleEnum|||
+|RoundaboutCompactNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactNosignal||JunctionRoundaboutEnum|
+|RoundaboutCompactSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutCompactSignal||JunctionRoundaboutEnum|
+|RoundaboutDoubleNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutDoubleNosignal||JunctionRoundaboutEnum|
+|RoundaboutDoubleSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutDoubleSignal||JunctionRoundaboutEnum|
+|RoundaboutLargeNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutLargeNosignal||JunctionRoundaboutEnum|
+|RoundaboutLargeSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutLargeSignal||JunctionRoundaboutEnum|
+|RoundaboutMiniNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutMiniNosignal||JunctionRoundaboutEnum|
+|RoundaboutMiniSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutMiniSignal||JunctionRoundaboutEnum|
+|RoundaboutNormalNosignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalNosignal||JunctionRoundaboutEnum|
+|RoundaboutNormalSignal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoundaboutNormalSignal||JunctionRoundaboutEnum|
 |Scenario|https://w3id.org/ascs-ev/envited-x/openlabel/v2/Scenario|||
-|SceneryFixedStructure|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure|||
-|ScenerySpecialStructure|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructure|||
-|SceneryTemporaryStructure|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructure|||
-|SceneryZone|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone|||
-|SignsInformation|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation|||
-|SignsRegulatory|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory|||
-|SignsWarning|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarning|||
-|SpecialStructureAutoAccess|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureAutoAccess||ScenerySpecialStructure|
-|SpecialStructureBridge|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureBridge||ScenerySpecialStructure|
-|SpecialStructurePedestrianCrossing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructurePedestrianCrossing||ScenerySpecialStructure|
-|SpecialStructureRailCrossing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureRailCrossing||ScenerySpecialStructure|
-|SpecialStructureTollPlaza|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTollPlaza||ScenerySpecialStructure|
-|SpecialStructureTunnel|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTunnel||ScenerySpecialStructure|
-|SunPositionBehind|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionBehind||DaySunPosition|
-|SunPositionFront|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionFront||DaySunPosition|
-|SunPositionLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionLeft||DaySunPosition|
-|SunPositionRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionRight||DaySunPosition|
-|SurfaceConditionContamination|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionContamination||DrivableAreaSurfaceCondition|
-|SurfaceConditionFlooded|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionFlooded||DrivableAreaSurfaceCondition|
-|SurfaceConditionIcy|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionIcy||DrivableAreaSurfaceCondition|
-|SurfaceConditionMirage|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionMirage||DrivableAreaSurfaceCondition|
-|SurfaceConditionSnow|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionSnow||DrivableAreaSurfaceCondition|
-|SurfaceConditionStandingWater|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionStandingWater||DrivableAreaSurfaceCondition|
-|SurfaceConditionWet|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionWet||DrivableAreaSurfaceCondition|
-|SurfaceFeatureCrack|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureCrack||DrivableAreaSurfaceFeature|
-|SurfaceFeaturePothole|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeaturePothole||DrivableAreaSurfaceFeature|
-|SurfaceFeatureRut|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureRut||DrivableAreaSurfaceFeature|
-|SurfaceFeatureSwell|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureSwell||DrivableAreaSurfaceFeature|
-|SurfaceTypeLoose|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeLoose||DrivableAreaSurfaceType|
-|SurfaceTypeSegmented|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeSegmented||DrivableAreaSurfaceType|
-|SurfaceTypeUniform|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeUniform||DrivableAreaSurfaceType|
+|SceneryFixedStructureEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructureEnum|||
+|ScenerySpecialStructureEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructureEnum|||
+|SceneryTemporaryStructureEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructureEnum|||
+|SceneryZoneEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZoneEnum|||
+|SignsInformationEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformationEnum|||
+|SignsRegulatoryEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatoryEnum|||
+|SignsWarningEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarningEnum|||
+|SpecialStructureAutoAccess|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureAutoAccess||ScenerySpecialStructureEnum|
+|SpecialStructureBridge|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureBridge||ScenerySpecialStructureEnum|
+|SpecialStructurePedestrianCrossing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructurePedestrianCrossing||ScenerySpecialStructureEnum|
+|SpecialStructureRailCrossing|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureRailCrossing||ScenerySpecialStructureEnum|
+|SpecialStructureTollPlaza|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTollPlaza||ScenerySpecialStructureEnum|
+|SpecialStructureTunnel|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructureTunnel||ScenerySpecialStructureEnum|
+|SunPositionBehind|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionBehind||DaySunPositionEnum|
+|SunPositionFront|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionFront||DaySunPositionEnum|
+|SunPositionLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionLeft||DaySunPositionEnum|
+|SunPositionRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SunPositionRight||DaySunPositionEnum|
+|SurfaceConditionContamination|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionContamination||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionFlooded|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionFlooded||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionIcy|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionIcy||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionMirage|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionMirage||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionSnow|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionSnow||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionStandingWater|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionStandingWater||DrivableAreaSurfaceConditionEnum|
+|SurfaceConditionWet|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceConditionWet||DrivableAreaSurfaceConditionEnum|
+|SurfaceFeatureCrack|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureCrack||DrivableAreaSurfaceFeatureEnum|
+|SurfaceFeaturePothole|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeaturePothole||DrivableAreaSurfaceFeatureEnum|
+|SurfaceFeatureRut|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureRut||DrivableAreaSurfaceFeatureEnum|
+|SurfaceFeatureSwell|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceFeatureSwell||DrivableAreaSurfaceFeatureEnum|
+|SurfaceTypeLoose|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeLoose||DrivableAreaSurfaceTypeEnum|
+|SurfaceTypeSegmented|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeSegmented||DrivableAreaSurfaceTypeEnum|
+|SurfaceTypeUniform|https://w3id.org/ascs-ev/envited-x/openlabel/v2/SurfaceTypeUniform||DrivableAreaSurfaceTypeEnum|
 |Tag|https://w3id.org/ascs-ev/envited-x/openlabel/v2/Tag|||
-|TemporaryStructureConstructionDetour|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureConstructionDetour||SceneryTemporaryStructure|
-|TemporaryStructureRefuseCollection|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRefuseCollection||SceneryTemporaryStructure|
-|TemporaryStructureRoadSignage|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadSignage||SceneryTemporaryStructure|
-|TemporaryStructureRoadWorks|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadWorks||SceneryTemporaryStructure|
-|TransverseBarriers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseBarriers||GeometryTransverse|
-|TransverseDivided|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseDivided||GeometryTransverse|
-|TransverseLanesTogether|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseLanesTogether||GeometryTransverse|
-|TransversePavements|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransversePavements||GeometryTransverse|
-|TransverseUndivided|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseUndivided||GeometryTransverse|
-|TravelDirectionLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionLeft||LaneSpecificationTravelDirection|
-|TravelDirectionRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionRight||LaneSpecificationTravelDirection|
-|V2iCellular|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iCellular||ConnectivityCommunication|
-|V2iSatellite|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iSatellite||ConnectivityCommunication|
-|V2iWifi|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iWifi||ConnectivityCommunication|
-|V2vCellular|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vCellular||ConnectivityCommunication|
-|V2vSatellite|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vSatellite||ConnectivityCommunication|
-|V2vWifi|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vWifi||ConnectivityCommunication|
-|VehicleAgricultural|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural||RoadUserVehicle|
-|VehicleBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus||RoadUserVehicle|
-|VehicleCar|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar||RoadUserVehicle|
-|VehicleConstruction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleConstruction||RoadUserVehicle|
-|VehicleCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCycle||RoadUserVehicle|
-|VehicleEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleEmergency||RoadUserVehicle|
-|VehicleMotorcycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleMotorcycle||RoadUserVehicle|
-|VehicleTrailer|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTrailer||RoadUserVehicle|
-|VehicleTruck|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTruck||RoadUserVehicle|
-|VehicleVan|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan||RoadUserVehicle|
-|VehicleWheelchair|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair||RoadUserVehicle|
-|WarningSignsUniform|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniform||SignsWarning|
-|WarningSignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformFullTime||SignsWarning|
-|WarningSignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformTemporary||SignsWarning|
-|WarningSignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableFullTime||SignsWarning|
-|WarningSignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableTemporary||SignsWarning|
-|ZoneGeoFenced|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneGeoFenced||SceneryZone|
-|ZoneInterference|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneInterference||SceneryZone|
-|ZoneRegion|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneRegion||SceneryZone|
-|ZoneSchool|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneSchool||SceneryZone|
-|ZoneTrafficManagement|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneTrafficManagement||SceneryZone|
+|TemporaryStructureConstructionDetour|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureConstructionDetour||SceneryTemporaryStructureEnum|
+|TemporaryStructureRefuseCollection|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRefuseCollection||SceneryTemporaryStructureEnum|
+|TemporaryStructureRoadSignage|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadSignage||SceneryTemporaryStructureEnum|
+|TemporaryStructureRoadWorks|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadWorks||SceneryTemporaryStructureEnum|
+|TransverseBarriers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseBarriers||GeometryTransverseEnum|
+|TransverseDivided|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseDivided||GeometryTransverseEnum|
+|TransverseLanesTogether|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseLanesTogether||GeometryTransverseEnum|
+|TransversePavements|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransversePavements||GeometryTransverseEnum|
+|TransverseUndivided|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseUndivided||GeometryTransverseEnum|
+|TravelDirectionLeft|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionLeft||LaneSpecificationTravelDirectionEnum|
+|TravelDirectionRight|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TravelDirectionRight||LaneSpecificationTravelDirectionEnum|
+|V2iCellular|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iCellular||ConnectivityCommunicationEnum|
+|V2iSatellite|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iSatellite||ConnectivityCommunicationEnum|
+|V2iWifi|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2iWifi||ConnectivityCommunicationEnum|
+|V2vCellular|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vCellular||ConnectivityCommunicationEnum|
+|V2vSatellite|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vSatellite||ConnectivityCommunicationEnum|
+|V2vWifi|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vWifi||ConnectivityCommunicationEnum|
+|VehicleAgricultural|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural||RoadUserVehicleEnum|
+|VehicleBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus||RoadUserVehicleEnum|
+|VehicleCar|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar||RoadUserVehicleEnum|
+|VehicleConstruction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleConstruction||RoadUserVehicleEnum|
+|VehicleCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCycle||RoadUserVehicleEnum|
+|VehicleEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleEmergency||RoadUserVehicleEnum|
+|VehicleMotorcycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleMotorcycle||RoadUserVehicleEnum|
+|VehicleTrailer|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTrailer||RoadUserVehicleEnum|
+|VehicleTruck|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTruck||RoadUserVehicleEnum|
+|VehicleVan|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan||RoadUserVehicleEnum|
+|VehicleWheelchair|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair||RoadUserVehicleEnum|
+|WarningSignsUniform|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniform||SignsWarningEnum|
+|WarningSignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformFullTime||SignsWarningEnum|
+|WarningSignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformTemporary||SignsWarningEnum|
+|WarningSignsVariableFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableFullTime||SignsWarningEnum|
+|WarningSignsVariableTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableTemporary||SignsWarningEnum|
+|ZoneGeoFenced|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneGeoFenced||SceneryZoneEnum|
+|ZoneInterference|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneInterference||SceneryZoneEnum|
+|ZoneRegion|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneRegion||SceneryZoneEnum|
+|ZoneSchool|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneSchool||SceneryZoneEnum|
+|ZoneTrafficManagement|https://w3id.org/ascs-ev/envited-x/openlabel/v2/ZoneTrafficManagement||SceneryZoneEnum|
 
 ## Prefixes
 
@@ -824,198 +824,198 @@ SceneryZone <|-- ZoneTrafficManagement
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrain"></a>WeatherRain||0|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslopevalue"></a>longitudinalUpSlopeValue||0|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensity"></a>TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtraveldirection"></a>LaneSpecificationTravelDirection||0|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecount"></a>LaneSpecificationLaneCount||0|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwindvalue"></a>weatherWindValue||0|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signswarning"></a>SignsWarning||0|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatespollution"></a>ParticulatesPollution||0|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwind"></a>WeatherWind||0|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensionsvalue"></a>laneSpecificationDimensionsValue||0|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationmarking"></a>LaneSpecificationMarking||0|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevationvalue"></a>daySunElevationValue||0|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesvolcanic"></a>ParticulatesVolcanic||0|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalstraights"></a>HorizontalStraights||0|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitycommunication"></a>ConnectivityCommunication||0|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-raintype"></a>RainType||0|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacetype"></a>DrivableAreaSurfaceType||0|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowrate"></a>TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesdust"></a>ParticulatesDust||0|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-environmentparticulates"></a>EnvironmentParticulates||0|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolumevalue"></a>trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslopevalue"></a>longitudinalDownSlopeValue||0|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryspecialstructure"></a>ScenerySpecialStructure||0|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitypositioning"></a>ConnectivityPositioning||0|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-geometrytransverse"></a>GeometryTransverse||0|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationartificial"></a>IlluminationArtificial||0|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryzone"></a>SceneryZone||0|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareaedge"></a>DrivableAreaEdge||0|Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudinessvalue"></a>illuminationCloudinessValue||0|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurvesvalue"></a>horizontalCurvesValue||0|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswater"></a>ParticulatesWater||0|Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtype"></a>LaneSpecificationType||0|Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsinformation"></a>SignsInformation||0|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeed"></a>SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficspecialvehicle"></a>TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesmarine"></a>ParticulatesMarine||0|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevation"></a>DaySunElevation||0|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrainvalue"></a>weatherRainValue||0|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowratevalue"></a>trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinallevelplane"></a>LongitudinalLevelPlane||0|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionintersection"></a>JunctionIntersection||0|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryfixedstructure"></a>SceneryFixedStructure||0|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeedvalue"></a>subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslope"></a>LongitudinalDownSlope||0|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunposition"></a>DaySunPosition||0|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsregulatory"></a>SignsRegulatory||0|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensions"></a>LaneSpecificationDimensions||0|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacecondition"></a>DrivableAreaSurfaceCondition||0|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionroundabout"></a>JunctionRoundabout||0|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacefeature"></a>DrivableAreaSurfaceFeature||0|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurves"></a>HorizontalCurves||0|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolume"></a>TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslope"></a>LongitudinalUpSlope||0|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttype"></a>TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnowvalue"></a>weatherSnowValue||0|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationlowlight"></a>IlluminationLowLight||0|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareatype"></a>DrivableAreaType||0|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnow"></a>WeatherSnow||0|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecountvalue"></a>laneSpecificationLaneCountValue||0|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensityvalue"></a>trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenerytemporarystructure"></a>SceneryTemporaryStructure||0|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswatervalue"></a>particulatesWaterValue||0|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudiness"></a>IlluminationCloudiness||0|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|trafficAgentDensityValue||0|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|trafficVolumeValue||0|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LaneSpecificationTravelDirection||0|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SignsRegulatory||0|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DrivableAreaSurfaceType||0|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DrivableAreaSurfaceFeature||0|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|TrafficAgentDensity||0|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|longitudinalUpSlopeValue||0|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ParticulatesWater||1|Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SubjectVehicleSpeed||0|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DrivableAreaEdge||0|Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LongitudinalDownSlope||0|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SceneryFixedStructure||0|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LaneSpecificationDimensions||0|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LongitudinalUpSlope||0|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|trafficFlowRateValue||0|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|horizontalCurvesValue||0|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SignsInformation||0|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|trafficAgentTypeValue||0|Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LaneSpecificationLaneCount||0|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LaneSpecificationMarking||0|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|TrafficSpecialVehicle||0|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|TrafficVolume||0|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|JunctionRoundabout||0|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|subjectVehicleSpeedValue||0|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LongitudinalLevelPlane||0|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SceneryZone||0|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SignsWarning||0|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|longitudinalDownSlopeValue||0|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|GeometryTransverse||0|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|TrafficFlowRate||0|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|laneSpecificationLaneCountValue||0|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|LaneSpecificationType||0|Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|laneSpecificationDimensionsValue||0|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DrivableAreaSurfaceCondition||0|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|SceneryTemporaryStructure||0|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|DrivableAreaType||0|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|HorizontalCurves||0|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|JunctionIntersection||0|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|ScenerySpecialStructure||0|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|HorizontalStraights||0|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|TrafficAgentType||0|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SubjectVehicleSpeed||0|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|TrafficAgentType||0|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|particulatesWaterValue||0|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|TrafficAgentDensity||0|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|RainType||0|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DaySunPosition||0|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|daySunElevationValue||0|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|TrafficVolume||0|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|trafficFlowRateValue||0|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ParticulatesPollution||0|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|TrafficFlowRate||0|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|weatherWindValue||0|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ParticulatesDust||0|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ParticulatesWater||0|Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|subjectVehicleSpeedValue||0|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ParticulatesVolcanic||0|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|TrafficSpecialVehicle||0|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ConnectivityCommunication||0|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|IlluminationCloudiness||0|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|IlluminationLowLight||0|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|weatherRainValue||0|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|trafficVolumeValue||0|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|WeatherWind||0|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|weatherSnowValue||0|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|EnvironmentParticulates||0|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|IlluminationArtificial||0|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ParticulatesMarine||0|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|WeatherSnow||0|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|illuminationCloudinessValue||0|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|trafficAgentTypeValue||0|Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|ConnectivityPositioning||0|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DaySunElevation||0|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|WeatherRain||0|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|trafficAgentDensityValue||0|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenerytemporarystructure"></a>SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudiness"></a>IlluminationCloudiness||0|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-raintype"></a>RainType||0|Type of rainfall.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationlowlight"></a>IlluminationLowLight||0|Type of low-light condition.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwind"></a>WeatherWind||0|Presence of wind.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationcloudinessvalue"></a>illuminationCloudinessValue||0|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrain"></a>WeatherRain||0|Presence of rainfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacecondition"></a>DrivableAreaSurfaceCondition||0|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslope"></a>LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinalupslopevalue"></a>longitudinalUpSlopeValue||0|Upward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-illuminationartificial"></a>IlluminationArtificial||0|Type of artificial illumination.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryspecialstructure"></a>ScenerySpecialStructure||0|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecountvalue"></a>laneSpecificationLaneCountValue||0|Number of lanes.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsinformation"></a>SignsInformation||0|Type of information sign.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherwindvalue"></a>weatherWindValue||0|Wind speed in metres per second.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsregulatory"></a>SignsRegulatory||0|Type of regulatory sign.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunposition"></a>DaySunPosition||0|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-environmentparticulates"></a>EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurves"></a>HorizontalCurves||0|Presence of curved roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weatherrainvalue"></a>weatherRainValue||0|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesmarine"></a>ParticulatesMarine||0|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswatervalue"></a>particulatesWaterValue||0|Meteorological optical range in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowratevalue"></a>trafficFlowRateValue||1|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswater"></a>ParticulatesWater||0|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesvolcanic"></a>ParticulatesVolcanic||0|Presence of volcanic ash particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeed"></a>SubjectVehicleSpeed||1|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacetype"></a>DrivableAreaSurfaceType||0|Type of drivable area surface.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficflowrate"></a>TrafficFlowRate||1|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacefeature"></a>DrivableAreaSurfaceFeature||0|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatespollution"></a>ParticulatesPollution||0|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttype"></a>TrafficAgentType||1|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensity"></a>TrafficAgentDensity||1|Presence of a specified traffic agent density.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryfixedstructure"></a>SceneryFixedStructure||0|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslopevalue"></a>longitudinalDownSlopeValue||0|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensionsvalue"></a>laneSpecificationDimensionsValue||0|Lane width in metres.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionroundabout"></a>JunctionRoundabout||0|Type of roundabout.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationlanecount"></a>LaneSpecificationLaneCount||0|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-geometrytransverse"></a>GeometryTransverse||0|Type of transverse geometry.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-sceneryzone"></a>SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtype"></a>LaneSpecificationType||0|Type of lane.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareaedge"></a>DrivableAreaEdge||0|Type of drivable area edge.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnow"></a>WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevation"></a>DaySunElevation||0|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationtraveldirection"></a>LaneSpecificationTravelDirection||0|Direction of travel.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulatesdust"></a>ParticulatesDust||0|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolume"></a>TrafficVolume||1|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitypositioning"></a>ConnectivityPositioning||0|Type of positioning system.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficspecialvehicle"></a>TrafficSpecialVehicle||1|Presence of special vehicles.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-subjectvehiclespeedvalue"></a>subjectVehicleSpeedValue||1|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationmarking"></a>LaneSpecificationMarking||0|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-daysunelevationvalue"></a>daySunElevationValue||0|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagentdensityvalue"></a>trafficAgentDensityValue||1|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficvolumevalue"></a>trafficVolumeValue||1|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signswarning"></a>SignsWarning||0|Type of warning sign.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitycommunication"></a>ConnectivityCommunication||0|Type of communication connectivity.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinaldownslope"></a>LongitudinalDownSlope||0|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-lanespecificationdimensions"></a>LaneSpecificationDimensions||0|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareatype"></a>DrivableAreaType||0|Type of drivable area.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionintersection"></a>JunctionIntersection||0|Type of intersection.||openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalstraights"></a>HorizontalStraights||0|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurvesvalue"></a>horizontalCurvesValue||0|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-longitudinallevelplane"></a>LongitudinalLevelPlane||0|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-weathersnowvalue"></a>weatherSnowValue||0|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceType||0|Type of drivable area surface.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesWater||1|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceFeature||0|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|illuminationCloudinessValue||1|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SubjectVehicleSpeed||0|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|longitudinalDownSlopeValue||0|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|GeometryTransverse||0|Type of transverse geometry.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationType||0|Type of lane.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|laneSpecificationLaneCountValue||0|Number of lanes.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationDimensions||0|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationCloudiness||1|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|JunctionIntersection||0|Type of intersection.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficVolume||0|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficVolumeValue||0|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ScenerySpecialStructure||0|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficAgentDensity||0|Presence of a specified traffic agent density.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsWarning||0|Type of warning sign.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalLevelPlane||0|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherRainValue||1|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryFixedStructure||0|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|TrafficSpecialVehicle||0|Presence of special vehicles.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ConnectivityCommunication||1|Type of communication connectivity.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesPollution||1|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|RainType||1|Type of rainfall.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|laneSpecificationDimensionsValue||0|Lane width in metres.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DaySunPosition||1|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|HorizontalCurves||0|Presence of curved roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DaySunElevation||1|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|EnvironmentParticulates||1|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficFlowRateValue||0|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesMarine||1|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|longitudinalUpSlopeValue||0|Upward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationLowLight||1|Type of low-light condition.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherWind||1|Presence of wind.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesDust||1|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationMarking||0|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaSurfaceCondition||0|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LongitudinalDownSlope||0|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationLaneCount||0|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherRain||1|Presence of rainfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherWindValue||1|Wind speed in metres per second.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|HorizontalStraights||0|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficAgentDensityValue||0|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ConnectivityPositioning||1|Type of positioning system.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|horizontalCurvesValue||0|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|IlluminationArtificial||1|Type of artificial illumination.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsInformation||0|Type of information sign.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaType||0|Type of drivable area.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|daySunElevationValue||1|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|DrivableAreaEdge||0|Type of drivable area edge.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|subjectVehicleSpeedValue||0|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|SignsRegulatory||0|Type of regulatory sign.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|ParticulatesVolcanic||1|Presence of volcanic ash particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|JunctionRoundabout||0|Type of roundabout.||openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|WeatherSnow||1|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|weatherSnowValue||1|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|particulatesWaterValue||1|Meteorological optical range in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|LaneSpecificationTravelDirection||0|Direction of travel.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|RainType||0|Type of rainfall.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesVolcanic||0|Presence of volcanic ash particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsRegulatory||1|Type of regulatory sign.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficAgentDensityValue||0|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryTemporaryStructure||1|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficVolume||0|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficAgentDensity||0|Presence of a specified traffic agent density.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationArtificial||0|Type of artificial illumination.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherRainValue||0|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ConnectivityCommunication||0|Type of communication connectivity.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficVolumeValue||0|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesPollution||0|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesDust||0|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationType|||Type of lane.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|HorizontalCurves||1|Presence of curved roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationDimensions||1|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryFixedStructure||1|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceType||1|Type of drivable area surface.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ConnectivityPositioning||0|Type of positioning system.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceFeature||1|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DaySunElevation||0|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|JunctionIntersection||1|Type of intersection.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|illuminationCloudinessValue||0|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|JunctionRoundabout||1|Type of roundabout.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficSpecialVehicle||0|Presence of special vehicles.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalLevelPlane||1|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherWindValue||0|Wind speed in metres per second.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherWind||0|Presence of wind.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DaySunPosition||0|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|GeometryTransverse||1|Type of transverse geometry.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ScenerySpecialStructure||1|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|horizontalCurvesValue||1|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|WeatherRain||0|Presence of rainfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationMarking||1|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesWater||0|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|HorizontalStraights||1|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width in metres.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaEdge|||Type of drivable area edge.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaSurfaceCondition||1|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|weatherSnowValue||0|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|ParticulatesMarine||0|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationLaneCount||1|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalUpSlope||1|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationCloudiness||0|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|IlluminationLowLight||0|Type of low-light condition.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|LongitudinalDownSlope||1|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|DrivableAreaType||1|Type of drivable area.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|particulatesWaterValue||0|Meteorological optical range in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|daySunElevationValue||0|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SceneryZone||1|Type of zone.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|longitudinalUpSlopeValue||1|Upward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SubjectVehicleSpeed||0|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|subjectVehicleSpeedValue||0|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsInformation||1|Type of information sign.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficFlowRateValue||0|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|SignsWarning||1|Type of warning sign.||openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|longitudinalDownSlopeValue||1|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |Scenario|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-hastag"></a>hasTag||1|A tag associated with a scenario.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
 |Tag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduser"></a>RoadUser||1|Road user tag.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
 |Tag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-admintag"></a>AdminTag||1|Administration tag.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|openlabel-v2.shacl.ttl|
@@ -1034,96 +1034,96 @@ SceneryZone <|-- ZoneTrafficManagement
 |AdminTag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenarioversion"></a>scenarioVersion||1|The version number of the scenario.|<http://www.w3.org/2001/XMLSchema#string>|openlabel-v2.shacl.ttl|
 |AdminTag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-ownerurl"></a>ownerURL||1|The URL of the legal entity who owns the rights to the scenario.|<http://www.w3.org/2001/XMLSchema#string>|openlabel-v2.shacl.ttl|
 |AdminTag|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-scenarioname"></a>scenarioName||1|The name of the scenario.|<http://www.w3.org/2001/XMLSchema#string>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturn"></a>MotionTurn||1|An activity where the road user changes their heading.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondeceleratevalue"></a>motionDecelerateValue||1|Rate of deceleration (ms-2).||openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionreverse"></a>MotionReverse||1|An activity where the subject vehicle is moving in the opposite direction to which it is facing.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncutin"></a>MotionCutIn||1|An activity where the subject vehicle ends up directly in front of the object vehicle.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionstop"></a>MotionStop||1|An activity where the road user is stationary.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondecelerate"></a>MotionDecelerate||1|An activity where the road user decreases their velocity.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionlanechangeright"></a>MotionLaneChangeRight||1|An activity where the subject vehicle is in a lane right of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionrun"></a>MotionRun||1|Locomotion mode where at a specific point no foot touches the ground.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionacceleratevalue"></a>motionAccelerateValue||1|Rate of acceleration (ms-2).||openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiontowards"></a>MotionTowards||1|An activity where the road user is closer to the object by the end.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturnright"></a>MotionTurnRight||1|Subject exits the intersection on a road to the right of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionaccelerate"></a>MotionAccelerate||1|An activity where the road user increases their velocity.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-behaviourcommunication"></a>BehaviourCommunication|||Communication type of road user behaviour.||openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionlanechangeleft"></a>MotionLaneChangeLeft||1|An activity where the subject vehicle is in a lane left of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionuturn"></a>MotionUTurn||1|Subject performs a turn resulting in heading in the opposite direction.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionaway"></a>MotionAway||1|An activity where the road user is further away from the object by the end.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionovertake"></a>MotionOvertake||1|An activity where the subject starts behind and ends up in front by changing lanes.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondrive"></a>MotionDrive||1|An activity where the subject vehicle is moving in the direction it is facing.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturnleft"></a>MotionTurnLeft||1|Subject exits the intersection on a road to the left of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionacceleratevalue"></a>motionAccelerateValue||1|Rate of acceleration (ms⁻²).||openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionuturn"></a>MotionUTurn||1|Subject performs a turn resulting in heading in the opposite direction.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionreverse"></a>MotionReverse||1|An activity where the subject vehicle is moving in the opposite direction to which it is facing.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionlanechangeleft"></a>MotionLaneChangeLeft||1|An activity where the subject vehicle is in a lane left of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturnright"></a>MotionTurnRight||1|Subject exits the intersection on a road to the right of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionaway"></a>MotionAway||1|An activity where the road user is further away from the object by the end.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionstop"></a>MotionStop||1|An activity where the road user is stationary.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-behaviourcommunication"></a>BehaviourCommunication|||Communication type of road user behaviour.||openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiontowards"></a>MotionTowards||1|An activity where the road user is closer to the object by the end.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondrivevalue"></a>motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondeceleratevalue"></a>motionDecelerateValue||1|Rate of deceleration (ms⁻²).||openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionrun"></a>MotionRun||1|Locomotion mode where at a specific point no foot touches the ground.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionlanechangeright"></a>MotionLaneChangeRight||1|An activity where the subject vehicle is in a lane right of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionwalk"></a>MotionWalk||1|Locomotion mode where at least one foot is always on the ground.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionslide"></a>MotionSlide||1|An activity where a pedestrian is slipping/sliding on the road.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondrivevalue"></a>motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
-|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncutout"></a>MotionCutOut||1|An activity where the object vehicle suddenly moves out of the lane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturn"></a>MotionTurn||1|An activity where the road user changes their heading.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionovertake"></a>MotionOvertake||1|An activity where the subject starts behind and ends up in front by changing lanes.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturnleft"></a>MotionTurnLeft||1|Subject exits the intersection on a road to the left of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncross"></a>MotionCross||1|An activity where the trajectory of the road user crosses the trajectory of the object.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LongitudinalUpSlope||1|Up-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|GeometryTransverse||1|Transverse geometry type. Refer to BSI PAS-1883 Section 5.2.3.3.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|IlluminationArtificial||1|Artificial illumination type. Refer to BSI PAS-1883 Section 5.3.3.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DrivableAreaSurfaceType||1|Road surface type. Refer to BSI PAS-1883 Section 5.2.3.7.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|weatherSnowValue||1|Visibility (km). Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|JunctionRoundabout||1|Roundabout type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|illuminationCloudinessValue||1|Cloud cover (okta). Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LaneSpecificationDimensions||1|Lane dimensions flag. Refer to BSI PAS-1883 Section 5.2.3.4.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|trafficAgentTypeValue|||Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|subjectVehicleSpeedValue||1|Speed (km/h). Refer to BSI PAS-1883 Section 5.4.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DrivableAreaType||1|Road type. Refer to BSI PAS-1883 Section 5.2.3.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|TrafficFlowRate||1|Traffic flow rate flag. Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SceneryZone||1|Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|WeatherRain||1|Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|TrafficVolume||1|Traffic volume flag. Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SignsWarning||1|Warning sign type. Refer to BSI PAS-1883 Section 5.2.3.5.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|particulatesWaterValue||1|Meteorological Optical Range (MOR) (m). Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|JunctionIntersection||1|Intersection type. Refer to BSI PAS-1883 Section 5.2.4.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LaneSpecificationType|||Lane type. Refer to BSI PAS-1883 Section 5.2.3.4.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ConnectivityCommunication||1|Communication connectivity type. Refer to BSI PAS-1883 Section 5.3.4.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DaySunElevation||1|Elevation of the sun above the horizon flag. Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|trafficAgentDensityValue||1|Density (vehicles/km). Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SignsRegulatory||1|Regulatory sign type. Refer to BSI PAS-1883 Section 5.2.3.5.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|TrafficAgentType||1|Traffic agent type classification flag. Refer to BSI PAS-1883 Section 5.4.a.4.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LaneSpecificationMarking||1|Lane marking flag. Refer to BSI PAS-1883 Section 5.2.3.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|trafficVolumeValue||1|Volume (vehicle km). Refer to BSI PAS-1883 Section 5.4.a.2.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LongitudinalLevelPlane||1|Level plane flag. Refer to BSI PAS-1883 Section 5.2.3.3.iii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DrivableAreaSurfaceCondition||1|Road surface condition. Refer to BSI PAS-1883 Section 5.2.3.7.c.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|EnvironmentParticulates||1|Particulate type. Refer to BSI PAS-1883 Section 5.3.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DaySunPosition||1|Position of the sun. Refer to BSI PAS-1883 Section 5.3.3.a.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|longitudinalUpSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.i.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ParticulatesVolcanic||1|Volcanic ash flag. Refer to BSI PAS-1883 Section 5.3.2.e.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width (m). Refer to BSI PAS-1883 Section 5.2.3.4.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|TrafficAgentDensity||1|Traffic agent density flag. Refer to BSI PAS-1883 Section 5.4.a.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DrivableAreaEdge|||Drivable area edge type. Refer to BSI PAS-1883 Section 5.2.3.1.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|DrivableAreaSurfaceFeature||1|Road surface feature. Refer to BSI PAS-1883 Section 5.2.3.7.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LaneSpecificationLaneCount||1|Number of lanes flag. Refer to BSI PAS-1883 Section 5.2.3.4.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|HorizontalCurves||1|Curves flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|WeatherWind||1|Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|weatherRainValue||1|Rainfall intensity (mm/h). Refer to BSI PAS-1883 Section 5.3.1.2.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|longitudinalDownSlopeValue||1|Gradient (%). Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|IlluminationLowLight||1|Low light condition. Refer to BSI PAS-1883 Section 5.3.3.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ParticulatesDust||1|Sand and dust flag. Refer to BSI PAS-1883 Section 5.3.2.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LongitudinalDownSlope||1|Down-slope flag. Refer to BSI PAS-1883 Section 5.2.3.3.ii.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SubjectVehicleSpeed||1|Subject vehicle speed flag. Refer to BSI PAS-1883 Section 5.4.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ConnectivityPositioning||1|Positioning system type. Refer to BSI PAS-1883 Section 5.3.4.b.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel. Refer to BSI PAS-1883 Section 5.2.3.4.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|HorizontalStraights||1|Straight lines flag. Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|TrafficSpecialVehicle||1|Presence of special vehicles flag. Refer to BSI PAS-1883 Section 5.4.a.5.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SceneryFixedStructure||1|Fixed road structure. Refer to BSI PAS-1883 Section 5.2.1.e.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ParticulatesWater||1|Non-precipitating water droplets or ice crystals (mist/fog) flag. Refer to BSI PAS-1883 Section 5.3.2.b.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|daySunElevationValue||1|Sun elevation (degrees). Refer to BSI PAS-1883 Section 5.3.3.a.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|trafficFlowRateValue||1|Rate (vehicles/h). Refer to BSI PAS-1883 Section 5.4.a.3.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|horizontalCurvesValue||1|Curve radius (m). Refer to BSI PAS-1883 Section 5.2.3.3.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|IlluminationCloudiness||1|Cloudiness flag. Refer to BSI PAS-1883 Section 5.3.3.c.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|RainType||1|Rainfall type. Refer to BSI PAS-1883 Section 5.3.1.2.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SceneryTemporaryStructure||1|Temporary road structure. Refer to BSI PAS-1883 Section 5.2.1.f.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ScenerySpecialStructure||1|Special road structure. Refer to BSI PAS-1883 Section 5.2.1.d.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|WeatherSnow||1|Snowfall flag. Refer to BSI PAS-1883 Section 5.3.1.3.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|SignsInformation||1|Information sign type. Refer to BSI PAS-1883 Section 5.2.3.5.a.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ParticulatesMarine||1|Marine (coastal areas only) flag. Refer to BSI PAS-1883 Section 5.3.2.a.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|ParticulatesPollution||1|Smoke and pollution flag. Refer to BSI PAS-1883 Section 5.3.2.d.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|weatherWindValue||1|Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|RoadUser|openlabel_v2|motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motiondecelerate"></a>MotionDecelerate||1|An activity where the road user decreases their velocity.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncutout"></a>MotionCutOut||1|An activity where the object vehicle suddenly moves out of the lane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motioncutin"></a>MotionCutIn||1|An activity where the subject vehicle ends up directly in front of the object vehicle.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Behaviour|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionaccelerate"></a>MotionAccelerate||1|An activity where the road user increases their velocity.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ConnectivityPositioning||1|Type of positioning system.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficAgentType||1|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|HorizontalCurves||1|Presence of curved roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryZone||1|Type of zone.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesPollution||1|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesDust||1|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationLaneCount||1|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DaySunElevation||1|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalLevelPlane||1|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationCloudiness||1|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceFeature||1|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationMarking||1|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaType||1|Type of drivable area.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesWater||1|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|illuminationCloudinessValue||1|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|HorizontalStraights||1|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficFlowRateValue||1|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DaySunPosition||1|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationType|||Type of lane.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|JunctionRoundabout||1|Type of roundabout.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationLowLight||1|Type of low-light condition.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaEdge|||Type of drivable area edge.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesMarine||1|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsWarning||1|Type of warning sign.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficAgentDensity||1|Presence of a specified traffic agent density.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|longitudinalUpSlopeValue||1|Upward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceCondition||1|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ParticulatesVolcanic||1|Presence of volcanic ash particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherSnow||1|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsInformation||1|Type of information sign.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|subjectVehicleSpeedValue||1|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficFlowRate||1|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficSpecialVehicle||1|Presence of special vehicles.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherRainValue||1|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ConnectivityCommunication||1|Type of communication connectivity.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryFixedStructure||1|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|JunctionIntersection||1|Type of intersection.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherSnowValue||1|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|longitudinalDownSlopeValue||1|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherWind||1|Presence of wind.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalDownSlope||1|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width in metres.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|DrivableAreaSurfaceType||1|Type of drivable area surface.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|daySunElevationValue||1|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|particulatesWaterValue||1|Meteorological optical range in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficAgentDensityValue||1|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LaneSpecificationDimensions||1|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|RainType||1|Type of rainfall.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|laneSpecificationLaneCountValue||1|Number of lanes.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SubjectVehicleSpeed||1|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|TrafficVolume||1|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|horizontalCurvesValue||1|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SceneryTemporaryStructure||1|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|SignsRegulatory||1|Type of regulatory sign.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|weatherWindValue||1|Wind speed in metres per second.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|WeatherRain||1|Presence of rainfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|EnvironmentParticulates||1|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|GeometryTransverse||1|Type of transverse geometry.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficVolumeValue||1|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|ScenerySpecialStructure||1|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|LongitudinalUpSlope||1|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|IlluminationArtificial||1|Type of artificial illumination.||openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduservehicle"></a>RoadUserVehicle||1|Vehicle type.||openlabel-v2.shacl.ttl|
+|RoadUser|openlabel_v2|motionDriveValue||1|Speed (km/h).||openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduseranimal"></a>RoadUserAnimal||1|Animal road user flag.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |RoadUser|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-roaduserhuman"></a>RoadUserHuman||1|Human road user type.||openlabel-v2.shacl.ttl|
 |QuantitativeValue|cmns-q|<a id="prop-https---www-omg-org-spec-commons-quantities-hasupperbound"></a>hasUpperBound||1|Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|

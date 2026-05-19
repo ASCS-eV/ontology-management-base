@@ -9,5 +9,5 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentTypeValue                                                         =
-=    Error:            trafficAgentTypeValue (Odd): Agent type. Refer to BSI PAS-1883 Section 5.4.a.4.                                               =
+=    Error:            trafficAgentTypeValue (Odd): Types of traffic agents present. ISO 34503:2023, 11.1                                            =
 ======================================================================================================================================================
