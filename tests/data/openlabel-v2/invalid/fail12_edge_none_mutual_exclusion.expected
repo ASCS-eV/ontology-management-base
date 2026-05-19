@@ -1,17 +1,14 @@
 ======================================================================================================================================================
 =                                                           ❌ SHACL validation failed for:                                                          =
 =                                                                                                                                                    =
-=                                        ['tests/data/openlabel-v2/invalid/fail04_wrong_literal_types.json']                                         =
+=                                     ['tests/data/openlabel-v2/invalid/fail12_edge_none_mutual_exclusion.json']                                     =
 =                                                                                                                                                    =
 ======================================================================================================================================================
 =                                                                                                                                                    =
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue                                                      =
-=    Error:            subjectVehicleSpeedValue (Odd): Subject vehicle speed in kilometres per hour. ISO 34503:2023, 11.2                            =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            weatherWindValue (Odd): Wind speed in metres per second. ISO 34503:2023, 10.2.3                                               =
+=    Error:            EdgeNone is mutually exclusive with other drivable area edge types. If DrivableAreaEdge includes EdgeNone, no other edge      =
+=                      values are allowed.                                                                                                           =
 ======================================================================================================================================================
+

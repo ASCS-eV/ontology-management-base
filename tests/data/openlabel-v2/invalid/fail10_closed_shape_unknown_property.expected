@@ -95,53 +95,53 @@
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/unknownOddProperty> Literal("this should fail on closed shape",              =
 =                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue> Literal("5", datatype=xsd:decimal)  =
 =                      ; rdf:type <https://w3id.org/ascs-ev/envited-x/openlabel/v2/Odd>, [ owl:allValuesFrom <https://w3id.org/ascs-                 =
-=                      ev/envited-x/openlabel/v2/ConnectivityCommunication> ; owl:onProperty <https://w3id.org/ascs-                                 =
+=                      ev/envited-x/openlabel/v2/ConnectivityCommunicationEnum> ; owl:onProperty <https://w3id.org/ascs-                             =
 =                      ev/envited-x/openlabel/v2/ConnectivityCommunication> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom         =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioning> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioningEnum> ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/ConnectivityPositioning> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom           =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ; owl:onProperty <https://w3id.org/ascs-                     =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPositionEnum> ; owl:onProperty <https://w3id.org/ascs-                 =
 =                      ev/envited-x/openlabel/v2/DaySunPosition> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                    =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge> ; owl:onProperty <https://w3id.org/ascs-                   =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdgeEnum> ; owl:onProperty <https://w3id.org/ascs-               =
 =                      ev/envited-x/openlabel/v2/DrivableAreaEdge> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                  =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; owl:onProperty <https://w3id.org/ascs-       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceConditionEnum> ; owl:onProperty <https://w3id.org/ascs-   =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom      =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature> ; owl:onProperty <https://w3id.org/ascs-         =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeatureEnum> ; owl:onProperty <https://w3id.org/ascs-     =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom        =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceType> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceTypeEnum> ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceType> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom           =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType> ; owl:onProperty <https://w3id.org/ascs-                   =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaTypeEnum> ; owl:onProperty <https://w3id.org/ascs-               =
 =                      ev/envited-x/openlabel/v2/DrivableAreaType> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                  =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulates> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/EnvironmentParticulatesEnum> ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/EnvironmentParticulates> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom           =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverse> ; owl:onProperty <https://w3id.org/ascs-                 =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverseEnum> ; owl:onProperty <https://w3id.org/ascs-             =
 =                      ev/envited-x/openlabel/v2/GeometryTransverse> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificial> ; owl:onProperty <https://w3id.org/ascs-             =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificialEnum> ; owl:onProperty <https://w3id.org/ascs-         =
 =                      ev/envited-x/openlabel/v2/IlluminationArtificial> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom            =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLight> ; owl:onProperty <https://w3id.org/ascs-               =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLightEnum> ; owl:onProperty <https://w3id.org/ascs-           =
 =                      ev/envited-x/openlabel/v2/IlluminationLowLight> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom              =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection> ; owl:onProperty <https://w3id.org/ascs-               =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersectionEnum> ; owl:onProperty <https://w3id.org/ascs-           =
 =                      ev/envited-x/openlabel/v2/JunctionIntersection> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom              =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout> ; owl:onProperty <https://w3id.org/ascs-                 =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundaboutEnum> ; owl:onProperty <https://w3id.org/ascs-             =
 =                      ev/envited-x/openlabel/v2/JunctionRoundabout> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; owl:onProperty <https://w3id.org/ascs-   =
-=                      ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom  =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType> ; owl:onProperty <https://w3id.org/ascs-              =
-=                      ev/envited-x/openlabel/v2/LaneSpecificationType> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom             =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; owl:onProperty <https://w3id.org/ascs-                           =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirectionEnum> ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, rdfs:Resource  =
+=                      ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTypeEnum> ; owl:onProperty           =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType> ; rdf:type owl:Restriction, rdfs:Resource ], [        =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum> ; owl:onProperty <https://w3id.org/ascs-     =
 =                      ev/envited-x/openlabel/v2/RainType> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-  =
-=                      ev/envited-x/openlabel/v2/SceneryFixedStructure> ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/SceneryFixedStructureEnum> ; owl:onProperty <https://w3id.org/ascs-                                 =
 =                      ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom             =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructureEnum> ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom           =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; owl:onProperty <https://w3id.org/ascs-          =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructureEnum> ; owl:onProperty <https://w3id.org/ascs-      =
 =                      ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom         =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone> ; owl:onProperty <https://w3id.org/ascs-                        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZoneEnum> ; owl:onProperty <https://w3id.org/ascs-                    =
 =                      ev/envited-x/openlabel/v2/SceneryZone> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                       =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation> ; owl:onProperty <https://w3id.org/ascs-                   =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformationEnum> ; owl:onProperty <https://w3id.org/ascs-               =
 =                      ev/envited-x/openlabel/v2/SignsInformation> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                  =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory> ; owl:onProperty <https://w3id.org/ascs-                    =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatoryEnum> ; owl:onProperty <https://w3id.org/ascs-                =
 =                      ev/envited-x/openlabel/v2/SignsRegulatory> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom                   =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarning> ; owl:onProperty <https://w3id.org/ascs-                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarningEnum> ; owl:onProperty <https://w3id.org/ascs-                   =
 =                      ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom [ owl:intersectionOf =
 =                      ( xsd:integer [ owl:onDatatype xsd:integer ; owl:withRestrictions ( <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype,   =
 =                      rdfs:Resource ] ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ; owl:onProperty <https://w3id.org/ascs-                          =
@@ -160,8 +160,8 @@
 =                      ev/envited-x/openlabel/v2/subjectVehicleSpeedValue> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom [        =
 =                      owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty            =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationDimensionsValue> ; rdf:type owl:Restriction, rdfs:Resource  =
-=                      ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHuman>                        =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicle> ) ] ; owl:onProperty <https://w3id.org/ascs-                =
+=                      ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserHumanEnum>                    =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicleEnum> ) ] ; owl:onProperty <https://w3id.org/ascs-            =
 =                      ev/envited-x/openlabel/v2/trafficAgentTypeValue> ; rdf:type owl:Restriction, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean =
 =                      ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunElevation> ; rdf:type owl:Restriction, rdfs:Resource  =
 =                      ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/HorizontalCurves> ;      =

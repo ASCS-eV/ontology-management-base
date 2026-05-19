@@ -8,17 +8,17 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            If weatherWindValue is provided, WeatherWind must be true. Corresponds to BSI PAS-1883 conditional constraint.                =
+=    Error:            If weatherWindValue is provided, WeatherWind must be true.                                                                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherRain                                                                   =
-=    Error:            WeatherRain (Odd): Rainfall flag. Refer to BSI PAS-1883 Section 5.3.1.2.                                                      =
+=    Error:            WeatherRain (Odd): Presence of rainfall. ISO 34503:2023, 10.2.4                                                               =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherWind                                                                   =
-=    Error:            WeatherWind (Odd): Wind flag. Refer to BSI PAS-1883 Section 5.3.1.1.                                                          =
+=    Error:            WeatherWind (Odd): Presence of wind. ISO 34503:2023, 10.2.3                                                                   =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue                                                              =
-=    Error:            weatherWindValue (Odd): Wind speed (m/s). Refer to BSI PAS-1883 Section 5.3.1.1.                                              =
+=    Error:            weatherWindValue (Odd): Wind speed in metres per second. ISO 34503:2023, 10.2.3                                               =
 ======================================================================================================================================================

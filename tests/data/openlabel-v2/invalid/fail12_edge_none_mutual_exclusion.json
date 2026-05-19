@@ -1,0 +1,35 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "https://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_edge_none_exclusion",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
+      "ownerEmail": "contact@test.de",
+      "ownerName": "Test Org",
+      "ownerURL": "https://www.test.de",
+      "scenarioCreatedDate": "2025-01-01",
+      "scenarioDefinition": "Edge None Exclusion Test",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
+      "scenarioDescription": "Tests that EdgeNone cannot coexist with other edge types",
+      "scenarioName": "EdgeNone_Exclusion_Test",
+      "scenarioParentReference": "UUID-PARENT-EDGE",
+      "scenarioUniqueReference": "UUID-UNIQUE-EDGE",
+      "scenarioVersion": "1.0.0",
+      "scenarioVisualisationURL": "https://example.com/vis.png"
+   },
+   "Odd": {
+      "@type": "Odd",
+      "DrivableAreaEdge": [
+         "EdgeNone",
+         "EdgeSolidBarriers"
+      ],
+      "DrivableAreaType": "MotorwayManaged"
+   }
+}

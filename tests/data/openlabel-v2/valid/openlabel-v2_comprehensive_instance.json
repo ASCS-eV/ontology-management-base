@@ -1,0 +1,183 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      {
+         "xsd": "http://www.w3.org/2001/XMLSchema#",
+         "schema": "https://schema.org/"
+      }
+   ],
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_comprehensive_all_variants",
+   "@type": "Tag",
+   "AdminTag": {
+      "@type": "AdminTag",
+      "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "ownerEmail": "validation-test@example.org",
+      "ownerName": "Comprehensive Test Organization GmbH",
+      "ownerURL": "https://www.example.org/comprehensive-test",
+      "scenarioCreatedDate": "2025-12-31T23:59:59",
+      "scenarioDefinition": "A very long scenario definition string that exercises the full capacity of this field with special characters: \u00e4\u00f6\u00fc\u00df \u00e9 \u00f1 \u2014 \"quotes\" and <angle brackets> and & ampersand",
+      "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario-v2/",
+      "scenarioDescription": "Comprehensive test scenario exercising ALL valid property variants, enum values, QuantitativeValue ranges, integer/decimal types, boolean+value pairings, and multi-value arrays. Designed for cross-testing v1\u2194v2 compatibility.",
+      "scenarioName": "Comprehensive_AllVariants_CrossTest_v2",
+      "scenarioParentReference": "550e8400-e29b-41d4-a716-446655440000",
+      "scenarioUniqueReference": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      "scenarioVersion": "99.88.77",
+      "scenarioVisualisationURL": "https://example.org/vis/comprehensive-test.webp"
+   },
+   "Behaviour": {
+      "@type": "Behaviour",
+      "BehaviourCommunication": [
+         "CommunicationHeadlightFlash",
+         "CommunicationHorn",
+         "CommunicationSignalEmergency",
+         "CommunicationSignalHazard",
+         "CommunicationSignalLeft",
+         "CommunicationSignalRight",
+         "CommunicationSignalSlowing",
+         "CommunicationWave"
+      ],
+      "MotionAccelerate": true,
+      "motionAccelerateValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "0.001",
+         "maxValue": "9.81"
+      },
+      "MotionDecelerate": true,
+      "motionDecelerateValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "0.0",
+         "maxValue": "15.0"
+      },
+      "MotionDrive": true,
+      "motionDriveValue": "130.5",
+      "MotionAway": true,
+      "MotionCross": true,
+      "MotionCutIn": true,
+      "MotionCutOut": true,
+      "MotionLaneChangeLeft": true,
+      "MotionLaneChangeRight": true,
+      "MotionOvertake": true,
+      "MotionReverse": true,
+      "MotionRun": true,
+      "MotionSlide": true,
+      "MotionStop": true,
+      "MotionTowards": true,
+      "MotionTurn": true,
+      "MotionTurnLeft": true,
+      "MotionTurnRight": true,
+      "MotionUTurn": true,
+      "MotionWalk": true
+   },
+   "Odd": {
+      "@type": "Odd",
+      "ConnectivityCommunication": "V2vCellular",
+      "ConnectivityPositioning": "PositioningGalileo",
+      "DaySunElevation": true,
+      "daySunElevationValue": 0.0,
+      "DaySunPosition": "SunPositionLeft",
+      "DrivableAreaEdge": [
+         "EdgeLineMarkers",
+         "EdgeShoulderGrass",
+         "EdgeShoulderPavedOrGravel",
+         "EdgeSolidBarriers",
+         "EdgeTemporaryLineMarkers"
+      ],
+      "DrivableAreaSurfaceCondition": "SurfaceConditionIcy",
+      "DrivableAreaSurfaceFeature": "SurfaceFeaturePothole",
+      "DrivableAreaSurfaceType": "SurfaceTypeSegmented",
+      "DrivableAreaType": "MotorwayManaged",
+      "EnvironmentParticulates": "ParticulatesMarine",
+      "GeometryTransverse": "TransverseBarriers",
+      "HorizontalCurves": true,
+      "horizontalCurvesValue": 50.0,
+      "HorizontalStraights": true,
+      "IlluminationArtificial": "ArtificialVehicleLighting",
+      "IlluminationCloudiness": true,
+      "illuminationCloudinessValue": 8.0,
+      "IlluminationLowLight": "LowLightAmbient",
+      "JunctionIntersection": "IntersectionYJunction",
+      "JunctionRoundabout": "RoundaboutDoubleSignal",
+      "LaneSpecificationDimensions": true,
+      "laneSpecificationDimensionsValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "2.5",
+         "maxValue": "4.0"
+      },
+      "LaneSpecificationLaneCount": true,
+      "laneSpecificationLaneCountValue": 5,
+      "LaneSpecificationMarking": true,
+      "LaneSpecificationTravelDirection": "TravelDirectionLeft",
+      "LaneSpecificationType": [
+         "LaneTypeBus",
+         "LaneTypeCycle",
+         "LaneTypeEmergency",
+         "LaneTypeSpecial",
+         "LaneTypeTraffic",
+         "LaneTypeTram"
+      ],
+      "LongitudinalDownSlope": true,
+      "longitudinalDownSlopeValue": 12.5,
+      "LongitudinalLevelPlane": false,
+      "LongitudinalUpSlope": true,
+      "longitudinalUpSlopeValue": 8.3,
+      "ParticulatesDust": true,
+      "ParticulatesMarine": true,
+      "ParticulatesPollution": true,
+      "ParticulatesVolcanic": true,
+      "ParticulatesWater": true,
+      "particulatesWaterValue": 100.0,
+      "RainType": "RainTypeOrographic",
+      "SceneryFixedStructure": "FixedStructureVegetation",
+      "ScenerySpecialStructure": "SpecialStructureTunnel",
+      "SceneryTemporaryStructure": "TemporaryStructureConstructionDetour",
+      "SceneryZone": "ZoneSchool",
+      "SignsInformation": "InformationSignsVariableTemporary",
+      "SignsRegulatory": "RegulatorySignsVariableFullTime",
+      "SignsWarning": "WarningSignsVariableTemporary",
+      "SubjectVehicleSpeed": true,
+      "subjectVehicleSpeedValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "30",
+         "maxValue": "250"
+      },
+      "TrafficAgentDensity": true,
+      "trafficAgentDensityValue": 0,
+      "TrafficAgentType": true,
+      "trafficAgentTypeValue": [
+         {
+            "@id": "openlabel_v2:VehicleTruck"
+         },
+         {
+            "@id": "openlabel_v2:VehicleEmergency"
+         },
+         {
+            "@id": "openlabel_v2:HumanCyclist"
+         },
+         {
+            "@id": "openlabel_v2:HumanWheelchairUser"
+         }
+      ],
+      "TrafficFlowRate": true,
+      "trafficFlowRateValue": 9999,
+      "TrafficSpecialVehicle": true,
+      "TrafficVolume": true,
+      "trafficVolumeValue": 100000,
+      "WeatherRain": true,
+      "weatherRainValue": 50.0,
+      "WeatherSnow": true,
+      "weatherSnowValue": 0.5,
+      "WeatherWind": true,
+      "weatherWindValue": 33.3
+   },
+   "RoadUser": {
+      "@type": "RoadUser",
+      "RoadUserAnimal": true,
+      "RoadUserHuman": "HumanWheelchairUser",
+      "RoadUserVehicle": "VehicleEmergency",
+      "motionDriveValue": {
+         "@type": "schema:QuantitativeValue",
+         "minValue": "0.0",
+         "maxValue": "200.0"
+      }
+   }
+}

@@ -9,9 +9,9 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType                                                              =
-=    Error:            DrivableAreaType (Odd): Road type. Refer to BSI PAS-1883 Section 5.2.3.2.                                                     =
+=    Error:            DrivableAreaType (Odd): Type of drivable area. ISO 34503:2023, 9.3.2                                                          =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone                                                                   =
-=    Error:            SceneryZone (Odd): Zone type. Refer to BSI PAS-1883 Section 5.2.1.a.                                                          =
+=    Error:            SceneryZone (Odd): Type of zone. ISO 34503:2023, 9.2                                                                          =
 ======================================================================================================================================================

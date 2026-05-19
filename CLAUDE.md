@@ -256,3 +256,44 @@ Update both files **before** presenting the final result to the user. If a sessi
 - Silent `None` returns instead of raising exceptions
 - Using `print()` for internal progress (use `logger`)
 - Leaking absolute paths in output (use `normalize_path_for_display`)
+- Committing generated artifacts with CRLF or trailing newlines on Windows (CI fails)
+
+## Generated Artifacts & Line Endings (Windows/Linux CI)
+
+CI regenerates artifacts on Linux and diffs against the committed state. On Windows,
+LinkML generators (`gen-owl`, `gen-shacl`, `gen-jsonld-context`) produce CRLF line
+endings, causing pre-commit hooks to enter an infinite fix-loop.
+
+**Symptoms:**
+- Pre-commit hooks report "files were modified" on every attempt
+- `generate-linkml` → CRLF → `mixed-line-ending` fixes → hooks fail → repeat
+- CI "Generate Artifacts" job fails with "make generate produced different artifacts"
+
+**Fix (Windows development):**
+
+```bash
+# After generating artifacts, normalize before committing:
+python -c "
+import glob
+for f in glob.glob('artifacts/<domain>/*'):
+    with open(f, 'rb') as fh: c = fh.read()
+    c = c.replace(b'\r\n', b'\n')
+    with open(f, 'wb') as fh: fh.write(c)
+"
+
+# For .context.jsonld: strip trailing empty line (CI doesn't produce one)
+python -c "
+f = 'artifacts/<domain>/<domain>.context.jsonld'
+with open(f, 'rb') as fh: c = fh.read()
+c = c.rstrip() + b'\n'
+with open(f, 'wb') as fh: fh.write(c)
+"
+```
+
+**Key invariant:** Committed artifacts must be byte-identical to what Linux
+`make generate` + pre-commit normalization produces. When in doubt, use
+`--no-verify` to commit and verify that CI's "Generate Artifacts" job passes.
+
+**Root cause:** Python's LinkML generators inherit the platform's default line
+separator. The repo has no `.gitattributes` forcing `eol=lf` on generated files
+(potential future fix).

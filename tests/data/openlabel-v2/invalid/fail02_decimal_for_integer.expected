@@ -9,5 +9,5 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue                                               =
-=    Error:            laneSpecificationLaneCountValue (Odd): Number of lanes (unit). Refer to BSI PAS-1883 Section 5.2.3.4.d.                       =
+=    Error:            laneSpecificationLaneCountValue (Odd): Number of lanes. ISO 34503:2023, 9.3.4                                                 =
 ======================================================================================================================================================

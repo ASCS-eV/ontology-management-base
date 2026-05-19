@@ -123,6 +123,48 @@ Read these BEFORE making changes:
 - ❌ **Don't silently return `None`** - Raise specific exceptions
 - ❌ **Don't use `print()` for logging** - Use `logger` from `core/logging.py`
 - ❌ **Don't duplicate path normalization** - Use `normalize_paths_to_list()` or `normalize_path_for_display()`
+- ❌ **Don't commit with `--no-verify` without verifying** - If you must skip hooks (e.g., Windows CRLF loop), manually ensure generated artifacts have LF line endings and no trailing empty lines in `.context.jsonld`
+- ❌ **Don't assume generator output is CI-ready on Windows** - LinkML generators produce CRLF on Windows; CI runs on Linux with LF
+
+## Generated Artifacts & Line Endings (Windows/Linux CI)
+
+CI verifies that committed artifacts exactly match `make generate` output on Linux.
+On Windows, LinkML generators produce CRLF and trailing newlines that differ.
+
+**The CRLF commit loop on Windows:**
+1. `generate-linkml` hook produces CRLF → reports "files modified" → commit fails
+2. `mixed-line-ending` hook fixes to LF → reports "files modified" → commit fails
+3. Retrying repeats the cycle endlessly
+
+**Correct workflow on Windows:**
+
+```bash
+# Generate, then normalize before staging
+make generate DOMAIN=openlabel-v2
+
+# Fix CRLF → LF in generated files
+python -c "
+import glob
+for f in glob.glob('artifacts/openlabel-v2/*'):
+    with open(f, 'rb') as fh: c = fh.read()
+    c = c.replace(b'\r\n', b'\n')
+    with open(f, 'wb') as fh: fh.write(c)
+"
+
+# Remove trailing empty line from .context.jsonld (pretty-format-json removes it)
+python -c "
+f = 'artifacts/openlabel-v2/openlabel-v2.context.jsonld'
+with open(f, 'rb') as fh: c = fh.read()
+c = c.rstrip() + b'\n'
+with open(f, 'wb') as fh: fh.write(c)
+"
+
+# Now commit normally (hooks should pass)
+git add artifacts/ && git commit -s -S -m "feat: ..."
+```
+
+If hooks still fail, `--no-verify` is acceptable but **verify CI passes after push**.
+The committed state must be byte-identical to Linux `make generate` + hook normalization.
 
 ## Git Commit Policy
 

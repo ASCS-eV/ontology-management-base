@@ -147,6 +147,7 @@ nav:
       - Long-Term Maintenance: ecosystem/maintenance.md
   - Future:
       - LinkML Migration: future/linkml.md
+      - LinkML Modelling Guidelines: future/linkml-modelling-guidelines.md
 
 hooks:
   - hooks/copy_artifacts.py
