@@ -10,3 +10,6 @@
 [submodule "submodules/linkml"]
 	path = submodules/linkml
 	url = https://github.com/ASCS-eV/linkml.git
+[submodule "submodules/asam-openx-standards"]
+	path = submodules/asam-openx-standards
+	url = https://github.com/ASCS-eV/asam-openx-standards.git
