@@ -166,6 +166,52 @@ git add artifacts/ && git commit -s -S -m "feat: ..."
 If hooks still fail, `--no-verify` is acceptable but **verify CI passes after push**.
 The committed state must be byte-identical to Linux `make generate` + hook normalization.
 
+## ASAM Standards Reference (submodule)
+
+Standards are in `submodules/asam-openx-standards/standards/`. See the submodule's
+`AGENTS.md` for full navigation guidance.
+
+### Key Files for Ontology Work
+
+| Task | File to Read |
+|------|-------------|
+| Validate hdmap enum values | `standards/asam-opendrive/map-uml-enumerations.md` |
+| Check road/lane definitions | `standards/asam-opendrive/03-terms-and-definitions.md` |
+| Understand ODD taxonomy | `standards/asam-openodd/06-02-*` through `06-08-*` |
+| Cross-check openlabel types | `standards/asam-openlabel/INDEX.md` |
+| Verify OpenSCENARIO concepts | `standards/asam-openscenario-dsl/` chapters |
+| Find machine-readable enums | `ENUMERATIONS.yaml` (root of submodule) |
+| Map concepts across standards | `CROSS_REFERENCES.md` (root of submodule) |
+
+### Ontology Purpose
+
+These ontologies are **searchable metadata descriptors** — NOT full data models.
+They summarize what's inside simulation files to enable natural language search
+via [ontology-based-nl-search](https://github.com/ASCS-eV/ontology-based-nl-search).
+
+When adding properties, apply the property test:
+> "What natural language search query does this property enable?"
+
+### Citation Pattern
+
+When modifying ontology properties that reference ASAM standards:
+
+```turtle
+# In SHACL
+sh:description "Road types per OpenDRIVE v1.9.0, Annex A.6.2 (e_roadType)"@en ;
+
+# In OWL
+dcterms:source "ASAM OpenDRIVE v1.9.0, Annex A.6.2, Table 194" ;
+```
+
+```yaml
+# In LinkML
+comments:
+  - "[OpenDRIVE] Annex A.3.7, Table 176 (e_laneType)"
+see_also:
+  - https://publications.pages.asam.net/standards/ASAM_OpenDRIVE/...
+```
+
 ## Git Commit Policy
 
 **STRICT REQUIREMENTS:**

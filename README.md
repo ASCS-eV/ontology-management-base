@@ -3,9 +3,37 @@
 [![CI Pipeline](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml/badge.svg)](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://ascs-ev.github.io/ontology-management-base/)
 
-Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the Automotive Solution Center for Simulation e.V. It serves as the single source of truth for [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics) compliant ontologies, including those developed within the [Gaia-X 4 PLC-AAD](https://www.gaia-x4plcaad.info/) project.
+Ontologies for **discovering and describing simulation assets** in the [ENVITED-X](https://envited-x.net/) data space, maintained by the Automotive Solution Center for Simulation e.V. ([ASCS](https://www.2-3-2.de/)). Compliant with [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics).
 
 > **Note:** This repository is the active development home, forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`).
+
+## What This Does
+
+These ontologies define **searchable metadata** for simulation assets (HD maps, scenarios, sensor traces, environment models). They enable:
+
+- **Natural language search** — "find all German motorway maps with 3+ lanes" → [ontology-based-nl-search](https://github.com/ASCS-eV/ontology-based-nl-search)
+- **Structured annotation** — describe your assets so others can find them → [sl-5-8-asset-tools](https://github.com/openMSL/sl-5-8-asset-tools)
+- **Cross-domain discovery** — find scenarios that reference a specific HD map
+- **Quality validation** — ensure metadata annotations are complete and correct (SHACL)
+
+The ontology is **not** a copy of the ASAM OpenDRIVE/OpenSCENARIO data model. It's a metadata layer that summarizes what's inside data files — a 100MB OpenDRIVE file is described by ~2KB of searchable `hdmap:HdMap` metadata.
+
+## Who Uses This
+
+| Role | Activity | Tool |
+|------|----------|------|
+| **Data Searcher** | Find assets by properties (NL or structured) | [NL Search App](https://github.com/ASCS-eV/ontology-based-nl-search) |
+| **Data Creator** | Annotate assets with metadata for discovery | [Asset Tools](https://github.com/openMSL/sl-5-8-asset-tools) |
+| **Ontology Developer** | Extend the metadata schema for new domains | This repository |
+
+## How It Works
+
+```mermaid
+flowchart TD
+    A[/"Simulation Asset<br/>(OpenDRIVE, OSI, OpenSCENARIO...)"/] -->|annotate| B["JSON-LD Metadata<br/>(@type: hdmap:HdMap)"]
+    B -->|validate · SHACL| C[("Knowledge Graph<br/>(SPARQL endpoint)")]
+    C -->|search · NL → SPARQL| D["'Show me highway maps near Munich'"]
+```
 
 ## Getting Started
 
@@ -17,17 +45,19 @@ Central repository for the [ENVITED-X Ecosystem](https://envited-x.net/) of the 
 
 ## Quick Links
 
-- **[Full Documentation](https://ascs-ev.github.io/ontology-management-base/)** - Complete guides and references
-- **[Validation](https://ascs-ev.github.io/ontology-management-base/validation/strategy/)** - Run checks on your data
-- **[Contributing](https://ascs-ev.github.io/ontology-management-base/getting-started/contribute/)** - How to add or modify ontologies
-- **[Gaia-X 4 PLC-AAD](https://ascs-ev.github.io/ontology-management-base/gaiax/gaiax4plc-aad/)** - Federated catalog upload flow
+- **[Full Documentation](https://ascs-ev.github.io/ontology-management-base/)** — Complete guides and references
+- **[Validation](https://ascs-ev.github.io/ontology-management-base/validation/strategy/)** — Run checks on your data
+- **[Contributing](https://ascs-ev.github.io/ontology-management-base/getting-started/contribute/)** — How to add or modify ontologies
+- **[ASAM OpenX Standards](https://github.com/ASCS-eV/asam-openx-standards)** — Source standard references (submodule)
+- **[Gaia-X 4 PLC-AAD](https://ascs-ev.github.io/ontology-management-base/gaiax/gaiax4plc-aad/)** — Federated catalog upload flow
 
 ## What's in This Repository
 
-- **Ontologies** - OWL definitions with SHACL validation shapes
-- **Validation Tools** - Python scripts to validate instances
-- **Test Data** - Examples and regression tests
-- **Documentation** - Guides, APIs, and specifications
+- **Ontologies** — OWL definitions with SHACL validation shapes (`artifacts/`)
+- **Validation Tools** — Python suite to validate metadata instances (`src/tools/`)
+- **Test Data** — Valid and invalid examples per domain (`tests/data/`)
+- **Documentation** — Guides, architecture, and specifications (`docs/`)
+- **Standard References** — ASAM OpenX specs as submodule (`submodules/asam-openx-standards/`)
 
 ## Requirements
 
