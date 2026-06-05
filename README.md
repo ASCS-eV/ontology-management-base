@@ -3,7 +3,7 @@
 [![CI Pipeline](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml/badge.svg)](https://github.com/ASCS-eV/ontology-management-base/actions/workflows/ci-quality.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://ascs-ev.github.io/ontology-management-base/)
 
-Ontologies for **discovering and describing simulation assets** in the [ENVITED-X](https://envited-x.net/) data space, maintained by the Automotive Solution Center for Simulation e.V. ([ASCS](https://www.2-3-2.de/)). Compliant with [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics).
+Ontologies for **discovering and describing simulation assets** in the [ENVITED-X](https://envited-x.net/) data space, maintained by the Automotive Solution Center for Simulation e.V. ([ASCS](https://www.asc-s.de/)). Compliant with [Gaia-X 25.11](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics).
 
 > **Note:** This repository is the active development home, forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`).
 
