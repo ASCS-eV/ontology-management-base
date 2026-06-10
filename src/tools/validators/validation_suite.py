@@ -225,6 +225,7 @@ def validate_data_conformance_all(
     inference_mode: str = "rdfs",
     strict: bool = False,
     allow_online: bool = True,
+    per_resource: bool = False,
 ) -> int:
     """
     Validate JSON-LD files against SHACL schemas.
@@ -277,6 +278,41 @@ def validate_data_conformance_all(
         print(
             f"\n🔍 Starting JSON-LD SHACL validation for domain: {domain}", flush=True
         )
+
+        # Per-resource mode: validate each file in its own graph (no merging),
+        # sharing loaded shapes + ontology closure. Correct for VC/DID documents
+        # that legitimately reuse IRIs across files.
+        if per_resource:
+            from pathlib import Path as _Path
+
+            files = [
+                _Path(f)
+                for f in validator.resolver.get_test_files(domain, test_type="valid")
+            ]
+            if not files:
+                print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
+                continue
+            print(f"   Found {len(files)} test files from catalog (per-resource)")
+            results = validator.validate_each(files)
+            domain_failed = False
+            for res in results:
+                fname = res.files_validated[0] if res.files_validated else "?"
+                if res.return_code != 0:
+                    domain_failed = True
+                    print(f"   ❌ {fname}", flush=True)
+                    print(validator.format_result(res), flush=True)
+                else:
+                    print(f"   ✅ {fname}", flush=True)
+            if domain_failed:
+                print(
+                    f"\n❌ Error during JSON-LD SHACL validation for domain "
+                    f"'{domain}'. Aborting.",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                return 210
+            print(f"\n✅ {domain} conforms to SHACL constraints (per-resource).")
+            continue
 
         # Use catalog-based validation method
         try:
@@ -632,6 +668,16 @@ def main():
         "(fetches ontology schemas from GitHub Pages when local catalogs are missing).",
     )
 
+    target_group.add_argument(
+        "--per-resource",
+        dest="per_resource",
+        action="store_true",
+        default=False,
+        help="Validate each data file in its own graph (no cross-document "
+        "merging), sharing loaded shapes/ontology. Correct grain for Verifiable "
+        "Credentials and DID documents that reuse IRIs across files.",
+    )
+
     args = parser.parse_args()
     _enable_http = args.remote
 
@@ -702,8 +748,16 @@ def main():
                         file=sys.stderr,
                     )
 
-        # Create temporary domain with top-level files only
-        temp_domain = catalog_resolver.create_temporary_domain(top_level_files)
+        # Create temporary domain with the files to validate. In per-resource
+        # mode there are no "fixtures": every document (including DID documents
+        # that would otherwise only be used for cross-reference resolution) is
+        # validated as its own isolated resource, so fold the fixture files in.
+        domain_files = list(top_level_files)
+        if args.per_resource and iri_to_file:
+            existing = {Path(f).resolve() for f in domain_files}
+            fixture_files = sorted({Path(f).resolve() for f in iri_to_file.values()})
+            domain_files += [f for f in fixture_files if f not in existing]
+        temp_domain = catalog_resolver.create_temporary_domain(domain_files)
 
         if not temp_domain:
             print("❌ Error: Failed to create temporary domain.", file=sys.stderr)
@@ -769,6 +823,7 @@ def main():
     _inference_mode = args.inference_mode
     _strict = args.strict
     _allow_online = args.allow_online
+    _per_resource = args.per_resource
 
     # Artifact coherence and failing tests require standard domain structure
     if data_paths and args.run in ["check-artifact-coherence", "check-failing-tests"]:
@@ -806,6 +861,7 @@ def main():
                     _inference_mode,
                     strict=_strict,
                     allow_online=_allow_online,
+                    per_resource=_per_resource,
                 ),
             )
         ],

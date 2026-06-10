@@ -265,8 +265,157 @@ class ShaclValidator:
             duration_seconds=duration,
         )
 
-    def _load_data(self, jsonld_files: List[Path]) -> Tuple[Graph, Dict[str, str]]:
-        """Load JSON-LD files and resolve fixture references."""
+    def validate_each(self, jsonld_files: List[Path]) -> List["ValidationResult"]:
+        """Validate each file in isolation, sharing loaded shapes + ontology.
+
+        Per-resource validation: every document is validated against its OWN
+        data graph only (no cross-document graph merging). This is the correct
+        grain for Verifiable Credentials and DID documents, which legitimately
+        reuse the same IRIs (a subject DID, an embedded credential id) across
+        files — merging them into one graph conflates distinct resources and
+        produces spurious closed-shape / maxCount violations.
+
+        The data-INDEPENDENT work — parsing the shapes graph and computing the
+        ontology's RDFS closure — is done ONCE and reused across all files, so
+        this is dramatically faster than calling ``validate()`` per file (which
+        re-parses shapes and re-infers the ontology every time).
+
+        Returns one ValidationResult per input file, in the same order.
+        """
+        if not PYSHACL_AVAILABLE:
+            return [
+                ValidationResult(
+                    conforms=False,
+                    return_code=99,
+                    report_text="Error: pyshacl is not installed",
+                    files_validated=[self._rel_path(f)],
+                )
+                for f in jsonld_files
+            ]
+
+        # Step 1: Load each file's data in isolation (NO fixture merging) and
+        # collect the union of types/predicates/datatypes for schema discovery.
+        self._log("Step 1: Loading JSON-LD data files (per-resource)...")
+        per_file: List[Tuple[Path, Graph]] = []
+        union_types: Set[str] = set()
+        union_predicates: Set[str] = set()
+        union_datatypes: Set[str] = set()
+        for f in jsonld_files:
+            data_graph, _ = self._load_data([f], load_fixtures=False)
+            per_file.append((f, data_graph))
+            union_types |= extract_rdf_types(data_graph)
+            union_predicates |= extract_predicates(data_graph)
+            union_datatypes |= extract_datatype_iris(data_graph)
+
+        # Step 2 + 3: Load the union of required schemas and pre-compute the
+        # ontology's RDFS closure ONCE, then reuse across files. Both are
+        # data-independent, so they are also memoised on the validator instance
+        # keyed by the discovered IRI sets — a session-scoped validator running
+        # many validate_each() calls (e.g. a parametrised test suite) pays the
+        # parse + inference cost only once per distinct schema footprint.
+        cache_key = (
+            frozenset(union_types),
+            frozenset(union_predicates),
+            frozenset(union_datatypes),
+        )
+        cache = getattr(self, "_per_resource_schema_cache", None)
+        if cache is None:
+            cache = self._per_resource_schema_cache = {}
+        if cache_key in cache:
+            self._log("Step 2+3: Reusing cached shapes + ontology closure")
+            shacl_graph, closed_ontology = cache[cache_key]
+        else:
+            self._log("Step 2: Discovering + loading required schemas (once)...")
+            ontology_graph, shacl_graph = self._load_schemas(
+                union_types, union_predicates, union_datatypes
+            )
+            if self.inference_mode == "rdfs":
+                self._log("Step 3: Pre-computing ontology RDFS closure (once)...")
+                closed_ontology, _ = apply_rdfs_inference(
+                    Graph(store=FAST_STORE), ontology_graph
+                )
+            else:
+                closed_ontology = ontology_graph
+            cache[cache_key] = (shacl_graph, closed_ontology)
+
+        # Step 4: Validate each file's data graph in isolation.
+        self._log(f"Step 4: Validating {len(per_file)} resource(s) individually...")
+        results: List[ValidationResult] = []
+        for f, data_graph in per_file:
+            if self.inference_mode == "rdfs":
+                combined = self._abox_inference(data_graph, closed_ontology)
+            else:
+                combined, _ = self._apply_inference(data_graph, closed_ontology)
+            conforms, report_text, report_graph = self._run_validation(
+                combined, closed_ontology, shacl_graph
+            )
+            results.append(
+                ValidationResult(
+                    conforms=conforms,
+                    return_code=0 if conforms else 210,
+                    report_text=report_text,
+                    report_graph=report_graph,
+                    files_validated=[self._rel_path(f)],
+                    triples_count=len(combined),
+                )
+            )
+        return results
+
+    def _abox_inference(self, data_graph: Graph, closed_ontology: Graph) -> Graph:
+        """Fast ABox RDFS inference against a pre-closed TBox.
+
+        Given an ontology whose ``rdfs:subClassOf`` / ``rdfs:subPropertyOf``
+        relations are already transitively closed (done once in
+        ``validate_each``), this propagates types and predicates over the
+        (small) *data* graph using indexed TBox lookups, iterating to a
+        fixpoint. It applies the same RDFS rules as ``apply_rdfs_inference``
+        (rdfs2 domain, rdfs3 range, rdfs7 subPropertyOf, rdfs9 subClassOf) but
+        without re-scanning the full ontology graph for every resource — which
+        is what makes per-resource validation fast.
+
+        Returns the data plus inferred instance triples only; the ontology is
+        NOT merged in, since fully-materialized ``rdf:type`` triples are
+        sufficient for SHACL ``sh:class`` / ``sh:closed`` evaluation.
+        """
+        from rdflib import RDF, RDFS, URIRef
+
+        work = Graph(store=FAST_STORE)
+        work += data_graph
+        for _ in range(10):  # TBox already closed -> converges in 1-2 passes
+            new = []
+            for s, p, o in list(work):
+                for sup in closed_ontology.objects(p, RDFS.subPropertyOf):
+                    if sup != p and (s, sup, o) not in work:
+                        new.append((s, sup, o))
+                for cls in closed_ontology.objects(p, RDFS.domain):
+                    if (s, RDF.type, cls) not in work:
+                        new.append((s, RDF.type, cls))
+                if isinstance(o, URIRef):
+                    for cls in closed_ontology.objects(p, RDFS.range):
+                        if (o, RDF.type, cls) not in work:
+                            new.append((o, RDF.type, cls))
+            for s, _t, c in list(work.triples((None, RDF.type, None))):
+                for sup in closed_ontology.objects(c, RDFS.subClassOf):
+                    if sup != c and (s, RDF.type, sup) not in work:
+                        new.append((s, RDF.type, sup))
+            if not new:
+                break
+            for triple in new:
+                work.add(triple)
+        return work
+
+    def _load_data(
+        self, jsonld_files: List[Path], load_fixtures: bool = True
+    ) -> Tuple[Graph, Dict[str, str]]:
+        """Load JSON-LD files and (optionally) resolve fixture references.
+
+        When ``load_fixtures`` is False, external references (e.g. issuer/subject
+        DIDs) are NOT resolved and merged into the data graph. This is required
+        for per-resource validation, where each document must be validated in
+        isolation against its own shapes — merging a referenced DID document onto
+        a shared subject IRI would conflate two distinct resources and trigger
+        spurious closed-shape violations.
+        """
         data_graph, prefixes = load_jsonld_files(
             jsonld_files, self.root_dir, context_url_map=self._context_url_map
         )
@@ -278,7 +427,11 @@ class ShaclValidator:
         self._log(f"  Prefixes discovered: {len(prefixes)}")
 
         # Load fixtures for external references (catalog-first, online fallback)
-        external_iris = extract_external_iris(data_graph, resolver=self.resolver)
+        external_iris = (
+            extract_external_iris(data_graph, resolver=self.resolver)
+            if load_fixtures
+            else []
+        )
         if external_iris:
             self._log(f"\n  Resolving {len(external_iris)} external references...")
             fixtures_loaded, unresolved = load_fixtures_for_iris(
