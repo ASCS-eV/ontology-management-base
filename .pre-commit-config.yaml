@@ -16,6 +16,14 @@ repos:
         types: [python]
         pass_filenames: true
 
+      - id: sync-tag-type-enum
+        name: Sync TagTypeEnum to structural schema
+        entry: python scripts/sync_tag_type_enum.py
+        language: system
+        pass_filenames: false
+        files: ^linkml/openlabel-v2/openlabel-v2\.yaml$
+        stages: [pre-commit]
+
       - id: generate-linkml
         name: Generate LinkML Artifacts
         entry: make generate
@@ -51,7 +59,7 @@ repos:
         entry: python -m src.tools.utils.registry_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
         stages: [pre-commit]
 
       - id: update-properties
@@ -59,7 +67,7 @@ repos:
         entry: python -m src.tools.utils.properties_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
         stages: [pre-commit]
 
       - id: update-readme
@@ -67,7 +75,7 @@ repos:
         entry: python -m src.tools.utils.readme_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
         stages: [pre-commit]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks

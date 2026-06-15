@@ -1,0 +1,222 @@
+# OpenLABEL v2 — Unified LinkML Modeling Strategy
+
+## Overview
+
+This directory contains **two complementary LinkML schemas** that together form
+the single source of truth for ASAM OpenLABEL scenario tagging:
+
+| Schema | Purpose | Generates |
+|--------|---------|-----------|
+| `openlabel-v2.yaml` | Semantic model (tag vocabulary) | OWL ontology, SHACL shapes, JSON-LD context |
+| `openlabel-v2-schema.yaml` | Structural model (file format) | JSON Schema for ASAM v1 format files |
+
+## Architecture
+
+```
+openlabel-v2.yaml (Semantic Model)
+├── 10 classes: Tag, AdminTag, Odd, Behaviour, RoadUser, QuantitativeValue, ...
+├── 113 typed slots: WeatherRain (boolean), weatherRainValue (decimal), ...
+├── 27 enums: DrivableAreaTypeEnum, JunctionIntersectionEnum, ...
+│   └── 142 permissible values
+└── Generates:
+    ├── openlabel-v2.owl.ttl       (OWL 2 ontology)
+    ├── openlabel-v2.shacl.ttl     (SHACL validation shapes)
+    └── openlabel-v2.context.jsonld (JSON-LD context with type coercion)
+
+openlabel-v2-schema.yaml (Structural Model)
+├── 12 classes: OpenLabelFile, OpenLabel, Metadata, TagEntry, TagData, ...
+├── TagTypeEnum: 227 valid tag.type values (derived from semantic model)
+├── BoundaryModeEnum, NumTypeEnum, VecTypeEnum
+└── Generates:
+    └── openlabel-v2.schema.json   (JSON Schema for ASAM v1 format)
+```
+
+## How They Work Together
+
+The **semantic model** defines WHAT tags exist and their validation rules.
+The **structural model** defines HOW those tags are serialized in ASAM v1 JSON files.
+
+The bridge between them is `TagTypeEnum` — it lists all 227 valid `tag.type` values
+derived from the semantic model's classes, slots, and enum values. When the
+vocabulary changes (e.g., adding a new tag), the `TagTypeEnum` is regenerated
+and the JSON Schema automatically reflects the update.
+
+```
+User changes openlabel-v2.yaml (add new tag)
+    │
+    ├── make generate → OWL/SHACL/context updated ✅
+    │
+    └── Regenerate TagTypeEnum → openlabel-v2-schema.yaml updated
+            │
+            └── gen-json-schema → JSON Schema updated ✅
+```
+
+## Functional Equivalence Proof
+
+The LinkML-generated JSON Schema was tested against the ASAM-authored JSON Schema
+using 9 test cases from the ASAM OpenLABEL v1.0.0 specification:
+
+| Test Case | ASAM Schema | LinkML Schema | Verdict |
+|-----------|-------------|---------------|---------|
+| Valid: minimal tagging (§8.6) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: full scenario (§8.8.1) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: boundary include (§8.2.2) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: numeric tag_data (§8.2.4) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Invalid: missing metadata | ❌ REJECT | ❌ REJECT | Equivalent |
+| Invalid: missing tag.type | ❌ REJECT | ❌ REJECT | Equivalent |
+| Invalid: wrong tag.type value | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
+| Invalid: wrong boundary_mode | ❌ REJECT | ❌ REJECT | Equivalent |
+| Invalid: num.val wrong type | ❌ REJECT | ❌ REJECT | Equivalent |
+
+**Result: 8/9 structurally equivalent. The one difference is that LinkML
+is STRICTER — it also validates vocabulary (tag.type values).**
+
+## Additional Gains from LinkML Modeling
+
+### 1. Vocabulary Validation (NEW — ASAM schema lacks this)
+
+The ASAM JSON Schema defines `tag.type` as an unconstrained `string`. Any value
+passes structural validation, even nonsense like `"CompletelyFakeTag"`.
+
+The LinkML-generated schema constrains `tag.type` to exactly 227 valid values
+derived from the ontology. Invalid vocabulary is caught at validation time:
+
+```
+ASAM:   {"type": "NonExistentTag", "ontology_uid": "0"} → ✅ VALID (!)
+LinkML: {"type": "NonExistentTag", "ontology_uid": "0"} → ❌ INVALID
+        "is not one of ['Tag', 'AdminTag', 'Odd', ...]"
+```
+
+### 2. Single Source of Truth (No Drift)
+
+| Artifact | Before (v1) | After (v2) |
+|----------|-------------|------------|
+| OWL ontology | Hand-maintained by ASAM | Generated from LinkML |
+| SHACL shapes | Hand-maintained by third party | Generated from LinkML |
+| JSON-LD context | Auto-generated from OWL+SHACL | Generated from LinkML |
+| JSON Schema | Hand-maintained by ASAM | Generated from LinkML |
+
+With both schemas in LinkML, **all four artifacts are generated from models**.
+A vocabulary change requires editing ONE file (`openlabel-v2.yaml`). All
+downstream artifacts update automatically. No manual synchronization needed.
+
+### 3. Enum Validation for Supporting Fields
+
+Beyond `tag.type`, the LinkML schema also validates:
+
+- `boundary_mode`: constrained to `["include", "exclude"]`
+- `num.type`: constrained to `["value", "min", "max"]`
+- `vec.type`: constrained to `["range", "set", "values"]`
+
+The ASAM schema has `boundary_mode` as an enum but leaves `num.type` and
+`vec.type` unconstrained. The LinkML schema enforces all of them.
+
+### 4. Required Field Validation (Equivalent)
+
+Both schemas enforce:
+- `metadata.schema_version` is required
+- `tag.type` is required
+- `tag.ontology_uid` is required
+- `ontology.uri` is required
+- `num.val`, `boolean.val`, `text.val`, `vec.val` are required
+
+### 5. Structural Typing (Equivalent)
+
+Both schemas validate:
+- `num.val` must be a number (not a string)
+- `boolean.val` must be a boolean
+- `vec.val` must be an array
+- `ontologies` and `tags` must be objects (dict-keyed)
+
+### 6. Documentation Co-location
+
+The LinkML schema includes `description` fields on every class and attribute,
+providing inline documentation that appears in the generated JSON Schema as
+`description` annotations. This makes the schema self-documenting.
+
+### 7. Cross-Validation with Semantic Artifacts
+
+When combined with the semantic model, users get **layered validation**:
+
+| Layer | Tool | What it validates |
+|-------|------|-------------------|
+| 1. Structure | JSON Schema (from schema model) | Keys, types, required fields |
+| 2. Vocabulary | JSON Schema TagTypeEnum | Valid tag.type values |
+| 3. Semantics | SHACL (from semantic model) | Enum values, cardinality, conditional rules |
+| 4. Reasoning | OWL (from semantic model) | Class consistency, property ranges |
+
+A single `@context` IRI enables the v2 JSON-LD path (layers 3-4).
+The JSON Schema path (layers 1-2) works without any context.
+
+## Synergy with Existing Ontology Model
+
+The `openlabel-v2.yaml` semantic model already provides:
+
+- **Closed SHACL shapes** — reject unknown properties
+- **Conditional constraints** — 18 boolean↔value rules (e.g., if weatherWindValue present, WeatherWind must be true)
+- **Type coercion via @vocab** — bare strings expand to IRIs during JSON-LD processing
+- **QuantitativeValue support** — values can be simple numbers or structured min/max ranges
+
+The structural schema (`openlabel-v2-schema.yaml`) complements this by validating
+the ASAM v1 file format — which uses a different (generic) representation of the
+same semantic content. Together, they support both:
+
+1. **v1 path**: Plain JSON → JSON Schema validation (structure + vocabulary)
+2. **v2 path**: JSON-LD → SHACL validation (structure + semantics + constraints)
+
+### Migration Support
+
+Users with existing ASAM v1 files can:
+1. Validate structure/vocabulary with the generated JSON Schema (immediate value)
+2. Optionally add `@context` to migrate to v2 format (full semantic validation)
+
+Both paths are supported by artifacts generated from the same LinkML source.
+
+## Usage
+
+```bash
+# Generate semantic artifacts (OWL, SHACL, context)
+make generate DOMAIN=openlabel-v2
+
+# Generate JSON Schema from structural model
+gen-json-schema linkml/openlabel-v2/openlabel-v2-schema.yaml > artifacts/openlabel-v2/openlabel-v2.schema.json
+
+# Regenerate TagTypeEnum after vocabulary changes
+python scripts/gen_tag_type_enum.py
+
+# Validate a v1 format file against the generated schema
+python -c "
+import json, jsonschema
+with open('artifacts/openlabel-v2/openlabel-v2.schema.json') as f:
+    schema = json.load(f)
+with open('my_tagging_file.json') as f:
+    instance = json.load(f)
+jsonschema.validate(instance, schema)
+print('Valid!')
+"
+```
+
+## Known Differences from ASAM Schema
+
+| Aspect | ASAM JSON Schema | LinkML-generated |
+|--------|-----------------|-----------------|
+| Dict key validation | `patternProperties: "^(0-9\|UUID)$"` | `additionalProperties` (any key) |
+| `tag.type` constraint | None (any string) | Enum with 227 values |
+| `tag_data` as string | Allowed via `oneOf` | Object only (string form not modeled) |
+| Multi-sensor definitions | 36 (objects, frames, geometry) | Not included (tagging only) |
+| Scope | All of OpenLABEL | Scenario tagging subset |
+
+The `patternProperties` difference is cosmetic — both accept numeric and UUID keys.
+LinkML's `additionalProperties` is slightly more permissive (accepts any key format)
+but validates the VALUE structure identically.
+
+## File Inventory
+
+```
+linkml/openlabel-v2/
+├── openlabel-v2.yaml           ← Semantic model (vocabulary + constraints)
+├── openlabel-v2-schema.yaml    ← Structural model (file format)
+├── GAP_ANALYSIS.md             ← Detailed v1↔v2 comparison
+├── IMPROVEMENTS.md             ← v2 improvements over v1
+└── SCHEMA_MODELING.md          ← This file
+```

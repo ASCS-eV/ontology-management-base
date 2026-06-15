@@ -61,6 +61,7 @@ endef
 GEN_OWL := $(VENV_BIN)/gen-owl
 GEN_SHACL := $(VENV_BIN)/gen-shacl
 GEN_JSONLD_CONTEXT := $(VENV_BIN)/gen-jsonld-context
+GEN_JSON_SCHEMA := $(VENV_BIN)/gen-json-schema
 
 # LinkML domains — add new domains here
 LINKML_DOMAINS := openlabel-v2
@@ -211,6 +212,10 @@ _generate_default:
 		"$(GEN_OWL)" --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" linkml/$$domain/$$domain.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.owl.ttl; \
 		"$(GEN_SHACL)" --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" linkml/$$domain/$$domain.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.shacl.ttl; \
 		"$(GEN_JSONLD_CONTEXT)" --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri linkml/$$domain/$$domain.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.context.jsonld; \
+		if [ -f linkml/$$domain/$$domain-schema.yaml ]; then \
+			echo "    Generating JSON Schema for $$domain..."; \
+			"$(GEN_JSON_SCHEMA)" linkml/$$domain/$$domain-schema.yaml 2>/dev/null | tr -d '\r' > artifacts/$$domain/$$domain.schema.json; \
+		fi; \
 	done
 	@echo "[OK] Artifacts generated"
 
@@ -408,7 +413,7 @@ _help_general:
 	@echo "  make format         - Format code with ruff"
 	@echo ""
 	@echo "LinkML:"
-	@echo "  make generate                     - Generate OWL/SHACL/context from all OMB LinkML schemas"
+	@echo "  make generate                     - Generate OWL/SHACL/context/JSON Schema from all OMB LinkML schemas"
 	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific OMB domain"
 	@echo "  make generate gx                  - Build and sync Gaia-X artifacts from service-characteristics"
 	@echo "  make generate help                - Show generate subcommands"
@@ -434,7 +439,7 @@ _help_install:
 
 _help_generate:
 	@echo "Generate subcommands:"
-	@echo "  make generate                     - Generate OWL/SHACL/context from all OMB LinkML schemas"
+	@echo "  make generate                     - Generate OWL/SHACL/context/JSON Schema from all OMB LinkML schemas"
 	@echo "  make generate DOMAIN=openlabel-v2 - Generate for a specific OMB domain"
 	@echo "  make generate gx                  - Build and sync Gaia-X artifacts from service-characteristics"
 	@echo "  make generate gx GX_REF=25.12     - Check out a specific Gaia-X ref before generating"
