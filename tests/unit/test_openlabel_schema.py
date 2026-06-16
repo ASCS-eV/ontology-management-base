@@ -9,6 +9,7 @@ Tests cover:
 """
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -21,6 +22,37 @@ SCHEMA_YAML = ROOT_DIR / "linkml" / "openlabel-v2" / "openlabel-v2-schema.yaml"
 ONTOLOGY_YAML = ROOT_DIR / "linkml" / "openlabel-v2" / "openlabel-v2.yaml"
 SYNC_SCRIPT = ROOT_DIR / "scripts" / "sync_tag_type_enum.py"
 CONVERT_SCRIPT = ROOT_DIR / "scripts" / "convert_openlabel_v1_to_v2.py"
+# Authoritative ASAM OpenLABEL v1.0.0 JSON Schema (the format we claim parity with).
+ASAM_SCHEMA = (
+    ROOT_DIR
+    / "submodules"
+    / "asam-openx-standards"
+    / "standards"
+    / "asam-openlabel"
+    / "schema"
+    / "openlabel_json_schema-v1.0.0.json"
+)
+# Authoritative ASAM scenario tagging ontology (source of valid tag.type names).
+ASAM_ONTOLOGY_TTL = (
+    ROOT_DIR
+    / "submodules"
+    / "asam-openx-standards"
+    / "standards"
+    / "asam-openlabel"
+    / "ontologies"
+    / "openlabel_ontology_scenario_tags.ttl"
+)
+
+
+def _asam_tag_classes() -> set[str]:
+    """Local names of every rdfs:Class in the ASAM scenario tagging ontology."""
+    ttl = ASAM_ONTOLOGY_TTL.read_text(encoding="utf-8")
+    return set(re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:Class", ttl))
+
+
+def _tag_type_enum(schema: dict) -> list[str]:
+    """Extract the TagTypeEnum permissible values from a generated JSON Schema."""
+    return schema["$defs"]["TagTypeEnum"]["enum"]
 
 
 # =============================================================================
@@ -39,6 +71,12 @@ def generated_schema() -> dict:
     )
     assert result.returncode == 0, f"gen-json-schema failed: {result.stderr}"
     return json.loads(result.stdout)
+
+
+@pytest.fixture(scope="module")
+def asam_schema() -> dict:
+    """Load the authoritative ASAM OpenLABEL v1.0.0 JSON Schema."""
+    return json.loads(ASAM_SCHEMA.read_text(encoding="utf-8"))
 
 
 # =============================================================================
@@ -86,16 +124,14 @@ VALID_FULL_SCENARIO = {
             "7": {
                 "type": "WeatherWind",
                 "ontology_uid": "0",
-                "tag_data": {"vec": [{"type": "range", "val": ["10", "25"]}]},
+                "tag_data": {"vec": [{"type": "range", "val": [10, 25]}]},
             },
             "11": {"type": "VehicleCar", "ontology_uid": "0"},
             "13": {"type": "MotionDrive", "ontology_uid": "0"},
             "15": {
                 "type": "scenarioUniqueReference",
                 "ontology_uid": "0",
-                "tag_data": {
-                    "text": [{"type": "value", "val": "c133241e-f325-11eb"}]
-                },
+                "tag_data": {"text": [{"type": "value", "val": "c133241e-f325-11eb"}]},
             },
         },
     }
@@ -196,9 +232,7 @@ class TestSchemaGeneration:
     def test_tag_type_enum_values(self, generated_schema: dict) -> None:
         """TagEntry should constrain tag.type to enum values."""
         # Find TagEntry definition (may have __identifier_optional suffix)
-        tag_defs = [
-            k for k in generated_schema["$defs"] if k.startswith("TagEntry")
-        ]
+        tag_defs = [k for k in generated_schema["$defs"] if k.startswith("TagEntry")]
         assert len(tag_defs) > 0, "No TagEntry definition found"
         tag_def = generated_schema["$defs"][tag_defs[0]]
         tag_type_prop = tag_def["properties"]["type"]
@@ -299,9 +333,7 @@ class TestSchemaValidation:
 class TestSyncTagTypeEnum:
     """Tests for the TagTypeEnum synchronization script."""
 
-    @pytest.mark.skipif(
-        not SYNC_SCRIPT.exists(), reason="sync script not found"
-    )
+    @pytest.mark.skipif(not SYNC_SCRIPT.exists(), reason="sync script not found")
     def test_check_mode_passes(self) -> None:
         """Sync script --check should pass when enum is up to date."""
         result = subprocess.run(
@@ -315,59 +347,217 @@ class TestSyncTagTypeEnum:
             f"Run: python scripts/sync_tag_type_enum.py\n{result.stdout}"
         )
 
-    @pytest.mark.skipif(
-        not SYNC_SCRIPT.exists(), reason="sync script not found"
-    )
-    def test_enum_count_matches_ontology(self) -> None:
-        """TagTypeEnum should have the expected number of values."""
+    @pytest.mark.skipif(not SYNC_SCRIPT.exists(), reason="sync script not found")
+    def test_enum_count_floor(self) -> None:
+        """TagTypeEnum should expose the full ASAM vocabulary (>= 256 values)."""
         import yaml
 
-        with open(ONTOLOGY_YAML) as f:
-            model = yaml.safe_load(f)
-
-        enums = model.get("enums", {})
-        slots = model.get("slots", {})
-        enum_names = set(enums.keys())
-
-        all_enum_values: set[str] = set()
-        for edef in enums.values():
-            all_enum_values.update(edef.get("permissible_values", {}).keys())
-
-        enum_slots = {
-            sname
-            for sname, sdef in slots.items()
-            if sdef.get("range") in enum_names
-        }
-
-        bool_flags = {
-            sname
-            for sname, sdef in slots.items()
-            if sdef.get("range") == "boolean"
-            and sname not in all_enum_values
-            and sname not in enum_slots
-        }
-
-        admin_slots = set(
-            model["classes"].get("AdminTag", {}).get("slots", [])
-        )
-
-        expected_count = (
-            5  # structural classes
-            + len(admin_slots)
-            + len(bool_flags)
-            + len(enum_slots)
-            + len(all_enum_values)
-        )
-
-        # Verify the schema YAML has this count
         with open(SCHEMA_YAML) as f:
             schema = yaml.safe_load(f)
-        actual_count = len(
-            schema["enums"]["TagTypeEnum"]["permissible_values"]
+        actual_count = len(schema["enums"]["TagTypeEnum"]["permissible_values"])
+        assert actual_count >= 256, (
+            f"TagTypeEnum has {actual_count} values, expected >= 256 "
+            f"(full ASAM tag-class + admin + enum vocabulary)"
         )
-        assert actual_count == expected_count, (
-            f"TagTypeEnum has {actual_count} values, expected {expected_count}"
+
+
+# =============================================================================
+# Vocabulary Faithfulness (covers every ASAM tag class)
+# =============================================================================
+
+
+class TestVocabularyFaithfulness:
+    """TagTypeEnum must accept every real ASAM v1 tag and invent none."""
+
+    def test_enum_covers_all_asam_tag_classes(self, generated_schema: dict) -> None:
+        """Every rdfs:Class in the ASAM ontology must be a valid tag.type."""
+        enum = set(_tag_type_enum(generated_schema))
+        asam_classes = _asam_tag_classes()
+        missing = sorted(asam_classes - enum)
+        assert not missing, f"ASAM tag classes missing from TagTypeEnum: {missing}"
+
+    def test_no_fabricated_enum_values(self, generated_schema: dict) -> None:
+        """Every enum value must be a real ASAM ontology name (class or property)."""
+        ttl = ASAM_ONTOLOGY_TTL.read_text(encoding="utf-8")
+        asam_names = set(
+            re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:(?:Class|Property)", ttl)
         )
+        enum = set(_tag_type_enum(generated_schema))
+        fabricated = sorted(enum - asam_names)
+        assert not fabricated, f"TagTypeEnum has non-ASAM values: {fabricated}"
+
+    @pytest.mark.parametrize(
+        "tag",
+        [
+            "RoundaboutLarge",  # spec 8.2.1 headline "large roundabout"
+            "SceneryJunction",
+            "EnvironmentWeather",
+            "BehaviourMotion",
+            "OddScenery",
+            "DrivableAreaSigns",  # used in spec/test boundary_list
+        ],
+    )
+    def test_spec_hierarchy_tags_present(
+        self, generated_schema: dict, tag: str
+    ) -> None:
+        """Mid-level hierarchy tags referenced by the spec must validate."""
+        assert tag in set(_tag_type_enum(generated_schema))
+
+
+# =============================================================================
+# Functional Equivalence with the ASAM schema (spec section 8 examples)
+# =============================================================================
+
+
+class TestFunctionalEquivalence:
+    """Spec-valid ASAM v1 files must validate against BOTH ASAM and LinkML schemas."""
+
+    # Canonical ASAM OpenLABEL v1.0.0 chapter-8 examples.
+    SPEC_EXAMPLES = {
+        "8.2.5_numeric_range": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {
+                    "0": {
+                        "type": "LaneSpecificationDimensions",
+                        "ontology_uid": "0",
+                        "tag_data": {"vec": [{"type": "range", "val": [3.4, 3.7]}]},
+                    }
+                },
+            }
+        },
+        "8.2.5_numeric_set": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {
+                    "0": {
+                        "type": "LaneSpecificationLaneCount",
+                        "ontology_uid": "0",
+                        "tag_data": {"vec": [{"type": "values", "val": [2, 3]}]},
+                    }
+                },
+            }
+        },
+        "8.2.4_rainfall_value": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {
+                    "0": {
+                        "type": "WeatherRain",
+                        "ontology_uid": "0",
+                        "tag_data": {"num": [{"type": "value", "val": 3.1}]},
+                    }
+                },
+            }
+        },
+        "tag_data_string": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {
+                    "0": {
+                        "type": "WeatherRain",
+                        "ontology_uid": "0",
+                        "tag_data": "freeform",
+                    }
+                },
+            }
+        },
+        "8.6_minimal": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {"0": {"type": "SceneryJunction", "ontology_uid": "0"}},
+            }
+        },
+        "8.2.1_ontology_entry_string": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": "https://openlabel.asam.net/o.ttl"},
+                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
+            }
+        },
+    }
+
+    # Malformed files that BOTH schemas must reject (structural equivalence).
+    SHARED_INVALID = {
+        "missing_metadata": {
+            "openlabel": {"tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}}}
+        },
+        "missing_tag_type": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"ontology_uid": "0"}},
+            }
+        },
+        "num_val_wrong_type": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {
+                    "0": {
+                        "type": "WeatherRain",
+                        "ontology_uid": "0",
+                        "tag_data": {"num": [{"val": "not_a_number"}]},
+                    }
+                },
+            }
+        },
+    }
+
+    # Files the ASAM schema accepts but the LinkML schema rejects (LinkML stricter).
+    LINKML_STRICTER = {
+        "unknown_tag_type": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"type": "CompletelyFakeTag", "ontology_uid": "0"}},
+            }
+        },
+        "wrong_boundary_mode": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {
+                    "0": {"uri": "https://x/o", "boundary_mode": "not_a_mode"}
+                },
+                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
+            }
+        },
+    }
+
+    @pytest.mark.parametrize("name", sorted(SPEC_EXAMPLES))
+    def test_spec_example_valid_in_asam(self, asam_schema: dict, name: str) -> None:
+        """Sanity: each example is valid against the authoritative ASAM schema."""
+        jsonschema.validate(self.SPEC_EXAMPLES[name], asam_schema)
+
+    @pytest.mark.parametrize("name", sorted(SPEC_EXAMPLES))
+    def test_spec_example_valid_in_linkml(
+        self, generated_schema: dict, name: str
+    ) -> None:
+        """Each ASAM-valid example must ALSO validate against the LinkML schema."""
+        jsonschema.validate(self.SPEC_EXAMPLES[name], generated_schema)
+
+    @pytest.mark.parametrize("name", sorted(SHARED_INVALID))
+    def test_shared_invalid_rejected_by_both(
+        self, asam_schema: dict, generated_schema: dict, name: str
+    ) -> None:
+        """Malformed files must be rejected by BOTH schemas (equivalence)."""
+        data = self.SHARED_INVALID[name]
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate(data, asam_schema)
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate(data, generated_schema)
+
+    @pytest.mark.parametrize("name", sorted(LINKML_STRICTER))
+    def test_linkml_stricter_than_asam(
+        self, asam_schema: dict, generated_schema: dict, name: str
+    ) -> None:
+        """Cases ASAM accepts (unconstrained) but LinkML rejects (added value)."""
+        data = self.LINKML_STRICTER[name]
+        jsonschema.validate(data, asam_schema)  # ASAM accepts
+        with pytest.raises(jsonschema.ValidationError):
+            jsonschema.validate(data, generated_schema)
 
 
 # =============================================================================
@@ -467,9 +657,7 @@ class TestV1ToV2Converter:
                     "0": {
                         "type": "scenarioName",
                         "ontology_uid": "0",
-                        "tag_data": {
-                            "text": [{"type": "value", "val": "My Scenario"}]
-                        },
+                        "tag_data": {"text": [{"type": "value", "val": "My Scenario"}]},
                     }
                 },
             }

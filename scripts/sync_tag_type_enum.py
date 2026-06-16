@@ -41,6 +41,16 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
 
     enums = model.get("enums", {})
     slots = model.get("slots", {})
+    classes = model.get("classes", {})
+
+    # Tag classes: every class minted in the openlabel-v2 namespace forms the
+    # ASAM v1 tag hierarchy (structural roots + category nodes). Helper classes
+    # outside that namespace (e.g. sdo:QuantitativeValue) are excluded.
+    tag_classes = sorted(
+        cname
+        for cname, cdef in classes.items()
+        if str(cdef.get("class_uri", "")).startswith("openlabel_v2:")
+    )
 
     # Admin slots
     admin_slots = model["classes"].get("AdminTag", {}).get("slots", [])
@@ -78,11 +88,11 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
     lines.append("      enums, slots). AUTO-GENERATED — do not edit manually.")
     lines.append("    permissible_values:")
 
-    # Structural classes
-    lines.append("      # --- Structural class types ---")
-    for c in ["Tag", "AdminTag", "Odd", "Behaviour", "RoadUser"]:
+    # Tag classes (structural roots + hierarchy category nodes)
+    lines.append("      # --- Tag classes (hierarchy nodes) ---")
+    for c in tag_classes:
         lines.append(f"      {c}:")
-        lines.append("        description: Structural class type")
+        lines.append("        description: Tag class (hierarchy node)")
 
     # Admin properties
     lines.append("      # --- Administration tag properties ---")
@@ -118,7 +128,7 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
 
     # Stats
     all_types: set[str] = set()
-    all_types.update(["Tag", "AdminTag", "Odd", "Behaviour", "RoadUser"])
+    all_types.update(tag_classes)
     all_types.update(admin_slots)
     all_types.update(bool_flags)
     all_types.update(enum_slots)
@@ -127,7 +137,7 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
 
     stats = {
         "total": str(len(all_types)),
-        "structural_classes": "5",
+        "structural_classes": str(len(tag_classes)),
         "admin_properties": str(len(admin_slots)),
         "boolean_flags": str(len(bool_flags)),
         "enum_category_slots": str(len(enum_slots)),
@@ -163,22 +173,17 @@ def update_schema(schema_path: Path, enum_lines: list[str]) -> bool:
             continue
         # A line at indentation level 2 (or less) that isn't empty marks the end
         stripped = line.rstrip()
-        if stripped and not stripped.startswith(" " * 6) and not stripped.startswith(
-            "    "
+        if (
+            stripped
+            and not stripped.startswith(" " * 6)
+            and not stripped.startswith("    ")
         ):
             # This is at enum level or higher — we've left TagTypeEnum
             end_offset = i
             break
-        if (
-            in_enum
-            and stripped
-            and not stripped.startswith("#")
-            and len(stripped) > 0
-        ):
+        if in_enum and stripped and not stripped.startswith("#") and len(stripped) > 0:
             # Check if this is a new enum at level 2 (2 spaces)
-            if stripped.startswith("  ") and not stripped.startswith(
-                "    "
-            ):
+            if stripped.startswith("  ") and not stripped.startswith("    "):
                 if stripped != marker_start.strip():
                     end_offset = i
                     break

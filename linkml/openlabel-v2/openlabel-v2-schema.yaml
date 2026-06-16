@@ -34,7 +34,6 @@ prefixes:
   openlabel_schema: https://w3id.org/ascs-ev/envited-x/openlabel/schema/v1/
 
 default_prefix: openlabel_schema
-default_range: string
 
 imports:
   - linkml:types
@@ -98,8 +97,10 @@ classes:
       schema_version:
         range: string
         required: true
+        equals_string: "1.0.0"
         description: >-
           The version of the ASAM OpenLABEL schema this file conforms to.
+          ASAM constrains this to "1.0.0".
       tagged_file:
         range: string
         description: >-
@@ -172,14 +173,20 @@ classes:
         required: true
         description: >-
           UID of the ontology (from the ontologies section) where this tag
-          type is defined.
+          type is defined. Required: every scenario tag references its ontology
+          (spec 8.2.1). (ASAM's JSON Schema lists only "type" as required, but
+          all spec examples and real files include ontology_uid; keeping it
+          required also avoids a LinkML simple-dict shorthand that ASAM forbids.)
       resource_uid:
         range: ResourceUid
         description: Reference to external resource identifiers.
       tag_data:
-        range: TagData
+        any_of:
+          - range: TagData
+          - range: string
         description: >-
           Optional data associated with this tag (values, ranges, text).
+          ASAM models tag_data as oneOf[object, string]; both forms are allowed.
 
   # ---------------------------------------------------------------------------
   # TagData - generic data container (spec 8.7)
@@ -226,8 +233,8 @@ classes:
         required: true
         description: The boolean value.
       type:
-        range: string
-        description: How the value shall be interpreted (e.g., "value").
+        range: ValueOnlyTypeEnum
+        description: How the value shall be interpreted (ASAM allows only "value").
       attributes:
         range: Attributes
         description: Nested attributes for this data entry.
@@ -242,7 +249,11 @@ classes:
       val:
         range: float
         required: true
-        description: The numerical value.
+        description: >-
+          The numerical value. Modelled as a number to match the ASAM JSON
+          Schema (num.val type=number). NOTE: spec 8.2.4's prose example shows
+          "val": "3.1" (a string), which is inconsistent with the ASAM schema;
+          the schema (number) is authoritative.
       type:
         range: NumTypeEnum
         description: >-
@@ -263,8 +274,8 @@ classes:
         required: true
         description: The text value.
       type:
-        range: string
-        description: How the text shall be interpreted (e.g., "value").
+        range: ValueOnlyTypeEnum
+        description: How the text shall be interpreted (ASAM allows only "value").
       attributes:
         range: Attributes
         description: Nested attributes for this data entry.
@@ -278,15 +289,18 @@ classes:
         range: string
         description: Name of this data entry.
       val:
-        range: string
         multivalued: true
         required: true
+        any_of:
+          - range: float
+          - range: string
         description: >-
-          Array of values (numbers or strings). Interpretation depends on type.
+          Array of values. ASAM vec.val items are oneOf[number, string]
+          (e.g. a numeric range [3.4, 3.7] or a set [2, 3]).
       type:
         range: VecTypeEnum
         description: >-
-          How the vector shall be interpreted: range, set, or values.
+          How the vector shall be interpreted: range or values (ASAM vec.type).
       attributes:
         range: Attributes
         description: Nested attributes for this data entry.
@@ -363,14 +377,19 @@ enums:
 
   VecTypeEnum:
     description: >-
-      How a vector (array) value shall be interpreted.
+      How a vector (array) value shall be interpreted (ASAM: range or values).
     permissible_values:
       range:
         description: Two-element array [min, max] defining a value range.
-      set:
-        description: Unordered collection of discrete values.
       values:
-        description: Ordered list of values.
+        description: Ordered list of discrete values.
+
+  ValueOnlyTypeEnum:
+    description: >-
+      Interpretation for boolean/text data entries. ASAM allows only "value".
+    permissible_values:
+      value:
+        description: The entry represents a single value.
 
 
   TagTypeEnum:
@@ -379,17 +398,55 @@ enums:
       files. Derived from the openlabel-v2 ontology vocabulary (classes,
       enums, slots). AUTO-GENERATED — do not edit manually.
     permissible_values:
-      # --- Structural class types ---
-      Tag:
-        description: Structural class type
+      # --- Tag classes (hierarchy nodes) ---
       AdminTag:
-        description: Structural class type
-      Odd:
-        description: Structural class type
+        description: Tag class (hierarchy node)
       Behaviour:
-        description: Structural class type
+        description: Tag class (hierarchy node)
+      BehaviourMotion:
+        description: Tag class (hierarchy node)
+      DrivableAreaGeometry:
+        description: Tag class (hierarchy node)
+      DrivableAreaLaneSpecification:
+        description: Tag class (hierarchy node)
+      DrivableAreaSigns:
+        description: Tag class (hierarchy node)
+      DrivableAreaSurface:
+        description: Tag class (hierarchy node)
+      DynamicElementsSubjectVehicle:
+        description: Tag class (hierarchy node)
+      DynamicElementsTraffic:
+        description: Tag class (hierarchy node)
+      EnvironmentConnectivity:
+        description: Tag class (hierarchy node)
+      EnvironmentIllumination:
+        description: Tag class (hierarchy node)
+      EnvironmentWeather:
+        description: Tag class (hierarchy node)
+      GeometryHorizontal:
+        description: Tag class (hierarchy node)
+      GeometryLongitudinal:
+        description: Tag class (hierarchy node)
+      IlluminationDay:
+        description: Tag class (hierarchy node)
+      Odd:
+        description: Tag class (hierarchy node)
+      OddDynamicElements:
+        description: Tag class (hierarchy node)
+      OddEnvironment:
+        description: Tag class (hierarchy node)
+      OddScenery:
+        description: Tag class (hierarchy node)
       RoadUser:
-        description: Structural class type
+        description: Tag class (hierarchy node)
+      Scenario:
+        description: Tag class (hierarchy node)
+      SceneryDrivableArea:
+        description: Tag class (hierarchy node)
+      SceneryJunction:
+        description: Tag class (hierarchy node)
+      Tag:
+        description: Tag class (hierarchy node)
       # --- Administration tag properties ---
       licenseURI:
         description: Administration tag property
@@ -710,22 +767,32 @@ enums:
       IntersectionYJunction:
         description: "Y-Junction."
       # --- JunctionRoundaboutEnum ---
+      RoundaboutCompact:
+        description: "Compact (signalisation unspecified)."
       RoundaboutCompactNosignal:
         description: "Compact non-signalised."
       RoundaboutCompactSignal:
         description: "Compact signalised."
+      RoundaboutDouble:
+        description: "Double (signalisation unspecified)."
       RoundaboutDoubleNosignal:
         description: "Double non-signalised."
       RoundaboutDoubleSignal:
         description: "Double signalised."
+      RoundaboutLarge:
+        description: "Large (signalisation unspecified)."
       RoundaboutLargeNosignal:
         description: "Large non-signalised."
       RoundaboutLargeSignal:
         description: "Large signalised."
+      RoundaboutMini:
+        description: "Mini (signalisation unspecified)."
       RoundaboutMiniNosignal:
         description: "Mini non-signalised."
       RoundaboutMiniSignal:
         description: "Mini signalised."
+      RoundaboutNormal:
+        description: "Normal (signalisation unspecified)."
       RoundaboutNormalNosignal:
         description: "Normal non-signalised."
       RoundaboutNormalSignal:
@@ -836,19 +903,27 @@ enums:
       ZoneTrafficManagement:
         description: "Traffic management zones."
       # --- SignsInformationEnum ---
+      InformationSignsUniform:
+        description: "Uniform (full-time/temporary unspecified)."
       InformationSignsUniformFullTime:
         description: "Uniform full-time."
       InformationSignsUniformTemporary:
         description: "Uniform temporary."
+      InformationSignsVariable:
+        description: "Variable (full-time/temporary unspecified)."
       InformationSignsVariableFullTime:
         description: "Variable full-time."
       InformationSignsVariableTemporary:
         description: "Variable temporary."
       # --- SignsRegulatoryEnum ---
+      RegulatorySignsUniform:
+        description: "Uniform (full-time/temporary unspecified)."
       RegulatorySignsUniformFullTime:
         description: "Uniform full-time."
       RegulatorySignsUniformTemporary:
         description: "Uniform temporary."
+      RegulatorySignsVariable:
+        description: "Variable (full-time/temporary unspecified)."
       RegulatorySignsVariableFullTime:
         description: "Variable full-time."
       RegulatorySignsVariableTemporary:
@@ -860,6 +935,8 @@ enums:
         description: "Uniform full-time."
       WarningSignsUniformTemporary:
         description: "Uniform temporary."
+      WarningSignsVariable:
+        description: "Variable (full-time/temporary unspecified)."
       WarningSignsVariableFullTime:
         description: "Variable full-time."
       WarningSignsVariableTemporary:

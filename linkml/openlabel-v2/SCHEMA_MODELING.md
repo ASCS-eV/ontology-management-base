@@ -14,19 +14,21 @@ the single source of truth for ASAM OpenLABEL scenario tagging:
 
 ```
 openlabel-v2.yaml (Semantic Model)
-├── 10 classes: Tag, AdminTag, Odd, Behaviour, RoadUser, QuantitativeValue, ...
+├── 25 classes: Tag, AdminTag, Odd, Behaviour, RoadUser, OddScenery,
+│       SceneryJunction, EnvironmentWeather, ... (hierarchy category nodes)
 ├── 113 typed slots: WeatherRain (boolean), weatherRainValue (decimal), ...
 ├── 27 enums: DrivableAreaTypeEnum, JunctionIntersectionEnum, ...
-│   └── 142 permissible values
+│   └── 152 permissible values
 └── Generates:
     ├── openlabel-v2.owl.ttl       (OWL 2 ontology)
     ├── openlabel-v2.shacl.ttl     (SHACL validation shapes)
     └── openlabel-v2.context.jsonld (JSON-LD context with type coercion)
 
 openlabel-v2-schema.yaml (Structural Model)
-├── 12 classes: OpenLabelFile, OpenLabel, Metadata, TagEntry, TagData, ...
-├── TagTypeEnum: 227 valid tag.type values (derived from semantic model)
-├── BoundaryModeEnum, NumTypeEnum, VecTypeEnum
+├── 12 classes: OpenLabelFile, OpenLabel, Metadata, TagEntry, TagData,
+│       BooleanVal, NumVal, TextVal, VecVal, Attributes, ...
+├── TagTypeEnum: 256 valid tag.type values (every ASAM v1 tag class + admin tag)
+├── BoundaryModeEnum, NumTypeEnum, VecTypeEnum, ValueOnlyTypeEnum
 └── Generates:
     └── openlabel-v2.schema.json   (JSON Schema for ASAM v1 format)
 ```
@@ -36,10 +38,12 @@ openlabel-v2-schema.yaml (Structural Model)
 The **semantic model** defines WHAT tags exist and their validation rules.
 The **structural model** defines HOW those tags are serialized in ASAM v1 JSON files.
 
-The bridge between them is `TagTypeEnum` — it lists all 227 valid `tag.type` values
-derived from the semantic model's classes, slots, and enum values. When the
-vocabulary changes (e.g., adding a new tag), the `TagTypeEnum` is regenerated
-and the JSON Schema automatically reflects the update.
+The bridge between them is `TagTypeEnum` — it lists all 256 valid `tag.type` values
+derived from the semantic model's tag classes, slots, and enum values (every
+`rdfs:Class` in the ASAM scenario tagging ontology plus the administration tags;
+`*Value` value-properties and `hasTag` are excluded as they are not tag types).
+When the vocabulary changes (e.g., adding a new tag), the `TagTypeEnum` is
+regenerated and the JSON Schema automatically reflects the update.
 
 ```
 User changes openlabel-v2.yaml (add new tag)
@@ -51,25 +55,41 @@ User changes openlabel-v2.yaml (add new tag)
             └── gen-json-schema → JSON Schema updated ✅
 ```
 
+## Scope
+
+This structural schema models **scenario-tagging files** — the `openlabel` object
+restricted to `metadata`, `ontologies`, and `tags` (spec 8.1: tags carry no
+spatiotemporal constructs). Multi-sensor labeling containers (`objects`, `frames`,
+`streams`, `coordinate_systems`, …) are intentionally out of scope. A file that
+combines tagging *and* labeling will therefore validate against the ASAM schema
+but not this tagging-scoped schema; that is by design.
+
 ## Functional Equivalence Proof
 
-The LinkML-generated JSON Schema was tested against the ASAM-authored JSON Schema
-using 9 test cases from the ASAM OpenLABEL v1.0.0 specification:
+Spec-valid ASAM OpenLABEL v1.0.0 chapter-8 examples are validated against BOTH the
+authoritative ASAM JSON Schema and the LinkML-generated schema. Every row below is
+asserted by `tests/unit/test_openlabel_schema.py::TestFunctionalEquivalence`
+(`SPEC_EXAMPLES` accept-in-both, `SHARED_INVALID` reject-in-both, `LINKML_STRICTER`
+accept-in-ASAM / reject-in-LinkML):
 
 | Test Case | ASAM Schema | LinkML Schema | Verdict |
 |-----------|-------------|---------------|---------|
 | Valid: minimal tagging (§8.6) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
-| Valid: full scenario (§8.8.1) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
-| Valid: boundary include (§8.2.2) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: numeric range `vec.val:[3.4,3.7]` (§8.2.5) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: numeric set `vec.val:[2,3]` (§8.2.5) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
 | Valid: numeric tag_data (§8.2.4) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: `tag_data` as string (§8.7) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
+| Valid: ontology entry as string (§8.2.1) | ✅ ACCEPT | ✅ ACCEPT | Equivalent |
 | Invalid: missing metadata | ❌ REJECT | ❌ REJECT | Equivalent |
 | Invalid: missing tag.type | ❌ REJECT | ❌ REJECT | Equivalent |
-| Invalid: wrong tag.type value | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
-| Invalid: wrong boundary_mode | ❌ REJECT | ❌ REJECT | Equivalent |
 | Invalid: num.val wrong type | ❌ REJECT | ❌ REJECT | Equivalent |
+| Invalid: **unknown tag.type** | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
+| Invalid: **wrong boundary_mode** | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
 
-**Result: 8/9 structurally equivalent. The one difference is that LinkML
-is STRICTER — it also validates vocabulary (tag.type values).**
+**Result: equivalent acceptance/rejection for spec tagging files; LinkML is STRICTER
+only where it adds value — it also validates the tag vocabulary (tag.type values),
+the `schema_version`, the `boundary_mode`, and the boolean/text `type` enums, all of
+which the ASAM schema leaves unconstrained.**
 
 ## Additional Gains from LinkML Modeling
 
@@ -78,7 +98,7 @@ is STRICTER — it also validates vocabulary (tag.type values).**
 The ASAM JSON Schema defines `tag.type` as an unconstrained `string`. Any value
 passes structural validation, even nonsense like `"CompletelyFakeTag"`.
 
-The LinkML-generated schema constrains `tag.type` to exactly 227 valid values
+The LinkML-generated schema constrains `tag.type` to exactly 256 valid values
 derived from the ontology. Invalid vocabulary is caught at validation time:
 
 ```
@@ -201,8 +221,11 @@ print('Valid!')
 | Aspect | ASAM JSON Schema | LinkML-generated |
 |--------|-----------------|-----------------|
 | Dict key validation | `patternProperties: "^(0-9\|UUID)$"` | `additionalProperties` (any key) |
-| `tag.type` constraint | None (any string) | Enum with 227 values |
-| `tag_data` as string | Allowed via `oneOf` | Object only (string form not modeled) |
+| `tag.type` constraint | None (any string) | Enum with 256 values (full ASAM vocabulary) |
+| `tag_data` as string | Allowed via `oneOf` | Allowed via `any_of` (object or string) |
+| `vec.val` items | `oneOf[number, string]` | `any_of[number, string]` (numeric ranges/sets) |
+| `schema_version` | `enum: ["1.0.0"]` | `const: "1.0.0"` |
+| `boolean`/`text` `type` | `enum: ["value"]` | `ValueOnlyTypeEnum` (value) |
 | Multi-sensor definitions | 36 (objects, frames, geometry) | Not included (tagging only) |
 | Scope | All of OpenLABEL | Scenario tagging subset |
 

@@ -214,7 +214,7 @@ _generate_default:
 		"$(GEN_JSONLD_CONTEXT)" --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri linkml/$$domain/$$domain.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.context.jsonld; \
 		if [ -f linkml/$$domain/$$domain-schema.yaml ]; then \
 			echo "    Generating JSON Schema for $$domain..."; \
-			"$(GEN_JSON_SCHEMA)" linkml/$$domain/$$domain-schema.yaml 2>/dev/null | tr -d '\r' > artifacts/$$domain/$$domain.schema.json; \
+			"$(GEN_JSON_SCHEMA)" --deterministic --indent 3 linkml/$$domain/$$domain-schema.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.schema.json; \
 		fi; \
 	done
 	@echo "[OK] Artifacts generated"
