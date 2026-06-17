@@ -1,0 +1,76 @@
+{
+   "openlabel": {
+      "metadata": {
+         "schema_version": "1.0.0",
+         "tagged_file": "../resources/scenarios/scenario123.osc"
+      },
+      "ontologies": {
+         "0": {
+            "uri": "https://openlabel.asam.net/V1-0-0/ontologies/openlabel_ontology_scenario_tags.ttl",
+            "boundary_list": [
+               "DrivableAreaSigns",
+               "DrivableAreaEdge",
+               "DrivableAreaSurface"
+            ],
+            "boundary_mode": "exclude"
+         }
+      },
+      "tags": {
+         "0": {
+            "type": "RoadTypeMinor",
+            "ontology_uid": "0"
+         },
+         "1": {
+            "type": "HorizontalStraights",
+            "ontology_uid": "0"
+         },
+         "3": {
+            "type": "LaneTypeTraffic",
+            "ontology_uid": "0"
+         },
+         "4": {
+            "type": "ZoneSchool",
+            "ontology_uid": "0"
+         },
+         "5": {
+            "type": "IntersectionCrossroad",
+            "ontology_uid": "0"
+         },
+         "7": {
+            "type": "WeatherWind",
+            "ontology_uid": "0",
+            "tag_data": {
+               "vec": [
+                  {
+                     "type": "range",
+                     "val": [
+                        10,
+                        25
+                     ]
+                  }
+               ]
+            }
+         },
+         "11": {
+            "type": "VehicleCar",
+            "ontology_uid": "0"
+         },
+         "13": {
+            "type": "MotionDrive",
+            "ontology_uid": "0"
+         },
+         "15": {
+            "type": "scenarioUniqueReference",
+            "ontology_uid": "0",
+            "tag_data": {
+               "text": [
+                  {
+                     "type": "value",
+                     "val": "c133241e-f325-11eb"
+                  }
+               ]
+            }
+         }
+      }
+   }
+}

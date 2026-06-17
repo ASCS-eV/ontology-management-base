@@ -1,0 +1,76 @@
+# Refinement-proof spec for the OpenLABEL v2 structural migration.
+#
+# Consumed by scripts/schema_refinement_prover.py to prove that the
+# LinkML-generated JSON Schema is a sound refinement of the normative ASAM
+# OpenLABEL v1.0.0 JSON Schema, within the scenario-tagging scope.
+#
+# This file is the ONLY ontology-specific input; the prover itself is generic.
+# To verify another migration, write a sibling proof_spec.yaml.
+
+name: openlabel-v2
+
+# A — the authoritative normative reference schema.
+reference_schema: submodules/asam-openx-standards/standards/asam-openlabel/schema/openlabel_json_schema-v1.0.0.json
+
+# L — the LinkML-generated structural schema (committed artifact).
+linkml_schema: artifacts/openlabel-v2/openlabel-v2.schema.json
+# Alternatively, regenerate on the fly from the model:
+# linkml_yaml: linkml/openlabel-v2/openlabel-v2-schema.yaml
+
+# Scope (τ): property paths retained. The in-scope definition set is the $ref
+# reachability closure of these; everything else is OUT_OF_SCOPE by construction.
+scope_keep:
+  - openlabel.metadata
+  - openlabel.ontologies
+  - openlabel.tags
+
+# Optional explicit reference-def -> LinkML-def map (overrides the heuristic).
+def_map:
+  metadata: Metadata
+  tag: TagEntry
+  tag_data: TagData
+  num: NumVal
+  vec: VecVal
+  text: TextVal
+  boolean: BooleanVal
+  attributes: Attributes
+  resource_uid: ResourceUid
+  ontologies: OntologyEntry
+
+# Property-based generation budget (requires hypothesis-jsonschema).
+hypothesis:
+  soundness: 150       # instances from L's grammar -> must all be A-valid
+  completeness: 150    # instances from A|τ -> measure how much stricter L is
+
+# Optional properties dropped for property-based GENERATION only (to break
+# recursive $ref cycles hypothesis-jsonschema cannot expand). 'attributes' is
+# optional and self-referential (attributes -> *Val -> attributes), so omitting
+# it yields a strict subset of valid instances. The mutation corpus + seeds
+# still cover the attributes subtree.
+generation_prune:
+  - attributes
+
+# Declared, bounded relaxations (Λ) where L is knowingly LOOSER than A. Any
+# looseness OUTSIDE this set is an undisclosed soundness violation and fails the
+# gate. Each declared category is justified below.
+#
+# null_optional was eliminated by generating with --no-include-null (scoped to
+# this domain via jsonschema.genopts); it is intentionally NOT listed here, so
+# the gate now FAILS if explicit-null looseness ever reappears (regression guard).
+allow_looseness:
+  - key_pattern     # A restricts dict keys to numeric/UUID; L accepts any key
+
+# Canonical spec-valid seed instances (chapter-8 examples). Mutated to build the
+# deterministic edge-case corpus; also fed straight through both validators.
+seeds:
+  - linkml/openlabel-v2/proof_seeds/*.json
+
+# Justifications for disclosed deltas. Keys are matched as substrings against the
+# synthesized "{ref_def}.{aspect}" gap key, or against a classification name.
+justifications:
+  tag.required: "Spec §8.2.1: every scenario tag references its ontology; all spec examples include ontology_uid. Disclosed stricter case."
+  tag.closed: "Rejects undocumented tag keys; tightens, never loosens, the contract."
+  tag.key_pattern: "DISCLOSED, bounded looseness: A restricts dict keys to numeric/UUID via patternProperties; L accepts any key. Affects key naming only, not value structure. Tighten with pattern_properties if strict parity is required."
+  ontologies.key_pattern: "Same disclosed key-naming looseness as tag containers; value structure validated identically."
+  type.enum: "A leaves tag.type/num.type/vec.type as unconstrained strings; L pins them to the ASAM vocabulary (TagTypeEnum = 256 ontology classes) and spec value sets. Pure strengthening."
+  schema_version: "A: enum[\"1.0.0\"]; L: const \"1.0.0\" — semantically identical single-value pin."

@@ -33,9 +33,12 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ruff>=0.15.0",
-    # linkml: in [dev] for standalone pip install; the submodule pin in
-    # submodules/linkml/ is the single source of truth for the actual version.
-    "linkml @ git+https://github.com/ASCS-eV/linkml.git@feat/envited-x-pipeline#subdirectory=packages/linkml",
+    # linkml: in [dev] for standalone pip install. Pinned to the exact commit
+    # tracked by submodules/linkml/ (the single source of truth) so CI and the
+    # submodule cannot drift — a newer branch HEAD would change generated
+    # artifacts (e.g. drop format:uri) and trip the modified-file gate. Bump this
+    # SHA whenever the submodule is bumped.
+    "linkml @ git+https://github.com/ASCS-eV/linkml.git@b2b3dba5d2abd88c9773028bb8527e4f2bed2283#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
     "mkdocs-awesome-pages-plugin>=2.9.3",
@@ -43,6 +46,11 @@ dev = [
     "mkdocstrings[python]>=0.24.0",
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
+    # Property-based corpus generation for the schema-refinement prover
+    # (scripts/schema_refinement_prover.py). Optional at runtime: the prover
+    # degrades to the deterministic mutation corpus when absent.
+    "hypothesis>=6.100.0",
+    "hypothesis-jsonschema>=0.23.1",
 ]
 docs = [
     "mkdocs-material>=9.5.0",
@@ -93,6 +101,9 @@ python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
+markers = [
+    "slow: property-based / generative tests (minutes-scale). Run a fast lane with -m 'not slow'.",
+]
 filterwarnings = [
     "ignore::DeprecationWarning:src.tools.validators.*",
 ]

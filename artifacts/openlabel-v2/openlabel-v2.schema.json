@@ -9,40 +9,28 @@
                "items": {
                   "$ref": "#/$defs/BooleanVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "num": {
                "description": "Nested numeric attributes.",
                "items": {
                   "$ref": "#/$defs/NumVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "text": {
                "description": "Nested text attributes.",
                "items": {
                   "$ref": "#/$defs/TextVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "vec": {
                "description": "Nested vector attributes.",
                "items": {
                   "$ref": "#/$defs/VecVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             }
          },
          "title": "Attributes",
@@ -53,22 +41,12 @@
          "description": "A boolean value entry in tag_data or attributes (spec 8.7.1).",
          "properties": {
             "attributes": {
-               "anyOf": [
-                  {
-                     "$ref": "#/$defs/Attributes"
-                  },
-                  {
-                     "type": "null"
-                  }
-               ],
+               "$ref": "#/$defs/Attributes",
                "description": "Nested attributes for this data entry."
             },
             "name": {
                "description": "Name of this data entry (used as index in data pointers).",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "type": {
                "$ref": "#/$defs/ValueOnlyTypeEnum",
@@ -100,31 +78,19 @@
          "properties": {
             "annotator": {
                "description": "Name or identifier of the annotator.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "comment": {
                "description": "Free-text comment about the annotation.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "file_version": {
                "description": "Version of the annotation file.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "name": {
                "description": "Name of the annotation file.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "schema_version": {
                "const": "1.0.0",
@@ -133,10 +99,7 @@
             },
             "tagged_file": {
                "description": "Path or URI to the raw data file that this annotation references.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             }
          },
          "required": [
@@ -160,22 +123,12 @@
          "description": "A numeric value entry in tag_data or attributes (spec 8.7.2).",
          "properties": {
             "attributes": {
-               "anyOf": [
-                  {
-                     "$ref": "#/$defs/Attributes"
-                  },
-                  {
-                     "type": "null"
-                  }
-               ],
+               "$ref": "#/$defs/Attributes",
                "description": "Nested attributes for this data entry."
             },
             "name": {
                "description": "Name of this data entry.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "type": {
                "$ref": "#/$defs/NumTypeEnum",
@@ -201,10 +154,7 @@
                "items": {
                   "type": "string"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "boundary_mode": {
                "$ref": "#/$defs/BoundaryModeEnum",
@@ -236,10 +186,7 @@
                "items": {
                   "type": "string"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "boundary_mode": {
                "$ref": "#/$defs/BoundaryModeEnum",
@@ -283,20 +230,14 @@
                   ]
                },
                "description": "Ontology references keyed by UID. Each entry specifies the URI of an ontology and optional tagging boundary controls.",
-               "type": [
-                  "object",
-                  "null"
-               ]
+               "type": "object"
             },
             "tags": {
                "additionalProperties": {
                   "$ref": "#/$defs/TagEntry__identifier_optional"
                },
                "description": "Tags keyed by UID. Each entry specifies the tag type (from an ontology) and optional tag_data with values.",
-               "type": [
-                  "object",
-                  "null"
-               ]
+               "type": "object"
             }
          },
          "required": [
@@ -331,10 +272,7 @@
             "uri": {
                "description": "URI of the external resource.",
                "format": "uri",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             }
          },
          "required": [
@@ -352,40 +290,28 @@
                "items": {
                   "$ref": "#/$defs/BooleanVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "num": {
                "description": "List of numeric values describing this tag.",
                "items": {
                   "$ref": "#/$defs/NumVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "text": {
                "description": "List of text values describing this tag.",
                "items": {
                   "$ref": "#/$defs/TextVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             },
             "vec": {
                "description": "List of vector (array) values describing this tag.",
                "items": {
                   "$ref": "#/$defs/VecVal"
                },
-               "type": [
-                  "array",
-                  "null"
-               ]
+               "type": "array"
             }
          },
          "title": "TagData",
@@ -401,10 +327,7 @@
             },
             "resource_uid": {
                "description": "Reference to external resource identifiers.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "tag_data": {
                "anyOf": [
@@ -413,9 +336,6 @@
                   },
                   {
                      "type": "string"
-                  },
-                  {
-                     "type": "null"
                   }
                ],
                "description": "Optional data associated with this tag (values, ranges, text). ASAM models tag_data as oneOf[object, string]; both forms are allowed."
@@ -447,10 +367,7 @@
             },
             "resource_uid": {
                "description": "Reference to external resource identifiers.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "tag_data": {
                "anyOf": [
@@ -459,9 +376,6 @@
                   },
                   {
                      "type": "string"
-                  },
-                  {
-                     "type": "null"
                   }
                ],
                "description": "Optional data associated with this tag (values, ranges, text). ASAM models tag_data as oneOf[object, string]; both forms are allowed."
@@ -750,22 +664,12 @@
          "description": "A text value entry in tag_data or attributes (spec 8.7.3).",
          "properties": {
             "attributes": {
-               "anyOf": [
-                  {
-                     "$ref": "#/$defs/Attributes"
-                  },
-                  {
-                     "type": "null"
-                  }
-               ],
+               "$ref": "#/$defs/Attributes",
                "description": "Nested attributes for this data entry."
             },
             "name": {
                "description": "Name of this data entry.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "type": {
                "$ref": "#/$defs/ValueOnlyTypeEnum",
@@ -804,22 +708,12 @@
          "description": "A vector (array) value entry in tag_data or attributes (spec 8.7.4). Used for ranges, sets, and multi-valued data.",
          "properties": {
             "attributes": {
-               "anyOf": [
-                  {
-                     "$ref": "#/$defs/Attributes"
-                  },
-                  {
-                     "type": "null"
-                  }
-               ],
+               "$ref": "#/$defs/Attributes",
                "description": "Nested attributes for this data entry."
             },
             "name": {
                "description": "Name of this data entry.",
-               "type": [
-                  "string",
-                  "null"
-               ]
+               "type": "string"
             },
             "type": {
                "$ref": "#/$defs/VecTypeEnum",
