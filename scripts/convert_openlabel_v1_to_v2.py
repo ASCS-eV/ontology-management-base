@@ -40,7 +40,7 @@ def load_tag_mapping(
     Returns:
         Dict mapping tag.type string to {class, slot, range} info.
     """
-    with open(ontology_path) as f:
+    with open(ontology_path, encoding="utf-8") as f:
         model = yaml.safe_load(f)
 
     slots = model.get("slots", {})
@@ -104,7 +104,9 @@ def load_tag_mapping(
     return mapping
 
 
-def extract_tag_value(tag: dict, tag_mapping: dict[str, dict[str, str]]) -> str | bool | float | None:
+def extract_tag_value(
+    tag: dict, tag_mapping: dict[str, dict[str, str]]
+) -> str | bool | float | None:
     """Extract the value from tag_data for a given tag.
 
     For boolean flags: True (presence = true)
@@ -145,6 +147,28 @@ def extract_tag_value(tag: dict, tag_mapping: dict[str, dict[str, str]]) -> str 
     return True
 
 
+def _assign_slot(
+    target: dict[str, str | bool | float | list | None],
+    slot: str,
+    value: str | bool | float | None,
+) -> None:
+    """Assign ``value`` to ``slot``, accumulating into a list on repeats.
+
+    Multiple v1 tags can map to the same class+slot (e.g. several values of one
+    enum category, which the v2 model represents as an array). Promote to a list
+    instead of silently overwriting so no tag value is lost.
+    """
+    if slot not in target:
+        target[slot] = value
+        return
+    existing = target[slot]
+    if isinstance(existing, list):
+        if value not in existing:
+            existing.append(value)
+    elif existing != value:
+        target[slot] = [existing, value]
+
+
 def convert_v1_to_v2(
     v1_data: dict,
     tag_mapping: dict[str, dict[str, str]],
@@ -165,7 +189,7 @@ def convert_v1_to_v2(
     metadata = openlabel.get("metadata", {})
 
     # Group tags by their v2 class
-    class_slots: dict[str, dict[str, str | bool | float | None]] = {}
+    class_slots: dict[str, dict[str, str | bool | float | list | None]] = {}
     unmapped: list[dict] = []
 
     for tag_uid, tag in tags.items():
@@ -180,14 +204,8 @@ def convert_v1_to_v2(
         slot = info["slot"]
         value = extract_tag_value(tag, tag_mapping)
 
-        if cls not in class_slots:
-            class_slots[cls] = {}
-
-        # For enum values, the slot is the enum category slot
-        if info["type"] == "enum_value":
-            class_slots[cls][slot] = value
-        else:
-            class_slots[cls][slot] = value
+        class_slots.setdefault(cls, {})
+        _assign_slot(class_slots[cls], slot, value)
 
     # Build the v2 JSON-LD document
     result: dict = {
@@ -199,32 +217,15 @@ def convert_v1_to_v2(
     if metadata.get("tagged_file"):
         result["@id"] = f"urn:openlabel:{metadata.get('tagged_file', 'unknown')}"
 
-    # Build class objects
+    # Build class objects. The ODD sub-hierarchy (OddScenery, OddEnvironment,
+    # OddDynamicElements) collapses into a single "Odd" object; every other class
+    # is emitted as its own typed object.
+    odd_classes = {"Odd", "OddScenery", "OddEnvironment", "OddDynamicElements"}
     for cls_name, slot_values in sorted(class_slots.items()):
-        if cls_name == "AdminTag":
-            result[cls_name] = {
-                "@type": cls_name,
-                **slot_values,
-            }
-        elif cls_name in ("Odd", "OddScenery", "OddEnvironment", "OddDynamicElements"):
-            if "Odd" not in result:
-                result["Odd"] = {"@type": "Odd"}
-            result["Odd"].update(slot_values)
-        elif cls_name == "Behaviour":
-            result[cls_name] = {
-                "@type": cls_name,
-                **slot_values,
-            }
-        elif cls_name == "RoadUser":
-            result[cls_name] = {
-                "@type": cls_name,
-                **slot_values,
-            }
+        if cls_name in odd_classes:
+            result.setdefault("Odd", {"@type": "Odd"}).update(slot_values)
         else:
-            result[cls_name] = {
-                "@type": cls_name,
-                **slot_values,
-            }
+            result[cls_name] = {"@type": cls_name, **slot_values}
 
     # Report unmapped tags
     if unmapped:
@@ -258,9 +259,9 @@ def main() -> int:
     )
     parser.add_argument(
         "--pretty",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
         default=True,
-        help="Pretty-print JSON output (default: True)",
+        help="Pretty-print JSON output (use --no-pretty for compact output).",
     )
     args = parser.parse_args()
 
@@ -272,7 +273,7 @@ def main() -> int:
         return 1
 
     # Load input
-    with open(args.input) as f:
+    with open(args.input, encoding="utf-8") as f:
         v1_data = json.load(f)
 
     # Load mapping

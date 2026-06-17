@@ -85,11 +85,20 @@ accept-in-ASAM / reject-in-LinkML):
 | Invalid: num.val wrong type | ❌ REJECT | ❌ REJECT | Equivalent |
 | Invalid: **unknown tag.type** | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
 | Invalid: **wrong boundary_mode** | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
+| Invalid: **missing `tag.ontology_uid`** | ✅ ACCEPT | ❌ REJECT | **LinkML stricter** |
 
 **Result: equivalent acceptance/rejection for spec tagging files; LinkML is STRICTER
 only where it adds value — it also validates the tag vocabulary (tag.type values),
-the `schema_version`, the `boundary_mode`, and the boolean/text `type` enums, all of
-which the ASAM schema leaves unconstrained.**
+the `schema_version`, the `boundary_mode`, and the boolean/text `type` enums, and it
+requires `tag.ontology_uid`, all of which the ASAM schema leaves unconstrained.**
+
+> **Disclosed stricter case — `tag.ontology_uid` is required.** ASAM's JSON Schema
+> lists only `type` as required on a tag, so a bare `{"type": "WeatherRain"}` is
+> ASAM-valid but rejected here. This is intentional: every scenario tag references
+> its ontology (spec 8.2.1), all spec examples include `ontology_uid`, and keeping
+> it required also avoids a LinkML simple-dict shorthand (bare-string tags) that
+> ASAM forbids. Real ASAM files that omit `ontology_uid` will not validate against
+> this schema by design.
 
 ## Additional Gains from LinkML Modeling
 
@@ -202,7 +211,7 @@ make generate DOMAIN=openlabel-v2
 gen-json-schema linkml/openlabel-v2/openlabel-v2-schema.yaml > artifacts/openlabel-v2/openlabel-v2.schema.json
 
 # Regenerate TagTypeEnum after vocabulary changes
-python scripts/gen_tag_type_enum.py
+python scripts/sync_tag_type_enum.py
 
 # Validate a v1 format file against the generated schema
 python -c "
@@ -232,6 +241,15 @@ print('Valid!')
 The `patternProperties` difference is cosmetic — both accept numeric and UUID keys.
 LinkML's `additionalProperties` is slightly more permissive (accepts any key format)
 but validates the VALUE structure identically.
+
+### Schema `$id` namespace
+
+The structural model's `id` is `https://w3id.org/ascs-ev/envited-x/openlabel/schema/v1`,
+a deliberate sibling of the semantic model's `…/envited-x/openlabel/v2`. The extra
+`/schema/` segment distinguishes the two models that share the single `openlabel`
+domain (the documented `…/envited-x/{domain}/v{n}` pattern assumes one model per
+domain). It is a JSON-Schema `$id` only — not a resolvable ontology IRI — so no w3id
+redirect is required. The semantic model keeps the canonical domain IRI.
 
 ## File Inventory
 

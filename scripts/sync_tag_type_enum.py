@@ -36,7 +36,7 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
         Tuple of (yaml_lines, stats) where yaml_lines is the TagTypeEnum YAML
         fragment and stats is a dict of category counts.
     """
-    with open(ontology_path) as f:
+    with open(ontology_path, encoding="utf-8") as f:
         model = yaml.safe_load(f)
 
     enums = model.get("enums", {})
@@ -156,44 +156,34 @@ def update_schema(schema_path: Path, enum_lines: list[str]) -> bool:
         True if the file was changed, False if already up to date.
     """
     content = schema_path.read_text(encoding="utf-8")
+    lines = content.split("\n")
 
-    # Find the TagTypeEnum block boundaries
-    marker_start = "  TagTypeEnum:"
-    start_idx = content.find(marker_start)
-    if start_idx == -1:
-        raise ValueError(f"Could not find '{marker_start}' in {schema_path}")
+    # Locate the TagTypeEnum block. The block body is indented >= 4 spaces (its
+    # `description:`/`permissible_values:` keys) or 6 spaces (value comments);
+    # the block ends at the first subsequent non-blank line indented <= 2 spaces
+    # (a sibling enum at indent 2, or a top-level key at indent 0). This is
+    # position-independent — TagTypeEnum need not be the last enum in the file.
+    marker = "  TagTypeEnum:"
+    try:
+        start = next(i for i, ln in enumerate(lines) if ln.rstrip() == marker)
+    except StopIteration as exc:
+        raise ValueError(f"Could not find '{marker}' in {schema_path}") from exc
 
-    # Find the end of the TagTypeEnum block (next top-level enum or end of file)
-    lines = content[start_idx:].split("\n")
-    end_offset = 0
-    in_enum = False
-    for i, line in enumerate(lines):
-        if i == 0:
-            in_enum = True
+    end = len(lines)
+    for i in range(start + 1, len(lines)):
+        line = lines[i]
+        if not line.strip():
             continue
-        # A line at indentation level 2 (or less) that isn't empty marks the end
-        stripped = line.rstrip()
-        if (
-            stripped
-            and not stripped.startswith(" " * 6)
-            and not stripped.startswith("    ")
-        ):
-            # This is at enum level or higher — we've left TagTypeEnum
-            end_offset = i
+        indent = len(line) - len(line.lstrip(" "))
+        if indent <= 2:
+            end = i
             break
-        if in_enum and stripped and not stripped.startswith("#") and len(stripped) > 0:
-            # Check if this is a new enum at level 2 (2 spaces)
-            if stripped.startswith("  ") and not stripped.startswith("    "):
-                if stripped != marker_start.strip():
-                    end_offset = i
-                    break
 
-    if end_offset == 0:
-        # TagTypeEnum goes to end of file
-        new_content = content[:start_idx] + "\n".join(enum_lines) + "\n"
-    else:
-        remaining = "\n".join(lines[end_offset:])
-        new_content = content[:start_idx] + "\n".join(enum_lines) + "\n" + remaining
+    new_lines = lines[:start] + enum_lines + lines[end:]
+    new_content = "\n".join(new_lines)
+    # Preserve the file's trailing newline when TagTypeEnum is the final block.
+    if not new_content.endswith("\n"):
+        new_content += "\n"
 
     if new_content == content:
         return False

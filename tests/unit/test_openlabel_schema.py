@@ -352,7 +352,7 @@ class TestSyncTagTypeEnum:
         """TagTypeEnum should expose the full ASAM vocabulary (>= 256 values)."""
         import yaml
 
-        with open(SCHEMA_YAML) as f:
+        with open(SCHEMA_YAML, encoding="utf-8") as f:
             schema = yaml.safe_load(f)
         actual_count = len(schema["enums"]["TagTypeEnum"]["permissible_values"])
         assert actual_count >= 256, (
@@ -524,6 +524,14 @@ class TestFunctionalEquivalence:
                 "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
             }
         },
+        # ASAM marks only tag.type required; we additionally require ontology_uid
+        # (spec 8.2.1). Disclosed in SCHEMA_MODELING.md "Functional Equivalence".
+        "missing_ontology_uid": {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"type": "WeatherRain"}},
+            }
+        },
     }
 
     @pytest.mark.parametrize("name", sorted(SPEC_EXAMPLES))
@@ -673,3 +681,114 @@ class TestV1ToV2Converter:
         )
         output = json.loads(result.stdout)
         assert output.get("AdminTag", {}).get("scenarioName") == "My Scenario"
+
+    @pytest.mark.skipif(
+        not CONVERT_SCRIPT.exists(), reason="converter script not found"
+    )
+    def test_converter_accumulates_repeated_slot(self, tmp_path: Path) -> None:
+        """Multiple tags mapping to one class+slot must accumulate, not overwrite."""
+        v1_data = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "ontologies": {"0": {"uri": "https://example.org/ont"}},
+                "tags": {
+                    "0": {"type": "LaneTypeTraffic", "ontology_uid": "0"},
+                    "1": {"type": "LaneTypeBus", "ontology_uid": "0"},
+                },
+            }
+        }
+        input_file = tmp_path / "input.json"
+        input_file.write_text(json.dumps(v1_data))
+
+        result = subprocess.run(
+            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
+            capture_output=True,
+            text=True,
+            cwd=str(ROOT_DIR),
+        )
+        output = json.loads(result.stdout)
+        lane_type = output.get("Odd", {}).get("LaneSpecificationType")
+        # Both values must survive (list), not be clobbered to the last one.
+        assert isinstance(lane_type, list)
+        assert set(lane_type) == {"LaneTypeTraffic", "LaneTypeBus"}
+
+    @pytest.mark.skipif(
+        not CONVERT_SCRIPT.exists(), reason="converter script not found"
+    )
+    def test_converter_no_pretty_emits_compact(self, tmp_path: Path) -> None:
+        """--no-pretty must actually disable indentation (single-line output)."""
+        input_file = tmp_path / "input.json"
+        input_file.write_text(json.dumps(VALID_MINIMAL))
+
+        result = subprocess.run(
+            [sys.executable, str(CONVERT_SCRIPT), str(input_file), "--no-pretty"],
+            capture_output=True,
+            text=True,
+            cwd=str(ROOT_DIR),
+        )
+        assert result.returncode == 0, f"Converter failed: {result.stderr}"
+        # Compact JSON has no newlines inside the document body.
+        assert "\n" not in result.stdout.strip()
+        assert json.loads(result.stdout)["@type"] == "Tag"
+
+    @pytest.mark.skipif(
+        not CONVERT_SCRIPT.exists(), reason="converter script not found"
+    )
+    def test_converter_output_conforms_to_shacl(self, tmp_path: Path) -> None:
+        """Converter output must pass SHACL validation (the PR's stated purpose).
+
+        Proves the v1→v2 conversion produces JSON-LD that conforms to the
+        openlabel-v2 SHACL shapes, not merely well-formed @context/@type.
+        """
+        v1_data = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0", "tagged_file": "s.osc"},
+                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
+                "tags": {
+                    "0": {"type": "RoadTypeMinor", "ontology_uid": "0"},
+                    "1": {"type": "WeatherRain", "ontology_uid": "0"},
+                    "2": {"type": "MotionDrive", "ontology_uid": "0"},
+                    "3": {
+                        "type": "scenarioName",
+                        "ontology_uid": "0",
+                        "tag_data": {"text": [{"type": "value", "val": "Demo"}]},
+                    },
+                },
+            }
+        }
+        input_file = tmp_path / "input.json"
+        input_file.write_text(json.dumps(v1_data))
+        output_file = tmp_path / "out.jsonld"
+
+        convert = subprocess.run(
+            [
+                sys.executable,
+                str(CONVERT_SCRIPT),
+                str(input_file),
+                "-o",
+                str(output_file),
+            ],
+            capture_output=True,
+            text=True,
+            cwd=str(ROOT_DIR),
+        )
+        assert convert.returncode == 0, f"Converter failed: {convert.stderr}"
+
+        validate = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "src.tools.validators.validation_suite",
+                "--run",
+                "check-data-conformance",
+                "--data-paths",
+                str(output_file),
+            ],
+            capture_output=True,
+            text=True,
+            cwd=str(ROOT_DIR),
+        )
+        assert validate.returncode == 0, (
+            f"Converter output failed SHACL conformance:\n"
+            f"{validate.stdout}\n{validate.stderr}"
+        )
