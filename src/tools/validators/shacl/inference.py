@@ -197,6 +197,9 @@ def apply_rdfs_inference_transitive(
             ?property rdfs:domain ?class .
         }
         """,
+        # rdfs:range — same rule as _DOMAIN_RANGE_RULES above: !isLiteral (not
+        # isIRI) so blank-node objects are typed too; see the spec-citation
+        # comment on the canonical rule.
         """
         INSERT { ?object a ?class }
         WHERE {
