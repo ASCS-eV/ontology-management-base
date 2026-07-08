@@ -151,11 +151,11 @@
       "gx": {
          "namespace": "gaia-x",
          "iri": "https://w3id.org/gaia-x/development#",
-         "latest": "v2.1.8-ascs.7",
+         "latest": "v2.2.1",
          "versions": {
-            "v2.1.8-ascs.7": {
+            "v2.2.1": {
                "releaseTag": "v0.1.6",
-               "versionInfo": "v2.1.8-ascs.7",
+               "versionInfo": "v2.2.1",
                "versionIri": "https://w3id.org/gaia-x/development#",
                "files": {
                   "ontology": "artifacts/gx/gx.owl.ttl",
@@ -464,5 +464,6 @@
             }
          }
       }
-   }
+   },
+   "generated": "2026-07-07T14:42:14.646109+00:00"
 }
