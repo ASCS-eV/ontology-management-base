@@ -122,6 +122,16 @@ class TestOpenLabelScopeProjection:
             assert d in out, f"{d} should be out of tagging scope"
 
     def test_disclosed_looseness_is_bounded(self, ol: prover.ProofReport) -> None:
-        """Looseness is limited to the two known LinkML-codegen relaxations."""
+        """Looseness is limited to known, declared LinkML relaxations. key_pattern and
+        null_optional are now closed (propertyNames + --closed + --no-include-null);
+        the only remaining one is the inlined simple-dict object-form expressivity
+        limit (resource_uid)."""
         breakdown = ol.soundness.looseness_breakdown()
-        assert set(breakdown) <= {prover.KEY_PATTERN, prover.NULL_OPTIONAL}
+        assert set(breakdown) <= {
+            prover.KEY_PATTERN,
+            prover.NULL_OPTIONAL,
+            prover.SIMPLE_DICT_OBJECT_FORM,
+        }
+        # key_pattern and null_optional are closed for openlabel-v2
+        assert prover.KEY_PATTERN not in breakdown
+        assert prover.NULL_OPTIONAL not in breakdown

@@ -218,7 +218,7 @@ _generate_default:
 			if [ -f linkml/$$domain/jsonschema.genopts ]; then \
 				JSON_SCHEMA_OPTS="$$(cat linkml/$$domain/jsonschema.genopts)"; \
 			fi; \
-			"$(PYTHON)" scripts/gen_json_schema.py --deterministic --indent 3 $$JSON_SCHEMA_OPTS linkml/$$domain/$$domain-schema.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.schema.json; \
+			"$(GEN_JSON_SCHEMA)" --deterministic --indent 3 $$JSON_SCHEMA_OPTS linkml/$$domain/$$domain-schema.yaml 2>/dev/null | tr -d '\r' | sed -e '$${' -e '/^$$/d' -e '}' > artifacts/$$domain/$$domain.schema.json; \
 		fi; \
 	done
 	@echo "[OK] Artifacts generated"

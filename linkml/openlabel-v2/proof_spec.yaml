@@ -54,11 +54,13 @@ generation_prune:
 # looseness OUTSIDE this set is an undisclosed soundness violation and fails the
 # gate. Each declared category is justified below.
 #
-# null_optional was eliminated by generating with --no-include-null (scoped to
-# this domain via jsonschema.genopts); it is intentionally NOT listed here, so
-# the gate now FAILS if explicit-null looseness ever reappears (regression guard).
+# CLOSED (intentionally NOT listed, so the gate guards against regression):
+#   - key_pattern : closed by `pattern` on the uid identifier slots -> propertyNames
+#                   (jsonschemagen) plus `--closed` (root additionalProperties:false).
+#   - null_optional: closed by `--no-include-null` (jsonschema.genopts).
+# The single remaining relaxation is a LinkML expressivity limit (see below).
 allow_looseness:
-  - key_pattern     # A restricts dict keys to numeric/UUID; L accepts any key
+  - simple_dict_object_form
 
 # Canonical spec-valid seed instances (chapter-8 examples). Mutated to build the
 # deterministic edge-case corpus; also fed straight through both validators.
@@ -70,7 +72,6 @@ seeds:
 justifications:
   tag.required: "Spec §8.2.1: every scenario tag references its ontology; all spec examples include ontology_uid. Disclosed stricter case."
   tag.closed: "Rejects undocumented tag keys; tightens, never loosens, the contract."
-  tag.key_pattern: "DISCLOSED, bounded looseness: A restricts dict keys to numeric/UUID via patternProperties; L accepts any key. Affects key naming only, not value structure. Tighten with pattern_properties if strict parity is required."
-  ontologies.key_pattern: "Same disclosed key-naming looseness as tag containers; value structure validated identically."
   type.enum: "A leaves tag.type/num.type/vec.type as unconstrained strings; L pins them to the ASAM vocabulary (TagTypeEnum = 256 ontology classes) and spec value sets. Pure strengthening."
   schema_version: "A: enum[\"1.0.0\"]; L: const \"1.0.0\" — semantically identical single-value pin."
+  simple_dict_object_form: "DISCLOSED, bounded LinkML expressivity limit: tag.resource_uid is ASAM's id->string map (patternProperties value is a bare string). LinkML models it as an inlined simple-dict (ResourceUid: uid + identifier_in_resource), which ALWAYS also accepts the object form {identifier_in_resource: ...} for the value, not just the bare string. A accepts only the string. Affects the optional resource_uid value form only; keys and the string form are validated identically. Not expressible away in LinkML's structural model (an inlined simple-dict cannot be restricted to scalar-only values)."

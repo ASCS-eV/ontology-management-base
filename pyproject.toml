@@ -38,7 +38,7 @@ dev = [
     # submodule cannot drift — a newer branch HEAD would change generated
     # artifacts (e.g. drop format:uri) and trip the modified-file gate. Bump this
     # SHA whenever the submodule is bumped.
-    "linkml @ git+https://github.com/ASCS-eV/linkml.git@b2b3dba5d2abd88c9773028bb8527e4f2bed2283#subdirectory=packages/linkml",
+    "linkml @ git+https://github.com/ASCS-eV/linkml.git@97e73d0f1dcbe13dd8fd4ff7685ec9b71252f85c#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
     "mkdocs-awesome-pages-plugin>=2.9.3",

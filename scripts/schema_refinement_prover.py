@@ -403,6 +403,21 @@ def _json_types(schema: dict, prop: Any) -> set[str]:
 # is only treated as benign when the spec's allow_looseness declares it.
 KEY_PATTERN = "key_pattern"  # A constrains dict keys; L accepts any key
 NULL_OPTIONAL = "null_optional"  # L permits explicit JSON null where A forbids it
+# L permits the object form of a LinkML inlined simple-dict value (an object with
+# the value slot) where A allows only the bare scalar. This is a LinkML
+# expressivity limit: an inlined simple-dict cannot be restricted to scalar-only
+# values, so the object form is always accepted.
+SIMPLE_DICT_OBJECT_FORM = "simple_dict_object_form"
+
+
+def _expects_scalar(validator_value: Any) -> bool:
+    """True if a JSON Schema ``type`` keyword value names a scalar type."""
+    scalars = {"string", "number", "integer", "boolean"}
+    if isinstance(validator_value, str):
+        return validator_value in scalars
+    if isinstance(validator_value, list):
+        return any(t in scalars for t in validator_value)
+    return False
 
 
 def categorize_looseness(errors: list, allowed: set[str]) -> set[str] | None:
@@ -418,6 +433,12 @@ def categorize_looseness(errors: list, allowed: set[str]) -> set[str] | None:
             cat = KEY_PATTERN
         elif e.validator == "type" and e.instance is None:
             cat = NULL_OPTIONAL
+        elif (
+            e.validator == "type"
+            and isinstance(e.instance, dict)
+            and _expects_scalar(e.validator_value)
+        ):
+            cat = SIMPLE_DICT_OBJECT_FORM
         else:
             return None  # undisclosed looseness
         if cat not in allowed:

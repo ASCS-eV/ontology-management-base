@@ -80,8 +80,9 @@ projection (the `$ref`-reachability closure of `metadata`/`ontologies`/`tags` �
 in-scope defs, 36 out of scope, derived not asserted), `L` is the LinkML-generated
 schema, `Δ` is the enumerated set of intended strengthenings (vocabulary enums,
 required fields, closed objects, const pins), and `Λ` is the enumerated set of
-disclosed, bounded relaxations (currently just dict-key naming — the explicit-`null`
-relaxation was eliminated; see below). The proof has three pillars: scope
+disclosed, bounded relaxations (now just one — an inlined simple-dict object-form
+LinkML expressivity limit; the dict-key-naming and explicit-`null` relaxations are
+closed; see below). The proof has three pillars: scope
 projection, a structural gap table, and a **differential oracle** that generates a
 mutation + property-based instance corpus (via `hypothesis-jsonschema`) and checks
 that nothing `L` accepts is rejected by `A` for a reason outside `Λ`. The
@@ -273,23 +274,21 @@ each is either eliminated or declared in `proof_spec.yaml`:
 
 | # | Relaxation | Status | Effect / resolution |
 |---|-----------|--------|---------------------|
-| Λ1 | **Dict-key naming** | **Declared** (`allow_looseness: [key_pattern]`) | ASAM restricts `tags`/`ontologies` keys to numeric/UUID via `patternProperties` (+ `additionalProperties:false`); LinkML emits open `additionalProperties`, accepting any key. Affects key *format* only; the VALUE structure under each key is validated identically. |
-| Λ2 | **Explicit `null` on optional fields** | **Resolved** | LinkML codegen emits optional scalars as `type: ["<t>", "null"]` by default (`include_null=True`), accepting an explicit JSON `null` where ASAM expects the bare type. Eliminated by generating this domain's schema with `--no-include-null` (scoped per-domain via `linkml/openlabel-v2/jsonschema.genopts`). `null_optional` is deliberately omitted from `allow_looseness`, so the gate now **fails** if it ever reappears. |
+| Λ1 | **Dict-key naming** | **Closed** | ASAM restricts `tags`/`ontologies`/`resource_uid` keys to numeric/UUID via `patternProperties`. Closed by adding `pattern` to the `uid` identifier slots → emitted as JSON Schema `propertyNames` (linkml jsonschemagen, [PR #16](https://github.com/ASCS-eV/linkml/pull/16)), plus `--closed` so the root rejects unknown keys. `key_pattern` is omitted from `allow_looseness`, so the gate **fails** if it reappears. |
+| Λ2 | **Explicit `null` on optional fields** | **Closed** | LinkML defaults optional scalars to `type: ["<t>", "null"]` (`include_null=True`). Closed by generating with the native `--no-include-null` flag ([PR #15](https://github.com/ASCS-eV/linkml/pull/15)), scoped per-domain via `linkml/openlabel-v2/jsonschema.genopts`. Omitted from `allow_looseness` (regression-guarded). |
+| Λ3 | **Inlined simple-dict object form** | **Declared** (`allow_looseness: [simple_dict_object_form]`) | `tag.resource_uid` is ASAM's id→string map. LinkML models it as an inlined simple-dict (`ResourceUid`: `uid` + `identifier_in_resource`), which always *also* accepts the object form `{identifier_in_resource: ...}` for the value, not just the bare string. ASAM accepts only the string. This is a **LinkML expressivity limit** (an inlined simple-dict cannot be restricted to scalar-only values), not a model defect — affects only the optional `resource_uid` value form; keys and the string form validate identically. |
 
-Neither is "cosmetic" — each is a real case where an `L`-valid file would be rejected
-by ASAM. Λ2 is now closed; closing Λ1 requires emitting `patternProperties` on the
-containers (a separate generator/post-processing step), so it remains declared and
-reported in `REFINEMENT_PROOF.md` until then.
+Λ1 and Λ2 are now **closed** (the two linkml generator features were upstreamed via
+the ASCS-eV fork). Λ3 is the single residual; it is not expressible away in LinkML's
+structural model and is therefore declared and reported in `REFINEMENT_PROOF.md`.
 
-> **Toolchain note.** `--no-include-null` is not yet a flag on the upstream
-> `gen-json-schema` CLI, so the Makefile drives JSON-Schema generation through
-> `scripts/gen_json_schema.py` (a thin wrapper over `JsonSchemaGenerator` exposing
-> `include_null`). Per-domain options live in `linkml/<domain>/jsonschema.genopts`;
-> domains without that file get LinkML defaults. The wrapper is byte-identical to
-> `gen-json-schema` when `include_null` is left on, and can be retired once the
-> fork's CLI gains a native `--include-null/--no-include-null` option. Note that
-> regenerating requires the linkml version pinned in `submodules/linkml/`
-> (metamodel 1.11.0); an older venv silently drops `format: uri` annotations.
+> **Toolchain note.** JSON-Schema generation runs through the `gen-json-schema` CLI
+> with per-domain options in `linkml/<domain>/jsonschema.genopts` (openlabel-v2:
+> `--no-include-null --closed`); domains without that file get LinkML defaults.
+> Regenerating requires the linkml version pinned in `submodules/linkml/` and
+> `pyproject.toml` (the `feat/envited-x-pipeline` SHA carrying the `--include-null`
+> and `propertyNames` generator features, metamodel 1.11.0); an older venv silently
+> drops `format: uri` and the `propertyNames`/`--no-include-null` behavior.
 
 ### Schema `$id` namespace
 
