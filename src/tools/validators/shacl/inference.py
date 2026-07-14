@@ -56,13 +56,20 @@ _DOMAIN_RANGE_RULES = [
         ?property rdfs:domain ?class .
     }
     """,
-    # Rule: rdfs:range (only for IRI objects)
+    # Rule: rdfs:range — RDF 1.1 Semantics rule rdfs3 / OWL 2 RL rule prp-rng:
+    #   { ?p rdfs:range ?c . ?x ?p ?y }  =>  { ?y a ?c }
+    # The range type is entailed for ANY resource object. Only literals are
+    # excluded, because RDF forbids literals in subject position (RDF 1.1
+    # Semantics, "generalized RDF triple" note). Blank nodes ARE valid subjects
+    # and ARE entailed — so the guard is !isLiteral, not isIRI. Using isIRI would
+    # silently drop the type of every anonymous (blank-node) object, e.g. nested
+    # JSON-LD objects that carry no @id.
     """
     INSERT { ?object a ?class }
     WHERE {
         ?subject ?property ?object .
         ?property rdfs:range ?class .
-        FILTER(isIRI(?object))
+        FILTER(!isLiteral(?object))
     }
     """,
 ]
@@ -190,12 +197,15 @@ def apply_rdfs_inference_transitive(
             ?property rdfs:domain ?class .
         }
         """,
+        # rdfs:range — same rule as _DOMAIN_RANGE_RULES above: !isLiteral (not
+        # isIRI) so blank-node objects are typed too; see the spec-citation
+        # comment on the canonical rule.
         """
         INSERT { ?object a ?class }
         WHERE {
             ?subject ?property ?object .
             ?property rdfs:range ?class .
-            FILTER(isIRI(?object))
+            FILTER(!isLiteral(?object))
         }
         """,
     ]

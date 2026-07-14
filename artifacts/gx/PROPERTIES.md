@@ -47,6 +47,8 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
   - sha-3 (https://w3id.org/gaia-x/development#ChecksumAlgorithm/sha-3)
   - sha-384 (https://w3id.org/gaia-x/development#ChecksumAlgorithm/sha-384)
   - sha-512 (https://w3id.org/gaia-x/development#ChecksumAlgorithm/sha-512)
+- ComplianceCredential (https://w3id.org/gaia-x/development#ComplianceCredential)
+  - LabelCredential (https://w3id.org/gaia-x/development#LabelCredential)
 - CompliantCredential (https://w3id.org/gaia-x/development#CompliantCredential)
 - CompressionAlgorithm (https://w3id.org/gaia-x/development#CompressionAlgorithm)
   - ANS (https://w3id.org/gaia-x/development#CompressionAlgorithm/ANS)
@@ -936,7 +938,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
   - Participant (https://w3id.org/gaia-x/development#Participant)
     - LegalPerson (https://w3id.org/gaia-x/development#LegalPerson)
       - InternetServiceProvider (https://w3id.org/gaia-x/development#InternetServiceProvider)
-    - ServiceEntity (https://w3id.org/gaia-x/development#ServiceEntity)
   - Resource (https://w3id.org/gaia-x/development#Resource)
     - AvailabilityZone (https://w3id.org/gaia-x/development#AvailabilityZone)
     - PhysicalResource (https://w3id.org/gaia-x/development#PhysicalResource)
@@ -1012,7 +1013,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
   - BYOK (https://w3id.org/gaia-x/development#KeyManagement/BYOK)
   - HYOK (https://w3id.org/gaia-x/development#KeyManagement/HYOK)
   - managed (https://w3id.org/gaia-x/development#KeyManagement/managed)
-- LabelCredential (https://w3id.org/gaia-x/development#LabelCredential)
 - LabelLevel (https://w3id.org/gaia-x/development#LabelLevel)
   - L1 (https://w3id.org/gaia-x/development#LabelLevel/L1)
   - L2 (https://w3id.org/gaia-x/development#LabelLevel/L2)
@@ -11946,6 +11946,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |COM|https://w3id.org/gaia-x/development#CountryNameAlpha3/COM||CountryNameAlpha3|
 |Community-Spec-1.0|https://w3id.org/gaia-x/development#SPDX/Community-Spec-1.0||SPDX|
 |ComplianceAssurance|https://w3id.org/gaia-x/development#ComplianceAssurance||LegalDocument|
+|ComplianceCredential|https://w3id.org/gaia-x/development#ComplianceCredential|||
 |CompliantCredential|https://w3id.org/gaia-x/development#CompliantCredential|||
 |CompressionAlgorithm|https://w3id.org/gaia-x/development#CompressionAlgorithm|||
 |ComputeFunctionConfiguration|https://w3id.org/gaia-x/development#ComputeFunctionConfiguration||InstantiationRequirement|
@@ -14435,7 +14436,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |LA-XE|https://w3id.org/gaia-x/development#RegionCode/LA-XE||RegionCode|
 |LA-XI|https://w3id.org/gaia-x/development#RegionCode/LA-XI||RegionCode|
 |LA-XS|https://w3id.org/gaia-x/development#RegionCode/LA-XS||RegionCode|
-|LabelCredential|https://w3id.org/gaia-x/development#LabelCredential|||
+|LabelCredential|https://w3id.org/gaia-x/development#LabelCredential||ComplianceCredential|
 |LabelLevel|https://w3id.org/gaia-x/development#LabelLevel|||
 |LAL-1.2|https://w3id.org/gaia-x/development#SPDX/LAL-1.2||SPDX|
 |LAL-1.3|https://w3id.org/gaia-x/development#SPDX/LAL-1.3||SPDX|
@@ -16530,7 +16531,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |Sendmail-8.23|https://w3id.org/gaia-x/development#SPDX/Sendmail-8.23||SPDX|
 |ServerFlavor|https://w3id.org/gaia-x/development#ServerFlavor||InstantiationRequirement|
 |ServiceAgreementOffer|https://w3id.org/gaia-x/development#ServiceAgreementOffer||LegalDocument|
-|ServiceEntity|https://w3id.org/gaia-x/development#ServiceEntity||Participant|
 |ServiceOffering|https://w3id.org/gaia-x/development#ServiceOffering||GaiaXEntity|
 |ServiceTermsAndConditions|https://w3id.org/gaia-x/development#ServiceTermsAndConditions|||
 |Session|https://w3id.org/gaia-x/development#ConsistencyType/Session||ConsistencyType|
@@ -18325,7 +18325,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 #### gx:numberOfCoresLimit {: #prop-https---w3id-org-gaia-x-development-numberofcoreslimit .property-anchor }
 #### gx:numberOfThreads {: #prop-https---w3id-org-gaia-x-development-numberofthreads .property-anchor }
 #### gx:objectAPICompatibility {: #prop-https---w3id-org-gaia-x-development-objectapicompatibility .property-anchor }
-#### gx:operatedBy {: #prop-https---w3id-org-gaia-x-development-operatedby .property-anchor }
 #### gx:operatingSystem {: #prop-https---w3id-org-gaia-x-development-operatingsystem .property-anchor }
 #### gx:osDistribution {: #prop-https---w3id-org-gaia-x-development-osdistribution .property-anchor }
 #### gx:overProvisioningRatio {: #prop-https---w3id-org-gaia-x-development-overprovisioningratio .property-anchor }
@@ -18388,7 +18387,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 #### gx:snapshotReplication {: #prop-https---w3id-org-gaia-x-development-snapshotreplication .property-anchor }
 #### gx:sourceIdentifierA {: #prop-https---w3id-org-gaia-x-development-sourceidentifiera .property-anchor }
 #### gx:specificParameters {: #prop-https---w3id-org-gaia-x-development-specificparameters .property-anchor }
-#### gx:spiffeId {: #prop-https---w3id-org-gaia-x-development-spiffeid .property-anchor }
 #### gx:standardConformity {: #prop-https---w3id-org-gaia-x-development-standardconformity .property-anchor }
 #### gx:standardReference {: #prop-https---w3id-org-gaia-x-development-standardreference .property-anchor }
 #### gx:storageCompression {: #prop-https---w3id-org-gaia-x-development-storagecompression .property-anchor }
@@ -18418,7 +18416,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 #### gx:throughput {: #prop-https---w3id-org-gaia-x-development-throughput .property-anchor }
 #### gx:triggeringEvent {: #prop-https---w3id-org-gaia-x-development-triggeringevent .property-anchor }
 #### gx:triggeringService {: #prop-https---w3id-org-gaia-x-development-triggeringservice .property-anchor }
-#### gx:trustDomain {: #prop-https---w3id-org-gaia-x-development-trustdomain .property-anchor }
 #### gx:updateStrategy {: #prop-https---w3id-org-gaia-x-development-updatestrategy .property-anchor }
 #### gx:url {: #prop-https---w3id-org-gaia-x-development-url .property-anchor }
 #### gx:validatedCriteria {: #prop-https---w3id-org-gaia-x-development-validatedcriteria .property-anchor }
@@ -18495,12 +18492,12 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |BandWidthShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dataprotectionregime"></a>dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-providedby"></a>providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-provisiontype"></a>provisionType||1|Provision type of the service||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-codeartifact"></a>codeArtifact|1||Set of available bare metal server images for this service offering.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-servicepolicy"></a>servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-providedby"></a>providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-tenantseparation"></a>tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dependson"></a>dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BareMetalServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-dataportability"></a>dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18535,7 +18532,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |BlockStorageConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-blocksize"></a>blockSize|||Available block size to be used.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|BlockStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18553,6 +18549,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |BlockStorageServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-storageconfiguration"></a>storageConfiguration|1|1|Attributes that are configurable at service instantiation.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-lifetimemanagement"></a>lifetimeManagement||1|Lifetime (in hours) of data (since last access), before it is moved externally, archived or deleted and will not be accessible through the storage service.|<http://www.w3.org/2001/XMLSchema#integer>|gx.shacl.ttl|
+|BlockStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |BlockStorageServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18603,6 +18600,10 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ComplianceAssuranceShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
 |ComplianceAssuranceShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
 |ComplianceAssuranceShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|ComplianceCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-validatedcriteria"></a>validatedCriteria|1||Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComplianceCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-rulesversion"></a>rulesVersion|1|1|Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComplianceCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-engineversion"></a>engineVersion|1|1|Gaia-X compliance engine version that delivered a label credential.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ComplianceCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-compliantcredentials"></a>compliantCredentials|1||Credentials validated by the compliance engine and linked to a label credential.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |CompliantCredentialShape||<a id="prop-https---www-w3-org-2018-credentials-digestsri"></a>https://www.w3.org/2018/credentials#digestSRI|1|1|Subresource Integrity hash of the verifiable credential ensuring it has won't be modified.|<https://www.w3.org/2018/credentials#sriString>|gx.shacl.ttl|
 |CompliantCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-credentialtype"></a>credentialType|1|1|Type of the compliant credential.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeFunctionConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionruntime"></a>computeFunctionRuntime|1||Available runtime for executing function|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18629,7 +18630,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ComputeFunctionServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionallowfsmount"></a>computeFunctionAllowFSMount||1|Indicates whether the service supports mounting and using external file systems in functions|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
-|ComputeFunctionServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionallowtimeout"></a>computeFunctionAllowTimeout||1|Indicates whether the service allows to define timeouts for functions|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18652,6 +18652,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ComputeFunctionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-computefunctionconfiguration"></a>computeFunctionConfiguration|1|1|Attributes configurable at service instantiation.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
+|ComputeFunctionServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|possiblePersonalDataTransfers|||One or more data transfer documents describing if and to which extent Customer data transfers will happen.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeFunctionServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18685,9 +18686,9 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ComputeServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ComputeServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
+|ComputeServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |ComputeServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18705,8 +18706,8 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ConnectivityConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-sourceidentifiera"></a>sourceIdentifierA||1|InterconnectionPointIdentifier reference of the source service access point.||gx.shacl.ttl|
 |ConnectivityConfigurationShape|gx|<a id="prop-https---w3id-org-gaia-x-development-destinationidentifierz"></a>destinationIdentifierZ||1|InterconnectionPointIdentifier reference of the destination service access point.||gx.shacl.ttl|
 |ConnectivityConfigurationShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|ConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ConnectivityServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18781,6 +18782,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ContainerServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|ContainerServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
@@ -18797,7 +18799,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ContainerServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ContainerServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ContainerServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |CopyrightAndIntellectualPropertyDocumentShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
 |CopyrightAndIntellectualPropertyDocumentShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -18847,6 +18848,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |DataProductCatalogueShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|possiblePersonalDataTransfers|||One or more data transfer documents describing if and to which extent Customer data transfers will happen.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|requiredMeasures|||One or more technical and organizational measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|DataProductCatalogueShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |DataProductCatalogueShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |DataProductCatalogueShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -18854,7 +18856,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |DataProductCatalogueShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |DataProductCatalogueShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
-|DataProductCatalogueShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |DataProductCatalogueShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
@@ -19014,6 +19015,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |FileStorageServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
+|FileStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|minimumSize||1|Minimum Capacity (expressed as value + unit) supported by the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19039,7 +19041,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |FileStorageServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|dataViews||1|Capability to compose logical data views and present the subset of the data as a logical data entity|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|FileStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|storageConfiguration|1|1|Attributes that are configurable at service instantiation.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |FileStorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19129,10 +19130,10 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |InfrastructureServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
+|InfrastructureServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|InfrastructureServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InfrastructureServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19159,6 +19160,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |InterconnectionServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|requiredMeasures|||One or more technical and organizational measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
+|InterconnectionServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19172,7 +19174,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-connectiontype"></a>connectionType|||The supported types of connection, preferably specified as a controlled vocabulary entry: ethernet unicast, multicast, broadcast support...|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|connectivityConfiguration|1||All possible provided connectivity parameters for this network connectivity service offering.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|InterconnectionServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-prefixseta"></a>prefixSetA|||CIDR Provider Identifier of network on the side A.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |InterconnectionServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-publicipaddressprovisioning"></a>publicIpAddressProvisioning||1|Defines how public IP address are provided. Floating: floating ips are supported.||gx.shacl.ttl|
@@ -19212,11 +19213,11 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |IssuerShape|gx|<a id="prop-https---w3id-org-gaia-x-development-gaiaxtermsandconditions"></a>gaiaxTermsAndConditions|1|1|Gaia-X terms and conditions this issuer agreed with in order to act as an issuer of Gaia-X compliant credentials.||gx.shacl.ttl|
 |JitterShape|gx|metric|1|1|Jitter expressed as time.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |JitterShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
-|LabelCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-engineversion"></a>engineVersion|1|1|Gaia-X compliance engine version that delivered a label credential.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|LabelCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-rulesversion"></a>rulesVersion|1|1|Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LabelCredentialShape|gx|engineVersion|1|1|Gaia-X compliance engine version that delivered a label credential.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LabelCredentialShape|gx|rulesVersion|1|1|Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LabelCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-labellevel"></a>labelLevel|1|1|Abbreviated conformity level of the label credential (SC, L1, L2, ...).||gx.shacl.ttl|
-|LabelCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-compliantcredentials"></a>compliantCredentials|1||Credentials validated by the compliance engine and linked to a label credential.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|LabelCredentialShape|gx|<a id="prop-https---w3id-org-gaia-x-development-validatedcriteria"></a>validatedCriteria|1||Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|LabelCredentialShape|gx|compliantCredentials|1||Credentials validated by the compliance engine and linked to a label credential.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|LabelCredentialShape|gx|validatedCriteria|1||Gaia-X compliance document version from which the validated criteria originate.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LatencyShape|gx|guaranteed||1|Minimum percentage of time where a performance-level is guaranteed to be met.|<http://qudt.org/schema/qudt/floatPercentage>|gx.shacl.ttl|
 |LatencyShape|gx|metric|1|1|Latency expressed as time.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LegalDocumentShape|gx|governingLawCountries|||Countries under whose laws the document is governed.||gx.shacl.ttl|
@@ -19241,12 +19242,12 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |LeiCodeShape|gx|<a id="prop-https---w3id-org-gaia-x-development-subdivisioncountrycode"></a>subdivisionCountryCode||1|The country subdivision (state/region) where the LEI number is registered.||gx.shacl.ttl|
 |LeiCodeShape|schema|<a id="prop-https---schema-org-leicode"></a>leiCode|1|1|Unique LEI number as defined by https://www.gleif.org.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|connectivityQoS||1|Contractual performance values defined in the SLA.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|LinkConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-protocoltype"></a>protocolType|1|1|Link protocol type.||gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
-|LinkConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |LinkConnectivityServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19295,13 +19296,13 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |NetworkConnectivityServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|NetworkConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|ipVersion||1|Version of IP address supported. IPv4: only ipV4 addresses are supported. IPv6: both version iIPV4 and IPv6 are supported.||gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|possiblePersonalDataTransfers|||One or more data transfer documents describing if and to which extent Customer data transfers will happen.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|connectivityQoS||1|Contractual performance values defined in the SLA.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|serviceType||1|Type of Service Offering. Choose one of the following: virtual, bare-metal, mixed|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
+|NetworkConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |NetworkConnectivityServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19345,12 +19346,12 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ObjectStorageServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|<a id="prop-https---w3id-org-gaia-x-development-maximumobjectsize"></a>maximumObjectSize||1|Maximum size for objects supported by the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ObjectStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|ObjectStorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|maximumSize||1|Maximum Capacity (expressed as value + unit) supported by the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|multipleViews||1|Capability for multiple views. For example is it possible to view Objects as Files, or the other way around|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |ObjectStorageServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19413,7 +19414,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |PhysicalConnectivityServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|PhysicalConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|connectivityQoS||1|Contractual performance values defined in the SLA.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -19427,6 +19427,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |PhysicalConnectivityServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|requiredMeasures|||One or more technical and organizational measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|dataProtectionRegime|||One or more data protection regimes applying to the service offering.||gx.shacl.ttl|
+|PhysicalConnectivityServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|gx|interfaceType|1|1|For the chosen circuit type, one should know the interface type in case the interoperability is required.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |PhysicalConnectivityServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19537,12 +19538,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ServiceAgreementOfferShape|gx|mimeTypes|||The MIME types associated with the legal document.||gx.shacl.ttl|
 |ServiceAgreementOfferShape|gx|involvedParties|||Legal entities involved or mentioned in the legal document.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceAgreementOfferShape|gx|url|1|1|A resolvable link to the legal document.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
-|ServiceEntityShape|gx|<a id="prop-https---w3id-org-gaia-x-development-trustdomain"></a>trustDomain|1|1|The SPIFFE trust domain this service entity belongs to. Represents an administrative boundary (e.g., a Gaia-X federation or dataspace). Derived from the authority component of the SPIFFE ID.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServiceEntityShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServiceEntityShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServiceEntityShape|gx|<a id="prop-https---w3id-org-gaia-x-development-operatedby"></a>operatedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson that operates and is legally responsible for this service entity. Every ServiceEntity MUST be operated by a LegalPerson — machines cannot bear legal responsibility independently.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|ServiceEntityShape|gx|<a id="prop-https---w3id-org-gaia-x-development-spiffeid"></a>spiffeId|1|1|The SPIFFE ID URI uniquely identifying this workload or service entity. Format: spiffe://<trust-domain>/<path> per [SPIFFE-ID]. Used as the "sub" claim in JWT-SVIDs [JWT-SVID] §3.1.|<http://www.w3.org/ns/shacl#IRI>|gx.shacl.ttl|
-|ServiceEntityShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|dependsOn|||A list of resolvable links to Gaia-X Credentials of service offerings related to the service and that can exist independently of it.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|keyword|||Keywords that describe / tag the service.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
@@ -19553,6 +19548,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ServiceOfferingShape|gx|possiblePersonalDataTransfers|||One or more data transfer documents describing if and to which extent Customer data transfers will happen.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|servicePolicy|||One or more policies expressed using a DSL (e.g., Rego or ODRL) (access control, throttling, usage, retention, ...).|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|ServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|schema|description||1||<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |ServiceOfferingShape|gx|serviceOfferingTermsAndConditions|1||One or more Terms and Conditions applying to that service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19560,7 +19556,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |ServiceOfferingShape|gx|subContractors|||A list of sub-contractors processing customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|serviceScope||1|Plain text describing the service scope.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
-|ServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |ServiceOfferingShape|rdfs|label||1|A human-readable label. Automatically entailed via RDFS inference from schema:name (which is declared as rdfs:subPropertyOf rdfs:label by schema.org). Declared here so that sh:closed SHACL shapes remain valid when an RDFS-aware validator materialises this property.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |ServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
@@ -19608,8 +19603,8 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |StorageServiceOfferingShape|gx|possiblePersonalDataTransfers|||One or more data transfer documents describing if and to which extent Customer data transfers will happen.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageServiceOfferingShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|endpoint||1|Endpoint through which the Service Offering can be accessed.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
-|StorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|aggregationOfResources|||A resolvable link of resources related to an entity and that can exist independently of it.||gx.shacl.ttl|
+|StorageServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|versioning||1|Whether versioning is available on this storage service.|<http://www.w3.org/2001/XMLSchema#boolean>|gx.shacl.ttl|
 |StorageServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
@@ -19714,7 +19709,6 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |VirtualMachineServiceOfferingShape|gx|requiredMeasures|||One or more technical and organizational measures.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|provisionType||1|Provision type of the service||gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|cryptographicSecurityStandards|||One or more cryptographic security standards protecting authenticity or integrity of the data.||gx.shacl.ttl|
-|VirtualMachineServiceOfferingShape|gx|providedBy|1|1|A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|customerInstructions|||One or more customer instructions describing the Customer instructions regarding any data therein.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|providerContactInformation||1|The contact information where the customer can contact the provider of this service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|hostedOn|||List of Resource references where service is hosted and can be instantiated. Can refer to availabilty zones, data centers, regions, etc.||gx.shacl.ttl|
@@ -19725,6 +19719,7 @@ _Class diagram omitted for size (9032 classes). See class hierarchy and definiti
 |VirtualMachineServiceOfferingShape|gx|dataPortability|||One or more data portability documents describing the data portability measures for the stored Customer data.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|legalDocuments|||A list of legal documents in relation to the service or the customer.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|dataAccountExport|||One or more methods to export data out of the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
+|VirtualMachineServiceOfferingShape|gx|providedBy|1|1|A resolvable link to Gaia-X Credential of the participant providing the service.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|instantiationReq|1||Set of technical requirements or conditions to instantiate this service offering.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|gx.shacl.ttl|
 |VirtualMachineServiceOfferingShape|gx|tenantSeparation||1|How compute resources of different tenants are separated. Default value = hw-virtualized.||gx.shacl.ttl|
 |VirtualResourceShape|schema|name||1|A human readable name of the entity.|<http://www.w3.org/2001/XMLSchema#string>|gx.shacl.ttl|

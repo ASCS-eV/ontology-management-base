@@ -526,44 +526,15 @@ gx:LabelCredential a owl:Class ;
     rdfs:label "LabelCredential" ;
     dcterms:title "Label Credential" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:engineVersion ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:rulesVersion ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:validatedCriteria ],
-        [ a owl:Restriction ;
             owl:allValuesFrom gx:LabelLevel ;
             owl:onProperty gx:labelLevel ],
         [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:rulesVersion ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:validatedCriteria ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:rulesVersion ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:engineVersion ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:engineVersion ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom gx:CompliantCredential ;
-            owl:onProperty gx:compliantCredentials ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty gx:labelLevel ],
         [ a owl:Restriction ;
             owl:minCardinality 1 ;
             owl:onProperty gx:labelLevel ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:compliantCredentials ] ;
+        gx:ComplianceCredential ;
     skos:definition "Gaia-X compliance engine issued credential representing a Gaia-X conformity label level." ;
     skos:inScheme gx:compliance .
 
@@ -785,42 +756,6 @@ gx:ServiceAgreementOffer a owl:Class ;
     skos:definition "Legal document describing the ability to establish a contract per a set of governing law countries." ;
     skos:inScheme gx:legal-document .
 
-gx:ServiceEntity a owl:Class ;
-    rdfs:label "ServiceEntity" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom gx:LegalPerson ;
-            owl:onProperty gx:operatedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:operatedBy ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:trustDomain ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:operatedBy ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:trustDomain ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty gx:spiffeId ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty gx:spiffeId ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:spiffeId ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:string ;
-            owl:onProperty gx:trustDomain ],
-        gx:Participant ;
-    skos:definition "A machine or workload identity that operates within the Gaia-X ecosystem on behalf of a LegalPerson. Identified by a SPIFFE ID URI (spiffe://<trust-domain>/<path>) per [SPIFFE-ID]. Authentication uses JWT-SVID [JWT-SVID] §3.1 where the \"sub\" claim is the SPIFFE ID. Enables M2M (machine-to-machine) interactions where services and workloads need verifiable, short-lived cryptographic identities independent of the human operators who manage them." ;
-    skos:inScheme gx:participant ;
-    skos:note "Analogous to odrl:Party representing a \"device or software agent\" per [ODRL-PARTY] §2.3.",
-        "[JWT-SVID] §3.1: The \"sub\" claim MUST be set to the SPIFFE ID of the subject (the workload).",
-        "[SPIFFE-ID]: SPIFFE ID format is spiffe://<trust-domain>/<path>. The trust domain represents an administrative boundary (e.g., a Gaia-X federation or dataspace)." .
-
 gx:SnapshotPolicy a owl:Class ;
     rdfs:label "SnapshotPolicy" ;
     rdfs:subClassOf [ a owl:Restriction ;
@@ -996,7 +931,7 @@ gx:exposedThrough a owl:ObjectProperty ;
 gx:gaia-x.owl.ttl a owl:Ontology ;
     rdfs:label "gaia-x" ;
     rdfs:comment "ASCS/OMB profile of the Gaia-X Trust Framework ontology, regenerated via LinkML from service-characteristics. See artifacts/gx/VERSIONING.md for provenance details." ;
-    owl:versionInfo "2.1.8-ascs.7" .
+    owl:versionInfo "2.2.1" .
 
 gx:hotfixHours a owl:DatatypeProperty ;
     rdfs:label "hotfixHours" ;
@@ -1118,6 +1053,42 @@ gx:BlockStorageConfiguration a owl:Class ;
         gx:StorageConfiguration ;
     skos:definition "Represents the attributes that are configurable at service instantiation for storage service offerings." ;
     skos:inScheme gx:storage-configuration .
+
+gx:ComplianceCredential a owl:Class ;
+    rdfs:label "ComplianceCredential" ;
+    dcterms:title "Compliance Credential" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:engineVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:validatedCriteria ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty gx:rulesVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:validatedCriteria ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:compliantCredentials ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:engineVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:rulesVersion ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty gx:engineVersion ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty gx:rulesVersion ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom gx:CompliantCredential ;
+            owl:onProperty gx:compliantCredentials ] ;
+    skos:definition "Gaia-X compliance engine issued credential attesting that the referenced credentials have been validated against a set of Gaia-X rules and criteria." ;
+    skos:inScheme gx:compliance .
 
 gx:ContainerImage a owl:Class ;
     rdfs:label "ContainerImage" ;
@@ -47183,13 +47154,6 @@ gx:numberOfThreads a owl:DatatypeProperty ;
     skos:definition "Number of threads of the CPU." ;
     skos:inScheme gx:slots .
 
-gx:operatedBy a owl:ObjectProperty ;
-    rdfs:label "operatedBy" ;
-    dcterms:title "Operated By" ;
-    rdfs:range gx:LegalPerson ;
-    skos:definition "A resolvable link to the Gaia-X Credential of the LegalPerson that operates and is legally responsible for this service entity. Every ServiceEntity MUST be operated by a LegalPerson — machines cannot bear legal responsibility independently." ;
-    skos:inScheme gx:slots .
-
 gx:operatingSystem a owl:ObjectProperty ;
     rdfs:label "operatingSystem" ;
     dcterms:title "Operating System" ;
@@ -47324,7 +47288,7 @@ gx:protocolType a owl:ObjectProperty ;
 gx:providedBy a owl:ObjectProperty ;
     rdfs:label "providedBy" ;
     rdfs:range gx:LegalPerson ;
-    skos:definition "A resolvable link to the Gaia-X Credential of the LegalPerson providing the service. Range is LegalPerson (not Participant) because only legal entities — natural or business persons per [ISO-LP] §3.24 — can bear the legal responsibility of providing a service. Machine identities (ServiceEntity) operate services but are always operated by a LegalPerson via the operatedBy relationship." ;
+    skos:definition "A resolvable link to Gaia-X Credential of the participant providing the service." ;
     skos:inScheme gx:slots .
 
 gx:providerContactInformation a owl:ObjectProperty ;
@@ -47501,12 +47465,6 @@ gx:specificParameters a owl:DatatypeProperty ;
     skos:definition "Type or Provider Specific Parameters, separated by colons." ;
     skos:inScheme gx:slots .
 
-gx:spiffeId a owl:ObjectProperty ;
-    rdfs:label "spiffeId" ;
-    dcterms:title "SPIFFE ID" ;
-    skos:definition "The SPIFFE ID URI uniquely identifying this workload or service entity. Format: spiffe://<trust-domain>/<path> per [SPIFFE-ID]. Used as the \"sub\" claim in JWT-SVIDs [JWT-SVID] §3.1." ;
-    skos:inScheme gx:slots .
-
 gx:standardReference a owl:ObjectProperty ;
     rdfs:label "standardReference" ;
     dcterms:title "standard reference" ;
@@ -47608,13 +47566,6 @@ gx:triggeringService a owl:ObjectProperty ;
     dcterms:title "Triggering Service" ;
     rdfs:range gx:ServiceOffering ;
     skos:definition "Service providing the events usable to trigger execution of a ComputeFunction" ;
-    skos:inScheme gx:slots .
-
-gx:trustDomain a owl:DatatypeProperty ;
-    rdfs:label "trustDomain" ;
-    dcterms:title "Trust Domain" ;
-    rdfs:range xsd:string ;
-    skos:definition "The SPIFFE trust domain this service entity belongs to. Represents an administrative boundary (e.g., a Gaia-X federation or dataspace). Derived from the authority component of the SPIFFE ID." ;
     skos:inScheme gx:slots .
 
 gx:updateStrategy a owl:ObjectProperty ;
@@ -47942,6 +47893,12 @@ gx:PXEDiskType a owl:Class ;
     skos:inScheme gx:pxe-image ;
     linkml:permissible_values <https://w3id.org/gaia-x/development#PXEDiskType/ISO>,
         <https://w3id.org/gaia-x/development#PXEDiskType/WINPE> .
+
+gx:Participant a owl:Class ;
+    rdfs:label "Participant" ;
+    rdfs:subClassOf gx:GaiaXEntity ;
+    skos:definition "An legal or natural person that is onboarded to Gaia-X and offers, consumes services or operates resources." ;
+    skos:inScheme gx:participant .
 
 gx:PhysicalResource a owl:Class ;
     rdfs:label "PhysicalResource" ;
@@ -48478,14 +48435,6 @@ gx:Memory a owl:Class ;
         gx:Device ;
     skos:definition "Details with respect to properties and capabilities of RAM." ;
     skos:inScheme gx:memory .
-
-gx:Participant a owl:Class ;
-    rdfs:label "Participant" ;
-    rdfs:subClassOf gx:GaiaXEntity ;
-    skos:definition "A legal or natural person, or a machine/workload identity, that is onboarded to Gaia-X and offers, consumes services, or operates resources. Analogous to odrl:Party [ODRL-PARTY] §2.3 which covers individuals, organizations, devices, and software agents. Concrete subclasses are LegalPerson (for human/organizational entities per [ISO-LP] §3.24) and ServiceEntity (for M2M workload identities per [SPIFFE-ID])." ;
-    skos:inScheme gx:participant ;
-    skos:note "[GX-CD-PA] §5.1 Criterion PA1.1: \"A Gaia-X Participant is a legal or natural person, that has a Gaia-X Participant Credential.\"",
-        "[ODRL-PARTY] §2.3: \"An entity or a collection of entities that undertake Roles in a Rule\" — can represent individual, group, organization, device, or software agent." .
 
 gx:PhysicalInterconnectionPointIdentifier a owl:Class ;
     rdfs:label "PhysicalInterconnectionPointIdentifier" ;
@@ -49653,13 +49602,6 @@ gx:metric a owl:DatatypeProperty ;
     skos:definition "Metric used to measure an indicator." ;
     skos:inScheme gx:slots .
 
-gx:MemorySize a owl:Class ;
-    rdfs:label "MemorySize" ;
-    dcterms:title "Memory size" ;
-    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
-    skos:definition "The number of bytes, that can be stored on a digital storage." ;
-    skos:inScheme gx:quantity .
-
 gx:LegalPerson a owl:Class ;
     rdfs:label "LegalPerson" ;
     dcterms:title "Legal Person" ;
@@ -49700,8 +49642,15 @@ gx:LegalPerson a owl:Class ;
             owl:minCardinality 0 ;
             owl:onProperty gx:parentOrganizationOf ],
         gx:Participant ;
-    skos:definition "A legal person per [ISO-LP] §3.24: \"an individual, company, or other entity which has legal rights and is subject to obligations.\" This encompasses both natural persons (individuals) and business persons (organizations/companies). Uniquely identified by its registration number within the Gaia-X ecosystem. See [GX-CD-PA] §5.1 Criterion PA1.1 for compliance requirements." ;
+    skos:definition "A legal person, who is uniquely identified by its registration number." ;
     skos:inScheme gx:legal-person .
+
+gx:MemorySize a owl:Class ;
+    rdfs:label "MemorySize" ;
+    dcterms:title "Memory size" ;
+    rdfs:subClassOf <http://qudt.org/schema/qudt/QuantityKind> ;
+    skos:definition "The number of bytes, that can be stored on a digital storage." ;
+    skos:inScheme gx:quantity .
 
 gx:LegalDocument a owl:Class ;
     rdfs:label "LegalDocument" ;
@@ -58335,4 +58284,3 @@ gx:RegionCode a owl:Class ;
     owl:intersectionOf ( [ a owl:Restriction ;
                 owl:onProperty gx:altitude ;
                 owl:someValuesFrom xsd:string ] gx:GPSLocation ) .
-
