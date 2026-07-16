@@ -799,7 +799,7 @@ class RegistryResolver:
                 # File is outside repo, use absolute path
                 rel_path = file_path
 
-            test_id = f"temporary:{domain}:file{i:03d}"
+            test_id = f"temporary:{domain}:{test_type}:file{i:03d}"
             self._catalog[test_id] = {
                 "path": str(rel_path),
                 "domain": domain,
@@ -838,10 +838,20 @@ class RegistryResolver:
         ).hexdigest()[:8]
         temp_domain = f"{TEMP_DOMAIN_PREFIX}{path_hash}"
 
-        # Add temporary entries to catalog
-        self.add_temporary_test_entries(
-            temp_domain, unique_file_paths, test_type="valid"
-        )
+        # Add temporary entries to catalog, classifying each file by the name of
+        # its parent directory. This lets externally-supplied negative fixtures be
+        # exercised by `check-failing-tests` in data-paths mode: files under an
+        # ``invalid`` directory are registered as ``invalid`` test-data (matching
+        # OMB's own ``tests/data/{domain}/{valid,invalid}/`` convention); every
+        # other file is registered as ``valid``.
+        invalid_files = [p for p in unique_file_paths if p.parent.name == "invalid"]
+        valid_files = [p for p in unique_file_paths if p.parent.name != "invalid"]
+        if valid_files:
+            self.add_temporary_test_entries(temp_domain, valid_files, test_type="valid")
+        if invalid_files:
+            self.add_temporary_test_entries(
+                temp_domain, invalid_files, test_type="invalid"
+            )
 
         print(
             f"📋 Created temporary domain '{temp_domain}' with {len(unique_file_paths)} file(s)",

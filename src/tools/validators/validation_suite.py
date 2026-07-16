@@ -84,9 +84,12 @@ VALIDATION PHASES (--run):
     - In Data Path Mode: Discovers schemas from --artifacts directories.
 
 --run check-failing-tests
-    (Catalog/Domain Mode only)
     Executes "Negative Tests" - data files expected to fail validation.
-    Verifies that they fail with the specific error code/message defined in .expected files.
+    Verifies that they fail with the specific error code/message defined in
+    .expected files. Works in Catalog/Domain Mode and, for externally-supplied
+    fixtures, in Data Path Mode (files under an `invalid/` directory are treated
+    as negative tests). Pass --update-expected to (re)record each .expected
+    snapshot from the live validation report instead of comparing.
 
 EXAMPLES:
 =========
@@ -348,6 +351,7 @@ def check_failing_tests_all(
     resolver: RegistryResolver = None,
     inference_mode: str = "rdfs",
     allow_online: bool = True,
+    update_expected: bool = False,
 ) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
@@ -360,6 +364,8 @@ def check_failing_tests_all(
         resolver: Optional pre-configured RegistryResolver (with temporary entries)
         inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
         allow_online: If True, attempt HTTP resolution for unresolved IRIs
+        update_expected: If True, (re)record each `.expected` snapshot from the
+            live validation report instead of comparing against it.
 
     Returns:
         0 on success, non-zero on failure
@@ -407,7 +413,7 @@ def check_failing_tests_all(
                 ".expected"
             )
 
-            if not expected_output_path.exists():
+            if not expected_output_path.exists() and not update_expected:
                 expected_path_display = normalize_path_for_display(
                     expected_output_path, root_dir
                 )
@@ -418,8 +424,6 @@ def check_failing_tests_all(
                 )
                 return 1
 
-            expected_output = expected_output_path.read_text(encoding="utf-8").strip()
-
             print(f"🔍 Running failing test: {test_path}", flush=True)
 
             # Validate single file (fixtures/schemas resolved via catalog)
@@ -429,6 +433,18 @@ def check_failing_tests_all(
             print("\n", flush=True)
 
             if result.return_code == 210:
+                if update_expected:
+                    expected_output_path.write_text(output, encoding="utf-8")
+                    print(
+                        "📝 Recorded expected snapshot: "
+                        f"{normalize_path_for_display(expected_output_path, root_dir)}",
+                        flush=True,
+                    )
+                    continue
+
+                expected_output = expected_output_path.read_text(
+                    encoding="utf-8"
+                ).strip()
                 output_norm = normalize_text(output)
                 expected_norm = normalize_text(expected_output)
 
@@ -598,6 +614,15 @@ def main():
         ],
         default="all",
         help="Validation mode to run (default: all)",
+    )
+
+    mode_group.add_argument(
+        "--update-expected",
+        action="store_true",
+        default=False,
+        help="check-failing-tests only: (re)record each negative test's .expected "
+        "snapshot from the live validation report instead of comparing. Use after "
+        "an intentional schema or OMB/pyshacl change, then review the diff.",
     )
 
     target_group.add_argument(
@@ -825,14 +850,17 @@ def main():
     _allow_online = args.allow_online
     _per_resource = args.per_resource
 
-    # Artifact coherence and failing tests require standard domain structure
-    if data_paths and args.run in ["check-artifact-coherence", "check-failing-tests"]:
+    # Artifact coherence requires standard catalog structure with domain
+    # artifacts, so it stays unsupported in data-paths mode. check-failing-tests
+    # DOES work in data-paths mode: negative fixtures supplied under an `invalid/`
+    # directory are registered as invalid test-data by create_temporary_domain.
+    if data_paths and args.run == "check-artifact-coherence":
         print(
             f"❌ Error: {args.run} is not supported in data-paths mode.",
             file=sys.stderr,
         )
         print(
-            "   These checks require catalog structure with domain artifacts.",
+            "   This check requires catalog structure with domain artifacts.",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -873,6 +901,7 @@ def main():
                     catalog_resolver,
                     _inference_mode,
                     allow_online=_allow_online,
+                    update_expected=args.update_expected,
                 ),
             )
         ],
