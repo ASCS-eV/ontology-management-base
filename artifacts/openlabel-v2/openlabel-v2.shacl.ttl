@@ -1614,32 +1614,32 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 1 ;
             sh:path openlabel_v2:MotionAccelerate ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "If motionDriveValue is provided, MotionDrive must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDriveValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If motionDecelerateValue is provided, MotionDecelerate must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDecelerateValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If motionAccelerateValue is provided, MotionAccelerate must be true."@en ;
+            sh:message "If motionAccelerateValue is provided, MotionAccelerate must be true." ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerate> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If motionDecelerateValue is provided, MotionDecelerate must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDecelerateValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If motionDriveValue is provided, MotionDrive must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDriveValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ] ;
@@ -2073,169 +2073,169 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:order 15 ;
             sh:path openlabel_v2:IlluminationArtificial ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "If weatherRainValue is provided, WeatherRain must be true."@en ;
+            sh:message "If subjectVehicleSpeedValue is provided, SubjectVehicleSpeed must be true." ;
             sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherRain> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherRainValue> ?value . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "If longitudinalUpSlopeValue is provided, LongitudinalUpSlope must be true."@en ;
+            sh:message "If daySunElevationValue is provided, DaySunElevation must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunElevation> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/daySunElevationValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If longitudinalUpSlopeValue is provided, LongitudinalUpSlope must be true." ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalUpSlope> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/longitudinalUpSlopeValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "EdgeNone is mutually exclusive with other drivable area edge types. If DrivableAreaEdge includes EdgeNone, no other edge values are allowed."@en ;
+            sh:message "If trafficAgentTypeValue is provided, TrafficAgentType must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentType> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentTypeValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If horizontalCurvesValue is provided, HorizontalCurves must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/HorizontalCurves> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/horizontalCurvesValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If trafficVolumeValue is provided, TrafficVolume must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficVolume> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficVolumeValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "EdgeNone is mutually exclusive with other drivable area edge types. If DrivableAreaEdge includes EdgeNone, no other edge values are allowed." ;
             sh:select """SELECT $this WHERE {
     $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge> <https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeNone> .
     $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge> ?other .
     FILTER (?other != <https://w3id.org/ascs-ev/envited-x/openlabel/v2/EdgeNone>)
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "If horizontalCurvesValue is provided, HorizontalCurves must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/HorizontalCurves> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/horizontalCurvesValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If trafficAgentTypeValue is provided, TrafficAgentType must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentType> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentTypeValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If weatherSnowValue is provided, WeatherSnow must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherSnow> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherSnowValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If daySunElevationValue is provided, DaySunElevation must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunElevation> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/daySunElevationValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If laneSpecificationLaneCountValue is provided, LaneSpecificationLaneCount must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationLaneCount> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If subjectVehicleSpeedValue is provided, SubjectVehicleSpeed must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If particulatesWaterValue is provided, ParticulatesWater must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/particulatesWaterValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If weatherWindValue is provided, WeatherWind must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherWind> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If longitudinalDownSlopeValue is provided, LongitudinalDownSlope must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalDownSlope> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/longitudinalDownSlopeValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If trafficAgentDensityValue is provided, TrafficAgentDensity must be true."@en ;
-            sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentDensityValue> ?value . }
-    FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
-        BOUND(?value)
-    )
-}""" ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If laneSpecificationDimensionsValue is provided, LaneSpecificationDimensions must be true."@en ;
+            sh:message "If laneSpecificationDimensionsValue is provided, LaneSpecificationDimensions must be true." ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationDimensions> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationDimensionsValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "If trafficFlowRateValue is provided, TrafficFlowRate must be true."@en ;
+            sh:message "If particulatesWaterValue is provided, ParticulatesWater must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/particulatesWaterValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If weatherRainValue is provided, WeatherRain must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherRain> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherRainValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If weatherSnowValue is provided, WeatherSnow must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherSnow> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherSnowValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If trafficFlowRateValue is provided, TrafficFlowRate must be true." ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficFlowRate> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficFlowRateValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "If trafficVolumeValue is provided, TrafficVolume must be true."@en ;
+            sh:message "If weatherWindValue is provided, WeatherWind must be true." ;
             sh:select """SELECT $this WHERE {
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficVolume> ?flag . }
-    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficVolumeValue> ?value . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherWind> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ],
         [ a sh:SPARQLConstraint ;
-            sh:message "If illuminationCloudinessValue is provided, IlluminationCloudiness must be true."@en ;
+            sh:message "If laneSpecificationLaneCountValue is provided, LaneSpecificationLaneCount must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationLaneCount> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If illuminationCloudinessValue is provided, IlluminationCloudiness must be true." ;
             sh:select """SELECT $this WHERE {
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationCloudiness> ?flag . }
     OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/illuminationCloudinessValue> ?value . }
     FILTER (
-        ( !BOUND(?flag) || str(?flag) != "true" ) &&
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If longitudinalDownSlopeValue is provided, LongitudinalDownSlope must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalDownSlope> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/longitudinalDownSlopeValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
+        BOUND(?value)
+    )
+}""" ],
+        [ a sh:SPARQLConstraint ;
+            sh:message "If trafficAgentDensityValue is provided, TrafficAgentDensity must be true." ;
+            sh:select """SELECT $this WHERE {
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ?flag . }
+    OPTIONAL { $this <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentDensityValue> ?value . }
+    FILTER (
+        ( !BOUND(?flag) || ?flag != true ) &&
         BOUND(?value)
     )
 }""" ] ;
