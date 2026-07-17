@@ -4463,6 +4463,14 @@ openlabel_v2:Odd a owl:Class,
                 owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
 
 [] rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty openlabel_v2:DrivableAreaEdge ;
+            owl:someValuesFrom xsd:string ] ;
+    owl:intersectionOf ( [ a owl:Restriction ;
+                owl:onProperty openlabel_v2:DrivableAreaEdge ;
+                owl:someValuesFrom [ a rdfs:Datatype ;
+                        owl:oneOf ( "EdgeNone" ) ] ] openlabel_v2:Odd ) .
+
+[] rdfs:subClassOf [ a owl:Restriction ;
             owl:onProperty openlabel_v2:LongitudinalDownSlope ;
             owl:someValuesFrom [ a rdfs:Datatype ;
                     owl:onDatatype xsd:string ;
@@ -4487,13 +4495,6 @@ openlabel_v2:Odd a owl:Class,
                     owl:withRestrictions ( [ xsd:pattern "true" ] ) ] ] ;
     owl:intersectionOf ( [ a owl:Restriction ;
                 owl:onProperty openlabel_v2:particulatesWaterValue ;
-                owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
-
-[] rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty openlabel_v2:DrivableAreaEdge ;
-            owl:someValuesFrom xsd:string ] ;
-    owl:intersectionOf ( [ a owl:Restriction ;
-                owl:onProperty openlabel_v2:DrivableAreaEdge ;
                 owl:someValuesFrom xsd:string ] openlabel_v2:Odd ) .
 
 [] rdfs:subClassOf [ a owl:Restriction ;
