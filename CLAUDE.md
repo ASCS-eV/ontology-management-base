@@ -228,6 +228,7 @@ Read these before making changes:
 | Validation pipeline | `.github/instructions/validation-workflow.md` |
 | Testing requirements | `.github/instructions/testing.md` |
 | Domain terminology | `.github/instructions/glossary.md` |
+| LinkML fork & upstream PRs | `.github/instructions/linkml-fork-workflow.md` |
 
 ## Change Documentation
 

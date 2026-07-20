@@ -75,8 +75,24 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
         and sname not in set(enum_slots)
     ]
 
-    # Build YAML lines
+    # Build YAML lines.
+    #
+    # TagTypeEnum is a *set* of unique tag-type names: the same permissible value
+    # may legitimately appear in several enum families (e.g. a road-user term
+    # listed in both RoadUserHumanEnum and a combined TrafficAgentTypeEnum). It
+    # must be emitted only once, or gen-json-schema fails with a duplicate-key
+    # error. `seen` tracks every key already written so later duplicates (from any
+    # section) are skipped, keeping the first occurrence.
     lines: list[str] = []
+    seen: set[str] = set()
+
+    def add_value(key: str, description_line: str) -> None:
+        if key in seen:
+            return
+        seen.add(key)
+        lines.append(f"      {key}:")
+        lines.append(description_line)
+
     lines.append("  TagTypeEnum:")
     lines.append("    description: >-")
     lines.append(
@@ -91,40 +107,38 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
     # Tag classes (structural roots + hierarchy category nodes)
     lines.append("      # --- Tag classes (hierarchy nodes) ---")
     for c in tag_classes:
-        lines.append(f"      {c}:")
-        lines.append("        description: Tag class (hierarchy node)")
+        add_value(c, "        description: Tag class (hierarchy node)")
 
     # Admin properties
     lines.append("      # --- Administration tag properties ---")
     for s in sorted(admin_slots):
-        lines.append(f"      {s}:")
-        lines.append("        description: Administration tag property")
+        add_value(s, "        description: Administration tag property")
 
     # Boolean flags
     lines.append("      # --- Boolean flag tags (ODD/Behaviour) ---")
     for s in sorted(bool_flags):
-        lines.append(f"      {s}:")
-        lines.append("        description: Boolean ODD/Behaviour flag")
+        add_value(s, "        description: Boolean ODD/Behaviour flag")
 
     # Enum-typed slot names
     lines.append("      # --- Enum category tags (slot names with enum ranges) ---")
     for s in sorted(enum_slots):
         slot_range = slots[s].get("range", "")
-        lines.append(f"      {s}:")
-        lines.append(
-            f"        description: Enum category tag (takes values from {slot_range})"
+        add_value(
+            s,
+            f"        description: Enum category tag (takes values from {slot_range})",
         )
 
-    # Enum values by family
+    # Enum values by family (values shared across families are emitted once)
     for ename in sorted(enums.keys()):
         pvs = enums[ename].get("permissible_values", {})
         lines.append(f"      # --- {ename} ---")
         for pv in sorted(pvs.keys()):
-            lines.append(f"      {pv}:")
             desc = pvs[pv].get("description", "")
             if desc:
                 desc_clean = desc.replace('"', '\\"')
-                lines.append(f'        description: "{desc_clean}"')
+                add_value(pv, f'        description: "{desc_clean}"')
+            else:
+                add_value(pv, "        description: Enum value")
 
     # Stats
     all_types: set[str] = set()

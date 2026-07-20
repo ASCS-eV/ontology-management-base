@@ -188,12 +188,6 @@ openlabel_v2:DrivableAreaGeometry a sh:NodeShape ;
             sh:message "ConnectivityCommunication (DrivableAreaGeometry): Type of communication connectivity. ISO 34503:2023, 10.5 a)"@en ;
             sh:order 0 ;
             sh:path openlabel_v2:ConnectivityCommunication ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (DrivableAreaGeometry): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area surface condition."@en ;
             sh:in ( openlabel_v2:SurfaceConditionContamination openlabel_v2:SurfaceConditionFlooded openlabel_v2:SurfaceConditionIcy openlabel_v2:SurfaceConditionMirage openlabel_v2:SurfaceConditionSnow openlabel_v2:SurfaceConditionStandingWater openlabel_v2:SurfaceConditionWet ) ;
             sh:maxCount 1 ;
@@ -207,6 +201,12 @@ openlabel_v2:DrivableAreaGeometry a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 37 ;
             sh:path openlabel_v2:ParticulatesWater ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (DrivableAreaGeometry): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of regulatory sign."@en ;
             sh:in ( openlabel_v2:RegulatorySignsUniform openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariable openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
             sh:maxCount 1 ;
@@ -718,6 +718,12 @@ openlabel_v2:DrivableAreaLaneSpecification a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
             sh:path openlabel_v2:ParticulatesPollution ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (DrivableAreaLaneSpecification): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of a specified lane count."@en ;
             sh:maxCount 1 ;
@@ -977,12 +983,6 @@ openlabel_v2:DrivableAreaLaneSpecification a sh:NodeShape ;
             sh:message "DrivableAreaType (DrivableAreaLaneSpecification): Type of drivable area. ISO 34503:2023, 9.3.2"@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (DrivableAreaLaneSpecification): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of a specified traffic agent type."@en ;
             sh:maxCount 0 ;
@@ -1069,12 +1069,6 @@ openlabel_v2:DrivableAreaSigns a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 14 ;
             sh:path openlabel_v2:HorizontalStraights ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (DrivableAreaSigns): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of cloudiness."@en ;
             sh:maxCount 0 ;
@@ -1406,6 +1400,12 @@ openlabel_v2:DrivableAreaSigns a sh:NodeShape ;
             sh:message "GeometryTransverse (DrivableAreaSigns): Type of transverse geometry. ISO 34503:2023, 9.3.3"@en ;
             sh:order 11 ;
             sh:path openlabel_v2:GeometryTransverse ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (DrivableAreaSigns): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area."@en ;
             sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
             sh:maxCount 1 ;
@@ -1678,12 +1678,6 @@ openlabel_v2:DrivableAreaSurface a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 58 ;
             sh:path openlabel_v2:WeatherRain ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (DrivableAreaSurface): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Lane width in metres."@en ;
             sh:maxCount 1 ;
             sh:message "laneSpecificationDimensionsValue (DrivableAreaSurface): Lane width in metres. ISO 34503:2023, 9.3.4"@en ;
@@ -1805,6 +1799,12 @@ openlabel_v2:DrivableAreaSurface a sh:NodeShape ;
             sh:message "ScenerySpecialStructure (DrivableAreaSurface): Type of special structure present in the scenery. ISO 34503:2023, 9.6"@en ;
             sh:order 41 ;
             sh:path openlabel_v2:ScenerySpecialStructure ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (DrivableAreaSurface): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of particulates present in the environment."@en ;
             sh:in ( openlabel_v2:ParticulatesDust openlabel_v2:ParticulatesMarine openlabel_v2:ParticulatesPollution openlabel_v2:ParticulatesVolcanic openlabel_v2:ParticulatesWater ) ;
             sh:maxCount 0 ;
@@ -1930,11 +1930,6 @@ openlabel_v2:DynamicElementsSubjectVehicle a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 14 ;
             sh:path openlabel_v2:HorizontalStraights ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:message "trafficAgentTypeValue (DynamicElementsSubjectVehicle): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Cloud cover in okta."@en ;
             sh:maxCount 0 ;
@@ -2234,6 +2229,11 @@ openlabel_v2:DynamicElementsSubjectVehicle a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 61 ;
             sh:path openlabel_v2:weatherSnowValue ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:message "trafficAgentTypeValue (DynamicElementsSubjectVehicle): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of an uphill gradient."@en ;
             sh:maxCount 0 ;
@@ -2560,11 +2560,6 @@ openlabel_v2:DynamicElementsTraffic a sh:NodeShape ;
             sh:message "IlluminationLowLight (DynamicElementsTraffic): Type of low-light condition. ISO 34503:2023, 10.4 a) 2)"@en ;
             sh:order 18 ;
             sh:path openlabel_v2:IlluminationLowLight ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:message "trafficAgentTypeValue (DynamicElementsTraffic): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of zone."@en ;
             sh:in ( openlabel_v2:ZoneGeoFenced openlabel_v2:ZoneInterference openlabel_v2:ZoneRegion openlabel_v2:ZoneSchool openlabel_v2:ZoneTrafficManagement ) ;
             sh:maxCount 0 ;
@@ -2682,6 +2677,11 @@ openlabel_v2:DynamicElementsTraffic a sh:NodeShape ;
             sh:message "SceneryTemporaryStructure (DynamicElementsTraffic): Type of temporary drivable area structure present in the scenery. ISO 34503:2023, 9.7"@en ;
             sh:order 42 ;
             sh:path openlabel_v2:SceneryTemporaryStructure ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:message "trafficAgentTypeValue (DynamicElementsTraffic): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of snowfall."@en ;
             sh:maxCount 0 ;
@@ -2897,6 +2897,12 @@ openlabel_v2:EnvironmentConnectivity a sh:NodeShape ;
             sh:message "LaneSpecificationType (EnvironmentConnectivity): Type of lane. ISO 34503:2023, 9.3.4"@en ;
             sh:order 27 ;
             sh:path openlabel_v2:LaneSpecificationType ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (EnvironmentConnectivity): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of particulates present in the environment."@en ;
             sh:in ( openlabel_v2:ParticulatesDust openlabel_v2:ParticulatesMarine openlabel_v2:ParticulatesPollution openlabel_v2:ParticulatesVolcanic openlabel_v2:ParticulatesWater ) ;
             sh:maxCount 1 ;
@@ -3092,12 +3098,6 @@ openlabel_v2:EnvironmentConnectivity a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 24 ;
             sh:path openlabel_v2:laneSpecificationLaneCountValue ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (EnvironmentConnectivity): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area surface feature."@en ;
             sh:in ( openlabel_v2:SurfaceFeatureCrack openlabel_v2:SurfaceFeaturePothole openlabel_v2:SurfaceFeatureRut openlabel_v2:SurfaceFeatureSwell ) ;
             sh:maxCount 0 ;
@@ -3410,12 +3410,6 @@ openlabel_v2:EnvironmentIllumination a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 29 ;
             sh:path openlabel_v2:longitudinalDownSlopeValue ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (EnvironmentIllumination): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of a specified lane count."@en ;
             sh:maxCount 0 ;
@@ -3423,6 +3417,12 @@ openlabel_v2:EnvironmentIllumination a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 23 ;
             sh:path openlabel_v2:LaneSpecificationLaneCount ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (EnvironmentIllumination): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Rainfall intensity in millimetres per hour."@en ;
             sh:maxCount 1 ;
@@ -3901,6 +3901,12 @@ openlabel_v2:EnvironmentWeather a sh:NodeShape ;
             sh:message "DaySunPosition (EnvironmentWeather): Position of the sun relative to the direction of travel. ISO 34503:2023, 10.4 a) 1)"@en ;
             sh:order 4 ;
             sh:path openlabel_v2:DaySunPosition ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (EnvironmentWeather): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area."@en ;
             sh:in ( openlabel_v2:MotorwayManaged openlabel_v2:MotorwayUnmanaged openlabel_v2:RoadTypeDistributor openlabel_v2:RoadTypeMinor openlabel_v2:RoadTypeMotorway openlabel_v2:RoadTypeParking openlabel_v2:RoadTypeRadial openlabel_v2:RoadTypeShared openlabel_v2:RoadTypeSlip ) ;
             sh:maxCount 0 ;
@@ -4047,13 +4053,7 @@ openlabel_v2:EnvironmentWeather a sh:NodeShape ;
             sh:message "ParticulatesPollution (EnvironmentWeather): Presence of smoke or pollution particulates. ISO 34503:2023, 10.3"@en ;
             sh:nodeKind sh:Literal ;
             sh:order 35 ;
-            sh:path openlabel_v2:ParticulatesPollution ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (EnvironmentWeather): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ] ;
+            sh:path openlabel_v2:ParticulatesPollution ] ;
     sh:targetClass openlabel_v2:EnvironmentWeather .
 
 openlabel_v2:GeometryHorizontal a sh:NodeShape ;
@@ -4100,6 +4100,12 @@ openlabel_v2:GeometryHorizontal a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 28 ;
             sh:path openlabel_v2:LongitudinalDownSlope ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (GeometryHorizontal): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of a specified traffic flow rate."@en ;
             sh:maxCount 0 ;
@@ -4107,12 +4113,6 @@ openlabel_v2:GeometryHorizontal a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 53 ;
             sh:path openlabel_v2:TrafficFlowRate ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (GeometryHorizontal): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of intersection."@en ;
             sh:in ( openlabel_v2:IntersectionCrossroad openlabel_v2:IntersectionGradeSeperated openlabel_v2:IntersectionStaggered openlabel_v2:IntersectionTJunction openlabel_v2:IntersectionYJunction ) ;
             sh:maxCount 1 ;
@@ -4628,12 +4628,6 @@ openlabel_v2:GeometryLongitudinal a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 37 ;
             sh:path openlabel_v2:ParticulatesWater ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (GeometryLongitudinal): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Visibility in kilometres."@en ;
             sh:maxCount 0 ;
@@ -4908,6 +4902,12 @@ openlabel_v2:GeometryLongitudinal a sh:NodeShape ;
             sh:message "SignsWarning (GeometryLongitudinal): Type of warning sign. ISO 34503:2023, 9.3.5"@en ;
             sh:order 46 ;
             sh:path openlabel_v2:SignsWarning ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (GeometryLongitudinal): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of rainfall."@en ;
             sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
             sh:maxCount 0 ;
@@ -4973,12 +4973,6 @@ openlabel_v2:IlluminationDay a sh:NodeShape ;
             sh:message "LaneSpecificationTravelDirection (IlluminationDay): Direction of travel. ISO 34503:2023, 9.3.4"@en ;
             sh:order 26 ;
             sh:path openlabel_v2:LaneSpecificationTravelDirection ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (IlluminationDay): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Sun elevation in degrees."@en ;
             sh:maxCount 1 ;
@@ -5186,6 +5180,12 @@ openlabel_v2:IlluminationDay a sh:NodeShape ;
             sh:message "SceneryZone (IlluminationDay): Type of zone. ISO 34503:2023, 9.2"@en ;
             sh:order 43 ;
             sh:path openlabel_v2:SceneryZone ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (IlluminationDay): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of special vehicles."@en ;
             sh:maxCount 0 ;
@@ -5598,6 +5598,11 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 23 ;
             sh:path openlabel_v2:LaneSpecificationLaneCount ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:message "trafficAgentTypeValue (OddDynamicElements): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of transverse geometry."@en ;
             sh:in ( openlabel_v2:TransverseBarriers openlabel_v2:TransverseDivided openlabel_v2:TransverseLanesTogether openlabel_v2:TransversePavements openlabel_v2:TransverseUndivided ) ;
             sh:maxCount 0 ;
@@ -5696,11 +5701,6 @@ openlabel_v2:OddDynamicElements a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 3 ;
             sh:path openlabel_v2:daySunElevationValue ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:message "trafficAgentTypeValue (OddDynamicElements): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:integer ;
             sh:description "Traffic agent density in vehicles per kilometre."@en ;
             sh:maxCount 1 ;
@@ -6125,6 +6125,12 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 13 ;
             sh:path openlabel_v2:horizontalCurvesValue ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (OddEnvironment): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of artificial illumination."@en ;
             sh:in ( openlabel_v2:ArtificialStreetLighting openlabel_v2:ArtificialVehicleLighting ) ;
             sh:maxCount 1 ;
@@ -6137,12 +6143,6 @@ openlabel_v2:OddEnvironment a sh:NodeShape ;
             sh:message "DrivableAreaType (OddEnvironment): Type of drivable area. ISO 34503:2023, 9.3.2"@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (OddEnvironment): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:decimal ;
             sh:description "Sun elevation in degrees."@en ;
             sh:maxCount 1 ;
@@ -6329,6 +6329,12 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 21 ;
             sh:path openlabel_v2:LaneSpecificationDimensions ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (OddScenery): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of basic road structure present in the scenery."@en ;
             sh:in ( openlabel_v2:FixedStructureBuilding openlabel_v2:FixedStructureStreetFurniture openlabel_v2:FixedStructureStreetlight openlabel_v2:FixedStructureVegetation ) ;
             sh:maxCount 1 ;
@@ -6498,12 +6504,6 @@ openlabel_v2:OddScenery a sh:NodeShape ;
             sh:message "DrivableAreaEdge (OddScenery): Type of drivable area edge. ISO 34503:2023, 9.3.6"@en ;
             sh:order 5 ;
             sh:path openlabel_v2:DrivableAreaEdge ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (OddScenery): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area surface condition."@en ;
             sh:in ( openlabel_v2:SurfaceConditionContamination openlabel_v2:SurfaceConditionFlooded openlabel_v2:SurfaceConditionIcy openlabel_v2:SurfaceConditionMirage openlabel_v2:SurfaceConditionSnow openlabel_v2:SurfaceConditionStandingWater openlabel_v2:SurfaceConditionWet ) ;
             sh:maxCount 1 ;
@@ -6760,6 +6760,12 @@ openlabel_v2:SceneryDrivableArea a sh:NodeShape ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 48 ;
             sh:path openlabel_v2:subjectVehicleSpeedValue ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (SceneryDrivableArea): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of rainfall."@en ;
             sh:in ( openlabel_v2:RainTypeConvective openlabel_v2:RainTypeDynamic openlabel_v2:RainTypeOrographic ) ;
             sh:maxCount 0 ;
@@ -6806,12 +6812,6 @@ openlabel_v2:SceneryDrivableArea a sh:NodeShape ;
             sh:message "EnvironmentParticulates (SceneryDrivableArea): Type of particulates present in the environment. ISO 34503:2023, 10.3"@en ;
             sh:order 10 ;
             sh:path openlabel_v2:EnvironmentParticulates ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (SceneryDrivableArea): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of regulatory sign."@en ;
             sh:in ( openlabel_v2:RegulatorySignsUniform openlabel_v2:RegulatorySignsUniformFullTime openlabel_v2:RegulatorySignsUniformTemporary openlabel_v2:RegulatorySignsVariable openlabel_v2:RegulatorySignsVariableFullTime openlabel_v2:RegulatorySignsVariableTemporary ) ;
             sh:maxCount 1 ;
@@ -7108,12 +7108,6 @@ openlabel_v2:SceneryJunction a sh:NodeShape ;
             sh:message "SignsWarning (SceneryJunction): Type of warning sign. ISO 34503:2023, 9.3.5"@en ;
             sh:order 46 ;
             sh:path openlabel_v2:SignsWarning ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:maxCount 0 ;
-            sh:message "trafficAgentTypeValue (SceneryJunction): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of positioning system."@en ;
             sh:in ( openlabel_v2:PositioningGalileo openlabel_v2:PositioningGlonass openlabel_v2:PositioningGps ) ;
             sh:maxCount 0 ;
@@ -7340,6 +7334,12 @@ openlabel_v2:SceneryJunction a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 28 ;
             sh:path openlabel_v2:LongitudinalDownSlope ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:maxCount 0 ;
+            sh:message "trafficAgentTypeValue (SceneryJunction): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of drivable area surface feature."@en ;
             sh:in ( openlabel_v2:SurfaceFeatureCrack openlabel_v2:SurfaceFeaturePothole openlabel_v2:SurfaceFeatureRut openlabel_v2:SurfaceFeatureSwell ) ;
             sh:maxCount 1 ;
@@ -7904,6 +7904,11 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 23 ;
             sh:path openlabel_v2:LaneSpecificationLaneCount ],
+        [ sh:description "Types of traffic agents present."@en ;
+            sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+            sh:message "trafficAgentTypeValue (Odd): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
+            sh:order 52 ;
+            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Presence of a specified sun elevation above the horizon."@en ;
             sh:maxCount 1 ;
@@ -7944,11 +7949,6 @@ openlabel_v2:Odd a sh:NodeShape ;
             sh:message "DrivableAreaType (Odd): Type of drivable area. ISO 34503:2023, 9.3.2"@en ;
             sh:order 9 ;
             sh:path openlabel_v2:DrivableAreaType ],
-        [ sh:description "Types of traffic agents present."@en ;
-            sh:message "trafficAgentTypeValue (Odd): Types of traffic agents present. ISO 34503:2023, 11.1"@en ;
-            sh:or ( [ sh:in ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ] [ sh:in ( openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ] ) ;
-            sh:order 52 ;
-            sh:path openlabel_v2:trafficAgentTypeValue ],
         [ sh:description "Type of warning sign."@en ;
             sh:in ( openlabel_v2:WarningSignsUniform openlabel_v2:WarningSignsUniformFullTime openlabel_v2:WarningSignsUniformTemporary openlabel_v2:WarningSignsVariable openlabel_v2:WarningSignsVariableFullTime openlabel_v2:WarningSignsVariableTemporary ) ;
             sh:maxCount 1 ;

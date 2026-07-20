@@ -1,3 +1,4 @@
+@prefix cmns-q: <https://www.omg.org/spec/Commons/Quantities/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
@@ -272,41 +273,6 @@ openlabel_v2:FixedStructureVegetation a owl:Class ;
     rdfs:label "FixedStructureVegetation"@en ;
     rdfs:subClassOf openlabel_v2:SceneryFixedStructureEnum ;
     skos:definition "Vegetation."@en .
-
-openlabel_v2:HumanAnimalRider a owl:Class ;
-    rdfs:label "HumanAnimalRider"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Animal rider (e.g. horse rider)."@en .
-
-openlabel_v2:HumanCyclist a owl:Class ;
-    rdfs:label "HumanCyclist"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Cyclist."@en .
-
-openlabel_v2:HumanDriver a owl:Class ;
-    rdfs:label "HumanDriver"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Driver."@en .
-
-openlabel_v2:HumanMotorcyclist a owl:Class ;
-    rdfs:label "HumanMotorcyclist"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Motorcyclist."@en .
-
-openlabel_v2:HumanPassenger a owl:Class ;
-    rdfs:label "HumanPassenger"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Passenger."@en .
-
-openlabel_v2:HumanPedestrian a owl:Class ;
-    rdfs:label "HumanPedestrian"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Pedestrian."@en .
-
-openlabel_v2:HumanWheelchairUser a owl:Class ;
-    rdfs:label "HumanWheelchairUser"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum ;
-    skos:definition "Wheelchair user."@en .
 
 openlabel_v2:InformationSignsUniform a owl:Class ;
     rdfs:label "InformationSignsUniform"@en ;
@@ -791,61 +757,6 @@ openlabel_v2:V2vWifi a owl:Class ;
     rdfs:subClassOf openlabel_v2:ConnectivityCommunicationEnum ;
     skos:definition "V2V via WiFi."@en .
 
-openlabel_v2:VehicleAgricultural a owl:Class ;
-    rdfs:label "VehicleAgricultural"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Agricultural vehicle."@en .
-
-openlabel_v2:VehicleBus a owl:Class ;
-    rdfs:label "VehicleBus"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Bus."@en .
-
-openlabel_v2:VehicleCar a owl:Class ;
-    rdfs:label "VehicleCar"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Car."@en .
-
-openlabel_v2:VehicleConstruction a owl:Class ;
-    rdfs:label "VehicleConstruction"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Construction vehicle."@en .
-
-openlabel_v2:VehicleCycle a owl:Class ;
-    rdfs:label "VehicleCycle"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Cycle."@en .
-
-openlabel_v2:VehicleEmergency a owl:Class ;
-    rdfs:label "VehicleEmergency"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Emergency vehicle."@en .
-
-openlabel_v2:VehicleMotorcycle a owl:Class ;
-    rdfs:label "VehicleMotorcycle"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Motorcycle."@en .
-
-openlabel_v2:VehicleTrailer a owl:Class ;
-    rdfs:label "VehicleTrailer"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Trailer."@en .
-
-openlabel_v2:VehicleTruck a owl:Class ;
-    rdfs:label "VehicleTruck"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Truck."@en .
-
-openlabel_v2:VehicleVan a owl:Class ;
-    rdfs:label "VehicleVan"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Van."@en .
-
-openlabel_v2:VehicleWheelchair a owl:Class ;
-    rdfs:label "VehicleWheelchair"@en ;
-    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum ;
-    skos:definition "Wheelchair."@en .
-
 openlabel_v2:WarningSignsUniform a owl:Class ;
     rdfs:label "WarningSignsUniform"@en ;
     rdfs:subClassOf openlabel_v2:SignsWarningEnum ;
@@ -900,6 +811,20 @@ openlabel_v2:ZoneTrafficManagement a owl:Class ;
     rdfs:label "ZoneTrafficManagement"@en ;
     rdfs:subClassOf openlabel_v2:SceneryZoneEnum ;
     skos:definition "Traffic management zones."@en .
+
+schema:maxValue a owl:DatatypeProperty ;
+    rdfs:label "maxValue"@en ;
+    rdfs:domain schema:QuantitativeValue ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Maximum value of the range."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+schema:minValue a owl:DatatypeProperty ;
+    rdfs:label "minValue"@en ;
+    rdfs:domain schema:QuantitativeValue ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Minimum value of the range."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:DrivableAreaGeometry a owl:Class ;
     rdfs:label "DrivableAreaGeometry"@en ;
@@ -1903,40 +1828,16 @@ openlabel_v2:Tag a owl:Class ;
     skos:exactMatch openlabel_v2:Tag ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
-openlabel_v2:hasLowerBound a owl:DatatypeProperty ;
-    rdfs:label "hasLowerBound"@en ;
-    rdfs:range xsd:decimal ;
-    skos:definition "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
 openlabel_v2:hasTag a owl:ObjectProperty ;
     rdfs:label "hasTag"@en ;
     rdfs:range openlabel_v2:Tag ;
     skos:definition "A tag associated with a scenario."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
-openlabel_v2:hasUpperBound a owl:DatatypeProperty ;
-    rdfs:label "hasUpperBound"@en ;
-    rdfs:range xsd:decimal ;
-    skos:definition "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
 openlabel_v2:licenseURI a owl:DatatypeProperty ;
     rdfs:label "licenseURI"@en ;
     rdfs:range xsd:string ;
     skos:definition "The type of license which governs usage of the scenario."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
-openlabel_v2:maxValue a owl:DatatypeProperty ;
-    rdfs:label "maxValue"@en ;
-    rdfs:range xsd:decimal ;
-    skos:definition "Maximum value of the range."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
-
-openlabel_v2:minValue a owl:DatatypeProperty ;
-    rdfs:label "minValue"@en ;
-    rdfs:range xsd:decimal ;
-    skos:definition "Minimum value of the range."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:ownerEmail a owl:DatatypeProperty ;
@@ -2010,6 +1911,60 @@ openlabel_v2:scenarioVisualisationURL a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:definition "Relative or absolute URL of a static image or animation of the scenario to allow users to easily see what the scenario represents."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+cmns-q:hasLowerBound a owl:DatatypeProperty ;
+    rdfs:label "hasLowerBound"@en ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Lower bound inferred via RDFS from schema:minValue being a subPropertyOf cmns-q:hasLowerBound in schema.org OWL."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+cmns-q:hasUpperBound a owl:DatatypeProperty ;
+    rdfs:label "hasUpperBound"@en ;
+    rdfs:range xsd:decimal ;
+    skos:definition "Upper bound inferred via RDFS from schema:maxValue being a subPropertyOf cmns-q:hasUpperBound in schema.org OWL."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
+
+openlabel_v2:HumanAnimalRider a owl:Class ;
+    rdfs:label "HumanAnimalRider"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Animal rider (e.g. horse rider)."@en .
+
+openlabel_v2:HumanCyclist a owl:Class ;
+    rdfs:label "HumanCyclist"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Cyclist."@en .
+
+openlabel_v2:HumanDriver a owl:Class ;
+    rdfs:label "HumanDriver"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Driver."@en .
+
+openlabel_v2:HumanMotorcyclist a owl:Class ;
+    rdfs:label "HumanMotorcyclist"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Motorcyclist."@en .
+
+openlabel_v2:HumanPassenger a owl:Class ;
+    rdfs:label "HumanPassenger"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Passenger."@en .
+
+openlabel_v2:HumanPedestrian a owl:Class ;
+    rdfs:label "HumanPedestrian"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Pedestrian."@en .
+
+openlabel_v2:HumanWheelchairUser a owl:Class ;
+    rdfs:label "HumanWheelchairUser"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserHumanEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Wheelchair user."@en .
 
 openlabel_v2:IlluminationArtificialEnum a owl:Class ;
     rdfs:label "IlluminationArtificialEnum"@en ;
@@ -2444,9 +2399,75 @@ openlabel_v2:OddEnvironment a owl:Class ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
     skos:note "ISO 34503:2023, Clause 10"@en .
 
+openlabel_v2:VehicleAgricultural a owl:Class ;
+    rdfs:label "VehicleAgricultural"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Agricultural vehicle."@en .
+
+openlabel_v2:VehicleBus a owl:Class ;
+    rdfs:label "VehicleBus"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Bus."@en .
+
+openlabel_v2:VehicleCar a owl:Class ;
+    rdfs:label "VehicleCar"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Car."@en .
+
+openlabel_v2:VehicleConstruction a owl:Class ;
+    rdfs:label "VehicleConstruction"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Construction vehicle."@en .
+
+openlabel_v2:VehicleCycle a owl:Class ;
+    rdfs:label "VehicleCycle"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Cycle."@en .
+
+openlabel_v2:VehicleEmergency a owl:Class ;
+    rdfs:label "VehicleEmergency"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Emergency vehicle."@en .
+
+openlabel_v2:VehicleMotorcycle a owl:Class ;
+    rdfs:label "VehicleMotorcycle"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Motorcycle."@en .
+
+openlabel_v2:VehicleTrailer a owl:Class ;
+    rdfs:label "VehicleTrailer"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Trailer."@en .
+
+openlabel_v2:VehicleTruck a owl:Class ;
+    rdfs:label "VehicleTruck"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Truck."@en .
+
+openlabel_v2:VehicleVan a owl:Class ;
+    rdfs:label "VehicleVan"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Van."@en .
+
+openlabel_v2:VehicleWheelchair a owl:Class ;
+    rdfs:label "VehicleWheelchair"@en ;
+    rdfs:subClassOf openlabel_v2:RoadUserVehicleEnum,
+        openlabel_v2:TrafficAgentTypeEnum ;
+    skos:definition "Wheelchair."@en .
+
 openlabel_v2:motionAccelerateValue a owl:DatatypeProperty ;
     rdfs:label "motionAccelerateValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
     skos:definition "Rate of acceleration (ms⁻²)."@en ;
     skos:editorialNote "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. acceleration rate)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
@@ -2454,7 +2475,7 @@ openlabel_v2:motionAccelerateValue a owl:DatatypeProperty ;
 
 openlabel_v2:motionDecelerateValue a owl:DatatypeProperty ;
     rdfs:label "motionDecelerateValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
     skos:definition "Rate of deceleration (ms⁻²)."@en ;
     skos:editorialNote "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. deceleration rate)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
@@ -2665,14 +2686,14 @@ openlabel_v2:RoadUser a owl:Class,
     rdfs:seeAlso <https://www.iso.org/standard/78952.html>,
         <https://www.iso.org/standard/78953.html> ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:motionDriveValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:RoadUserHuman ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:RoadUserAnimal ],
@@ -2791,7 +2812,7 @@ openlabel_v2:SceneryZoneEnum a owl:Class ;
 
 openlabel_v2:motionDriveValue a owl:DatatypeProperty ;
     rdfs:label "motionDriveValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
     skos:definition "Speed (km/h)."@en ;
     skos:editorialNote "ISO 34504 Section 4.4.4.5 lists 'relative speed' as a state tag for dynamic entities."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
@@ -3093,6 +3114,21 @@ openlabel_v2:RainType a owl:ObjectProperty ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
     skos:note "ISO 34503:2023, 10.2.4"@en .
 
+openlabel_v2:RoadUserHumanEnum a owl:Class ;
+    rdfs:label "RoadUserHumanEnum"@en ;
+    owl:unionOf ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ;
+    skos:definition "Types of human road users."@en ;
+    skos:editorialNote "ISO 34504 lists pedestrian sub-tags: child, adult, person with disabilities, hearing-impaired, visually-impaired, road-works crew, person pushing stroller, person in wheelchair, etc. Cyclist sub-tags: bicyclist, e-Bike user, skater, motorcycle, moped/scooter. ASAM OpenLABEL uses role-based categories."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    skos:note "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian/cyclist sub-tags)"@en ;
+    linkml:permissible_values openlabel_v2:HumanAnimalRider,
+        openlabel_v2:HumanCyclist,
+        openlabel_v2:HumanDriver,
+        openlabel_v2:HumanMotorcyclist,
+        openlabel_v2:HumanPassenger,
+        openlabel_v2:HumanPedestrian,
+        openlabel_v2:HumanWheelchairUser .
+
 openlabel_v2:SceneryFixedStructure a owl:ObjectProperty ;
     rdfs:label "SceneryFixedStructure"@en ;
     rdfs:range openlabel_v2:SceneryFixedStructureEnum ;
@@ -3173,9 +3209,9 @@ openlabel_v2:TrafficSpecialVehicle a owl:DatatypeProperty ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
     skos:note "ISO 34503:2023, 11.1"@en .
 
-openlabel_v2:trafficAgentTypeValue a owl:DatatypeProperty ;
+openlabel_v2:trafficAgentTypeValue a owl:ObjectProperty ;
     rdfs:label "trafficAgentTypeValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:RoadUserHumanEnum openlabel_v2:RoadUserVehicleEnum ) ] ;
+    rdfs:range openlabel_v2:TrafficAgentTypeEnum ;
     rdfs:seeAlso <https://www.iso.org/standard/78952.html> ;
     skos:definition "Types of traffic agents present."@en ;
     skos:editorialNote "v1 description: \"Agent type\" (PAS 1883:2020, Section 5.4.a.4)."@en ;
@@ -3218,6 +3254,9 @@ openlabel_v2:Behaviour a owl:Class,
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionAccelerate ],
         [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDriveValue ],
+        [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionDecelerate ],
         [ a owl:Restriction ;
@@ -3232,6 +3271,9 @@ openlabel_v2:Behaviour a owl:Class,
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionRun ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionDecelerateValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionSlide ],
@@ -3284,9 +3326,6 @@ openlabel_v2:Behaviour a owl:Class,
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionStop ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
-            owl:onProperty openlabel_v2:motionDriveValue ],
-        [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:MotionCross ],
         [ a owl:Restriction ;
@@ -3295,9 +3334,6 @@ openlabel_v2:Behaviour a owl:Class,
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionAccelerate ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
-            owl:onProperty openlabel_v2:motionAccelerateValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:MotionOvertake ],
@@ -3344,9 +3380,6 @@ openlabel_v2:Behaviour a owl:Class,
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:motionDriveValue ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
-            owl:onProperty openlabel_v2:motionDecelerateValue ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:motionAccelerateValue ],
         [ a owl:Restriction ;
@@ -3379,6 +3412,9 @@ openlabel_v2:Behaviour a owl:Class,
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionTurn ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:motionAccelerateValue ],
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:MotionStop ],
@@ -3630,7 +3666,7 @@ openlabel_v2:illuminationCloudinessValue a owl:DatatypeProperty ;
 
 openlabel_v2:laneSpecificationDimensionsValue a owl:DatatypeProperty ;
     rdfs:label "laneSpecificationDimensionsValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
     rdfs:seeAlso <https://www.iso.org/standard/78952.html> ;
     skos:definition "Lane width in metres."@en ;
     skos:editorialNote "v1 description: \"Lane width (m)\" (PAS 1883:2020, Section 5.2.3.4.a)."@en ;
@@ -3639,7 +3675,7 @@ openlabel_v2:laneSpecificationDimensionsValue a owl:DatatypeProperty ;
 
 openlabel_v2:laneSpecificationLaneCountValue a owl:DatatypeProperty ;
     rdfs:label "laneSpecificationLaneCountValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue [ a rdfs:Datatype ;
                         owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
                                     owl:onDatatype xsd:integer ;
                                     owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ) ] ;
@@ -3678,7 +3714,7 @@ openlabel_v2:particulatesWaterValue a owl:DatatypeProperty ;
 
 openlabel_v2:subjectVehicleSpeedValue a owl:DatatypeProperty ;
     rdfs:label "subjectVehicleSpeedValue"@en ;
-    rdfs:range [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
+    rdfs:range [ owl:unionOf ( schema:QuantitativeValue [ a rdfs:Datatype ;
                         owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
                                     owl:onDatatype xsd:integer ;
                                     owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ) ] ;
@@ -3822,21 +3858,6 @@ openlabel_v2:ParticulatesVolcanic a owl:Class,
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
     skos:note "ISO 34503:2023, 10.3"@en .
 
-openlabel_v2:RoadUserHumanEnum a owl:Class ;
-    rdfs:label "RoadUserHumanEnum"@en ;
-    owl:unionOf ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser ) ;
-    skos:definition "Types of human road users."@en ;
-    skos:editorialNote "ISO 34504 lists pedestrian sub-tags: child, adult, person with disabilities, hearing-impaired, visually-impaired, road-works crew, person pushing stroller, person in wheelchair, etc. Cyclist sub-tags: bicyclist, e-Bike user, skater, motorcycle, moped/scooter. ASAM OpenLABEL uses role-based categories."@en ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian/cyclist sub-tags)"@en ;
-    linkml:permissible_values openlabel_v2:HumanAnimalRider,
-        openlabel_v2:HumanCyclist,
-        openlabel_v2:HumanDriver,
-        openlabel_v2:HumanMotorcyclist,
-        openlabel_v2:HumanPassenger,
-        openlabel_v2:HumanPedestrian,
-        openlabel_v2:HumanWheelchairUser .
-
 openlabel_v2:ParticulatesWater a owl:Class,
         owl:DatatypeProperty ;
     rdfs:label "ParticulatesWater"@en ;
@@ -3849,48 +3870,6 @@ openlabel_v2:ParticulatesWater a owl:Class,
     skos:editorialNote "v1 label: \"Non-precipitating water droplets or ice crystals (i.e. mist/fog)\" (PAS 1883:2020, Section 5.3.2.b)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
     skos:note "ISO 34503:2023, 10.3"@en .
-
-openlabel_v2:QuantitativeValue a owl:Class ;
-    rdfs:label "QuantitativeValue"@en ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:hasUpperBound ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:hasLowerBound ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty openlabel_v2:minValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:hasUpperBound ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:hasUpperBound ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:maxValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:minValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 1 ;
-            owl:onProperty openlabel_v2:maxValue ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:hasLowerBound ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty openlabel_v2:minValue ],
-        [ a owl:Restriction ;
-            owl:minCardinality 0 ;
-            owl:onProperty openlabel_v2:hasLowerBound ],
-        [ a owl:Restriction ;
-            owl:maxCardinality 1 ;
-            owl:onProperty openlabel_v2:maxValue ] ;
-    skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue."@en ;
-    skos:exactMatch schema:QuantitativeValue ;
-    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:RoadUserVehicleEnum a owl:Class ;
     rdfs:label "RoadUserVehicleEnum"@en ;
@@ -3910,6 +3889,48 @@ openlabel_v2:RoadUserVehicleEnum a owl:Class ;
         openlabel_v2:VehicleTruck,
         openlabel_v2:VehicleVan,
         openlabel_v2:VehicleWheelchair .
+
+schema:QuantitativeValue a owl:Class ;
+    rdfs:label "QuantitativeValue"@en ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty cmns-q:hasLowerBound ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty schema:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty schema:maxValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty schema:minValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty cmns-q:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty schema:maxValue ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty cmns-q:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty schema:maxValue ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty schema:minValue ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty cmns-q:hasUpperBound ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty cmns-q:hasLowerBound ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty cmns-q:hasLowerBound ] ;
+    skos:definition "A point value or interval for quantitative measurements. Requires minValue and maxValue."@en ;
+    skos:exactMatch openlabel_v2:QuantitativeValue ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> .
 
 openlabel_v2:JunctionRoundaboutEnum a owl:Class ;
     rdfs:label "JunctionRoundaboutEnum"@en ;
@@ -3934,6 +3955,31 @@ openlabel_v2:JunctionRoundaboutEnum a owl:Class ;
         openlabel_v2:RoundaboutNormal,
         openlabel_v2:RoundaboutNormalNosignal,
         openlabel_v2:RoundaboutNormalSignal .
+
+openlabel_v2:TrafficAgentTypeEnum a owl:Class ;
+    rdfs:label "TrafficAgentTypeEnum"@en ;
+    owl:unionOf ( openlabel_v2:HumanAnimalRider openlabel_v2:HumanCyclist openlabel_v2:HumanDriver openlabel_v2:HumanMotorcyclist openlabel_v2:HumanPassenger openlabel_v2:HumanPedestrian openlabel_v2:HumanWheelchairUser openlabel_v2:VehicleAgricultural openlabel_v2:VehicleBus openlabel_v2:VehicleCar openlabel_v2:VehicleConstruction openlabel_v2:VehicleCycle openlabel_v2:VehicleEmergency openlabel_v2:VehicleMotorcycle openlabel_v2:VehicleTrailer openlabel_v2:VehicleTruck openlabel_v2:VehicleVan openlabel_v2:VehicleWheelchair ) ;
+    skos:definition "Combined set of traffic agent types (human and vehicle road users). Union of RoadUserHumanEnum and RoadUserVehicleEnum, used by trafficAgentTypeValue so a single enum range yields the @vocab context coercion and a single sh:in constraint (values written as bare terms)."@en ;
+    skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
+    skos:note "ISO 34503:2023, 11.1"@en ;
+    linkml:permissible_values openlabel_v2:HumanAnimalRider,
+        openlabel_v2:HumanCyclist,
+        openlabel_v2:HumanDriver,
+        openlabel_v2:HumanMotorcyclist,
+        openlabel_v2:HumanPassenger,
+        openlabel_v2:HumanPedestrian,
+        openlabel_v2:HumanWheelchairUser,
+        openlabel_v2:VehicleAgricultural,
+        openlabel_v2:VehicleBus,
+        openlabel_v2:VehicleCar,
+        openlabel_v2:VehicleConstruction,
+        openlabel_v2:VehicleCycle,
+        openlabel_v2:VehicleEmergency,
+        openlabel_v2:VehicleMotorcycle,
+        openlabel_v2:VehicleTrailer,
+        openlabel_v2:VehicleTruck,
+        openlabel_v2:VehicleVan,
+        openlabel_v2:VehicleWheelchair .
 
 openlabel_v2:Odd a owl:Class,
         owl:ObjectProperty ;
@@ -3992,6 +4038,9 @@ openlabel_v2:Odd a owl:Class,
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:trafficFlowRateValue ],
         [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue xsd:decimal ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
+        [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:trafficFlowRateValue ],
         [ a owl:Restriction ;
@@ -4019,12 +4068,6 @@ openlabel_v2:Odd a owl:Class,
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:TrafficFlowRate ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
-                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                            owl:onDatatype xsd:integer ;
-                                            owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
-        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:SceneryTemporaryStructure ],
         [ a owl:Restriction ;
@@ -4033,6 +4076,12 @@ openlabel_v2:Odd a owl:Class,
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:LaneSpecificationDimensions ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 1 ] ) ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:laneSpecificationLaneCountValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:WeatherRain ],
@@ -4084,12 +4133,6 @@ openlabel_v2:Odd a owl:Class,
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:TrafficVolume ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue [ a rdfs:Datatype ;
-                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
-                                            owl:onDatatype xsd:integer ;
-                                            owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ) ] ;
-            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:daySunElevationValue ],
@@ -4406,6 +4449,12 @@ openlabel_v2:Odd a owl:Class,
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
         [ a owl:Restriction ;
+            owl:allValuesFrom [ owl:unionOf ( schema:QuantitativeValue [ a rdfs:Datatype ;
+                                owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                                            owl:onDatatype xsd:integer ;
+                                            owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ) ] ;
+            owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],
+        [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:weatherWindValue ],
         [ a owl:Restriction ;
@@ -4454,9 +4503,6 @@ openlabel_v2:Odd a owl:Class,
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:LongitudinalLevelPlane ],
         [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:QuantitativeValue xsd:decimal ) ] ;
-            owl:onProperty openlabel_v2:laneSpecificationDimensionsValue ],
-        [ a owl:Restriction ;
             owl:allValuesFrom xsd:decimal ;
             owl:onProperty openlabel_v2:particulatesWaterValue ],
         [ a owl:Restriction ;
@@ -4468,9 +4514,6 @@ openlabel_v2:Odd a owl:Class,
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:SignsInformation ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom [ owl:unionOf ( openlabel_v2:RoadUserHumanEnum openlabel_v2:RoadUserVehicleEnum ) ] ;
-            owl:onProperty openlabel_v2:trafficAgentTypeValue ],
         [ a owl:Restriction ;
             owl:allValuesFrom xsd:boolean ;
             owl:onProperty openlabel_v2:ParticulatesWater ],
@@ -4513,6 +4556,9 @@ openlabel_v2:Odd a owl:Class,
         [ a owl:Restriction ;
             owl:minCardinality 0 ;
             owl:onProperty openlabel_v2:DrivableAreaType ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom openlabel_v2:TrafficAgentTypeEnum ;
+            owl:onProperty openlabel_v2:trafficAgentTypeValue ],
         [ a owl:Restriction ;
             owl:maxCardinality 1 ;
             owl:onProperty openlabel_v2:subjectVehicleSpeedValue ],

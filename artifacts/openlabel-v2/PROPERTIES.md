@@ -2,7 +2,7 @@
 
 ### Class Diagram
 
-_Class diagram omitted for size (204 classes). See class hierarchy and definitions below._
+_Class diagram omitted for size (205 classes). See class hierarchy and definitions below._
 
 ### Class Hierarchy
 
@@ -138,7 +138,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
       - DrivableAreaSigns (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSigns)
       - DrivableAreaSurface (https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurface)
     - SceneryJunction (https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryJunction)
-- QuantitativeValue (https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue)
+- QuantitativeValue (https://schema.org/QuantitativeValue)
 - RainTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum)
   - RainTypeConvective (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective)
   - RainTypeDynamic (https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeDynamic)
@@ -210,6 +210,25 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
   - WarningSignsVariableFullTime (https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableFullTime)
   - WarningSignsVariableTemporary (https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsVariableTemporary)
 - Tag (https://w3id.org/ascs-ev/envited-x/openlabel/v2/Tag)
+- TrafficAgentTypeEnum (https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentTypeEnum)
+  - HumanAnimalRider (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider)
+  - HumanCyclist (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist)
+  - HumanDriver (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver)
+  - HumanMotorcyclist (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanMotorcyclist)
+  - HumanPassenger (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger)
+  - HumanPedestrian (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian)
+  - HumanWheelchairUser (https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser)
+  - VehicleAgricultural (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural)
+  - VehicleBus (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus)
+  - VehicleCar (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar)
+  - VehicleConstruction (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleConstruction)
+  - VehicleCycle (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCycle)
+  - VehicleEmergency (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleEmergency)
+  - VehicleMotorcycle (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleMotorcycle)
+  - VehicleTrailer (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTrailer)
+  - VehicleTruck (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTruck)
+  - VehicleVan (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan)
+  - VehicleWheelchair (https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair)
 
 ### Class Definitions
 
@@ -262,13 +281,13 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |GeometryHorizontal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryHorizontal||DrivableAreaGeometry|
 |GeometryLongitudinal|https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryLongitudinal||DrivableAreaGeometry|
 |GeometryTransverseEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverseEnum|||
-|HumanAnimalRider|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider||RoadUserHumanEnum|
-|HumanCyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist||RoadUserHumanEnum|
-|HumanDriver|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver||RoadUserHumanEnum|
-|HumanMotorcyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanMotorcyclist||RoadUserHumanEnum|
-|HumanPassenger|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger||RoadUserHumanEnum|
-|HumanPedestrian|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian||RoadUserHumanEnum|
-|HumanWheelchairUser|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser||RoadUserHumanEnum|
+|HumanAnimalRider|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanAnimalRider||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanCyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanCyclist||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanDriver|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanDriver||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanMotorcyclist|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanMotorcyclist||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanPassenger|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPassenger||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanPedestrian|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanPedestrian||RoadUserHumanEnum, TrafficAgentTypeEnum|
+|HumanWheelchairUser|https://w3id.org/ascs-ev/envited-x/openlabel/v2/HumanWheelchairUser||RoadUserHumanEnum, TrafficAgentTypeEnum|
 |IlluminationArtificialEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificialEnum|||
 |IlluminationDay|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationDay||EnvironmentIllumination|
 |IlluminationLowLightEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLightEnum|||
@@ -309,7 +328,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |PositioningGalileo|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGalileo||ConnectivityPositioningEnum|
 |PositioningGlonass|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGlonass||ConnectivityPositioningEnum|
 |PositioningGps|https://w3id.org/ascs-ev/envited-x/openlabel/v2/PositioningGps||ConnectivityPositioningEnum|
-|QuantitativeValue|https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue|||
+|QuantitativeValue|https://schema.org/QuantitativeValue|||
 |RainTypeConvective|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeConvective||RainTypeEnum|
 |RainTypeDynamic|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeDynamic||RainTypeEnum|
 |RainTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum|||
@@ -384,6 +403,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |TemporaryStructureRefuseCollection|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRefuseCollection||SceneryTemporaryStructureEnum|
 |TemporaryStructureRoadSignage|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadSignage||SceneryTemporaryStructureEnum|
 |TemporaryStructureRoadWorks|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TemporaryStructureRoadWorks||SceneryTemporaryStructureEnum|
+|TrafficAgentTypeEnum|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentTypeEnum|||
 |TransverseBarriers|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseBarriers||GeometryTransverseEnum|
 |TransverseDivided|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseDivided||GeometryTransverseEnum|
 |TransverseLanesTogether|https://w3id.org/ascs-ev/envited-x/openlabel/v2/TransverseLanesTogether||GeometryTransverseEnum|
@@ -397,17 +417,17 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |V2vCellular|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vCellular||ConnectivityCommunicationEnum|
 |V2vSatellite|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vSatellite||ConnectivityCommunicationEnum|
 |V2vWifi|https://w3id.org/ascs-ev/envited-x/openlabel/v2/V2vWifi||ConnectivityCommunicationEnum|
-|VehicleAgricultural|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural||RoadUserVehicleEnum|
-|VehicleBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus||RoadUserVehicleEnum|
-|VehicleCar|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar||RoadUserVehicleEnum|
-|VehicleConstruction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleConstruction||RoadUserVehicleEnum|
-|VehicleCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCycle||RoadUserVehicleEnum|
-|VehicleEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleEmergency||RoadUserVehicleEnum|
-|VehicleMotorcycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleMotorcycle||RoadUserVehicleEnum|
-|VehicleTrailer|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTrailer||RoadUserVehicleEnum|
-|VehicleTruck|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTruck||RoadUserVehicleEnum|
-|VehicleVan|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan||RoadUserVehicleEnum|
-|VehicleWheelchair|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair||RoadUserVehicleEnum|
+|VehicleAgricultural|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleAgricultural||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleBus|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleBus||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleCar|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCar||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleConstruction|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleConstruction||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleCycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleCycle||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleEmergency|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleEmergency||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleMotorcycle|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleMotorcycle||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleTrailer|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTrailer||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleTruck|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleTruck||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleVan|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleVan||RoadUserVehicleEnum, TrafficAgentTypeEnum|
+|VehicleWheelchair|https://w3id.org/ascs-ev/envited-x/openlabel/v2/VehicleWheelchair||RoadUserVehicleEnum, TrafficAgentTypeEnum|
 |WarningSignsUniform|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniform||SignsWarningEnum|
 |WarningSignsUniformFullTime|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformFullTime||SignsWarningEnum|
 |WarningSignsUniformTemporary|https://w3id.org/ascs-ev/envited-x/openlabel/v2/WarningSignsUniformTemporary||SignsWarningEnum|
@@ -573,9 +593,9 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |BehaviourMotion|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionrun"></a>MotionRun||1|Locomotion mode where at a specific point no foot touches the ground.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |BehaviourMotion|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-motionturnleft"></a>MotionTurnLeft||1|Subject exits the intersection on a road to the left of the original.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-connectivitycommunication"></a>ConnectivityCommunication||0|Type of communication connectivity.||openlabel-v2.shacl.ttl|
-|DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-drivableareasurfacecondition"></a>DrivableAreaSurfaceCondition||1|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-particulateswater"></a>ParticulatesWater||0|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-trafficagenttypevalue"></a>trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-signsregulatory"></a>SignsRegulatory||1|Type of regulatory sign.||openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-horizontalcurvesvalue"></a>horizontalCurvesValue||1|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DrivableAreaGeometry|openlabel_v2|<a id="prop-https---w3id-org-ascs-ev-envited-x-openlabel-v2-junctionintersection"></a>JunctionIntersection||1|Type of intersection.||openlabel-v2.shacl.ttl|
@@ -652,6 +672,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaLaneSpecification|openlabel_v2|ConnectivityCommunication||0|Type of communication connectivity.||openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|DaySunElevation||0|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|ParticulatesPollution||0|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|DrivableAreaLaneSpecification|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|LaneSpecificationLaneCount||1|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|longitudinalDownSlopeValue||1|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
@@ -691,7 +712,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaLaneSpecification|openlabel_v2|DaySunPosition||0|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|LaneSpecificationType|||Type of lane.||openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|DrivableAreaType||1|Type of drivable area.||openlabel-v2.shacl.ttl|
-|DrivableAreaLaneSpecification|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|horizontalCurvesValue||1|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DrivableAreaLaneSpecification|openlabel_v2|weatherRainValue||0|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
@@ -704,7 +724,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaSigns|openlabel_v2|IlluminationArtificial||0|Type of artificial illumination.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|SceneryZone||1|Type of zone.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|HorizontalStraights||1|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|DrivableAreaSigns|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|IlluminationCloudiness||0|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|ConnectivityPositioning||0|Type of positioning system.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|SubjectVehicleSpeed||0|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -755,6 +774,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaSigns|openlabel_v2|SignsRegulatory||1|Type of regulatory sign.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|DrivableAreaSurfaceType||1|Type of drivable area surface.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|GeometryTransverse||1|Type of transverse geometry.||openlabel-v2.shacl.ttl|
+|DrivableAreaSigns|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|DrivableAreaType||1|Type of drivable area.||openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|ParticulatesVolcanic||0|Presence of volcanic ash particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSigns|openlabel_v2|LongitudinalDownSlope||1|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -794,7 +814,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaSurface|openlabel_v2|LaneSpecificationDimensions||1|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|WeatherWind||0|Presence of wind.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|WeatherRain||0|Presence of rainfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|DrivableAreaSurface|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width in metres.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|SubjectVehicleSpeed||0|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|subjectVehicleSpeedValue||0|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
@@ -814,6 +833,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DrivableAreaSurface|openlabel_v2|SceneryFixedStructure||1|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|LongitudinalLevelPlane||1|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|ScenerySpecialStructure||1|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
+|DrivableAreaSurface|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|GeometryTransverse||1|Type of transverse geometry.||openlabel-v2.shacl.ttl|
 |DrivableAreaSurface|openlabel_v2|LaneSpecificationMarking||1|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -832,7 +852,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DynamicElementsSubjectVehicle|openlabel_v2|WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|horizontalCurvesValue||0|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|HorizontalStraights||0|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|DynamicElementsSubjectVehicle|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|illuminationCloudinessValue||0|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|TrafficAgentType||1|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -878,6 +897,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DynamicElementsSubjectVehicle|openlabel_v2|SignsWarning||0|Type of warning sign.||openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|daySunElevationValue||0|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|weatherSnowValue||0|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|DynamicElementsSubjectVehicle|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|TrafficFlowRate||1|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DynamicElementsSubjectVehicle|openlabel_v2|laneSpecificationLaneCountValue||0|Number of lanes.||openlabel-v2.shacl.ttl|
@@ -926,7 +946,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DynamicElementsTraffic|openlabel_v2|trafficFlowRateValue||1|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|illuminationCloudinessValue||0|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|IlluminationLowLight||0|Type of low-light condition.||openlabel-v2.shacl.ttl|
-|DynamicElementsTraffic|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|LaneSpecificationLaneCount||0|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -945,6 +964,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |DynamicElementsTraffic|openlabel_v2|ScenerySpecialStructure||0|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|JunctionRoundabout||0|Type of roundabout.||openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
+|DynamicElementsTraffic|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|daySunElevationValue||0|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |DynamicElementsTraffic|openlabel_v2|TrafficAgentDensity||1|Presence of a specified traffic agent density.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -976,6 +996,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |EnvironmentConnectivity|openlabel_v2|ConnectivityPositioning||1|Type of positioning system.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|DrivableAreaSurfaceType||0|Type of drivable area surface.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|LaneSpecificationType||0|Type of lane.||openlabel-v2.shacl.ttl|
+|EnvironmentConnectivity|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|EnvironmentParticulates||1|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -1005,7 +1026,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |EnvironmentConnectivity|openlabel_v2|SignsInformation||0|Type of information sign.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|ParticulatesDust||1|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|laneSpecificationLaneCountValue||0|Number of lanes.||openlabel-v2.shacl.ttl|
-|EnvironmentConnectivity|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|DrivableAreaSurfaceFeature||0|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|DaySunPosition||1|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
 |EnvironmentConnectivity|openlabel_v2|DrivableAreaType||0|Type of drivable area.||openlabel-v2.shacl.ttl|
@@ -1052,8 +1072,8 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |EnvironmentIllumination|openlabel_v2|SceneryTemporaryStructure||0|Type of temporary drivable area structure present in the scenery.||openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|illuminationCloudinessValue||1|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|longitudinalDownSlopeValue||0|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|EnvironmentIllumination|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|LaneSpecificationLaneCount||0|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|EnvironmentIllumination|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|weatherRainValue||1|Rainfall intensity in millimetres per hour.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |EnvironmentIllumination|openlabel_v2|JunctionIntersection||0|Type of intersection.||openlabel-v2.shacl.ttl|
@@ -1125,6 +1145,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |EnvironmentWeather|openlabel_v2|LaneSpecificationType||0|Type of lane.||openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|JunctionIntersection||0|Type of intersection.||openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|DaySunPosition||1|Position of the sun relative to the direction of travel.||openlabel-v2.shacl.ttl|
+|EnvironmentWeather|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|DrivableAreaType||0|Type of drivable area.||openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|LongitudinalUpSlope||0|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|DrivableAreaSurfaceType||0|Type of drivable area surface.||openlabel-v2.shacl.ttl|
@@ -1147,15 +1168,14 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |EnvironmentWeather|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|ParticulatesDust||1|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |EnvironmentWeather|openlabel_v2|ParticulatesPollution||1|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|EnvironmentWeather|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|SubjectVehicleSpeed||0|Presence of a specified subject vehicle speed.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|LaneSpecificationDimensions||1|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|IlluminationLowLight||0|Type of low-light condition.||openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|LongitudinalDownSlope||1|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|GeometryHorizontal|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
+|GeometryHorizontal|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|JunctionIntersection||1|Type of intersection.||openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|trafficFlowRateValue||0|Traffic flow rate in vehicles per hour.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |GeometryHorizontal|openlabel_v2|IlluminationCloudiness||0|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -1233,7 +1253,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |GeometryLongitudinal|openlabel_v2|DrivableAreaSurfaceType||1|Type of drivable area surface.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|LaneSpecificationTravelDirection||1|Direction of travel.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|ParticulatesWater||0|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
-|GeometryLongitudinal|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|weatherSnowValue||0|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|ConnectivityPositioning||0|Type of positioning system.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|DrivableAreaSurfaceCondition||1|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
@@ -1275,6 +1294,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |GeometryLongitudinal|openlabel_v2|EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|ScenerySpecialStructure||1|Type of special structure present in the scenery.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|SignsWarning||1|Type of warning sign.||openlabel-v2.shacl.ttl|
+|GeometryLongitudinal|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |GeometryLongitudinal|openlabel_v2|RainType||0|Type of rainfall.||openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|particulatesWaterValue||1|Meteorological optical range in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|EnvironmentParticulates||1|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
@@ -1284,7 +1304,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |IlluminationDay|openlabel_v2|SignsWarning||0|Type of warning sign.||openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|TrafficVolume||0|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|LaneSpecificationTravelDirection||0|Direction of travel.||openlabel-v2.shacl.ttl|
-|IlluminationDay|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|daySunElevationValue||1|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|LaneSpecificationDimensions||0|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|TrafficFlowRate||0|Presence of a specified traffic flow rate.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -1316,6 +1335,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |IlluminationDay|openlabel_v2|TrafficAgentType||0|Presence of a specified traffic agent type.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|laneSpecificationDimensionsValue||0|Lane width in metres.||openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
+|IlluminationDay|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|TrafficSpecialVehicle||0|Presence of special vehicles.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|ParticulatesWater||1|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |IlluminationDay|openlabel_v2|trafficVolumeValue||0|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
@@ -1377,6 +1397,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |OddDynamicElements|openlabel_v2|longitudinalDownSlopeValue||0|Downward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|laneSpecificationDimensionsValue||0|Lane width in metres.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|LaneSpecificationLaneCount||0|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddDynamicElements|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|GeometryTransverse||0|Type of transverse geometry.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|LaneSpecificationType||0|Type of lane.||openlabel-v2.shacl.ttl|
@@ -1392,7 +1413,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |OddDynamicElements|openlabel_v2|subjectVehicleSpeedValue||1|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|LaneSpecificationMarking||0|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|daySunElevationValue||0|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
-|OddDynamicElements|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|trafficAgentDensityValue||1|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|trafficVolumeValue||1|Traffic volume in vehicle kilometres.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |OddDynamicElements|openlabel_v2|ConnectivityCommunication||0|Type of communication connectivity.||openlabel-v2.shacl.ttl|
@@ -1455,9 +1475,9 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |OddEnvironment|openlabel_v2|trafficAgentDensityValue||0|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|ConnectivityPositioning||1|Type of positioning system.||openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|horizontalCurvesValue||0|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
+|OddEnvironment|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|IlluminationArtificial||1|Type of artificial illumination.||openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|DrivableAreaType||0|Type of drivable area.||openlabel-v2.shacl.ttl|
-|OddEnvironment|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|daySunElevationValue||1|Sun elevation in degrees.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|SceneryZone||0|Type of zone.||openlabel-v2.shacl.ttl|
 |OddEnvironment|openlabel_v2|DrivableAreaEdge||0|Type of drivable area edge.||openlabel-v2.shacl.ttl|
@@ -1485,6 +1505,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |OddScenery|openlabel_v2|HorizontalCurves||1|Presence of curved roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|JunctionRoundabout||1|Type of roundabout.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|LaneSpecificationDimensions||1|Presence of specified lane dimensions.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|OddScenery|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|SceneryFixedStructure||1|Type of basic road structure present in the scenery.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|DrivableAreaSurfaceType||1|Type of drivable area surface.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|SignsInformation||1|Type of information sign.||openlabel-v2.shacl.ttl|
@@ -1511,7 +1532,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |OddScenery|openlabel_v2|HorizontalStraights||1|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|laneSpecificationDimensionsValue||1|Lane width in metres.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|DrivableAreaEdge|||Type of drivable area edge.||openlabel-v2.shacl.ttl|
-|OddScenery|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|DrivableAreaSurfaceCondition||1|Type of drivable area surface condition.||openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|weatherSnowValue||0|Visibility in kilometres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |OddScenery|openlabel_v2|ParticulatesMarine||0|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -1548,6 +1568,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |SceneryDrivableArea|openlabel_v2|SignsInformation||1|Type of information sign.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|IlluminationCloudiness||0|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|subjectVehicleSpeedValue||0|Subject vehicle speed in kilometres per hour.||openlabel-v2.shacl.ttl|
+|SceneryDrivableArea|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|RainType||0|Type of rainfall.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|DrivableAreaEdge|||Type of drivable area edge.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|longitudinalUpSlopeValue||1|Upward gradient as a percentage.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
@@ -1555,7 +1576,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |SceneryDrivableArea|openlabel_v2|trafficAgentDensityValue||0|Traffic agent density in vehicles per kilometre.|<http://www.w3.org/2001/XMLSchema#integer>|openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|HorizontalStraights||1|Presence of straight roadway geometry.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|EnvironmentParticulates||0|Type of particulates present in the environment.||openlabel-v2.shacl.ttl|
-|SceneryDrivableArea|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|SignsRegulatory||1|Type of regulatory sign.||openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|ParticulatesMarine||0|Presence of marine spray in coastal areas.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryDrivableArea|openlabel_v2|JunctionRoundabout||1|Type of roundabout.||openlabel-v2.shacl.ttl|
@@ -1600,7 +1620,6 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |SceneryJunction|openlabel_v2|LongitudinalUpSlope||1|Presence of an uphill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|TrafficVolume||0|Presence of a specified traffic volume.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|SignsWarning||1|Type of warning sign.||openlabel-v2.shacl.ttl|
-|SceneryJunction|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|ConnectivityPositioning||0|Type of positioning system.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|IlluminationLowLight||0|Type of low-light condition.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|JunctionIntersection||1|Type of intersection.||openlabel-v2.shacl.ttl|
@@ -1635,6 +1654,7 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |SceneryJunction|openlabel_v2|DrivableAreaEdge|||Type of drivable area edge.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|horizontalCurvesValue||1|Curve radius in metres.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|LongitudinalDownSlope||1|Presence of a downhill gradient.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|SceneryJunction|openlabel_v2|trafficAgentTypeValue||0|Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|DrivableAreaSurfaceFeature||1|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|ParticulatesPollution||0|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |SceneryJunction|openlabel_v2|WeatherSnow||0|Presence of snowfall.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
@@ -1710,13 +1730,13 @@ _Class diagram omitted for size (204 classes). See class hierarchy and definitio
 |Odd|openlabel_v2|ParticulatesPollution||1|Presence of smoke or pollution particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|ParticulatesDust||1|Presence of sand or dust particulates.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|LaneSpecificationLaneCount||1|Presence of a specified lane count.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
+|Odd|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|DaySunElevation||1|Presence of a specified sun elevation above the horizon.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|LongitudinalLevelPlane||1|Presence of a level longitudinal plane.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|IlluminationCloudiness||1|Presence of cloudiness.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|DrivableAreaSurfaceFeature||1|Type of drivable area surface feature.||openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|LaneSpecificationMarking||1|Presence of lane markings.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|DrivableAreaType||1|Type of drivable area.||openlabel-v2.shacl.ttl|
-|Odd|openlabel_v2|trafficAgentTypeValue|||Types of traffic agents present.||openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|SignsWarning||1|Type of warning sign.||openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|ParticulatesWater||1|Presence of non-precipitating water droplets or ice crystals.|<http://www.w3.org/2001/XMLSchema#boolean>|openlabel-v2.shacl.ttl|
 |Odd|openlabel_v2|illuminationCloudinessValue||1|Cloud cover in okta.|<http://www.w3.org/2001/XMLSchema#decimal>|openlabel-v2.shacl.ttl|

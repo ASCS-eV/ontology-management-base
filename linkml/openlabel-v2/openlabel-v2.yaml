@@ -2152,9 +2152,7 @@ slots:
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficAgentTypeValue
-    any_of:
-      - range: RoadUserHumanEnum
-      - range: RoadUserVehicleEnum
+    range: TrafficAgentTypeEnum
     multivalued: true
   trafficFlowRateValue:
     description: Traffic flow rate in vehicles per hour.
@@ -2235,12 +2233,14 @@ slots:
   minValue:
     description: Minimum value of the range.
     slot_uri: sdo:minValue
+    domain: QuantitativeValue
     range: decimal
     required: true
 
   maxValue:
     description: Maximum value of the range.
     slot_uri: sdo:maxValue
+    domain: QuantitativeValue
     range: decimal
     required: true
 
@@ -2376,6 +2376,73 @@ enums:
       HumanWheelchairUser:
         description: Wheelchair user.
         meaning: openlabel_v2:HumanWheelchairUser
+
+  # ---------------------------------------------------------------------------
+  # Traffic Agent Type (union of human + vehicle road user types)
+  # ---------------------------------------------------------------------------
+  TrafficAgentTypeEnum:
+    description: >-
+      Combined set of traffic agent types (human and vehicle road users).
+      Union of RoadUserHumanEnum and RoadUserVehicleEnum, used by
+      trafficAgentTypeValue so a single enum range yields the @vocab context
+      coercion and a single sh:in constraint (values written as bare terms).
+    comments:
+      - "ISO 34503:2023, 11.1"
+    permissible_values:
+      HumanAnimalRider:
+        description: Animal rider (e.g. horse rider).
+        meaning: openlabel_v2:HumanAnimalRider
+      HumanCyclist:
+        description: Cyclist.
+        meaning: openlabel_v2:HumanCyclist
+      HumanDriver:
+        description: Driver.
+        meaning: openlabel_v2:HumanDriver
+      HumanMotorcyclist:
+        description: Motorcyclist.
+        meaning: openlabel_v2:HumanMotorcyclist
+      HumanPassenger:
+        description: Passenger.
+        meaning: openlabel_v2:HumanPassenger
+      HumanPedestrian:
+        description: Pedestrian.
+        meaning: openlabel_v2:HumanPedestrian
+      HumanWheelchairUser:
+        description: Wheelchair user.
+        meaning: openlabel_v2:HumanWheelchairUser
+      VehicleAgricultural:
+        description: Agricultural vehicle.
+        meaning: openlabel_v2:VehicleAgricultural
+      VehicleBus:
+        description: Bus.
+        meaning: openlabel_v2:VehicleBus
+      VehicleCar:
+        description: Car.
+        meaning: openlabel_v2:VehicleCar
+      VehicleConstruction:
+        description: Construction vehicle.
+        meaning: openlabel_v2:VehicleConstruction
+      VehicleCycle:
+        description: Cycle.
+        meaning: openlabel_v2:VehicleCycle
+      VehicleEmergency:
+        description: Emergency vehicle.
+        meaning: openlabel_v2:VehicleEmergency
+      VehicleMotorcycle:
+        description: Motorcycle.
+        meaning: openlabel_v2:VehicleMotorcycle
+      VehicleTrailer:
+        description: Trailer.
+        meaning: openlabel_v2:VehicleTrailer
+      VehicleTruck:
+        description: Truck.
+        meaning: openlabel_v2:VehicleTruck
+      VehicleVan:
+        description: Van.
+        meaning: openlabel_v2:VehicleVan
+      VehicleWheelchair:
+        description: Wheelchair.
+        meaning: openlabel_v2:VehicleWheelchair
 
   # ---------------------------------------------------------------------------
   # Drivable Area Edge

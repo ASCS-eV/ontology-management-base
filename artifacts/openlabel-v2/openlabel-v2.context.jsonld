@@ -645,7 +645,14 @@
          "@type": "xsd:integer"
       },
       "trafficAgentTypeValue": {
-         "@id": "trafficAgentTypeValue"
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "trafficAgentTypeValue",
+         "@type": "@vocab"
       },
       "trafficFlowRateValue": {
          "@id": "trafficFlowRateValue",

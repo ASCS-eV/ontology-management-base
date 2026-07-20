@@ -70,6 +70,7 @@ Read these BEFORE making changes:
 | Validation pipeline             | [instructions/validation-workflow.md](instructions/validation-workflow.md) |
 | Testing requirements            | [instructions/testing.md](instructions/testing.md)                         |
 | Domain terminology              | [instructions/glossary.md](instructions/glossary.md)                       |
+| LinkML fork & upstream PRs      | [instructions/linkml-fork-workflow.md](instructions/linkml-fork-workflow.md) |
 
 ## Core Principles
 

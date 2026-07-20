@@ -12,6 +12,7 @@ Read these before making changes; they are authoritative for repo workflows.
 | Validation pipeline             | [.github/instructions/validation-workflow.md](.github/instructions/validation-workflow.md) |
 | Testing requirements            | [.github/instructions/testing.md](.github/instructions/testing.md)                         |
 | Domain terminology              | [.github/instructions/glossary.md](.github/instructions/glossary.md)                       |
+| LinkML fork & upstream PRs      | [.github/instructions/linkml-fork-workflow.md](.github/instructions/linkml-fork-workflow.md) |
 
 ## Project Structure & Module Organization
 

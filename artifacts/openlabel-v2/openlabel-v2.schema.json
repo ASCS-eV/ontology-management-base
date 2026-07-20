@@ -562,6 +562,7 @@
             "SignsInformation",
             "SignsRegulatory",
             "SignsWarning",
+            "trafficAgentTypeValue",
             "CommunicationHeadlightFlash",
             "CommunicationHorn",
             "CommunicationSignalEmergency",

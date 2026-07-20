@@ -625,6 +625,8 @@ enums:
         description: Enum category tag (takes values from SignsRegulatoryEnum)
       SignsWarning:
         description: Enum category tag (takes values from SignsWarningEnum)
+      trafficAgentTypeValue:
+        description: Enum category tag (takes values from TrafficAgentTypeEnum)
       # --- BehaviourCommunicationEnum ---
       CommunicationHeadlightFlash:
         description: "Flash headlight."
@@ -956,3 +958,4 @@ enums:
         description: "Variable full-time."
       WarningSignsVariableTemporary:
         description: "Variable temporary."
+      # --- TrafficAgentTypeEnum ---
