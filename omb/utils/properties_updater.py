@@ -49,10 +49,11 @@ import rdflib
 from rdflib import OWL, RDF, RDFS, URIRef
 
 from omb.core.logging import get_logger
+from omb.core.paths import builtin_data_root
 
 logger = get_logger(__name__)
 
-ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
+ROOT_DIR = builtin_data_root()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
 DOCS_DIR = ROOT_DIR / "docs"
 CATALOG_PATH = DOCS_DIR / "ontologies" / "catalog.md"

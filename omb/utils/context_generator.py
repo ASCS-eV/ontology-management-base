@@ -55,13 +55,14 @@ from rdflib.term import Node
 from omb.core.constants import FAST_STORE, Extensions
 from omb.core.iri_utils import get_local_name, normalize_iri
 from omb.core.logging import get_logger
+from omb.core.paths import builtin_data_root
 from omb.utils.graph_loader import load_graph, load_graphs
 from omb.utils.print_formatter import normalize_path_for_display
 
 logger = get_logger(__name__)
 
 # Constants
-ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
+ROOT_DIR = builtin_data_root()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
 LINKML_DIR = ROOT_DIR / "linkml"
 

@@ -50,11 +50,12 @@ import rdflib
 from rdflib import OWL, RDF, RDFS, Namespace, URIRef
 
 from omb.core.logging import get_logger
+from omb.core.paths import builtin_data_root
 
 PAV = Namespace("http://purl.org/pav/")
 logger = get_logger(__name__)
 
-ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
+ROOT_DIR = builtin_data_root()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
 DOCS_DIR = ROOT_DIR / "docs"
 CLASSES_DIR = DOCS_DIR / "ontologies" / "classes"

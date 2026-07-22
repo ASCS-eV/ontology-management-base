@@ -37,6 +37,7 @@ PAV = Namespace("http://purl.org/pav/")
 
 from omb.core.constants import FAST_STORE  # noqa: E402
 from omb.core.logging import get_logger  # noqa: E402
+from omb.core.paths import builtin_data_root  # noqa: E402
 from omb.utils.file_collector import (  # noqa: E402
     collect_jsonld_files,
     collect_ontology_bundles,
@@ -47,7 +48,7 @@ from omb.utils.file_collector import (  # noqa: E402
 logger = get_logger(__name__)
 
 # Constants
-ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
+ROOT_DIR = builtin_data_root()
 ARTIFACTS_DIR = ROOT_DIR / "artifacts"
 TESTS_DATA_DIR = ROOT_DIR / "tests" / "data"
 FIXTURES_DIR = ROOT_DIR / "tests" / "fixtures"
