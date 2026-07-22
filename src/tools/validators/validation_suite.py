@@ -116,6 +116,7 @@ import sys
 from pathlib import Path
 from typing import List
 
+from src.tools.core.paths import builtin_data_root
 from src.tools.utils.file_collector import discover_data_hierarchy
 from src.tools.utils.print_formatter import normalize_path_for_display, normalize_text
 from src.tools.utils.registry_resolver import TEMP_DOMAIN_PREFIX, RegistryResolver
@@ -126,9 +127,9 @@ from src.tools.validators.syntax_validator import (
     check_turtle_wellformedness,
 )
 
-# Default root directory (computed from module location).
-# Functions accept root_dir as parameter; this is only used as fallback.
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
+# Default root for OMB's built-in data. Functions accept root_dir as a
+# parameter; this is only the fallback. Single seam: builtin_data_root().
+ROOT_DIR = builtin_data_root()
 
 # Known upstream coherence failures that should warn instead of fail.
 # Maps (domain, lowercase_class_name) -> upstream issue URL.

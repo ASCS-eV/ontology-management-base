@@ -52,6 +52,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
 from src.tools.core.logging import get_logger
+from src.tools.core.paths import builtin_data_root
 
 # Prefix for temporary domains created by --data-paths mode.
 TEMP_DOMAIN_PREFIX = "custom-path-"
@@ -74,12 +75,12 @@ class RegistryResolver:
         Initialize the registry resolver.
 
         Args:
-            root_dir: Root directory of the repository. Defaults to current directory.
+            root_dir: Root directory of OMB's built-in data. Defaults to builtin_data_root().
             enable_http: If True and local catalogs are missing, bootstrap
                 artifacts from HTTP using HttpArtifactResolver.  Note: this
                 replaces ``root_dir`` with the HTTP cache directory.
         """
-        self.root_dir = Path(root_dir or Path.cwd()).resolve()
+        self.root_dir = Path(root_dir or builtin_data_root()).resolve()
         self._registry: Dict = {}
         self._catalog: Dict[str, Dict] = {}  # Full catalog (test-data + fixtures)
         self._fixtures_catalog: Dict[str, str] = {}  # Fixture IRIs only
@@ -853,9 +854,10 @@ class RegistryResolver:
                 temp_domain, invalid_files, test_type="invalid"
             )
 
-        print(
-            f"📋 Created temporary domain '{temp_domain}' with {len(unique_file_paths)} file(s)",
-            flush=True,
+        logger.info(
+            "Created temporary domain '%s' with %d file(s)",
+            temp_domain,
+            len(unique_file_paths),
         )
 
         return temp_domain

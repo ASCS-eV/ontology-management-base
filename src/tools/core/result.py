@@ -42,7 +42,7 @@ NOTES:
 
 from dataclasses import dataclass, field
 from enum import IntEnum
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from rdflib import Graph
 
@@ -104,6 +104,11 @@ class ValidationResult:
         duration_seconds: Time taken for validation
         errors: List of specific error messages
         warnings: List of warning messages
+        shapes_loaded: Number of sh:NodeShape subjects loaded
+        target_types: Sorted @type IRIs found in validated data
+        types_routed: Target types that resolve to a domain/imported namespace
+        types_unrouted: Target types that resolve to neither
+        per_type_shape_count: Shapes targeting each found @type IRI
     """
 
     conforms: bool
@@ -116,6 +121,11 @@ class ValidationResult:
     duration_seconds: float = 0.0
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
+    shapes_loaded: int = 0
+    target_types: List[str] = field(default_factory=list)
+    types_routed: List[str] = field(default_factory=list)
+    types_unrouted: List[str] = field(default_factory=list)
+    per_type_shape_count: Dict[str, int] = field(default_factory=dict)
 
     @classmethod
     def success(

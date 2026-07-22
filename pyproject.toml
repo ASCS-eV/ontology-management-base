@@ -25,12 +25,16 @@ classifiers = [
 dependencies = [
     "rdflib>=7.6.0",
     "pyshacl>=0.31.0",
-    "keycloak_client>=0.15.4",
-    "requests>=2.32.5",
     "oxrdflib>=0.5.0",
 ]
 
 [project.optional-dependencies]
+publish = [
+    # Optional Gaia-X Federated Catalogue / EDC publishing stack. Only needed for
+    # src/tools/uploaders and src/tools/authhelper; NOT required to validate.
+    "keycloak_client>=0.15.4",
+    "requests>=2.32.5",
+]
 dev = [
     "ruff>=0.15.0",
     # linkml: in [dev] for standalone pip install; the submodule pin in

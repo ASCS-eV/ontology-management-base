@@ -223,6 +223,7 @@ class ShaclValidator:
         ontology_graph, shacl_graph = self._load_schemas(
             rdf_types, predicates, datatypes
         )
+        routing = self._routing_metadata(rdf_types, shacl_graph)
 
         # Strict mode: fail on unresolved @type IRIs
         if self.strict and self._unresolved_types:
@@ -238,6 +239,7 @@ class ShaclValidator:
                 ),
                 files_validated=[self._rel_path(f) for f in jsonld_files],
                 warnings=warnings,
+                **routing,
             )
 
         # Step 3: Apply inference if requested
@@ -263,6 +265,7 @@ class ShaclValidator:
             triples_count=len(combined_graph),
             inferred_count=inferred_count,
             duration_seconds=duration,
+            **routing,
         )
 
     def validate_each(self, jsonld_files: List[Path]) -> List["ValidationResult"]:
@@ -338,6 +341,8 @@ class ShaclValidator:
                 closed_ontology = ontology_graph
             cache[cache_key] = (shacl_graph, closed_ontology)
 
+        routing = self._routing_metadata(union_types, shacl_graph)
+
         # Step 4: Validate each file's data graph in isolation.
         self._log(f"Step 4: Validating {len(per_file)} resource(s) individually...")
         results: List[ValidationResult] = []
@@ -357,6 +362,7 @@ class ShaclValidator:
                     report_graph=report_graph,
                     files_validated=[self._rel_path(f)],
                     triples_count=len(combined),
+                    **routing,
                 )
             )
         return results
@@ -506,6 +512,37 @@ class ShaclValidator:
         self._log(f"  SHACL triples: {len(shacl_graph)}")
 
         return ontology_graph, shacl_graph
+
+    def _routing_metadata(self, rdf_types, shacl_graph):
+        """Compute shape/type-routing metadata for the report model.
+
+        Pure/read-only: derives report data from the discovered types and the
+        loaded SHACL graph. Does NOT affect pass/fail. Computed independently of
+        the per-resource schema cache so it is correct on cache hits too.
+        """
+        from rdflib import URIRef
+        from rdflib.namespace import RDF, SH
+
+        target = sorted(str(t) for t in rdf_types)
+        unrouted = sorted(
+            str(t)
+            for t in rdf_types
+            if self.resolver.resolve_type_to_domain(t) is None
+            and not self.resolver.is_imported_namespace(t)
+        )
+        unrouted_set = set(unrouted)
+        routed = [t for t in target if t not in unrouted_set]
+        shapes_loaded = len(set(shacl_graph.subjects(RDF.type, SH.NodeShape)))
+        per_type = {
+            t: len(set(shacl_graph.subjects(SH.targetClass, URIRef(t)))) for t in target
+        }
+        return {
+            "shapes_loaded": shapes_loaded,
+            "target_types": target,
+            "types_routed": routed,
+            "types_unrouted": unrouted,
+            "per_type_shape_count": per_type,
+        }
 
     def _apply_inference(
         self, data_graph: Graph, ontology_graph: Graph
