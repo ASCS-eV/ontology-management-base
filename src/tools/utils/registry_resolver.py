@@ -853,9 +853,10 @@ class RegistryResolver:
                 temp_domain, invalid_files, test_type="invalid"
             )
 
-        print(
-            f"📋 Created temporary domain '{temp_domain}' with {len(unique_file_paths)} file(s)",
-            flush=True,
+        logger.info(
+            "Created temporary domain '%s' with %d file(s)",
+            temp_domain,
+            len(unique_file_paths),
         )
 
         return temp_domain
