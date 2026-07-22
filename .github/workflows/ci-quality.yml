@@ -40,7 +40,7 @@ jobs:
           echo "Diffing against: $BASE_SHA"
           CHANGED_FILES=$(git diff --name-only "$BASE_SHA" HEAD)
 
-          if echo "$CHANGED_FILES" | grep -qE "^(src/|imports/|config/|submodules/|.github/|pyproject.toml|requirements.txt)"; then
+          if echo "$CHANGED_FILES" | grep -qE "^(omb/|imports/|config/|submodules/|.github/|pyproject.toml|requirements.txt)"; then
             echo "Core configuration or code changed. Running full suite."
             echo "domains=" >> $GITHUB_OUTPUT
             echo "should_run=true" >> $GITHUB_OUTPUT

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Tests for src.tools.api."""
+"""Tests for omb.api."""
 
 import contextlib
 import io
 from pathlib import Path
 
-from src.tools.api import validate_data
-from src.tools.core.result import ValidationResult
+from omb.api import validate_data
+from omb.core.result import ValidationResult
 
 GX_VALID_DIR = Path("tests/data/gx/valid")
 

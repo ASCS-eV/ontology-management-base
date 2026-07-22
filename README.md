@@ -54,7 +54,7 @@ flowchart TD
 ## What's in This Repository
 
 - **Ontologies** — OWL definitions with SHACL validation shapes (`artifacts/`)
-- **Validation Tools** — Python suite to validate metadata instances (`src/tools/`)
+- **Validation Tools** — Python suite to validate metadata instances (`omb/`)
 - **Test Data** — Valid and invalid examples per domain (`tests/data/`)
 - **Documentation** — Guides, architecture, and specifications (`docs/`)
 - **Standard References** — ASAM OpenX specs as submodule (`submodules/asam-openx-standards/`)
@@ -95,7 +95,7 @@ source .venv/bin/activate
 make test
 
 # See validation options
-python3 -m src.tools.validators.validation_suite --help
+python3 -m omb.validators.validation_suite --help
 
 # Validate specific domain
 make test domain DOMAIN=hdmap

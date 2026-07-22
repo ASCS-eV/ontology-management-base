@@ -3,7 +3,7 @@
 ## Module Hierarchy
 
 ```
-src/tools/
+omb/
 ├── core/                    # Foundation layer (no internal dependencies)
 │   ├── constants.py         # FAST_STORE, Extensions, Namespaces
 │   ├── result.py            # ReturnCodes, ValidationResult

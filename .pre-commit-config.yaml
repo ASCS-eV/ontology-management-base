@@ -26,21 +26,21 @@ repos:
 
       - id: jsonld-lint
         name: JSON-LD Parser
-        entry: python -m src.tools.validators.syntax_validator --json
+        entry: python -m omb.validators.syntax_validator --json
         language: system
         types: [json]
         files: \.(json|jsonld)$
 
       - id: turtle-lint
         name: Turtle Parser
-        entry: python -m src.tools.validators.syntax_validator --turtle
+        entry: python -m omb.validators.syntax_validator --turtle
         language: system
         types: [text]
         files: \.(ttl)$
 
       - id: update-context
         name: Update JSON-LD Contexts
-        entry: python -m src.tools.utils.context_generator --all
+        entry: python -m omb.utils.context_generator --all
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl)$
@@ -48,7 +48,7 @@ repos:
 
       - id: update-registry
         name: Update Ontology Registry and Catalog
-        entry: python -m src.tools.utils.registry_updater
+        entry: python -m omb.utils.registry_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
@@ -56,7 +56,7 @@ repos:
 
       - id: update-properties
         name: Update Properties Documentation
-        entry: python -m src.tools.utils.properties_updater
+        entry: python -m omb.utils.properties_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
@@ -64,7 +64,7 @@ repos:
 
       - id: update-readme
         name: Update README Catalog Table
-        entry: python -m src.tools.utils.readme_updater
+        entry: python -m omb.utils.readme_updater
         language: system
         pass_filenames: false
         files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$

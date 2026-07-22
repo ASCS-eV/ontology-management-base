@@ -16,7 +16,7 @@ The validation suite performs four types of checks:
 ### 1. Auto Discovery Mode (Default)
 
 ```bash
-python3 -m src.tools.validators.validation_suite
+python3 -m omb.validators.validation_suite
 ```
 
 - Reads `tests/catalog-v001.xml`
@@ -26,7 +26,7 @@ python3 -m src.tools.validators.validation_suite
 ### 2. Domain Selection Mode
 
 ```bash
-python3 -m src.tools.validators.validation_suite --domain manifest scenario
+python3 -m omb.validators.validation_suite --domain manifest scenario
 ```
 
 - Reads `tests/catalog-v001.xml`
@@ -36,7 +36,7 @@ python3 -m src.tools.validators.validation_suite --domain manifest scenario
 ### 3. Data Paths Validation Mode
 
 ```bash
-python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json ./more_data/
+python3 -m omb.validators.validation_suite --data-paths ./my_data.json ./more_data/
 ```
 
 - Creates temporary in-memory catalog from provided paths

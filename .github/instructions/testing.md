@@ -62,7 +62,7 @@ Test complete features from user perspective:
 def test_domain_mode_validates_manifest(root_dir):
     """Domain mode should validate all manifest test files."""
     result = subprocess.run(
-        ["python", "-m", "src.tools.validators.validation_suite",
+        ["python", "-m", "omb.validators.validation_suite",
          "--domain", "manifest"],
         capture_output=True,
         cwd=root_dir,
@@ -188,7 +188,7 @@ def _run_tests() -> bool:
 Run with:
 
 ```bash
-python3 -m src.tools.utils.file_collector --test
+python3 -m omb.utils.file_collector --test
 ```
 
 ## Test Naming Conventions
@@ -227,7 +227,7 @@ def test_validate_without_pyshacl():
 pytest tests/
 
 # Run with coverage
-pytest tests/ --cov=src/tools --cov-report=html
+pytest tests/ --cov=omb --cov-report=html
 
 # Run specific test file
 pytest tests/unit/utils/test_file_collector.py
@@ -239,7 +239,7 @@ pytest tests/ -k "test_load"
 pytest tests/ -v
 
 # Run self-tests in a module
-python3 -m src.tools.utils.file_collector --test
+python3 -m omb.utils.file_collector --test
 ```
 
 ## CI Requirements
@@ -247,5 +247,5 @@ python3 -m src.tools.utils.file_collector --test
 All PRs must pass:
 
 1. `pytest tests/` - All tests pass
-2. `pytest tests/ --cov=src/tools` - Coverage > 80%
-3. `python3 -m src.tools.validators.validation_suite` - Full suite passes
+2. `pytest tests/ --cov=omb` - Coverage > 80%
+3. `python3 -m omb.validators.validation_suite` - Full suite passes

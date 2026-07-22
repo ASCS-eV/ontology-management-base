@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from src.tools.api import validate_data
+from omb.api import validate_data
 
 GX_VALID_DIR = Path("tests/data/gx/valid")
 

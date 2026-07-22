@@ -12,11 +12,11 @@
 # INFRASTRUCTURE & TOOLING
 # =============================================================================
 # Source code and tooling (Carlo)
-/src/ @jdsika
+/omb/ @jdsika
 
-# Exceptions: authhandler and uploaders (Robert OR Justin)
-/src/authhandler/ @robertschubert @JustinDxx
-/src/uploaders/ @robertschubert @JustinDxx
+# Exceptions: authhelper and uploaders (Robert OR Justin)
+/omb/authhelper/ @robertschubert @JustinDxx
+/omb/uploaders/ @robertschubert @JustinDxx
 
 # CI/CD workflows (Carlo)
 /.github/ @jdsika

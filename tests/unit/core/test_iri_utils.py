@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.core.iri_utils module.
+Unit tests for omb.core.iri_utils module.
 """
 
-from src.tools.core.iri_utils import (
+from omb.core.iri_utils import (
     did_web_to_url,
     extract_prefix_from_context,
     get_local_name,

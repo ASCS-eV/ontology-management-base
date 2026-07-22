@@ -177,8 +177,8 @@ lint:
 format:
 	$(call check_dev_setup)
 	@echo "[INFO] Formatting Python code..."
-	@"$(PYTHON)" -m ruff check --fix src/
-	@"$(PYTHON)" -m ruff format src/
+	@"$(PYTHON)" -m ruff check --fix omb/
+	@"$(PYTHON)" -m ruff format omb/
 	@echo "[OK] Python formatting complete"
 
 generate:
@@ -261,28 +261,28 @@ _test_default:
 
 _test_syntax:
 	@echo "[INFO] Running check-syntax..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-syntax
+	@"$(PYTHON)" -m omb.validators.validation_suite --run check-syntax
 	@echo "[OK] check-syntax complete"
 
 _test_artifact_coherence:
 	@echo "[INFO] Running check-artifact-coherence..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-artifact-coherence
+	@"$(PYTHON)" -m omb.validators.validation_suite --run check-artifact-coherence
 	@echo "[OK] check-artifact-coherence complete"
 
 _test_data_conformance:
 	@echo "[INFO] Running check-data-conformance..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-data-conformance
+	@"$(PYTHON)" -m omb.validators.validation_suite --run check-data-conformance
 	@echo "[OK] check-data-conformance complete"
 
 _test_failing:
 	@echo "[INFO] Running check-failing-tests..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run check-failing-tests
+	@"$(PYTHON)" -m omb.validators.validation_suite --run check-failing-tests
 	@echo "[OK] check-failing-tests complete"
 
 _test_cov:
 	$(call check_dev_setup)
 	@echo "[INFO] Running unit tests with coverage..."
-	@"$(PYTHON)" -m pytest tests/ --cov=src --cov-report=html --cov-report=term
+	@"$(PYTHON)" -m pytest tests/ --cov=omb --cov-report=html --cov-report=term
 	@echo "[OK] Coverage run complete"
 
 # Test specific domain
@@ -293,7 +293,7 @@ _test_domain:
 		exit 1; \
 	fi
 	@echo "[INFO] Running full validation suite for domain: $(DOMAIN)..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite --run all --domain "$(DOMAIN)"
+	@"$(PYTHON)" -m omb.validators.validation_suite --run all --domain "$(DOMAIN)"
 	@echo "[OK] Domain validation complete"
 
 # Validate target — runs the validation suite with optional ARGS passthrough.
@@ -301,7 +301,7 @@ _test_domain:
 validate:
 	$(call check_dev_setup)
 	@echo "[INFO] Running validation suite..."
-	@"$(PYTHON)" -m src.tools.validators.validation_suite $(ARGS)
+	@"$(PYTHON)" -m omb.validators.validation_suite $(ARGS)
 	@echo "[OK] Validation complete"
 
 # Documentation targets
@@ -324,7 +324,7 @@ docs:
 _docs_generate:
 	$(call check_dev_setup)
 	@echo "[INFO] Generating documentation assets..."
-	@"$(PYTHON)" -m src.tools.utils.properties_updater
+	@"$(PYTHON)" -m omb.utils.properties_updater
 	@echo "[OK] Documentation assets generated"
 
 _docs_serve:
@@ -360,7 +360,7 @@ _registry_update:
 		TAG_VALUE="v$$(sed -n 's/^version = "\(.*\)"/\1/p' pyproject.toml)"; \
 	fi; \
 	echo "[INFO] Updating ontology registry (tag: $$TAG_VALUE)..."; \
-	"$(PYTHON)" -m src.tools.utils.registry_updater --release-tag "$$TAG_VALUE"
+	"$(PYTHON)" -m omb.utils.registry_updater --release-tag "$$TAG_VALUE"
 	@echo "[OK] Registry update complete"
 
 # Cleaning

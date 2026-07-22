@@ -19,24 +19,24 @@ Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4
 make setup
 
 # Run full validation suite
-python3 -m src.tools.validators.validation_suite
+python3 -m omb.validators.validation_suite
 
 # Validate specific domain(s)
-python3 -m src.tools.validators.validation_suite --domain manifest hdmap
+python3 -m omb.validators.validation_suite --domain manifest hdmap
 
 # Run a specific validation check only
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
 
 # Validate arbitrary files (auto-discovers fixtures from referenced IRIs)
-python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+python3 -m omb.validators.validation_suite --data-paths ./my_data.json
 
 # Validate with external artifact directories
-python3 -m src.tools.validators.validation_suite --run check-data-conformance \
+python3 -m omb.validators.validation_suite --run check-data-conformance \
     --data-paths ./examples/credential.json \
     --artifacts ./artifacts ../external-repo/artifacts
 
 # Use specific inference mode (rdfs, owlrl, none, both)
-python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
+python3 -m omb.validators.validation_suite --domain hdmap --inference-mode owlrl
 
 # Run all pytest tests
 pytest tests/
@@ -48,20 +48,20 @@ pytest tests/unit/utils/test_file_collector.py
 pytest tests/ -k "test_load"
 
 # Run tests with coverage
-pytest tests/ --cov=src/tools --cov-report=html
+pytest tests/ --cov=omb --cov-report=html
 
 # Lint and format
 make lint       # pre-commit on all files
-make format     # ruff check --fix + ruff format on src/
+make format     # ruff check --fix + ruff format on omb/
 
 # Run module self-tests
-python3 -m src.tools.utils.file_collector --test
+python3 -m omb.utils.file_collector --test
 
 # Local docs server
 DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
 
 # Update catalogs after artifact changes
-python3 -m src.tools.utils.registry_updater
+python3 -m omb.utils.registry_updater
 ```
 
 **Installed CLI entry points** (after `make setup` or `pip install -e .`):
@@ -75,7 +75,7 @@ python3 -m src.tools.utils.registry_updater
 ### Module Hierarchy
 
 ```
-src/tools/
+omb/
 ├── core/           # Foundation (no internal deps) - constants, logging, result codes, IRI utils
 ├── utils/          # Catalog I/O + graph loading - depends on core/
 └── validators/     # Validation CLI - depends on core/ + utils/
@@ -137,13 +137,13 @@ Auto-triggered on relevant file changes (configured in `.pre-commit-config.yaml`
 ## Key Imports
 
 ```python
-from src.tools.core.logging import get_logger
-from src.tools.core.result import ReturnCodes, ValidationResult
-from src.tools.core.constants import FAST_STORE, Extensions, Namespaces
-from src.tools.core.iri_utils import ...  # IRI string manipulation
-from src.tools.utils.registry_resolver import RegistryResolver
-from src.tools.utils.graph_loader import load_graph, load_jsonld_files
-from src.tools.utils.print_formatter import normalize_path_for_display
+from omb.core.logging import get_logger
+from omb.core.result import ReturnCodes, ValidationResult
+from omb.core.constants import FAST_STORE, Extensions, Namespaces
+from omb.core.iri_utils import ...  # IRI string manipulation
+from omb.utils.registry_resolver import RegistryResolver
+from omb.utils.graph_loader import load_graph, load_jsonld_files
+from omb.utils.print_formatter import normalize_path_for_display
 
 logger = get_logger(__name__)
 ```
@@ -190,7 +190,7 @@ tests/
 └── conftest.py        # Shared pytest fixtures (resolver, tmp_path helpers)
 ```
 
-Modules also have `_run_tests()` functions for self-testing: `python3 -m src.tools.utils.file_collector --test`
+Modules also have `_run_tests()` functions for self-testing: `python3 -m omb.utils.file_collector --test`
 
 ## Coding Conventions
 

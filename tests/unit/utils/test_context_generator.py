@@ -12,7 +12,7 @@ import pytest
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import OWL, RDF, RDFS, XSD
 
-from src.tools.utils.context_generator import (
+from omb.utils.context_generator import (
     _analyze_or_branches,
     _build_ns_prefix_lookup,
     _lookup_prefix,

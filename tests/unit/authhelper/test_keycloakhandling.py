@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.authhelper.keycloakhandling.
+Unit tests for omb.authhelper.keycloakhandling.
 """
 
 import importlib
@@ -21,7 +21,7 @@ class _StubKeycloak:
 
 def test_get_auth_header_returns_bearer(monkeypatch):
     pytest.importorskip("keycloak.keycloak_openid")
-    module = importlib.import_module("src.tools.authhelper.keycloakhandling")
+    module = importlib.import_module("omb.authhelper.keycloakhandling")
 
     stub = _StubKeycloak()
     monkeypatch.setattr(module, "KEYCLOAK_OPENID", stub)

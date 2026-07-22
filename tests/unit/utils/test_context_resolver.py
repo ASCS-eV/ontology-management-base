@@ -3,8 +3,8 @@
 
 from pathlib import Path
 
-from src.tools.utils.context_resolver import build_context_url_map
-from src.tools.utils.registry_resolver import RegistryResolver
+from omb.utils.context_resolver import build_context_url_map
+from omb.utils.registry_resolver import RegistryResolver
 
 
 def test_build_context_url_map_includes_schema_shared_w3c_contexts(root_dir: Path):

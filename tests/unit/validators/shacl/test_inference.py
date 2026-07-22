@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.shacl.inference.
+Unit tests for omb.validators.shacl.inference.
 """
 
 from rdflib import RDF, RDFS, BNode, Graph, Literal, Namespace
 
-from src.tools.validators.shacl.inference import apply_rdfs_inference
+from omb.validators.shacl.inference import apply_rdfs_inference
 
 
 def test_apply_rdfs_inference_subclass_and_domain():

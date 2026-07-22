@@ -8,7 +8,7 @@ The Gaia-X 4 PLC-AAD project aligned automotive simulation assets with Gaia-X re
 
 ## Federated Catalog Upload
 
-Publishing to the federated catalog is supported by `src/tools/uploaders/fc_upload_with_update.py`.
+Publishing to the federated catalog is supported by `omb/uploaders/fc_upload_with_update.py`.
 
 Required environment variables:
 
@@ -25,7 +25,7 @@ export FOLDER_TO_UPLOAD=hdmap
 export FEDERATED_CATALOGUE_URL=https://fc-server.gxfs.gx4fm.org
 export DRY_RUN=true
 
-python3 -m src.tools.uploaders.fc_upload_with_update
+python3 -m omb.uploaders.fc_upload_with_update
 ```
 
 The uploader authenticates through Keycloak, checks existing schemas, and creates or updates OWL and SHACL files accordingly.

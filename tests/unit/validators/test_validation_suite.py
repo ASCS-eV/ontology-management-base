@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.validation_suite.
+Unit tests for omb.validators.validation_suite.
 
 Tests cover:
 - CLI argument parsing
@@ -17,9 +17,9 @@ from pathlib import Path
 
 import pytest
 
-from src.tools.utils.registry_resolver import RegistryResolver
-from src.tools.validators import validation_suite
-from src.tools.validators.shacl.validator import (
+from omb.utils.registry_resolver import RegistryResolver
+from omb.validators import validation_suite
+from omb.validators.shacl.validator import (
     ValidationResult as ShaclValidationResult,
 )
 
@@ -344,7 +344,7 @@ def test_resolver_register_artifact_directory(temp_dir: Path, minimal_repo: Path
 
 def test_discover_data_hierarchy_single_file(temp_dir: Path):
     """Single file becomes top-level when explicitly provided."""
-    from src.tools.utils.file_collector import discover_data_hierarchy
+    from omb.utils.file_collector import discover_data_hierarchy
 
     # Explicit files are always validated, even with did: scheme
     test_file = temp_dir / "test.json"
@@ -358,7 +358,7 @@ def test_discover_data_hierarchy_single_file(temp_dir: Path):
 
 def test_discover_data_hierarchy_with_fixtures(temp_dir: Path):
     """Referenced files become fixtures."""
-    from src.tools.utils.file_collector import discover_data_hierarchy
+    from omb.utils.file_collector import discover_data_hierarchy
 
     # Main file uses https:// IRI (not did:) so it's top-level
     main_file = temp_dir / "main.json"

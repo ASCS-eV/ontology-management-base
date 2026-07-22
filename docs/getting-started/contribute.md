@@ -15,7 +15,7 @@ This guide describes how to add or update ontologies, shapes, and test data.
 Run the updater to regenerate `docs/registry.json` and the XML catalogs:
 
 ```bash
-python3 -m src.tools.utils.registry_updater
+python3 -m omb.utils.registry_updater
 ```
 
 This updates:
@@ -28,7 +28,7 @@ This updates:
 ## Validation
 
 ```bash
-python3 -m src.tools.validators.validation_suite --run all --domain {domain}
+python3 -m omb.validators.validation_suite --run all --domain {domain}
 ```
 
 ## Documentation

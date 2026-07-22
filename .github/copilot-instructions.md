@@ -16,24 +16,24 @@ make lint
 make format
 
 # Run full validation suite (catalog-driven)
-python3 -m src.tools.validators.validation_suite
+python3 -m omb.validators.validation_suite
 
 # Validate specific domain
-python3 -m src.tools.validators.validation_suite --domain manifest
+python3 -m omb.validators.validation_suite --domain manifest
 
 # Validate arbitrary data paths (auto-discovers fixtures)
-python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+python3 -m omb.validators.validation_suite --data-paths ./my_data.json
 
 # Validate with external artifact directories
-python3 -m src.tools.validators.validation_suite --run check-data-conformance \
+python3 -m omb.validators.validation_suite --run check-data-conformance \
     --data-paths ./examples/credential.json \
     --artifacts ./artifacts ../external-repo/artifacts
 
 # Use specific inference mode (rdfs, owlrl, none, both)
-python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
+python3 -m omb.validators.validation_suite --domain hdmap --inference-mode owlrl
 
 # Run specific validation checks
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
 
 # Run tests
 pytest tests/
@@ -45,7 +45,7 @@ pytest tests/unit/utils/test_file_collector.py
 pytest tests/ -k "test_load"
 
 # Run with coverage
-pytest tests/ --cov=src/tools --cov-report=html
+pytest tests/ --cov=omb --cov-report=html
 
 # Run full validation suite via Make
 make test
@@ -54,8 +54,8 @@ make test
 make test domain DOMAIN=hdmap
 
 # Run module self-tests
-python3 -m src.tools.validators.syntax_validator --test
-python3 -m src.tools.utils.file_collector --test
+python3 -m omb.validators.syntax_validator --test
+python3 -m omb.utils.file_collector --test
 ```
 
 ## Instruction Files
@@ -92,7 +92,7 @@ Read these BEFORE making changes:
 
 ## High-Level Architecture
 
-- **Layered modules**: `src/tools/core` (foundations) → `src/tools/utils` (catalog + graph helpers) → `src/tools/validators` (CLI pipeline). No upward imports.
+- **Layered modules**: `omb/core` (foundations) → `omb/utils` (catalog + graph helpers) → `omb/validators` (CLI pipeline). No upward imports.
 - **Catalog-driven discovery**: XML catalogs in `artifacts/`, `imports/`, and `tests/` are the single source of truth for file resolution.
 - **Validation pipeline**: `check-syntax` → `check-artifact-coherence` → `check-data-conformance` → `check-failing-tests` (domain mode only for coherence/failing tests).
 - **Data paths mode** builds a temporary in-memory catalog from `--data-paths` inputs, then runs the standard pipeline.
@@ -105,7 +105,7 @@ Read these BEFORE making changes:
 - **Logging/output**: use `get_logger(__name__)` for progress; `print()` only for final CLI output; normalize paths with `normalize_path_for_display()`.
 - **Errors/return codes**: raise specific exceptions (no silent `None`), and use `ReturnCodes` from `core/result.py`.
 - **Test data**: invalid instances live in `tests/data/{domain}/invalid/` and require a matching `.expected` file.
-- **Artifact changes**: run `python3 -m src.tools.utils.registry_updater` (pre-commit hooks also update catalogs/README/PROPERTIES).
+- **Artifact changes**: run `python3 -m omb.utils.registry_updater` (pre-commit hooks also update catalogs/README/PROPERTIES).
 - **Path input flexibility**: Collection functions accept `PathsInput` (single path or list) - use `normalize_paths_to_list()` from `file_collector.py` when needed.
 
 ## Before You Code
@@ -247,24 +247,24 @@ The human operator will review these files and either:
 
 ```python
 # Logging
-from src.tools.core.logging import get_logger
+from omb.core.logging import get_logger
 logger = get_logger(__name__)
 
 # Path resolution (READ from catalogs)
-from src.tools.utils.registry_resolver import RegistryResolver
+from omb.utils.registry_resolver import RegistryResolver
 
 # Graph loading
-from src.tools.utils.graph_loader import load_graph, load_jsonld_files
+from omb.utils.graph_loader import load_graph, load_jsonld_files
 
 # Return codes
-from src.tools.core.result import ReturnCodes, ValidationResult
+from omb.core.result import ReturnCodes, ValidationResult
 
 # Path utilities
-from src.tools.utils.file_collector import PathsInput, normalize_paths_to_list
-from src.tools.utils.print_formatter import normalize_path_for_display
+from omb.utils.file_collector import PathsInput, normalize_paths_to_list
+from omb.utils.print_formatter import normalize_path_for_display
 
 # Syntax validation (unified API)
-from src.tools.validators.syntax_validator import (
+from omb.validators.syntax_validator import (
     check_json_wellformedness,
     check_turtle_wellformedness,
 )

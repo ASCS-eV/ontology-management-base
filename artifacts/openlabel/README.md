@@ -55,7 +55,7 @@ See the root guide for the canonical commands and explanations:
 Example command for this folder:
 
 ```bash
-python3 -m src.tools.validators.validation_suite \
+python3 -m omb.validators.validation_suite \
   --run check-data-conformance \
   --domain openlabel
 ```

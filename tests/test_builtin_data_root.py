@@ -3,10 +3,10 @@
 
 from pathlib import Path
 
-from src.tools.api import validate_data
-from src.tools.core.paths import builtin_data_root
-from src.tools.utils.registry_resolver import RegistryResolver
-from src.tools.validators.validation_suite import ROOT_DIR
+from omb.api import validate_data
+from omb.core.paths import builtin_data_root
+from omb.utils.registry_resolver import RegistryResolver
+from omb.validators.validation_suite import ROOT_DIR
 
 
 def test_builtin_data_root_points_at_omb_data():

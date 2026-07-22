@@ -130,10 +130,10 @@ def _run_docs_generators() -> None:
     DOCS_SITE_URL is optional and overrides the base URL used for local diagrams.
     """
     subprocess.run(
-        [sys.executable, "-m", "src.tools.utils.properties_updater"], check=True
+        [sys.executable, "-m", "omb.utils.properties_updater"], check=True
     )
     subprocess.run(
-        [sys.executable, "-m", "src.tools.utils.class_page_generator"], check=True
+        [sys.executable, "-m", "omb.utils.class_page_generator"], check=True
     )
 
 

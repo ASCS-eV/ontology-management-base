@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.core.result.
+Unit tests for omb.core.result.
 """
 
-from src.tools.core.result import ReturnCodes, ValidationResult
+from omb.core.result import ReturnCodes, ValidationResult
 
 
 def test_return_codes_values():

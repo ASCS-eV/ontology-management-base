@@ -74,9 +74,9 @@ jobs:
       - name: Generate ontology documentation
         run: |
           # Generate PROPERTIES.md files
-          python3 -m src.tools.utils.properties_updater
+          python3 -m omb.utils.properties_updater
           # Generate class pages with WebVOWL embeds
-          python3 -m src.tools.utils.class_page_generator
+          python3 -m omb.utils.class_page_generator
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

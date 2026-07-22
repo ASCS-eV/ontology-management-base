@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.core.constants.
+Unit tests for omb.core.constants.
 """
 
-from src.tools.core import constants
+from omb.core import constants
 
 
 def test_fast_store_value():

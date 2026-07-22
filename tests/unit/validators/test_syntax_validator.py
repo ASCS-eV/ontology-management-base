@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.syntax_validator.
+Unit tests for omb.validators.syntax_validator.
 
 The unified API returns (overall_code, [(file_code, file_msg), ...]) for all functions.
 """
@@ -8,8 +8,8 @@ The unified API returns (overall_code, [(file_code, file_msg), ...]) for all fun
 import json
 from pathlib import Path
 
-from src.tools.core.result import ReturnCodes
-from src.tools.validators import syntax_validator
+from omb.core.result import ReturnCodes
+from omb.validators import syntax_validator
 
 
 def test_check_json_syntax_success(temp_dir: Path):

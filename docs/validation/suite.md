@@ -5,13 +5,13 @@
 ## Run All Checks
 
 ```bash
-python3 -m src.tools.validators.validation_suite --run all
+python3 -m omb.validators.validation_suite --run all
 ```
 
 ## Run a Single Check
 
 ```bash
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
 ```
 
 ## Data Paths Mode
@@ -19,13 +19,13 @@ python3 -m src.tools.validators.validation_suite --run check-data-conformance --
 Use `--data-paths` to validate arbitrary files. Fixtures are auto-discovered from referenced IRIs:
 
 ```bash
-python3 -m src.tools.validators.validation_suite --data-paths path/to/data.jsonld
+python3 -m omb.validators.validation_suite --data-paths path/to/data.jsonld
 ```
 
 Multiple files or directories can be provided:
 
 ```bash
-python3 -m src.tools.validators.validation_suite --data-paths file1.json file2.json ./directory/
+python3 -m omb.validators.validation_suite --data-paths file1.json file2.json ./directory/
 ```
 
 ## External Artifacts
@@ -33,7 +33,7 @@ python3 -m src.tools.validators.validation_suite --data-paths file1.json file2.j
 Use `--artifacts` to register external artifact directories (for schema resolution):
 
 ```bash
-python3 -m src.tools.validators.validation_suite --data-paths ./data.json --artifacts ../other-repo/artifacts
+python3 -m omb.validators.validation_suite --data-paths ./data.json --artifacts ../other-repo/artifacts
 ```
 
 ## Inference Mode
@@ -41,7 +41,7 @@ python3 -m src.tools.validators.validation_suite --data-paths ./data.json --arti
 Control RDFS/OWL inference with `--inference-mode`:
 
 ```bash
-python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
+python3 -m omb.validators.validation_suite --domain hdmap --inference-mode owlrl
 ```
 
 Options: `rdfs` (default), `owlrl`, `none`, `both`

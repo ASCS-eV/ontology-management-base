@@ -4,7 +4,7 @@ import textwrap
 
 import pytest
 
-from src.tools.utils.xsd_enum_extractor import (
+from omb.utils.xsd_enum_extractor import (
     EnumType,
     EnumValue,
     _is_deprecated,

@@ -102,7 +102,7 @@ See the root guide for the canonical commands and explanations:
 Example command for this folder:
 
 ```bash
-python3 -m src.tools.validators.validation_suite \
+python3 -m omb.validators.validation_suite \
   --run check-data-conformance \
   --domain gx
 ```
@@ -187,8 +187,8 @@ When a new version of Gaia-X is released:
 7. Regenerate documentation and commit:
 
    ```bash
-   python3 -m src.tools.utils.registry_updater
-   python3 -m src.tools.utils.properties_updater
+   python3 -m omb.utils.registry_updater
+   python3 -m omb.utils.properties_updater
    git add artifacts/gx/ submodules/service-characteristics
    git commit -m "chore(gx): upgrade Gaia-X to 25.12"
    ```

@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from src.tools.utils.xsd_enum_extractor import EnumType, EnumValue
-from src.tools.utils.xsd_shacl_sync import (
+from omb.utils.xsd_enum_extractor import EnumType, EnumValue
+from omb.utils.xsd_shacl_sync import (
     EnumComparisonResult,
     SyncReport,
     compare_enums,

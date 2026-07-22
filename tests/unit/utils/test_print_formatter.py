@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.print_formatter.
+Unit tests for omb.utils.print_formatter.
 """
 
 from io import StringIO
@@ -8,7 +8,7 @@ from pathlib import Path
 
 from rdflib import RDF, Graph, Literal, Namespace
 
-from src.tools.utils import print_formatter
+from omb.utils import print_formatter
 
 
 def test_normalize_path_for_display(temp_dir: Path):

@@ -292,7 +292,7 @@ def sample_graph(sample_ontology) -> Graph:
 @pytest.fixture
 def registry_resolver(root_dir):
     """Configured RegistryResolver instance."""
-    from src.tools.utils.registry_resolver import RegistryResolver
+    from omb.utils.registry_resolver import RegistryResolver
 
     return RegistryResolver(root_dir)
 
