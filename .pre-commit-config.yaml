@@ -18,7 +18,7 @@ repos:
 
       - id: generate-linkml
         name: Generate LinkML Artifacts
-        entry: make generate
+        entry: just generate
         language: system
         pass_filenames: false
         files: ^linkml/.*\.yaml$
