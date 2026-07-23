@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.shacl.schema_discovery.
+Unit tests for omb.validators.shacl.schema_discovery.
 """
 
 import json
@@ -8,8 +8,8 @@ from pathlib import Path
 
 from rdflib import RDF, Graph, Literal, URIRef
 
-from src.tools.utils.registry_resolver import RegistryResolver
-from src.tools.validators.shacl import schema_discovery
+from omb.utils.registry_resolver import RegistryResolver
+from omb.validators.shacl import schema_discovery
 
 
 def _write_registry(root: Path) -> None:

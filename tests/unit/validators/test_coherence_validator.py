@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pytest
 
-from src.tools.core.iri_utils import get_local_name
-from src.tools.core.result import ReturnCodes
-from src.tools.validators.coherence_validator import (
+from omb.core.iri_utils import get_local_name
+from omb.core.result import ReturnCodes
+from omb.validators.coherence_validator import (
     extract_ontology_classes,
     extract_shacl_classes,
     extract_shacl_classes_from_file,

@@ -8,8 +8,8 @@ Before creating a release, ensure:
 
 - [ ] All PRs for the release are merged into `main`
 - [ ] `pyproject.toml` version is updated (e.g., `version = "0.2.0"`)
-- [ ] Validation passes: `make test`
-- [ ] Pre-commit hooks pass: `make lint`
+- [ ] Validation passes: `just test`
+- [ ] Pre-commit hooks pass: `just lint`
 
 ## Creating a Release
 
@@ -62,6 +62,20 @@ flowchart LR
 | **Create GitHub Release** | Publishes the release on GitHub with the generated notes |
 | **Build docs + W3ID** | Triggers `cd-docs.yml` to build documentation and versioned W3ID artifacts from the immutable tag |
 
+### Publishing to PyPI
+
+Publishing the package to [PyPI](https://pypi.org/p/ontology-management-base) is handled
+by a separate workflow, [`cd-pypi.yml`](https://github.com/ASCS-eV/ontology-management-base/blob/main/.github/workflows/cd-pypi.yml),
+which triggers when a GitHub Release is **published** (so it runs after `cd-release.yml`
+creates the release). It builds the sdist and wheel, verifies the `pyproject.toml`
+version matches the release tag, and uploads to PyPI using
+[trusted publishing](https://docs.pypi.org/trusted-publishers/) (OIDC — no API tokens).
+
+The publish step runs in the repository's `pypi` GitHub Actions environment, which must
+exist in **Settings → Environments** (restricting it to release tags / protected refs is
+recommended). No secrets are required; the `id-token: write` permission plus the
+configured PyPI trusted publisher authorize the upload.
+
 ## Versioning
 
 The repository uses [Semantic Versioning](https://semver.org/):
@@ -72,12 +86,21 @@ The repository uses [Semantic Versioning](https://semver.org/):
 | New domain or backward-compatible additions | Minor | `v0.1.4` → `v0.2.0` |
 | Breaking change (existing Self-Descriptions become invalid) | Major | `v0.2.0` → `v1.0.0` |
 
-Update the version in `pyproject.toml` before tagging:
+Update the version in `pyproject.toml` before tagging — this is the **single source
+of truth** for the package version:
 
 ```toml
 [project]
-version = "0.2.0"
+version = "0.3.0"
 ```
+
+Everything else derives from it and must **not** be edited by hand:
+
+- `omb/__init__.py` reads `__version__` from the installed package metadata.
+- `config/ontoenv.toml` is regenerated from `pyproject.toml` by `registry_updater`.
+
+The release tag must match: for `version = "0.3.0"`, tag `v0.3.0`. The PyPI publish
+workflow fails fast if the tag and `pyproject.toml` version disagree.
 
 ## Changelog Generation
 

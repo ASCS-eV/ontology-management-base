@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.registry_updater.
+Unit tests for omb.utils.registry_updater.
 """
 
 from pathlib import Path
 
 import rdflib
 
-from src.tools.utils import registry_updater
+from omb.utils import registry_updater
 
 
 def test_clean_iri_strips_extension():

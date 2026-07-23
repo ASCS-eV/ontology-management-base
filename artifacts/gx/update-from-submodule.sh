@@ -48,7 +48,7 @@ fi
 for cmd in gen-owl gen-shacl gen-jsonld-context; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "Error: Required command '$cmd' not found in PATH."
-        echo "Run this script via 'make generate gx' or ensure the OMB virtualenv tools are available."
+        echo "Run this script via 'just generate-gx' or ensure the OMB virtualenv tools are available."
         exit 1
     fi
 done
@@ -196,8 +196,8 @@ echo "✓ GX artifacts updated from $(git rev-parse --short HEAD)"
 echo ""
 echo "Next steps:"
 echo "  1. Regenerate documentation:"
-echo "     python3 -m src.tools.utils.registry_updater"
-echo "     python3 -m src.tools.utils.properties_updater"
+echo "     python3 -m omb.utils.registry_updater"
+echo "     python3 -m omb.utils.properties_updater"
 echo ""
 echo "  2. Review artifacts/gx/VERSION and provenance metadata if needed"
 echo ""

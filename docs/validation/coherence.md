@@ -5,13 +5,13 @@ The coherence validator checks that SHACL target classes exist in the OWL ontolo
 ## Recommended Usage
 
 ```bash
-python3 -m src.tools.validators.validation_suite --run check-artifact-coherence --domain hdmap
+just validate --run check-artifact-coherence --domain hdmap
 ```
 
 ## Direct Module Usage
 
 ```bash
-python3 -m src.tools.validators.coherence_validator hdmap
+python3 -m omb.validators.coherence_validator hdmap
 ```
 
 ## Behavior

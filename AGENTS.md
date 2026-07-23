@@ -15,31 +15,31 @@ Read these before making changes; they are authoritative for repo workflows.
 
 ## Project Structure & Module Organization
 
-- `src/tools/` is the Python codebase with layered modules: `core/` (foundations), `utils/` (catalog + graph helpers), and `validators/` (CLI validation pipeline).
+- `omb/` is the Python codebase with layered modules: `core/` (foundations), `utils/` (catalog + graph helpers), and `validators/` (CLI validation pipeline).
 - XML catalogs live in `artifacts/`, `imports/`, and `tests/`; they control discovery.
 - Tests are in `tests/` with `unit/`, `integration/`, shared fixtures in `conftest.py`, and domain data in `tests/data/{domain}/`.
 - Key file types include `.owl.ttl`, `.shacl.ttl`, `.context.jsonld`, and `.expected` for invalid test outputs.
 
 ## Build, Test, and Development Commands
 
-- `make setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
-- `make install dev` reinstalls dev dependencies and pre-commit hooks in the active environment.
-- `make lint` runs `pre-commit`; `make format` runs `ruff check --fix` and `ruff format` on `src/`.
-- `python3 -m src.tools.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
-- `pytest tests/` runs all tests; `pytest tests/ --cov=src/tools --cov-report=html` generates coverage reports.
-- `make registry update TAG=vX.Y.Z` updates catalogs for a release; `make docs serve` runs docs locally.
+- `just setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
+- `just install-dev` reinstalls dev dependencies.
+- `just lint` runs `pre-commit`; `just format` runs `ruff check --fix` and `ruff format` on `omb/`.
+- `just validate` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
+- `pytest tests/` runs all tests; `pytest tests/ --cov=omb --cov-report=html` generates coverage reports.
+- `just registry-update vX.Y.Z` updates catalogs for a release; `just docs-serve` runs docs locally.
 
 ## Coding Style & Naming Conventions
 
 - Python with 4-space indentation, type hints on public APIs, and module docstring headers as defined in `coding-standards.md`.
 - Use `pathlib.Path` (not `os.path`), raise specific exceptions, and return `ReturnCodes` for CLI results.
-- Log via `get_logger` from `src.tools.core.logging`; reserve `print()` for final user-facing output.
+- Log via `get_logger` from `omb.core.logging`; reserve `print()` for final user-facing output.
 - Import order: stdlib, third-party, local `core`, local `utils`. Tests follow `test_{function}_{scenario}_{expected}`.
 
 ## Testing Guidelines
 
 - Pytest is required; cover happy path, edge cases, error cases, and boundaries.
-- CI expects >80% coverage for `src/tools` and the validation suite to pass.
+- CI expects >80% coverage for `omb` and the validation suite to pass.
 - Invalid data tests require matching `.expected` files in `tests/data/{domain}/invalid/`.
 
 ## Architecture & Catalog Rules
@@ -51,7 +51,7 @@ Read these before making changes; they are authoritative for repo workflows.
 ## Generated Artifacts & Line Endings (Windows/Linux CI)
 
 This repo's CI runs on Linux and verifies that committed artifacts exactly match
-`make generate` output. When developing on **Windows**, the LinkML generators
+`just generate` output. When developing on **Windows**, the LinkML generators
 (`gen-owl`, `gen-shacl`, `gen-jsonld-context`) produce CRLF line endings and
 sometimes trailing newlines that differ from Linux output.
 
@@ -69,7 +69,7 @@ sometimes trailing newlines that differ from Linux output.
 
 ```bash
 # 1. Generate artifacts
-make generate DOMAIN=openlabel-v2
+just generate-domain openlabel-v2
 
 # 2. Normalize line endings manually (Python one-liner)
 python -c "
@@ -101,7 +101,7 @@ git commit -s -S --no-verify -m "feat: ..."
 ```
 
 **Key rule:** The committed state must be byte-identical to what Linux
-`make generate` + pre-commit normalization produces. CI enforces this via
+`just generate` + pre-commit normalization produces. CI enforces this via
 the "Verify no changes" step.
 
 ## Commit & Pull Request Guidelines
@@ -161,8 +161,8 @@ Brief description of the changes.
 
 ## Testing
 
-- [ ] Validation passes (`make test`)
-- [ ] Pre-commit hooks pass (`make lint`)
+- [ ] Validation passes (`just test`)
+- [ ] Pre-commit hooks pass (`just lint`)
 
 ## Related Issues
 

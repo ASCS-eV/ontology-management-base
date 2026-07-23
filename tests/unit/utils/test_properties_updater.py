@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.properties_updater.
+Unit tests for omb.utils.properties_updater.
 """
 
 from pathlib import Path
 
-from src.tools.utils import properties_updater
+from omb.utils import properties_updater
 
 
 def test_extract_shacl_properties_from_ttl(temp_dir: Path):

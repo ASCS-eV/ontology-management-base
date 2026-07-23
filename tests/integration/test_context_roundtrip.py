@@ -188,8 +188,8 @@ class TestContextRoundtripGeneric:
 
 def _build_context_url_map() -> dict:
     """Build context URL map using the real artifacts catalog."""
-    from src.tools.utils.context_resolver import build_context_url_map
-    from src.tools.utils.registry_resolver import RegistryResolver
+    from omb.utils.context_resolver import build_context_url_map
+    from omb.utils.registry_resolver import RegistryResolver
 
     resolver = RegistryResolver(ROOT_DIR)
     return build_context_url_map(resolver, ROOT_DIR)
@@ -197,7 +197,7 @@ def _build_context_url_map() -> dict:
 
 def _load_instance_with_local_contexts(instance_path: Path) -> Graph:
     """Load a JSON-LD instance with context URLs resolved to local files."""
-    from src.tools.utils.context_resolver import load_jsonld_with_local_contexts
+    from omb.utils.context_resolver import load_jsonld_with_local_contexts
 
     url_map = _build_context_url_map()
     json_str = load_jsonld_with_local_contexts(instance_path, url_map)

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.registry_resolver catalog resolution.
+Unit tests for omb.utils.registry_resolver catalog resolution.
 """
 
 import json
 import logging
 from pathlib import Path
 
-from src.tools.utils.registry_resolver import RegistryResolver
+from omb.utils.registry_resolver import RegistryResolver
 
 
 def _write_registry(root: Path, registry: dict) -> None:

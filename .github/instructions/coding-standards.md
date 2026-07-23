@@ -19,7 +19,7 @@ FEATURE SET:
 
 USAGE:
 ======
-    from src.tools.module.submodule import function_one, ClassName
+    from omb.module.submodule import function_one, ClassName
 
     # Example 1: Basic usage
     result = function_one(arg1, arg2)
@@ -30,7 +30,7 @@ USAGE:
 
 STANDALONE TESTING:
 ==================
-    python3 -m src.tools.module.submodule [--test] [options]
+    python3 -m omb.module.submodule [--test] [options]
 
     Options:
       --test      Run self-tests
@@ -89,7 +89,7 @@ def validate_data(
 Use the centralized logger from `core/logging.py`:
 
 ```python
-from src.tools.core.logging import get_logger
+from omb.core.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -130,7 +130,7 @@ print("Loading files...")  # Should be logger.info
 ### Use Specific Exceptions
 
 ```python
-from src.tools.core.result import ReturnCodes  # for return code checks
+from omb.core.result import ReturnCodes  # for return code checks
 
 def get_schema_path(domain: str) -> Path:
     path = self._catalog.get(domain)
@@ -144,7 +144,7 @@ def get_schema_path(domain: str) -> Path:
 Use `ReturnCodes` from `core/result.py`:
 
 ```python
-from src.tools.core.result import ReturnCodes
+from omb.core.result import ReturnCodes
 
 def check_syntax(file: Path) -> Tuple[int, str]:
     try:
@@ -190,7 +190,7 @@ full_path = os.path.join(root_dir, "artifacts", domain, f"{domain}.owl.ttl")
 ### Normalize for Display
 
 ```python
-from src.tools.utils.print_formatter import normalize_path_for_display
+from omb.utils.print_formatter import normalize_path_for_display
 
 # Good: Hide user paths in output
 display = normalize_path_for_display(abs_path, root_dir)
@@ -216,13 +216,13 @@ from typing import Dict, List, Optional, Tuple
 from rdflib import Graph, Namespace
 
 # 3. Local - core (no relative imports)
-from src.tools.core.constants import FAST_STORE
-from src.tools.core.logging import get_logger
-from src.tools.core.result import ReturnCodes, ValidationResult
+from omb.core.constants import FAST_STORE
+from omb.core.logging import get_logger
+from omb.core.result import ReturnCodes, ValidationResult
 
 # 4. Local - utils
-from src.tools.utils.graph_loader import load_graph
-from src.tools.utils.registry_resolver import RegistryResolver
+from omb.utils.graph_loader import load_graph
+from omb.utils.registry_resolver import RegistryResolver
 
 logger = get_logger(__name__)
 ```

@@ -48,6 +48,6 @@ jq -r '.ontologies | to_entries[] | "\(.key)\t\(.value.latest)\t\(.value.iri)"' 
 Regenerate the registry and catalogs with:
 
 ```bash
-python3 -m src.tools.utils.registry_updater
+just registry-update
 ```
 

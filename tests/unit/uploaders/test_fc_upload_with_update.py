@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.uploaders.fc_upload_with_update.
+Unit tests for omb.uploaders.fc_upload_with_update.
 """
 
 from pathlib import Path
 
 import rdflib
 
-from src.tools.uploaders import fc_upload_with_update as uploader
+from omb.uploaders import fc_upload_with_update as uploader
 
 
 def test_extract_ontology_name():

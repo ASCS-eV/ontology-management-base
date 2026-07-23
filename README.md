@@ -54,7 +54,7 @@ flowchart TD
 ## What's in This Repository
 
 - **Ontologies** — OWL definitions with SHACL validation shapes (`artifacts/`)
-- **Validation Tools** — Python suite to validate metadata instances (`src/tools/`)
+- **Validation Tools** — Python suite to validate metadata instances (`omb/`)
 - **Test Data** — Valid and invalid examples per domain (`tests/data/`)
 - **Documentation** — Guides, architecture, and specifications (`docs/`)
 - **Standard References** — ASAM OpenX specs as submodule (`submodules/asam-openx-standards/`)
@@ -63,7 +63,8 @@ flowchart TD
 
 - **Python ≥ 3.12** (required — older versions will fail with syntax errors)
 - **Git**
-- **Make** (included with Git Bash on Windows; install via `choco install make` or `scoop install make` for PowerShell)
+- **uv** ([installation guide](https://docs.astral.sh/uv/getting-started/installation/))
+- **just** ([installation packages](https://just.systems/man/en/packages.html))
 
 ## Installation
 
@@ -72,10 +73,10 @@ git clone https://github.com/ASCS-eV/ontology-management-base.git
 cd ontology-management-base
 
 # One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
-make setup
+just setup
 ```
 
-Activate the environment in your current shell when needed:
+No activation is required for `just` recipes; they run through `uv run`. Activate the environment only for direct Python or pip commands:
 
 ```bash
 # Linux / macOS / Git Bash
@@ -92,26 +93,29 @@ source .venv/bin/activate
 
 ```bash
 # Validate test data
-make test
+just test
 
 # See validation options
-python3 -m src.tools.validators.validation_suite --help
+just validate --help
 
 # Validate specific domain
-make test domain DOMAIN=hdmap
+just test-domain hdmap
 
-# See grouped test subcommands
-make test help
+# Validate a single data file
+just validate-file path/to/instance.json
+
+# See all just recipes
+just --list
 ```
 
 ## Local Docs Build
 
 ```bash
 # Preview locally
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 
 # Build static docs site
-make docs build
+just docs-build
 ```
 
 Notes:

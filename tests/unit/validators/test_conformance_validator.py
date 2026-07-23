@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.conformance_validator.
+Unit tests for omb.validators.conformance_validator.
 """
 
 from pathlib import Path
 
-from src.tools.core.result import ReturnCodes
-from src.tools.validators import conformance_validator
-from src.tools.validators.conformance_validator import (
+from omb.core.result import ReturnCodes
+from omb.validators import conformance_validator
+from omb.validators.conformance_validator import (
     collect_jsonld_files,
     validate_files,
 )

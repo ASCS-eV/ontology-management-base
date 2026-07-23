@@ -40,7 +40,7 @@ jobs:
           echo "Diffing against: $BASE_SHA"
           CHANGED_FILES=$(git diff --name-only "$BASE_SHA" HEAD)
 
-          if echo "$CHANGED_FILES" | grep -qE "^(src/|imports/|config/|submodules/|.github/|pyproject.toml|requirements.txt)"; then
+          if echo "$CHANGED_FILES" | grep -qE "^(omb/|imports/|config/|submodules/|.github/|pyproject.toml|requirements.txt)"; then
             echo "Core configuration or code changed. Running full suite."
             echo "domains=" >> $GITHUB_OUTPUT
             echo "should_run=true" >> $GITHUB_OUTPUT
@@ -75,20 +75,22 @@ jobs:
   standards-and-syntax:
     name: Standards & Syntax
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.12"
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
       - name: Run pre-commit
         run: |
           # Hooks like update-registry and update-properties may regenerate
           # files (e.g., registry.json includes a timestamp that changes per-run).
           # Run hooks, then verify only formatting/lint hooks produce no diff.
-          make lint || true
+          just lint || true
 
           # Check if only auto-generated files changed (registry, properties, catalog)
           UNEXPECTED=$(git diff --name-only | grep -vE '(registry\.json|PROPERTIES\.md|properties\.md|catalog\.md|ontoenv\.toml|README\.md|context\.jsonld)' || true)
@@ -103,23 +105,25 @@ jobs:
   generate:
     name: Generate Artifacts
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.12"
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
       - name: Generate artifacts
-        run: make generate
+        run: just generate
       - name: Normalize generated files (same as pre-commit hooks)
-        run: pre-commit run pretty-format-json --all-files || true
+        run: uv run --frozen --extra dev pre-commit run pretty-format-json --all-files || true
       - name: Verify no changes
         run: |
           CHANGES=$(git diff --name-only -- artifacts/)
           if [ -n "$CHANGES" ]; then
-            echo "::error::make generate produced different artifacts than committed:"
+            echo "::error::just generate produced different artifacts than committed:"
             echo "$CHANGES"
             git diff -- artifacts/
             exit 1
@@ -131,16 +135,18 @@ jobs:
     needs: changes
     if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.12"
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
       - name: Run SHACL Checks
-        run: make validate ARGS="--run check-data-conformance ${{ needs.changes.outputs.domains }}"
+        run: just validate --run check-data-conformance ${{ needs.changes.outputs.domains }}
 
   # --- JOB 3: OWL Consistency ---
   validate-owl:
@@ -148,16 +154,18 @@ jobs:
     needs: changes
     if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.12"
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
       - name: Run Target Class Checks
-        run: make validate ARGS="--run check-artifact-coherence ${{ needs.changes.outputs.domains }}"
+        run: just validate --run check-artifact-coherence ${{ needs.changes.outputs.domains }}
 
   # --- JOB 4: Unit & Integration Tests ---
   unit-tests:
@@ -168,16 +176,18 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.12", "3.13"]
     runs-on: ${{ matrix.os }}
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
-      - name: Run pytest
-        run: make test
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+      - name: Run validation suite
+        run: just test
 
   # --- JOB 5: Regression Tests ---
   regression-tests:
@@ -185,13 +195,15 @@ jobs:
     needs: changes
     if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.12"
-          cache: 'pip'
-      - name: Install dependencies
-        run: make setup
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
       - name: Run Failing Tests
-        run: make validate ARGS="--run check-failing-tests ${{ needs.changes.outputs.domains }}"
+        run: just validate --run check-failing-tests ${{ needs.changes.outputs.domains }}

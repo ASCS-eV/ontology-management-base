@@ -1,4 +1,4 @@
-"""Tests for HTTP artifact resolution (src.tools.utils.http_artifact_resolver)."""
+"""Tests for HTTP artifact resolution (omb.utils.http_artifact_resolver)."""
 
 import json
 import textwrap
@@ -9,7 +9,7 @@ from urllib.error import URLError
 
 import pytest
 
-from src.tools.utils.http_artifact_resolver import (
+from omb.utils.http_artifact_resolver import (
     ALLOWED_HOSTS,
     STALE_BUILD_TIMEOUT_SECONDS,
     HttpArtifactResolver,
@@ -105,7 +105,7 @@ class TestRegistryFetch:
 
     def test_fetch_registry_caches_result(self, resolver):
         """Registry is fetched once and cached in memory."""
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             result = resolver.fetch_registry()
             assert result["version"] == "2.1.0"
@@ -118,13 +118,13 @@ class TestRegistryFetch:
 
     def test_get_registry_version(self, resolver):
         """get_registry_version returns latestRelease."""
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             assert resolver.get_registry_version() == "v0.1.4"
 
     def test_get_domain_info(self, resolver):
         """get_domain_info returns ontologies dict."""
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             info = resolver.get_domain_info()
             assert "hdmap" in info
@@ -136,7 +136,7 @@ class TestRegistryFetch:
         from urllib.error import URLError
 
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=URLError("connection refused"),
         ):
             with pytest.raises(RuntimeError, match="Failed to fetch registry"):
@@ -222,7 +222,7 @@ class TestCatalogFetch:
     def test_fetch_catalog_saves_to_correct_path(self, resolver, tmp_path):
         """Catalog is saved under the correct relative path."""
         cache_dir = tmp_path / "cache"
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = SAMPLE_ARTIFACTS_CATALOG.encode()
             path = resolver.fetch_catalog("artifacts/catalog-v001.xml", cache_dir)
 
@@ -233,7 +233,7 @@ class TestCatalogFetch:
     def test_fetch_all_catalogs_fetches_three(self, resolver, tmp_path):
         """fetch_all_catalogs requests all 3 catalog files."""
         cache_dir = tmp_path / "cache"
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"<catalog/>"
             resolver.fetch_all_catalogs(cache_dir)
             assert mock_get.call_count == 3
@@ -273,7 +273,7 @@ class TestDomainArtifactFetch:
         cache_dir = tmp_path / "cache"
         info = {"iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6"}
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"@prefix hdmap: <...> ."
             result = resolver.fetch_domain_artifacts("hdmap", info, cache_dir)
 
@@ -293,7 +293,7 @@ class TestDomainArtifactFetch:
 
         info = {"iri": "https://w3id.org/ascs-ev/envited-x/hdmap/v6"}
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             result = resolver.fetch_domain_artifacts("hdmap", info, cache_dir)
             assert result is True
             mock_get.assert_not_called()
@@ -314,7 +314,7 @@ class TestImportFetch:
         imports_dir.mkdir(parents=True)
         (imports_dir / "catalog-v001.xml").write_text(SAMPLE_IMPORTS_CATALOG)
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"@prefix rdf: <...> ."
             count = resolver.fetch_import_files(cache_dir)
 
@@ -345,7 +345,7 @@ class TestCatalogBasedArtifactFetch:
         (hdmap_dir / "hdmap.shacl.ttl").write_text("cached")
         (hdmap_dir / "hdmap.context.jsonld").write_text("cached")
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"@prefix gx: <...> ."
             count = resolver.fetch_artifacts_from_catalog(cache_dir)
 
@@ -370,7 +370,7 @@ class TestEnsureCache:
         cache_dir.mkdir(parents=True)
         (cache_dir / ".cache-timestamp").write_text(str(time.time()))
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             result = resolver.ensure_cache()
             assert result == cache_dir
@@ -388,7 +388,7 @@ class TestEnsureCache:
 
         with patch.object(resolver, "ensure_cache") as mock_ensure:
             mock_ensure.return_value = tmp_path / "result"
-            with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+            with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
                 mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
                 resolver.ensure_cache_for_iris(iris)
 
@@ -428,19 +428,19 @@ class TestRegistryResolverHttpFallback:
 
     def test_enable_http_false_default_no_http_calls(self, tmp_path):
         """Default enable_http=False does not trigger HTTP fetching."""
-        from src.tools.utils.registry_resolver import RegistryResolver
+        from omb.utils.registry_resolver import RegistryResolver
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             resolver = RegistryResolver(tmp_path)
             mock_get.assert_not_called()
             assert resolver.is_http_bootstrapped is False
 
     def test_enable_http_true_triggers_bootstrap_when_no_catalogs(self, tmp_path):
         """enable_http=True triggers HTTP bootstrap when catalogs missing."""
-        from src.tools.utils.registry_resolver import RegistryResolver
+        from omb.utils.registry_resolver import RegistryResolver
 
         with patch(
-            "src.tools.utils.http_artifact_resolver.HttpArtifactResolver"
+            "omb.utils.http_artifact_resolver.HttpArtifactResolver"
         ) as MockResolver:
             mock_instance = MagicMock()
             mock_instance.ensure_cache.return_value = tmp_path / "cache"
@@ -455,7 +455,7 @@ class TestRegistryResolverHttpFallback:
 
     def test_enable_http_true_skips_bootstrap_when_catalogs_exist(self, tmp_path):
         """enable_http=True does NOT bootstrap when local catalogs exist."""
-        from src.tools.utils.registry_resolver import RegistryResolver
+        from omb.utils.registry_resolver import RegistryResolver
 
         # Create catalog files so _has_local_catalogs returns True
         (tmp_path / "artifacts").mkdir()
@@ -468,7 +468,7 @@ class TestRegistryResolverHttpFallback:
         )
 
         with patch(
-            "src.tools.utils.http_artifact_resolver.HttpArtifactResolver"
+            "omb.utils.http_artifact_resolver.HttpArtifactResolver"
         ) as MockResolver:
             resolver = RegistryResolver(tmp_path, enable_http=True)
             MockResolver.assert_not_called()
@@ -566,7 +566,7 @@ class TestW3idConnegFallback:
                 raise gh_pages_404
 
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=mock_http_get,
         ):
             result = resolver.fetch_domain_artifacts("hdmap", domain_info, tmp_path)
@@ -703,7 +703,7 @@ class TestPathTraversalInCatalogs:
         (imports_dir / "catalog-v001.xml").write_text(self.MALICIOUS_IMPORTS_CATALOG)
 
         resolver = HttpArtifactResolver(cache_dir=tmp_path)
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"@prefix rdfs: <...> ."
             count = resolver.fetch_import_files(cache_dir)
 
@@ -722,7 +722,7 @@ class TestPathTraversalInCatalogs:
         )
 
         resolver = HttpArtifactResolver(cache_dir=tmp_path)
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = b"@prefix gx: <...> ."
             count = resolver.fetch_artifacts_from_catalog(cache_dir)
 
@@ -796,7 +796,7 @@ class TestBuildSentinel:
         """ensure_cache removes .cache-building after successful build."""
         resolver = HttpArtifactResolver(cache_dir=tmp_path)
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             with patch.object(resolver, "fetch_all_catalogs"):
                 with patch.object(
@@ -813,7 +813,7 @@ class TestBuildSentinel:
         """ensure_cache removes .cache-building even when build fails."""
         resolver = HttpArtifactResolver(cache_dir=tmp_path)
 
-        with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+        with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
             mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
             with patch.object(
                 resolver, "fetch_all_catalogs", side_effect=RuntimeError("boom")
@@ -900,7 +900,7 @@ class TestBothStrategiesFail:
             raise error
 
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=mock_http_get,
         ):
             result = resolver.fetch_domain_artifacts("hdmap", domain_info, tmp_path)
@@ -930,7 +930,7 @@ class TestCorruptCacheTimestamp:
             registry_url="https://test.example.com/registry.json",
         )
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=URLError("fail"),
         ):
             assert not resolver.is_cache_valid()
@@ -954,7 +954,7 @@ class TestEnsureCacheForIrisFallback:
 
         with patch.object(resolver, "ensure_cache") as mock_ensure:
             mock_ensure.return_value = tmp_path / "result"
-            with patch("src.tools.utils.http_artifact_resolver._http_get") as mock_get:
+            with patch("omb.utils.http_artifact_resolver._http_get") as mock_get:
                 mock_get.return_value = json.dumps(SAMPLE_REGISTRY).encode()
                 result = resolver.ensure_cache_for_iris(iris)
 
@@ -993,7 +993,7 @@ class TestFetchAllCatalogsErrorHandling:
             return b"<catalog/>"
 
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=mock_http_get,
         ):
             with pytest.raises(HTTPError):
@@ -1021,7 +1021,7 @@ class TestFetchAllCatalogsErrorHandling:
             return b"<catalog/>"
 
         with patch(
-            "src.tools.utils.http_artifact_resolver._http_get",
+            "omb.utils.http_artifact_resolver._http_get",
             side_effect=mock_http_get,
         ):
             resolver.fetch_all_catalogs(cache_dir)  # Should not raise

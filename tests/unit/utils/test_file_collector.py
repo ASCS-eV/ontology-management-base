@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.file_collector module.
+Unit tests for omb.utils.file_collector module.
 
 Tests file collection utilities including:
 - collect_files_by_extension
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest  # noqa: F401
 
-from src.tools.utils.file_collector import (
+from omb.utils.file_collector import (
     collect_files_by_extension,
     collect_files_by_pattern,
     collect_jsonld_files,

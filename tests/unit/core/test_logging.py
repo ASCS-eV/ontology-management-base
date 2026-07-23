@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.core.logging module.
+Unit tests for omb.core.logging module.
 """
 
 import io
@@ -12,7 +12,7 @@ class TestGetLogger:
 
     def test_returns_logger_instance(self):
         """get_logger should return a Logger instance."""
-        from src.tools.core.logging import get_logger
+        from omb.core.logging import get_logger
 
         logger = get_logger("test_module")
 
@@ -21,15 +21,15 @@ class TestGetLogger:
 
     def test_shortens_module_path(self):
         """get_logger should shorten long module paths."""
-        from src.tools.core.logging import get_logger
+        from omb.core.logging import get_logger
 
-        logger = get_logger("src.tools.utils.file_collector")
+        logger = get_logger("omb.utils.file_collector")
 
         assert logger.name == "file_collector"
 
     def test_preserves_simple_name(self):
         """get_logger should preserve simple names without dots."""
-        from src.tools.core.logging import get_logger
+        from omb.core.logging import get_logger
 
         logger = get_logger("simple_name")
 
@@ -37,7 +37,7 @@ class TestGetLogger:
 
     def test_same_name_returns_same_logger(self):
         """get_logger should return the same logger for the same name."""
-        from src.tools.core.logging import get_logger
+        from omb.core.logging import get_logger
 
         logger1 = get_logger("same_module")
         logger2 = get_logger("same_module")
@@ -50,7 +50,7 @@ class TestConfigureLogging:
 
     def test_sets_log_level(self):
         """configure_logging should set the specified log level."""
-        from src.tools.core.logging import LogLevel, configure_logging, get_logger
+        from omb.core.logging import LogLevel, configure_logging, get_logger
 
         test_stream = io.StringIO()
         configure_logging(level=LogLevel.DEBUG, stream=test_stream)
@@ -63,7 +63,7 @@ class TestConfigureLogging:
 
     def test_filters_below_level(self):
         """configure_logging should filter messages below the set level."""
-        from src.tools.core.logging import LogLevel, configure_logging, get_logger
+        from omb.core.logging import LogLevel, configure_logging, get_logger
 
         test_stream = io.StringIO()
         configure_logging(level=LogLevel.WARNING, stream=test_stream)
@@ -78,7 +78,7 @@ class TestConfigureLogging:
 
     def test_custom_format(self):
         """configure_logging should accept custom format string."""
-        from src.tools.core.logging import LogLevel, configure_logging, get_logger
+        from omb.core.logging import LogLevel, configure_logging, get_logger
 
         test_stream = io.StringIO()
         custom_format = "CUSTOM: %(message)s"
@@ -98,31 +98,31 @@ class TestLogLevel:
 
     def test_debug_matches_logging_debug(self):
         """LogLevel.DEBUG should match logging.DEBUG."""
-        from src.tools.core.logging import LogLevel
+        from omb.core.logging import LogLevel
 
         assert LogLevel.DEBUG == logging.DEBUG
 
     def test_info_matches_logging_info(self):
         """LogLevel.INFO should match logging.INFO."""
-        from src.tools.core.logging import LogLevel
+        from omb.core.logging import LogLevel
 
         assert LogLevel.INFO == logging.INFO
 
     def test_warning_matches_logging_warning(self):
         """LogLevel.WARNING should match logging.WARNING."""
-        from src.tools.core.logging import LogLevel
+        from omb.core.logging import LogLevel
 
         assert LogLevel.WARNING == logging.WARNING
 
     def test_error_matches_logging_error(self):
         """LogLevel.ERROR should match logging.ERROR."""
-        from src.tools.core.logging import LogLevel
+        from omb.core.logging import LogLevel
 
         assert LogLevel.ERROR == logging.ERROR
 
     def test_critical_matches_logging_critical(self):
         """LogLevel.CRITICAL should match logging.CRITICAL."""
-        from src.tools.core.logging import LogLevel
+        from omb.core.logging import LogLevel
 
         assert LogLevel.CRITICAL == logging.CRITICAL
 
@@ -132,7 +132,7 @@ class TestSetLevel:
 
     def test_changes_root_logger_level(self):
         """set_level should change the root logger level."""
-        from src.tools.core.logging import LogLevel, set_level
+        from omb.core.logging import LogLevel, set_level
 
         set_level(LogLevel.ERROR)
 
@@ -147,13 +147,13 @@ class TestEnableDebug:
 
     def test_sets_debug_level(self):
         """enable_debug should set level to DEBUG."""
-        from src.tools.core.logging import LogLevel, enable_debug
+        from omb.core.logging import LogLevel, enable_debug
 
         enable_debug()
 
         assert logging.getLogger().level == LogLevel.DEBUG
 
         # Reset
-        from src.tools.core.logging import set_level
+        from omb.core.logging import set_level
 
         set_level(LogLevel.INFO)

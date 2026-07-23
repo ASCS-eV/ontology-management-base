@@ -9,7 +9,7 @@ artifacts/                 Domain ontologies, shapes, and contexts
 imports/                   Base vocabularies for inference and validation
 tests/                     Test instances and fixtures
   catalog-v001.xml         Unified test catalog
-src/tools/                 Validation and publishing tools
+omb/                 Validation and publishing tools
 docs/                      Documentation and registry.json
 docs/artifacts/            Generated artifact copies for documentation
 docs/ontologies/classes/   Generated class pages

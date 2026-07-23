@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.readme_updater.
+Unit tests for omb.utils.readme_updater.
 """
 
 from pathlib import Path
 
-from src.tools.utils import readme_updater
+from omb.utils import readme_updater
 
 
 def test_generate_table_sorted(monkeypatch, temp_dir: Path):

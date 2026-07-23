@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "ontology-management-base"
-version = "0.1.6"
+version = "0.3.0"
 description = "Ontology validation tools and management for the ENVITED-X ecosystem"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -31,7 +31,7 @@ dependencies = [
 [project.optional-dependencies]
 publish = [
     # Optional Gaia-X Federated Catalogue / EDC publishing stack. Only needed for
-    # src/tools/uploaders and src/tools/authhelper; NOT required to validate.
+    # omb/uploaders and omb/authhelper; NOT required to validate.
     "keycloak_client>=0.15.4",
     "requests>=2.32.5",
 ]
@@ -62,15 +62,25 @@ Repository = "https://github.com/ASCS-eV/ontology-management-base.git"
 Issues = "https://github.com/ASCS-eV/ontology-management-base/issues"
 
 [project.scripts]
-onto-validate = "src.tools.validators.validation_suite:main"
-onto-check-conformance = "src.tools.validators.conformance_validator:main"
-onto-check-coherence = "src.tools.validators.coherence_validator:main"
-onto-generate-docs = "src.tools.utils.properties_updater:main"
-onto-generate-context = "src.tools.utils.context_generator:main"
+onto-validate = "omb.validators.validation_suite:main"
+onto-check-conformance = "omb.validators.conformance_validator:main"
+onto-check-coherence = "omb.validators.coherence_validator:main"
+onto-generate-docs = "omb.utils.properties_updater:main"
+onto-generate-context = "omb.utils.context_generator:main"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["omb"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"artifacts" = "omb/data/artifacts"
+"imports" = "omb/data/imports"
+"docs/registry.json" = "omb/data/docs/registry.json"
+
+[tool.hatch.build.targets.sdist]
+include = ["omb", "artifacts", "imports", "docs/registry.json", "pyproject.toml", "README.md", "LICENSE"]
 
 [tool.ruff]
 line-length = 88
@@ -92,17 +102,18 @@ ignore = [
 "__init__.py" = ["F401"]
 
 [tool.pytest.ini_options]
+pythonpath = ["."]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
 filterwarnings = [
-    "ignore::DeprecationWarning:src.tools.validators.*",
+    "ignore::DeprecationWarning:omb.validators.*",
 ]
 
 [tool.coverage.run]
-source = ["src/tools"]
+source = ["omb"]
 omit = ["*/tests/*", "*/__init__.py"]
 
 [tool.coverage.report]

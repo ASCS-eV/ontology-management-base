@@ -27,7 +27,7 @@ fi
 
 if [ ! -f "$UPSTREAM_COMMIT_FILE" ]; then
     echo "❌ Error: UPSTREAM_COMMIT file not found at $UPSTREAM_COMMIT_FILE"
-    echo "Run: make generate gx"
+    echo "Run: just generate-gx"
     exit 1
 fi
 
@@ -64,7 +64,7 @@ else
     echo "Submodule commit: $SUBMODULE_COMMIT"
     echo ""
     echo "To update, run:"
-    echo "  make generate gx"
+    echo "  just generate-gx"
     echo ""
     echo "Current submodule short SHA: $SUBMODULE_SHORT_COMMIT"
     exit 1

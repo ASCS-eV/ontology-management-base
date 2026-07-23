@@ -39,4 +39,4 @@ jobs:
         # Installs packages like keycloak_client, requests, etc. from pyproject.toml
         run: pip install -e .
       - name: Run Python upload into FC
-        run: python3 -m src.tools.uploaders.fc_upload_with_update
+        run: python3 -m omb.uploaders.fc_upload_with_update

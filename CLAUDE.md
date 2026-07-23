@@ -16,27 +16,27 @@ Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4
 
 ```bash
 # One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
-make setup
+just setup
 
 # Run full validation suite
-python3 -m src.tools.validators.validation_suite
+just validate
 
 # Validate specific domain(s)
-python3 -m src.tools.validators.validation_suite --domain manifest hdmap
+just validate --domain manifest hdmap
 
 # Run a specific validation check only
-python3 -m src.tools.validators.validation_suite --run check-data-conformance --domain hdmap
+just validate --run check-data-conformance --domain hdmap
 
 # Validate arbitrary files (auto-discovers fixtures from referenced IRIs)
-python3 -m src.tools.validators.validation_suite --data-paths ./my_data.json
+just validate --data-paths ./my_data.json
 
 # Validate with external artifact directories
-python3 -m src.tools.validators.validation_suite --run check-data-conformance \
+just validate --run check-data-conformance \
     --data-paths ./examples/credential.json \
     --artifacts ./artifacts ../external-repo/artifacts
 
 # Use specific inference mode (rdfs, owlrl, none, both)
-python3 -m src.tools.validators.validation_suite --domain hdmap --inference-mode owlrl
+just validate --domain hdmap --inference-mode owlrl
 
 # Run all pytest tests
 pytest tests/
@@ -48,23 +48,23 @@ pytest tests/unit/utils/test_file_collector.py
 pytest tests/ -k "test_load"
 
 # Run tests with coverage
-pytest tests/ --cov=src/tools --cov-report=html
+pytest tests/ --cov=omb --cov-report=html
 
 # Lint and format
-make lint       # pre-commit on all files
-make format     # ruff check --fix + ruff format on src/
+just lint       # pre-commit on all files
+just format     # ruff check --fix + ruff format on omb/
 
 # Run module self-tests
-python3 -m src.tools.utils.file_collector --test
+python3 -m omb.utils.file_collector --test
 
 # Local docs server
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 
 # Update catalogs after artifact changes
-python3 -m src.tools.utils.registry_updater
+just registry-update
 ```
 
-**Installed CLI entry points** (after `make setup` or `pip install -e .`):
+**Installed CLI entry points** (after `just setup` or `pip install -e .`):
 - `onto-validate` → `validation_suite:main`
 - `onto-check-conformance` → `conformance_validator:main`
 - `onto-check-coherence` → `coherence_validator:main`
@@ -75,7 +75,7 @@ python3 -m src.tools.utils.registry_updater
 ### Module Hierarchy
 
 ```
-src/tools/
+omb/
 ├── core/           # Foundation (no internal deps) - constants, logging, result codes, IRI utils
 ├── utils/          # Catalog I/O + graph loading - depends on core/
 └── validators/     # Validation CLI - depends on core/ + utils/
@@ -137,13 +137,13 @@ Auto-triggered on relevant file changes (configured in `.pre-commit-config.yaml`
 ## Key Imports
 
 ```python
-from src.tools.core.logging import get_logger
-from src.tools.core.result import ReturnCodes, ValidationResult
-from src.tools.core.constants import FAST_STORE, Extensions, Namespaces
-from src.tools.core.iri_utils import ...  # IRI string manipulation
-from src.tools.utils.registry_resolver import RegistryResolver
-from src.tools.utils.graph_loader import load_graph, load_jsonld_files
-from src.tools.utils.print_formatter import normalize_path_for_display
+from omb.core.logging import get_logger
+from omb.core.result import ReturnCodes, ValidationResult
+from omb.core.constants import FAST_STORE, Extensions, Namespaces
+from omb.core.iri_utils import ...  # IRI string manipulation
+from omb.utils.registry_resolver import RegistryResolver
+from omb.utils.graph_loader import load_graph, load_jsonld_files
+from omb.utils.print_formatter import normalize_path_for_display
 
 logger = get_logger(__name__)
 ```
@@ -190,7 +190,7 @@ tests/
 └── conftest.py        # Shared pytest fixtures (resolver, tmp_path helpers)
 ```
 
-Modules also have `_run_tests()` functions for self-testing: `python3 -m src.tools.utils.file_collector --test`
+Modules also have `_run_tests()` functions for self-testing: `python3 -m omb.utils.file_collector --test`
 
 ## Coding Conventions
 
@@ -267,7 +267,7 @@ endings, causing pre-commit hooks to enter an infinite fix-loop.
 **Symptoms:**
 - Pre-commit hooks report "files were modified" on every attempt
 - `generate-linkml` → CRLF → `mixed-line-ending` fixes → hooks fail → repeat
-- CI "Generate Artifacts" job fails with "make generate produced different artifacts"
+- CI "Generate Artifacts" job fails with "just generate produced different artifacts"
 
 **Fix (Windows development):**
 
@@ -291,7 +291,7 @@ with open(f, 'wb') as fh: fh.write(c)
 ```
 
 **Key invariant:** Committed artifacts must be byte-identical to what Linux
-`make generate` + pre-commit normalization produces. When in doubt, use
+`just generate` + pre-commit normalization produces. When in doubt, use
 `--no-verify` to commit and verify that CI's "Generate Artifacts" job passes.
 
 **Root cause:** Python's LinkML generators inherit the platform's default line

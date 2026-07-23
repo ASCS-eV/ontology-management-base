@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.validators.shacl.validator.
+Unit tests for omb.validators.shacl.validator.
 """
 
 from pathlib import Path
 
 from rdflib import RDF, RDFS, Graph, Namespace
 
-from src.tools.validators.shacl import validator as shacl_validator_module
-from src.tools.validators.shacl.validator import ShaclValidator
+from omb.validators.shacl import validator as shacl_validator_module
+from omb.validators.shacl.validator import ShaclValidator
 
 
 def _make_validator(tmp: Path) -> ShaclValidator:

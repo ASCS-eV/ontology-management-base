@@ -27,3 +27,4 @@ htmlcov/
 
 # Reference documentation (local only)
 .reference/
+/omb/data/

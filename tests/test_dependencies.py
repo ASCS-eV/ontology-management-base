@@ -41,7 +41,7 @@ def test_validate_import_path_excludes_publish_stack():
     publish extra happens to be installed in the dev environment.
     """
     probe = (
-        "import sys; import src.tools.api;"  # the public validate entry point
+        "import sys; import omb.api;"  # the public validate entry point
         "leaked=[m for m in ('requests','keycloak') if m in sys.modules];"
         "print('LEAKED', leaked); sys.exit(1 if leaked else 0)"
     )

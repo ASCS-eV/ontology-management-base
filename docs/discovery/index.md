@@ -24,5 +24,5 @@ jq -r '.ontologies | to_entries[] | select(.value.iri | contains("hdmap")) | .ke
 
 ## Programmatic Access
 
-Use `src.tools.utils.registry_resolver.RegistryResolver` to resolve domains to paths inside tools and scripts.
+Use `omb.utils.registry_resolver.RegistryResolver` to resolve domains to paths inside tools and scripts.
 

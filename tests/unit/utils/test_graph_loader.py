@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unit tests for src.tools.utils.graph_loader.
+Unit tests for omb.utils.graph_loader.
 """
 
 import json
@@ -10,8 +10,8 @@ from pathlib import Path
 import pytest
 from rdflib import Graph, URIRef
 
-from src.tools.utils import graph_loader
-from src.tools.utils.registry_resolver import RegistryResolver
+from omb.utils import graph_loader
+from omb.utils.registry_resolver import RegistryResolver
 
 
 def test_load_graph_auto_detects_jsonld(temp_dir: Path):
