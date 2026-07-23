@@ -16,7 +16,7 @@ Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4
 
 ```bash
 # One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
-make setup
+just setup
 
 # Run full validation suite
 python3 -m omb.validators.validation_suite
@@ -51,20 +51,20 @@ pytest tests/ -k "test_load"
 pytest tests/ --cov=omb --cov-report=html
 
 # Lint and format
-make lint       # pre-commit on all files
-make format     # ruff check --fix + ruff format on omb/
+just lint       # pre-commit on all files
+just format     # ruff check --fix + ruff format on omb/
 
 # Run module self-tests
 python3 -m omb.utils.file_collector --test
 
 # Local docs server
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 
 # Update catalogs after artifact changes
 python3 -m omb.utils.registry_updater
 ```
 
-**Installed CLI entry points** (after `make setup` or `pip install -e .`):
+**Installed CLI entry points** (after `just setup` or `pip install -e .`):
 - `onto-validate` → `validation_suite:main`
 - `onto-check-conformance` → `conformance_validator:main`
 - `onto-check-coherence` → `coherence_validator:main`
@@ -267,7 +267,7 @@ endings, causing pre-commit hooks to enter an infinite fix-loop.
 **Symptoms:**
 - Pre-commit hooks report "files were modified" on every attempt
 - `generate-linkml` → CRLF → `mixed-line-ending` fixes → hooks fail → repeat
-- CI "Generate Artifacts" job fails with "make generate produced different artifacts"
+- CI "Generate Artifacts" job fails with "just generate produced different artifacts"
 
 **Fix (Windows development):**
 
@@ -291,7 +291,7 @@ with open(f, 'wb') as fh: fh.write(c)
 ```
 
 **Key invariant:** Committed artifacts must be byte-identical to what Linux
-`make generate` + pre-commit normalization produces. When in doubt, use
+`just generate` + pre-commit normalization produces. When in doubt, use
 `--no-verify` to commit and verify that CI's "Generate Artifacts" job passes.
 
 **Root cause:** Python's LinkML generators inherit the platform's default line

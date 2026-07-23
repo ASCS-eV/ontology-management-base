@@ -48,7 +48,7 @@ fi
 for cmd in gen-owl gen-shacl gen-jsonld-context; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "Error: Required command '$cmd' not found in PATH."
-        echo "Run this script via 'make generate gx' or ensure the OMB virtualenv tools are available."
+        echo "Run this script via 'just generate-gx' or ensure the OMB virtualenv tools are available."
         exit 1
     fi
 done

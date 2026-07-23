@@ -22,12 +22,12 @@ Read these before making changes; they are authoritative for repo workflows.
 
 ## Build, Test, and Development Commands
 
-- `make setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
-- `make install dev` reinstalls dev dependencies and pre-commit hooks in the active environment.
-- `make lint` runs `pre-commit`; `make format` runs `ruff check --fix` and `ruff format` on `omb/`.
+- `just setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
+- `just install-dev` reinstalls dev dependencies.
+- `just lint` runs `pre-commit`; `just format` runs `ruff check --fix` and `ruff format` on `omb/`.
 - `python3 -m omb.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
 - `pytest tests/` runs all tests; `pytest tests/ --cov=omb --cov-report=html` generates coverage reports.
-- `make registry update TAG=vX.Y.Z` updates catalogs for a release; `make docs serve` runs docs locally.
+- `just registry-update vX.Y.Z` updates catalogs for a release; `just docs-serve` runs docs locally.
 
 ## Coding Style & Naming Conventions
 
@@ -51,7 +51,7 @@ Read these before making changes; they are authoritative for repo workflows.
 ## Generated Artifacts & Line Endings (Windows/Linux CI)
 
 This repo's CI runs on Linux and verifies that committed artifacts exactly match
-`make generate` output. When developing on **Windows**, the LinkML generators
+`just generate` output. When developing on **Windows**, the LinkML generators
 (`gen-owl`, `gen-shacl`, `gen-jsonld-context`) produce CRLF line endings and
 sometimes trailing newlines that differ from Linux output.
 
@@ -69,7 +69,7 @@ sometimes trailing newlines that differ from Linux output.
 
 ```bash
 # 1. Generate artifacts
-make generate DOMAIN=openlabel-v2
+just generate-domain openlabel-v2
 
 # 2. Normalize line endings manually (Python one-liner)
 python -c "
@@ -101,7 +101,7 @@ git commit -s -S --no-verify -m "feat: ..."
 ```
 
 **Key rule:** The committed state must be byte-identical to what Linux
-`make generate` + pre-commit normalization produces. CI enforces this via
+`just generate` + pre-commit normalization produces. CI enforces this via
 the "Verify no changes" step.
 
 ## Commit & Pull Request Guidelines
@@ -161,8 +161,8 @@ Brief description of the changes.
 
 ## Testing
 
-- [ ] Validation passes (`make test`)
-- [ ] Pre-commit hooks pass (`make lint`)
+- [ ] Validation passes (`just test`)
+- [ ] Pre-commit hooks pass (`just lint`)
 
 ## Related Issues
 

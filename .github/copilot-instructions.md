@@ -6,14 +6,14 @@ This repository contains a validation suite for ontology artifacts (OWL, SHACL, 
 
 ```bash
 # One-command setup (creates .venv, installs dev dependencies, installs pre-commit hooks)
-make setup
+just setup
 
-# Reinstall dev dependencies + pre-commit hooks in active environment
-make install dev
+# Reinstall dev dependencies
+just install-dev
 
 # Lint and format
-make lint
-make format
+just lint
+just format
 
 # Run full validation suite (catalog-driven)
 python3 -m omb.validators.validation_suite
@@ -47,11 +47,11 @@ pytest tests/ -k "test_load"
 # Run with coverage
 pytest tests/ --cov=omb --cov-report=html
 
-# Run full validation suite via Make
-make test
+# Run full validation suite via just
+just test
 
-# Run a single domain via Make
-make test domain DOMAIN=hdmap
+# Run a single domain via just
+just test-domain hdmap
 
 # Run module self-tests
 python3 -m omb.validators.syntax_validator --test
@@ -128,7 +128,7 @@ Read these BEFORE making changes:
 
 ## Generated Artifacts & Line Endings (Windows/Linux CI)
 
-CI verifies that committed artifacts exactly match `make generate` output on Linux.
+CI verifies that committed artifacts exactly match `just generate` output on Linux.
 On Windows, LinkML generators produce CRLF and trailing newlines that differ.
 
 **The CRLF commit loop on Windows:**
@@ -140,7 +140,7 @@ On Windows, LinkML generators produce CRLF and trailing newlines that differ.
 
 ```bash
 # Generate, then normalize before staging
-make generate DOMAIN=openlabel-v2
+just generate-domain openlabel-v2
 
 # Fix CRLF → LF in generated files
 python -c "
@@ -164,7 +164,7 @@ git add artifacts/ && git commit -s -S -m "feat: ..."
 ```
 
 If hooks still fail, `--no-verify` is acceptable but **verify CI passes after push**.
-The committed state must be byte-identical to Linux `make generate` + hook normalization.
+The committed state must be byte-identical to Linux `just generate` + hook normalization.
 
 ## ASAM Standards Reference (submodule)
 

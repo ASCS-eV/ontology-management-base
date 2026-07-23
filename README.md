@@ -63,7 +63,8 @@ flowchart TD
 
 - **Python ≥ 3.12** (required — older versions will fail with syntax errors)
 - **Git**
-- **Make** (included with Git Bash on Windows; install via `choco install make` or `scoop install make` for PowerShell)
+- **uv** ([installation guide](https://docs.astral.sh/uv/getting-started/installation/))
+- **just** ([installation packages](https://just.systems/man/en/packages.html))
 
 ## Installation
 
@@ -72,10 +73,10 @@ git clone https://github.com/ASCS-eV/ontology-management-base.git
 cd ontology-management-base
 
 # One-command setup (creates .venv, installs dev dependencies, and pre-commit hooks)
-make setup
+just setup
 ```
 
-Activate the environment in your current shell when needed:
+No activation is required for `just` recipes; they run through `uv run`. Activate the environment only for direct Python or pip commands:
 
 ```bash
 # Linux / macOS / Git Bash
@@ -92,26 +93,26 @@ source .venv/bin/activate
 
 ```bash
 # Validate test data
-make test
+just test
 
 # See validation options
 python3 -m omb.validators.validation_suite --help
 
 # Validate specific domain
-make test domain DOMAIN=hdmap
+just test-domain hdmap
 
-# See grouped test subcommands
-make test help
+# See all just recipes
+just --list
 ```
 
 ## Local Docs Build
 
 ```bash
 # Preview locally
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 
 # Build static docs site
-make docs build
+just docs-build
 ```
 
 Notes:

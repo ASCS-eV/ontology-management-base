@@ -131,5 +131,5 @@ generate SHACL constraints when `gen-shacl` gains `rules:` support
 v1 artifacts are manually maintained, making diffs noisy and reviews hard. v2
 uses `--deterministic --no-metadata` on all LinkML generators, which applies
 Weisfeiler-Lehman blank-node signatures for stable Turtle serialization. This
-ensures `make generate` produces byte-identical output across runs, enabling
+ensures `just generate` produces byte-identical output across runs, enabling
 reliable pre-commit hooks and CI diffing.

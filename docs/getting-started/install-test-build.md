@@ -6,7 +6,8 @@ This page covers the full setup flow for users and contributors.
 
 - **Python ≥ 3.12** (required — older versions will fail with syntax errors)
 - **Git**
-- **Make** (included with Git Bash on Windows; install via `choco install make` or `scoop install make` for PowerShell)
+- **uv** ([installation guide](https://docs.astral.sh/uv/getting-started/installation/))
+- **just** ([installation packages](https://just.systems/man/en/packages.html))
 
 ## Install
 
@@ -17,10 +18,10 @@ cd ontology-management-base
 git submodule update --init --recursive
 
 # One-command setup (creates .venv, installs dev deps, installs pre-commit hooks)
-make setup
+just setup
 ```
 
-Activate the environment in your current shell when needed:
+No activation is required for `just` recipes; they run through `uv run`. Activate the environment only for direct Python or pip commands:
 
 ```bash
 # Linux / macOS / Git Bash
@@ -52,13 +53,13 @@ Install the Python extension, then select the interpreter for this workspace so 
 Run the full validation suite:
 
 ```bash
-make test
+just test
 ```
 
 Run a single domain:
 
 ```bash
-make test domain DOMAIN=hdmap
+just test-domain hdmap
 ```
 
 ## Build Documentation
@@ -66,13 +67,13 @@ make test domain DOMAIN=hdmap
 Build the site:
 
 ```bash
-make docs build
+just docs-build
 ```
 
 To preview locally (auto-generates docs assets):
 
 ```bash
-DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base make docs serve
+DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 ```
 
 Notes:

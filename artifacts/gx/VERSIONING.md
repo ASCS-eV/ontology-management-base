@@ -78,7 +78,7 @@ When upstream releases 25.12 (or later) that includes these fixes:
 1. Check out the new tag: `cd submodules/service-characteristics && git checkout 25.12`
 2. Update artifacts: `./update-from-submodule.sh 25.12`
 3. Update VERSION: `echo "25.12" > VERSION` (remove +fix suffix)
-4. Refresh provenance files by running `make generate gx`
+4. Refresh provenance files by running `just generate-gx`
 5. Update README.md to remove the "Post-release fixes" section
 6. Regenerate docs and commit
 

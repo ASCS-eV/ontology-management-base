@@ -8,8 +8,8 @@ Before creating a release, ensure:
 
 - [ ] All PRs for the release are merged into `main`
 - [ ] `pyproject.toml` version is updated (e.g., `version = "0.2.0"`)
-- [ ] Validation passes: `make test`
-- [ ] Pre-commit hooks pass: `make lint`
+- [ ] Validation passes: `just test`
+- [ ] Pre-commit hooks pass: `just lint`
 
 ## Creating a Release
 

@@ -116,9 +116,9 @@ python3 -m omb.validators.validation_suite \
 From the ontology-management-base root, run:
 
 ```bash
-make generate gx
+just generate-gx
 # OR
-make generate gx GX_REF=25.12
+just generate-gx 25.12
 ```
 
 This command invokes `artifacts/gx/update-from-submodule.sh`, which will:
