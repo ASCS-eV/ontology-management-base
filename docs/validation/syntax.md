@@ -5,7 +5,7 @@ Syntax checks verify that JSON-LD and Turtle files are well-formed.
 ## Recommended Usage
 
 ```bash
-python3 -m omb.validators.validation_suite --run check-syntax --domain hdmap
+just validate --run check-syntax --domain hdmap
 ```
 
 ## Direct Module Usage

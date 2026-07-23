@@ -49,5 +49,5 @@ Example snippet:
 ## Regeneration
 
 ```bash
-python3 -m omb.utils.registry_updater
+just registry-update
 ```

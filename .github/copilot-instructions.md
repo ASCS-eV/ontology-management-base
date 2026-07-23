@@ -16,24 +16,24 @@ just lint
 just format
 
 # Run full validation suite (catalog-driven)
-python3 -m omb.validators.validation_suite
+just validate
 
 # Validate specific domain
-python3 -m omb.validators.validation_suite --domain manifest
+just validate --domain manifest
 
 # Validate arbitrary data paths (auto-discovers fixtures)
-python3 -m omb.validators.validation_suite --data-paths ./my_data.json
+just validate --data-paths ./my_data.json
 
 # Validate with external artifact directories
-python3 -m omb.validators.validation_suite --run check-data-conformance \
+just validate --run check-data-conformance \
     --data-paths ./examples/credential.json \
     --artifacts ./artifacts ../external-repo/artifacts
 
 # Use specific inference mode (rdfs, owlrl, none, both)
-python3 -m omb.validators.validation_suite --domain hdmap --inference-mode owlrl
+just validate --domain hdmap --inference-mode owlrl
 
 # Run specific validation checks
-python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
+just validate --run check-data-conformance --domain hdmap
 
 # Run tests
 pytest tests/
@@ -105,7 +105,7 @@ Read these BEFORE making changes:
 - **Logging/output**: use `get_logger(__name__)` for progress; `print()` only for final CLI output; normalize paths with `normalize_path_for_display()`.
 - **Errors/return codes**: raise specific exceptions (no silent `None`), and use `ReturnCodes` from `core/result.py`.
 - **Test data**: invalid instances live in `tests/data/{domain}/invalid/` and require a matching `.expected` file.
-- **Artifact changes**: run `python3 -m omb.utils.registry_updater` (pre-commit hooks also update catalogs/README/PROPERTIES).
+- **Artifact changes**: run `just registry-update` (pre-commit hooks also update catalogs/README/PROPERTIES).
 - **Path input flexibility**: Collection functions accept `PathsInput` (single path or list) - use `normalize_paths_to_list()` from `file_collector.py` when needed.
 
 ## Before You Code

@@ -19,24 +19,24 @@ Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4
 just setup
 
 # Run full validation suite
-python3 -m omb.validators.validation_suite
+just validate
 
 # Validate specific domain(s)
-python3 -m omb.validators.validation_suite --domain manifest hdmap
+just validate --domain manifest hdmap
 
 # Run a specific validation check only
-python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
+just validate --run check-data-conformance --domain hdmap
 
 # Validate arbitrary files (auto-discovers fixtures from referenced IRIs)
-python3 -m omb.validators.validation_suite --data-paths ./my_data.json
+just validate --data-paths ./my_data.json
 
 # Validate with external artifact directories
-python3 -m omb.validators.validation_suite --run check-data-conformance \
+just validate --run check-data-conformance \
     --data-paths ./examples/credential.json \
     --artifacts ./artifacts ../external-repo/artifacts
 
 # Use specific inference mode (rdfs, owlrl, none, both)
-python3 -m omb.validators.validation_suite --domain hdmap --inference-mode owlrl
+just validate --domain hdmap --inference-mode owlrl
 
 # Run all pytest tests
 pytest tests/
@@ -61,7 +61,7 @@ python3 -m omb.utils.file_collector --test
 DOCS_SITE_URL=http://127.0.0.1:8000/ontology-management-base just docs-serve
 
 # Update catalogs after artifact changes
-python3 -m omb.utils.registry_updater
+just registry-update
 ```
 
 **Installed CLI entry points** (after `just setup` or `pip install -e .`):

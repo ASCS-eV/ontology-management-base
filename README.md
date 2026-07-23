@@ -96,7 +96,7 @@ source .venv/bin/activate
 just test
 
 # See validation options
-python3 -m omb.validators.validation_suite --help
+just validate --help
 
 # Validate specific domain
 just test-domain hdmap

@@ -25,7 +25,7 @@ Read these before making changes; they are authoritative for repo workflows.
 - `just setup` is the one-command bootstrap: creates `.venv`, installs dev dependencies, and installs pre-commit hooks.
 - `just install-dev` reinstalls dev dependencies.
 - `just lint` runs `pre-commit`; `just format` runs `ruff check --fix` and `ruff format` on `omb/`.
-- `python3 -m omb.validators.validation_suite` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
+- `just validate` runs the full suite (auto-discovery). Use `--domain manifest` or `--data-paths ./file.json` for scoped runs.
 - `pytest tests/` runs all tests; `pytest tests/ --cov=omb --cov-report=html` generates coverage reports.
 - `just registry-update vX.Y.Z` updates catalogs for a release; `just docs-serve` runs docs locally.
 

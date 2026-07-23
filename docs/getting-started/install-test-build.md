@@ -91,5 +91,5 @@ Hook flow (via `hooks/copy_artifacts.py`):
 - If catalogs are missing, run the registry updater:
 
 ```bash
-python3 -m omb.utils.registry_updater
+just registry-update
 ```

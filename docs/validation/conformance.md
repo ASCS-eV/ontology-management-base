@@ -5,7 +5,7 @@ The conformance validator checks JSON-LD instances against SHACL shapes.
 ## Recommended Usage
 
 ```bash
-python3 -m omb.validators.validation_suite --run check-data-conformance --domain hdmap
+just validate --run check-data-conformance --domain hdmap
 ```
 
 ## Direct Module Usage

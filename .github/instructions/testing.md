@@ -248,4 +248,4 @@ All PRs must pass:
 
 1. `pytest tests/` - All tests pass
 2. `pytest tests/ --cov=omb` - Coverage > 80%
-3. `python3 -m omb.validators.validation_suite` - Full suite passes
+3. `just validate` - Full suite passes
