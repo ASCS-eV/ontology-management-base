@@ -101,6 +101,9 @@ python3 -m omb.validators.validation_suite --help
 # Validate specific domain
 just test-domain hdmap
 
+# Validate a single data file
+just validate-file path/to/instance.json
+
 # See all just recipes
 just --list
 ```

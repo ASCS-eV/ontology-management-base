@@ -131,6 +131,14 @@ test-domain domain:
 validate *args:
     {{run}} python -m omb.validators.validation_suite {{args}}
 
+# Validate a single data file or directory against the catalog, e.g.
+#   just validate-file path/to/instance.json
+# The file's parent dir is scanned for fixtures. Pass extra flags after the
+# path (e.g. --offline, --per-resource, --strict). First-class bare-data
+# (--type) support is a later workstream (W5).
+validate-file path *extra:
+    {{run}} python -m omb.validators.validation_suite --data-paths "{{path}}" {{extra}}
+
 # ===== Documentation =====
 
 # Generate PROPERTIES.md / docs assets.
