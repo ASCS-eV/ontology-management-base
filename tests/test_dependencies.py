@@ -54,3 +54,16 @@ def test_validate_import_path_excludes_publish_stack():
     assert proc.returncode == 0, (
         f"publish stack leaked onto import path:\n{proc.stdout}\n{proc.stderr}"
     )
+
+
+def test_no_direct_url_deps_in_published_metadata():
+    """PyPI rejects direct-URL Requires-Dist. Dev-only URL deps (e.g. the linkml
+    fork) must live in [dependency-groups], never in published [project] metadata."""
+    project = _manifest()["project"]
+    published = list(project.get("dependencies", []))
+    for vals in project.get("optional-dependencies", {}).values():
+        published += list(vals)
+    offenders = [d for d in published if ("git+" in d or " @ " in d or "://" in d)]
+    assert not offenders, f"direct-URL deps in published metadata: {offenders}"
+    # dev tooling moved to a dependency group, not a published extra:
+    assert "dev" not in project.get("optional-dependencies", {})

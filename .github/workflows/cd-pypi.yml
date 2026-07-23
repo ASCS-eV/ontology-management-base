@@ -42,6 +42,41 @@ jobs:
       - name: Build sdist and wheel
         run: python -m build
 
+      - name: Reject direct-URL dependencies (PyPI forbids them)
+        run: |
+          python - <<'PY'
+          import sys, zipfile, tarfile, glob
+          from email.parser import Parser
+
+          def bad_lines(meta_text):
+              msg = Parser().parsestr(meta_text)
+              out = []
+              for req in msg.get_all("Requires-Dist") or []:
+                  if "git+" in req or " @ " in req or "://" in req:
+                      out.append(req)
+              return out
+
+          failures = []
+          for whl in glob.glob("dist/*.whl"):
+              with zipfile.ZipFile(whl) as z:
+                  name = next(n for n in z.namelist() if n.endswith("METADATA"))
+                  for r in bad_lines(z.read(name).decode()):
+                      failures.append(f"{whl}: {r}")
+          for sd in glob.glob("dist/*.tar.gz"):
+              with tarfile.open(sd) as t:
+                  name = next(n for n in t.getnames() if n.endswith("PKG-INFO"))
+                  for r in bad_lines(t.extractfile(name).read().decode()):
+                      failures.append(f"{sd}: {r}")
+
+          if failures:
+              print("::error::Direct-URL dependencies found in published metadata "
+                    "(PyPI will reject the upload):")
+              for f in failures:
+                  print(f"  {f}")
+              sys.exit(1)
+          print("OK: no direct-URL dependencies in built distributions.")
+          PY
+
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:

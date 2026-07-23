@@ -35,10 +35,19 @@ publish = [
     "keycloak_client>=0.15.4",
     "requests>=2.32.5",
 ]
+docs = [
+    "mkdocs-material>=9.5.0",
+    "mkdocs-awesome-pages-plugin>=2.9.3",
+    "mkdocs-exclude>=1.0.0",
+    "mkdocstrings[python]>=0.24.0",
+]
+
+[dependency-groups]
 dev = [
     "ruff>=0.15.0",
-    # linkml: in [dev] for standalone pip install; the submodule pin in
-    # submodules/linkml/ is the single source of truth for the actual version.
+    # linkml: dev-only tooling for artifact generation. In a dependency group (not a
+    # published extra) so its git-URL reference never lands in the wheel's
+    # Requires-Dist — PyPI forbids direct-URL deps in uploaded metadata.
     "linkml @ git+https://github.com/ASCS-eV/linkml.git@feat/envited-x-pipeline#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
@@ -47,12 +56,6 @@ dev = [
     "mkdocstrings[python]>=0.24.0",
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
-]
-docs = [
-    "mkdocs-material>=9.5.0",
-    "mkdocs-awesome-pages-plugin>=2.9.3",
-    "mkdocs-exclude>=1.0.0",
-    "mkdocstrings[python]>=0.24.0",
 ]
 
 [project.urls]
@@ -67,9 +70,6 @@ onto-check-conformance = "omb.validators.conformance_validator:main"
 onto-check-coherence = "omb.validators.coherence_validator:main"
 onto-generate-docs = "omb.utils.properties_updater:main"
 onto-generate-context = "omb.utils.context_generator:main"
-
-[tool.hatch.metadata]
-allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["omb"]
