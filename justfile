@@ -11,10 +11,11 @@
 # Requires `uv` (https://docs.astral.sh/uv/) and `just` (https://just.systems) on PATH.
 
 # Run a command inside the project's dev environment. `--frozen` uses the
-# committed uv.lock as-is (no re-resolution — the dev extra pins linkml from a
-# git branch, which uv would otherwise re-check on every call), syncing `.venv`
-# from the lock; `--extra dev` selects the dev dependencies from the locked graph.
-run := "uv run --frozen --extra dev"
+# committed uv.lock as-is (no re-resolution — the dev dependency group pins
+# linkml from a git branch, which uv would otherwise re-check on every call),
+# syncing `.venv` from the lock; `--group dev` selects the PEP 735 dev
+# dependency group from the locked graph.
+run := "uv run --frozen --group dev"
 
 export PYTHONUTF8 := "1"
 export PYTHONIOENCODING := "utf-8"
@@ -33,17 +34,17 @@ default:
 
 # Create the dev environment (.venv + dev deps) and install pre-commit git hooks.
 setup:
-    uv sync --extra dev
+    uv sync --group dev
     {{run}} pre-commit install
     @echo "[OK] Dev environment ready. Run recipes with: just <recipe>"
 
 # Install the package with runtime dependencies only.
 install:
-    uv sync
+    uv sync --no-default-groups
 
 # Install the package with dev dependencies.
 install-dev:
-    uv sync --extra dev
+    uv sync --group dev
 
 # ===== Lint / format =====
 

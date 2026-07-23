@@ -118,7 +118,7 @@ jobs:
       - name: Generate artifacts
         run: just generate
       - name: Normalize generated files (same as pre-commit hooks)
-        run: uv run --frozen --extra dev pre-commit run pretty-format-json --all-files || true
+        run: uv run --frozen --group dev pre-commit run pretty-format-json --all-files || true
       - name: Verify no changes
         run: |
           CHANGES=$(git diff --name-only -- artifacts/)
