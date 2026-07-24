@@ -19,11 +19,36 @@ def test_normalize_path_for_display(temp_dir: Path):
     assert normalized == "nested/file.ttl"
 
 
-def test_normalize_path_for_display_outside_root(temp_dir: Path):
+def test_normalize_path_for_display_outside_root(temp_dir: Path, monkeypatch):
+    """External paths render relative to CWD, not via a root_dir ``../`` traversal.
+
+    Simulates a consumer whose CWD is its own repo root while OMB's data root
+    (``root_dir``) lives elsewhere (e.g. an installed wheel's uv-cache dir).
+    """
     outside_path = temp_dir.parent / "outside.ttl"
     outside_path.write_text("")
+    monkeypatch.chdir(temp_dir.parent)
     normalized = print_formatter.normalize_path_for_display(outside_path, temp_dir)
-    assert normalized == "../outside.ttl"
+    assert normalized == "outside.ttl"
+
+
+def test_normalize_path_for_display_external_data_is_portable(tmp_path, monkeypatch):
+    """A consumer data file under CWD renders as a clean repo-relative path even when
+    root_dir is an unrelated, machine-specific install location.
+
+    Reproduces the wheel/uv-cache case that made ``--data-paths`` reports non-portable:
+    root_dir points at a packaged install dir, unrelated to the consumer's tree.
+    """
+    install_root = tmp_path / "uv-cache" / "site-packages" / "omb" / "data"
+    install_root.mkdir(parents=True)
+    repo = tmp_path / "consumer-repo"
+    data = repo / "tests" / "omb" / "scenario" / "invalid" / "x.jsonld"
+    data.parent.mkdir(parents=True)
+    data.write_text("{}")
+
+    monkeypatch.chdir(repo)
+    normalized = print_formatter.normalize_path_for_display(data, install_root)
+    assert normalized == "tests/omb/scenario/invalid/x.jsonld"
 
 
 def test_normalize_text_scrubs_bnode():
