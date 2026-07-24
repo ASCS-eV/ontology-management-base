@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 import textwrap
@@ -23,19 +24,31 @@ def normalize_text(text: str) -> str:
 
 def normalize_path_for_display(path: Union[str, Path], root_dir: Path) -> str:
     """
-    Convert any path to a repository-relative string for console output.
+    Convert any path to a portable, relative string for console output.
 
-    This prevents leaking user folder information (e.g., /home/user/...) in
-    console output by converting absolute paths to repository-relative format.
-    Always uses forward slashes for cross-platform consistency.
+    Prevents leaking user/machine folder information (e.g. /home/user/... or a uv
+    cache directory) in console output, and keeps report snapshots stable across
+    machines and CI. Always uses forward slashes for cross-platform consistency.
+
+    Resolution order:
+      1. If ``path`` is inside ``root_dir`` (OMB's own built-in data), render it
+         relative to ``root_dir`` (e.g. "artifacts/scenario/scenario.owl.ttl").
+      2. Otherwise ``path`` is an external/consumer input (e.g. ``--data-paths`` or
+         ``--artifacts``). ``root_dir`` MUST NOT be the display base here: when OMB
+         runs from an installed wheel it is a machine-specific location (a uv/pip
+         cache), so a ``root_dir``-relative ``../`` traversal would embed that path
+         and differ on every machine. Render relative to the current working
+         directory, which is stable in the consumer's checkout and CI, instead.
+      3. If ``path`` is under neither ``root_dir`` nor the working directory, fall
+         back to a deterministic traversal from the working directory (same drive) or
+         the bare filename — never an absolute or user-specific path.
 
     Args:
         path: Path to normalize (string or Path object)
-        root_dir: Repository root directory
+        root_dir: OMB's built-in data root (used only for case 1)
 
     Returns:
-        Repository-relative path string with forward slashes
-        (e.g., "artifacts/scenario/scenario.owl.ttl")
+        Portable relative path string with forward slashes.
     """
     if isinstance(path, str):
         path = Path(path)
@@ -48,32 +61,32 @@ def normalize_path_for_display(path: Union[str, Path], root_dir: Path) -> str:
 
     root_dir = root_dir.resolve()
 
-    # Try to make relative to root_dir
+    # 1) OMB's own built-in data: render relative to root_dir.
     try:
-        rel = path.relative_to(root_dir)
-        return rel.as_posix()
+        return path.relative_to(root_dir).as_posix()
     except ValueError:
-        # If path is outside root_dir, keep output deterministic and non-leaky
-        # by expressing it as a relative traversal (e.g. ../../artifacts/...).
-        try:
-            if path.anchor != root_dir.anchor:
-                raise ValueError("Cannot relativize paths on different anchors")
+        pass
 
-            path_parts = path.parts
-            root_parts = root_dir.parts
-            common_len = 0
+    # 2) External/consumer path: render relative to the working directory (stable in
+    #    the consumer's repo and CI), NOT relative to root_dir, which may be a
+    #    machine-specific wheel/cache location.
+    try:
+        cwd = Path.cwd().resolve()
+    except (OSError, ValueError):
+        return path.name
+    try:
+        return path.relative_to(cwd).as_posix()
+    except ValueError:
+        pass
 
-            for root_part, path_part in zip(root_parts, path_parts):
-                if root_part != path_part:
-                    break
-                common_len += 1
-
-            rel_parts = [".."] * (len(root_parts) - common_len) + list(
-                path_parts[common_len:]
-            )
-            return Path(*rel_parts).as_posix() if rel_parts else "."
-        except ValueError:
-            return str(path).replace("\\", "/")
+    # 3) Under neither root_dir nor cwd: deterministic traversal from cwd on the same
+    #    drive, else the bare filename. Never leak an absolute/user-specific path.
+    try:
+        if path.anchor != cwd.anchor:
+            return path.name
+        return Path(os.path.relpath(path, cwd)).as_posix()
+    except (ValueError, OSError):
+        return path.name
 
 
 def _clean(val) -> str:
