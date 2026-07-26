@@ -7,6 +7,8 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix org: <http://www.w3.org/ns/org#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 
 # Ontology metadata
@@ -44,7 +46,8 @@
 
     # Imports strict dependencies
     owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v5> ,
-                <https://w3id.org/gaia-x/development#> ;
+                <https://w3id.org/gaia-x/development#> ,
+                <http://www.w3.org/ns/prov#> ;
 
     # Reference to SHACL validation rules
     dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/envited-x/v3/shapes> ;
@@ -405,3 +408,44 @@ envited-x:isOwner a manifest:AccessRole, owl:NamedIndividual ;
 envited-x:isRegistered a manifest:AccessRole, owl:NamedIndividual ;
     rdfs:label "Registered Access Role"@en ;
     rdfs:comment "Indicates that the artifact access role is registered user in the envited-x context."@en .
+
+
+###################################################################
+# Attribute Provenance — records how individual metadata fields
+# were derived and which software tool/model produced them.
+###################################################################
+
+envited-x:AttributeProvenance a owl:Class ;
+    rdfs:label "Attribute Provenance"@en ;
+    rdfs:comment "Records the derivation method and responsible software agent for one or more metadata attributes that were automatically filled."@en ;
+    rdfs:subClassOf prov:Activity .
+
+envited-x:hasAttributeProvenance a owl:ObjectProperty ;
+    rdfs:label "has attribute provenance"@en ;
+    rdfs:comment "Links a DomainSpecification to provenance records describing how individual attributes were derived."@en ;
+    rdfs:domain envited-x:DomainSpecification ;
+    rdfs:range envited-x:AttributeProvenance .
+
+envited-x:attributeName a owl:DatatypeProperty ;
+    rdfs:label "attribute name"@en ;
+    rdfs:comment "The name of the metadata attribute whose provenance is being declared."@en ;
+    rdfs:domain envited-x:AttributeProvenance ;
+    rdfs:range xsd:string .
+
+envited-x:derivationMethod a owl:DatatypeProperty ;
+    rdfs:label "derivation method"@en ;
+    rdfs:comment "The method used to derive the attribute value. One of: extraction (parsed from source), calculation (computed from source values), rule-based-inference (heuristic mapping), llm-inference (LLM model generated), manual (human input)."@en ;
+    rdfs:domain envited-x:AttributeProvenance ;
+    rdfs:range xsd:string .
+
+envited-x:confidence a owl:DatatypeProperty ;
+    rdfs:label "confidence"@en ;
+    rdfs:comment "Confidence level of the derived value: high, medium, or low."@en ;
+    rdfs:domain envited-x:AttributeProvenance ;
+    rdfs:range xsd:string .
+
+envited-x:llmModel a owl:DatatypeProperty ;
+    rdfs:label "LLM model"@en ;
+    rdfs:comment "Identifier of the LLM model used for inference (e.g. 'claude-sonnet-4', 'gpt-4o'). Absent or null when derivation is not LLM-based."@en ;
+    rdfs:domain prov:SoftwareAgent ;
+    rdfs:range xsd:string .
