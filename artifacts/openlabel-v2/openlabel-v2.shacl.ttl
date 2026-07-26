@@ -1379,6 +1379,13 @@ openlabel_v2:AdminTag a sh:NodeShape ;
             sh:order 9 ;
             sh:path openlabel_v2:scenarioParentReference ],
         [ sh:datatype xsd:string ;
+            sh:description "A free-text comment about the scenario."@en ;
+            sh:maxCount 1 ;
+            sh:message "scenarioComment (AdminTag): A free-text comment about the scenario."@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path openlabel_v2:scenarioComment ],
+        [ sh:datatype xsd:string ;
             sh:description "A description of the scenario."@en ;
             sh:maxCount 1 ;
             sh:message "scenarioDescription (AdminTag): A description of the scenario."@en ;
