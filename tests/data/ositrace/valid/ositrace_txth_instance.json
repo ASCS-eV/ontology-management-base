@@ -15,7 +15,7 @@
       "@id": "did:web:registry.envited-x.net::ResourceDescription:TxthSensorViewUrbanExcerpt",
       "@type": "envited-x:ResourceDescription",
       "schema:name": "Urban intersection sensor view excerpt (plain text)",
-      "schema:description": "Short human-readable ASAM OSI SensorView trace excerpt of an urban intersection, stored in the plain-text .txth serialization for manual inspection of the raw radar and lidar reflection lists.",
+      "schema:description": "Short human-readable ASAM OSI SensorView trace excerpt of an urban intersection, stored in the plain-text .txth serialization for manual inspection of the raw radar and lidar reflection lists. Uses only lane and object types that ASAM OpenDRIVE V1.9.0 does not deprecate, so the fixture documents the recommended spelling; the deprecated keywords are covered by ositrace_legacy_deprecated_keywords_instance.json.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -38,16 +38,16 @@
          "roadTypes": "town",
          "laneTypes": [
             "driving",
-            "bus",
-            "taxi",
             "rail",
             "roadWorks",
-            "shared"
+            "shared",
+            "tram",
+            "HOV"
          ],
          "levelOfDetail": [
             "pole",
             "tree",
-            "streetLamp",
+            "roadMark",
             "trafficIsland",
             "roadSurface",
             "vegetation"
