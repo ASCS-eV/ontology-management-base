@@ -188,6 +188,35 @@ jobs:
           tool: just
       - name: Run validation suite
         run: just test
+      # Until now nothing in CI ran pytest: this job's name promised unit tests but it
+      # only invoked the validation suite. Assertions that need the pinned ASAM
+      # submodules skip here (see the drift-guard job below) so the matrix stays cheap.
+      - name: Run pytest suite
+        run: just test-unit
+
+  # --- JOB 4b: Pinned Standards Drift ---
+  # Separate from the matrix on purpose: the ASAM standards submodule tree is ~260 MB,
+  # so it is fetched once on ubuntu instead of six times across the matrix.
+  # OMB_REQUIRE_PINNED_SOURCES turns the drift guard's "submodule missing" skip into a
+  # hard failure, so the guard cannot silently stop running here.
+  enum-drift:
+    name: Pinned Standards Drift
+    runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.12"
+      OMB_REQUIRE_PINNED_SOURCES: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+      - name: Check out the pinned ASAM standards
+        run: git submodule update --init --recursive --depth 1 submodules/asam-openx-standards
+      - name: Check enumerations against their pinned sources
+        run: just validate-enums
 
   # --- JOB 5: Regression Tests ---
   regression-tests:
