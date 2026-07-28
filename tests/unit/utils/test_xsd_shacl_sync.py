@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR
 from omb.utils.xsd_enum_extractor import EnumType, EnumValue
 from omb.utils.xsd_shacl_sync import (
     EnumComparisonResult,
@@ -256,7 +257,7 @@ class TestExtractShaclEnums:
 class TestActualSyncCheck:
     """Integration tests against the actual hdmap files."""
 
-    XSD_DIR = Path("imports/OpenDrive/xsd_schema")
+    XSD_DIR = Path(ASAM_OPENDRIVE_SCHEMA_DIR)
     SHACL_PATH = Path("artifacts/hdmap/hdmap.shacl.ttl")
 
     @pytest.fixture

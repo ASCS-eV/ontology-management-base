@@ -21,13 +21,13 @@ USAGE:
 
     # Run hdmap sync check (default)
     report = run_sync_check(
-        xsd_dir=Path("imports/OpenDrive/xsd_schema"),
+        xsd_dir=Path("submodules/asam-openx-standards/standards/asam-opendrive/schema"),
         shacl_path=Path("artifacts/hdmap/hdmap.shacl.ttl"),
     )
 
     # Run scenario sync check
     report = run_sync_check(
-        xsd_dir=Path("imports/OpenScenario/OpenSCENARIO.xsd"),
+        xsd_dir=Path("submodules/asam-openx-standards/standards/asam-openscenario-xml/schema/OpenSCENARIO.xsd"),
         shacl_path=Path("artifacts/scenario/scenario.shacl.ttl"),
         mappings=SCENARIO_ENUM_MAPPINGS,
     )
@@ -58,6 +58,7 @@ from pathlib import Path
 from rdflib import Graph, Namespace
 from rdflib.term import Literal
 
+from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR
 from omb.core.logging import get_logger
 from omb.utils.xsd_enum_extractor import (
     EnumType,
@@ -397,7 +398,7 @@ def _run_tests() -> bool:
         all_passed = False
 
     # Test 3: Full sync check against actual files
-    xsd_dir = Path("imports/OpenDrive/xsd_schema")
+    xsd_dir = Path(ASAM_OPENDRIVE_SCHEMA_DIR)
     shacl_path = Path("artifacts/hdmap/hdmap.shacl.ttl")
     if xsd_dir.exists() and shacl_path.exists():
         try:
@@ -435,7 +436,7 @@ def main() -> None:
         sys.exit(0 if success else 1)
 
     if "--check" in sys.argv:
-        xsd_dir = Path("imports/OpenDrive/xsd_schema")
+        xsd_dir = Path(ASAM_OPENDRIVE_SCHEMA_DIR)
         shacl_path = Path("artifacts/hdmap/hdmap.shacl.ttl")
 
         if not xsd_dir.exists():

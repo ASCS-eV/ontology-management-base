@@ -61,6 +61,29 @@ class Namespaces:
     SKOS = "http://www.w3.org/2004/02/skos/core#"
 
 
+# Normative ASAM XML schemas.
+#
+# Single source of truth for where the vendored ASAM XSDs live. They used to sit in
+# ``imports/OpenDrive/`` and ``imports/OpenScenario/``, which predates the
+# ``asam-openx-standards`` submodule; the submodule is now the one place that pins ASAM
+# deliverables, records their provenance (version, source URL, retrieval date, checksums)
+# and states ASAM's ownership. Paths are repository-relative.
+#
+# These files are only present when the submodule is initialised:
+#   git submodule update --init --recursive submodules/asam-openx-standards
+ASAM_STANDARDS_ROOT = "submodules/asam-openx-standards/standards"
+ASAM_OPENDRIVE_SCHEMA_DIR = f"{ASAM_STANDARDS_ROOT}/asam-opendrive/schema"
+ASAM_OPENSCENARIO_SCHEMA_FILE = (
+    f"{ASAM_STANDARDS_ROOT}/asam-openscenario-xml/schema/OpenSCENARIO.xsd"
+)
+
+#: Shown when a pinned ASAM schema is missing, so the fix is always in the error.
+ASAM_SUBMODULE_HINT = (
+    "Pinned ASAM schemas not found. Initialise the standards submodule: "
+    "git submodule update --init --recursive submodules/asam-openx-standards"
+)
+
+
 # Validation-related constants
 MAX_INFERENCE_ITERATIONS = 10  # Maximum iterations for RDFS inference
 

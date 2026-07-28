@@ -4,6 +4,7 @@ import textwrap
 
 import pytest
 
+from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR
 from omb.utils.xsd_enum_extractor import (
     EnumType,
     EnumValue,
@@ -255,7 +256,7 @@ class TestExtractEnumsFromDir:
 class TestActualXsdFiles:
     """Integration tests against the actual OpenDRIVE XSD files."""
 
-    XSD_DIR = "imports/OpenDrive/xsd_schema"
+    XSD_DIR = ASAM_OPENDRIVE_SCHEMA_DIR
 
     @pytest.fixture
     def xsd_enums(self):
