@@ -12,8 +12,8 @@ changes an enumeration fails the build instead of drifting unnoticed.
 
 Sources of truth:
 
-* ASAM OpenDRIVE V1.8.0 XSD ``simpleType`` enumerations in ``imports/OpenDrive/xsd_schema/``.
-  These also carry ``<xs:documentation>deprecated</xs:documentation>`` per value.
+* ASAM OpenDRIVE V1.9.0 XSD ``simpleType`` enumerations, pinned in the standards
+  submodule. These also carry ``<xs:documentation>deprecated</xs:documentation>`` per value.
 * ASAM OpenDRIVE v1.9.0 specification §11.8, which deprecates two further lane types that
   the pinned XSD does *not* mark. Deprecation therefore has two sources and each value
   records which one deprecates it.
@@ -29,22 +29,29 @@ Two things are deliberately *not* derived from a pinned source, and say so:
 
 import os
 import re
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Dict, FrozenSet, Optional, Sequence, Tuple
 
 import pytest
 from rdflib import RDF, Graph, URIRef
 
+from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR, ASAM_SUBMODULE_HINT
+from omb.utils.xsd_enum_extractor import extract_enums_from_dir
+from omb.utils.xsd_shacl_sync import (
+    HDMAP_ENUM_MAPPINGS,
+    OSITRACE_ENUM_MAPPINGS,
+    run_sync_check,
+)
+
 ROOT = Path(__file__).resolve().parents[3]
 
-XS = "{http://www.w3.org/2001/XMLSchema}"
 SH = "http://www.w3.org/ns/shacl#"
 
-LANE_XSD = "imports/OpenDrive/xsd_schema/OpenDRIVE_Lane.xsd"
-OBJECT_XSD = "imports/OpenDrive/xsd_schema/OpenDRIVE_Object.xsd"
-ROAD_XSD = "imports/OpenDrive/xsd_schema/OpenDRIVE_Road.xsd"
+LANE_XSD = f"{ASAM_OPENDRIVE_SCHEMA_DIR}/OpenDRIVE_Lane.xsd"
+OBJECT_XSD = f"{ASAM_OPENDRIVE_SCHEMA_DIR}/OpenDRIVE_Object.xsd"
+ROAD_XSD = f"{ASAM_OPENDRIVE_SCHEMA_DIR}/OpenDRIVE_Road.xsd"
 
 OSI_NAMING_ADOC = (
     "submodules/asam-openx-standards/submodules/open-simulation-interface"
@@ -53,7 +60,7 @@ OSI_NAMING_ADOC = (
 
 # Which document deprecates a value. The pinned XSD and the v1.9.0 prose disagree, so the
 # distinction is recorded rather than flattened into one set.
-XSD = "ASAM OpenDRIVE V1.8.0 XSD <xs:documentation>deprecated</xs:documentation>"
+XSD = "ASAM OpenDRIVE V1.9.0 XSD <xs:documentation>deprecated</xs:documentation>"
 SPEC_11_8 = "ASAM OpenDRIVE v1.9.0 specification §11.8"
 
 
@@ -62,25 +69,29 @@ SPEC_11_8 = "ASAM OpenDRIVE v1.9.0 specification §11.8"
 # =============================================================================
 
 
+@lru_cache(maxsize=None)
+def _xsd_enums(rel_path: str) -> Dict[str, object]:
+    """Enumerations of one XSD, via the shared extractor.
+
+    Deliberately not re-implemented here. ``omb.utils.xsd_enum_extractor`` already parses
+    both XSD enum shapes and, importantly, recognises ASAM's two ways of marking
+    deprecation: a documentation string starting with "deprecated", and one phrased as
+    "use X instead" - which is how V1.9.0 marks ``sidewalk``, ``bus``, ``taxi``, ``patch``,
+    ``railing``, ``soundBarrier`` and ``streetLamp``. A parser that greps for the word
+    "deprecated" alone silently undercounts by seven values.
+    """
+    return extract_enums_from_dir(Path(ASAM_OPENDRIVE_SCHEMA_DIR))
+
+
 def _xsd_enumeration(
     rel_path: str, type_name: str
 ) -> Tuple[FrozenSet[str], FrozenSet[str]]:
     """Return ``(values, deprecated)`` of an XSD ``simpleType`` enumeration."""
-    root = ET.parse(ROOT / rel_path).getroot()
-    for simple_type in root.iter(f"{XS}simpleType"):
-        if simple_type.get("name") != type_name:
-            continue
-        values, deprecated = set(), set()
-        for enum in simple_type.iter(f"{XS}enumeration"):
-            value = enum.get("value")
-            values.add(value)
-            docs = " ".join(
-                (doc.text or "") for doc in enum.iter(f"{XS}documentation")
-            ).lower()
-            if "deprecated" in docs:
-                deprecated.add(value)
-        return frozenset(values), frozenset(deprecated)
-    raise AssertionError(f"simpleType {type_name!r} not found in {rel_path}")
+    enums = _xsd_enums(rel_path)
+    enum = enums.get(type_name)
+    if enum is None:
+        raise AssertionError(f"simpleType {type_name!r} not found in {rel_path}")
+    return frozenset(enum.value_strings), frozenset(enum.deprecated_values)
 
 
 def _require_osi_specification() -> Path:
@@ -98,13 +109,9 @@ def _require_osi_specification() -> Path:
     if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
         raise AssertionError(
             f"{OSI_NAMING_ADOC} is missing while OMB_REQUIRE_PINNED_SOURCES is set. "
-            "Initialise the ASAM standards submodule (git submodule update --init "
-            "--recursive submodules/asam-openx-standards) so this guard actually runs."
+            f"{ASAM_SUBMODULE_HINT}"
         )
-    pytest.skip(
-        "ASAM OSI submodule not checked out; run "
-        "'git submodule update --init --recursive submodules/asam-openx-standards'"
-    )
+    pytest.skip(f"ASAM OSI specification not checked out. {ASAM_SUBMODULE_HINT}")
 
 
 def _osi_trace_types() -> Tuple[FrozenSet[str], FrozenSet[str]]:
@@ -204,19 +211,31 @@ class Contract:
         return f"{self.domain}:{'/'.join(self.path)}"
 
 
+# ASAM OpenDRIVE V1.9.0 deprecation state. The schema marks eight lane types; the v1.9.0
+# specification §11.8 deprecates one more that the schema does not, so the source is
+# recorded per value rather than derived from either document alone.
 LANE_DEPRECATED = {
-    "mwyEntry": XSD,
-    "mwyExit": XSD,
+    "sidewalk": XSD,  # use walking
+    "bus": XSD,  # use the lane <access> element
+    "taxi": XSD,  # use the lane <access> element
+    "mwyEntry": XSD,  # use entry
+    "mwyExit": XSD,  # use exit
     "special1": XSD,
     "special2": XSD,
     "special3": XSD,
-    "sidewalk": SPEC_11_8,
-    "bidirectional": SPEC_11_8,
+    "bidirectional": SPEC_11_8,  # use the lane @direction attribute
 }
 
 OBJECT_DEPRECATED = {
     value: XSD
     for value in (
+        # deprecated with a stated replacement
+        "patch",  # use roadSurface
+        "railing",  # use barrier
+        "soundBarrier",  # use barrier
+        "streetLamp",  # use pole
+        "wind",  # use pole
+        # deprecated without a stated replacement
         "car",
         "bus",
         "trailer",
@@ -225,7 +244,6 @@ OBJECT_DEPRECATED = {
         "tram",
         "train",
         "pedestrian",
-        "wind",
     )
 }
 
@@ -348,40 +366,57 @@ HISTORICAL_BRANCHES = {
 # =============================================================================
 
 
-@pytest.mark.parametrize("contract", CONTRACTS, ids=lambda c: c.id)
-def test_enum_equals_pinned_source_plus_declared_extensions(contract: Contract):
-    """The widest ``sh:in`` for a path equals the pinned enumeration plus extensions.
+SYNC_TARGETS = (
+    ("hdmap", HDMAP_ENUM_MAPPINGS),
+    ("ositrace", OSITRACE_ENUM_MAPPINGS),
+)
 
-    "Widest" because ``hdmap`` declares one branch per OpenDRIVE revision and only the
-    current-revision branch is expected to match the pinned V1.8.0 schema; the historical
-    branches are covered by ``test_historical_branches_match_frozen_snapshots``.
+
+@pytest.mark.parametrize(
+    "domain,mappings", SYNC_TARGETS, ids=lambda x: x if isinstance(x, str) else ""
+)
+def test_enums_match_their_pinned_source(domain, mappings):
+    """Every mapped ``sh:in`` equals its pinned ASAM enumeration, extensions aside.
+
+    Delegated to ``omb.utils.xsd_shacl_sync.run_sync_check`` rather than reimplemented:
+    that module owns the XSD-to-SHACL comparison, including declared extensions such as
+    ``truck``. This test is what makes it fail a build instead of only printing a report.
     """
-    graph = _shacl_graph(contract.domain)
-    declared = _sh_in_sets(graph, contract.path)
-    assert declared, f"no sh:in found for {contract.id}"
-
-    expected = _xsd_enumeration(*contract.source)[0] | frozenset(contract.extensions)
-    widest = max(declared, key=len)
-
-    assert widest == expected, (
-        f"{contract.id} drifted from {contract.source[1]} in {contract.source[0]}:\n"
-        f"  missing: {sorted(expected - widest)}\n"
-        f"  unexpected: {sorted(widest - expected)}"
+    report = run_sync_check(
+        Path(ASAM_OPENDRIVE_SCHEMA_DIR),
+        Path("artifacts") / domain / f"{domain}.shacl.ttl",
+        mappings=mappings,
+    )
+    assert report.results, f"no mappings checked for {domain}"
+    assert report.all_in_sync, "\n".join(
+        ["enumeration drift against the pinned ASAM schemas:"]
+        + [r.summary() for r in report.results]
+        + [
+            f"  {r.shacl_property}: missing={sorted(r.missing_in_shacl)} "
+            f"undeclared_extra={sorted(r.undeclared_extras)}"
+            for r in report.results
+            if not r.in_sync
+        ]
     )
 
 
 @pytest.mark.parametrize("contract", CONTRACTS, ids=lambda c: c.id)
-def test_extensions_are_declared_with_a_rationale(contract: Contract):
-    """Values not in the pinned source exist only where declared, and say why."""
-    graph = _shacl_graph(contract.domain)
-    pinned = _xsd_enumeration(*contract.source)[0]
-    widest = max(_sh_in_sets(graph, contract.path), key=len)
-
-    declared = frozenset(contract.extensions)
-    assert (widest - pinned) == declared, (
-        f"{contract.id} extension set changed:\n"
-        f"  undeclared non-ASAM values: {sorted((widest - pinned) - declared)}\n"
-        f"  declared but no longer present: {sorted(declared - widest)}"
+def test_declared_extensions_match_the_sync_mappings(contract: Contract):
+    """The extensions declared here and in the sync mappings cannot drift apart."""
+    mappings = (
+        HDMAP_ENUM_MAPPINGS if contract.domain == "hdmap" else OSITRACE_ENUM_MAPPINGS
+    )
+    prop = contract.path[-1]
+    declared_in_mapping = {
+        e
+        for m in mappings
+        if m["shacl_property"] == prop
+        for e in m.get("extensions", ())
+    }
+    assert declared_in_mapping == frozenset(contract.extensions), (
+        f"{contract.id}: extensions declared in xsd_shacl_sync "
+        f"({sorted(declared_in_mapping)}) differ from this contract "
+        f"({sorted(contract.extensions)})"
     )
     for value, rationale in contract.extensions.items():
         assert len(rationale) > 40, f"{contract.id}: {value!r} needs a real rationale"

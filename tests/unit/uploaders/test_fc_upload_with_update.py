@@ -5,9 +5,21 @@ Unit tests for omb.uploaders.fc_upload_with_update.
 
 from pathlib import Path
 
+import pytest
 import rdflib
 
-from omb.uploaders import fc_upload_with_update as uploader
+# omb.uploaders pulls in omb.authhelper.keycloakhandling, which imports keycloak from the
+# optional "publish" extra. Skip rather than fail collection when it is absent; `just
+# test-unit` installs the extra so these tests really run in CI.
+pytest.importorskip(
+    "keycloak",
+    reason=(
+        "optional 'publish' extra not installed; "
+        "install with: uv sync --group dev --extra publish"
+    ),
+)
+
+from omb.uploaders import fc_upload_with_update as uploader  # noqa: E402
 
 
 def test_extract_ontology_name():
