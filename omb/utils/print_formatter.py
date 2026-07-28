@@ -111,19 +111,41 @@ def _print_boxed_line(text: str, width: int, file=None):
     print(f"= {text}{' ' * max(0, padding)} =", file=file)
 
 
-def _extract_and_sort_errors(report_graph: Graph):
-    """Extracts and sorts errors deterministically using normalized content."""
+#: Severities that do not make a graph non-conformant when warnings are allowed.
+ADVISORY_SEVERITIES = ("Warning", "Info")
+
+
+def _severity_name(severity) -> str:
+    """Local name of a ``sh:resultSeverity``; absent severity means Violation."""
+    return str(severity).split("#")[-1] if severity else "Violation"
+
+
+def _extract_and_sort_errors(report_graph: Graph, advisory: bool = False):
+    """Extracts and sorts results deterministically using normalized content.
+
+    Args:
+        report_graph: SHACL validation report graph.
+        advisory: If False (default), return only results that make the graph
+            non-conformant. If True, return only ``sh:Warning``/``sh:Info``
+            results. Splitting them keeps advisory results out of the recorded
+            ``.expected`` snapshots, so adding a warning-severity constraint
+            cannot churn 40-odd unrelated negative-test snapshots.
+    """
     SH = Namespace("http://www.w3.org/ns/shacl#")
     results = list(report_graph.subjects(RDF.type, SH.ValidationResult))
     error_rows = []
     seen = set()
 
     for result in results:
+        severity = report_graph.value(result, SH.resultSeverity)
+        is_advisory = _severity_name(severity) in ADVISORY_SEVERITIES
+        if is_advisory != advisory:
+            continue
         data = {
             "focus_node": report_graph.value(result, SH.focusNode),
             "result_path": report_graph.value(result, SH.resultPath),
             "result_message": report_graph.value(result, SH.resultMessage),
-            "severity": report_graph.value(result, SH.resultSeverity),
+            "severity": severity,
         }
         sig = (
             str(data["focus_node"]),
@@ -199,47 +221,82 @@ def format_data_conformance_result(
             "Structured Validation Errors:".center(inner_width), width, file=file
         )
         _print_boxed_line("-" * inner_width, width, file=file)
-        errors = _extract_and_sort_errors(report_graph)
-        for i, row in enumerate(errors):
-            sev = (
-                str(row["severity"]).split("#")[-1] if row["severity"] else "Violation"
-            )
-            labels = [f"🔹 [{sev}] Node: ", "   Property: ", "   Error:    "]
-            max_label_w = max(_get_visual_width(ll) for ll in labels)
-
-            def pad(ll):
-                return ll + (" " * (max_label_w - _get_visual_width(ll)))
-
-            # Print Node
-            node_val = _clean(row["focus_node"])
-            wrapped_node = textwrap.wrap(node_val, width=inner_width - max_label_w)
-            _print_boxed_line(f"{pad(labels[0])}{wrapped_node[0]}", width, file=file)
-            for line in wrapped_node[1:]:
-                _print_boxed_line(" " * max_label_w + line, width, file=file)
-
-            # Print Property
-            if row["result_path"]:
-                prop_val = _clean(row["result_path"])
-                wrapped_prop = textwrap.wrap(prop_val, width=inner_width - max_label_w)
-                _print_boxed_line(
-                    f"{pad(labels[1])}{wrapped_prop[0]}", width, file=file
-                )
-                for line in wrapped_prop[1:]:
-                    _print_boxed_line(" " * max_label_w + line, width, file=file)
-
-            # Print Error Message
-            if row["result_message"]:
-                msg_val = _clean(row["result_message"])
-                wrapped_msg = textwrap.wrap(msg_val, width=inner_width - max_label_w)
-                _print_boxed_line(f"{pad(labels[2])}{wrapped_msg[0]}", width, file=file)
-                for line in wrapped_msg[1:]:
-                    _print_boxed_line(" " * max_label_w + line, width, file=file)
-
-            if i < len(errors) - 1:
-                _print_boxed_line("-" * inner_width, width, file=file)
+        _print_result_rows(
+            _extract_and_sort_errors(report_graph), width, inner_width, file
+        )
         print(border, file=file)
     if exit_code is not None:
         sys.exit(exit_code)
+
+
+def _print_result_rows(rows, width, inner_width, file):
+    """Renders SHACL result rows as boxed, wrapped node/property/message blocks."""
+    for i, row in enumerate(rows):
+        sev = _severity_name(row["severity"])
+        labels = [f"🔹 [{sev}] Node: ", "   Property: ", "   Error:    "]
+        max_label_w = max(_get_visual_width(ll) for ll in labels)
+
+        def pad(ll):
+            return ll + (" " * (max_label_w - _get_visual_width(ll)))
+
+        # Print Node
+        node_val = _clean(row["focus_node"])
+        wrapped_node = textwrap.wrap(node_val, width=inner_width - max_label_w)
+        _print_boxed_line(f"{pad(labels[0])}{wrapped_node[0]}", width, file=file)
+        for line in wrapped_node[1:]:
+            _print_boxed_line(" " * max_label_w + line, width, file=file)
+
+        # Print Property
+        if row["result_path"]:
+            prop_val = _clean(row["result_path"])
+            wrapped_prop = textwrap.wrap(prop_val, width=inner_width - max_label_w)
+            _print_boxed_line(f"{pad(labels[1])}{wrapped_prop[0]}", width, file=file)
+            for line in wrapped_prop[1:]:
+                _print_boxed_line(" " * max_label_w + line, width, file=file)
+
+        # Print Error Message
+        if row["result_message"]:
+            msg_val = _clean(row["result_message"])
+            wrapped_msg = textwrap.wrap(msg_val, width=inner_width - max_label_w)
+            _print_boxed_line(f"{pad(labels[2])}{wrapped_msg[0]}", width, file=file)
+            for line in wrapped_msg[1:]:
+                _print_boxed_line(" " * max_label_w + line, width, file=file)
+
+        if i < len(rows) - 1:
+            _print_boxed_line("-" * inner_width, width, file=file)
+
+
+def format_advisory_results(report_graph, files=None) -> str:
+    """Render ``sh:Warning``/``sh:Info`` results as a separate, non-failing section.
+
+    Returns an empty string when there are none. Deliberately *not* part of
+    ``format_data_conformance_result``: advisory results must be visible in the
+    console without entering the ``.expected`` snapshots that
+    ``check-failing-tests`` compares byte for byte.
+    """
+    if report_graph is None:
+        return ""
+    rows = _extract_and_sort_errors(report_graph, advisory=True)
+    if not rows:
+        return ""
+
+    width, inner_width = 150, 146
+    border, buf = "=" * width, StringIO()
+    print(border, file=buf)
+    _print_boxed_line(
+        "⚠️  Advisory results (do not fail validation):".center(inner_width - 1),
+        width,
+        file=buf,
+    )
+    if files:
+        _print_boxed_line(" ", width, file=buf)
+        formatted = f"[{', '.join(f"'{_clean(f)}'" for f in files)}]"
+        for line in textwrap.wrap(formatted, width=inner_width):
+            _print_boxed_line(line.center(inner_width), width, file=buf)
+    _print_boxed_line("-" * inner_width, width, file=buf)
+    _print_result_rows(rows, width, inner_width, buf)
+    print(border, file=buf)
+    return buf.getvalue()
 
 
 def format_shacl_validation_result(

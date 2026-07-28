@@ -48,6 +48,7 @@ from omb.utils.graph_loader import (
     load_turtle_files,
 )
 from omb.utils.print_formatter import (
+    format_advisory_results,
     format_shacl_validation_result,
     normalize_path_for_display,
 )
@@ -97,6 +98,7 @@ class ShaclValidator:
         strict: bool = False,
         allow_online: bool = True,
         enable_http: bool = False,
+        allow_warnings: bool = True,
     ):
         """
         Initialize the SHACL validator.
@@ -111,6 +113,13 @@ class ShaclValidator:
             strict: If True, unresolved IRIs cause validation failure.
             allow_online: If True, attempt HTTP resolution for unresolved IRIs.
             enable_http: If True and no local catalogs, bootstrap via HTTP.
+            allow_warnings: If True (default), ``sh:Warning`` and ``sh:Info``
+                results are advisory: they are reported but do not make the
+                graph non-conformant. pyshacl's own default is the opposite —
+                any result at all, including a warning, sets
+                ``conforms=False`` — which makes ``sh:severity sh:Warning``
+                unusable for "accepted but discouraged" constraints such as
+                deprecated enumeration values. Set False to fail on them.
         """
         self.root_dir = Path(root_dir).resolve()
         if resolver and enable_http:
@@ -127,6 +136,7 @@ class ShaclValidator:
         self.verbose = verbose
         self.strict = strict
         self.allow_online = allow_online
+        self.allow_warnings = allow_warnings
         self._context_url_map: Optional[Dict[str, "Path"]] = None
 
         # Build context URL map from resolver's catalog
@@ -594,6 +604,7 @@ class ShaclValidator:
                 advanced=True,
                 js=False,
                 meta_shacl=False,
+                allow_warnings=self.allow_warnings,
             )
 
             if conforms:
@@ -628,6 +639,19 @@ class ShaclValidator:
             file=output_buffer,
         )
         return output_buffer.getvalue()
+
+    def format_advisory(self, result: ValidationResult) -> str:
+        """
+        Format the advisory (``sh:Warning``/``sh:Info``) part of a result.
+
+        Kept separate from :meth:`format_result` so advisory output reaches the
+        console without becoming part of the ``.expected`` snapshots that
+        ``check-failing-tests`` compares byte for byte.
+
+        Returns:
+            Formatted advisory section, or an empty string if there is none.
+        """
+        return format_advisory_results(result.report_graph, result.files_validated)
 
 
 def validate_data_conformance(

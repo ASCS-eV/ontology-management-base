@@ -229,6 +229,7 @@ def test_validate_data_conformance_all_prints_formatted_report(
             resolver: RegistryResolver = None,
             strict: bool = False,
             allow_online: bool = True,
+            allow_warnings: bool = True,
         ):
             self._resolver = resolver
 
@@ -242,6 +243,9 @@ def test_validate_data_conformance_all_prints_formatted_report(
 
         def format_result(self, _result):
             return "FORMATTED REPORT TEXT"
+
+        def format_advisory(self, _result):
+            return ""
 
     monkeypatch.setattr(validation_suite, "ShaclValidator", FakeValidator)
 
