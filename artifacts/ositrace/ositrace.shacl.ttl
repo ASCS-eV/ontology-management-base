@@ -117,14 +117,14 @@ ositrace:ContentShape a sh:NodeShape ;
             sh:order 0 ;
             sh:path ositrace:roadTypes ],
         [ skos:example "shoulder, curb, ..." ;
-            sh:description "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in imports/OpenDrive/xsd_schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.8.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape."@en ;
+            sh:description "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in imports/OpenDrive/xsd_schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.8.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE and accepted here only so that existing assets stay valid: 'sidewalk' (deprecated in v1.9.0 §11.8, use 'walking'), 'bidirectional' (deprecated in v1.9.0 §11.8, use the lane @direction attribute), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), 'special1', 'special2', 'special3'. Prefer the non-deprecated spellings in new self-descriptions."@en ;
             sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
             sh:message "Validation of laneTypes failed! Must be a known ASAM OpenDRIVE e_laneType."@en ;
             sh:name "lane types"@en ;
             sh:order 1 ;
             sh:path ositrace:laneTypes ],
         [ skos:example "trees, street lamps, road patches..." ;
-            sh:description "Covered object classes. ASAM OpenDRIVE e_objectType enumeration as defined in imports/OpenDrive/xsd_schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.8.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck' retained from the v1.4 object-type keywords. Identical to the enumeration enforced on hdmap:DomainSpecificationShape."@en ;
+            sh:description "Covered object classes. ASAM OpenDRIVE e_objectType enumeration as defined in imports/OpenDrive/xsd_schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.8.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.8.0 and accepted here only so that existing assets stay valid: 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian', which the schema deprecates without naming a replacement — describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."@en ;
             sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
             sh:message "Validation of levelOfDetail failed! Must be a known ASAM OpenDRIVE e_objectType."@en ;
             sh:name "level of detail"@en ;
@@ -228,7 +228,7 @@ ositrace:SingleChannelFormatShape a sh:NodeShape ;
     sh:closed false ;
     sh:description "Validation shape for single-channel trace files, covering both serializations ASAM OSI v3.8.0 defines for them: binary .osi and plain-text .txth."@en ;
     sh:property [ skos:example "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData" ;
-            sh:description "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+            sh:description "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."@en ;
             sh:in ("ASAM OSI GroundTruth" "ASAM OSI HostVehicleData" "ASAM OSI MotionRequest" "ASAM OSI SensorData" "ASAM OSI SensorView" "ASAM OSI SensorViewConfiguration" "ASAM OSI StreamingUpdate" "ASAM OSI TrafficCommand" "ASAM OSI TrafficCommandUpdate" "ASAM OSI TrafficUpdate") ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
@@ -237,7 +237,7 @@ ositrace:SingleChannelFormatShape a sh:NodeShape ;
             sh:order 0 ;
             sh:path ositrace:formatType ],
         [ skos:example "OSI" ;
-            sh:description "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Optional for backward compatibility; the multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
+            sh:description "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
             sh:in ("OSI" "TXTH") ;
             sh:maxCount 1 ;
             sh:message "Validation of fileFormat failed! Single-channel traces must be 'OSI' (.osi binary) or 'TXTH' (.txth plain text)."@en ;
@@ -345,7 +345,7 @@ ositrace:ChannelShape a sh:NodeShape ;
             sh:order 0 ;
             sh:path ositrace:topic ],
         [ skos:example "SensorData" ;
-            sh:description "OSI top-level message type carried by this channel."@en ;
+            sh:description "OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."@en ;
             sh:in ("GroundTruth" "SensorView" "SensorData" "SensorViewConfiguration" "HostVehicleData" "TrafficCommand" "TrafficCommandUpdate" "TrafficUpdate" "MotionRequest" "StreamingUpdate") ;
             sh:maxCount 1 ;
             sh:minCount 1 ;

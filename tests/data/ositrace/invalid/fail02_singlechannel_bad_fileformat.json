@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_txth_instance",
+   "@id": "did:web:test.ositrace.net:OSITrace:test_invalid_singlechannel_bad_fileformat",
    "@type": "ositrace:OSITrace",
    "ositrace:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:TxthSensorViewUrbanExcerpt",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:singlechannel_bad_fileformat",
       "@type": "envited-x:ResourceDescription",
-      "schema:name": "Urban intersection sensor view excerpt (plain text)",
-      "schema:description": "Short human-readable ASAM OSI SensorView trace excerpt of an urban intersection, stored in the plain-text .txth serialization for manual inspection of the raw radar and lidar reflection lists.",
+      "schema:name": "Single-channel trace declaring a multi-channel file format",
+      "schema:description": "Negative fixture: a single-channel ositrace:Format (no hasChannel) that declares fileFormat 'MCAP'. It must satisfy neither SingleChannelFormatShape, whose fileFormat is restricted to OSI/TXTH, nor MultiChannelFormatShape, which requires at least one channel. Locks the intentional narrowing: because SingleChannelFormatShape is sh:closed false, this instance conformed before fileFormat was constrained.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -29,76 +29,65 @@
       "@type": "ositrace:DomainSpecification",
       "ositrace:hasFormat": {
          "@type": "ositrace:Format",
-         "formatType": "ASAM OSI SensorView",
-         "fileFormat": "TXTH",
-         "version": "3.8.0/3.21.0"
+         "formatType": "ASAM OSI SensorData",
+         "version": "3.6.0/3.20.0",
+         "fileFormat": "MCAP"
       },
       "ositrace:hasContent": {
          "@type": "ositrace:Content",
-         "roadTypes": "town",
+         "roadTypes": "rural",
          "laneTypes": [
-            "driving",
-            "bus",
-            "taxi",
-            "rail",
-            "roadWorks",
-            "shared"
+            "driving"
          ],
-         "levelOfDetail": [
-            "pole",
-            "tree",
-            "streetLamp",
-            "trafficIsland",
-            "roadSurface",
-            "vegetation"
-         ],
+         "levelOfDetail": "car",
          "trafficDirection": "right-hand",
          "granularity": [
-            "raw data"
+            "object list",
+            "detection list"
          ],
-         "startTime": "2026-05-12T09:14:02.104500+02:00",
-         "stopTime": "2026-05-12T09:14:03.304500+02:00",
+         "startTime": "2024-06-03T16:37:10.835792+02:00",
+         "stopTime": "2024-06-03T16:38:28.636671+02:00",
          "hasHostMovingObject": {
             "@type": "ositrace:MovingObject",
             "identifier": 1,
-            "description": "Instrumented host vehicle with roof-mounted lidar and front radar"
+            "description": "PMSF MB CLS 500 Host Vehicle"
          },
          "hasTargetMovingObject": {
             "@type": "ositrace:MovingObject",
             "identifier": 2,
-            "description": "Pedestrian crossing at the signalised intersection"
+            "description": "ADC Target Vehicle"
          }
       },
       "ositrace:hasQuality": {
          "@type": "ositrace:Quality",
-         "validationReport": "https://github.com/mygroup/myproject/osi_txth_trace_validation_report.xqar",
+         "validationReport": "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar",
          "validationReportType": "application/xqar"
       },
       "ositrace:hasQuantity": {
          "@type": "ositrace:Quantity",
-         "numberFrames": 12
+         "numberFrames": 1448
       },
       "ositrace:hasDataSource": {
          "@type": "ositrace:DataSource",
-         "usedDataSources": "Direct sensor capture, roof lidar and front radar on instrumented host vehicle",
-         "measurementSystem": "osi-trace-writer v0.4 (plain-text export)"
+         "usedDataSources": "Direct Sensor Capture ARS 548 FW05.38.14 on PMSF MB CLS 500",
+         "measurementSystem": "pcapng2osi converter v1.1"
       },
       "hasGeoreference": {
          "@type": "georeference:Georeference",
-         "@id": "did:web:registry.envited-x.net:Georeference:TxthSensorViewUrbanExcerpt",
+         "@id": "did:web:registry.envited-x.net:Georeference:T9rkdS19poUrbbAEk3rXMqZ3hzVezwDrrxaf",
          "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
             "country": "DE",
-            "state": "DE-BY",
-            "region": "Upper Bavaria",
-            "city": "Munich",
-            "relationOrArea": "Signalised urban intersection",
+            "state": "DE-NI",
+            "region": "Brunswick",
+            "city": "Edemissen",
+            "relationOrArea": "Airport Peine-Eddesse",
             "hasBoundingBox": {
                "@type": "georeference:BoundingBox",
-               "xMin": 11.5615,
-               "yMin": 48.1478,
-               "xMax": 11.5689,
-               "yMax": 48.1521
+               "xMin": 10.22518251,
+               "yMin": 52.4017796466667,
+               "xMax": 10.23265636,
+               "yMax": 52.403132605
             }
          },
          "hasGeodeticReferenceSystem": {
@@ -106,13 +95,13 @@
             "codeEPSG": 4326,
             "hasOrigin": {
                "@type": "georeference:LatLonCoordinate",
-               "lat": 48.1478,
-               "lon": 11.5615
+               "lat": 52.4017796466667,
+               "lon": 10.22518251
             },
             "hasViewPoint": {
                "@type": "georeference:LatLonCoordinate",
-               "lat": 48.1478,
-               "lon": 11.5615
+               "lat": 52.4017796466667,
+               "lon": 10.22518251
             },
             "heightSystem": "Ellipsoidal height"
          }

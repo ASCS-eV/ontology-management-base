@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.hdmap.net:HdMap:test_valid_v15_truck",
+   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_unknown_lanelet_formattype",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:truck_test_v15",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:unknown_lanelet_formattype",
       "@type": "envited-x:ResourceDescription",
-      "name": "OpenDRIVE v1.5 HD Map with truck objects",
-      "description": "Tests that 'truck' stays accepted as a levelOfDetail value. It is not an ASAM OpenDRIVE e_objectType in any schema pinned by this repository; it is an ENVITED-X ecosystem extension kept for backward compatibility (see #48).",
+      "name": "HD map declaring an unknown lanelet format version",
+      "description": "Negative fixture: formatType 'Lanelet3' does not exist. The formatType enumeration is closed, so adding Lanelet2 must not make arbitrary lanelet-like spellings acceptable.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -29,34 +29,34 @@
       "@type": "hdmap:DomainSpecification",
       "hdmap:hasFormat": {
          "@type": "hdmap:Format",
-         "formatType": "ASAM OpenDRIVE",
-         "version": "1.5"
+         "formatType": "Lanelet3",
+         "version": "1.2"
       },
       "hdmap:hasContent": {
          "@type": "hdmap:Content",
-         "roadTypes": "motorway",
+         "roadTypes": "town",
          "laneTypes": [
             "driving",
-            "shoulder"
+            "walking"
          ],
-         "levelOfDetail": "truck",
+         "levelOfDetail": "pole",
          "trafficDirection": "right-hand"
       },
       "hdmap:hasQuantity": {
          "@type": "hdmap:Quantity",
-         "length": 5.2,
-         "elevationRange": 15.0,
-         "numberIntersections": 2,
-         "numberTrafficLights": 0,
-         "numberTrafficSigns": 80,
-         "numberObjects": 45,
-         "numberOutlines": 30,
+         "length": 3.4,
+         "elevationRange": 8.0,
+         "numberIntersections": 6,
+         "numberTrafficLights": 12,
+         "numberTrafficSigns": 40,
+         "numberObjects": 60,
+         "numberOutlines": 25,
          "speedLimit": {
             "@type": "hdmap:Range2D",
-            "min": 80.0,
-            "max": 130.0
+            "min": 30.0,
+            "max": 50.0
          },
-         "rangeOfModeling": 50.0
+         "rangeOfModeling": 40.0
       },
       "hdmap:hasQuality": {
          "@type": "hdmap:Quality",
@@ -69,7 +69,7 @@
       "hdmap:hasDataSource": {
          "@type": "hdmap:DataSource",
          "usedDataSources": "scanner",
-         "measurementSystem": "Mobile mapping system"
+         "measurementSystem": "OpenStreetMap import with manual lanelet annotation"
       }
    },
    "hdmap:hasManifest": {

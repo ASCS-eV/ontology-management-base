@@ -194,7 +194,10 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
             ]
         ]
         [   # Branch 2: version > 1.4 — strict e_objectType enum
-            # Union of all 28 known values from v1.4H keywords + v1.5M + v1.8.0
+            # The 27 e_objectType values of ASAM OpenDRIVE V1.8.0
+            # (imports/OpenDrive/xsd_schema/OpenDRIVE_Object.xsd) plus "truck",
+            # which is not an e_objectType in any schema pinned by this repository
+            # and is kept as an ENVITED-X ecosystem extension (see #48).
             sh:property [
                 sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
                 sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
