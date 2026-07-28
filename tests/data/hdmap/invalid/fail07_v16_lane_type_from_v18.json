@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance",
+   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_v16_lane_type_from_v18",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:vP8mX2qL9kR5wJ3zN7bH4dC1fG0tY6",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:test_invalid_v16_lane_type_from_v18",
       "@type": "envited-x:ResourceDescription",
-      "name": "Test HD Map Dataset",
-      "description": "A sample HD map dataset for testing, covering an urban environment.",
+      "name": "OpenDRIVE v1.6 HD map declaring a v1.8 lane type",
+      "description": "Negative fixture, one value away from hdmap_instance.json: laneTypes 'curb' was introduced in ASAM OpenDRIVE v1.8 and must not validate on a version 1.6 asset. Guards the v1.5-v1.7 implication specifically.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -37,7 +37,7 @@
          "roadTypes": "town",
          "laneTypes": [
             "driving",
-            "shoulder"
+            "curb"
          ],
          "levelOfDetail": "crosswalk",
          "trafficDirection": "right-hand"

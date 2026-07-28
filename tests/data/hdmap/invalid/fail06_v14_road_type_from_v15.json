@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.hdmap.net:HdMap:test_valid_hdmap_instance",
+   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_v14_road_type_from_v15",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:vP8mX2qL9kR5wJ3zN7bH4dC1fG0tY6",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:test_invalid_v14_road_type_from_v15",
       "@type": "envited-x:ResourceDescription",
-      "name": "Test HD Map Dataset",
-      "description": "A sample HD map dataset for testing, covering an urban environment.",
+      "name": "OpenDRIVE v1.4 HD map declaring a v1.5 road type",
+      "description": "Negative fixture, one value away from hdmap_v14_custom_objecttype_instance.json: roadTypes 'townArterial' is one of the six town subtypes added in ASAM OpenDRIVE v1.5 and must not validate on a version 1.4 asset.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -30,16 +30,16 @@
       "hdmap:hasFormat": {
          "@type": "hdmap:Format",
          "formatType": "ASAM OpenDRIVE",
-         "version": "1.6"
+         "version": "1.4"
       },
       "hdmap:hasContent": {
          "@type": "hdmap:Content",
-         "roadTypes": "town",
+         "roadTypes": "townArterial",
          "laneTypes": [
             "driving",
-            "shoulder"
+            "sidewalk"
          ],
-         "levelOfDetail": "crosswalk",
+         "levelOfDetail": "custom_sensor_mount",
          "trafficDirection": "right-hand"
       },
       "hdmap:hasQuantity": {
@@ -73,7 +73,7 @@
       },
       "hasGeoreference": {
          "@type": "georeference:Georeference",
-         "@id": "did:web:registry.envited-x.net:Georeference:wDgNY3gZAxMe3LjhdAZ9TbPiYnQ-yybNhCu8",
+         "@id": "did:web:registry.envited-x.net:Georeference:v14CustomTest_uniqueGeoRef",
          "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
             "country": "DE",
