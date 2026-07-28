@@ -8,7 +8,7 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Format must conform to either SingleChannelFormatShape (.osi) or MultiChannelFormatShape (MCAP).                              =
+=    Error:            Format must conform to either SingleChannelFormatShape (.osi or .txth) or MultiChannelFormatShape (.mcap).                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.ositrace.net:OSITrace:test_invalid_fail01_mcap_missing_topic                                                     =
 =    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasDomainSpecification                                                         =

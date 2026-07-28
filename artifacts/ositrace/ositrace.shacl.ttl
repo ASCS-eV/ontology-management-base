@@ -139,8 +139,8 @@ ositrace:ContentShape a sh:NodeShape ;
             sh:order 3 ;
             sh:path ositrace:trafficDirection ],
         [ skos:example "object list, detection list"@en ;
-            sh:description "Level of granularity of sensor data"@en ;
-            sh:in ("object list" "detection list") ;
+            sh:description "Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+            sh:in ("object list" "detection list" "raw data") ;
             sh:message "Validation of granularity failed!"@en ;
             sh:minCount 1 ;
             sh:name "granularity"@en ;
@@ -213,29 +213,37 @@ ositrace:DataSourceShape a sh:NodeShape ;
             sh:path ositrace:usedDataSources ] ;
     sh:targetClass ositrace:DataSource .
 
-### Format SHACL Shape (disjunction: single-channel .osi or multi-channel MCAP)
+### Format SHACL Shape (disjunction: single-channel .osi/.txth or multi-channel .mcap)
 ositrace:FormatShape a sh:NodeShape ;
     sh:closed false ;
     sh:or (
         [ sh:node ositrace:SingleChannelFormatShape ]
         [ sh:node ositrace:MultiChannelFormatShape ]
     ) ;
-    sh:message "Format must conform to either SingleChannelFormatShape (.osi) or MultiChannelFormatShape (MCAP)."@en ;
+    sh:message "Format must conform to either SingleChannelFormatShape (.osi or .txth) or MultiChannelFormatShape (.mcap)."@en ;
     sh:targetClass ositrace:Format .
 
-### SingleChannelFormatShape — validates classic single-channel .osi trace files
+### SingleChannelFormatShape — validates single-channel .osi and .txth trace files
 ositrace:SingleChannelFormatShape a sh:NodeShape ;
     sh:closed false ;
-    sh:description "Validation shape for single-channel .osi trace files with a formatType and version."@en ;
+    sh:description "Validation shape for single-channel trace files, covering both serializations ASAM OSI v3.8.0 defines for them: binary .osi and plain-text .txth."@en ;
     sh:property [ skos:example "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData" ;
-            sh:description "Format type definition for single-channel .osi files."@en ;
-            sh:in ("ASAM OSI GroundTruth" "ASAM OSI SensorView" "ASAM OSI SensorData") ;
+            sh:description "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+            sh:in ("ASAM OSI GroundTruth" "ASAM OSI HostVehicleData" "ASAM OSI MotionRequest" "ASAM OSI SensorData" "ASAM OSI SensorView" "ASAM OSI SensorViewConfiguration" "ASAM OSI StreamingUpdate" "ASAM OSI TrafficCommand" "ASAM OSI TrafficCommandUpdate" "ASAM OSI TrafficUpdate") ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
-            sh:message "Validation of formatType failed! Must be one of: ASAM OSI GroundTruth, ASAM OSI SensorView, ASAM OSI SensorData."@en ;
+            sh:message "Validation of formatType failed! Must be a top-level OSI message type listed in the ASAM OSI trace file naming conventions."@en ;
             sh:name "type"@en ;
             sh:order 0 ;
             sh:path ositrace:formatType ],
+        [ skos:example "OSI" ;
+            sh:description "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Optional for backward compatibility; the multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
+            sh:in ("OSI" "TXTH") ;
+            sh:maxCount 1 ;
+            sh:message "Validation of fileFormat failed! Single-channel traces must be 'OSI' (.osi binary) or 'TXTH' (.txth plain text)."@en ;
+            sh:name "file format"@en ;
+            sh:order 2 ;
+            sh:path ositrace:fileFormat ],
         [ skos:example "3.7.0" ;
             sh:datatype xsd:string ;
             sh:description "Version of data format (OSI version / protobuf version)."@en ;
