@@ -1,0 +1,138 @@
+{
+   "@context": [
+      "https://w3id.org/gaia-x/development#",
+      "https://w3id.org/ascs-ev/envited-x/ositrace/v6/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      {
+         "@vocab": null
+      }
+   ],
+   "@id": "did:web:test.ositrace.net:OSITrace:test_valid_ositrace_legacy_deprecated_keywords_instance",
+   "@type": "ositrace:OSITrace",
+   "ositrace:hasResourceDescription": {
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:LegacyDeprecatedKeywords",
+      "@type": "envited-x:ResourceDescription",
+      "schema:name": "Legacy trace using deprecated ASAM OpenDRIVE keywords",
+      "schema:description": "Positive fixture: an ASAM OSI GroundTruth trace of an older asset that describes its scene with lane and object keywords ASAM OpenDRIVE has since deprecated - 'sidewalk' and 'bidirectional' (v1.9.0 SS11.8), 'special1' and 'mwyEntry' (V1.8.0 e_laneType), and 'pedestrian', 'car', 'wind' (V1.8.0 e_objectType). Deprecated is not removed: these values must keep validating so existing self-descriptions stay conformant. Deliberate acceptance, not an oversight.",
+      "version": "1.0.0",
+      "license": "EPL-2.0",
+      "resourcePolicy": "allow",
+      "containsPII": false,
+      "copyrightOwnedBy": {
+         "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+      },
+      "producedBy": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
+   },
+   "ositrace:hasDomainSpecification": {
+      "@type": "ositrace:DomainSpecification",
+      "ositrace:hasFormat": {
+         "@type": "ositrace:Format",
+         "formatType": "ASAM OSI GroundTruth",
+         "fileFormat": "OSI",
+         "version": "3.8.0/3.21.0"
+      },
+      "ositrace:hasContent": {
+         "@type": "ositrace:Content",
+         "roadTypes": "town",
+         "laneTypes": [
+            "sidewalk",
+            "bidirectional",
+            "special1",
+            "mwyEntry"
+         ],
+         "levelOfDetail": [
+            "pedestrian",
+            "car",
+            "wind"
+         ],
+         "trafficDirection": "right-hand",
+         "granularity": [
+            "object list"
+         ],
+         "startTime": "2024-06-03T16:37:10.835792+02:00",
+         "stopTime": "2024-06-03T16:38:28.636671+02:00",
+         "hasHostMovingObject": {
+            "@type": "ositrace:MovingObject",
+            "identifier": 1,
+            "description": "Instrumented host vehicle of a legacy recording"
+         },
+         "hasTargetMovingObject": {
+            "@type": "ositrace:MovingObject",
+            "identifier": 2,
+            "description": "Pedestrian on the deprecated 'sidewalk' lane"
+         }
+      },
+      "ositrace:hasQuality": {
+         "@type": "ositrace:Quality",
+         "validationReport": "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar",
+         "validationReportType": "application/xqar"
+      },
+      "ositrace:hasQuantity": {
+         "@type": "ositrace:Quantity",
+         "numberFrames": 320
+      },
+      "ositrace:hasDataSource": {
+         "@type": "ositrace:DataSource",
+         "usedDataSources": "Direct Sensor Capture ARS 548 FW05.38.14 on PMSF MB CLS 500",
+         "measurementSystem": "pcapng2osi converter v1.1"
+      },
+      "hasGeoreference": {
+         "@type": "georeference:Georeference",
+         "@id": "did:web:registry.envited-x.net:Georeference:LegacyDeprecatedKeywords",
+         "hasProjectLocation": {
+            "@type": "georeference:ProjectLocation",
+            "country": "DE",
+            "state": "DE-NI",
+            "region": "Brunswick",
+            "city": "Edemissen",
+            "relationOrArea": "Airport Peine-Eddesse",
+            "hasBoundingBox": {
+               "@type": "georeference:BoundingBox",
+               "xMin": 10.22518251,
+               "yMin": 52.4017796466667,
+               "xMax": 10.23265636,
+               "yMax": 52.403132605
+            }
+         },
+         "hasGeodeticReferenceSystem": {
+            "@type": "georeference:GeodeticReferenceSystem",
+            "codeEPSG": 4326,
+            "hasOrigin": {
+               "@type": "georeference:LatLonCoordinate",
+               "lat": 52.4017796466667,
+               "lon": 10.22518251
+            },
+            "hasViewPoint": {
+               "@type": "georeference:LatLonCoordinate",
+               "lat": 52.4017796466667,
+               "lon": 10.22518251
+            },
+            "heightSystem": "Ellipsoidal height"
+         }
+      }
+   },
+   "ositrace:hasManifest": {
+      "@type": "manifest:Link",
+      "iri": "did:web:test.fixture.net:Manifest:test_ositrace_manifest_reference",
+      "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
+      "conformsTo": [
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+      ],
+      "hasAccessRole": {
+         "@type": "manifest:AccessRole",
+         "@id": "envited-x:isPublic"
+      },
+      "hasCategory": {
+         "@type": "manifest:Category",
+         "@id": "envited-x:isManifest"
+      },
+      "hasFileMetadata": {
+         "@type": "manifest:FileMetadata",
+         "filePath": "./base-references/ositrace_manifest_reference.json",
+         "mimeType": "application/ld+json"
+      }
+   }
+}

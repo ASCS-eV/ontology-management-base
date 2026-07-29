@@ -194,7 +194,10 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
             ]
         ]
         [   # Branch 2: version > 1.4 — strict e_objectType enum
-            # Union of all 28 known values from v1.4H keywords + v1.5M + v1.8.0
+            # The 27 e_objectType values of ASAM OpenDRIVE V1.9.0
+            # (submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd) plus "truck",
+            # which is not an e_objectType in any schema pinned by this repository
+            # and is kept as an ENVITED-X ecosystem extension (see #48).
             sh:property [
                 sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
                 sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
@@ -278,8 +281,8 @@ hdmap:FormatShape a sh:NodeShape ;
             sh:path hdmap:version ],
         [ skos:example "ASAM OpenDRIVE" ;
             sh:datatype xsd:string ;
-            sh:description "Defines the type of data format used for the HD map asset."@en ;
-            sh:in ("ASAM OpenDRIVE" "Lanelet" "Road5" "Shape" "road2sim" "roadXML") ;
+            sh:description "Defines the type of data format used for the HD map asset. 'Lanelet' denotes the original lanelet map format (Bender et al., 'Lanelets: Efficient map representation for autonomous driving', IEEE Intelligent Vehicles Symposium, 2014, doi:10.1109/IVS.2014.6856487); 'Lanelet2' denotes the distinct successor framework built on OpenStreetMap primitives with its own tagging scheme (Poggenhans et al., 'Lanelet2: A High-Definition Map Framework for the Future of Automated Driving', IEEE Intelligent Transportation Systems Conference, 2018, doi:10.1109/ITSC.2018.8569929)."@en ;
+            sh:in ("ASAM OpenDRIVE" "Lanelet" "Lanelet2" "Road5" "Shape" "road2sim" "roadXML") ;
             sh:maxCount 1 ;
             sh:message "Validation of type failed!"@en ;
             sh:name "type"@en ;
