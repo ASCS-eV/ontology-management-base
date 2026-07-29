@@ -119,6 +119,17 @@ test-data-conformance:
 test-failing:
     {{run}} python -m omb.validators.validation_suite --run check-failing-tests
 
+# Run the pytest unit and integration suite. Installs the optional "publish" extra so
+# the uploader/authhelper tests are exercised instead of skipped for a missing keycloak.
+test-unit:
+    uv run --frozen --group dev --extra publish python -m pytest tests/ -q
+
+# Check every sh:in that models an ASAM enumeration against its pinned source.
+# Requires the ASAM standards submodules:
+#   git submodule update --init --recursive submodules/asam-openx-standards
+validate-enums:
+    {{run}} python -m pytest tests/unit/artifacts -q
+
 # Run the pytest unit suite with coverage (HTML + terminal report).
 test-cov:
     {{run}} python -m pytest tests/ --cov=omb --cov-report=html --cov-report=term

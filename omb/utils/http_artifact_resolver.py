@@ -159,8 +159,21 @@ def _safe_cache_path(cache_dir: Path, *segments: str) -> Path:
         Resolved absolute path guaranteed to be under *cache_dir*.
 
     Raises:
-        ValueError: If the resolved path escapes *cache_dir*.
+        ValueError: If the resolved path escapes *cache_dir*, or if a segment
+            contains a backslash.
     """
+    # Backslashes are rejected on every platform, not just Windows. Segments come
+    # from a remote registry, and on POSIX "..\\..\\etc\\passwd" is a single
+    # filename that resolves inside the cache - so the traversal is inert here but
+    # becomes real as soon as the same cache tree is read on Windows, or the name is
+    # passed to a tool that normalises separators.
+    for segment in segments:
+        if "\\" in segment:
+            raise ValueError(
+                f"Path traversal blocked: {'/'.join(segments)} "
+                "contains a backslash separator"
+            )
+
     dest = (cache_dir.resolve() / Path(*segments)).resolve()
     if not dest.is_relative_to(cache_dir.resolve()):
         raise ValueError(

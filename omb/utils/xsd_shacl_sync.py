@@ -92,6 +92,31 @@ HDMAP_ENUM_MAPPINGS: list[dict[str, str]] = [
         "shacl_property": "levelOfDetail",
         "shacl_prefix_name": "hdmap",
         "description": "Object types / level of detail (OpenDRIVE -> hdmap:levelOfDetail)",
+        # Not an ASAM e_objectType in any pinned schema; ENVITED-X extension (see #48).
+        "extensions": ["truck"],
+    },
+]
+
+OSITRACE_ENUM_MAPPINGS: list[dict[str, str]] = [
+    {
+        "xsd_enum": "e_roadType",
+        "shacl_property": "roadTypes",
+        "shacl_prefix_name": "ositrace",
+        "description": "Road types (OpenDRIVE -> ositrace:roadTypes)",
+    },
+    {
+        "xsd_enum": "e_laneType",
+        "shacl_property": "laneTypes",
+        "shacl_prefix_name": "ositrace",
+        "description": "Lane types (OpenDRIVE -> ositrace:laneTypes)",
+    },
+    {
+        "xsd_enum": "e_objectType",
+        "shacl_property": "levelOfDetail",
+        "shacl_prefix_name": "ositrace",
+        "description": "Object types / level of detail (OpenDRIVE -> ositrace:levelOfDetail)",
+        # Not an ASAM e_objectType in any pinned schema; ENVITED-X extension (see #48).
+        "extensions": ["truck"],
     },
 ]
 
@@ -129,21 +154,43 @@ class EnumComparisonResult:
     missing_in_shacl: set[str] = field(default_factory=set)
     extra_in_shacl: set[str] = field(default_factory=set)
     deprecated_in_xsd: set[str] = field(default_factory=set)
+    #: Values the mapping declares as deliberate non-ASAM extensions, e.g. "truck".
+    declared_extensions: set[str] = field(default_factory=set)
+
+    @property
+    def undeclared_extras(self) -> set[str]:
+        """Extra SHACL values that the mapping does not declare as extensions."""
+        return self.extra_in_shacl - self.declared_extensions
 
     @property
     def in_sync(self) -> bool:
-        """True if SHACL and XSD values match exactly."""
-        return len(self.missing_in_shacl) == 0 and len(self.extra_in_shacl) == 0
+        """True if SHACL matches XSD, allowing values declared as extensions.
+
+        A declared extension is a deliberate ecosystem addition, not drift; an
+        undeclared one is drift and must be either removed or declared.
+        """
+        return len(self.missing_in_shacl) == 0 and len(self.undeclared_extras) == 0
 
     def summary(self) -> str:
         """One-line summary of the comparison."""
         if self.in_sync:
-            return f"✅ {self.description}: {len(self.shacl_values)} values in sync"
+            declared = (
+                f" (+{len(self.declared_extensions)} declared extension"
+                f"{'s' if len(self.declared_extensions) > 1 else ''}: "
+                f"{', '.join(sorted(self.declared_extensions))})"
+                if self.declared_extensions & self.shacl_values
+                else ""
+            )
+            return (
+                f"✅ {self.description}: "
+                f"{len(self.shacl_values - self.declared_extensions)} values in sync"
+                f"{declared}"
+            )
         parts = []
         if self.missing_in_shacl:
             parts.append(f"{len(self.missing_in_shacl)} missing in SHACL")
-        if self.extra_in_shacl:
-            parts.append(f"{len(self.extra_in_shacl)} extra in SHACL")
+        if self.undeclared_extras:
+            parts.append(f"{len(self.undeclared_extras)} undeclared extra in SHACL")
         return f"❌ {self.description}: {', '.join(parts)}"
 
 
@@ -241,18 +288,31 @@ def extract_shacl_enums(
         else:
             prop_uri = mapping["shacl_prefix"] + prop_name
 
-        # Find property shapes that use this sh:path
-        query = (
-            """
+        # Find property shapes that constrain this property, whether they address it
+        # directly (sh:path ex:prop) or through a SHACL sequence path
+        # (sh:path ( ex:hasContent ex:prop )), which is how hdmap models its
+        # version-conditional constraints. Matching only the direct form made this
+        # check report every hdmap value as missing, which is why it could never be
+        # wired into CI.
+        #
+        # A property shape may also be nested inside sh:or/sh:and rather than hanging
+        # off a node shape's sh:property, so no such anchor is required. Values from
+        # every matching shape are unioned: the question here is whether the standard's
+        # values are expressible at all, not which branch expresses them.
+        query = """
         SELECT ?listItem WHERE {
-            ?shape sh:property ?propShape .
-            ?propShape sh:path <%s> .
             ?propShape sh:in ?list .
             ?list rdf:rest*/rdf:first ?listItem .
+            {
+                ?propShape sh:path <%s> .
+            } UNION {
+                ?propShape sh:path ?seq .
+                ?seq rdf:rest* ?tail .
+                ?tail rdf:first <%s> ;
+                      rdf:rest rdf:nil .
+            }
         }
-        """
-            % prop_uri
-        )
+        """ % (prop_uri, prop_uri)
 
         values = set()
         for row in g.query(query):
@@ -313,6 +373,7 @@ def compare_enums(
             missing_in_shacl=xsd_vals - shacl_vals,
             extra_in_shacl=shacl_vals - xsd_vals,
             deprecated_in_xsd=deprecated,
+            declared_extensions=set(mapping.get("extensions", ())),
         )
         results.append(result)
 
