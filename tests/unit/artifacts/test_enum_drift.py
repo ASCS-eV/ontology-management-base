@@ -14,17 +14,19 @@ Sources of truth:
 
 * ASAM OpenDRIVE V1.9.0 XSD ``simpleType`` enumerations, pinned in the standards
   submodule. These also carry ``<xs:documentation>deprecated</xs:documentation>`` per value.
-* ASAM OpenDRIVE v1.9.0 specification §11.8, which deprecates two further lane types that
-  the pinned XSD does *not* mark. Deprecation therefore has two sources and each value
+* ASAM OpenDRIVE v1.9.0 specification §11.8, which deprecates ``bidirectional`` although
+  the pinned XSD does *not* mark it. Deprecation therefore has two sources and each value
   records which one deprecates it.
+* ASAM OpenSCENARIO XML V1.4.0 for ``scenario:entityTypes``, which models the union of
+  three enumerations (vehicle, pedestrian and misc-object categories).
 * ASAM OSI v3.8.0 ``doc/architecture/trace_file_naming.adoc`` for the single-channel
   trace file types.
 
 Two things are deliberately *not* derived from a pinned source, and say so:
 
 * ``truck`` — not an ``e_objectType`` in any pinned schema; an ENVITED-X extension.
-* ``hdmap``'s v1.4 and v1.5–1.7 branches — this repository pins only V1.8.0 schemas, so
-  the historical sets are frozen snapshots checked against themselves, not against ASAM.
+* ``hdmap``'s v1.4 and v1.5–1.7 branches — only the current revision's schemas are
+  pinned, so the historical sets are frozen snapshots checked against themselves.
 """
 
 import os
@@ -37,11 +39,16 @@ from typing import Dict, FrozenSet, Optional, Sequence, Tuple
 import pytest
 from rdflib import RDF, Graph, URIRef
 
-from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR, ASAM_SUBMODULE_HINT
+from omb.core.constants import (
+    ASAM_OPENDRIVE_SCHEMA_DIR,
+    ASAM_OPENSCENARIO_SCHEMA_FILE,
+    ASAM_SUBMODULE_HINT,
+)
 from omb.utils.xsd_enum_extractor import extract_enums_from_dir
 from omb.utils.xsd_shacl_sync import (
     HDMAP_ENUM_MAPPINGS,
     OSITRACE_ENUM_MAPPINGS,
+    SCENARIO_ENUM_MAPPINGS,
     run_sync_check,
 )
 
@@ -384,16 +391,20 @@ HISTORICAL_BRANCHES = {
 # =============================================================================
 
 
+#: (domain, mappings, pinned source). ``scenario`` reads the OpenSCENARIO XML schema
+#: rather than the OpenDRIVE directory, and its ``entityTypes`` models the union of three
+#: enumerations - see the union handling in ``xsd_shacl_sync.compare_enums``.
 SYNC_TARGETS = (
-    ("hdmap", HDMAP_ENUM_MAPPINGS),
-    ("ositrace", OSITRACE_ENUM_MAPPINGS),
+    ("hdmap", HDMAP_ENUM_MAPPINGS, ASAM_OPENDRIVE_SCHEMA_DIR),
+    ("ositrace", OSITRACE_ENUM_MAPPINGS, ASAM_OPENDRIVE_SCHEMA_DIR),
+    ("scenario", SCENARIO_ENUM_MAPPINGS, ASAM_OPENSCENARIO_SCHEMA_FILE),
 )
 
 
 @pytest.mark.parametrize(
-    "domain,mappings", SYNC_TARGETS, ids=lambda x: x if isinstance(x, str) else ""
+    "domain,mappings,source", SYNC_TARGETS, ids=[t[0] for t in SYNC_TARGETS]
 )
-def test_enums_match_their_pinned_source(domain, mappings):
+def test_enums_match_their_pinned_source(domain, mappings, source):
     """Every mapped ``sh:in`` equals its pinned ASAM enumeration, extensions aside.
 
     Delegated to ``omb.utils.xsd_shacl_sync.run_sync_check`` rather than reimplemented:
@@ -401,7 +412,7 @@ def test_enums_match_their_pinned_source(domain, mappings):
     ``truck``. This test is what makes it fail a build instead of only printing a report.
     """
     report = run_sync_check(
-        _require_schema_dir(),
+        _require_pinned_sources(Path(source), f"the pinned ASAM schema at {source}"),
         Path("artifacts") / domain / f"{domain}.shacl.ttl",
         mappings=mappings,
     )
