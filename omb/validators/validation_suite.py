@@ -230,6 +230,7 @@ def validate_data_conformance_all(
     strict: bool = False,
     allow_online: bool = True,
     per_resource: bool = False,
+    allow_warnings: bool = True,
 ) -> int:
     """
     Validate JSON-LD files against SHACL schemas.
@@ -243,6 +244,8 @@ def validate_data_conformance_all(
         inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
         strict: If True, unresolved IRIs cause validation failure
         allow_online: If True, attempt HTTP resolution for unresolved IRIs
+        allow_warnings: If True (default), `sh:Warning`/`sh:Info` results are
+            reported as advisory and do not fail the check
 
     Returns:
         0 on success, non-zero on failure
@@ -276,6 +279,7 @@ def validate_data_conformance_all(
         resolver=catalog_resolver,
         strict=strict,
         allow_online=allow_online,
+        allow_warnings=allow_warnings,
     )
 
     for domain in ontology_domains:
@@ -331,9 +335,13 @@ def validate_data_conformance_all(
 
         print(f"   Found {len(result.files_validated)} test files from catalog")
 
+        advisory = validator.format_advisory(result)
+
         if result.return_code != 0:
             print("\n📄 SHACL validation report:", flush=True)
             print(validator.format_result(result), flush=True)
+            if advisory:
+                print(advisory, flush=True)
 
             print(
                 f"\n❌ Error during JSON-LD SHACL validation for domain '{domain}'. Aborting.",
@@ -342,6 +350,8 @@ def validate_data_conformance_all(
             )
             return result.return_code
         else:
+            if advisory:
+                print(advisory, flush=True)
             print(f"\n✅ {domain} conforms to SHACL constraints.", flush=True)
 
     return 0
@@ -353,6 +363,7 @@ def check_failing_tests_all(
     inference_mode: str = "rdfs",
     allow_online: bool = True,
     update_expected: bool = False,
+    allow_warnings: bool = True,
 ) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
@@ -367,6 +378,10 @@ def check_failing_tests_all(
         allow_online: If True, attempt HTTP resolution for unresolved IRIs
         update_expected: If True, (re)record each `.expected` snapshot from the
             live validation report instead of comparing against it.
+        allow_warnings: If True (default), `sh:Warning`/`sh:Info` results are
+            advisory: they are printed after the report but never recorded into
+            a `.expected` snapshot, so a negative fixture still has to produce a
+            real violation to pass.
 
     Returns:
         0 on success, non-zero on failure
@@ -396,6 +411,7 @@ def check_failing_tests_all(
         verbose=True,
         resolver=catalog_resolver,
         allow_online=allow_online,
+        allow_warnings=allow_warnings,
     )
 
     for domain in ontology_domains:
@@ -431,6 +447,11 @@ def check_failing_tests_all(
             result = validator.validate([test_abs_path])
             output = validator.format_result(result)
             print(output)
+            # Advisory results are shown but deliberately excluded from `output`,
+            # which is what gets recorded as the `.expected` snapshot.
+            advisory = validator.format_advisory(result)
+            if advisory:
+                print(advisory)
             print("\n", flush=True)
 
             if result.return_code == 210:
@@ -695,6 +716,16 @@ def main():
     )
 
     target_group.add_argument(
+        "--fail-on-warnings",
+        dest="allow_warnings",
+        action="store_false",
+        default=True,
+        help="Treat sh:Warning and sh:Info results as failures. By default they "
+        "are advisory: reported after the validation report, but not counted "
+        "against conformance and never recorded into a .expected snapshot.",
+    )
+
+    target_group.add_argument(
         "--per-resource",
         dest="per_resource",
         action="store_true",
@@ -891,6 +922,7 @@ def main():
                     strict=_strict,
                     allow_online=_allow_online,
                     per_resource=_per_resource,
+                    allow_warnings=args.allow_warnings,
                 ),
             )
         ],
@@ -903,6 +935,7 @@ def main():
                     _inference_mode,
                     allow_online=_allow_online,
                     update_expected=args.update_expected,
+                    allow_warnings=args.allow_warnings,
                 ),
             )
         ],
