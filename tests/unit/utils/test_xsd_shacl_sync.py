@@ -51,7 +51,22 @@ class TestEnumComparisonResult:
             extra_in_shacl={"d"},
         )
         assert r.in_sync is False
-        assert "1 extra" in r.summary()
+        assert "1 undeclared extra" in r.summary()
+
+    def test_declared_extension_is_not_drift(self):
+        """A value declared as an ecosystem extension is in sync, and is named."""
+        r = EnumComparisonResult(
+            xsd_enum_name="e_test",
+            shacl_property="testProp",
+            description="Test",
+            xsd_values={"a"},
+            shacl_values={"a", "truck"},
+            extra_in_shacl={"truck"},
+            declared_extensions={"truck"},
+        )
+        assert r.undeclared_extras == set()
+        assert r.in_sync is True
+        assert "declared extension: truck" in r.summary()
 
     def test_summary_icons(self):
         synced = EnumComparisonResult(
@@ -269,40 +284,42 @@ class TestActualSyncCheck:
     def test_all_mappings_checked(self, sync_report):
         assert len(sync_report.results) == 3
 
-    # All three enum properties (roadTypes, laneTypes, levelOfDetail) now use
-    # version-conditional sh:or on DomainSpecificationShape instead of direct
-    # sh:in on ContentShape.  The sync tool's SHACL parser cannot extract
-    # sh:in from nested sh:or branches, so we verify only XSD-side counts.
-    # SHACL enums are tested via the validation suite test data.
+    # hdmap constrains all three properties through version-conditional sh:or branches
+    # on DomainSpecificationShape, addressed by sequence paths
+    # (sh:path ( hdmap:hasContent hdmap:laneTypes )). extract_shacl_enums used to match
+    # direct paths only, so it reported every value missing and these tests asserted that
+    # emptiness as expected behaviour - freezing the defect in place. It reads both forms
+    # now, so they assert the real contract: the pinned enumeration is fully expressible.
     # See: https://github.com/ASCS-eV/ontology-management-base/issues/48
 
     def test_all_in_sync(self, sync_report):
-        """All mapped enums should have XSD values extracted correctly.
+        """Every mapped enum matches its pinned XSD, declared extensions aside."""
+        assert sync_report.all_in_sync, "\n".join(
+            r.summary() for r in sync_report.results
+        )
 
-        SHACL values are empty for version-conditional properties (the parser
-        can't reach sh:or branches), so we only check for XSD extraction.
-        """
-        for result in sync_report.results:
-            assert len(result.xsd_values) > 0, (
-                f"{result.shacl_property}: no XSD values extracted"
-            )
-
-    def test_road_types_xsd(self, sync_report):
+    def test_road_types(self, sync_report):
         road = next(r for r in sync_report.results if r.shacl_property == "roadTypes")
-        assert len(road.xsd_values) == 13  # v1.8 e_roadType enum
-        assert len(road.shacl_values) == 0  # version-conditional sh:or
+        assert len(road.xsd_values) == 13  # V1.9.0 e_roadType
+        assert road.shacl_values == road.xsd_values
 
-    def test_lane_types_xsd(self, sync_report):
+    def test_lane_types(self, sync_report):
         lane = next(r for r in sync_report.results if r.shacl_property == "laneTypes")
-        assert len(lane.xsd_values) == 31  # v1.8 e_laneType enum
-        assert len(lane.shacl_values) == 0  # version-conditional sh:or
+        assert len(lane.xsd_values) == 31  # V1.9.0 e_laneType
+        assert lane.shacl_values == lane.xsd_values
+        # Deprecated values stay accepted so existing assets keep validating.
+        assert lane.deprecated_in_xsd <= lane.shacl_values
 
-    def test_level_of_detail_xsd(self, sync_report):
+    def test_level_of_detail(self, sync_report):
         lod = next(
             r for r in sync_report.results if r.shacl_property == "levelOfDetail"
         )
-        assert len(lod.xsd_values) == 27  # v1.8 e_objectType enum
-        assert len(lod.shacl_values) == 0  # version-conditional sh:or
+        assert len(lod.xsd_values) == 27  # V1.9.0 e_objectType
+        # "truck" is an ENVITED-X extension, declared in the mapping, not ASAM drift.
+        assert lod.extra_in_shacl == {"truck"}
+        assert lod.undeclared_extras == set()
+        assert lod.missing_in_shacl == set()
+        assert lod.in_sync
 
     def test_unmapped_enums_reported(self, sync_report):
         assert len(sync_report.unmapped_xsd_enums) > 0

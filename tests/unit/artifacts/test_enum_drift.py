@@ -80,7 +80,7 @@ def _xsd_enums(rel_path: str) -> Dict[str, object]:
     ``railing``, ``soundBarrier`` and ``streetLamp``. A parser that greps for the word
     "deprecated" alone silently undercounts by seven values.
     """
-    return extract_enums_from_dir(Path(ASAM_OPENDRIVE_SCHEMA_DIR))
+    return extract_enums_from_dir(_require_schema_dir())
 
 
 def _xsd_enumeration(
@@ -94,6 +94,32 @@ def _xsd_enumeration(
     return frozenset(enum.value_strings), frozenset(enum.deprecated_values)
 
 
+def _require_pinned_sources(path: Path, what: str) -> Path:
+    """Return *path*, or skip locally / fail where the sources are guaranteed.
+
+    The pinned ASAM schemas and specifications live in a submodule, so a missing checkout
+    is a legitimate local state and skipping is right there. In the ``Pinned Standards
+    Drift`` job, which initialises the submodule and sets ``OMB_REQUIRE_PINNED_SOURCES=1``,
+    a missing file must fail instead: a drift guard that quietly stops running is worse
+    than no guard.
+    """
+    if path.exists():
+        return path
+    if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
+        raise AssertionError(
+            f"{what} is missing while OMB_REQUIRE_PINNED_SOURCES is set. "
+            f"{ASAM_SUBMODULE_HINT}"
+        )
+    pytest.skip(f"{what} not checked out. {ASAM_SUBMODULE_HINT}")
+
+
+def _require_schema_dir() -> Path:
+    """The pinned OpenDRIVE XSD directory, or skip/fail per the rule above."""
+    return _require_pinned_sources(
+        Path(ASAM_OPENDRIVE_SCHEMA_DIR), "the pinned ASAM OpenDRIVE schema directory"
+    )
+
+
 def _require_osi_specification() -> Path:
     """Locate the pinned OSI naming conventions, or fail where they are guaranteed.
 
@@ -103,15 +129,7 @@ def _require_osi_specification() -> Path:
     ``OMB_REQUIRE_PINNED_SOURCES=1`` — a missing file must fail instead: a drift guard
     that quietly stops running is worse than no guard.
     """
-    path = ROOT / OSI_NAMING_ADOC
-    if path.exists():
-        return path
-    if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
-        raise AssertionError(
-            f"{OSI_NAMING_ADOC} is missing while OMB_REQUIRE_PINNED_SOURCES is set. "
-            f"{ASAM_SUBMODULE_HINT}"
-        )
-    pytest.skip(f"ASAM OSI specification not checked out. {ASAM_SUBMODULE_HINT}")
+    return _require_pinned_sources(ROOT / OSI_NAMING_ADOC, OSI_NAMING_ADOC)
 
 
 def _osi_trace_types() -> Tuple[FrozenSet[str], FrozenSet[str]]:
@@ -383,7 +401,7 @@ def test_enums_match_their_pinned_source(domain, mappings):
     ``truck``. This test is what makes it fail a build instead of only printing a report.
     """
     report = run_sync_check(
-        Path(ASAM_OPENDRIVE_SCHEMA_DIR),
+        _require_schema_dir(),
         Path("artifacts") / domain / f"{domain}.shacl.ttl",
         mappings=mappings,
     )
