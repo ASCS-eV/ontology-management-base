@@ -24,10 +24,10 @@ USAGE:
     from omb.utils.xsd_enum_extractor import extract_enums_from_dir
 
     # Extract all enums from an XSD directory
-    enums = extract_enums_from_dir(Path("imports/OpenDrive/xsd_schema"))
+    enums = extract_enums_from_dir(Path("submodules/asam-openx-standards/standards/asam-opendrive/schema"))
 
     # Extract from a single XSD file
-    enums = extract_enums_from_file(Path("imports/OpenScenario/OpenSCENARIO.xsd"))
+    enums = extract_enums_from_file(Path("submodules/asam-openx-standards/standards/asam-openscenario-xml/schema/OpenSCENARIO.xsd"))
 
     # Access specific enum
     lane_types = enums["e_laneType"]
@@ -55,6 +55,11 @@ from pathlib import Path
 from typing import Optional
 from xml.etree import ElementTree as ET
 
+from omb.core.constants import (
+    ASAM_OPENDRIVE_SCHEMA_DIR,
+    ASAM_OPENSCENARIO_SCHEMA_FILE,
+    ASAM_SUBMODULE_HINT,
+)
 from omb.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -267,7 +272,7 @@ def _run_tests() -> bool:
         all_passed = False
 
     # Test 2: Extract from OpenDRIVE XSD files (direct restriction pattern)
-    xsd_dir = Path("imports/OpenDrive/xsd_schema")
+    xsd_dir = Path(ASAM_OPENDRIVE_SCHEMA_DIR)
     if xsd_dir.exists():
         try:
             enums = extract_enums_from_dir(xsd_dir)
@@ -303,10 +308,10 @@ def _run_tests() -> bool:
             print(f"  FAIL: OpenDRIVE extraction - {e}")
             all_passed = False
     else:
-        print("  SKIP: OpenDRIVE XSD files not found at imports/OpenDrive/xsd_schema")
+        print(f"  SKIP: OpenDRIVE XSD files not found. {ASAM_SUBMODULE_HINT}")
 
     # Test 3: Extract from OpenSCENARIO XSD file (union pattern)
-    xsd_file = Path("imports/OpenScenario/OpenSCENARIO.xsd")
+    xsd_file = Path(ASAM_OPENSCENARIO_SCHEMA_FILE)
     if xsd_file.exists():
         try:
             enums = extract_enums_from_file(xsd_file)
@@ -341,9 +346,7 @@ def _run_tests() -> bool:
             print(f"  FAIL: OpenSCENARIO extraction - {e}")
             all_passed = False
     else:
-        print(
-            "  SKIP: OpenSCENARIO XSD not found at imports/OpenScenario/OpenSCENARIO.xsd"
-        )
+        print(f"  SKIP: OpenSCENARIO XSD not found. {ASAM_SUBMODULE_HINT}")
 
     # Test 4: EnumType properties
     try:
@@ -377,7 +380,7 @@ def main() -> None:
     xsd_path = Path(sys.argv[1]) if len(sys.argv) > 1 else None
 
     if xsd_path is None:
-        xsd_path = Path("imports/OpenDrive/xsd_schema")
+        xsd_path = Path(ASAM_OPENDRIVE_SCHEMA_DIR)
 
     if not xsd_path.exists():
         print(f"XSD path not found: {xsd_path}")
