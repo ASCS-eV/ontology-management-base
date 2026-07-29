@@ -269,6 +269,69 @@ class TestExtractShaclEnums:
         assert "testProp" not in result
 
 
+class TestUnionMappings:
+    """Several XSD enums may model one SHACL property, e.g. scenario:entityTypes."""
+
+    XSD_ENUMS = {
+        "CatA": EnumType(
+            name="CatA", values=[EnumValue(value="a"), EnumValue(value="b")]
+        ),
+        "CatB": EnumType(name="CatB", values=[EnumValue(value="c")]),
+    }
+    MAPPINGS = [
+        {
+            "xsd_enum": "CatA",
+            "shacl_property": "kinds",
+            "shacl_prefix": "http://example.org/",
+            "description": "Cat A",
+        },
+        {
+            "xsd_enum": "CatB",
+            "shacl_property": "kinds",
+            "shacl_prefix": "http://example.org/",
+            "description": "Cat B",
+        },
+    ]
+
+    def test_other_mapped_enums_values_are_not_extras(self):
+        """A value from a sibling enum is permitted, not drift.
+
+        Before union handling, each mapping reported the others' values as extras - 19, 27
+        and 13 false extras for scenario:entityTypes - which is why that domain could not
+        be registered as a drift target.
+        """
+        results = compare_enums(
+            self.XSD_ENUMS, {"kinds": {"a", "b", "c"}}, mappings=self.MAPPINGS
+        )
+        assert len(results) == 2
+        for r in results:
+            assert r.extra_in_shacl == set(), r.summary()
+            assert r.in_sync, r.summary()
+
+    def test_missing_is_still_judged_per_enum(self):
+        """Each standard enumeration must remain fully expressible on its own."""
+        results = compare_enums(
+            self.XSD_ENUMS, {"kinds": {"a", "c"}}, mappings=self.MAPPINGS
+        )
+        by_enum = {r.xsd_enum_name: r for r in results}
+        assert by_enum["CatA"].missing_in_shacl == {"b"}
+        assert by_enum["CatA"].in_sync is False
+        assert by_enum["CatB"].missing_in_shacl == set()
+        assert by_enum["CatB"].in_sync is True
+
+    def test_value_outside_every_mapped_enum_is_still_drift(self):
+        """The union widens what is permitted; it does not open the enumeration."""
+        results = compare_enums(
+            self.XSD_ENUMS,
+            {"kinds": {"a", "b", "c", "spaceship"}},
+            mappings=self.MAPPINGS,
+        )
+        for r in results:
+            assert r.extra_in_shacl == {"spaceship"}
+            assert r.undeclared_extras == {"spaceship"}
+            assert r.in_sync is False
+
+
 class TestActualSyncCheck:
     """Integration tests against the actual hdmap files."""
 
