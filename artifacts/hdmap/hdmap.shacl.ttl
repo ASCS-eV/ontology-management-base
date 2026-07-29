@@ -116,97 +116,128 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
         ] ;
 
     # ══════════════════════════════════════════════════════════════════════
-    # Version-conditional enum enforcement for roadTypes, laneTypes, and
-    # levelOfDetail.  OpenDRIVE v1.4 used free-form xs:string for object
-    # types and smaller enum sets for road/lane types.  From v1.5 onward
-    # all three have strict enums that grew further in v1.8.
+    # Enum enforcement for roadTypes, laneTypes, and levelOfDetail.
     #
-    # Each constraint uses sh:or with property paths on hasFormat/version
-    # and hasContent/<property> to enforce version-appropriate enums.
+    # Layer 1 lives on hdmap:ContentShape: the complete ASAM OpenDRIVE V1.9.0
+    # enumerations, which apply to every asset regardless of format.
+    # Layer 2 (the sh:node references below) narrows those sets for older
+    # OpenDRIVE revisions, which knew fewer values, and exempts v1.4 objects,
+    # which the standard modelled as free-form xs:string.
+    #
+    # The dispatch is a conjunction of implications, NOT an sh:or over
+    # per-revision branches.  sh:or needs only ONE branch to hold, so a branch
+    # carrying the widest enum and no version guard satisfies every asset and
+    # the narrower branches never constrain anything: before this shape was
+    # rewritten, OpenDRIVE 1.4 with laneTypes "walking" - a value introduced in
+    # v1.8 - passed validation.  sh:xone does not work either, because a
+    # v1.4-legal value matches both the v1.4 branch and the superset branch, so
+    # exactly-one fails.
+    #
+    # Each implication is "guard -> constraint", written as NOT guard OR
+    # constraint, and the whole dispatch is gated on formatType "ASAM OpenDRIVE"
+    # so that a Lanelet2 asset versioned "1.2" is not read as OpenDRIVE 1.2.
     # See: https://github.com/ASCS-eV/ontology-management-base/issues/48
     # ══════════════════════════════════════════════════════════════════════
 
-    # ── roadTypes: v1.4 (7 values) vs v1.5+ (13 values) ────────────────
-    sh:or (
-        [   # Branch 1: version <= 1.4 — 7 road types (e_roadType)
-            sh:property [
-                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
-                sh:pattern "^1\\.[0-4]" ;
-                sh:minCount 1 ;
-            ] ;
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:roadTypes ) ;
-                sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "unknown") ;
-                sh:message "roadTypes must be a known OpenDRIVE e_roadType for v1.4."@en ;
-            ]
-        ]
-        [   # Branch 2: version > 1.4 — 13 road types (v1.5 added 6 town subtypes)
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:roadTypes ) ;
-                sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "unknown") ;
-                sh:message "roadTypes must be a known OpenDRIVE e_roadType for v1.5+."@en ;
-            ]
-        ]
-    ) ;
-
-    # ── laneTypes: v1.4 (20) vs v1.5 (26) vs v1.8 (31) ────────────────
-    sh:or (
-        [   # Branch 1: version <= 1.4 — 20 lane types (e_laneType v1.4)
-            sh:property [
-                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
-                sh:pattern "^1\\.[0-4]" ;
-                sh:minCount 1 ;
-            ] ;
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
-                sh:in ("bidirectional" "biking" "border" "driving" "entry" "exit" "median" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "tram") ;
-                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.4."@en ;
-            ]
-        ]
-        [   # Branch 2: version 1.5–1.7 — 26 lane types (v1.5 added 6)
-            sh:property [
-                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
-                sh:pattern "^1\\.[5-7]" ;
-                sh:minCount 1 ;
-            ] ;
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
-                sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "taxi" "tram") ;
-                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.5–v1.7."@en ;
-            ]
-        ]
-        [   # Branch 3: version >= 1.8 — 31 lane types (v1.8 added 5)
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
-                sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
-                sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.8+."@en ;
-            ]
-        ]
-    ) ;
-
-    # ── levelOfDetail: v1.4 (free-form) vs v1.5+ (28-value enum) ───────
-    sh:or (
-        [   # Branch 1: version <= 1.4 — any string accepted (xs:string)
-            sh:property [
-                sh:path ( hdmap:hasFormat <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> ) ;
-                sh:pattern "^1\\.[0-4]" ;
-                sh:minCount 1 ;
-            ]
-        ]
-        [   # Branch 2: version > 1.4 — strict e_objectType enum
-            # The 27 e_objectType values of ASAM OpenDRIVE V1.9.0
-            # (submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd) plus "truck",
-            # which is not an e_objectType in any schema pinned by this repository
-            # and is kept as an ENVITED-X ecosystem extension (see #48).
-            sh:property [
-                sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
-                sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
-                sh:message "levelOfDetail must be a known OpenDRIVE e_objectType for v1.5+. Use 'none' for unmapped custom values."@en ;
-            ]
-        ]
-    ) ;
+    # ── Layer 2: OpenDRIVE revision dispatch ───────────────────────────
+    sh:node hdmap:OpenDriveRoadTypeRevisionShape,
+        hdmap:OpenDriveLaneTypeRevisionShape,
+        hdmap:OpenDriveObjectTypeRevisionShape ;
 
     sh:targetClass hdmap:DomainSpecification .
+
+# ══════════════════════════════════════════════════════════════════════════
+# OpenDRIVE revision dispatch shapes
+#
+# Referenced with sh:node from hdmap:DomainSpecificationShape.  Each one is a
+# conjunction of "guard -> constraint" implications; a shape holds vacuously
+# for assets whose formatType is not "ASAM OpenDRIVE".
+# ══════════════════════════════════════════════════════════════════════════
+
+# Guard: the asset declares itself as ASAM OpenDRIVE and its version is v1.4 or older.
+# The formatType test is inlined rather than factored into its own named shape: a named
+# shape carrying a sequence path directly under sh:property surfaces in the generated
+# PROPERTIES.md as a blank-node identifier, which differs on every regeneration.
+hdmap:OpenDriveV14OrOlderShape a sh:NodeShape ;
+    sh:description "Holds for an ASAM OpenDRIVE asset whose version is 1.0 to 1.4."@en ;
+    sh:and (
+        [ sh:property [
+              sh:path ( hdmap:hasFormat hdmap:formatType ) ;
+              sh:in ("ASAM OpenDRIVE") ;
+              sh:minCount 1 ;
+          ] ]
+        [ sh:property [
+              sh:path ( hdmap:hasFormat hdmap:version ) ;
+              sh:pattern "^1\\.[0-4]" ;
+              sh:minCount 1 ;
+          ] ]
+    ) .
+
+# Guard: ASAM OpenDRIVE, version v1.5, v1.6 or v1.7.
+hdmap:OpenDriveV15ToV17Shape a sh:NodeShape ;
+    sh:description "Holds for an ASAM OpenDRIVE asset whose version is 1.5 to 1.7."@en ;
+    sh:and (
+        [ sh:property [
+              sh:path ( hdmap:hasFormat hdmap:formatType ) ;
+              sh:in ("ASAM OpenDRIVE") ;
+              sh:minCount 1 ;
+          ] ]
+        [ sh:property [
+              sh:path ( hdmap:hasFormat hdmap:version ) ;
+              sh:pattern "^1\\.[5-7]" ;
+              sh:minCount 1 ;
+          ] ]
+    ) .
+
+hdmap:OpenDriveRoadTypeRevisionShape a sh:NodeShape ;
+    sh:description "roadTypes must be legal for the declared ASAM OpenDRIVE revision: v1.4 and older knew 7 of the 13 e_roadType values; v1.5 added the six town subtypes."@en ;
+    sh:or (
+        # ¬(v1.4 or older)
+        [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ]
+        # ∨ roadTypes ⊆ the v1.4 set
+        [ sh:property [
+              sh:path ( hdmap:hasContent hdmap:roadTypes ) ;
+              sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "unknown") ;
+              sh:message "roadTypes must be a known OpenDRIVE e_roadType for v1.4 and older; the town subtypes were introduced in v1.5."@en ;
+          ] ]
+    ) .
+
+hdmap:OpenDriveLaneTypeRevisionShape a sh:NodeShape ;
+    sh:description "laneTypes must be legal for the declared ASAM OpenDRIVE revision: 21 e_laneType values up to v1.4, 27 in v1.5 to v1.7, 31 from v1.8."@en ;
+    sh:and (
+        [ sh:or (
+              # ¬(v1.4 or older) ∨ laneTypes ⊆ the v1.4 set
+              [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ]
+              [ sh:property [
+                    sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
+                    sh:in ("bidirectional" "biking" "border" "driving" "entry" "exit" "median" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "tram") ;
+                    sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.4 and older."@en ;
+                ] ]
+          ) ]
+        [ sh:or (
+              # ¬(v1.5–v1.7) ∨ laneTypes ⊆ the v1.5–v1.7 set
+              [ sh:not [ sh:node hdmap:OpenDriveV15ToV17Shape ] ]
+              [ sh:property [
+                    sh:path ( hdmap:hasContent hdmap:laneTypes ) ;
+                    sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shoulder" "sidewalk" "special1" "special2" "special3" "stop" "taxi" "tram") ;
+                    sh:message "laneTypes must be a known OpenDRIVE e_laneType for v1.5–v1.7; curb, shared, slipLane and walking were introduced in v1.8."@en ;
+                ] ]
+          ) ]
+    ) .
+
+hdmap:OpenDriveObjectTypeRevisionShape a sh:NodeShape ;
+    sh:description "levelOfDetail must be a known e_objectType unless the asset is ASAM OpenDRIVE v1.4 or older, which modelled object types as free-form xs:string."@en ;
+    sh:or (
+        # v1.4 and older: any string, as the standard had no enumeration
+        [ sh:node hdmap:OpenDriveV14OrOlderShape ]
+        # otherwise the 27 V1.9.0 e_objectType values plus the ENVITED-X
+        # extension "truck" (see the note on DomainSpecificationShape)
+        [ sh:property [
+              sh:path ( hdmap:hasContent hdmap:levelOfDetail ) ;
+              sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
+              sh:message "levelOfDetail must be a known OpenDRIVE e_objectType for v1.5+. Use 'none' for unmapped custom values."@en ;
+          ] ]
+    ) .
 
 hdmap:ContentOrOddSceneryShape a sh:NodeShape ;
     sh:description "HDMap Content or OpenLABEL ODD Scenery Union Shape"@en ;
@@ -221,19 +252,23 @@ hdmap:ContentShape a sh:NodeShape ;
     sh:targetClass hdmap:Content ;
     
     sh:property [ skos:example "[motorway, rural]" ;
-            sh:description "Lists the road types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
+            sh:description "Lists the road types used in the HD map asset. Complete ASAM OpenDRIVE V1.9.0 e_roadType enumeration (13 values, submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd); OpenDRIVE revisions up to v1.4 knew only 7 of them, which hdmap:OpenDriveRoadTypeRevisionShape enforces per declared version."@en ;
             sh:datatype xsd:string ;
+            sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "town" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "unknown") ;
+            sh:message "roadTypes must be a known OpenDRIVE e_roadType (ASAM OpenDRIVE V1.9.0)."@en ;
             sh:name "road types"@en ;
             sh:order 0 ;
             sh:path hdmap:roadTypes ],
         [ skos:example "driving, shoulder, parking, walking" ;
-            sh:description "Lists the lane types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
+            sh:description "Lists the lane types used in the HD map asset. Complete ASAM OpenDRIVE V1.9.0 e_laneType enumeration (31 values, submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd); earlier revisions knew 21 (up to v1.4) and 27 (v1.5-v1.7), which hdmap:OpenDriveLaneTypeRevisionShape enforces per declared version. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted only for backward compatibility: sidewalk (use walking), bus and taxi (use the lane <access> element), mwyEntry (use entry), mwyExit (use exit), special1, special2, special3; bidirectional is deprecated by the v1.9.0 specification §11.8 in favour of the lane @direction attribute but is not marked deprecated in the schema."@en ;
             sh:datatype xsd:string ;
+            sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
+            sh:message "laneTypes must be a known OpenDRIVE e_laneType (ASAM OpenDRIVE V1.9.0)."@en ;
             sh:name "lane types"@en ;
             sh:order 1 ;
             sh:path hdmap:laneTypes ],
         [ skos:example "tree, pole, roadSurface, barrier, ..." ;
-            sh:description "Lists the object types used in the HD map asset. Version-conditional enum enforced on DomainSpecificationShape."@en ;
+            sh:description "Lists the object types used in the HD map asset. The e_objectType enumeration is version-conditional and enforced by hdmap:OpenDriveObjectTypeRevisionShape, which needs the declared format version: OpenDRIVE up to v1.4 modelled object types as free-form xs:string, v1.5 onwards as a closed enumeration."@en ;
             sh:datatype xsd:string ;
             sh:name "level of detail"@en ;
             sh:order 2 ;

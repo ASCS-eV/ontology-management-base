@@ -15,7 +15,7 @@
       "@id": "did:web:registry.envited-x.net::ResourceDescription:v14_custom_test",
       "@type": "envited-x:ResourceDescription",
       "name": "OpenDRIVE v1.4 HD Map with custom object type",
-      "description": "Tests that custom v1.4 object type names are rejected by SHACL. Use none for unmapped custom types.",
+      "description": "Tests the ASAM OpenDRIVE v1.4 escape hatch: v1.4 modelled object types as free-form xs:string, so a custom levelOfDetail must stay valid for a v1.4 asset. Lane types use the v1.4 spelling 'sidewalk' - 'walking' only exists from v1.8.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -37,7 +37,7 @@
          "roadTypes": "town",
          "laneTypes": [
             "driving",
-            "walking"
+            "sidewalk"
          ],
          "levelOfDetail": "custom_sensor_mount",
          "trafficDirection": "right-hand"

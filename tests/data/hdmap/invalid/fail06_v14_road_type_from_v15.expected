@@ -1,26 +1,17 @@
 ======================================================================================================================================================
 =                                                           ❌ SHACL validation failed for:                                                          =
 =                                                                                                                                                    =
-=                                        ['tests/data/hdmap/invalid/fail01_false_value_hdmap_instance.json']                                         =
+=                                          ['tests/data/hdmap/invalid/fail06_v14_road_type_from_v15.json']                                           =
 =                                                                                                                                                    =
 ======================================================================================================================================================
 =                                                                                                                                                    =
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            If 'laneSpecificationDimensions' is not true, 'laneSpecificationDimensionsValue' must not be present.                         =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasContent> [                                                         =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions> Literal("false" = False, datatype=xsd:boolean) ;   =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/laneSpecificationDimensionsValue> Literal("3.5", datatype=xsd:decimal) ;        =
-=                      rdf:type <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>,                                          =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Odd>, <https://openlabel.asam.net/V1-0-0/ontologies/OddScenery>,                =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content>,                =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Class, rdfs:Resource ], [ <https://w3id.org/ascs-     =
-=                      ev/envited-x/hdmap/v6/laneTypes> Literal("driving", datatype=xsd:string), Literal("walking", datatype=xsd:string) ;           =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/levelOfDetail> Literal("crosswalk", datatype=xsd:string) ;                       =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/roadTypes> Literal("town", datatype=xsd:string) ; <https://w3id.org/ascs-        =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasContent> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/laneTypes> =
+=                      Literal("driving", datatype=xsd:string), Literal("sidewalk", datatype=xsd:string) ; <https://w3id.org/ascs-                   =
+=                      ev/envited-x/hdmap/v6/levelOfDetail> Literal("custom_sensor_mount", datatype=xsd:string) ; <https://w3id.org/ascs-            =
+=                      ev/envited-x/hdmap/v6/roadTypes> Literal("townArterial", datatype=xsd:string) ; <https://w3id.org/ascs-                       =
 =                      ev/envited-x/hdmap/v6/trafficDirection> Literal("right-hand", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-         =
 =                      ev/envited-x/envited-x/v3/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
 =                      ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasDataSource> =
@@ -29,7 +20,7 @@
 =                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
 =                      rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasFormat> [ <https://w3id.org/ascs-                       =
 =                      ev/envited-x/hdmap/v6/formatType> Literal("ASAM OpenDRIVE", datatype=xsd:string) ; <https://w3id.org/ascs-                    =
-=                      ev/envited-x/hdmap/v6/version> Literal("1.6", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                         =
+=                      ev/envited-x/hdmap/v6/version> Literal("1.4", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                         =
 =                      ev/envited-x/envited-x/v3/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
 =                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasQuality> [ <https://w3id.org/ascs-                                        =
 =                      ev/envited-x/hdmap/v6/accuracyLaneModel2d> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-                       =
@@ -52,28 +43,21 @@
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/min> Literal("10.0", datatype=xsd:float) ; rdf:type <https://w3id.org/ascs-      =
 =                      ev/envited-x/hdmap/v6/Range2D>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Quantity>,        =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quantity>, rdfs:Resource ] ; <https://w3id.org/ascs-                             =
-=                      ev/envited-x/hdmap/v6/hasContent> [ <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>                =
-=                      Literal("false" = False, datatype=xsd:boolean) ;                                                                              =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/laneSpecificationDimensionsValue> Literal("3.5", datatype=xsd:decimal) ;        =
-=                      rdf:type <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>,                                          =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Odd>, <https://openlabel.asam.net/V1-0-0/ontologies/OddScenery>,                =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content>,                =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Class, rdfs:Resource ], [ <https://w3id.org/ascs-     =
-=                      ev/envited-x/hdmap/v6/laneTypes> Literal("driving", datatype=xsd:string), Literal("walking", datatype=xsd:string) ;           =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/levelOfDetail> Literal("crosswalk", datatype=xsd:string) ;                       =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/roadTypes> Literal("town", datatype=xsd:string) ; <https://w3id.org/ascs-        =
-=                      ev/envited-x/hdmap/v6/trafficDirection> Literal("right-hand", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-         =
-=                      ev/envited-x/envited-x/v3/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
-=                      ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDataSource> [   =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/measurementSystem> Literal("3DMS system", datatype=xsd:string) ;                 =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/usedDataSources> Literal("scanner", datatype=xsd:string) ; rdf:type              =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
-=                      rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasFormat> [ <https://w3id.org/ascs-                           =
-=                      ev/envited-x/hdmap/v6/formatType> Literal("ASAM OpenDRIVE", datatype=xsd:string) ; <https://w3id.org/ascs-                    =
-=                      ev/envited-x/hdmap/v6/version> Literal("1.6", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                         =
-=                      ev/envited-x/envited-x/v3/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
-=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasGeoreference>                                                                 =
-=                      <did:web:registry.envited-x.net:Georeference:wDgNY3gZAxMe3LjhdAZ9TbPiYnQ-yybNhCu8> ; <https://w3id.org/ascs-                  =
+=                      ev/envited-x/hdmap/v6/hasContent> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/laneTypes> Literal("driving",                =
+=                      datatype=xsd:string), Literal("sidewalk", datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/levelOfDetail>  =
+=                      Literal("custom_sensor_mount", datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/roadTypes>                 =
+=                      Literal("townArterial", datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/trafficDirection> Literal("right- =
+=                      hand", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content>, <https://w3id.org/ascs-     =
+=                      ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ;          =
+=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDataSource> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/measurementSystem> =
+=                      Literal("3DMS system", datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/usedDataSources>                   =
+=                      Literal("scanner", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v3/DataSource>,              =
+=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>, rdfs:Resource ] ; <https://w3id.org/ascs-                           =
+=                      ev/envited-x/hdmap/v6/hasFormat> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/formatType> Literal("ASAM OpenDRIVE",         =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/version> Literal("1.4", datatype=xsd:string) ; rdf:type   =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource =
+=                      ] ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasGeoreference>                                                             =
+=                      <did:web:registry.envited-x.net:Georeference:v14CustomTest_uniqueGeoRef> ; <https://w3id.org/ascs-                            =
 =                      ev/envited-x/hdmap/v6/hasQuality> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracyLaneModel2d> Literal("0.1",          =
 =                      datatype=xsd:float) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracyLaneModelHeight> Literal("0.1",                    =
 =                      datatype=xsd:float) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracyObjects> Literal("0.1", datatype=xsd:float) ;      =
@@ -113,33 +97,18 @@
 =                      owl:someValuesFrom <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content> ; rdf:type owl:Restriction, rdfs:Class,          =
 =                      rdfs:Resource ], [ owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasFormat> ; owl:someValuesFrom            =
 =                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Format> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ],             =
-=                      rdfs:Resource ] must conform to all shapes in [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ] [ sh:property [ =
-=                      sh:in ( Literal("bidirectional", datatype=xsd:string) Literal("biking", datatype=xsd:string) Literal("border",                =
-=                      datatype=xsd:string) Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit",            =
-=                      datatype=xsd:string) Literal("median", datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp",           =
-=                      datatype=xsd:string) Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail",           =
-=                      datatype=xsd:string) Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shoulder", =
-=                      datatype=xsd:string) Literal("sidewalk", datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2",    =
-=                      datatype=xsd:string) Literal("special3", datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("tram",            =
-=                      datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.4 and older.", lang=en) ;  =
-=                      sh:path ( hdmap:hasContent hdmap:laneTypes ) ] ] ) ] , [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV15ToV17Shape ] ] [        =
-=                      sh:property [ sh:in ( Literal("HOV", datatype=xsd:string) Literal("bidirectional", datatype=xsd:string) Literal("biking",     =
-=                      datatype=xsd:string) Literal("border", datatype=xsd:string) Literal("bus", datatype=xsd:string) Literal("connectingRamp",     =
-=                      datatype=xsd:string) Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit",            =
-=                      datatype=xsd:string) Literal("median", datatype=xsd:string) Literal("mwyEntry", datatype=xsd:string) Literal("mwyExit",       =
-=                      datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp", datatype=xsd:string) Literal("onRamp",           =
-=                      datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail", datatype=xsd:string) Literal("restricted",       =
-=                      datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shoulder", datatype=xsd:string) Literal("sidewalk",   =
-=                      datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2", datatype=xsd:string) Literal("special3",    =
-=                      datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("taxi", datatype=xsd:string) Literal("tram",                =
-=                      datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.5–v1.7; curb, shared,      =
-=                      slipLane and walking were introduced in v1.8.", lang=en) ; sh:path ( hdmap:hasContent hdmap:laneTypes ) ] ] ) ]               =
+=                      rdfs:Resource ] must conform to one or more shapes in [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ] , [ sh:property [ =
+=                      sh:in ( Literal("bicycle", datatype=xsd:string) Literal("lowSpeed", datatype=xsd:string) Literal("motorway",                  =
+=                      datatype=xsd:string) Literal("pedestrian", datatype=xsd:string) Literal("rural", datatype=xsd:string) Literal("town",         =
+=                      datatype=xsd:string) Literal("unknown", datatype=xsd:string) ) ; sh:message Literal("roadTypes must be a known OpenDRIVE      =
+=                      e_roadType for v1.4 and older; the town subtypes were introduced in v1.5.", lang=en) ; sh:path ( hdmap:hasContent             =
+=                      hdmap:roadTypes ) ] ]                                                                                                         =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Error:            Value must conform to every Shape in ('hdmap:OpenDriveObjectTypeRevisionShape', 'hdmap:OpenDriveLaneTypeRevisionShape',       =
 =                      'hdmap:OpenDriveRoadTypeRevisionShape'). See details for more information.                                                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: did:web:test.hdmap.net:HdMap:test_invalid_fail01_false_value_hdmap_instance                                                   =
+= 🔹 [Violation] Node: did:web:test.hdmap.net:HdMap:test_invalid_v14_road_type_from_v15                                                              =
 =    Property:         https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDomainSpecification                                                            =
 =    Error:            Each HD map must have one associated DomainSpecification object with format, content, quantity, quality, and dataSource.      =
 ======================================================================================================================================================
