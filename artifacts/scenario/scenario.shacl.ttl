@@ -282,9 +282,9 @@ scenario:ContentShape a sh:NodeShape ;
             sh:order 13 ;
             sh:path scenario:country ],
         [ skos:example "car, truck, pedestrian, bicycle" ;
-            sh:description "Specifies the types of traffic entities present in the scenario. Values aligned with ASAM OpenSCENARIO XML v1.3.1 VehicleCategory, PedestrianCategory, and MiscObjectCategory enumerations (https://publications.pages.asam.net/standards/ASAM_OpenSCENARIO/ASAM_OpenSCENARIO_XML/latest/index.html)."@en ;
-            sh:in ("animal" "barrier" "bicycle" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "semitrailer" "soundBarrier" "streetLamp" "trailer" "trafficIsland" "train" "tram" "tree" "truck" "van" "vegetation" "wheelchair" "wind") ;
-            sh:message "Validation of entityTypes failed!"@en ;
+            sh:description "Specifies the types of traffic entities present in the scenario. Union of the ASAM OpenSCENARIO XML V1.4.0 VehicleCategory, PedestrianCategory and MiscObjectCategory enumerations (40 values), as defined in submodules/asam-openx-standards/standards/asam-openscenario-xml/schema/OpenSCENARIO.xsd. V1.4.0 added ten vehicle categories over v1.3.1: aircraft, heavyTruck, landVehicle, micromobilityDevice, motorcycle, other, semitractor, standupScooter, watercraft and workMachine. One of them, \'other\', is ASAM\'s own catch-all, so the enumeration admits an explicit unspecified-vehicle value while remaining closed to arbitrary strings. No value in any of the three enumerations is deprecated. Note motorcycle and motorbike coexist: motorcycle is the OpenSCENARIO spelling, motorbike the ASAM OpenDRIVE e_objectType one, and both are accepted so cross-domain assets stay valid."@en ;
+            sh:in ("aircraft" "animal" "barrier" "bicycle" "building" "bus" "car" "crosswalk" "gantry" "heavyTruck" "landVehicle" "micromobilityDevice" "motorbike" "motorcycle" "none" "obstacle" "other" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "semitractor" "semitrailer" "soundBarrier" "standupScooter" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "watercraft" "wheelchair" "wind" "workMachine") ;
+            sh:message "Validation of entityTypes failed! Must be an ASAM OpenSCENARIO XML V1.4.0 VehicleCategory, PedestrianCategory or MiscObjectCategory value."@en ;
             sh:minCount 0 ;
             sh:name "entity types"@en ;
             sh:order 14 ;
@@ -299,7 +299,7 @@ scenario:ContentShape a sh:NodeShape ;
             sh:order 15 ;
             sh:path scenario:scenarioCategory ],
         [ skos:example "clear, rain, fog" ;
-            sh:description "Coarse weather/environment classification. Harmonized with ASAM OpenSCENARIO XML v1.3.1 (PrecipitationType, FractionalCloudCover) and ASAM OSI v3 EnvironmentalConditions (Precipitation, Fog, AmbientIllumination enums)."@en ;
+            sh:description "Coarse weather/environment classification. Deliberately NOT set-equal to any ASAM enumeration: it is an ENVITED-X classification harmonised with ASAM OpenSCENARIO XML V1.4.0 (PrecipitationType: dry, rain, snow; FractionalCloudCover: zeroOktas to nineOktas) and ASAM OSI v3 EnvironmentalConditions (Precipitation, Fog, AmbientIllumination), collapsing those finer-grained vocabularies into search-friendly categories. Do not register it as an enumeration drift target - unlike scenario:entityTypes, no standard enumeration is being transcribed here."@en ;
             sh:in ("clear" "rain" "snow" "fog" "icy_conditions" "night" "windy" "mixed" "not_specified") ;
             sh:maxCount 1 ;
             sh:message "Validation of weatherSummary failed!"@en ;

@@ -349,6 +349,18 @@ def compare_enums(
 
     results = []
 
+    # Values a SHACL property is allowed to carry: the union of every XSD enum mapped to
+    # it. "Missing" stays per-enum (each standard enum must be fully expressible), but
+    # "extra" is judged against the union, so a property modelling several enums is not
+    # reported as drift for containing the others' values.
+    permitted_by_prop: dict[str, set[str]] = {}
+    for mapping in mappings:
+        xsd_type = xsd_enums.get(mapping["xsd_enum"])
+        if xsd_type is None:
+            continue
+        permitted = permitted_by_prop.setdefault(mapping["shacl_property"], set())
+        permitted |= set(xsd_type.value_strings)
+
     for mapping in mappings:
         xsd_name = mapping["xsd_enum"]
         shacl_prop = mapping["shacl_property"]
@@ -363,6 +375,7 @@ def compare_enums(
 
         xsd_vals = set(xsd_type.value_strings)
         deprecated = set(xsd_type.deprecated_values)
+        permitted = permitted_by_prop.get(shacl_prop, xsd_vals)
 
         result = EnumComparisonResult(
             xsd_enum_name=xsd_name,
@@ -371,7 +384,7 @@ def compare_enums(
             xsd_values=xsd_vals,
             shacl_values=shacl_vals,
             missing_in_shacl=xsd_vals - shacl_vals,
-            extra_in_shacl=shacl_vals - xsd_vals,
+            extra_in_shacl=shacl_vals - permitted,
             deprecated_in_xsd=deprecated,
             declared_extensions=set(mapping.get("extensions", ())),
         )
