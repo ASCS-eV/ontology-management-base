@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_v14_lane_type_from_v18",
+   "@id": "did:web:test.hdmap.net:HdMap:test_valid_v14_lane_type_from_v18",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:test_invalid_v14_lane_type_from_v18",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:v14LaneTypeFromV18Advisory",
       "@type": "envited-x:ResourceDescription",
       "name": "OpenDRIVE v1.4 HD map declaring a v1.8 lane type",
-      "description": "Negative fixture, one value away from hdmap_v14_custom_objecttype_instance.json: laneTypes 'walking' was introduced in ASAM OpenDRIVE v1.8 and must not validate on an asset declaring version 1.4. Before the version dispatch was rewritten as implications, the unguarded widest branch of the sh:or accepted this.",
+      "description": "Advisory fixture: an ASAM OpenDRIVE v1.4 map declaring laneTypes 'walking', which v1.8 introduced. It validates - the revision check is a warning during the deprecation window - and the report carries an advisory naming the mismatch. Becomes an error in hdmap v7.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -73,7 +73,7 @@
       },
       "hasGeoreference": {
          "@type": "georeference:Georeference",
-         "@id": "did:web:registry.envited-x.net:Georeference:v14CustomTest_uniqueGeoRef",
+         "@id": "did:web:registry.envited-x.net:Georeference:v14LaneTypeFromV18Advisory",
          "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
             "country": "DE",
