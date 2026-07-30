@@ -140,11 +140,50 @@ hdmap:DomainSpecificationShape a sh:NodeShape ;
     # ══════════════════════════════════════════════════════════════════════
 
     # ── Layer 2: OpenDRIVE revision dispatch ───────────────────────────
-    sh:node hdmap:OpenDriveRoadTypeRevisionShape,
-        hdmap:OpenDriveLaneTypeRevisionShape,
-        hdmap:OpenDriveObjectTypeRevisionShape ;
+    # levelOfDetail stays an error here. Unlike roadTypes and laneTypes, its check was
+    # never inert: its narrow branch is the version guard alone (v1.4 modelled object
+    # types as free-form xs:string), not a subset enum, so the disjunction always
+    # constrained v1.5+ assets. Demoting it would newly accept data that has always been
+    # rejected.
+    sh:node hdmap:OpenDriveObjectTypeRevisionShape ;
+
+    # roadTypes and laneTypes are declared on hdmap:OpenDriveRevisionAdvisoryShape below
+    # at sh:Warning severity, not here: sh:severity applies to every constraint of the
+    # shape that declares it, and the constraints above must stay violations.
 
     sh:targetClass hdmap:DomainSpecification .
+
+# ══════════════════════════════════════════════════════════════════════════
+# OpenDRIVE revision vocabulary: advisory (deprecation window)
+#
+# The constraints below check that roadTypes and laneTypes are legal for the ASAM
+# OpenDRIVE revision the asset declares. They are reported at sh:Warning, not
+# sh:Violation, and therefore do NOT make a self-description invalid.
+#
+# levelOfDetail is deliberately NOT here: see hdmap:DomainSpecificationShape. Its check
+# always worked, so it stays an error - a deprecation window is for constraints that were
+# inert, not for relaxing ones that were enforced.
+#
+# Why a window rather than a hard constraint. Until #93 these checks never fired: each
+# sh:or carried a widest branch with no version guard, and that branch absorbed every
+# asset, so an OpenDRIVE 1.4 map could declare laneTypes "walking" - introduced in v1.8 -
+# and validate. Two fixtures in this repository did exactly that. Enforcing the intended
+# semantics immediately would invalidate published self-descriptions that were accepted
+# for years, so the constraints land as warnings first: authors get an actionable signal
+# while their assets keep validating.
+#
+# Planned promotion to sh:Violation in hdmap v7, together with the next model change, so
+# that consumers migrate once. Until then, `just validate` reports these under
+# "Advisory results (do not fail validation)".
+# ══════════════════════════════════════════════════════════════════════════
+
+hdmap:OpenDriveRevisionAdvisoryShape a sh:NodeShape ;
+    sh:targetClass hdmap:DomainSpecification ;
+    sh:severity sh:Warning ;
+    sh:description "Advisory check that the declared roadTypes and laneTypes are legal for the declared ASAM OpenDRIVE revision. Warning severity for a deprecation window; scheduled to become sh:Violation in hdmap v7."@en ;
+    sh:message "Road or lane type is not legal for the declared ASAM OpenDRIVE revision. Accepted for now: this becomes an error in hdmap v7. Either declare the revision that introduced the value, or use a value that exists in the declared revision."@en ;
+    sh:node hdmap:OpenDriveRoadTypeRevisionShape,
+        hdmap:OpenDriveLaneTypeRevisionShape .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OpenDRIVE revision dispatch shapes

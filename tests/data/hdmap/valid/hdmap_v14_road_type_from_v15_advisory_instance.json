@@ -9,13 +9,13 @@
          "@vocab": null
       }
    ],
-   "@id": "did:web:test.hdmap.net:HdMap:test_invalid_v16_lane_type_from_v18",
+   "@id": "did:web:test.hdmap.net:HdMap:test_valid_v14_road_type_from_v15",
    "@type": "hdmap:HdMap",
    "hdmap:hasResourceDescription": {
-      "@id": "did:web:registry.envited-x.net::ResourceDescription:test_invalid_v16_lane_type_from_v18",
+      "@id": "did:web:registry.envited-x.net::ResourceDescription:v14RoadTypeFromV15Advisory",
       "@type": "envited-x:ResourceDescription",
-      "name": "OpenDRIVE v1.6 HD map declaring a v1.8 lane type",
-      "description": "Negative fixture, one value away from hdmap_instance.json: laneTypes 'curb' was introduced in ASAM OpenDRIVE v1.8 and must not validate on a version 1.6 asset. Guards the v1.5-v1.7 implication specifically.",
+      "name": "OpenDRIVE v1.4 HD map declaring a v1.5 road type",
+      "description": "Advisory fixture: an ASAM OpenDRIVE v1.4 map declaring roadTypes 'townArterial', one of the town subtypes v1.5 added. Validates with an advisory during the deprecation window; becomes an error in hdmap v7.",
       "version": "1.0.0",
       "license": "EPL-2.0",
       "resourcePolicy": "allow",
@@ -30,16 +30,16 @@
       "hdmap:hasFormat": {
          "@type": "hdmap:Format",
          "formatType": "ASAM OpenDRIVE",
-         "version": "1.6"
+         "version": "1.4"
       },
       "hdmap:hasContent": {
          "@type": "hdmap:Content",
-         "roadTypes": "town",
+         "roadTypes": "townArterial",
          "laneTypes": [
             "driving",
-            "curb"
+            "sidewalk"
          ],
-         "levelOfDetail": "crosswalk",
+         "levelOfDetail": "custom_sensor_mount",
          "trafficDirection": "right-hand"
       },
       "hdmap:hasQuantity": {
@@ -73,7 +73,7 @@
       },
       "hasGeoreference": {
          "@type": "georeference:Georeference",
-         "@id": "did:web:registry.envited-x.net:Georeference:wDgNY3gZAxMe3LjhdAZ9TbPiYnQ-yybNhCu8",
+         "@id": "did:web:registry.envited-x.net:Georeference:v14RoadTypeFromV15Advisory",
          "hasProjectLocation": {
             "@type": "georeference:ProjectLocation",
             "country": "DE",

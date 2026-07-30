@@ -224,8 +224,7 @@
 =                      hdmap:levelOfDetail ) ] ]                                                                                                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Value must conform to every Shape in ('hdmap:OpenDriveObjectTypeRevisionShape', 'hdmap:OpenDriveLaneTypeRevisionShape',       =
-=                      'hdmap:OpenDriveRoadTypeRevisionShape'). See details for more information.                                                    =
+=    Error:            Value does not conform to Shape hdmap:OpenDriveObjectTypeRevisionShape. See details for more information.                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.hdmap.net:HdMap:test_invalid_custom_v15_objecttype                                                               =
 =    Property:         https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDomainSpecification                                                            =

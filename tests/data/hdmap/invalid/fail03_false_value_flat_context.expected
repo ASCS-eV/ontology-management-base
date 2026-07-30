@@ -164,12 +164,4 @@
 =                      datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("taxi", datatype=xsd:string) Literal("tram",                =
 =                      datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.5–v1.7; curb, shared,      =
 =                      slipLane and walking were introduced in v1.8.", lang=en) ; sh:path ( hdmap:hasContent hdmap:laneTypes ) ] ] ) ]               =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Value must conform to every Shape in ('hdmap:OpenDriveObjectTypeRevisionShape', 'hdmap:OpenDriveLaneTypeRevisionShape',       =
-=                      'hdmap:OpenDriveRoadTypeRevisionShape'). See details for more information.                                                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: did:web:test.hdmap.net:HdMap:test_invalid_fail03_false_value_flat_context                                                     =
-=    Property:         https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDomainSpecification                                                            =
-=    Error:            Each HD map must have one associated DomainSpecification object with format, content, quantity, quality, and dataSource.      =
 ======================================================================================================================================================
