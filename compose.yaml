@@ -1,0 +1,9 @@
+services:
+  ontology-tools:
+    build:
+      context: .
+    image: ontology-management-base:dev
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command: bash

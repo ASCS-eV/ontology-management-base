@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v3/",
+    "openlabel_v3": "https://w3id.org/ascs-ev/envited-x/openlabel/v3/",
+    "OpenLabelFile": { "@id": "OpenLabelFile" },
+    "OpenLabel": { "@id": "OpenLabel" },
+    "openlabel": { "@id": "openlabel" },
+    "metadata": { "@id": "metadata" },
+    "ontologies": { "@id": "ontologies" },
+    "objects": { "@id": "objects" },
+    "actions": { "@id": "actions" },
+    "events": { "@id": "events" },
+    "contexts": { "@id": "contexts" },
+    "relations": { "@id": "relations" },
+    "type": { "@id": "type" },
+    "ontology_uid": { "@id": "ontology_uid" },
+    "uri": { "@id": "uri" },
+    "uid": { "@id": "uid" }
+  }
+}

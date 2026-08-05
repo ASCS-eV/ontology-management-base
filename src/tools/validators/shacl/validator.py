@@ -30,6 +30,7 @@ USAGE:
 For command-line usage, see: src.tools.validators.validation_suite
 """
 
+import json
 import sys
 import time
 from io import StringIO
@@ -72,6 +73,13 @@ try:
     PYSHACL_AVAILABLE = True
 except ImportError:
     PYSHACL_AVAILABLE = False
+
+try:
+    import jsonschema
+
+    JSONSCHEMA_AVAILABLE = True
+except ImportError:
+    JSONSCHEMA_AVAILABLE = False
 
 
 class ShaclValidator:
@@ -200,6 +208,11 @@ class ShaclValidator:
                 report_text="Error: pyshacl is not installed",
                 files_validated=[self._rel_path(f) for f in jsonld_files],
             )
+
+        # Step 0: Validate structural JSON Schema where a domain provides one.
+        schema_result = self._validate_json_schema_files(jsonld_files)
+        if schema_result is not None:
+            return schema_result
 
         # Step 1: Load data
         self._log("Step 1: Loading JSON-LD Data Files...")
@@ -360,6 +373,78 @@ class ShaclValidator:
                 )
             )
         return results
+
+    def _validate_json_schema_files(
+        self, jsonld_files: List[Path]
+    ) -> Optional[ValidationResult]:
+        """Validate OpenLABEL v3 JSON structure before SHACL semantics.
+
+        OpenLABEL v3 deliberately keeps the ASAM JSON object shape and uses
+        SHACL only for the semantic mapping from nested ``type`` strings to the
+        v2 vocabulary. This pre-check enforces the JSON container structure
+        before RDF parsing and SPARQL constraints run.
+        """
+        schema_path = self.root_dir / "artifacts/openlabel-v3/openlabel-v3.schema.json"
+        schema: Optional[dict] = None
+        checked_files: List[Path] = []
+
+        for file_path in jsonld_files:
+            file_path = Path(file_path)
+            try:
+                data = json.loads(file_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                # Syntax validation reports this in the preceding phase.
+                continue
+
+            context = data.get("@context")
+            data_type = data.get("@type")
+            is_openlabel_v3 = (
+                context == "https://w3id.org/ascs-ev/envited-x/openlabel/v3/"
+                or data_type == "OpenLabelFile"
+            )
+            if not is_openlabel_v3:
+                continue
+
+            checked_files.append(file_path)
+            if not JSONSCHEMA_AVAILABLE:
+                return ValidationResult(
+                    conforms=False,
+                    return_code=99,
+                    report_text="Error: jsonschema is not installed",
+                    files_validated=[self._rel_path(f) for f in jsonld_files],
+                )
+            if not schema_path.exists():
+                return ValidationResult(
+                    conforms=False,
+                    return_code=1,
+                    report_text=(
+                        "Error: OpenLABEL v3 JSON Schema not found: "
+                        f"{self._rel_path(schema_path)}"
+                    ),
+                    files_validated=[self._rel_path(f) for f in jsonld_files],
+                )
+            if schema is None:
+                schema = json.loads(schema_path.read_text(encoding="utf-8"))
+
+            try:
+                jsonschema.Draft202012Validator(schema).validate(data)
+            except jsonschema.ValidationError as exc:
+                path = ".".join(str(p) for p in exc.absolute_path) or "<root>"
+                return ValidationResult(
+                    conforms=False,
+                    return_code=210,
+                    report_text=(
+                        "JSON Schema validation failed for "
+                        f"{self._rel_path(file_path)}: {path}: {exc.message}"
+                    ),
+                    files_validated=[self._rel_path(file_path)],
+                )
+
+        if checked_files:
+            self._log("Step 0: Validating JSON Schema...")
+            for file_path in checked_files:
+                self._log(f"  JSON Schema OK: {self._rel_path(file_path)}")
+        return None
 
     def _abox_inference(self, data_graph: Graph, closed_ontology: Graph) -> Graph:
         """Fast ABox RDFS inference against a pre-closed TBox.
@@ -582,6 +667,10 @@ class ShaclValidator:
             Formatted string output
         """
         output_buffer = StringIO()
+        if not result.conforms and result.report_graph is None and result.report_text:
+            output_buffer.write(result.report_text)
+            output_buffer.write("\n")
+            return output_buffer.getvalue()
         format_shacl_validation_result(
             result.conforms,
             result.files_validated,

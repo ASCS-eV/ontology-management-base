@@ -1,0 +1,124 @@
+@prefix openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/> .
+@prefix openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+openlabel_v3:OpenLabelFileShape a sh:NodeShape ;
+    rdfs:comment "Validates ASAM OpenLABEL JSON wrapper files and maps nested ASAM type strings to the OpenLABEL v2 semantic vocabulary."@en ;
+    sh:targetClass openlabel_v3:OpenLabelFile ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [
+        sh:path openlabel_v3:openlabel ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:node openlabel_v3:OpenLabelShape ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:message "OpenLabelFile must contain exactly one openlabel object."@en
+    ] ;
+    sh:sparql [
+        sh:message "Every actions entry must have a type."@en ;
+        sh:select """
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:actions ?container .
+              ?container ?key ?value .
+              FILTER(?key != rdf:type)
+              FILTER NOT EXISTS { ?value openlabel_v3:type ?type }
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "actions entry type must be a Behaviour vocabulary term."@en ;
+        sh:select """
+            PREFIX openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/>
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:actions ?container .
+              ?container ?key ?entry .
+              FILTER(?key != rdf:type)
+              ?entry openlabel_v3:type ?typeLiteral .
+              BIND(IRI(CONCAT("https://w3id.org/ascs-ev/envited-x/openlabel/v2/", STR(?typeLiteral))) AS ?typeIri)
+              FILTER NOT EXISTS { ?typeIri openlabel_v3:allowedAction true }
+              BIND(?entry AS ?value)
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "Every objects entry must have a type."@en ;
+        sh:select """
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:objects ?container .
+              ?container ?key ?value .
+              FILTER(?key != rdf:type)
+              FILTER NOT EXISTS { ?value openlabel_v3:type ?type }
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "objects entry type must be a RoadUser vocabulary term."@en ;
+        sh:select """
+            PREFIX openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/>
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:objects ?container .
+              ?container ?key ?entry .
+              FILTER(?key != rdf:type)
+              ?entry openlabel_v3:type ?typeLiteral .
+              BIND(IRI(CONCAT("https://w3id.org/ascs-ev/envited-x/openlabel/v2/", STR(?typeLiteral))) AS ?typeIri)
+              FILTER NOT EXISTS { ?typeIri openlabel_v3:allowedObject true }
+              BIND(?entry AS ?value)
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "Every contexts entry must have a type."@en ;
+        sh:select """
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:contexts ?container .
+              ?container ?key ?value .
+              FILTER(?key != rdf:type)
+              FILTER NOT EXISTS { ?value openlabel_v3:type ?type }
+            }
+        """
+    ] ;
+    sh:sparql [
+        sh:message "contexts entry type must be an Odd vocabulary term."@en ;
+        sh:select """
+            PREFIX openlabel_v2: <https://w3id.org/ascs-ev/envited-x/openlabel/v2/>
+            PREFIX openlabel_v3: <https://w3id.org/ascs-ev/envited-x/openlabel/v3/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT $this ?value WHERE {
+              $this openlabel_v3:openlabel/openlabel_v3:contexts ?container .
+              ?container ?key ?entry .
+              FILTER(?key != rdf:type)
+              ?entry openlabel_v3:type ?typeLiteral .
+              BIND(IRI(CONCAT("https://w3id.org/ascs-ev/envited-x/openlabel/v2/", STR(?typeLiteral))) AS ?typeIri)
+              FILTER NOT EXISTS { ?typeIri openlabel_v3:allowedContext true }
+              BIND(?entry AS ?value)
+            }
+        """
+    ] .
+
+openlabel_v3:OpenLabelShape a sh:NodeShape ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:path openlabel_v3:metadata ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:ontologies ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:objects ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:actions ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:events ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:contexts ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] ,
+        [ sh:path openlabel_v3:relations ; sh:maxCount 1 ; sh:nodeKind sh:BlankNodeOrIRI ] .

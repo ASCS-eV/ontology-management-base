@@ -1,0 +1,164 @@
+{
+    "@context":  "https://w3id.org/ascs-ev/envited-x/openlabel/v3/",
+    "@id":  "did:web:test.openlabel-v3.net:OpenLabelFile:invalid_action_odd_type",
+    "@type":  "OpenLabelFile",
+    "openlabel":  {
+                      "metadata":  {
+                                       "schema_version":  "1.0.0",
+                                       "file_version":  "1.0.0",
+                                       "name":  "Urban pedestrian crossing",
+                                       "comment":  "A vehicle stops after a pedestrian enters a school-zone road."
+                                   },
+                      "ontologies":  {
+                                         "0":  {
+                                                   "uri":  "https://openlabel.asam.net/V1-0-0/ontologies/"
+                                               },
+                                         "1":  {
+                                                   "uri":  "http://www.w3.org/2006/time#"
+                                               },
+                                         "2":  {
+                                                   "uri":  "http://www.w3.org/ns/prov#"
+                                               },
+                                         "3":  {
+                                                   "uri":  "https://w3id.org/openlabel-rdf/relations/"
+                                               },
+                                         "4":  {
+                                                   "uri":  "https://w3id.org/openlabel-rdf/events/"
+                                               }
+                                     },
+                      "objects":  {
+                                      "1":  {
+                                                "name":  "Ego car",
+                                                "type":  "VehicleCar",
+                                                "ontology_uid":  "0"
+                                            },
+                                      "2":  {
+                                                "name":  "Pedestrian",
+                                                "type":  "HumanPedestrian",
+                                                "ontology_uid":  "0"
+                                            }
+                                  },
+                      "actions":  {
+                                      "1":  {
+                                                "name":  "Vehicle drives toward crossing",
+                                                "type":  "MotionDrive",
+                                                "ontology_uid":  "0",
+                                                "frame_intervals":  [
+                                                                        {
+                                                                            "frame_start":  0,
+                                                                            "frame_end":  30
+                                                                        }
+                                                                    ],
+                                                "action_data":  {
+                                                                    "num":  [
+                                                                                {
+                                                                                    "name":  "motion_drive",
+                                                                                    "val":  30.0
+                                                                                }
+                                                                            ]
+                                                                }
+                                            },
+                                      "2":  {
+                                                "name":  "Vehicle stops",
+                                                "type":  "ZoneSchool",
+                                                "ontology_uid":  "0",
+                                                "frame_intervals":  [
+                                                                        {
+                                                                            "frame_start":  31,
+                                                                            "frame_end":  45
+                                                                        }
+                                                                    ]
+                                            }
+                                  },
+                      "events":  {
+                                     "1":  {
+                                               "name":  "Pedestrian enters road",
+                                               "type":  "PedestrianEntersRoad",
+                                               "ontology_uid":  "4",
+                                               "frame_intervals":  [
+                                                                       {
+                                                                           "frame_start":  30,
+                                                                           "frame_end":  30
+                                                                       }
+                                                                   ]
+                                           }
+                                 },
+                      "contexts":  {
+                                       "1":  {
+                                                 "name":  "School zone",
+                                                 "type":  "ZoneSchool",
+                                                 "ontology_uid":  "0"
+                                             }
+                                   },
+                      "relations":  {
+                                        "1":  {
+                                                  "name":  "Stop follows driving",
+                                                  "type":  "intervalAfter",
+                                                  "ontology_uid":  "1",
+                                                  "rdf_subjects":  [
+                                                                       {
+                                                                           "type":  "action",
+                                                                           "uid":  "2"
+                                                                       }
+                                                                   ],
+                                                  "rdf_objects":  [
+                                                                      {
+                                                                          "type":  "action",
+                                                                          "uid":  "1"
+                                                                      }
+                                                                  ]
+                                              },
+                                        "2":  {
+                                                  "name":  "Stop triggered by pedestrian event",
+                                                  "type":  "triggeredBy",
+                                                  "ontology_uid":  "3",
+                                                  "rdf_subjects":  [
+                                                                       {
+                                                                           "type":  "action",
+                                                                           "uid":  "2"
+                                                                       }
+                                                                   ],
+                                                  "rdf_objects":  [
+                                                                      {
+                                                                          "type":  "event",
+                                                                          "uid":  "1"
+                                                                      }
+                                                                  ]
+                                              },
+                                        "3":  {
+                                                  "name":  "Stop associated with ego car",
+                                                  "type":  "wasAssociatedWith",
+                                                  "ontology_uid":  "2",
+                                                  "rdf_subjects":  [
+                                                                       {
+                                                                           "type":  "action",
+                                                                           "uid":  "2"
+                                                                       }
+                                                                   ],
+                                                  "rdf_objects":  [
+                                                                      {
+                                                                          "type":  "object",
+                                                                          "uid":  "1"
+                                                                      }
+                                                                  ]
+                                              },
+                                        "4":  {
+                                                  "name":  "Entry event affects pedestrian",
+                                                  "type":  "affects",
+                                                  "ontology_uid":  "3",
+                                                  "rdf_subjects":  [
+                                                                       {
+                                                                           "type":  "event",
+                                                                           "uid":  "1"
+                                                                       }
+                                                                   ],
+                                                  "rdf_objects":  [
+                                                                      {
+                                                                          "type":  "object",
+                                                                          "uid":  "2"
+                                                                      }
+                                                                  ]
+                                              }
+                                    }
+                  }
+}

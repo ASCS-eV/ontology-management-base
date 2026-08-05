@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/ascs-ev/envited-x/openlabel/schema/v3",
+  "title": "ASAM OpenLABEL v3 Structural Mapping Schema",
+  "type": "object",
+  "required": ["@context", "@id", "@type", "openlabel"],
+  "additionalProperties": false,
+  "properties": {
+    "@context": { "type": "string" },
+    "@id": { "type": "string" },
+    "@type": { "const": "OpenLabelFile" },
+    "openlabel": { "$ref": "#/$defs/OpenLabel" }
+  },
+  "$defs": {
+    "UidMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+      }
+    },
+    "OpenLabel": {
+      "type": "object",
+      "required": ["metadata"],
+      "additionalProperties": false,
+      "properties": {
+        "metadata": { "type": "object" },
+        "ontologies": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/OntologyEntry" }
+        },
+        "objects": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/TypedEntry" }
+        },
+        "actions": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/TypedEntry" }
+        },
+        "events": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/TypedEntry" }
+        },
+        "contexts": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/TypedEntry" }
+        },
+        "relations": {
+          "allOf": [{ "$ref": "#/$defs/UidMap" }],
+          "additionalProperties": { "$ref": "#/$defs/TypedEntry" }
+        }
+      }
+    },
+    "OntologyEntry": {
+      "type": "object",
+      "required": ["uri"],
+      "additionalProperties": true,
+      "properties": {
+        "uri": { "type": "string" }
+      }
+    },
+    "TypedEntry": {
+      "type": "object",
+      "required": ["type", "ontology_uid"],
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "ontology_uid": { "type": "string" }
+      }
+    }
+  }
+}
