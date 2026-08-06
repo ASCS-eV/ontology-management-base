@@ -3,7 +3,7 @@
 
 [tool.ontoenv]
 name = "ontology-management-base"
-version = "0.1.6"
+version = "0.4.0"
 
 [dependencies.cred]
 uri = "https://www.w3.org/2018/credentials#"
@@ -24,6 +24,16 @@ local = "imports/did/did.owl.ttl"
 [dependencies.foaf]
 uri = "http://xmlns.com/foaf/0.1/"
 local = "imports/foaf/foaf.owl.ttl"
+
+[dependencies.opendrive]
+uri = "http://code.asam.net/simulation/standard/opendrive"
+local = "imports/opendrive/opendrive.owl.ttl"
+description = "Railroad"
+
+[dependencies.openscenario]
+uri = "http://code.asam.net/simulation/standard/openscenario"
+local = "imports/openscenario/openscenario.owl.ttl"
+description = "OpenSCENARIO"
 
 [dependencies.org]
 uri = "http://www.w3.org/ns/org#"

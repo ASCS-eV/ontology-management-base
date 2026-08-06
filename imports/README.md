@@ -9,27 +9,36 @@ All of these were downloaded from the sources named in their respective contexts
 **They are not original works of this project**; the original terms and licenses of
 each vocabulary apply. Please refer to the individual license terms.
 
-## ASAM schemas are not here
+## The ASAM vocabularies are derived, not maintained
 
-The normative ASAM XML schemas used to live in `imports/OpenDrive/xsd_schema/` and
-`imports/OpenScenario/OpenSCENARIO.xsd`. That predates the standards submodule. They
-now live in the one place that pins ASAM deliverables and records their provenance:
+`imports/opendrive/` and `imports/openscenario/` are the exception to everything above:
+they are not downloaded from a source named in a context, they are **derived from the
+`asam-openx-standards` submodule** and must never be edited in place. Each holds an OWL
+ontology, SHACL shapes and ASAM's normative XML schema, with a README of its own.
 
-| Standard | Path |
+| | Source of truth |
 |---|---|
-| ASAM OpenDRIVE® XSD | `submodules/asam-openx-standards/standards/asam-opendrive/schema/` |
-| ASAM OpenSCENARIO® XML XSD | `submodules/asam-openx-standards/standards/asam-openscenario-xml/schema/` |
+| Normative XML schemas | `submodules/asam-openx-standards/standards/*/schema/` |
+| Generated OWL + SHACL | `submodules/asam-openx-standards/standards/*/generated/` |
 
-Those directories carry a provenance README each — standard, version, deliverable,
-source URL, retrieval date, SHA-256 checksums — plus ASAM's ownership and
-redistribution notice. The submodule holds the matching specification prose, so
-schemas and specification can no longer drift apart unnoticed.
+The submodule is where provenance lives — standard, version, deliverable, source URL,
+retrieval date, SHA-256 checksums, ASAM's ownership and redistribution notice — together
+with the matching specification prose and the pipeline that produced the OWL and SHACL.
 
-Code must reference them through `omb.core.constants`
-(`ASAM_OPENDRIVE_SCHEMA_DIR`, `ASAM_OPENSCENARIO_SCHEMA_FILE`), never as literal
-paths, and must tolerate their absence: they exist only once the submodule is
-initialised.
+Re-derive after bumping the submodule:
 
 ```bash
 git submodule update --init --recursive submodules/asam-openx-standards
+just asam-imports                         # copy from the submodule
+just asam-imports-check                   # verify byte-for-byte; CI runs this
+just registry-update                      # register in catalog-v001.xml
 ```
+
+`tests/integration/test_asam_imports.py` fails if the copies and the submodule disagree,
+so a submodule bump that was not followed by a sync cannot pass unnoticed.
+
+Code that needs the **normative schemas** must reference them through
+`omb.core.constants` (`ASAM_OPENDRIVE_SCHEMA_DIR`, `ASAM_OPENSCENARIO_SCHEMA_FILE`),
+which point at the submodule, never as literal paths, and must tolerate their absence:
+there they exist only once the submodule is initialised. The copies under `imports/` are
+committed and so are always present.

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
   <!-- Auto-generated catalog for imports -->
+  <uri name="http://code.asam.net/simulation/standard/opendrive" uri="opendrive/opendrive.owl.ttl"/>
+  <uri name="http://code.asam.net/simulation/standard/opendrive/shapes" uri="opendrive/opendrive.shacl.ttl"/>
+  <uri name="http://code.asam.net/simulation/standard/openscenario" uri="openscenario/openscenario.owl.ttl"/>
+  <uri name="http://code.asam.net/simulation/standard/openscenario/shapes" uri="openscenario/openscenario.shacl.ttl"/>
   <uri name="http://purl.org/dc/terms/" uri="dcterms/dcterms.owl.ttl"/>
   <uri name="http://www.w3.org/1999/02/22-rdf-syntax-ns#" uri="rdf/rdf.owl.ttl"/>
   <uri name="http://www.w3.org/2000/01/rdf-schema#" uri="rdfs/rdfs.owl.ttl"/>
