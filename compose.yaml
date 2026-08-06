@@ -1,0 +1,27 @@
+# Development container for the Ontology Management Base. See Dockerfile for what the
+# image provides and why.
+#
+#   docker compose run --rm ontology-tools     # interactive shell with the toolchain
+#   docker compose run --rm ontology-tools just lint
+services:
+  ontology-tools:
+    build:
+      context: .
+    image: ontology-management-base:dev
+    working_dir: /workspace
+    volumes:
+      # The repository itself, so edits and generated artifacts cross the boundary.
+      - .:/workspace
+      # Keep the environment out of the bind mount: an in-tree .venv from the host would
+      # shadow the image's, and a host .venv built for a different platform would break.
+      - venv:/opt/venv
+    # The submodule-backed tests read committed submodule content; git needs to trust the
+    # bind-mounted tree, whose ownership differs from the container user.
+    environment:
+      - GIT_CONFIG_COUNT=1
+      - GIT_CONFIG_KEY_0=safe.directory
+      - GIT_CONFIG_VALUE_0=/workspace
+    command: bash
+
+volumes:
+  venv:
