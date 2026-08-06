@@ -1,1 +1,9 @@
 * text=auto eol=lf
+
+# ASAM's normative XML schemas, derived from the standards submodule by
+# omb/utils/asam_imports.py. Excluded from end-of-line conversion because the submodule
+# publishes the SHA-256 of each deliverable exactly as ASAM shipped it - several are stored
+# with CRLF, and normalising them would invalidate every published checksum, leaving the copy
+# unverifiable against its source. The submodule's own .gitattributes marks its schema/
+# directories the same way.
+imports/*/schema/** -text

@@ -217,6 +217,13 @@ jobs:
         run: git submodule update --init --recursive --depth 1 submodules/asam-openx-standards
       - name: Check enumerations against their pinned sources
         run: just validate-enums
+      # imports/opendrive and imports/openscenario are byte-for-byte copies of submodule
+      # artifacts. Checked in this job because it is the one that already pays for the
+      # ~260 MB submodule fetch. A submodule bump without a re-derive fails here.
+      - name: Check the derived ASAM vocabularies against the submodule
+        run: just asam-imports-check
+      - name: Run the ASAM imports integration tests
+        run: just test-asam-imports
 
   # --- JOB 5: Regression Tests ---
   regression-tests:
