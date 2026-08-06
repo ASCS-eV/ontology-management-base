@@ -78,3 +78,6 @@ repos:
         files: \.(json|jsonld)$
       - id: mixed-line-ending
         args: ["--fix=lf"]
+        # ASAM's normative schemas are byte-for-byte copies whose published SHA-256 checksums
+        # cover the CRLF they ship with; see .gitattributes and omb/utils/asam_imports.py.
+        exclude: ^imports/[^/]+/schema/

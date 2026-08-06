@@ -543,6 +543,26 @@ def generate_imports_catalog(
         rel_path = to_posix_relative(Path(owl_path), catalog_base)
         uri_mappings.append((iri, rel_path))
 
+        # Add SHACL shapes if present, under the same {iri}/shapes convention the artifacts
+        # catalog uses.  RegistryResolver already reads shapes from this catalog
+        # (_load_imports_shacl_entries) and loads them for data in the matching namespace, so
+        # an imported vocabulary that ships shapes - the ASAM standards do - had a reader with
+        # nothing to read until these entries were written.
+        shacl_paths = files.get("shacl")
+        if shacl_paths:
+            is_single_shacl = len(shacl_paths) == 1
+            for shacl_path in shacl_paths:
+                shacl_iri = extract_shacl_iri(shacl_path)
+                if not shacl_iri and is_single_shacl:
+                    shacl_iri = build_shapes_iri(iri)
+                if not shacl_iri:
+                    logger.warning(
+                        "No SHACL IRI found in %s, skipping", Path(shacl_path).name
+                    )
+                    continue
+                rel = to_posix_relative(Path(shacl_path), catalog_base)
+                uri_mappings.append((shacl_iri, rel))
+
         # Add JSON-LD context file if present
         jsonld_path = files.get("jsonld")
         if jsonld_path:

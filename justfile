@@ -180,6 +180,21 @@ registry-update tag="":
     {{run}} python -m omb.utils.registry_updater --release-tag "$tag"
     echo "[OK] Registry update complete"
 
+# ===== Derived ASAM vocabularies =====
+
+# Re-derive imports/opendrive and imports/openscenario from the standards submodule.
+asam-imports:
+    {{run}} python -m omb.utils.asam_imports
+    @echo "[INFO] Run 'just registry-update' to register any new files"
+
+# Verify the derived ASAM vocabularies still match the submodule byte-for-byte.
+asam-imports-check:
+    {{run}} python -m omb.utils.asam_imports --check
+
+# Integration tests for the derived ASAM vocabularies (drift, catalog wiring, coherence).
+test-asam-imports:
+    {{run}} python -m pytest tests/integration/test_asam_imports.py -q
+
 # ===== Cleaning =====
 
 # Remove build artifacts and caches.
