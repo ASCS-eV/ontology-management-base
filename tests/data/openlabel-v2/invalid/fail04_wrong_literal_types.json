@@ -2,14 +2,12 @@
    "@context": [
       "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       {
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "https://schema.org/"
+         "xsd": "http://www.w3.org/2001/XMLSchema#"
       }
    ],
    "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail04_integer_for_decimal",
    "@type": "Tag",
    "AdminTag": {
-      "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
       "ownerEmail": "contact@bmw.de",
       "ownerName": "BMW AG",
@@ -25,7 +23,6 @@
       "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
    "Odd": {
-      "@type": "Odd",
       "WeatherWind": true,
       "weatherWindValue": "strong",
       "SubjectVehicleSpeed": true,

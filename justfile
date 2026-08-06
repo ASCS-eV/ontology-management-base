@@ -68,9 +68,23 @@ generate:
     for domain in {{LINKML_DOMAINS}}; do
         echo "  Processing $domain..."
         mkdir -p "artifacts/$domain"
-        {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
+        {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
         {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
         {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+        # A domain that also carries a structural schema ($domain-schema.yaml) generates a
+        # JSON Schema from it. The semantic model above describes the RDF vocabulary; the
+        # structural one describes the JSON document format, and only the latter can say
+        # what a conforming file looks like before it is interpreted as RDF. Per-domain
+        # generator flags live in jsonschema.genopts so this recipe stays domain-neutral.
+        if [ -f "linkml/$domain/$domain-schema.yaml" ]; then
+            echo "    Generating JSON Schema for $domain..."
+            opts=""
+            if [ -f "linkml/$domain/jsonschema.genopts" ]; then
+                opts="$(cat "linkml/$domain/jsonschema.genopts")"
+            fi
+            # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
+            {{run}} gen-json-schema --deterministic --indent 3 $opts "linkml/$domain/$domain-schema.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.schema.json"
+        fi
     done
     echo "[OK] Artifacts generated"
 
@@ -79,7 +93,7 @@ generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p "artifacts/{{domain}}"
-    {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
+    {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
     {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.shacl.ttl"
     {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.context.jsonld"
     echo "[OK] Artifacts generated for {{domain}}"

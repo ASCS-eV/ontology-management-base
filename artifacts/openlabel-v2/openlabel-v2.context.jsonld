@@ -23,6 +23,9 @@
          "@id": "BehaviourCommunication",
          "@type": "@vocab"
       },
+      "BehaviourMotion": {
+         "@id": "BehaviourMotion"
+      },
       "ConnectivityCommunication": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
@@ -67,6 +70,18 @@
          "@id": "DrivableAreaEdge",
          "@type": "@vocab"
       },
+      "DrivableAreaGeometry": {
+         "@id": "DrivableAreaGeometry"
+      },
+      "DrivableAreaLaneSpecification": {
+         "@id": "DrivableAreaLaneSpecification"
+      },
+      "DrivableAreaSigns": {
+         "@id": "DrivableAreaSigns"
+      },
+      "DrivableAreaSurface": {
+         "@id": "DrivableAreaSurface"
+      },
       "DrivableAreaSurfaceCondition": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
@@ -107,6 +122,18 @@
          "@id": "DrivableAreaType",
          "@type": "@vocab"
       },
+      "DynamicElementsSubjectVehicle": {
+         "@id": "DynamicElementsSubjectVehicle"
+      },
+      "DynamicElementsTraffic": {
+         "@id": "DynamicElementsTraffic"
+      },
+      "EnvironmentConnectivity": {
+         "@id": "EnvironmentConnectivity"
+      },
+      "EnvironmentIllumination": {
+         "@id": "EnvironmentIllumination"
+      },
       "EnvironmentParticulates": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
@@ -116,6 +143,15 @@
          },
          "@id": "EnvironmentParticulates",
          "@type": "@vocab"
+      },
+      "EnvironmentWeather": {
+         "@id": "EnvironmentWeather"
+      },
+      "GeometryHorizontal": {
+         "@id": "GeometryHorizontal"
+      },
+      "GeometryLongitudinal": {
+         "@id": "GeometryLongitudinal"
       },
       "GeometryTransverse": {
          "@context": {
@@ -148,6 +184,9 @@
       "IlluminationCloudiness": {
          "@id": "IlluminationCloudiness",
          "@type": "xsd:boolean"
+      },
+      "IlluminationDay": {
+         "@id": "IlluminationDay"
       },
       "IlluminationLowLight": {
          "@context": {
@@ -378,6 +417,9 @@
       "Scenario": {
          "@id": "Scenario"
       },
+      "SceneryDrivableArea": {
+         "@id": "SceneryDrivableArea"
+      },
       "SceneryFixedStructure": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
@@ -387,6 +429,9 @@
          },
          "@id": "SceneryFixedStructure",
          "@type": "@vocab"
+      },
+      "SceneryJunction": {
+         "@id": "SceneryJunction"
       },
       "ScenerySpecialStructure": {
          "@context": {
@@ -600,7 +645,14 @@
          "@type": "xsd:integer"
       },
       "trafficAgentTypeValue": {
-         "@id": "trafficAgentTypeValue"
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "trafficAgentTypeValue",
+         "@type": "@vocab"
       },
       "trafficFlowRateValue": {
          "@id": "trafficFlowRateValue",
