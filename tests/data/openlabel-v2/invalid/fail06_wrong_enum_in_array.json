@@ -1,15 +1,8 @@
 {
-   "@context": [
-      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      {
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "https://schema.org/"
-      }
-   ],
+   "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
    "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail06_wrong_enum_in_array",
    "@type": "Tag",
    "AdminTag": {
-      "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
       "ownerEmail": "contact@bmw.de",
       "ownerName": "BMW AG",
@@ -25,7 +18,6 @@
       "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
    "Behaviour": {
-      "@type": "Behaviour",
       "BehaviourCommunication": [
          "CommunicationSignalLeft",
          "InvalidCommunicationType"
