@@ -14,6 +14,9 @@ services:
       - .:/workspace
       # Keep the environment out of the bind mount: an in-tree .venv from the host would
       # shadow the image's, and a host .venv built for a different platform would break.
+      # Docker seeds this volume from the image only while it is empty, so after a rebuild
+      # that changes dependencies, run `docker compose down -v` — otherwise the old
+      # environment keeps shadowing the new image's.
       - venv:/opt/venv
     # The submodule-backed tests read committed submodule content; git needs to trust the
     # bind-mounted tree, whose ownership differs from the container user.
