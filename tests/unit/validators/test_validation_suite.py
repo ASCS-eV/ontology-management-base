@@ -409,6 +409,67 @@ def test_cli_mutually_exclusive_data_paths_domain():
     pass
 
 
+def _record_checks(monkeypatch) -> list:
+    """Replace every check with a recorder, returning the list of names as they run."""
+    called: list = []
+
+    def recorder(name):
+        def _run(*_args, **_kwargs):
+            called.append(name)
+            return 0
+
+        return _run
+
+    for attr, name in (
+        ("check_syntax_all", "syntax"),
+        ("validate_artifact_coherence_all", "coherence"),
+        ("validate_data_conformance_all", "conformance"),
+        ("check_failing_tests_all", "failing-tests"),
+    ):
+        monkeypatch.setattr(validation_suite, attr, recorder(name))
+    return called
+
+
+def test_run_all_in_data_paths_mode_includes_failing_tests(tmp_path: Path, monkeypatch):
+    """``--run all`` with ``--data-paths`` must schedule check-failing-tests.
+
+    A supplied file under an ``invalid/`` directory is registered as a negative
+    fixture, and data conformance deliberately skips those. If failing tests were
+    skipped as well, nothing would validate the file at all, yet the suite would
+    still print success - so the caller would be told their invalid data is fine.
+    """
+    invalid_dir = tmp_path / "invalid"
+    invalid_dir.mkdir()
+    fixture = invalid_dir / "fail_case.json"
+    fixture.write_text(
+        json.dumps(
+            {
+                "@context": {"@vocab": "https://example.org/test-domain/v1/"},
+                "@id": "did:test:fail-001",
+                "@type": "TestClass",
+            }
+        )
+    )
+
+    called = _record_checks(monkeypatch)
+    monkeypatch.setattr("sys.argv", ["validation_suite", "--data-paths", str(fixture)])
+    validation_suite.main()
+
+    assert called == ["syntax", "conformance", "failing-tests"], (
+        "data-paths mode must run failing tests; artifact coherence stays excluded "
+        "because it needs domain artifacts in the standard catalog layout"
+    )
+
+
+def test_run_all_in_catalog_mode_runs_every_check(monkeypatch):
+    """``--run all`` without ``--data-paths`` keeps all four checks, in order."""
+    called = _record_checks(monkeypatch)
+    monkeypatch.setattr("sys.argv", ["validation_suite", "--domain", "manifest"])
+    validation_suite.main()
+
+    assert called == ["syntax", "coherence", "conformance", "failing-tests"]
+
+
 # =============================================================================
 # Tests: Integration scenarios
 # =============================================================================

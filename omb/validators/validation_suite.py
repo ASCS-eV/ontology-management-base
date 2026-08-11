@@ -943,9 +943,15 @@ def main():
 
     if args.run == "all":
         if data_paths:
-            # Path mode: skip artifact coherence and failing tests
+            # Only artifact coherence is skipped, for the reason given above. Failing
+            # tests must run: ``create_temporary_domain`` registers supplied files under
+            # an ``invalid/`` directory as negative fixtures, which data conformance then
+            # skips. Leaving this check out meant such a file was validated by nothing at
+            # all while the suite still reported success.
             checks_to_run = (
-                check_map["check-syntax"] + check_map["check-data-conformance"]
+                check_map["check-syntax"]
+                + check_map["check-data-conformance"]
+                + check_map["check-failing-tests"]
             )
         else:
             checks_to_run = (
