@@ -86,10 +86,10 @@ VALIDATION PHASES (--run):
 --run check-failing-tests
     Executes "Negative Tests" - data files expected to fail validation.
     Verifies that they fail with the specific error code/message defined in
-    .expected files. Works in Catalog/Domain Mode and, for externally-supplied
-    fixtures, in Data Path Mode (files under an `invalid/` directory are treated
-    as negative tests). Pass --update-expected to (re)record each .expected
-    snapshot from the live validation report instead of comparing.
+    .expected files. A data file counts as a negative test when a `.expected`
+    snapshot sits beside it, wherever it lives, so this works identically in
+    Catalog/Domain Mode and Data Path Mode. Pass --update-expected to (re)record
+    each .expected snapshot from the live validation report instead of comparing.
 
 EXAMPLES:
 =========
@@ -116,6 +116,7 @@ import sys
 from pathlib import Path
 from typing import List
 
+from omb.core.negative_fixtures import expected_snapshot_path
 from omb.core.paths import builtin_data_root
 from omb.utils.file_collector import discover_data_hierarchy
 from omb.utils.print_formatter import normalize_path_for_display, normalize_text
@@ -223,6 +224,36 @@ def check_syntax_all(
     return 0
 
 
+def _report_skipped_domain(
+    domain: str, resolver: RegistryResolver, root_dir: Path
+) -> None:
+    """Explain why conformance validated nothing for ``domain``.
+
+    "No files found" is misleading when files *were* supplied but every one of them is a
+    negative fixture: conformance leaves those to ``check-failing-tests``, which compares
+    each against its snapshot. Name the pairs so the reason is on the page rather than in
+    the reader's head.
+    """
+    negatives = resolver.get_test_files(domain, test_type="invalid")
+    if not negatives:
+        print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
+        return
+
+    print(
+        f"⏭️  Nothing to conformance-check in '{domain}': all "
+        f"{len(negatives)} file(s) are negative fixtures, verified by "
+        f"check-failing-tests against their snapshots.",
+        flush=True,
+    )
+    for path in negatives:
+        data_path = Path(path)
+        print(
+            f"     {normalize_path_for_display(data_path, root_dir)}"
+            f"  ←→  {expected_snapshot_path(data_path).name}",
+            flush=True,
+        )
+
+
 def validate_data_conformance_all(
     ontology_domains: List[str],
     resolver: RegistryResolver = None,
@@ -298,7 +329,7 @@ def validate_data_conformance_all(
                 for f in validator.resolver.get_test_files(domain, test_type="valid")
             ]
             if not files:
-                print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
+                _report_skipped_domain(domain, validator.resolver, root_dir)
                 continue
             print(f"   Found {len(files)} test files from catalog (per-resource)")
             results = validator.validate_each(files)
@@ -330,7 +361,7 @@ def validate_data_conformance_all(
             return 1
 
         if not result.files_validated:
-            print(f"⚠️ No JSON-LD files found in '{domain}'. Skipping.", flush=True)
+            _report_skipped_domain(domain, validator.resolver, root_dir)
             continue
 
         print(f"   Found {len(result.files_validated)} test files from catalog")
@@ -426,14 +457,12 @@ def check_failing_tests_all(
         for test_abs_path in invalid_test_files:
             test_abs_path = Path(test_abs_path)
             test_path = normalize_path_for_display(test_abs_path, root_dir)
-            expected_output_path = test_abs_path.with_suffix("").with_suffix(
-                ".expected"
+            expected_output_path = expected_snapshot_path(test_abs_path)
+            expected_path_display = normalize_path_for_display(
+                expected_output_path, root_dir
             )
 
             if not expected_output_path.exists() and not update_expected:
-                expected_path_display = normalize_path_for_display(
-                    expected_output_path, root_dir
-                )
                 print(
                     f"⚠️ No expected output file found: {expected_path_display}",
                     file=sys.stderr,
@@ -441,7 +470,10 @@ def check_failing_tests_all(
                 )
                 return 1
 
-            print(f"🔍 Running failing test: {test_path}", flush=True)
+            # Say out loud which snapshot is standing behind this file, so a reader can
+            # tell at a glance why a failing validation is about to be accepted.
+            print(f"🔍 Negative fixture: {test_path}", flush=True)
+            print(f"   Paired snapshot: {expected_path_display}", flush=True)
 
             # Validate single file (fixtures/schemas resolved via catalog)
             result = validator.validate([test_abs_path])
@@ -472,12 +504,18 @@ def check_failing_tests_all(
 
                 if output_norm == expected_norm:
                     print(
-                        f"✅ Test {test_path} for domain {domain} failed as expected.",
+                        "   Validation returned 210 (conformance error), as recorded",
+                        flush=True,
+                    )
+                    print(
+                        f"✅ {test_path} failed as expected: its report matches "
+                        f"{expected_path_display}, so the failure is accepted.",
                         flush=True,
                     )
                 else:
                     print(
-                        f"\n❌ Error: Output discrepancy for {test_path}. Aborting.",
+                        f"\n❌ Error: {test_path} failed, but not in the way "
+                        f"{expected_path_display} records. Aborting.",
                         file=sys.stderr,
                         flush=True,
                     )
@@ -503,7 +541,11 @@ def check_failing_tests_all(
                     return 1
             else:
                 print(
-                    f"\n❌ Test {test_path} did not return code 210 (got {result.return_code}). Aborting.",
+                    f"\n❌ {test_path} is paired with {expected_path_display}, so it is "
+                    f"expected to fail, but validation returned "
+                    f"{result.return_code} instead of 210. Either the data no longer "
+                    f"violates anything - delete the snapshot to treat it as ordinary "
+                    f"data - or the snapshot is stale. Aborting.",
                     file=sys.stderr,
                     flush=True,
                 )
@@ -884,8 +926,8 @@ def main():
 
     # Artifact coherence requires standard catalog structure with domain
     # artifacts, so it stays unsupported in data-paths mode. check-failing-tests
-    # DOES work in data-paths mode: negative fixtures supplied under an `invalid/`
-    # directory are registered as invalid test-data by create_temporary_domain.
+    # DOES work in data-paths mode: create_temporary_domain registers a supplied file
+    # as invalid test-data when a `.expected` snapshot sits beside it.
     if data_paths and args.run == "check-artifact-coherence":
         print(
             f"❌ Error: {args.run} is not supported in data-paths mode.",

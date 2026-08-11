@@ -289,7 +289,14 @@ def collect_test_files(
     extensions: Set[str] = None,
 ) -> List[Path]:
     """
-    Collect test files from valid/ or invalid/ subdirectories.
+    Collect test files from the valid/ or invalid/ subdirectory.
+
+    This is *discovery* by filing convention, not classification: whether a file is a
+    negative fixture is decided by its paired ``.expected`` snapshot
+    (``omb.core.negative_fixtures``), never by the directory it was filed under. A
+    fixture in ``invalid/`` without a snapshot is ordinary data as far as validation is
+    concerned, and ``tests/unit/test_negative_fixture_pairing.py`` fails if the
+    repository's own filing ever drifts from the pairing.
 
     Args:
         test_dir: Path to test domain directory (e.g., tests/data/manifest/)

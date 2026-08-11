@@ -17,6 +17,7 @@ from pathlib import Path
 
 import pytest
 
+from omb.core.negative_fixtures import expected_snapshot_path
 from omb.utils.registry_resolver import RegistryResolver
 from omb.validators import validation_suite
 from omb.validators.shacl.validator import (
@@ -433,14 +434,12 @@ def _record_checks(monkeypatch) -> list:
 def test_run_all_in_data_paths_mode_includes_failing_tests(tmp_path: Path, monkeypatch):
     """``--run all`` with ``--data-paths`` must schedule check-failing-tests.
 
-    A supplied file under an ``invalid/`` directory is registered as a negative
-    fixture, and data conformance deliberately skips those. If failing tests were
-    skipped as well, nothing would validate the file at all, yet the suite would
-    still print success - so the caller would be told their invalid data is fine.
+    A supplied file paired with a ``.expected`` snapshot is a negative fixture, and data
+    conformance deliberately leaves those alone. If failing tests were skipped as well,
+    nothing would validate the file at all, yet the suite would still print success - so
+    the caller would be told their invalid data is fine.
     """
-    invalid_dir = tmp_path / "invalid"
-    invalid_dir.mkdir()
-    fixture = invalid_dir / "fail_case.json"
+    fixture = tmp_path / "fail_case.json"
     fixture.write_text(
         json.dumps(
             {
@@ -450,6 +449,7 @@ def test_run_all_in_data_paths_mode_includes_failing_tests(tmp_path: Path, monke
             }
         )
     )
+    expected_snapshot_path(fixture).write_text("recorded report")
 
     called = _record_checks(monkeypatch)
     monkeypatch.setattr("sys.argv", ["validation_suite", "--data-paths", str(fixture)])
