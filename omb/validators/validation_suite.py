@@ -109,6 +109,7 @@ python3 -m omb.validators.validation_suite --run check-data-conformance \\
 """
 
 import argparse
+import dataclasses
 import difflib
 import io
 import os
@@ -116,7 +117,7 @@ import sys
 from pathlib import Path
 from typing import List
 
-from omb.core.negative_fixtures import expected_snapshot_path
+from omb.core.negative_fixtures import expected_snapshot_path, snapshot_files_field
 from omb.core.paths import builtin_data_root
 from omb.utils.file_collector import discover_data_hierarchy
 from omb.utils.print_formatter import normalize_path_for_display, normalize_text
@@ -477,11 +478,22 @@ def check_failing_tests_all(
 
             # Validate single file (fixtures/schemas resolved via catalog)
             result = validator.validate([test_abs_path])
-            output = validator.format_result(result)
+            # The report about to be printed is also the one written to, or compared
+            # against, the `.expected` snapshot below. Its validated-file line is
+            # reduced to a bare filename first: the pairing above already establishes
+            # location from `test_path`/`expected_path_display`, so a full path here
+            # would only tie the snapshot to wherever it happened to be recorded,
+            # making the one relocation the pairing rule tolerates - moving a fixture
+            # and its snapshot together - report a spurious mismatch. See
+            # `snapshot_files_field`.
+            snapshot_result = dataclasses.replace(
+                result, files_validated=snapshot_files_field(result.files_validated)
+            )
+            output = validator.format_result(snapshot_result)
             print(output)
             # Advisory results are shown but deliberately excluded from `output`,
             # which is what gets recorded as the `.expected` snapshot.
-            advisory = validator.format_advisory(result)
+            advisory = validator.format_advisory(snapshot_result)
             if advisory:
                 print(advisory)
             print("\n", flush=True)

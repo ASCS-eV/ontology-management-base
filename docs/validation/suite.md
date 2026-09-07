@@ -74,11 +74,14 @@ how fixtures are discovered, but it grants nothing: a fixture filed under `inval
 snapshot is ordinary data. `tests/unit/test_negative_fixture_pairing.py` fails if the filing
 and the pairing ever disagree, so the convention stays honest without being load-bearing.
 
-!!! note "A snapshot records the path it was made from"
+!!! note "A snapshot's validated-file line names the file, not its path"
 
-    The report includes the list of files validated, so a `.expected` file is tied to the
-    path it was recorded at. Moving a fixture and its snapshot together still reports a
-    mismatch on that line — re-record with `--update-expected` after moving.
+    The report includes the list of files validated, but the `.expected` snapshot records
+    only the bare filename there, not the directory it happened to sit in when recorded.
+    Directory never carries meaning for the pairing above, so it carries none for the
+    comparison either: moving a fixture and its snapshot together — to reorganise a
+    directory, or to hand both to `--data-paths` from outside the repository — still
+    matches. Renaming the file, or breaking the pairing, still does not.
 
 ## External Artifacts
 

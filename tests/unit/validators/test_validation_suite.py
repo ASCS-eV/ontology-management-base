@@ -307,6 +307,53 @@ def test_check_failing_tests_all_no_invalid_files(repo_with_test_data: Path):
     assert result == 0
 
 
+def test_check_failing_tests_all_is_path_independent(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+):
+    """A negative fixture and its snapshot, moved together, must still match.
+
+    Classification already ignores location (paired by stem, wherever the pair sits);
+    the comparison against the recorded report has to as well, or the one relocation
+    the pairing rule was designed to tolerate would still fail with a mismatch on the
+    validated-file line, demanding `--update-expected` for a move that changed nothing
+    about the failure itself. Uses a real fixture from the repository's own suite,
+    copied deep into an unrelated temp directory, to reproduce the exact conditions
+    `--data-paths` puts a consumer's fixture under.
+    """
+    real_fixture = (
+        validation_suite.ROOT_DIR
+        / "tests"
+        / "data"
+        / "manifest"
+        / "invalid"
+        / "fail_01_missing_license_instance.json"
+    )
+    real_snapshot = expected_snapshot_path(real_fixture)
+    assert real_fixture.is_file() and real_snapshot.is_file(), (
+        "fixture moved or renamed; update this test's paths to match"
+    )
+
+    moved_dir = tmp_path / "nested" / "elsewhere"
+    moved_dir.mkdir(parents=True)
+    moved_fixture = moved_dir / real_fixture.name
+    moved_fixture.write_text(real_fixture.read_text(encoding="utf-8"), encoding="utf-8")
+    expected_snapshot_path(moved_fixture).write_text(
+        real_snapshot.read_text(encoding="utf-8"), encoding="utf-8"
+    )
+
+    resolver = RegistryResolver(validation_suite.ROOT_DIR)
+    domain = resolver.create_temporary_domain([moved_fixture])
+
+    result = validation_suite.check_failing_tests_all([domain], resolver=resolver)
+    captured = capsys.readouterr()
+
+    assert result == 0, (
+        "moving a negative fixture and its snapshot together must not change the "
+        f"outcome; stderr was:\n{captured.err}"
+    )
+    assert "failed as expected" in captured.out
+
+
 # =============================================================================
 # Tests: RegistryResolver integration
 # =============================================================================

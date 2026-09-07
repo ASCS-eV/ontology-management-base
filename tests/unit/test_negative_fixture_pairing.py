@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """A negative fixture is one with a paired ``.expected`` snapshot — nothing else.
 
-Two things are covered here:
+Three things are covered here:
 
 1. **The rule itself** — ``omb.core.negative_fixtures`` decides from the snapshot beside a
    file, so the same file classifies identically wherever it sits. The previous behaviour
@@ -11,6 +11,10 @@ Two things are covered here:
    These tests are what stop that: a fixture filed under ``invalid/`` without a snapshot
    would quietly become ordinary data, and a snapshot appearing beside a ``valid/`` file
    would quietly excuse it from conformance.
+3. **The recorded snapshot itself** — classification is path-independent, so what gets
+   compared against a snapshot has to be too, or moving a fixture and its snapshot
+   together (the one relocation the pairing rule was designed to tolerate) would still
+   report a mismatch on the validated-file line.
 """
 
 from pathlib import Path
@@ -19,6 +23,7 @@ from omb.core.negative_fixtures import (
     EXPECTED_SUFFIX,
     expected_snapshot_path,
     is_negative_fixture,
+    snapshot_files_field,
 )
 
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
@@ -120,3 +125,36 @@ def test_the_repository_actually_has_fixtures_of_both_kinds():
     assert _data_files("invalid"), (
         "no invalid fixtures found; the checks would be vacuous"
     )
+
+
+# =============================================================================
+# The recorded snapshot must be as path-independent as the classification
+# =============================================================================
+
+
+def test_snapshot_files_field_drops_the_directory():
+    """Only the filename survives, regardless of how deep the original path was."""
+    assert snapshot_files_field(
+        ["tests/data/manifest/invalid/fail_01_missing_license.json"]
+    ) == ["fail_01_missing_license.json"]
+    assert snapshot_files_field(["/tmp/elsewhere/nested/case.json"]) == ["case.json"]
+
+
+def test_snapshot_files_field_is_stable_across_relocation():
+    """The whole point: the same file reduces to the same entry wherever it lives.
+
+    This is what makes moving a fixture and its snapshot together - the one
+    relocation the pairing rule in this module was designed to tolerate - not
+    report a spurious mismatch on the validated-file line.
+    """
+    original = snapshot_files_field(
+        ["tests/data/manifest/invalid/fail_01_missing_license.json"]
+    )
+    moved = snapshot_files_field(["/tmp/anywhere/deeper/fail_01_missing_license.json"])
+    assert original == moved
+
+
+def test_snapshot_files_field_preserves_order_and_count():
+    """Reducing to filenames is a plain map, not a filter or a re-sort."""
+    files = ["a/one.json", "b/two.json", "c/three.json"]
+    assert snapshot_files_field(files) == ["one.json", "two.json", "three.json"]
