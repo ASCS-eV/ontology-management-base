@@ -19,6 +19,20 @@ wheel built from `pyproject.toml`; nothing in the image takes part in that build
 docker compose build
 ```
 
+The container runs as a non-root user so that files a recipe creates (`docs-build`'s
+`site/`, a new `generate-domain` directory, coverage's `htmlcov/`, ...) come back owned by
+you, not root, on the bind-mounted host tree. It defaults to uid/gid `1000`, the common
+single-account Linux default; build with your own to match exactly:
+
+```bash
+HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose build
+```
+
+If you skip this and your account's ids differ from `1000`, files the container writes are
+still yours to read, but not to overwrite or delete without `sudo` — rebuilding with the
+right ids, or running `docker compose run --rm ontology-tools chown -R $(id -u):$(id -g) /workspace`
+after the fact, both fix it.
+
 ## Run
 
 `compose.yaml` bind-mounts the repository at `/workspace`, so edits on the host are visible
@@ -68,16 +82,21 @@ docker compose run --rm -v /absolute/path/to/my-data:/data:ro ontology-tools \
 
 ## Things Worth Knowing
 
+**Files the container writes are yours, not root's — if you built with your own ids.**
+See [Build](#build) above: without `HOST_UID`/`HOST_GID` set to match your account, a
+recipe that creates something new (rather than overwriting a file already there) leaves it
+owned by uid/gid `1000` instead of you.
+
 **The environment lives in a named volume, not in your working tree.** `UV_PROJECT_ENVIRONMENT`
 points at `/opt/venv`, backed by a Docker volume, so a host `.venv` cannot shadow it — and a
 host `.venv` built for a different platform cannot break the container.
 
-**After a rebuild that changes dependencies, reset that volume.** Docker seeds a named volume
-from the image only while the volume is still empty, so an existing volume keeps shadowing
-the new image:
+**After a rebuild that changes dependencies — or `HOST_UID`/`HOST_GID` — reset that volume.**
+Docker seeds a named volume from the image only while the volume is still empty, so an
+existing volume keeps shadowing the new image, environment *and* ownership alike:
 
 ```bash
-docker compose down -v && docker compose build
+docker compose down -v && HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose build
 ```
 
 **Submodules are bind-mounted, not baked in.** The image deliberately excludes

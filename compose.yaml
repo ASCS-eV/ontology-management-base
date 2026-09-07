@@ -3,10 +3,20 @@
 #
 #   docker compose run --rm ontology-tools     # interactive shell with the toolchain
 #   docker compose run --rm ontology-tools just lint
+#
+# Build with your own account's ids so files the container writes into the bind-mounted
+# repository come back owned by you, not root:
+#   HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose build
 services:
   ontology-tools:
     build:
       context: .
+      args:
+        # Defaults (1000/1000) match the Dockerfile's fallback for a build that doesn't
+        # set these — set the real HOST_UID/HOST_GID env vars before building to match
+        # your own account exactly (see above).
+        HOST_UID: ${HOST_UID:-1000}
+        HOST_GID: ${HOST_GID:-1000}
     image: ontology-management-base:dev
     working_dir: /workspace
     volumes:
@@ -19,7 +29,9 @@ services:
       # environment keeps shadowing the new image's.
       - venv:/opt/venv
     # The submodule-backed tests read committed submodule content; git needs to trust the
-    # bind-mounted tree, whose ownership differs from the container user.
+    # bind-mounted tree. Still required even when HOST_UID/HOST_GID match your account: the
+    # bind mount's ownership is evaluated against the container's *runtime* user, and this
+    # keeps working regardless of whether that match was made.
     environment:
       - GIT_CONFIG_COUNT=1
       - GIT_CONFIG_KEY_0=safe.directory
