@@ -52,6 +52,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
 from omb.core.logging import get_logger
+from omb.core.negative_fixtures import expected_snapshot_path, is_negative_fixture
 from omb.core.paths import builtin_data_root
 
 # Prefix for temporary domains created by --data-paths mode.
@@ -839,14 +840,19 @@ class RegistryResolver:
         ).hexdigest()[:8]
         temp_domain = f"{TEMP_DOMAIN_PREFIX}{path_hash}"
 
-        # Add temporary entries to catalog, classifying each file by the name of
-        # its parent directory. This lets externally-supplied negative fixtures be
-        # exercised by `check-failing-tests` in data-paths mode: files under an
-        # ``invalid`` directory are registered as ``invalid`` test-data (matching
-        # OMB's own ``tests/data/{domain}/{valid,invalid}/`` convention); every
-        # other file is registered as ``valid``.
-        invalid_files = [p for p in unique_file_paths if p.parent.name == "invalid"]
-        valid_files = [p for p in unique_file_paths if p.parent.name != "invalid"]
+        # Add temporary entries to the catalog, classifying each file by whether a
+        # ``.expected`` snapshot sits beside it. A file supplied from anywhere on disk
+        # therefore means the same thing it would mean inside the repository, and the
+        # record of what a failure must look like is what marks the file as allowed to
+        # fail. See ``omb.core.negative_fixtures``.
+        invalid_files = [p for p in unique_file_paths if is_negative_fixture(p)]
+        valid_files = [p for p in unique_file_paths if not is_negative_fixture(p)]
+        for path in invalid_files:
+            logger.info(
+                "Negative fixture: %s is paired with %s, so it is expected to fail",
+                path.name,
+                expected_snapshot_path(path).name,
+            )
         if valid_files:
             self.add_temporary_test_entries(temp_domain, valid_files, test_type="valid")
         if invalid_files:

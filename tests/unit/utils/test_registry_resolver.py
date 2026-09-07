@@ -300,3 +300,78 @@ def test_register_artifact_directory_logs_invalid_context_warning(temp_dir, capl
         "Could not extract IRI from context" in record.message
         for record in caplog.records
     )
+
+
+def _minimal_resolver(root: Path) -> RegistryResolver:
+    """A resolver over an otherwise empty repository, enough for temp domains."""
+    _write_registry(root, {"version": "1.0.0", "ontologies": {}})
+    _write_artifacts_catalog(
+        root,
+        """<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"></catalog>
+""",
+    )
+    return RegistryResolver(root)
+
+
+def test_create_temporary_domain_classifies_by_paired_snapshot(temp_dir):
+    """A ``.expected`` snapshot beside a file is what makes it a negative fixture.
+
+    Both files below sit in the same directory, so any rule based on the directory's
+    name would have to classify them identically. Only the snapshot distinguishes them.
+    """
+    resolver = _minimal_resolver(temp_dir)
+    data_dir = temp_dir / "payloads"
+    data_dir.mkdir()
+
+    plain = data_dir / "plain.json"
+    plain.write_text('{"@id": "did:test:plain"}')
+    negative = data_dir / "negative.json"
+    negative.write_text('{"@id": "did:test:negative"}')
+    (data_dir / "negative.expected").write_text("recorded report")
+
+    domain = resolver.create_temporary_domain([plain, negative])
+
+    valid = [Path(p).name for p in resolver.get_test_files(domain, test_type="valid")]
+    invalid = [
+        Path(p).name for p in resolver.get_test_files(domain, test_type="invalid")
+    ]
+    assert valid == ["plain.json"]
+    assert invalid == ["negative.json"]
+
+
+def test_create_temporary_domain_ignores_an_invalid_directory_name(temp_dir):
+    """A file under ``invalid/`` with no snapshot is ordinary data.
+
+    This is the behaviour change: previously the directory name alone marked the file as
+    a negative fixture, so conformance skipped it and - before the dispatch fix - nothing
+    validated it at all. Now it is conformance-checked like any other data.
+    """
+    resolver = _minimal_resolver(temp_dir)
+    invalid_dir = temp_dir / "invalid"
+    invalid_dir.mkdir()
+    unpaired = invalid_dir / "case.json"
+    unpaired.write_text('{"@id": "did:test:case"}')
+
+    domain = resolver.create_temporary_domain([unpaired])
+
+    assert [
+        Path(p).name for p in resolver.get_test_files(domain, test_type="valid")
+    ] == ["case.json"]
+    assert resolver.get_test_files(domain, test_type="invalid") == []
+
+
+def test_create_temporary_domain_logs_the_pairing(temp_dir, caplog):
+    """The log names both halves of the pair, so an accepted failure is traceable."""
+    resolver = _minimal_resolver(temp_dir)
+    negative = temp_dir / "case.json"
+    negative.write_text('{"@id": "did:test:case"}')
+    (temp_dir / "case.expected").write_text("recorded report")
+
+    caplog.set_level(logging.INFO)
+    resolver.create_temporary_domain([negative])
+
+    assert any(
+        "case.json" in record.message and "case.expected" in record.message
+        for record in caplog.records
+    ), "the pairing must be visible in the log, not inferred by the reader"
