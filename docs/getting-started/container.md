@@ -33,6 +33,35 @@ still yours to read, but not to overwrite or delete without `sudo` — rebuildin
 right ids, or running `docker compose run --rm ontology-tools chown -R $(id -u):$(id -g) /workspace`
 after the fact, both fix it.
 
+!!! note "Windows"
+
+    `HOST_UID`/`HOST_GID` matching is a Linux/WSL2 concept — NTFS has no uid or gid to
+    match in the first place. Whether it applies depends on *where the repository is
+    cloned*, not on Windows itself:
+
+    - **Cloned inside the WSL2 filesystem** (e.g. `\\wsl$\Ubuntu\home\you\...`, not
+      `C:\...`), **built from a WSL bash shell** — WSL2 is a real Linux VM with real
+      uid/gid semantics, so this works exactly as described above; use the same command.
+    - **Cloned on the Windows filesystem** (`C:\...`, including as `/mnt/c/...` from
+      WSL) — Docker Desktop bridges that bind mount over a protocol with no uid/gid of
+      its own. Files the container writes typically show up owned by a fixed, synthetic
+      identity no matter what `HOST_UID`/`HOST_GID` is set to, and `chown` inside the
+      container does not persist. In practice this is usually *not* the blocking version
+      of the problem described above, though: Windows enforces access through the NTFS
+      permissions of the account running Docker Desktop, not the Linux-side uid, so
+      Explorer/VS Code can typically still edit or delete those files regardless of what
+      a `docker compose run --rm ontology-tools ls -la` reports.
+
+    `$(id -u)`/`$(id -g)` are bash syntax; from PowerShell, set the same build args
+    without them (the default matches the common single-account WSL2 case, uid/gid
+    `1000`, so this is only needed if your WSL2 account's ids differ from that):
+
+    ```powershell
+    $env:HOST_UID = 1000
+    $env:HOST_GID = 1000
+    docker compose build
+    ```
+
 ## Run
 
 `compose.yaml` bind-mounts the repository at `/workspace`, so edits on the host are visible
@@ -85,7 +114,8 @@ docker compose run --rm -v /absolute/path/to/my-data:/data:ro ontology-tools \
 **Files the container writes are yours, not root's — if you built with your own ids.**
 See [Build](#build) above: without `HOST_UID`/`HOST_GID` set to match your account, a
 recipe that creates something new (rather than overwriting a file already there) leaves it
-owned by uid/gid `1000` instead of you.
+owned by uid/gid `1000` instead of you. On Windows this only applies at all when the
+repository is cloned inside the WSL2 filesystem — see the Windows note under Build.
 
 **The environment lives in a named volume, not in your working tree.** `UV_PROJECT_ENVIRONMENT`
 points at `/opt/venv`, backed by a Docker volume, so a host `.venv` cannot shadow it — and a
