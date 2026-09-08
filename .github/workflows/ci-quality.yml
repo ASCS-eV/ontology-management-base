@@ -243,3 +243,35 @@ jobs:
           tool: just
       - name: Run Failing Tests
         run: just validate --run check-failing-tests ${{ needs.changes.outputs.domains }}
+
+  # --- JOB 6: Dev Container ---
+  # Nothing else in CI builds Dockerfile/compose.yaml, so the exact class of bug this
+  # file's history already hit once — a pyproject.toml force-include the image's COPY
+  # list didn't cover — could regress silently on a future dependency or artifact change.
+  # Always runs (not gated on `changes`): pyproject.toml, uv.lock and artifacts/ can all
+  # break the build, and none of those are container-specific paths to filter on.
+  dev-container:
+    name: Dev Container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Built with the runner's own ids so the ownership fix has something non-default
+      # to prove: root and uid 1000 both being valid was never in question.
+      - name: Build the image
+        run: HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose build
+      - name: Smoke test the toolchain
+        run: |
+          docker compose run --rm ontology-tools just --list
+          docker compose run --rm ontology-tools just test-domain manifest
+      - name: Files the container writes must be owned by the runner, not root
+        run: |
+          docker compose run --rm ontology-tools mkdir -p /workspace/.container-ci-check
+          owner=$(stat -c '%u:%g' .container-ci-check)
+          rm -rf .container-ci-check
+          if [ "$owner" != "$(id -u):$(id -g)" ]; then
+            echo "::error::a directory the container created is owned by $owner, not $(id -u):$(id -g)"
+            exit 1
+          fi
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
