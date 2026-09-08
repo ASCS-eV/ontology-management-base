@@ -37,6 +37,7 @@ PAV = Namespace("http://purl.org/pav/")
 
 from omb.core.constants import FAST_STORE  # noqa: E402
 from omb.core.logging import get_logger  # noqa: E402
+from omb.core.negative_fixtures import is_negative_fixture  # noqa: E402
 from omb.core.paths import builtin_data_root  # noqa: E402
 from omb.utils.file_collector import (  # noqa: E402
     collect_jsonld_files,
@@ -640,9 +641,11 @@ def discover_test_data() -> Dict[str, dict]:
             try:
                 data_idx = parts.index("data")
                 domain = parts[data_idx + 1]
-                test_type = parts[data_idx + 2]
             except (ValueError, IndexError):
                 continue
+            # A paired ``.expected`` snapshot is what makes a fixture negative, not the
+            # directory it was filed under. See ``omb.core.negative_fixtures``.
+            test_type = "invalid" if is_negative_fixture(test_file) else "valid"
             rel_path = test_file.relative_to(ROOT_DIR)
             # Normalize to forward slashes for cross-platform catalog compatibility
             rel_path_str = str(rel_path).replace("\\", "/")

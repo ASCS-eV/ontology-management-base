@@ -1,0 +1,16 @@
+*.egg-info
+.git
+.hypothesis
+.mypy_cache
+.playground
+.pytest_cache
+.ruff_cache
+.venv
+__pycache__
+build
+dist
+htmlcov
+site
+# ~300 MB of pinned standards that no COPY reads. The bind mount, not the image, is how
+# they reach the container, so shipping them to the daemon only slows the build down.
+submodules
