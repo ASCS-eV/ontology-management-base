@@ -243,3 +243,111 @@ jobs:
           tool: just
       - name: Run Failing Tests
         run: just validate --run check-failing-tests ${{ needs.changes.outputs.domains }}
+
+  # --- JOB 6: Dev Container ---
+  # Nothing else in CI builds Dockerfile/compose.yaml, so the exact class of bug this
+  # file's history already hit once — a pyproject.toml force-include the image's COPY
+  # list didn't cover — could regress silently on a future dependency or artifact change.
+  # Always runs (not gated on `changes`): pyproject.toml, uv.lock and artifacts/ can all
+  # break the build, and none of those are container-specific paths to filter on.
+  dev-container:
+    name: Dev Container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Built with the runner's own ids so the ownership fix has something non-default
+      # to prove: root and uid 1000 both being valid was never in question.
+      - name: Build the image
+        run: HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose build
+      - name: Smoke test the toolchain
+        run: |
+          docker compose run --rm ontology-tools just --list
+          docker compose run --rm ontology-tools just test-domain manifest
+      - name: Files the container writes must be owned by the runner, not root
+        run: |
+          docker compose run --rm ontology-tools mkdir -p /workspace/.container-ci-check
+          owner=$(stat -c '%u:%g' .container-ci-check)
+          rm -rf .container-ci-check
+          if [ "$owner" != "$(id -u):$(id -g)" ]; then
+            echo "::error::a directory the container created is owned by $owner, not $(id -u):$(id -g)"
+            exit 1
+          fi
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
+
+  # --- JOB 7: Dev Container on Windows, via Podman ---
+  # The job above already proves the image and every recipe work under a real Linux
+  # docker engine. WSL2 does not need a separate job to re-prove that: it runs a real
+  # Linux kernel, so `docker compose` inside WSL2 exercises the exact same code path as
+  # ubuntu-latest above — verified by hand (build, `just --list`, `just test-domain`,
+  # `pytest`, and the non-root ownership fix all behave identically under WSL2's docker.io
+  # engine). What that job cannot cover is the Windows-native path this PR's own commits
+  # added support for: no Docker Desktop (no license under it), Podman instead, and NTFS
+  # bind-mount semantics instead of a Linux filesystem's.
+  #
+  # That path was verified by hand too: `podman compose build` / `run` reproduce every
+  # recipe correctly, and the container-reports-uid-1000-but-NTFS-shows-the-real-account
+  # behaviour documented in docs/getting-started/container.md under "Windows" matches
+  # exactly — `id` inside the container says uid=1000(omb), but a directory it creates
+  # lands owned by the real Windows account with full control, never root, regardless of
+  # HOST_UID/HOST_GID.
+  #
+  # Both `podman machine init` and a real WSL2 distro need nested virtualization that
+  # GitHub-hosted windows-latest runners do not provide (confirmed: podman machine init
+  # fails there). So this only runs on a self-hosted Windows runner with WSL2 already
+  # enabled, and only on an explicit trigger — never on push/pull_request — so a repo
+  # without such a runner registered never has a job hang waiting for one.
+  dev-container-windows-podman:
+    name: Dev Container (Windows, Podman)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: [self-hosted, windows]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure Podman is available
+        shell: pwsh
+        run: |
+          if (-not (Get-Command podman -ErrorAction SilentlyContinue)) {
+            winget install --id RedHat.Podman -e --source winget --accept-source-agreements --accept-package-agreements --silent
+          }
+          podman --version
+      - name: Ensure podman-compose is available
+        shell: pwsh
+        run: |
+          if (-not (Get-Command podman-compose -ErrorAction SilentlyContinue)) {
+            python -m pip install --user podman-compose
+          }
+      - name: Start the Podman machine
+        shell: pwsh
+        run: |
+          $existing = podman machine list --format "{{.Name}}" 2>$null
+          if (-not $existing) {
+            podman machine init
+          }
+          podman machine start
+      - name: Build the image
+        shell: pwsh
+        run: podman compose build
+      - name: Smoke test the toolchain
+        shell: pwsh
+        run: |
+          podman compose run --rm ontology-tools just --list
+          podman compose run --rm ontology-tools just test-domain manifest
+      # NTFS has no uid/gid, so the Linux-side ownership assertion the ubuntu-latest job
+      # makes has no equivalent here — Windows enforces access through the NTFS
+      # permissions of the account running Podman, not the container's uid, which is
+      # exactly what docs/getting-started/container.md documents for this platform. This
+      # step only proves the write itself succeeds and is readable/removable afterwards.
+      - name: Files the container writes must be usable from the host afterwards
+        shell: pwsh
+        run: |
+          podman compose run --rm ontology-tools mkdir -p /workspace/.container-ci-check
+          if (-not (Test-Path .container-ci-check)) {
+            Write-Error "the container's write is not visible on the host bind mount"
+            exit 1
+          }
+          Remove-Item -Recurse -Force .container-ci-check
+      - name: Tear down
+        if: always()
+        shell: pwsh
+        run: podman compose down -v

@@ -71,6 +71,7 @@ nav:
   - Home: index.md
   - Start Here:
       - Install, Test, Build: getting-started/install-test-build.md
+      - Run in a Container: getting-started/container.md
       - Contribute: getting-started/contribute.md
       - Repository Layout: getting-started/repo-layout.md
   - Ontologies:

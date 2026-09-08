@@ -89,6 +89,18 @@ source .venv/bin/activate
 .venv\Scripts\activate.bat
 ```
 
+### Without Installing the Toolchain
+
+A development container carries `uv`, `just`, Python 3.12 and the dev dependencies, so no
+Python, uv or just is needed on the host:
+
+```bash
+docker compose build
+docker compose run --rm ontology-tools just --list
+```
+
+See [Run the Toolchain in a Container](https://ascs-ev.github.io/ontology-management-base/getting-started/container/).
+
 ## Validation
 
 ```bash

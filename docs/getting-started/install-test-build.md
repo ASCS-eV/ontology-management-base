@@ -9,6 +9,8 @@ This page covers the full setup flow for users and contributors.
 - **uv** ([installation guide](https://docs.astral.sh/uv/getting-started/installation/))
 - **just** ([installation packages](https://just.systems/man/en/packages.html))
 
+To avoid installing any of these, [run the toolchain in a container](container.md) instead.
+
 ## Install
 
 ```bash
