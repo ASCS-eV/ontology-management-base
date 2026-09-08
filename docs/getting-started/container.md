@@ -13,6 +13,39 @@ wheel built from `pyproject.toml`; nothing in the image takes part in that build
 - The repository cloned locally — the image supplies the environment, your working tree
   supplies the code
 
+!!! note "No Docker license? Use Podman"
+
+    Everything on this page works unchanged with [Podman](https://podman.io/) instead of
+    Docker — useful where Docker Desktop's license doesn't apply (e.g. larger companies
+    without a subscription). Verified end to end on Windows: `winget install RedHat.Podman`,
+    then `pip install podman-compose` to give `podman compose` a Compose provider (Podman
+    itself doesn't ship one). `podman machine init --now` creates the Linux VM Podman needs
+    on Windows — it uses WSL2 the same way Docker Desktop does, so the same WSL2 prerequisite
+    applies. From there, every command on this page is `podman compose` in place of
+    `docker compose`, unchanged otherwise.
+
+    On Windows specifically, `podman compose run --rm ontology-tools id` reports
+    `uid=1000(omb)` regardless of `HOST_UID`/`HOST_GID` — but a file that recipe creates
+    still lands on the NTFS side owned by your real Windows account, not root, because
+    Windows enforces access through NTFS permissions on the account running Podman rather
+    than the container's Linux-side uid (see the Windows note under Build).
+
+!!! note "WSL2 without Docker Desktop"
+
+    A third option, free of both Docker Desktop's license and Podman's extra
+    `podman-compose` dependency: install Docker Engine directly inside your WSL2 distro
+    (`sudo apt install docker.io docker-compose-v2`) instead of Docker Desktop. This is
+    plain Docker CE — Docker Desktop is the piece that needs a license, not the engine —
+    and everything on this page works unchanged from a WSL bash shell against it.
+
+    Right after installing, `docker.service` can fail to start under `systemctl` on some
+    WSL2 setups (`Job for docker.service canceled`) even though `dockerd` itself is fine —
+    observed on a fresh install here. `wsl --shutdown` from PowerShell, then reopening the
+    distro, resolves it in most cases by giving systemd a clean restart to pick up the
+    newly installed units and the `docker` group. If it still doesn't start, run
+    `sudo dockerd` in a spare terminal as a fallback — everything on this page works
+    against it identically either way.
+
 ## Build
 
 ```bash
