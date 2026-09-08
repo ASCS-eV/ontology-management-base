@@ -40,11 +40,9 @@ ENV PATH="/opt/venv/bin:${PATH}"
 WORKDIR /workspace
 
 # git is a runtime dependency, not just a build one: the validation suite and the
-# submodule-backed tests invoke it. build-essential covers dev dependencies that still
-# ship only an sdist.
+# submodule-backed tests invoke it.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        build-essential \
         curl \
         git \
     && rm -rf /var/lib/apt/lists/*
