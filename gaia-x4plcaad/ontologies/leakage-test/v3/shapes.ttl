@@ -1,0 +1,170 @@
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+leakage-test:LeakageTestShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "Each LeakageTest must have exactly one associated CodeArtifactBase (either inline or a valid manifest:Link)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:CodeArtifactBaseShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path leakage-test:hasCodeArtifact ],
+        [ sh:maxCount 1 ;
+            sh:message "Each LeakageTest must have one associated DomainSpecification with content."@en ;
+            sh:minCount 1 ;
+            sh:node leakage-test:DomainSpecificationShape ;
+            sh:path leakage-test:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each LeakageTest must have exactly one manifest."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path leakage-test:hasManifest ] ;
+    sh:targetClass leakage-test:LeakageTest .
+
+leakage-test:shapes a owl:Ontology ;
+    owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3> .
+
+leakage-test:CodingDownholderShape a sh:NodeShape ;
+    sh:property [ skos:example "1" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of setpoint failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "setpoint"@en ;
+            sh:path leakage-test:setpoint ] ;
+    sh:targetClass leakage-test:CodingDownholder .
+
+leakage-test:CodingRFIDShape a sh:NodeShape ;
+    sh:property [ skos:example "16" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of setpoint failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "setpoint"@en ;
+            sh:path leakage-test:setpoint ] ;
+    sh:targetClass leakage-test:CodingRFID .
+
+leakage-test:CodingTestAdapterShape a sh:NodeShape ;
+    sh:property [ skos:example "1" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of setpoint failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "setpoint"@en ;
+            sh:path leakage-test:setpoint ] ;
+    sh:targetClass leakage-test:CodingTestAdapter .
+
+leakage-test:ContentShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:MachineParameterShape ;
+            sh:path leakage-test:machineParameter ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:ProcessParameterShape ;
+            sh:path leakage-test:processParameter ] .
+
+leakage-test:DomainSpecificationShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "Each DomainSpecification must have one Content facet."@en ;
+            sh:minCount 1 ;
+            sh:node leakage-test:ContentShape ;
+            sh:path leakage-test:hasContent ] .
+
+leakage-test:MachineParameterShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:MaximumPressureShape ;
+            sh:path leakage-test:maximumPressure ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:MinimumPressureShape ;
+            sh:path leakage-test:minimumPressure ] ;
+    sh:targetClass leakage-test:MachineParameter .
+
+leakage-test:MaximumPressureShape a sh:NodeShape ;
+    sh:property [ skos:example "bar" ;
+            sh:datatype xsd:string ;
+            sh:in ( "bar" ) ;
+            sh:maxCount 1 ;
+            sh:message "Validation of unit failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "unit"@en ;
+            sh:path leakage-test:unit ],
+        [ skos:example "0" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of upperTolerance failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "upperTolerance"@en ;
+            sh:path leakage-test:upperTolerance ],
+        [ skos:example "2.7" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of setpoint failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "setpoint"@en ;
+            sh:path leakage-test:setpoint ],
+        [ skos:example "0" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of lowerTolerance failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "lowerTolerance"@en ;
+            sh:path leakage-test:lowerTolerance ] ;
+    sh:targetClass leakage-test:MaximumPressure .
+
+leakage-test:MinimumPressureShape a sh:NodeShape ;
+    sh:property [ skos:example "bar" ;
+            sh:datatype xsd:string ;
+            sh:in ( "bar" ) ;
+            sh:maxCount 1 ;
+            sh:message "Validation of unit failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "unit"@en ;
+            sh:path leakage-test:unit ],
+        [ skos:example "0" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of upperTolerance failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "upperTolerance"@en ;
+            sh:path leakage-test:upperTolerance ],
+        [ skos:example "0.2" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of setpoint failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "setpoint"@en ;
+            sh:path leakage-test:setpoint ],
+        [ skos:example "0" ;
+            sh:datatype xsd:float ;
+            sh:maxCount 1 ;
+            sh:message "Validation of lowerTolerance failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "lowerTolerance"@en ;
+            sh:path leakage-test:lowerTolerance ] ;
+    sh:targetClass leakage-test:MinimumPressure .
+
+leakage-test:ProcessParameterShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:CodingDownholderShape ;
+            sh:path leakage-test:codingDownholder ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:CodingTestAdapterShape ;
+            sh:path leakage-test:codingTestAdapter ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node leakage-test:CodingRFIDShape ;
+            sh:path leakage-test:codingRFID ] ;
+    sh:targetClass leakage-test:ProcessParameter .
+

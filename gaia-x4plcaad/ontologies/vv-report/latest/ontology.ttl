@@ -1,0 +1,282 @@
+@prefix vv-report: <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2> a owl:Ontology ;
+    rdfs:label "Ontology definition for vv-report"@en ;
+    rdfs:comment "An ontology with common classes to describe the structure of a verification & validation report."@en ;
+
+    dcterms:contributor [
+        a foaf:Person ;
+        foaf:name "Maurizio Ahmann" ;
+        org:memberOf <https://www.setlabs.de/> ;
+    ] , [
+        a foaf:Person ;
+        foaf:name "Carlo van Driesten" ;
+        org:memberOf <https://www.bmwgroup.com/> ;
+    ] ;
+
+    # Permanent identifier for the ontology (not version-specific)
+    dcterms:identifier <https://w3id.org/gaia-x4plcaad/ontologies/vv-report> ;
+
+    # GitHub repository where the ontology is maintained
+    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+
+    # Specific GitHub release used for publishing this version
+    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
+
+    # Versioning
+    owl:versionIRI <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2> ;
+    owl:versionInfo "v2" ;
+
+    # Imports strict dependencies
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
+
+    # Reference to SHACL validation rules
+    dcterms:conformsTo <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/shapes> ;
+
+    # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies
+    dcterms:references <https://github.com/asam-ev/qc-framework> ;
+    rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md> .
+
+
+#### Classes
+
+vv-report:VvReport a owl:Class ;
+    rdfs:label "Class definition for VvReport"@en ;
+    rdfs:comment "Attributes for a verification & validation report."@en ;
+    rdfs:subClassOf envited-x:CodeAsset .
+
+vv-report:DomainSpecification a owl:Class ;
+    rdfs:label "Class definition for DomainSpecification"@en ;
+    rdfs:comment "Domain-specific metadata extension for V&V report assets."@en ;
+    rdfs:subClassOf envited-x:DomainSpecification .
+
+vv-report:Content a owl:Class ;
+    rdfs:label "Class definition for Content"@en ;
+    rdfs:comment "Describes the content properties of a V&V report (system under test, evaluations)."@en ;
+    rdfs:subClassOf envited-x:Content .
+
+vv-report:Format a owl:Class ;
+    rdfs:label "Class definition for Format"@en ;
+    rdfs:comment "Describes the format properties of a V&V report (report format)."@en ;
+    rdfs:subClassOf envited-x:Format .
+
+vv-report:Evaluation a owl:Class ;
+    rdfs:label "Class definition for Evaluation"@en ;
+    rdfs:comment "Attributes for an evaluation element of a verification & validation report."@en .
+
+vv-report:Metric a owl:Class ;
+    rdfs:label "Class definition for Metric"@en ;
+    rdfs:comment "Attributes for the definition of a quality metric of a verification & validation report."@en .
+
+vv-report:InputData a owl:Class ;
+    rdfs:label "Class definition for InputData"@en ;
+    rdfs:comment "Attributes for the definition of an input data element of a verification & validation report."@en .
+
+vv-report:Parameter a owl:Class ;
+    rdfs:label "Class definition for Parameter"@en ;
+    rdfs:comment "Attributes for the definition of parameter element of a verification & validation report."@en .
+
+vv-report:Result a owl:Class ;
+    rdfs:label "Class definition for Result"@en ;
+    rdfs:comment "Attributes for evaluation results of a verification & validation report."@en .
+
+vv-report:ResultVerification a owl:Class ;
+    rdfs:label "Class definition for ResultVerification"@en ;
+    rdfs:comment "Attributes for the verification of the result by a third party of a verification & validation report."@en .
+
+
+#### Object Properties
+
+### hasCodeArtifact (VvReport -> envited-x:CodeArtifactBase)
+vv-report:hasCodeArtifact a owl:ObjectProperty ;
+    rdfs:label "Object property: hasCodeArtifact"@en ;
+    rdfs:comment "Links a V&V report to its GX-compliant CodeArtifactBase."@en ;
+    rdfs:subPropertyOf envited-x:hasCodeArtifact ;
+    rdfs:domain vv-report:VvReport ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf ( envited-x:CodeArtifactBase manifest:Link )
+    ] .
+
+### hasDomainSpecification (VvReport -> DomainSpecification)
+vv-report:hasDomainSpecification a owl:ObjectProperty ;
+    rdfs:label "Object property: hasDomainSpecification"@en ;
+    rdfs:comment "Links a V&V report to its domain-specific metadata."@en ;
+    rdfs:subPropertyOf envited-x:hasDomainSpecification ;
+    rdfs:domain vv-report:VvReport ;
+    rdfs:range vv-report:DomainSpecification .
+
+### hasManifest (VvReport -> envited-x:Manifest or manifest:Link)
+vv-report:hasManifest a owl:ObjectProperty ;
+    rdfs:label "Object property: hasManifest"@en ;
+    rdfs:comment """Links a V&V report to its manifest.
+                The value can be either:
+                - an inline envited-x:Manifest node, or
+                - a manifest:Link node."""@en ;
+    rdfs:subPropertyOf envited-x:hasManifest ;
+    rdfs:domain vv-report:VvReport ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf ( envited-x:Manifest manifest:Link )
+    ] .
+
+### hasContent (DomainSpecification -> Content)
+vv-report:hasContent a owl:ObjectProperty ;
+    rdfs:label "Object property: hasContent"@en ;
+    rdfs:comment "Links a DomainSpecification to its Content facet."@en ;
+    rdfs:subPropertyOf envited-x:hasContent ;
+    rdfs:domain vv-report:DomainSpecification ;
+    rdfs:range vv-report:Content .
+
+### hasFormat (DomainSpecification -> Format)
+vv-report:hasFormat a owl:ObjectProperty ;
+    rdfs:label "Object property: hasFormat"@en ;
+    rdfs:comment "Links a DomainSpecification to its Format facet."@en ;
+    rdfs:subPropertyOf envited-x:hasFormat ;
+    rdfs:domain vv-report:DomainSpecification ;
+    rdfs:range vv-report:Format .
+
+### Format-level properties
+
+vv-report:reportFormat a owl:DatatypeProperty ;
+    rdfs:label "report format"@en ;
+    rdfs:comment "The format or standard used for the V&V report."@en ;
+    rdfs:domain vv-report:Format ;
+    rdfs:range xsd:string .
+
+### Content-level properties
+
+vv-report:systemUnderTest a owl:DatatypeProperty ;
+    rdfs:label "system under test"@en ;
+    rdfs:comment "Uniform Resource Identifier (URI) to identify the tested artifact."@en ;
+    rdfs:domain vv-report:Content ;
+    rdfs:range xsd:anyURI .
+
+vv-report:evaluations a owl:ObjectProperty ;
+    rdfs:label "evaluations"@en ;
+    rdfs:comment "A list of all measures carried out on the subject under test."@en ;
+    rdfs:domain vv-report:Content ;
+    rdfs:range vv-report:Evaluation .
+
+### Evaluation-level properties
+
+vv-report:metric a owl:ObjectProperty ;
+    rdfs:label "metric"@en ;
+    rdfs:comment "The definition of the quality metric that has been used in this evaluation item."@en ;
+    rdfs:domain vv-report:Evaluation ;
+    rdfs:range vv-report:Metric .
+
+vv-report:inputData a owl:ObjectProperty ;
+    rdfs:label "input data"@en ;
+    rdfs:comment "The definition of a dataset that has been used as input to the quality metric."@en ;
+    rdfs:domain vv-report:Evaluation ;
+    rdfs:range vv-report:InputData .
+
+vv-report:parameters a owl:ObjectProperty ;
+    rdfs:label "parameters"@en ;
+    rdfs:comment "A list of parameters that have been used to configure the quality metric and/or quality criterion."@en ;
+    rdfs:domain vv-report:Evaluation ;
+    rdfs:range vv-report:Parameter .
+
+vv-report:result a owl:ObjectProperty ;
+    rdfs:label "result"@en ;
+    rdfs:comment "The summary of the result of this evaluation item."@en ;
+    rdfs:domain vv-report:Evaluation ;
+    rdfs:range vv-report:Result .
+
+vv-report:conceptSpecificData a owl:ObjectProperty ;
+    rdfs:label "concept specific data"@en ;
+    rdfs:comment "Additional arbitrary V&V-concept specific data, to further describe the evaluation."@en ;
+    rdfs:domain vv-report:Evaluation .
+
+vv-report:metricTitle a owl:DatatypeProperty ;
+    rdfs:label "metric title"@en ;
+    rdfs:comment "A meaningful name of this metric."@en ;
+    rdfs:domain vv-report:Metric ;
+    rdfs:range xsd:string .
+
+vv-report:metricDescription a owl:DatatypeProperty ;
+    rdfs:label "metric description"@en ;
+    rdfs:comment "A short description of what is tested within this quality metric."@en ;
+    rdfs:domain vv-report:Metric ;
+    rdfs:range xsd:string .
+
+vv-report:metricReference a owl:DatatypeProperty ;
+    rdfs:label "metric reference"@en ;
+    rdfs:comment "URI to identify the metric."@en ;
+    rdfs:domain vv-report:Metric ;
+    rdfs:range xsd:anyURI .
+
+vv-report:inputDescription a owl:DatatypeProperty ;
+    rdfs:label "input description"@en ;
+    rdfs:comment "A short description for interpreting this input data element."@en ;
+    rdfs:domain vv-report:InputData ;
+    rdfs:range xsd:string .
+
+vv-report:inputReference a owl:DatatypeProperty ;
+    rdfs:label "input reference"@en ;
+    rdfs:comment "URI to identify the utilized input data element."@en ;
+    rdfs:domain vv-report:InputData ;
+    rdfs:range xsd:anyURI .
+
+vv-report:parameterName a owl:DatatypeProperty ;
+    rdfs:label "parameter name"@en ;
+    rdfs:comment "The formal name of the parameter."@en ;
+    rdfs:domain vv-report:Parameter ;
+    rdfs:range xsd:string .
+
+vv-report:parameterDescription a owl:DatatypeProperty ;
+    rdfs:label "parameter description"@en ;
+    rdfs:comment "A short description of the parameter."@en ;
+    rdfs:domain vv-report:Parameter ;
+    rdfs:range xsd:string .
+
+vv-report:parameterValue a owl:DatatypeProperty ;
+    rdfs:label "parameter value"@en ;
+    rdfs:comment "The value of the parameter."@en ;
+    rdfs:domain vv-report:Parameter .
+
+vv-report:resultTestPassed a owl:DatatypeProperty ;
+    rdfs:label "result test passed"@en ;
+    rdfs:comment "Statement if the test has been passed or not."@en ;
+    rdfs:domain vv-report:Result ;
+    rdfs:range xsd:boolean .
+
+vv-report:resultLog a owl:DatatypeProperty ;
+    rdfs:label "result log"@en ;
+    rdfs:comment "Additional information about the test result."@en ;
+    rdfs:domain vv-report:Result ;
+    rdfs:range xsd:string .
+
+vv-report:resultVerifiable a owl:DatatypeProperty ;
+    rdfs:label "result verifiable"@en ;
+    rdfs:comment "Information if the result can be verified by a third party."@en ;
+    rdfs:domain vv-report:Result ;
+    rdfs:range xsd:boolean .
+
+vv-report:resultVerification a owl:ObjectProperty ;
+    rdfs:label "result verification"@en ;
+    rdfs:comment "The necessary attributes to carry out verification of the result by a third party."@en ;
+    rdfs:domain vv-report:Result ;
+    rdfs:range vv-report:ResultVerification .
+
+vv-report:resultVerificationDescription a owl:DatatypeProperty ;
+    rdfs:label "result verification description"@en ;
+    rdfs:comment "A short description of how the result can be verified."@en ;
+    rdfs:domain vv-report:ResultVerification ;
+    rdfs:range xsd:string .
+
+vv-report:resultVerificationReference a owl:DatatypeProperty ;
+    rdfs:label "result verification reference"@en ;
+    rdfs:comment "URI to identify the reference used to verify the result."@en ;
+    rdfs:domain vv-report:ResultVerification ;
+    rdfs:range xsd:anyURI .
