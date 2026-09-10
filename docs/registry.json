@@ -151,11 +151,11 @@
       "gx": {
          "namespace": "gaia-x",
          "iri": "https://w3id.org/gaia-x/development#",
-         "latest": "v2.2.1",
+         "latest": "v2.5.0",
          "versions": {
-            "v2.2.1": {
+            "v2.5.0": {
                "releaseTag": "v0.4.0",
-               "versionInfo": "v2.2.1",
+               "versionInfo": "v2.5.0",
                "versionIri": "https://w3id.org/gaia-x/development#",
                "files": {
                   "ontology": "artifacts/gx/gx.owl.ttl",

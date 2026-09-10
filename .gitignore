@@ -28,3 +28,6 @@ htmlcov/
 # Reference documentation (local only)
 .reference/
 /omb/data/
+
+# Local planning notes (not part of the repository)
+plans/

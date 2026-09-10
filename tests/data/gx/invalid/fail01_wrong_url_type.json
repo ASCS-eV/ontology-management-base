@@ -11,23 +11,11 @@
       {
          "@id": "did:web:test.gx.net:DataProduct:test_invalid_fail01_wrong_url_type",
          "@type": "gx:DataProduct",
-         "description": "Invalid: gx:url uses xsd:string instead of xsd:anyURI.",
-         "gx:digitalServiceOfferingName": "Invalid URL Type Test",
-         "gx:digitalServiceOfferingShortDescription": "Tests wrong datatype on gx:url.",
-         "gx:digitalServiceOfferingIdentifier": "gx-invalid-url-001",
-         "gx:digitalServiceOfferingLaunchDate": "2025-03-28T12:29:44Z",
-         "gx:digitalServiceOfferingProvider": {
+         "description": "Invalid: gx:url carries a literal instead of an IRI. Two distinct cases: a well-formed URL typed xsd:string (wrong datatype) on gx:legalDocuments, and a malformed value typed xsd:anyURI on gx:usageTermsAndConditions.",
+         "gx:providedBy": {
             "@id": "did:web:test.fixture.net:LegalPerson:test_gx_legalperson_reference"
          },
-         "gx:digitalServiceOfferingTermsAndConditions": {
-            "@type": "gx:ServiceTermsAndConditions",
-            "gx:url": {
-               "@value": "https://example.org/gx/provider-terms",
-               "@type": "xsd:string"
-            },
-            "gx:hash": "8acc4f464f2fbf0b104410f5f9d203df707810a162d4f5d72fcb0aa94af6c8fb"
-         },
-         "gx:digitalServiceUsageTermsAndConditions": {
+         "gx:usageTermsAndConditions": {
             "@type": "gx:UsageTermsAndConditions",
             "gx:url": {
                "@value": "not-a-valid-uri",
@@ -35,14 +23,15 @@
             },
             "gx:hash": "c286ea0f5f0dbf378d8a72f126407fdf2d772316147f5f6a8f6ae6ce3c73b36c"
          },
-         "gx:digitalServiceUsageDataPolicy": {
-            "@type": "gx:TermsAndConditions",
-            "gx:url": {
-               "@value": "https://example.org/gx/data-policy",
-               "@type": "xsd:anyURI"
-            },
-            "gx:hash": "2ca8e2abf27608d70590436c9da8bb8286a99d94f356dfefb2b8baadce2b009c"
-         },
+         "gx:legalDocuments": [
+            {
+               "@type": "gx:LegalDocument",
+               "gx:url": {
+                  "@value": "https://example.org/gx/provider-terms",
+                  "@type": "xsd:string"
+               }
+            }
+         ],
          "gx:dataProductDescription": {
             "@type": "gx:DataProductDescription",
             "dcat:Dataset": "urn:uuid:gx-data-product-dataset",
