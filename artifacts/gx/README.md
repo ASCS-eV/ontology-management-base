@@ -4,7 +4,7 @@
 
 ## Overview
 
-This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (version 25.11+fix.5).
+This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (version 2.5.0).
 
 - The **Gaia-X model** (ontology) defines concepts for the Gaia-X Trust Framework including Participants, Services, Credentials, and Compliance.
 - The **SHACL shapes** automatically verify that Gaia-X instances conform to the Trust Framework specifications.
@@ -12,17 +12,17 @@ This folder contains the **Gaia-X Trust Framework ontology and SHACL shapes** (v
 - The **VERSION file** in this directory tracks the Gaia-X release label used in OMB tooling and documentation.
 - The **UPSTREAM_REF** and **UPSTREAM_COMMIT** files record the exact `service-characteristics` checkout used to generate the copied artifacts.
 
-### Current Version: 25.11+fix.5
+### Current Version: 2.5.0
 
-This version is based on the official **25.11 release** with the following additional fixes:
+This is a **clean upstream release** (`v2.5.0`) taken directly from the canonical
+Gaia-X repository — there are no downstream patches applied.
 
-- **Commit eea7ae71**: Fix double hash fragments in IRIs (fixes enum IRI generation)
-- **Commit 32394e25**: fix(linkml): rename httpsschema using LinkML-compatible schema URI
-- **Commit 33e9e75c**: fix(ci): use patched LinkML for correct any_of type coercion
-- **Commit 74e03101**: fix(linkml): rename waterUsageEffectiveness value slot to avoid collision
-- **Commit bfb9c620**: chore: switch to ASCS-eV/linkml.git@main
+Fixes previously carried on an ASCS fork (double hash fragments in enum IRIs,
+the `httpsschema` → `schema` prefix rename, `any_of` type coercion, and the
+`waterUsageEffectiveness` slot collision) have all landed upstream and are
+included in `v2.5.0`.
 
-The `+fix.5` suffix indicates this is a post-release patch on top of 25.11. When the upstream releases a later version that includes these fixes, we will update to the official release tag.
+See [VERSIONING.md](VERSIONING.md) for the full versioning scheme and provenance details.
 
 ## IRI Notes (Enum Values)
 
@@ -54,10 +54,10 @@ keeps IRIs valid.
 - **`gx.shacl.ttl`** – SHACL validation shapes for Gaia-X instances.
 - **`gx.context.jsonld`** – JSON-LD context for GX terms.
 - **`PROPERTIES.md`** – An auto-generated summary of SHACL properties.
-- **`VERSION`** – Current Gaia-X release label (e.g., `25.11+fix.5`).
+- **`VERSION`** – Current Gaia-X release label (e.g., `2.5.0`).
 - **`UPSTREAM_REF`** – Human-readable `service-characteristics` ref used for generation.
 - **`UPSTREAM_COMMIT`** – Exact `service-characteristics` commit used for generation.
-- **`VERSIONING.md`** – Detailed versioning scheme and post-release patch documentation.
+- **`VERSIONING.md`** – Versioning scheme and upstream provenance documentation.
 - **`README.md`** – This readme file.
 - **`update-from-submodule.sh`** – Helper script to rebuild and sync artifacts from the submodule.
 - **`verify-version.sh`** – Verify recorded upstream provenance matches the submodule checkout.
@@ -69,7 +69,7 @@ keeps IRIs valid.
 The core Gaia-X ontologies are maintained in an upstream GitLab repository:
 
 - **Upstream Source:** [Gaia-X Service Characteristics](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics)
-- **Current Gaia-X Label:** `25.11+fix.5`
+- **Current Gaia-X Label:** `2.5.0`
 - **Submodule Location:** `submodules/service-characteristics`
 
 > **Note:** The `gx/` directory contains copies of the ontology and shapes for local examples and validation. The actual submodule is located at `submodules/service-characteristics`.
@@ -83,6 +83,16 @@ If you haven't already initialized the Gaia-X submodule, run:
 ```bash
 git submodule update --init --recursive
 ```
+
+> **Existing clones:** the submodule URL was repointed from the former ASCS-eV
+> mirror to the canonical upstream repository. `.gitmodules` is only read at
+> init time, so an already-initialized clone keeps the old URL in `.git/config`
+> and will fail to fetch new release tags. Run this once after pulling:
+>
+> ```bash
+> git submodule sync --recursive
+> git submodule update --init --recursive
+> ```
 
 To inspect the current submodule checkout:
 
@@ -118,7 +128,7 @@ From the ontology-management-base root, run:
 ```bash
 just generate-gx
 # OR
-just generate-gx 25.12
+just generate-gx v2.6.0
 ```
 
 This command invokes `artifacts/gx/update-from-submodule.sh`, which will:
@@ -134,7 +144,7 @@ You can still run the helper script directly if needed:
 
 ```bash
 cd artifacts/gx
-./update-from-submodule.sh 25.12
+./update-from-submodule.sh v2.6.0
 ./update-from-submodule.sh
 ```
 
@@ -151,7 +161,7 @@ When a new version of Gaia-X is released:
 2. Check out the new version tag:
 
    ```bash
-   git checkout <new-tag>  # e.g., git checkout 25.12
+   git checkout <new-tag>  # e.g., git checkout v2.6.0
    ```
 
 3. Rebuild the upstream artifacts:
@@ -174,7 +184,7 @@ When a new version of Gaia-X is released:
 5. **Update the VERSION file** to match the new Gaia-X release label:
 
    ```bash
-   echo "25.12" > artifacts/gx/VERSION
+   echo "2.6.0" > artifacts/gx/VERSION
    ```
 
 6. Record the exact upstream provenance:
@@ -190,7 +200,7 @@ When a new version of Gaia-X is released:
    python3 -m omb.utils.registry_updater
    python3 -m omb.utils.properties_updater
    git add artifacts/gx/ submodules/service-characteristics
-   git commit -m "chore(gx): upgrade Gaia-X to 25.12"
+   git commit -m "chore(gx): upgrade Gaia-X to 2.6.0"
    ```
 
 ### Verify version sync

@@ -11,11 +11,11 @@ schema:name rdfs:subPropertyOf rdfs:label .
 ```
 
 This triple has been **commented out** in our local copy. The reason is an
-interaction between RDFS inference and Gaia-X 25.11 closed SHACL shapes.
+interaction between RDFS inference and Gaia-X closed SHACL shapes.
 
 ### The problem
 
-1. GX 25.11 shapes like `gx:SoftwareResourceShape` and `gx:ServiceOfferingShape`
+1. GX shapes like `gx:SoftwareResourceShape` and `gx:ServiceOfferingShape`
    use `sh:closed true`, which rejects any property not explicitly listed.
 2. These shapes explicitly allow `schema:name` via `sh:path schema:name`.
 3. However, `sh:ignoredProperties` does **not** include `rdfs:label`.

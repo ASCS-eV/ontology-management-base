@@ -95,7 +95,7 @@ generate-gx gx_ref="":
         exit 1
     fi
     {{run}} bash "{{GX_UPDATE_SCRIPT}}" {{gx_ref}}
-    @echo "[OK] Gaia-X artifacts refreshed"
+    echo "[OK] Gaia-X artifacts refreshed"
 
 # ===== Validation suite =====
 

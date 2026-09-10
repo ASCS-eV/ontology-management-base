@@ -2,89 +2,115 @@
 
 This document explains how Gaia-X versions are tracked in this repository.
 
+## Source of Truth
+
+The `gx` artifacts are generated from the `service-characteristics` submodule,
+which is pinned to the **canonical upstream Gaia-X repository**:
+
+- **Submodule URL**: https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics
+- **Submodule path**: `submodules/service-characteristics`
+
+ASCS e.V. has write access upstream, so fixes are contributed directly to the
+upstream project rather than carried on a fork. There is no downstream patch
+queue to maintain.
+
 ## Version Format
 
-The `VERSION` file uses semantic-like versioning with post-release patches:
+`artifacts/gx/VERSION` is the Gaia-X release label used in OMB docs. It is
+written automatically by `update-from-submodule.sh` from the submodule's git
+state:
 
+| Submodule state | `VERSION` format | Example |
+| --- | --- | --- |
+| On an exact release tag | leading `v` stripped, then truncated at the first `-` | `v2.5.0` → `2.5.0` |
+| Ahead of a release tag | `<base>-ascs.<N>` | `2.5.0-ascs.3` |
+| No reachable tag / unparsable `git describe` | previous `VERSION` is kept unchanged | — |
+
+The `-ascs.<N>` form means "N commits beyond upstream tag `v<base>`" and only
+appears when the submodule is deliberately pinned to an unreleased commit —
+for example while a contributed fix is awaiting an upstream release.
+
+> **Caution:** because the exact-tag branch truncates at the first `-`, a
+> prerelease tag such as `v2.0.1-develop.13` yields `VERSION=2.0.1`, which is
+> indistinguishable from the real `v2.0.1` release. `VERSION` propagates into
+> `owl:versionInfo` and the generated docs paths, so pin to final release tags
+> unless you have a specific reason not to. `UPSTREAM_REF` always records the
+> unambiguous ref.
+
+Exact provenance is always stored separately, regardless of format:
+
+- `UPSTREAM_REF` — output of `git describe --tags --always --dirty`
+  (e.g. `v2.5.0`, or `v2.5.0-dirty` for a modified submodule working tree)
+- `UPSTREAM_COMMIT` — full submodule commit SHA
+
+> **Caution:** `verify-version.sh` compares only `UPSTREAM_COMMIT` against
+> `git rev-parse HEAD`. A submodule with uncommitted local modifications still
+> verifies as matching, even though the generated artifacts do not correspond
+> to the recorded commit. Check `UPSTREAM_REF` for a `-dirty` suffix.
+
+`update-from-submodule.sh` also embeds `owl:versionInfo` and an `rdfs:comment`
+into `gx.owl.ttl` so downstream consumers can identify the profile.
+
+## Current Version: 2.5.0
+
+- **Upstream Tag**: `v2.5.0`
+- **Commit**: [6316558](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics/-/commit/6316558730e897de5945ab3eb1bce0455712240f)
+- **Post-release fixes**: none — this is a clean upstream release
+
+### Previously Carried Fixes (now upstream)
+
+These fixes were maintained downstream on an ASCS fork prior to `v2.5.0` and
+are included in the upstream release. They are listed for historical context
+only; no action is required.
+
+| Fix | Description | Status |
+| --- | --- | --- |
+| Double hash fragment (`c41d423`) | Fixed enum IRI generation producing `...development##Value` instead of `...development#/Value` | Upstream |
+| schema.org prefix (`711b6d4`) | Replaced non-standard `httpsschema` prefix with `schema` / `https://schema.org/` for `linkml:types` compatibility | Upstream |
+
+## Updating to a New Upstream Release
+
+```bash
+# 1. Ensure your local clone points at the canonical upstream
+git submodule sync --recursive
+
+# 2. Check out the new tag
+cd submodules/service-characteristics
+git fetch --tags origin
+git checkout v2.6.0
+cd ../..
+
+# 3. Regenerate artifacts and provenance files
+just generate-gx
+
+# 4. Regenerate catalogs and docs
+just registry-update
+just docs-generate
+
+# 5. Validate
+just validate --domain gx
 ```
-<upstream-version>[+fix.<N>]
-```
 
-Examples:
-
-- `25.11` - Official 25.11 release label
-- `25.11+fix.1` - Official 25.11 plus one additional fix commit
-- `25.11+fix.5` - Official 25.11 plus two additional fix commits
-
-The `VERSION` file is the Gaia-X release label used in OMB docs. Exact
-`service-characteristics` provenance is stored separately in `UPSTREAM_REF`
-and `UPSTREAM_COMMIT`.
-
-## Current Version: 25.11+fix.5
-
-### Base Version
-
-- **Upstream Tag**: 25.11
-- **Submodule URL**: https://gitlab.com/ascs-ev/service-characteristics
-- **Tag Commit**: 3051644
-
-### Post-Release Fixes
-
-#### +fix.1: Double Hash Fragment Fix (c41d423)
-
-- **Commit**: [c41d4230](https://gitlab.com/ascs-ev/service-characteristics/-/commit/c41d4230bded3b362cf57e7ff190eba59dd1078e)
-- **Branch**: fix/envited-ontologies
-- **Author**: Carlo van Driesten
-- **Date**: 2026-02-06
-- **Description**: Fixes enum IRI generation to avoid double hash fragments
-- **Files Changed**: `merge_schemas.sh`
-- **Reason**: Critical fix for OWL enum IRI generation that was causing invalid IRIs like `https://w3id.org/gaia-x/development##Value` instead of `https://w3id.org/gaia-x/development#/Value`
-
-#### +fix.5: LinkML-Compatible schema.org Prefix Fix (711b6d4)
-
-- **Commit**: [711b6d4](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics/-/commit/711b6d4aee19667f7c6ed8b3a33ab0444d3c4c68)
-- **Branch**: fix/354-rename-httpsschema-prefix
-- **Description**: Replaces the non-standard `httpsschema` prefix with `schema` and uses `https://schema.org/` to remain compatible with `linkml:types`
-- **Reason**: Prevents LinkML prefix merge failures while keeping the generated Gaia-X artifacts aligned with the upstream build pipeline
-
-### Why Post-Release Patches?
-
-We use post-release patches when:
-
-1. An upstream bug affects our use case
-2. We contribute a fix but the next upstream release isn't available yet
-3. We need the fix immediately for development/testing
-
-Once the upstream releases a new version that includes these fixes, we update to that official release.
+If the upstream release changes the schema, instance fixtures in
+`tests/data/gx/` may need migrating, and `.expected` snapshots re-recorded
+with `just validate --domain gx --update-expected`.
 
 ## Verification
 
-Check if recorded upstream provenance matches the submodule:
+Check that the recorded upstream provenance matches the submodule:
 
 ```bash
 ./verify-version.sh
 ```
 
-Expected output for synchronized post-release patches:
+Expected output:
 
 ```
 ✓ Upstream metadata matches the checked-out submodule.
 ```
 
-## Migration Path
-
-When upstream releases 25.12 (or later) that includes these fixes:
-
-1. Check out the new tag: `cd submodules/service-characteristics && git checkout 25.12`
-2. Update artifacts: `./update-from-submodule.sh 25.12`
-3. Update VERSION: `echo "25.12" > VERSION` (remove +fix suffix)
-4. Refresh provenance files by running `just generate-gx`
-5. Update README.md to remove the "Post-release fixes" section
-6. Regenerate docs and commit
-
 ## References
 
-- [Submodule Repository](https://gitlab.com/ascs-ev/service-characteristics)
-- [Fix Commit (+fix.1)](https://gitlab.com/ascs-ev/service-characteristics/-/commit/c41d4230bded3b362cf57e7ff190eba59dd1078e)
-- [Fix Commit (+fix.5)](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics/-/commit/711b6d4aee19667f7c6ed8b3a33ab0444d3c4c68)
+- [Upstream Repository](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics)
+- [Upstream Release v2.5.0](https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics/-/tree/v2.5.0)
 - [artifacts/gx/README.md](README.md) - General GX documentation

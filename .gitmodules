@@ -1,7 +1,6 @@
 [submodule "submodules/service-characteristics"]
 	path = submodules/service-characteristics
-	url = https://gitlab.com/ascs-ev/service-characteristics.git
-	branch = develop
+	url = https://gitlab.com/gaia-x/technical-committee/service-characteristics-working-group/service-characteristics.git
 [submodule "submodules/w3id.org"]
 	path = submodules/w3id.org
 	url = https://github.com/ASCS-eV/w3id.org.git
