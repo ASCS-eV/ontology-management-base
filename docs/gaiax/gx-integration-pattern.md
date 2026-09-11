@@ -1,10 +1,10 @@
 # GX Integration Pattern
 
-How ENVITED-X domain ontologies integrate with Gaia-X 25.11 while preserving semantic precision.
+How ENVITED-X domain ontologies integrate with Gaia-X 2.5.0 while preserving semantic precision.
 
 ## The `sh:closed` Problem
 
-Gaia-X 25.11 removed `gx:DataResource` and `gx:DataExchangeComponent`. The remaining class hierarchy imposes a critical SHACL constraint: several key GX types use `sh:closed true`, which rejects any property not explicitly listed in the shape.
+Gaia-X removed `gx:DataResource` and `gx:DataExchangeComponent` in the 25.11 release. The remaining class hierarchy imposes a critical SHACL constraint: several key GX types use `sh:closed true`, which rejects any property not explicitly listed in the shape.
 
 ```
 gx:VirtualResource         sh:closed false   ← ONLY open class

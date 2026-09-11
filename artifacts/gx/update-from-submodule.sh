@@ -101,10 +101,12 @@ generate_and_merge(
 )
 print('    OWL done')
 
-# JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top)
+# JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top).
+# --no-metadata omits the 'comments' block (generation_date is a live timestamp that
+# would otherwise make this artifact non-reproducible across runs).
 import subprocess
 result = subprocess.run(
-    ['gen-jsonld-context', '--deterministic', '--normalize-prefixes', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
+    ['gen-jsonld-context', '--deterministic', '--normalize-prefixes', '--no-metadata', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
     capture_output=True, text=True,
 )
 if result.returncode != 0:
@@ -161,6 +163,15 @@ fi
 # ---------------------------------------------------------------------------
 echo "Annotating OWL ontology with provenance metadata..."
 GX_VERSION=$(tr -d '[:space:]' < "$VERSION_FILE" 2>/dev/null || echo "unknown")
+# MSYS_NO_PATHCONV disables bash's automatic Unix->Windows path conversion for
+# this whole script (needed above to protect the literal "/" CLI arg), but the
+# path below is a real filesystem path that the native (non-MSYS) venv python.exe
+# must receive in Windows form. Convert it explicitly via cygpath when available;
+# on Linux/macOS the Unix-style path is already correct as-is.
+ANNOTATE_OWL_PATH="$ARTIFACTS_DIR/gx.owl.ttl"
+if command -v cygpath >/dev/null 2>&1; then
+    ANNOTATE_OWL_PATH="$(cygpath -w "$ANNOTATE_OWL_PATH")"
+fi
 python -c "
 import sys
 from pathlib import Path
@@ -189,7 +200,7 @@ g.add((ont, RDFS.comment, Literal(
 
 owl_path.write_text(deterministic_turtle(g), encoding='utf-8', newline='\n')
 print('  OWL provenance annotation added')
-" "$ARTIFACTS_DIR/gx.owl.ttl" "$GX_VERSION" 2>>"$GX_LOG"
+" "$ANNOTATE_OWL_PATH" "$GX_VERSION" 2>>"$GX_LOG"
 
 echo ""
 echo "✓ GX artifacts updated from $(git rev-parse --short HEAD)"

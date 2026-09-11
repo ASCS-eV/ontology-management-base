@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Central repository for **Gaia-X 25.11 compliant ontologies** for the ENVITED-X Ecosystem, maintained by ASCS e.V. Provides OWL ontology definitions, SHACL validation shapes, JSON-LD context files, and a Python validation suite.
+Central repository for **Gaia-X 2.5.0 compliant ontologies** for the ENVITED-X Ecosystem, maintained by ASCS e.V. Provides OWL ontology definitions, SHACL validation shapes, JSON-LD context files, and a Python validation suite.
 
 Forked from [GAIA-X4PLC-AAD/ontology-management-base](https://github.com/GAIA-X4PLC-AAD/ontology-management-base) (archived after `v0.1.0`). This is the active development home.
 
