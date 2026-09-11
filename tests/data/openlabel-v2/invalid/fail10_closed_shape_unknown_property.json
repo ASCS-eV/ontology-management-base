@@ -1,15 +1,8 @@
 {
-   "@context": [
-      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      {
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "https://schema.org/"
-      }
-   ],
+   "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
    "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail10_closed_shape",
    "@type": "Tag",
    "AdminTag": {
-      "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
       "ownerEmail": "contact@bmw.de",
       "ownerName": "BMW AG",
@@ -26,7 +19,6 @@
       "inventedProperty": "should not be allowed"
    },
    "Odd": {
-      "@type": "Odd",
       "WeatherWind": true,
       "weatherWindValue": 5.0,
       "unknownOddProperty": "this should fail on closed shape"

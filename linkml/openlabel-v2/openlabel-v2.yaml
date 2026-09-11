@@ -956,6 +956,179 @@ classes:
       - hasLowerBound
       - hasUpperBound
 
+  # ---------------------------------------------------------------------------
+  # Tagging category nodes — intermediate ASAM OpenLABEL v1 tag classes.
+  # These make the hierarchy's mid-level tags (e.g. SceneryJunction,
+  # EnvironmentWeather) usable as tag.type values, matching the ASAM v1
+  # scenario tagging ontology. Leaf flags/values remain modelled as slots.
+  # ---------------------------------------------------------------------------
+  BehaviourMotion:
+    description: An activity in which the road user changes position, velocity or direction.
+    comments:
+      - "ISO 34504:2023, 4.4.4 (Tags for a dynamic entity — longitudinal, lateral, and mixed actions)"
+    aliases:
+      - "Motion"
+    notes:
+      - "v1 label: \"Motion\"; v1 had no normative reference and was attributed solely to ASAM OpenLABEL. ISO 34504:2023 Section 4.4.4 defines the same motion/action taxonomy."
+    see_also:
+      - https://www.iso.org/standard/78953.html
+    is_a: Behaviour
+    class_uri: openlabel_v2:BehaviourMotion
+
+  SceneryJunction:
+    description: Junctions present in the scenery.
+    comments:
+      - "ISO 34503:2023, 9.4"
+    aliases:
+      - "Junctions"
+    notes:
+      - "v1 label: \"Junctions\" (PAS 1883:2020, Section 5.2.1.c)."
+    is_a: OddScenery
+    class_uri: openlabel_v2:SceneryJunction
+
+  SceneryDrivableArea:
+    description: Drivable area of the scenery.
+    comments:
+      - "ISO 34503:2023, 9.3"
+    aliases:
+      - "Drivable area"
+    notes:
+      - "v1 label: \"Drivable area\" (PAS 1883:2020, Section 5.2.1.b)."
+    is_a: OddScenery
+    class_uri: openlabel_v2:SceneryDrivableArea
+
+  EnvironmentWeather:
+    description: Weather conditions.
+    comments:
+      - "ISO 34503:2023, 10.2"
+    aliases:
+      - "Weather"
+    notes:
+      - "v1 label: \"Weather\" (PAS 1883:2020, Section 5.3.1)."
+    is_a: OddEnvironment
+    class_uri: openlabel_v2:EnvironmentWeather
+
+  EnvironmentIllumination:
+    description: Illumination conditions.
+    comments:
+      - "ISO 34503:2023, 10.4"
+    aliases:
+      - "Illumination"
+    notes:
+      - "v1 label: \"Illumination\" (PAS 1883:2020, Section 5.3.3)."
+    is_a: OddEnvironment
+    class_uri: openlabel_v2:EnvironmentIllumination
+
+  EnvironmentConnectivity:
+    description: Connectivity conditions.
+    comments:
+      - "ISO 34503:2023, 10.5"
+    aliases:
+      - "Connectivity"
+    notes:
+      - "v1 label: \"Connectivity\" (PAS 1883:2020, Section 5.3.4)."
+    is_a: OddEnvironment
+    class_uri: openlabel_v2:EnvironmentConnectivity
+
+  DynamicElementsTraffic:
+    description: Traffic dynamic elements.
+    comments:
+      - "ISO 34503:2023, 11.1"
+    aliases:
+      - "Traffic"
+    notes:
+      - "v1 label: \"Traffic\" (PAS 1883:2020, Section 5.4.a)."
+    is_a: OddDynamicElements
+    class_uri: openlabel_v2:DynamicElementsTraffic
+
+  DynamicElementsSubjectVehicle:
+    description: Subject vehicle dynamic element.
+    comments:
+      - "ISO 34503:2023, 11.2"
+    aliases:
+      - "Subject vehicle"
+    notes:
+      - "v1 label: \"Subject vehicle\" (PAS 1883:2020, Section 5.4.b)."
+    is_a: OddDynamicElements
+    class_uri: openlabel_v2:DynamicElementsSubjectVehicle
+
+  DrivableAreaGeometry:
+    description: Drivable area geometry.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Drivable area geometry"
+    notes:
+      - "v1 label: \"Drivable area geometry\" (PAS 1883:2020, Section 5.2.3.3)."
+    is_a: SceneryDrivableArea
+    class_uri: openlabel_v2:DrivableAreaGeometry
+
+  DrivableAreaLaneSpecification:
+    description: Drivable area lane specification.
+    comments:
+      - "ISO 34503:2023, 9.3.4"
+    aliases:
+      - "Drivable area lane specification"
+    notes:
+      - "v1 label: \"Drivable area lane specification\" (PAS 1883:2020, Section 5.2.3.1.c)."
+    is_a: SceneryDrivableArea
+    class_uri: openlabel_v2:DrivableAreaLaneSpecification
+
+  DrivableAreaSigns:
+    description: Drivable area signs.
+    comments:
+      - "ISO 34503:2023, 9.3.5"
+    aliases:
+      - "Drivable area signs"
+    notes:
+      - "v1 label: \"Drivable area signs\" (PAS 1883:2020, Section 5.2.3.1.d)."
+    is_a: SceneryDrivableArea
+    class_uri: openlabel_v2:DrivableAreaSigns
+
+  DrivableAreaSurface:
+    description: Drivable area surface.
+    comments:
+      - "ISO 34503:2023, 9.3.7"
+    aliases:
+      - "Drivable area surface"
+    notes:
+      - "v1 label: \"Drivable area surface\" (PAS 1883:2020, Section 5.2.3.1.f)."
+    is_a: SceneryDrivableArea
+    class_uri: openlabel_v2:DrivableAreaSurface
+
+  IlluminationDay:
+    description: Daytime illumination.
+    comments:
+      - "ISO 34503:2023, 10.4"
+    aliases:
+      - "Day"
+    notes:
+      - "v1 label: \"Day\" (PAS 1883:2020, Section 5.3.3.a)."
+    is_a: EnvironmentIllumination
+    class_uri: openlabel_v2:IlluminationDay
+
+  GeometryHorizontal:
+    description: Horizontal plane geometry of the drivable area.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Horizontal plane"
+    notes:
+      - "v1 label: \"Horizontal plane\" (PAS 1883:2020, Section 5.2.3.3.a)."
+    is_a: DrivableAreaGeometry
+    class_uri: openlabel_v2:GeometryHorizontal
+
+  GeometryLongitudinal:
+    description: Longitudinal plane geometry of the drivable area.
+    comments:
+      - "ISO 34503:2023, 9.3.3"
+    aliases:
+      - "Longitudinal plane"
+    notes:
+      - "v1 label: \"Longitudinal plane\" (PAS 1883:2020, Section 5.2.3.3.c)."
+    is_a: DrivableAreaGeometry
+    class_uri: openlabel_v2:GeometryLongitudinal
+
 
 # =============================================================================
 # Slots (properties)
@@ -1979,9 +2152,7 @@ slots:
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficAgentTypeValue
-    any_of:
-      - range: RoadUserHumanEnum
-      - range: RoadUserVehicleEnum
+    range: TrafficAgentTypeEnum
     multivalued: true
   trafficFlowRateValue:
     description: Traffic flow rate in vehicles per hour.
@@ -2062,12 +2233,14 @@ slots:
   minValue:
     description: Minimum value of the range.
     slot_uri: sdo:minValue
+    domain: QuantitativeValue
     range: decimal
     required: true
 
   maxValue:
     description: Maximum value of the range.
     slot_uri: sdo:maxValue
+    domain: QuantitativeValue
     range: decimal
     required: true
 
@@ -2205,6 +2378,73 @@ enums:
         meaning: openlabel_v2:HumanWheelchairUser
 
   # ---------------------------------------------------------------------------
+  # Traffic Agent Type (union of human + vehicle road user types)
+  # ---------------------------------------------------------------------------
+  TrafficAgentTypeEnum:
+    description: >-
+      Combined set of traffic agent types (human and vehicle road users).
+      Union of RoadUserHumanEnum and RoadUserVehicleEnum, used by
+      trafficAgentTypeValue so a single enum range yields the @vocab context
+      coercion and a single sh:in constraint (values written as bare terms).
+    comments:
+      - "ISO 34503:2023, 11.1"
+    permissible_values:
+      HumanAnimalRider:
+        description: Animal rider (e.g. horse rider).
+        meaning: openlabel_v2:HumanAnimalRider
+      HumanCyclist:
+        description: Cyclist.
+        meaning: openlabel_v2:HumanCyclist
+      HumanDriver:
+        description: Driver.
+        meaning: openlabel_v2:HumanDriver
+      HumanMotorcyclist:
+        description: Motorcyclist.
+        meaning: openlabel_v2:HumanMotorcyclist
+      HumanPassenger:
+        description: Passenger.
+        meaning: openlabel_v2:HumanPassenger
+      HumanPedestrian:
+        description: Pedestrian.
+        meaning: openlabel_v2:HumanPedestrian
+      HumanWheelchairUser:
+        description: Wheelchair user.
+        meaning: openlabel_v2:HumanWheelchairUser
+      VehicleAgricultural:
+        description: Agricultural vehicle.
+        meaning: openlabel_v2:VehicleAgricultural
+      VehicleBus:
+        description: Bus.
+        meaning: openlabel_v2:VehicleBus
+      VehicleCar:
+        description: Car.
+        meaning: openlabel_v2:VehicleCar
+      VehicleConstruction:
+        description: Construction vehicle.
+        meaning: openlabel_v2:VehicleConstruction
+      VehicleCycle:
+        description: Cycle.
+        meaning: openlabel_v2:VehicleCycle
+      VehicleEmergency:
+        description: Emergency vehicle.
+        meaning: openlabel_v2:VehicleEmergency
+      VehicleMotorcycle:
+        description: Motorcycle.
+        meaning: openlabel_v2:VehicleMotorcycle
+      VehicleTrailer:
+        description: Trailer.
+        meaning: openlabel_v2:VehicleTrailer
+      VehicleTruck:
+        description: Truck.
+        meaning: openlabel_v2:VehicleTruck
+      VehicleVan:
+        description: Van.
+        meaning: openlabel_v2:VehicleVan
+      VehicleWheelchair:
+        description: Wheelchair.
+        meaning: openlabel_v2:VehicleWheelchair
+
+  # ---------------------------------------------------------------------------
   # Drivable Area Edge
   # ---------------------------------------------------------------------------
   DrivableAreaEdgeEnum:
@@ -2337,6 +2577,12 @@ enums:
       InformationSignsVariableTemporary:
         description: Variable temporary.
         meaning: openlabel_v2:InformationSignsVariableTemporary
+      InformationSignsUniform:
+        description: Uniform (full-time/temporary unspecified).
+        meaning: openlabel_v2:InformationSignsUniform
+      InformationSignsVariable:
+        description: Variable (full-time/temporary unspecified).
+        meaning: openlabel_v2:InformationSignsVariable
 
   # ---------------------------------------------------------------------------
   # Signs Regulatory
@@ -2362,6 +2608,12 @@ enums:
       RegulatorySignsVariableTemporary:
         description: Variable temporary.
         meaning: openlabel_v2:RegulatorySignsVariableTemporary
+      RegulatorySignsUniform:
+        description: Uniform (full-time/temporary unspecified).
+        meaning: openlabel_v2:RegulatorySignsUniform
+      RegulatorySignsVariable:
+        description: Variable (full-time/temporary unspecified).
+        meaning: openlabel_v2:RegulatorySignsVariable
 
   # ---------------------------------------------------------------------------
   # Signs Warning
@@ -2390,6 +2642,9 @@ enums:
       WarningSignsVariableTemporary:
         description: Variable temporary.
         meaning: openlabel_v2:WarningSignsVariableTemporary
+      WarningSignsVariable:
+        description: Variable (full-time/temporary unspecified).
+        meaning: openlabel_v2:WarningSignsVariable
 
   # ---------------------------------------------------------------------------
   # Drivable Area Surface Condition
@@ -2613,6 +2868,21 @@ enums:
       RoundaboutNormalSignal:
         description: Normal signalised.
         meaning: openlabel_v2:RoundaboutNormalSignal
+      RoundaboutCompact:
+        description: Compact (signalisation unspecified).
+        meaning: openlabel_v2:RoundaboutCompact
+      RoundaboutDouble:
+        description: Double (signalisation unspecified).
+        meaning: openlabel_v2:RoundaboutDouble
+      RoundaboutLarge:
+        description: Large (signalisation unspecified).
+        meaning: openlabel_v2:RoundaboutLarge
+      RoundaboutMini:
+        description: Mini (signalisation unspecified).
+        meaning: openlabel_v2:RoundaboutMini
+      RoundaboutNormal:
+        description: Normal (signalisation unspecified).
+        meaning: openlabel_v2:RoundaboutNormal
 
   # ---------------------------------------------------------------------------
   # Scenery Special Structure

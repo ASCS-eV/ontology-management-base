@@ -1,0 +1,821 @@
+{
+   "$defs": {
+      "Attributes": {
+         "additionalProperties": false,
+         "description": "Nested attributes for any data entry. Same structure as tag_data.",
+         "properties": {
+            "boolean": {
+               "description": "Nested boolean attributes.",
+               "items": {
+                  "$ref": "#/$defs/BooleanVal"
+               },
+               "type": "array"
+            },
+            "num": {
+               "description": "Nested numeric attributes.",
+               "items": {
+                  "$ref": "#/$defs/NumVal"
+               },
+               "type": "array"
+            },
+            "text": {
+               "description": "Nested text attributes.",
+               "items": {
+                  "$ref": "#/$defs/TextVal"
+               },
+               "type": "array"
+            },
+            "vec": {
+               "description": "Nested vector attributes.",
+               "items": {
+                  "$ref": "#/$defs/VecVal"
+               },
+               "type": "array"
+            }
+         },
+         "title": "Attributes",
+         "type": "object"
+      },
+      "BooleanVal": {
+         "additionalProperties": false,
+         "description": "A boolean value entry in tag_data or attributes (spec 8.7.1).",
+         "properties": {
+            "attributes": {
+               "$ref": "#/$defs/Attributes",
+               "description": "Nested attributes for this data entry."
+            },
+            "name": {
+               "description": "Name of this data entry (used as index in data pointers).",
+               "type": "string"
+            },
+            "type": {
+               "$ref": "#/$defs/ValueOnlyTypeEnum",
+               "description": "How the value shall be interpreted (ASAM allows only \"value\")."
+            },
+            "val": {
+               "description": "The boolean value.",
+               "type": "boolean"
+            }
+         },
+         "required": [
+            "val"
+         ],
+         "title": "BooleanVal",
+         "type": "object"
+      },
+      "BoundaryModeEnum": {
+         "description": "Mode for interpreting the ontology tagging boundary (spec 8.2.2).",
+         "enum": [
+            "include",
+            "exclude"
+         ],
+         "title": "BoundaryModeEnum",
+         "type": "string"
+      },
+      "Metadata": {
+         "additionalProperties": false,
+         "description": "Metadata about the annotation file. The schema_version is mandatory.",
+         "properties": {
+            "annotator": {
+               "description": "Name or identifier of the annotator.",
+               "type": "string"
+            },
+            "comment": {
+               "description": "Free-text comment about the annotation.",
+               "type": "string"
+            },
+            "file_version": {
+               "description": "Version of the annotation file.",
+               "type": "string"
+            },
+            "name": {
+               "description": "Name of the annotation file.",
+               "type": "string"
+            },
+            "schema_version": {
+               "const": "1.0.0",
+               "description": "The version of the ASAM OpenLABEL schema this file conforms to. ASAM constrains this to \"1.0.0\".",
+               "type": "string"
+            },
+            "tagged_file": {
+               "description": "Path or URI to the raw data file that this annotation references.",
+               "type": "string"
+            }
+         },
+         "required": [
+            "schema_version"
+         ],
+         "title": "Metadata",
+         "type": "object"
+      },
+      "NumTypeEnum": {
+         "description": "How a numeric value shall be interpreted in its context.",
+         "enum": [
+            "value",
+            "min",
+            "max"
+         ],
+         "title": "NumTypeEnum",
+         "type": "string"
+      },
+      "NumVal": {
+         "additionalProperties": false,
+         "description": "A numeric value entry in tag_data or attributes (spec 8.7.2).",
+         "properties": {
+            "attributes": {
+               "$ref": "#/$defs/Attributes",
+               "description": "Nested attributes for this data entry."
+            },
+            "name": {
+               "description": "Name of this data entry.",
+               "type": "string"
+            },
+            "type": {
+               "$ref": "#/$defs/NumTypeEnum",
+               "description": "How the number shall be interpreted: value, minimum, or maximum."
+            },
+            "val": {
+               "description": "The numerical value. Modelled as a number to match the ASAM JSON Schema (num.val type=number). NOTE: spec 8.2.4's prose example shows \"val\": \"3.1\" (a string), which is inconsistent with the ASAM schema; the schema (number) is authoritative.",
+               "type": "number"
+            }
+         },
+         "required": [
+            "val"
+         ],
+         "title": "NumVal",
+         "type": "object"
+      },
+      "OntologyEntry": {
+         "additionalProperties": false,
+         "description": "An ontology reference. Specifies the URI of the ontology and optional boundary controls for tagging subsets (spec 8.2.2).",
+         "properties": {
+            "boundary_list": {
+               "description": "List of tag names that define the tagging boundary. Used with boundary_mode to specify which subset of ontology tags is relevant.",
+               "items": {
+                  "type": "string"
+               },
+               "type": "array"
+            },
+            "boundary_mode": {
+               "$ref": "#/$defs/BoundaryModeEnum",
+               "description": "Whether boundary_list specifies inclusion or exclusion of tags."
+            },
+            "uid": {
+               "description": "Unique identifier for this ontology entry (numeric UID or UUID). The pattern constrains the dict keys in the ontologies object (ASAM: numeric UID or UUID), rendered as JSON Schema propertyNames.",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            },
+            "uri": {
+               "description": "URI of the ontology definition (RDF Turtle file URL).",
+               "format": "uri",
+               "type": "string"
+            }
+         },
+         "required": [
+            "uid",
+            "uri"
+         ],
+         "title": "OntologyEntry",
+         "type": "object"
+      },
+      "OntologyEntry__identifier_optional": {
+         "additionalProperties": false,
+         "description": "An ontology reference. Specifies the URI of the ontology and optional boundary controls for tagging subsets (spec 8.2.2).",
+         "properties": {
+            "boundary_list": {
+               "description": "List of tag names that define the tagging boundary. Used with boundary_mode to specify which subset of ontology tags is relevant.",
+               "items": {
+                  "type": "string"
+               },
+               "type": "array"
+            },
+            "boundary_mode": {
+               "$ref": "#/$defs/BoundaryModeEnum",
+               "description": "Whether boundary_list specifies inclusion or exclusion of tags."
+            },
+            "uid": {
+               "description": "Unique identifier for this ontology entry (numeric UID or UUID). The pattern constrains the dict keys in the ontologies object (ASAM: numeric UID or UUID), rendered as JSON Schema propertyNames.",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            },
+            "uri": {
+               "description": "URI of the ontology definition (RDF Turtle file URL).",
+               "format": "uri",
+               "type": "string"
+            }
+         },
+         "required": [
+            "uri"
+         ],
+         "title": "OntologyEntry",
+         "type": "object"
+      },
+      "OpenLabel": {
+         "additionalProperties": false,
+         "description": "The OpenLABEL root JSON object for scenario tagging. Contains metadata, ontology references, and tags. For scenario tagging, objects/actions/frames are not used (spec 8.1 - tags do not include spatiotemporal constructs).",
+         "properties": {
+            "metadata": {
+               "$ref": "#/$defs/Metadata",
+               "description": "Metadata about the annotation file (schema version, annotator, etc.)."
+            },
+            "ontologies": {
+               "additionalProperties": {
+                  "anyOf": [
+                     {
+                        "$ref": "#/$defs/OntologyEntry__identifier_optional"
+                     },
+                     {
+                        "description": "URI of the ontology definition (RDF Turtle file URL).",
+                        "format": "uri",
+                        "type": "string"
+                     }
+                  ]
+               },
+               "description": "Ontology references keyed by UID. Each entry specifies the URI of an ontology and optional tagging boundary controls.",
+               "propertyNames": {
+                  "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+               },
+               "type": "object"
+            },
+            "tags": {
+               "additionalProperties": {
+                  "$ref": "#/$defs/TagEntry__identifier_optional"
+               },
+               "description": "Tags keyed by UID. Each entry specifies the tag type (from an ontology) and optional tag_data with values.",
+               "propertyNames": {
+                  "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+               },
+               "type": "object"
+            }
+         },
+         "required": [
+            "metadata"
+         ],
+         "title": "OpenLabel",
+         "type": "object"
+      },
+      "OpenLabelFile": {
+         "additionalProperties": false,
+         "description": "Root of an ASAM OpenLABEL JSON file. Contains a single \"openlabel\" key.",
+         "properties": {
+            "openlabel": {
+               "$ref": "#/$defs/OpenLabel",
+               "description": "The OpenLABEL root object containing all annotation data."
+            }
+         },
+         "required": [
+            "openlabel"
+         ],
+         "title": "OpenLabelFile",
+         "type": "object"
+      },
+      "ResourceUid": {
+         "additionalProperties": false,
+         "description": "A reference to an element in an external resource (ASAM resource_uid): a map keyed by a numeric/UUID id whose value is the element's identifier string in the external resource.",
+         "properties": {
+            "identifier_in_resource": {
+               "description": "Identifier of the element in the external resource.",
+               "type": "string"
+            },
+            "uid": {
+               "description": "External-resource reference key (numeric UID or UUID).",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "uid",
+            "identifier_in_resource"
+         ],
+         "title": "ResourceUid",
+         "type": "object"
+      },
+      "ResourceUid__identifier_optional": {
+         "additionalProperties": false,
+         "description": "A reference to an element in an external resource (ASAM resource_uid): a map keyed by a numeric/UUID id whose value is the element's identifier string in the external resource.",
+         "properties": {
+            "identifier_in_resource": {
+               "description": "Identifier of the element in the external resource.",
+               "type": "string"
+            },
+            "uid": {
+               "description": "External-resource reference key (numeric UID or UUID).",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "identifier_in_resource"
+         ],
+         "title": "ResourceUid",
+         "type": "object"
+      },
+      "TagData": {
+         "additionalProperties": false,
+         "description": "Generic data associated with a tag. Contains arrays of typed values (boolean, numeric, text, vector). For scenario tagging, only non-geometric data types are used (spec 8.7).",
+         "properties": {
+            "boolean": {
+               "description": "List of boolean values describing this tag.",
+               "items": {
+                  "$ref": "#/$defs/BooleanVal"
+               },
+               "type": "array"
+            },
+            "num": {
+               "description": "List of numeric values describing this tag.",
+               "items": {
+                  "$ref": "#/$defs/NumVal"
+               },
+               "type": "array"
+            },
+            "text": {
+               "description": "List of text values describing this tag.",
+               "items": {
+                  "$ref": "#/$defs/TextVal"
+               },
+               "type": "array"
+            },
+            "vec": {
+               "description": "List of vector (array) values describing this tag.",
+               "items": {
+                  "$ref": "#/$defs/VecVal"
+               },
+               "type": "array"
+            }
+         },
+         "title": "TagData",
+         "type": "object"
+      },
+      "TagEntry": {
+         "additionalProperties": false,
+         "description": "A single tag in an ASAM OpenLABEL file. References a tag type from an ontology and optionally includes tag_data with values.",
+         "properties": {
+            "ontology_uid": {
+               "description": "UID of the ontology (from the ontologies section) where this tag type is defined. Required: every scenario tag references its ontology (spec 8.2.1). (ASAM's JSON Schema lists only \"type\" as required, but all spec examples and real files include ontology_uid; keeping it required also avoids a LinkML simple-dict shorthand that ASAM forbids.)",
+               "type": "string"
+            },
+            "resource_uid": {
+               "additionalProperties": {
+                  "anyOf": [
+                     {
+                        "$ref": "#/$defs/ResourceUid__identifier_optional"
+                     },
+                     {
+                        "description": "Identifier of the element in the external resource.",
+                        "type": "string"
+                     }
+                  ]
+               },
+               "description": "Links to external resources, keyed by UID (ASAM resource_uid: a map of id -> the element's identifier string in the external resource).",
+               "propertyNames": {
+                  "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+               },
+               "type": "object"
+            },
+            "tag_data": {
+               "anyOf": [
+                  {
+                     "$ref": "#/$defs/TagData"
+                  },
+                  {
+                     "type": "string"
+                  }
+               ],
+               "description": "Optional data associated with this tag (values, ranges, text). ASAM models tag_data as oneOf[object, string]; both forms are allowed."
+            },
+            "type": {
+               "$ref": "#/$defs/TagTypeEnum",
+               "description": "The type of tag, referencing a class or property name from the ontology. Constrained to valid values from the openlabel-v2 vocabulary."
+            },
+            "uid": {
+               "description": "Unique identifier for this tag entry (numeric UID or UUID). The pattern constrains the dict keys in the tags object (ASAM: numeric UID or UUID), rendered as JSON Schema propertyNames.",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "uid",
+            "type",
+            "ontology_uid"
+         ],
+         "title": "TagEntry",
+         "type": "object"
+      },
+      "TagEntry__identifier_optional": {
+         "additionalProperties": false,
+         "description": "A single tag in an ASAM OpenLABEL file. References a tag type from an ontology and optionally includes tag_data with values.",
+         "properties": {
+            "ontology_uid": {
+               "description": "UID of the ontology (from the ontologies section) where this tag type is defined. Required: every scenario tag references its ontology (spec 8.2.1). (ASAM's JSON Schema lists only \"type\" as required, but all spec examples and real files include ontology_uid; keeping it required also avoids a LinkML simple-dict shorthand that ASAM forbids.)",
+               "type": "string"
+            },
+            "resource_uid": {
+               "additionalProperties": {
+                  "anyOf": [
+                     {
+                        "$ref": "#/$defs/ResourceUid__identifier_optional"
+                     },
+                     {
+                        "description": "Identifier of the element in the external resource.",
+                        "type": "string"
+                     }
+                  ]
+               },
+               "description": "Links to external resources, keyed by UID (ASAM resource_uid: a map of id -> the element's identifier string in the external resource).",
+               "propertyNames": {
+                  "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+               },
+               "type": "object"
+            },
+            "tag_data": {
+               "anyOf": [
+                  {
+                     "$ref": "#/$defs/TagData"
+                  },
+                  {
+                     "type": "string"
+                  }
+               ],
+               "description": "Optional data associated with this tag (values, ranges, text). ASAM models tag_data as oneOf[object, string]; both forms are allowed."
+            },
+            "type": {
+               "$ref": "#/$defs/TagTypeEnum",
+               "description": "The type of tag, referencing a class or property name from the ontology. Constrained to valid values from the openlabel-v2 vocabulary."
+            },
+            "uid": {
+               "description": "Unique identifier for this tag entry (numeric UID or UUID). The pattern constrains the dict keys in the tags object (ASAM: numeric UID or UUID), rendered as JSON Schema propertyNames.",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "type",
+            "ontology_uid"
+         ],
+         "title": "TagEntry",
+         "type": "object"
+      },
+      "TagTypeEnum": {
+         "description": "All valid values for the tag.type field in ASAM OpenLABEL v1 format files. Derived from the openlabel-v2 ontology vocabulary (classes, enums, slots). AUTO-GENERATED \u2014 do not edit manually.",
+         "enum": [
+            "AdminTag",
+            "Behaviour",
+            "BehaviourMotion",
+            "DrivableAreaGeometry",
+            "DrivableAreaLaneSpecification",
+            "DrivableAreaSigns",
+            "DrivableAreaSurface",
+            "DynamicElementsSubjectVehicle",
+            "DynamicElementsTraffic",
+            "EnvironmentConnectivity",
+            "EnvironmentIllumination",
+            "EnvironmentWeather",
+            "GeometryHorizontal",
+            "GeometryLongitudinal",
+            "IlluminationDay",
+            "Odd",
+            "OddDynamicElements",
+            "OddEnvironment",
+            "OddScenery",
+            "RoadUser",
+            "Scenario",
+            "SceneryDrivableArea",
+            "SceneryJunction",
+            "Tag",
+            "licenseURI",
+            "ownerEmail",
+            "ownerName",
+            "ownerURL",
+            "scenarioCreatedDate",
+            "scenarioDefinition",
+            "scenarioDefinitionLanguageURI",
+            "scenarioDescription",
+            "scenarioName",
+            "scenarioParentReference",
+            "scenarioUniqueReference",
+            "scenarioVersion",
+            "scenarioVisualisationURL",
+            "DaySunElevation",
+            "HorizontalCurves",
+            "HorizontalStraights",
+            "IlluminationCloudiness",
+            "LaneSpecificationDimensions",
+            "LaneSpecificationLaneCount",
+            "LaneSpecificationMarking",
+            "LongitudinalDownSlope",
+            "LongitudinalLevelPlane",
+            "LongitudinalUpSlope",
+            "MotionAccelerate",
+            "MotionAway",
+            "MotionCross",
+            "MotionCutIn",
+            "MotionCutOut",
+            "MotionDecelerate",
+            "MotionDrive",
+            "MotionLaneChangeLeft",
+            "MotionLaneChangeRight",
+            "MotionOvertake",
+            "MotionReverse",
+            "MotionRun",
+            "MotionSlide",
+            "MotionStop",
+            "MotionTowards",
+            "MotionTurn",
+            "MotionTurnLeft",
+            "MotionTurnRight",
+            "MotionUTurn",
+            "MotionWalk",
+            "RoadUserAnimal",
+            "SubjectVehicleSpeed",
+            "TrafficAgentDensity",
+            "TrafficAgentType",
+            "TrafficFlowRate",
+            "TrafficSpecialVehicle",
+            "TrafficVolume",
+            "WeatherRain",
+            "WeatherSnow",
+            "WeatherWind",
+            "BehaviourCommunication",
+            "ConnectivityCommunication",
+            "ConnectivityPositioning",
+            "DaySunPosition",
+            "DrivableAreaEdge",
+            "DrivableAreaSurfaceCondition",
+            "DrivableAreaSurfaceFeature",
+            "DrivableAreaSurfaceType",
+            "DrivableAreaType",
+            "EnvironmentParticulates",
+            "GeometryTransverse",
+            "IlluminationArtificial",
+            "IlluminationLowLight",
+            "JunctionIntersection",
+            "JunctionRoundabout",
+            "LaneSpecificationTravelDirection",
+            "LaneSpecificationType",
+            "RainType",
+            "RoadUserHuman",
+            "RoadUserVehicle",
+            "SceneryFixedStructure",
+            "ScenerySpecialStructure",
+            "SceneryTemporaryStructure",
+            "SceneryZone",
+            "SignsInformation",
+            "SignsRegulatory",
+            "SignsWarning",
+            "trafficAgentTypeValue",
+            "CommunicationHeadlightFlash",
+            "CommunicationHorn",
+            "CommunicationSignalEmergency",
+            "CommunicationSignalHazard",
+            "CommunicationSignalLeft",
+            "CommunicationSignalRight",
+            "CommunicationSignalSlowing",
+            "CommunicationWave",
+            "CommunicationV2i",
+            "CommunicationV2v",
+            "V2iCellular",
+            "V2iSatellite",
+            "V2iWifi",
+            "V2vCellular",
+            "V2vSatellite",
+            "V2vWifi",
+            "PositioningGalileo",
+            "PositioningGlonass",
+            "PositioningGps",
+            "SunPositionBehind",
+            "SunPositionFront",
+            "SunPositionLeft",
+            "SunPositionRight",
+            "EdgeLineMarkers",
+            "EdgeNone",
+            "EdgeShoulderGrass",
+            "EdgeShoulderPavedOrGravel",
+            "EdgeSolidBarriers",
+            "EdgeTemporaryLineMarkers",
+            "SurfaceConditionContamination",
+            "SurfaceConditionFlooded",
+            "SurfaceConditionIcy",
+            "SurfaceConditionMirage",
+            "SurfaceConditionSnow",
+            "SurfaceConditionStandingWater",
+            "SurfaceConditionWet",
+            "SurfaceFeatureCrack",
+            "SurfaceFeaturePothole",
+            "SurfaceFeatureRut",
+            "SurfaceFeatureSwell",
+            "SurfaceTypeLoose",
+            "SurfaceTypeSegmented",
+            "SurfaceTypeUniform",
+            "MotorwayManaged",
+            "MotorwayUnmanaged",
+            "RoadTypeDistributor",
+            "RoadTypeMinor",
+            "RoadTypeMotorway",
+            "RoadTypeParking",
+            "RoadTypeRadial",
+            "RoadTypeShared",
+            "RoadTypeSlip",
+            "ParticulatesDust",
+            "ParticulatesMarine",
+            "ParticulatesPollution",
+            "ParticulatesVolcanic",
+            "ParticulatesWater",
+            "TransverseBarriers",
+            "TransverseDivided",
+            "TransverseLanesTogether",
+            "TransversePavements",
+            "TransverseUndivided",
+            "ArtificialStreetLighting",
+            "ArtificialVehicleLighting",
+            "LowLightAmbient",
+            "LowLightNight",
+            "IntersectionCrossroad",
+            "IntersectionGradeSeperated",
+            "IntersectionStaggered",
+            "IntersectionTJunction",
+            "IntersectionYJunction",
+            "RoundaboutCompact",
+            "RoundaboutCompactNosignal",
+            "RoundaboutCompactSignal",
+            "RoundaboutDouble",
+            "RoundaboutDoubleNosignal",
+            "RoundaboutDoubleSignal",
+            "RoundaboutLarge",
+            "RoundaboutLargeNosignal",
+            "RoundaboutLargeSignal",
+            "RoundaboutMini",
+            "RoundaboutMiniNosignal",
+            "RoundaboutMiniSignal",
+            "RoundaboutNormal",
+            "RoundaboutNormalNosignal",
+            "RoundaboutNormalSignal",
+            "TravelDirectionLeft",
+            "TravelDirectionRight",
+            "LaneTypeBus",
+            "LaneTypeCycle",
+            "LaneTypeEmergency",
+            "LaneTypeSpecial",
+            "LaneTypeTraffic",
+            "LaneTypeTram",
+            "RainTypeConvective",
+            "RainTypeDynamic",
+            "RainTypeOrographic",
+            "HumanAnimalRider",
+            "HumanCyclist",
+            "HumanDriver",
+            "HumanMotorcyclist",
+            "HumanPassenger",
+            "HumanPedestrian",
+            "HumanWheelchairUser",
+            "VehicleAgricultural",
+            "VehicleBus",
+            "VehicleCar",
+            "VehicleConstruction",
+            "VehicleCycle",
+            "VehicleEmergency",
+            "VehicleMotorcycle",
+            "VehicleTrailer",
+            "VehicleTruck",
+            "VehicleVan",
+            "VehicleWheelchair",
+            "FixedStructureBuilding",
+            "FixedStructureStreetFurniture",
+            "FixedStructureStreetlight",
+            "FixedStructureVegetation",
+            "SpecialStructureAutoAccess",
+            "SpecialStructureBridge",
+            "SpecialStructurePedestrianCrossing",
+            "SpecialStructureRailCrossing",
+            "SpecialStructureTollPlaza",
+            "SpecialStructureTunnel",
+            "TemporaryStructureConstructionDetour",
+            "TemporaryStructureRefuseCollection",
+            "TemporaryStructureRoadSignage",
+            "TemporaryStructureRoadWorks",
+            "ZoneGeoFenced",
+            "ZoneInterference",
+            "ZoneRegion",
+            "ZoneSchool",
+            "ZoneTrafficManagement",
+            "InformationSignsUniform",
+            "InformationSignsUniformFullTime",
+            "InformationSignsUniformTemporary",
+            "InformationSignsVariable",
+            "InformationSignsVariableFullTime",
+            "InformationSignsVariableTemporary",
+            "RegulatorySignsUniform",
+            "RegulatorySignsUniformFullTime",
+            "RegulatorySignsUniformTemporary",
+            "RegulatorySignsVariable",
+            "RegulatorySignsVariableFullTime",
+            "RegulatorySignsVariableTemporary",
+            "WarningSignsUniform",
+            "WarningSignsUniformFullTime",
+            "WarningSignsUniformTemporary",
+            "WarningSignsVariable",
+            "WarningSignsVariableFullTime",
+            "WarningSignsVariableTemporary"
+         ],
+         "title": "TagTypeEnum",
+         "type": "string"
+      },
+      "TextVal": {
+         "additionalProperties": false,
+         "description": "A text value entry in tag_data or attributes (spec 8.7.3).",
+         "properties": {
+            "attributes": {
+               "$ref": "#/$defs/Attributes",
+               "description": "Nested attributes for this data entry."
+            },
+            "name": {
+               "description": "Name of this data entry.",
+               "type": "string"
+            },
+            "type": {
+               "$ref": "#/$defs/ValueOnlyTypeEnum",
+               "description": "How the text shall be interpreted (ASAM allows only \"value\")."
+            },
+            "val": {
+               "description": "The text value.",
+               "type": "string"
+            }
+         },
+         "required": [
+            "val"
+         ],
+         "title": "TextVal",
+         "type": "object"
+      },
+      "ValueOnlyTypeEnum": {
+         "description": "Interpretation for boolean/text data entries. ASAM allows only \"value\".",
+         "enum": [
+            "value"
+         ],
+         "title": "ValueOnlyTypeEnum",
+         "type": "string"
+      },
+      "VecTypeEnum": {
+         "description": "How a vector (array) value shall be interpreted (ASAM: range or values).",
+         "enum": [
+            "range",
+            "values"
+         ],
+         "title": "VecTypeEnum",
+         "type": "string"
+      },
+      "VecVal": {
+         "additionalProperties": false,
+         "description": "A vector (array) value entry in tag_data or attributes (spec 8.7.4). Used for ranges, sets, and multi-valued data.",
+         "properties": {
+            "attributes": {
+               "$ref": "#/$defs/Attributes",
+               "description": "Nested attributes for this data entry."
+            },
+            "name": {
+               "description": "Name of this data entry.",
+               "type": "string"
+            },
+            "type": {
+               "$ref": "#/$defs/VecTypeEnum",
+               "description": "How the vector shall be interpreted: range or values (ASAM vec.type)."
+            },
+            "val": {
+               "description": "Array of values. ASAM vec.val items are oneOf[number, string] (e.g. a numeric range [3.4, 3.7] or a set [2, 3]).",
+               "items": {
+                  "anyOf": [
+                     {
+                        "type": "number"
+                     },
+                     {
+                        "type": "string"
+                     }
+                  ]
+               },
+               "type": "array"
+            }
+         },
+         "required": [
+            "val"
+         ],
+         "title": "VecVal",
+         "type": "object"
+      }
+   },
+   "$id": "https://w3id.org/ascs-ev/envited-x/openlabel/schema/v1",
+   "$schema": "https://json-schema.org/draft/2019-09/schema",
+   "additionalProperties": false,
+   "description": "Root of an ASAM OpenLABEL JSON file. Contains a single \"openlabel\" key.",
+   "metamodel_version": "1.11.0",
+   "properties": {
+      "openlabel": {
+         "$ref": "#/$defs/OpenLabel",
+         "description": "The OpenLABEL root object containing all annotation data."
+      }
+   },
+   "required": [
+      "openlabel"
+   ],
+   "title": "openlabel-v2-schema",
+   "type": "object",
+   "version": "1.0.0"
+}
