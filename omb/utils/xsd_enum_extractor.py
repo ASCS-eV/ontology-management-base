@@ -60,7 +60,7 @@ from omb.core.constants import (
     ASAM_OPENSCENARIO_SCHEMA_FILE,
     ASAM_SUBMODULE_HINT,
 )
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 
 logger = get_logger(__name__)
 
@@ -372,6 +372,7 @@ def _run_tests() -> bool:
 
 def main() -> None:
     """Entry point for standalone execution."""
+    configure_cli_logging()
     if "--test" in sys.argv:
         success = _run_tests()
         sys.exit(0 if success else 1)

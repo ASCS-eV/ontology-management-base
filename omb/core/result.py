@@ -104,7 +104,7 @@ class ValidationResult:
         duration_seconds: Time taken for validation
         errors: List of specific error messages
         warnings: List of warning messages
-        shapes_loaded: Number of sh:NodeShape subjects loaded
+        shapes_loaded: Number of node/property shapes discovered by pySHACL (including implicit shapes)
         target_types: Sorted @type IRIs found in validated data
         types_routed: Target types that resolve to a domain/imported namespace
         types_unrouted: Target types that resolve to neither

@@ -45,7 +45,6 @@ RETURN CODES:
 """
 
 import argparse
-import io
 import json
 import sys
 from pathlib import Path
@@ -54,13 +53,17 @@ from typing import List, Optional, Tuple, Union
 from rdflib import Graph
 from rdflib.exceptions import ParserError
 
+from omb.core.logging import configure_cli_logging
 from omb.core.result import ReturnCodes
 from omb.utils.file_collector import (
     PathsInput,
     collect_jsonld_files,
     collect_turtle_files,
 )
-from omb.utils.print_formatter import normalize_path_for_display
+from omb.utils.print_formatter import (
+    ensure_utf8_output,
+    normalize_path_for_display,
+)
 
 
 def _check_single_json(
@@ -344,8 +347,10 @@ ex:subject "unclosed string .
 # =============================================================================
 
 
-def main(args=None):
-    """CLI entry point for syntax_validator."""
+def main(args=None) -> int:
+    """CLI entry point for syntax_validator. Returns a process exit code."""
+    configure_cli_logging()
+    ensure_utf8_output()
     parser = argparse.ArgumentParser(
         description="Check JSON-LD and Turtle files for syntactic well-formedness."
     )
@@ -358,12 +363,11 @@ def main(args=None):
     parsed_args = parser.parse_args(args)
 
     if parsed_args.test:
-        success = _run_tests()
-        sys.exit(0 if success else 1)
+        return ReturnCodes.SUCCESS if _run_tests() else ReturnCodes.GENERAL_ERROR
 
     if not parsed_args.paths:
         parser.print_help()
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
 
     # Determine what to check
     do_json = not parsed_args.turtle or parsed_args.json
@@ -389,11 +393,10 @@ def main(args=None):
         else:
             sys.stderr.write(msg + "\n")
 
-    sys.exit(ret)
+    return ret
 
 
 if __name__ == "__main__":
-    # Ensure UTF-8 output for emojis, etc.
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
-    main()
+    # UTF-8 output is set up inside main() (see ensure_utf8_output), so every caller
+    # gets it — not only this path.
+    raise SystemExit(main())

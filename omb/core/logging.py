@@ -40,6 +40,21 @@ NOTES:
 - All modules should use get_logger(__name__) for consistent naming
 - CLI output (print) is for user-facing results; logging is for progress/debug
 - Default level is INFO; use DEBUG for detailed tracing
+
+LIBRARY VS APPLICATION:
+=======================
+``get_logger`` is library-safe: it *only* looks a logger up. It never installs a
+handler on the root logger and never changes anybody's level, so importing OMB
+cannot disturb the logging setup of the application that imports it.
+
+``configure_logging`` is the application-side half and belongs in a ``main()``.
+OMB's own CLI entry points call it; a library caller is free never to call it, in
+which case OMB's records travel up to whatever the host application configured.
+
+The single ``NullHandler`` on the ``omb`` parent logger is the standard way to keep
+``logging.lastResort`` from printing OMB's warnings to stderr in a host that has not
+configured logging at all (see the "Configuring Logging for a Library" section of
+the Python logging HOWTO).
 """
 
 import argparse
@@ -51,6 +66,11 @@ from typing import Optional
 # Default format: timestamp - module - level - message
 DEFAULT_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 SHORT_FORMAT = "%(levelname)s: %(message)s"
+
+# Root of OMB's logger hierarchy. Every logger handed out by get_logger() sits under
+# this name, so a host application can silence or re-route all of OMB with a single
+# logging.getLogger("omb") call.
+PACKAGE_LOGGER_NAME = "omb"
 
 # Track if logging has been configured globally
 _logging_configured = False
@@ -74,6 +94,11 @@ def configure_logging(
     """
     Configure logging globally for the application.
 
+    **Application-level call.** It replaces the root logger's handlers, so it belongs
+    in a ``main()`` — OMB's own CLI entry points call it — and must never be triggered
+    by importing a module. A library consumer of :mod:`omb.api` should leave it alone
+    and configure logging however it likes; OMB's records will follow.
+
     This should be called once at application startup (e.g., in main()).
     Subsequent calls will update the configuration.
 
@@ -90,12 +115,14 @@ def configure_logging(
     if stream is None:
         stream = sys.stderr
 
-    # Remove existing handlers to avoid duplicates
+    # Detach any handlers already on the root logger so a repeated call (a different
+    # stream or level) takes effect instead of piling duplicates up. Deliberately not
+    # basicConfig(force=True), which would also *close* those handlers: this function
+    # can be called by an application that still owns them.
     root_logger = logging.getLogger()
     for handler in root_logger.handlers[:]:
         root_logger.removeHandler(handler)
 
-    # Configure with new settings
     logging.basicConfig(
         level=level,
         format=format_string,
@@ -105,31 +132,62 @@ def configure_logging(
     _logging_configured = True
 
 
+def configure_cli_logging(level: int = logging.INFO) -> None:
+    """Configure logging for a command-line entry point, once.
+
+    The application-side counterpart to :func:`get_logger`: every OMB ``main()`` calls
+    this so the package's progress messages reach the console, which used to happen as
+    a side effect of the first ``get_logger`` call. Doing it here — and only here —
+    keeps that output for CLI users without importing OMB reconfiguring logging for a
+    library caller.
+
+    No-op if :func:`configure_logging` has already run.
+    """
+    if not _logging_configured:
+        configure_logging(level=level)
+
+
 def get_logger(name: str) -> logging.Logger:
     """
-    Get a configured logger for a module.
+    Get the logger for a module, without configuring anything.
+
+    The returned logger keeps its full dotted name (``omb.utils.registry_resolver``),
+    so a host application can address the whole package at once — silence it with
+    ``logging.getLogger("omb").setLevel(logging.ERROR)``, or route it somewhere of its
+    own choosing — and so OMB's records can never collide with a logger of the host's
+    that happens to share a last path segment.
+
+    This function deliberately performs no configuration. It used to call
+    ``configure_logging()`` on first use, which removed every handler from the root
+    logger; because modules call ``get_logger(__name__)`` at import time, merely
+    importing OMB then silently dismantled the importing application's logging setup.
 
     Args:
-        name: Module name (typically __name__)
+        name: Module name (typically ``__name__``)
 
     Returns:
-        Configured Logger instance
+        Logger instance for *name*
 
     Example:
         >>> logger = get_logger(__name__)
         >>> logger.info("Processing started")
     """
-    # Ensure logging is configured with defaults if not already done
-    global _logging_configured
-    if not _logging_configured:
-        configure_logging()
+    _ensure_package_null_handler()
+    return logging.getLogger(name)
 
-    # Shorten the module path for cleaner output
-    # e.g., "omb.utils.file_collector" -> "file_collector"
-    short_name = name.split(".")[-1] if "." in name else name
 
-    logger = logging.getLogger(short_name)
-    return logger
+def _ensure_package_null_handler() -> None:
+    """Attach a single NullHandler to the ``omb`` logger.
+
+    Without a handler anywhere in the chain, ``logging.lastResort`` prints WARNING and
+    above straight to ``sys.stderr``. That is the right default for an application and
+    the wrong one for a library: it makes OMB write to a stream the caller never asked
+    it to write to. The NullHandler makes OMB silent by default; ``configure_logging``
+    (or the host's own setup) is what turns output back on.
+    """
+    package_logger = logging.getLogger(PACKAGE_LOGGER_NAME)
+    if not any(isinstance(h, logging.NullHandler) for h in package_logger.handlers):
+        package_logger.addHandler(logging.NullHandler())
 
 
 def set_level(level: int) -> None:
@@ -169,13 +227,14 @@ def _run_tests() -> bool:
         print(f"FAIL: get_logger - {e}")
         all_passed = False
 
-    # Test 2: Logger name is shortened
+    # Test 2: Logger keeps its full dotted name (addressable as a hierarchy)
     try:
         logger = get_logger("omb.utils.file_collector")
-        assert logger.name == "file_collector"
-        print("PASS: Logger name shortened correctly")
+        assert logger.name == "omb.utils.file_collector"
+        assert logger.parent is not None
+        print("PASS: Logger keeps its full dotted name")
     except AssertionError as e:
-        print(f"FAIL: Logger name shortening - {e}")
+        print(f"FAIL: Logger naming - {e}")
         all_passed = False
 
     # Test 3: configure_logging changes level

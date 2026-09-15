@@ -40,7 +40,6 @@ NOTES:
 """
 
 import argparse
-import io
 import sys
 from pathlib import Path
 from typing import Set, Tuple
@@ -48,9 +47,11 @@ from typing import Set, Tuple
 from rdflib import OWL, RDF, RDFS, Graph, Namespace
 
 from omb.core.iri_utils import get_local_name
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
+from omb.core.paths import builtin_data_root
 from omb.core.result import ReturnCodes
 from omb.utils.print_formatter import (
+    ensure_utf8_output,
     format_artifact_coherence_result,
     normalize_path_for_display,
 )
@@ -405,43 +406,46 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main():
-    """CLI entry point for coherence_validator."""
+def main() -> int:
+    """CLI entry point for coherence_validator. Returns a process exit code."""
+    configure_cli_logging()
+    ensure_utf8_output()
     parser = argparse.ArgumentParser(
-        description="Validate SHACL target classes match OWL class definitions."
+        prog="onto-check-coherence",
+        description="Validate SHACL target classes match OWL class definitions.",
     )
     parser.add_argument("domain", nargs="?", help="Ontology domain name")
     parser.add_argument(
         "--root",
         type=Path,
-        default=Path.cwd(),
-        help="Repository root directory (default: current directory)",
+        default=None,
+        help="Root of OMB's built-in data (default: the data shipped with the "
+        "installed package, or the repository root in a source checkout)",
     )
     parser.add_argument("--test", action="store_true", help="Run self-tests")
 
     args = parser.parse_args()
 
     if args.test:
-        success = _run_tests()
-        sys.exit(0 if success else 1)
+        return ReturnCodes.SUCCESS if _run_tests() else ReturnCodes.GENERAL_ERROR
 
     if not args.domain:
         parser.print_help()
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
 
-    root_dir = args.root.resolve()
+    # Not cwd: an installed package runs from the consumer's working directory, which
+    # holds no catalogs, so the default produced "no ontology file found" for every
+    # domain OMB actually ships.
+    root_dir = args.root.resolve() if args.root else builtin_data_root()
 
     return_code, message = validate_artifact_coherence(args.domain, root_dir=root_dir)
 
     if return_code != 0:
         print(message, file=sys.stderr)
-        sys.exit(return_code)
     else:
         print(message)
-        sys.exit(0)
+    return return_code
 
 
 if __name__ == "__main__":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
-    main()
+    raise SystemExit(main())

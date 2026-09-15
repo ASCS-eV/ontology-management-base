@@ -69,6 +69,7 @@ logger = get_logger(__name__)
 # Try to import pyshacl
 try:
     from pyshacl import validate
+    from pyshacl.shapes_graph import ShapesGraph
 
     PYSHACL_AVAILABLE = True
 except ImportError:
@@ -138,6 +139,8 @@ class ShaclValidator:
         self.allow_online = allow_online
         self.allow_warnings = allow_warnings
         self._context_url_map: Optional[Dict[str, "Path"]] = None
+        self._input_nodes: dict[Path, set] = {}
+        self._focus_nodes: set = set()
 
         # Build context URL map from resolver's catalog
         self._build_context_url_map()
@@ -179,8 +182,8 @@ class ShaclValidator:
 
         if not jsonld_files:
             return ValidationResult(
-                conforms=True,
-                return_code=0,
+                conforms=False,
+                return_code=100,
                 report_text=f"No {test_type} test files found for domain '{domain}'",
                 files_validated=[],
             )
@@ -263,6 +266,14 @@ class ShaclValidator:
         conforms, report_text, report_graph = self._run_validation(
             combined_graph, ontology_graph, shacl_graph
         )
+
+        coverage_error = (
+            self._coverage_error(jsonld_files, routing)
+            if report_graph is not None
+            else None
+        )
+        if coverage_error:
+            return coverage_error
 
         duration = time.perf_counter() - start_time
 
@@ -351,12 +362,23 @@ class ShaclValidator:
                 closed_ontology = ontology_graph
             cache[cache_key] = (shacl_graph, closed_ontology)
 
-        routing = self._routing_metadata(union_types, shacl_graph)
-
         # Step 4: Validate each file's data graph in isolation.
         self._log(f"Step 4: Validating {len(per_file)} resource(s) individually...")
         results: List[ValidationResult] = []
         for f, data_graph in per_file:
+            routing = self._routing_metadata(extract_rdf_types(data_graph), shacl_graph)
+            if self.strict and routing["types_unrouted"]:
+                results.append(
+                    ValidationResult(
+                        conforms=False,
+                        return_code=210,
+                        report_text="Strict mode: unresolved @type IRI(s): "
+                        + ", ".join(routing["types_unrouted"]),
+                        files_validated=[self._rel_path(f)],
+                        **routing,
+                    )
+                )
+                continue
             if self.inference_mode == "rdfs":
                 combined = self._abox_inference(data_graph, closed_ontology)
             else:
@@ -364,6 +386,12 @@ class ShaclValidator:
             conforms, report_text, report_graph = self._run_validation(
                 combined, closed_ontology, shacl_graph
             )
+            coverage_error = (
+                self._coverage_error([f], routing) if report_graph is not None else None
+            )
+            if coverage_error:
+                results.append(coverage_error)
+                continue
             results.append(
                 ValidationResult(
                     conforms=conforms,
@@ -432,9 +460,18 @@ class ShaclValidator:
         a shared subject IRI would conflate two distinct resources and trigger
         spurious closed-shape violations.
         """
-        data_graph, prefixes = load_jsonld_files(
-            jsonld_files, self.root_dir, context_url_map=self._context_url_map
-        )
+        data_graph = Graph(store=FAST_STORE)
+        prefixes = {}
+        for data_path in jsonld_files:
+            document, document_prefixes = load_jsonld_files(
+                [data_path], self.root_dir, context_url_map=self._context_url_map
+            )
+            # Keep terms from the actual parse (including blank-node identities),
+            # before merging references or ontology triples. A different document
+            # must not provide validation coverage for an empty/untargeted input.
+            self._input_nodes[Path(data_path)] = set(document.all_nodes())
+            data_graph += document
+            prefixes.update(document_prefixes)
 
         for i, f in enumerate(jsonld_files, 1):
             self._log(f"  [{i}/{len(jsonld_files)}] Loaded: {self._rel_path(f)}")
@@ -531,7 +568,7 @@ class ShaclValidator:
         the per-resource schema cache so it is correct on cache hits too.
         """
         from rdflib import URIRef
-        from rdflib.namespace import RDF, SH
+        from rdflib.namespace import SH
 
         target = sorted(str(t) for t in rdf_types)
         unrouted = sorted(
@@ -542,7 +579,7 @@ class ShaclValidator:
         )
         unrouted_set = set(unrouted)
         routed = [t for t in target if t not in unrouted_set]
-        shapes_loaded = len(set(shacl_graph.subjects(RDF.type, SH.NodeShape)))
+        shapes_loaded = len(list(ShapesGraph(shacl_graph, logger=logger).shapes))
         per_type = {
             t: len(set(shacl_graph.subjects(SH.targetClass, URIRef(t)))) for t in target
         }
@@ -582,13 +619,11 @@ class ShaclValidator:
         shacl_graph: Graph,
     ) -> Tuple[bool, str, Optional[Graph]]:
         """Run SHACL validation using pyshacl."""
-        # Convert to default store if using oxigraph (pyshacl compatibility)
-        if FAST_STORE == "oxigraph":
-            self._log("  Converting to default store for validation...")
-            validation_graph = Graph()
-            validation_graph += data_graph
-        else:
-            validation_graph = data_graph
+        # Work on a private memory graph. In-place validation leaves pySHACL's
+        # inferred/rule-derived triples available for its own target discovery.
+        validation_graph = Graph()
+        validation_graph += data_graph
+        self._focus_nodes = set()
 
         try:
             conforms, results_graph, results_text = validate(
@@ -605,10 +640,17 @@ class ShaclValidator:
                 js=False,
                 meta_shacl=False,
                 allow_warnings=self.allow_warnings,
+                inplace=True,
             )
 
+            shapes = ShapesGraph(shacl_graph, logger=logger)
+            for shape in shapes.shapes:
+                if not shape.deactivated:
+                    shape.set_advanced(True)
+                    self._focus_nodes.update(shape.focus_nodes(validation_graph))
+
             if conforms:
-                self._log("  Validation PASSED")
+                self._log("  SHACL constraints conform; checking input coverage")
             else:
                 self._log("  Validation FAILED")
 
@@ -618,6 +660,41 @@ class ShaclValidator:
             error_msg = f"Validation error: {e}"
             self._log(f"  {error_msg}")
             return False, error_msg, None
+
+    def _coverage_error(
+        self, files: List[Path], routing: dict
+    ) -> Optional[ValidationResult]:
+        """Reject input documents with no active SHACL target in their RDF terms.
+
+        SHACL focus nodes are discovered by pySHACL after inference, including
+        property shapes, implicit node shapes and non-class targets. Coverage is
+        per document; it is not a claim that every triple or property is constrained.
+        """
+        uncovered = [
+            self._rel_path(f)
+            for f in files
+            if not self._input_nodes.get(Path(f), set()) & self._focus_nodes
+        ]
+        if not files:
+            uncovered = ["(no input files)"]
+        if not uncovered:
+            return None
+        if routing["shapes_loaded"] == 0:
+            message = (
+                "No SHACL shapes were loaded. Register the artifacts that define "
+                "the supplied types (--artifacts <dir>, or artifacts=[...]). "
+            )
+        else:
+            message = "No active SHACL target covered these input documents. "
+        message += "Unvalidated files: " + ", ".join(uncovered)
+        return ValidationResult(
+            conforms=False,
+            return_code=210,
+            report_text=message,
+            files_validated=[self._rel_path(f) for f in files],
+            errors=[message],
+            **routing,
+        )
 
     def format_result(self, result: ValidationResult) -> str:
         """

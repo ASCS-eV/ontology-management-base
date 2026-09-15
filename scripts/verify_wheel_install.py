@@ -1,7 +1,7 @@
-"""Prove that OMB's built wheel is a standalone validator.
+"""Prove OMB's installed wheel and sdist consumer contracts.
 
 This script is the executable acceptance test for OMB's packaging: it builds (or
-accepts) the wheel, installs it into a throwaway virtual environment that has no
+accepts) a distribution, installs it into a throwaway virtual environment that has no
 connection to this source tree, and then runs the installed ``onto-validate``
 console script against a built-in domain from a working directory *outside* the
 repository. Success proves that a plain ``pip install ontology-management-base``
@@ -12,6 +12,8 @@ Run it directly::
 
     python scripts/verify_wheel_install.py            # builds a fresh wheel, then proves it
     python scripts/verify_wheel_install.py --wheel dist/ontology_management_base-*.whl
+    python scripts/verify_wheel_install.py --sdist "dist/*.tar.gz" --publish
+    python scripts/verify_wheel_install.py --wheel "dist/*.whl" --minimum
     python scripts/verify_wheel_install.py --keep     # leave the temp venv for inspection
 
 Exit code 0 means the proof passed; any non-zero exit means it failed (suitable
@@ -24,6 +26,7 @@ from __future__ import annotations
 import argparse
 import glob
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -42,6 +45,9 @@ def _run(
     """Run a subprocess, forcing UTF-8 I/O so the validator's emoji output cannot
     crash on a cp1252 (Windows) console. Output is captured and decoded leniently."""
     env = dict(os.environ)
+    env.pop("PYTHONPATH", None)
+    env.pop("PYTHONHOME", None)
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["PYTHONUTF8"] = "1"
     env["PYTHONIOENCODING"] = "utf-8"
     return subprocess.run(
@@ -79,7 +85,7 @@ def _fail(message: str, proc: subprocess.CompletedProcess[str] | None = None) ->
 
 def build_wheel(build_dir: Path) -> Path:
     """Build the wheel into ``build_dir`` and return its path."""
-    print(f"[1/5] Building wheel into {build_dir} ...")
+    print(f"[1/6] Building wheel into {build_dir} ...")
     proc = _run(
         [
             sys.executable,
@@ -102,7 +108,7 @@ def build_wheel(build_dir: Path) -> Path:
 
 
 def make_isolated_venv(venv_dir: Path) -> Path:
-    print(f"[2/5] Creating isolated venv at {venv_dir} ...")
+    print(f"[2/6] Creating isolated venv at {venv_dir} ...")
     proc = _run([sys.executable, "-m", "venv", str(venv_dir)])
     if proc.returncode != 0:
         _fail("venv creation failed", proc)
@@ -111,17 +117,51 @@ def make_isolated_venv(venv_dir: Path) -> Path:
     return vpy
 
 
-def install_wheel(vpy: Path, wheel: Path) -> None:
-    print(f"[3/5] Installing {wheel.name} into the isolated venv ...")
-    proc = _run([str(vpy), "-m", "pip", "install", str(wheel)])
+def declared_minimums() -> list[str]:
+    """Pin every runtime dependency to the lowest version pyproject.toml claims to support.
+
+    Derived, never hard-coded: a literal list here drifts silently from the floors the
+    package actually advertises, so raising a floor would leave this check proving an
+    unsupported version still works, and lowering one would leave the new floor untested.
+
+    ``rdflib>=7.6.0`` becomes ``rdflib==7.6.0``, and ``pyshacl>=0.31.0,<0.41`` becomes
+    ``pyshacl==0.31.0`` — only the text up to the next specifier is the floor, or the
+    pin would carry the upper bound along with it. A dependency declared without a
+    ``>=`` floor has no minimum to prove and is left to the resolver.
+    """
+    import tomllib
+
+    manifest = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text("utf-8"))
+    pins = []
+    for requirement in manifest["project"]["dependencies"]:
+        name, separator, remainder = requirement.partition(">=")
+        if separator:
+            floor = remainder.split(",")[0]
+            pins.append(f"{name.strip()}=={floor.strip()}")
+    if not pins:
+        _fail("no >= floors found in [project] dependencies", None)
+    return pins
+
+
+def install_wheel(
+    vpy: Path, wheel: Path, *, publish: bool = False, minimum: bool = False
+) -> None:
+    print(f"[3/6] Installing {wheel.name} into the isolated venv ...")
+    requirement = str(wheel) + ("[publish]" if publish else "")
+    dependencies = declared_minimums() if minimum else []
+    if minimum:
+        print(f"      pinning declared floors: {', '.join(dependencies)}")
+    proc = _run(
+        [str(vpy), "-m", "pip", "install", requirement, "pytest>=8", *dependencies]
+    )
     if proc.returncode != 0:
-        _fail("wheel install failed", proc)
+        _fail("distribution install failed", proc)
 
 
-def assert_packaged_data(vpy: Path) -> None:
+def assert_packaged_data(vpy: Path, *, publish: bool = False) -> None:
     """In the isolated venv: import omb, prove the built-in data resolves from
     inside site-packages, and prove the optional publish stack was not pulled in."""
-    print("[4/5] Checking that built-in data resolves from the installed package ...")
+    print("[4/6] Checking that built-in data resolves from the installed package ...")
     probe = (
         "import sys\n"
         "from omb.core.paths import builtin_data_root\n"
@@ -130,11 +170,8 @@ def assert_packaged_data(vpy: Path) -> None:
         "assert (root / 'imports').is_dir(), 'packaged imports/ missing'\n"
         "assert (root / 'artifacts' / 'manifest').is_dir(), 'packaged artifacts/manifest missing'\n"
         "assert (root / 'docs' / 'registry.json').is_file(), 'packaged docs/registry.json missing'\n"
-        "try:\n"
-        "    import keycloak  # noqa: F401\n"
-        "    sys.exit('publish stack (keycloak) leaked into the lean install')\n"
-        "except ModuleNotFoundError:\n"
-        "    pass\n"
+        "import importlib.util\n"
+        f"assert bool(importlib.util.find_spec('keycloak')) == {publish!r}, 'publish extra mismatch'\n"
         "print(root)\n"
     )
     # Run with -P so the current directory is never prepended to sys.path: this
@@ -151,7 +188,7 @@ def assert_packaged_data(vpy: Path) -> None:
 def run_validation_outside_repo(venv_dir: Path) -> None:
     """Run the installed console script from a cwd outside the repository."""
     print(
-        f"[5/5] Running 'onto-validate --run {PROOF_RUN} --domain {PROOF_DOMAIN}' "
+        f"[5/6] Running 'onto-validate --run {PROOF_RUN} --domain {PROOF_DOMAIN}' "
         "from outside the repo ..."
     )
     onto = _venv_script(venv_dir, "onto-validate")
@@ -167,6 +204,34 @@ def run_validation_outside_repo(venv_dir: Path) -> None:
     print("      onto-validate exited 0")
 
 
+def run_consumer_contract(vpy: Path, workspace: Path, *, publish: bool) -> None:
+    """Run self-contained tests outside the checkout with no source import path."""
+    print("[6/6] Running the consumer contract against the installed distribution ...")
+    outside = workspace / "consumer"
+    outside.mkdir()
+    shutil.copytree(REPO_ROOT / "tests" / "contract", outside / "tests")
+    (outside / "pytest.ini").write_text("[pytest]\n", encoding="utf-8")
+    env = dict(os.environ)
+    env.pop("PYTHONPATH", None)
+    env.pop("PYTHONHOME", None)
+    env.update(
+        OMB_EXPECT_INSTALLED="1",
+        OMB_EXPECT_PUBLISH="1" if publish else "0",
+        PYTHONDONTWRITEBYTECODE="1",
+    )
+    proc = subprocess.run(
+        [str(vpy), "-I", "-m", "pytest", "tests", "-q", "-p", "no:cacheprovider"],
+        cwd=outside,
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    print(proc.stdout)
+    if proc.returncode:
+        _fail("installed consumer contract failed", proc)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -176,28 +241,42 @@ def main() -> int:
         help="Path (or glob) to a prebuilt wheel. If omitted, a fresh wheel is built.",
     )
     parser.add_argument(
+        "--sdist", help="Install an sdist (path or glob) instead of a wheel."
+    )
+    parser.add_argument(
+        "--publish", action="store_true", help="Verify the optional publishing extra."
+    )
+    parser.add_argument(
+        "--minimum",
+        action="store_true",
+        help="Verify declared minimum runtime versions.",
+    )
+    parser.add_argument(
         "--keep",
         action="store_true",
         help="Keep the temporary workspace (venv + build dir) for inspection.",
     )
     args = parser.parse_args()
+    if args.wheel and args.sdist:
+        parser.error("choose --wheel or --sdist")
 
     workspace = Path(tempfile.mkdtemp(prefix="omb-w1d-"))
     try:
-        if args.wheel:
-            matches = sorted(glob.glob(args.wheel))
+        if args.wheel or args.sdist:
+            matches = sorted(glob.glob(args.wheel or args.sdist))
             if not matches:
-                _fail(f"no wheel matched --wheel {args.wheel!r}")
+                _fail(f"no distribution matched {args.wheel or args.sdist!r}")
             wheel = Path(matches[-1]).resolve()
-            print(f"[1/5] Using prebuilt wheel {wheel.name}")
+            print(f"[1/6] Using prebuilt distribution {wheel.name}")
         else:
             wheel = build_wheel(workspace / "build")
 
         venv_dir = workspace / "venv"
         vpy = make_isolated_venv(venv_dir)
-        install_wheel(vpy, wheel)
-        assert_packaged_data(vpy)
+        install_wheel(vpy, wheel, publish=args.publish, minimum=args.minimum)
+        assert_packaged_data(vpy, publish=args.publish)
         run_validation_outside_repo(venv_dir)
+        run_consumer_contract(vpy, workspace, publish=args.publish)
     finally:
         if args.keep:
             print(f"\nWorkspace kept at: {workspace}")
@@ -205,14 +284,12 @@ def main() -> int:
             _rmtree(workspace)
 
     print(
-        "\nPASS: the installed wheel is a standalone validator (no source checkout needed)."
+        "\nPASS: the installed distribution satisfies the consumer contract (no source checkout needed)."
     )
     return 0
 
 
 def _rmtree(path: Path) -> None:
-    import shutil
-
     shutil.rmtree(path, ignore_errors=True)
 
 

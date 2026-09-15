@@ -6,6 +6,7 @@ from urllib.parse import quote_plus
 import rdflib
 import requests
 
+from omb.core.logging import configure_cli_logging
 from omb.authhelper import keycloakhandling
 
 # ENVIRONMENT PROPERTIES
@@ -23,6 +24,7 @@ def main():
     """
     Main function to upload or update .ttl files by checking all existing schemas.
     """
+    configure_cli_logging()
     try:
         # Step 1: Get the auth header
         auth_header = keycloakhandling.get_auth_header()

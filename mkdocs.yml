@@ -133,6 +133,9 @@ nav:
   - Validation:
       - Strategy: validation/strategy.md
       - Validation Suite: validation/suite.md
+      - Python API: validation/python-api.md
+      - Consumer Contract: validation/consumer-contract.md
+      - Generators: validation/generators.md
       - SHACL Conformance: validation/conformance.md
       - Target Class Coherence: validation/coherence.md
       - Syntax Checks: validation/syntax.md

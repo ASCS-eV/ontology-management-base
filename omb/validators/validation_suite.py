@@ -9,8 +9,10 @@ or data definitions comply with defined standards.
 PREREQUISITES:
 =============
 - Python 3.12 or higher
-- Active Virtual Environment (venv, conda, etc.)
-- Catalogs must be generated (run: python -m omb.utils.registry_updater)
+- Catalogs must be generated (run: python -m omb.utils.registry_updater). An installed
+  package ships them; only a source checkout regenerates them.
+- No virtual environment is required. Working in a checkout without one is only warned
+  about, because the dependencies there are probably stale; --skip-env-check silences it.
 
 OPERATION MODES:
 ===============
@@ -111,16 +113,24 @@ python3 -m omb.validators.validation_suite --run check-data-conformance \\
 import argparse
 import dataclasses
 import difflib
-import io
 import os
 import sys
 from pathlib import Path
 from typing import List
 
-from omb.core.negative_fixtures import expected_snapshot_path, snapshot_files_field
+from omb.core.logging import configure_cli_logging
+from omb.core.negative_fixtures import (
+    expected_snapshot_path,
+    snapshot_files_field,
+)
 from omb.core.paths import builtin_data_root
+from omb.core.result import ReturnCodes
 from omb.utils.file_collector import discover_data_hierarchy
-from omb.utils.print_formatter import normalize_path_for_display, normalize_text
+from omb.utils.print_formatter import (
+    ensure_utf8_output,
+    normalize_path_for_display,
+    normalize_text,
+)
 from omb.utils.registry_resolver import TEMP_DOMAIN_PREFIX, RegistryResolver
 from omb.validators.coherence_validator import validate_artifact_coherence
 from omb.validators.shacl.validator import ShaclValidator
@@ -396,6 +406,7 @@ def check_failing_tests_all(
     allow_online: bool = True,
     update_expected: bool = False,
     allow_warnings: bool = True,
+    require_fixtures: bool = False,
 ) -> int:
     """
     Run failing test cases from tests/data/{domain}/invalid/ directories.
@@ -409,11 +420,19 @@ def check_failing_tests_all(
         inference_mode: Inference mode for SHACL validation (rdfs|owlrl|none|both)
         allow_online: If True, attempt HTTP resolution for unresolved IRIs
         update_expected: If True, (re)record each `.expected` snapshot from the
-            live validation report instead of comparing against it.
+            live validation report instead of comparing against it. A file that has
+            no snapshot yet is recorded when it fails, and reported as "not a negative
+            fixture" when it passes.
         allow_warnings: If True (default), `sh:Warning`/`sh:Info` results are
             advisory: they are printed after the report but never recorded into
             a `.expected` snapshot, so a negative fixture still has to produce a
             real violation to pass.
+        require_fixtures: If True, finding no negative fixture at all is an error
+            rather than a silent success. Set when the caller named the files it
+            wants checked (data-paths mode with an explicit `--run
+            check-failing-tests`), where "nothing to do" means the request was not
+            understood, not that there was no work. Left False in domain mode, where
+            a domain legitimately has no negative fixtures.
 
     Returns:
         0 on success, non-zero on failure
@@ -446,6 +465,8 @@ def check_failing_tests_all(
         allow_warnings=allow_warnings,
     )
 
+    examined = 0
+
     for domain in ontology_domains:
         print(f"\n🔍 Running failing tests for domain: {domain}", flush=True)
 
@@ -462,6 +483,7 @@ def check_failing_tests_all(
             expected_path_display = normalize_path_for_display(
                 expected_output_path, root_dir
             )
+            recording_new = update_expected and not expected_output_path.exists()
 
             if not expected_output_path.exists() and not update_expected:
                 print(
@@ -471,10 +493,16 @@ def check_failing_tests_all(
                 )
                 return 1
 
+            examined += 1
+
             # Say out loud which snapshot is standing behind this file, so a reader can
             # tell at a glance why a failing validation is about to be accepted.
-            print(f"🔍 Negative fixture: {test_path}", flush=True)
-            print(f"   Paired snapshot: {expected_path_display}", flush=True)
+            if recording_new:
+                print(f"🔍 Recording candidate: {test_path}", flush=True)
+                print(f"   Snapshot to write: {expected_path_display}", flush=True)
+            else:
+                print(f"🔍 Negative fixture: {test_path}", flush=True)
+                print(f"   Paired snapshot: {expected_path_display}", flush=True)
 
             # Validate single file (fixtures/schemas resolved via catalog)
             result = validator.validate([test_abs_path])
@@ -499,6 +527,18 @@ def check_failing_tests_all(
             print("\n", flush=True)
 
             if result.return_code == 210:
+                if update_expected and result.report_graph is None:
+                    # The fixture "failed" only because nothing could check it.
+                    # Recording that pins the misconfiguration into the snapshot, and
+                    # the fixture then passes forever without a shape ever looking at
+                    # it — the exact failure mode this check exists to prevent.
+                    print(
+                        f"\n❌ Refusing to record {expected_path_display}: validation "
+                        f"did not produce a SHACL report. {result.report_text}",
+                        file=sys.stderr,
+                        flush=True,
+                    )
+                    return ReturnCodes.CONFORMANCE_ERROR
                 if update_expected:
                     expected_output_path.write_text(output, encoding="utf-8")
                     print(
@@ -551,6 +591,19 @@ def check_failing_tests_all(
                     # --- DEBUGGING BLOCK END ---
 
                     return 1
+            elif recording_new and result.return_code == ReturnCodes.SUCCESS:
+                # Nothing to record: a file that passes validation is not a negative
+                # fixture, and writing a snapshot of a *passing* run would invent one.
+                # Not an error — a recording run is allowed to be pointed at a mixed
+                # directory — but it must say what it decided.
+                print(
+                    f"⏭️  {test_path} passed validation (code {result.return_code}), so "
+                    f"it is not a negative fixture. No snapshot written; it stays "
+                    f"ordinary data for check-data-conformance.",
+                    flush=True,
+                )
+                examined -= 1
+                continue
             else:
                 print(
                     f"\n❌ {test_path} is paired with {expected_path_display}, so it is "
@@ -562,6 +615,24 @@ def check_failing_tests_all(
                     flush=True,
                 )
                 return result.return_code or 1
+
+    if examined == 0 and require_fixtures:
+        # The caller asked for these files to be checked as negative fixtures and none
+        # of them were. Reporting success here is how a recording run that wrote no
+        # snapshot, and a check that verified no file, both used to pass.
+        print(
+            "\n❌ Error: no negative fixtures were checked. A data file counts as one "
+            "when a .expected snapshot sits beside it (same stem, .expected suffix); "
+            "pass --update-expected to record the snapshots for files that fail.",
+            file=sys.stderr,
+            flush=True,
+        )
+        return ReturnCodes.GENERAL_ERROR
+
+    if examined and update_expected:
+        print(f"\n✅ {examined} negative fixture snapshot(s) recorded.", flush=True)
+    elif examined:
+        print(f"\n✅ {examined} negative fixture(s) behaved as recorded.", flush=True)
 
     return 0
 
@@ -634,42 +705,76 @@ def validate_artifact_coherence_all(
     return 0
 
 
-def check_environment() -> None:
-    """Enforce Python version and virtual environment requirements.
+def _running_from_source_checkout() -> bool:
+    """True when OMB's data root is a repository checkout rather than an install.
 
-    Skips virtual-environment check when running in CI (``GITHUB_ACTIONS``
-    env var set) or when ``--skip-env-check`` is passed.
+    An installed wheel carries its data inside the package (``omb/data/``); a checkout
+    does not, and has the repository's own development files instead. ``pyproject.toml``
+    beside the data root is the cheap, unambiguous marker.
+    """
+    return (builtin_data_root() / "pyproject.toml").is_file()
+
+
+def check_environment(skip_env_check: bool = False) -> int:
+    """Check the interpreter is usable and return a process exit code.
+
+    Python version is a hard requirement: the code uses 3.12 syntax, so an older
+    interpreter cannot run it at all.
+
+    The virtual-environment check is a *development* guard, not a runtime requirement,
+    and only applies when running from a source checkout — there, "not in a venv"
+    almost always means the project's own ``.venv`` was not activated and the
+    dependencies are missing or stale. It used to be a hard exit for everyone, which
+    broke every legitimate way of running an installed package outside a venv: a
+    container that pip-installs into the system interpreter, a CI runner that is not
+    GitHub Actions (the one platform special-cased here), a ``pip install --user``.
+    Worse, it ran before argument parsing, so even ``onto-validate --help`` exited 1.
+
+    It is now a warning, and ``--skip-env-check`` — which this function's docstring has
+    promised for some time without the flag existing — silences it.
+
+    Returns:
+        0 when the interpreter is usable, non-zero when it is not.
     """
     if sys.version_info < (3, 12):
         print(
             f"❌ Error: This project requires Python 3.12+. You are running {sys.version.split()[0]}.",
             file=sys.stderr,
         )
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
 
-    in_venv = (
-        (sys.prefix != sys.base_prefix)
-        or ("CONDA_DEFAULT_ENV" in os.environ)
-        or ("GITHUB_ACTIONS" in os.environ)
-    )
+    if skip_env_check:
+        return ReturnCodes.SUCCESS
 
-    if not in_venv:
+    in_venv = (sys.prefix != sys.base_prefix) or ("CONDA_DEFAULT_ENV" in os.environ)
+
+    if not in_venv and _running_from_source_checkout():
         print(
-            "❌ Error: You are NOT running inside a virtual environment.",
+            "⚠️  Warning: running from a source checkout without an active virtual "
+            "environment. Dependencies may be missing or stale — `just setup` creates "
+            "the project environment. Pass --skip-env-check to silence this.",
             file=sys.stderr,
         )
-        sys.exit(1)
+
+    return ReturnCodes.SUCCESS
 
 
 # --- CLI / Main Logic ---
-def main():
-    """Run validation checks based on arguments."""
+def main() -> int:
+    """Run validation checks based on arguments and return a process exit code.
 
-    check_environment()
+    Returns the code rather than calling ``sys.exit`` so both entry points agree: the
+    ``onto-validate`` console script exits with what this returns, and ``python -m omb``
+    passes it to ``SystemExit``. Previously it returned ``None`` and exited from the
+    inside, which meant the console script's own exit status was always 0.
+    """
+    configure_cli_logging()
+    ensure_utf8_output()
 
     # Argument Parsing
     # Use the module docstring (__doc__) as the description
     parser = argparse.ArgumentParser(
+        prog="onto-validate",
         description=__doc__,  # <--- CHANGED: Uses the detailed docstring from the top of the file
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -789,7 +894,20 @@ def main():
         "Credentials and DID documents that reuse IRIs across files.",
     )
 
+    target_group.add_argument(
+        "--skip-env-check",
+        action="store_true",
+        default=False,
+        help="Silence the development warning about running from a source checkout "
+        "without an active virtual environment. Installed packages never emit it.",
+    )
+
     args = parser.parse_args()
+
+    env_code = check_environment(skip_env_check=args.skip_env_check)
+    if env_code != ReturnCodes.SUCCESS:
+        return env_code
+
     _enable_http = args.remote
 
     # DATA PATHS MODE: User specified file/directory paths
@@ -810,16 +928,21 @@ def main():
                     file=sys.stderr,
                 )
 
+        if len(valid_paths) != len(data_paths):
+            return ReturnCodes.GENERAL_ERROR
+
         if not valid_paths:
             print("❌ Error: No valid paths provided.", file=sys.stderr)
-            sys.exit(1)
+            return ReturnCodes.GENERAL_ERROR
 
         # Auto-discover top-level files and fixture mappings
-        top_level_files, iri_to_file, metadata = discover_data_hierarchy(valid_paths)
+        top_level_files, iri_to_file, metadata = discover_data_hierarchy(
+            valid_paths, include_did_documents=True
+        )
 
         if not top_level_files:
-            print("❌ Error: No top-level files found to validate.", file=sys.stderr)
-            sys.exit(1)
+            print("❌ Error: No JSON-LD data files found to validate.", file=sys.stderr)
+            return ReturnCodes.GENERAL_ERROR
 
         print(f"   Found {len(top_level_files)} top-level file(s) to validate")
         print(f"   Found {metadata['fixture_count']} fixture(s) for IRI resolution")
@@ -853,26 +976,38 @@ def main():
                             f"📦 Registered artifact domains: {', '.join(registered)}",
                             flush=True,
                         )
+                    else:
+                        # Silence here meant a misnamed or half-generated artifacts
+                        # directory looked exactly like a correct one, all the way to
+                        # "validation passed".
+                        print(
+                            f"⚠️  Warning: no artifact domains found in {ad}. Expected "
+                            f"{ad}/{{domain}}/{{domain}}.owl.ttl (plus .shacl.ttl, "
+                            f".context.jsonld).",
+                            file=sys.stderr,
+                            flush=True,
+                        )
                 else:
                     print(
                         f"⚠️  Warning: Artifact directory does not exist: {ad}",
                         file=sys.stderr,
                     )
 
-        # Create temporary domain with the files to validate. In per-resource
-        # mode there are no "fixtures": every document (including DID documents
-        # that would otherwise only be used for cross-reference resolution) is
-        # validated as its own isolated resource, so fold the fixture files in.
+        # Discovery includes all requested documents, while sibling files are only
+        # registered for reference resolution. Per-resource uses these same inputs.
         domain_files = list(top_level_files)
-        if args.per_resource and iri_to_file:
-            existing = {Path(f).resolve() for f in domain_files}
-            fixture_files = sorted({Path(f).resolve() for f in iri_to_file.values()})
-            domain_files += [f for f in fixture_files if f not in existing]
-        temp_domain = catalog_resolver.create_temporary_domain(domain_files)
+        # A recording run classifies every named file as a candidate negative fixture:
+        # the snapshot that normally does the classifying is the very thing it is about
+        # to write. Only for `--run check-failing-tests --update-expected`, so an
+        # ordinary run still keeps the snapshot-pairing rule as the single criterion.
+        recording_run = args.update_expected and args.run == "check-failing-tests"
+        temp_domain = catalog_resolver.create_temporary_domain(
+            domain_files, treat_all_as_negative=recording_run
+        )
 
         if not temp_domain:
             print("❌ Error: Failed to create temporary domain.", file=sys.stderr)
-            sys.exit(1)
+            return ReturnCodes.GENERAL_ERROR
 
         # Use temporary domain like a regular catalog domain
         ontology_domains = [temp_domain]
@@ -912,7 +1047,7 @@ def main():
             print("Available test domains:", sorted(available_domains))
             if artifact_domains:
                 print("Available artifact domains:", sorted(artifact_domains))
-            sys.exit(1)
+            return ReturnCodes.GENERAL_ERROR
 
         print(f"Detected ontology domains: {ontology_domains}", flush=True)
 
@@ -924,7 +1059,7 @@ def main():
 
         if not ontology_domains:
             print("No ontology domains to check in tests/catalog-v001.xml. Exiting.")
-            sys.exit(0)
+            return ReturnCodes.SUCCESS
 
         print(f"Detected ontology domains: {ontology_domains}", flush=True)
 
@@ -949,7 +1084,7 @@ def main():
             "   This check requires catalog structure with domain artifacts.",
             file=sys.stderr,
         )
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
 
     check_map = {
         "check-syntax": [
@@ -990,6 +1125,11 @@ def main():
                     allow_online=_allow_online,
                     update_expected=args.update_expected,
                     allow_warnings=args.allow_warnings,
+                    # Only when the user named both the files and this check: then
+                    # "no negative fixtures found" is a failed request, not an empty
+                    # one. Under `--run all`, or in domain mode, having none is normal.
+                    require_fixtures=bool(data_paths)
+                    and args.run == "check-failing-tests",
                 ),
             )
         ],
@@ -1027,12 +1167,12 @@ def main():
                 file=sys.stderr,
                 flush=True,
             )
-            sys.exit(rc)
+            return rc
 
     print(f"\n✅ {args.run.upper()} checks completed successfully!", flush=True)
 
 
 if __name__ == "__main__":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
-    main()
+    # UTF-8 output is set up inside main() (see ensure_utf8_output), so the console
+    # script and `python -m omb` get it too — not only this path.
+    raise SystemExit(main())

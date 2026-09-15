@@ -13,6 +13,7 @@ Tests cover:
 """
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -143,7 +144,35 @@ def test_check_environment_passes_in_venv():
     """check_environment() should not raise when running inside a venv."""
     # This test runs inside a venv, so it should pass without error.
     # We just verify it's callable and doesn't crash in normal test env.
-    validation_suite.check_environment()
+    assert validation_suite.check_environment() == 0
+
+
+def test_check_environment_outside_a_venv_warns_but_does_not_fail(monkeypatch, capsys):
+    """Running outside a virtual environment must not stop an installed package.
+
+    The venv requirement is a development guard: it used to exit(1) for everyone, before
+    argument parsing, which broke pip-installed use in containers and on CI platforms
+    other than GitHub Actions — even `--help` could not run.
+    """
+    monkeypatch.setattr("sys.base_prefix", sys.prefix)
+    monkeypatch.delenv("CONDA_DEFAULT_ENV", raising=False)
+
+    assert validation_suite.check_environment() == 0
+
+    captured = capsys.readouterr()
+    # Warned only when the data root is a checkout, which it is while testing.
+    if validation_suite._running_from_source_checkout():
+        assert "virtual environment" in captured.err
+    assert "❌" not in captured.err
+
+
+def test_check_environment_skip_flag_silences_the_warning(monkeypatch, capsys):
+    """--skip-env-check silences it — the flag the docstring long promised."""
+    monkeypatch.setattr("sys.base_prefix", sys.prefix)
+    monkeypatch.delenv("CONDA_DEFAULT_ENV", raising=False)
+
+    assert validation_suite.check_environment(skip_env_check=True) == 0
+    assert capsys.readouterr().err == ""
 
 
 # =============================================================================

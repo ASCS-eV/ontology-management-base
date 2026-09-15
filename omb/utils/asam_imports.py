@@ -50,7 +50,7 @@ from pathlib import Path
 from typing import Dict, List, Tuple
 
 from omb.core.constants import ASAM_STANDARDS_ROOT, ASAM_SUBMODULE_HINT
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 
 logger = get_logger(__name__)
 
@@ -228,6 +228,7 @@ def _run_tests() -> bool:
 
 
 def main() -> int:
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
