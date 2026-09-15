@@ -13,8 +13,8 @@ migration. Correctness fixes can turn previously unchecked inputs into failures.
 | Feature | Supported interface | Inputs, effects and failures | Automated evidence |
 |---|---|---|---|
 | Positive validation | `omb.api.validate_data`, `onto-validate --run check-data-conformance`, `onto-check-conformance` | JSON-LD `.json`/`.jsonld` files or directories; bundled or caller artifacts; no data writes. No coverage, missing shapes and violations fail. | `test_missing_shapes_never_pass`, `test_every_input_needs_active_coverage`, `test_validation_commands_and_bundled_coherence` |
-| Negative fixtures | `omb.api.check_negative_fixtures`, `onto-validate --run check-failing-tests` | Each data file with a same-stem `.expected` snapshot is verified. Missing fixtures, changed reports and unexpected conformance fail. | `test_first_snapshots_and_mixed_did_snapshot_drift` |
-| Snapshot recording | API `update=True`, CLI `--update-expected` | Every requested data file is a candidate. Writes snapshots for actual SHACL failures; refuses setup/coverage failures. A run recording no negative fixtures fails. Review snapshot changes before committing. | `test_first_snapshots_and_mixed_did_snapshot_drift`, `test_negative_fixture_errors_are_reported_without_recording` |
+| Negative fixtures | `omb.api.check_negative_fixtures`, `onto-validate --run check-failing-tests` | Each data file with a same-stem `.expected` snapshot is verified. API checks and explicit CLI data-path checks fail when no fixture exists; changed reports and unexpected conformance fail. | `test_first_snapshots_and_mixed_did_snapshot_drift` |
+| Snapshot recording | API `update=True`, CLI `--update-expected` | API and CLI data-path recording consider every requested data file. Writes snapshots for actual SHACL failures; refuses setup/coverage failures. These recording runs fail if no negative snapshot is written. Domain mode uses catalog fixtures. Review snapshot changes before committing. | `test_first_snapshots_and_mixed_did_snapshot_drift`, `test_negative_fixture_errors_are_reported_without_recording` |
 | Syntax | `onto-validate --run check-syntax` | Checks JSON/Turtle syntax, without asserting data conformance. In data-paths mode inputs are JSON-LD files. Domain mode also checks catalog artifacts. | `test_syntax_cli_rejects_malformed_json`, source syntax unit tests |
 | OWL/SHACL coherence | `onto-check-coherence DOMAIN [--root ROOT]`, suite `--run check-artifact-coherence --domain DOMAIN` | Checks shape target classes against OWL using catalogs. `--root` selects a complete catalog root. Data-paths `--run all` does not run coherence. | `test_validation_commands_and_bundled_coherence`, source coherence unit tests |
 | Documentation generation | `onto-generate-docs --artifacts DIR --output DIR` | Writes caller-owned documentation; creates missing consumer catalog pages. See [generator paths](generators.md). | `test_generators_write_to_caller_output`, generator unit tests |
@@ -82,7 +82,9 @@ metadata, not sufficient proof of coverage. In per-resource mode `report_graph` 
   fixtures; use `--run all` to verify their snapshots as well.
 - Negative API reports use `ok` as the verdict and `return_code` 0/210. Inspect both
   `errors` and `failures` for diagnostics. CLI snapshot mismatch/no fixtures returns 1.
-  CLI argument errors return 2. Generator failures return nonzero.
+  Domain checks can skip domains without negative fixtures. CLI syntax checks return
+  101 for malformed JSON and 102 for malformed Turtle; argument errors return 2.
+  Generator failures return nonzero.
 - Validation does not write input files; explicit recording and generation do.
   The API does not configure process logging or print. Host handlers can receive
   `omb.*` log records. Console output uses UTF-8; automate using exit codes and Python
