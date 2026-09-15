@@ -57,6 +57,8 @@ import argparse
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Union
+from omb.core.logging import configure_cli_logging
+
 
 # Type alias for flexible path input (single or multiple)
 PathsInput = Union[str, Path, List[Union[str, Path]]]
@@ -671,6 +673,7 @@ def _run_tests() -> bool:
 
 def main():
     """CLI entry point for file_collector."""
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description="Collect files by extension from paths"
     )

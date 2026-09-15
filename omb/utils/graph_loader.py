@@ -81,7 +81,7 @@ from rdflib import Graph
 
 from omb.core.constants import FAST_STORE
 from omb.core.iri_utils import did_web_to_url, is_did_web
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.utils.print_formatter import normalize_path_for_display
 
 # Module logger
@@ -648,6 +648,7 @@ ex:subject a ex:Thing .
 
 def main():
     """CLI entry point for graph_loader."""
+    configure_cli_logging()
     parser = argparse.ArgumentParser(description="Load and inspect RDF graphs")
     parser.add_argument(
         "files",

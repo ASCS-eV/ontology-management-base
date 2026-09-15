@@ -59,14 +59,50 @@ flowchart TD
 - **Documentation** — Guides, architecture, and specifications (`docs/`)
 - **Standard References** — ASAM OpenX specs as submodule (`submodules/asam-openx-standards/`)
 
+## Use It in Your Own Repository
+
+If you model your data (in LinkML or otherwise), generate OWL/SHACL/JSON-LD artifacts,
+and want your test suite to prove that your shapes accept what they should and reject
+what they should not, install the package — no clone required:
+
+```bash
+pip install ontology-management-base     # or: uv add ontology-management-base
+```
+
+```bash
+# data that must conform, validated against your generated artifacts
+onto-validate --run check-data-conformance --data-paths tests/data/valid --artifacts artifacts
+
+# data that must fail, checked against its recorded .expected snapshot
+onto-validate --run check-failing-tests --data-paths tests/data/invalid --artifacts artifacts
+```
+
+```python
+from omb.api import check_negative_fixtures, validate_data
+
+result = validate_data(["tests/data/valid"], artifacts=["artifacts"])
+assert result.conforms, result.report_text
+
+report = check_negative_fixtures(["tests/data/invalid"], artifacts=["artifacts"])
+assert report.ok, "\n".join(f.message for f in report.failures)
+```
+
+The wheel bundles OMB's own ontologies, imports and registry, so validation works
+offline and without a checkout. Runtime dependencies are `rdflib`, `pyshacl` and
+`oxrdflib`. Full guide: [Python API](https://ascs-ev.github.io/ontology-management-base/validation/python-api/).
+
 ## Requirements
+
+Using the package: **Python ≥ 3.12** and nothing else.
+
+Developing the ontologies in this repository:
 
 - **Python ≥ 3.12** (required — older versions will fail with syntax errors)
 - **Git**
 - **uv** ([installation guide](https://docs.astral.sh/uv/getting-started/installation/))
 - **just** ([installation packages](https://just.systems/man/en/packages.html))
 
-## Installation
+## Installation (for development)
 
 ```bash
 git clone https://github.com/ASCS-eV/ontology-management-base.git

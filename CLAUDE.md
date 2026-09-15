@@ -69,6 +69,10 @@ just registry-update
 - `onto-check-conformance` → `conformance_validator:main`
 - `onto-check-coherence` → `coherence_validator:main`
 - `onto-generate-docs` → `properties_updater:main`
+- `onto-generate-context` → `context_generator:main`
+
+Each `main()` returns its exit code (the console script exits with it); none of them
+requires a virtual environment, and all force UTF-8 output.
 
 ## Architecture
 
@@ -76,13 +80,20 @@ just registry-update
 
 ```
 omb/
-├── core/           # Foundation (no internal deps) - constants, logging, result codes, IRI utils
-├── utils/          # Catalog I/O + graph loading - depends on core/
-└── validators/     # Validation CLI - depends on core/ + utils/
-    └── shacl/      # SHACL validation internals (ShaclValidator, schema discovery, inference)
+├── api.py          # PUBLIC API (validate_data, check_negative_fixtures) - the supported surface
+├── core/           # Foundation (no internal deps) - constants, logging, result codes, IRI utils,
+│                   #   paths (built-in data root), negative_fixtures (the .expected pairing rule)
+├── utils/          # Catalog I/O + graph loading + generators - depends on core/
+├── validators/     # Validation CLI - depends on core/ + utils/
+│   └── shacl/      # SHACL validation internals (ShaclValidator, schema discovery, inference)
+├── authhelper/     # Optional [publish] extra only
+└── uploaders/      # Optional [publish] extra only
 ```
 
 **Dependency rule:** Never import upward (utils cannot import from validators).
+`api.py` sits above all of them and is the only module other repositories should import;
+everything else is internal and may change in any release. See
+`docs/validation/python-api.md`.
 
 ### Catalog-Driven Design
 
@@ -92,7 +103,7 @@ All file discovery goes through XML catalogs. Validators never scan the filesyst
 |--------|----------------|
 | `registry_updater.py` | WRITES catalogs, uses `file_collector.py` for discovery |
 | `registry_resolver.py` | READS catalogs, resolves IRIs to paths |
-| `file_collector.py` | Shared file discovery utilities (used by updater ONLY) |
+| `file_collector.py` | Shared file discovery: catalog building (`registry_updater`) and `--data-paths` hierarchy discovery (`validation_suite`, `api`). Never for resolving what a validator should load — that is the catalogs' job. |
 
 ### Catalog Locations
 
@@ -106,7 +117,11 @@ Four checks run in sequence (selectable via `--run`):
 1. **check-syntax** — JSON/Turtle well-formedness
 2. **check-artifact-coherence** — SHACL targets exist in OWL (domain mode only)
 3. **check-data-conformance** — SHACL validation of instance data
-4. **check-failing-tests** — Invalid data in `tests/data/{domain}/invalid/` fails as expected, matched against `.expected` files (domain mode only)
+4. **check-failing-tests** — Negative fixtures fail as expected, matched against their `.expected` snapshot. A data file is a negative fixture *iff* a `.expected` snapshot sits beside it (same stem), so this works identically in domain mode and data-paths mode. `--update-expected` records snapshots, including the first one for a new fixture.
+
+**Vacuity guard:** validation fails when no SHACL shape was loaded for the data. An empty
+shapes graph is conformant by definition, so without this a forgotten `--artifacts`, a
+half-generated artifacts directory or an unknown `@type` reported "Validation PASSED".
 
 **SHACL conformance detail** (check 3 — the most complex path):
 Load JSON-LD data → extract `@type` IRIs → discover matching SHACL shapes via catalog → load OWL+SHACL graphs → resolve `did:web:` fixture IRIs from test catalog → apply RDFS inference → run pyshacl
@@ -251,7 +266,7 @@ Update both files **before** presenting the final result to the user. If a sessi
 ## Common Mistakes to Avoid
 
 - Bypassing catalogs with direct filesystem scanning in validators
-- Using `file_collector.py` outside of `registry_updater.py`
+- Using `file_collector.py` to decide what a *validator* loads (catalogs decide that); building catalogs or discovering a `--data-paths` hierarchy with it is what it is for
 - Using `os.path` instead of `pathlib.Path`
 - Silent `None` returns instead of raising exceptions
 - Using `print()` for internal progress (use `logger`)

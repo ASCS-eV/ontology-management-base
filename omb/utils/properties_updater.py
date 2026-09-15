@@ -48,7 +48,7 @@ from typing import Dict, Iterable, List, Optional, Tuple
 import rdflib
 from rdflib import OWL, RDF, RDFS, URIRef
 
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
 
 logger = get_logger(__name__)
@@ -902,14 +902,16 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main() -> None:
-    """CLI entry point."""
+def main() -> int:
+    """CLI entry point. Returns a process exit code."""
+    configure_cli_logging()
     args = _parse_args()
     if args.verbose:
         logger.setLevel("DEBUG")
 
     generate_all()
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

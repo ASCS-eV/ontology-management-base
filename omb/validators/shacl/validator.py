@@ -252,6 +252,36 @@ class ShaclValidator:
                 **routing,
             )
 
+        # No shapes, no verdict. pyshacl reports conformance against an empty shapes
+        # graph, so every misconfiguration that ends with zero shapes - a forgotten
+        # --artifacts, an artifacts directory whose {domain}.owl.ttl is missing or
+        # misnamed, a typo'd path, an @type no catalog knows - used to print
+        # "Validation PASSED" and exit 0. A validator that checked nothing must never
+        # look like one that checked everything, so this fails regardless of strict
+        # mode: it is not a strictness preference, it is the absence of a result.
+        if routing["shapes_loaded"] == 0 and len(data_graph) > 0:
+            unresolved = sorted(self._unresolved_types)
+            hint = (
+                f"unresolved @type IRI(s): {', '.join(unresolved[:5])}"
+                if unresolved
+                else "the discovered @type IRIs resolved, but no SHACL shapes were found for them"
+            )
+            return ValidationResult(
+                conforms=False,
+                return_code=210,
+                report_text=(
+                    "No SHACL shapes were loaded, so nothing could be validated "
+                    f"({hint}). Register the artifacts that define these types — "
+                    "`--artifacts <dir>` on the CLI, `artifacts=[...]` in the API — "
+                    "and check each domain directory holds {domain}.owl.ttl and "
+                    "{domain}.shacl.ttl."
+                ),
+                files_validated=[self._rel_path(f) for f in jsonld_files],
+                warnings=[f"Unresolved @type: {t}" for t in unresolved],
+                errors=["No SHACL shapes loaded for the supplied data"],
+                **routing,
+            )
+
         # Step 3: Apply inference if requested
         self._log(f"Step 3: Applying Inference ({self.inference_mode})...")
         combined_graph, inferred_count = self._apply_inference(

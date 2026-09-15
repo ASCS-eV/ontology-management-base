@@ -63,11 +63,20 @@ Everything else follows from the pairing:
 | Snapshot present, data no longer fails | Exit non-zero — the snapshot is stale, or the data was fixed and the snapshot should be deleted |
 | No snapshot | Ordinary data: conformance-checked, real violations, exit `210` |
 
-Record a snapshot from the live report with `--update-expected`:
+Record a snapshot from the live report with `--update-expected`. This also works for a
+file that has **no** snapshot yet — that is how a fixture is created:
 
 ```bash
 just validate --run check-failing-tests --data-paths ./my/case.json --update-expected
 ```
+
+In a recording run every named file is a candidate fixture: those that fail get a
+snapshot written, those that pass are reported as "not a negative fixture" and left as
+ordinary data. Review the recorded snapshot before committing it.
+
+An explicit `--run check-failing-tests` over `--data-paths` that finds no negative
+fixture at all exits non-zero and says so, rather than reporting success for a run that
+verified nothing.
 
 `tests/data/{domain}/{valid,invalid}/` remains this repository's filing convention and is
 how fixtures are discovered, but it grants nothing: a fixture filed under `invalid/` with no
@@ -85,11 +94,25 @@ and the pairing ever disagree, so the convention stays honest without being load
 
 ## External Artifacts
 
-Use `--artifacts` to register external artifact directories (for schema resolution):
+Use `--artifacts` to register external artifact directories, so data typed with a
+vocabulary OMB does not ship can find its shapes:
 
 ```bash
 just validate --data-paths ./data.json --artifacts ../other-repo/artifacts
 ```
+
+Each directory holds `{domain}/{domain}.owl.ttl` (plus `{domain}.shacl.ttl` and
+`{domain}.context.jsonld`) — the layout `gen-owl`/`gen-shacl`/`gen-jsonld-context`
+produce. A subdirectory without the `.owl.ttl` is reported and skipped.
+
+!!! warning "A run that loads no shapes fails"
+
+    SHACL calls an empty shapes graph conformant, so a forgotten or misspelled
+    `--artifacts`, a half-generated artifacts directory, or an `@type` no catalog knows
+    would otherwise print "Validation PASSED" having checked nothing. When no shape is
+    loaded for the supplied data, validation fails with `210` and names the unresolved
+    types instead. Add `--strict` to fail on *any* unresolved IRI, not just on an empty
+    shapes graph.
 
 ## Inference Mode
 

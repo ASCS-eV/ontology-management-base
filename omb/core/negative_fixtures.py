@@ -22,10 +22,13 @@ must look like. A directory name promises neither.
 """
 
 from pathlib import Path
-from typing import List
+from typing import Iterable, List
 
 #: Suffix of the file holding a negative fixture's recorded validation report.
 EXPECTED_SUFFIX = ".expected"
+
+#: Extensions treated as instance data when scanning for fixtures.
+DATA_SUFFIXES = {".json", ".jsonld"}
 
 
 def expected_snapshot_path(data_path: Path) -> Path:
@@ -41,6 +44,39 @@ def expected_snapshot_path(data_path: Path) -> Path:
 def is_negative_fixture(data_path: Path) -> bool:
     """True when ``data_path`` has a paired ``.expected`` snapshot beside it."""
     return expected_snapshot_path(data_path).is_file()
+
+
+def collect_negative_fixtures(
+    paths: Iterable[Path], *, include_unpaired: bool = False
+) -> List[Path]:
+    """Find the negative fixtures among ``paths``, sorted and deduplicated.
+
+    Files are taken as they are found on disk — directories are scanned recursively —
+    without any reference analysis. That matters: fixtures routinely reference each
+    other, and a hierarchy walk that asks "which file is not referenced by another?"
+    can answer "none of them" for a directory of them, leaving a caller with nothing to
+    check and no idea why.
+
+    Args:
+        paths: Files or directories to scan.
+        include_unpaired: Treat every data file as a fixture, snapshot or not. For a
+            recording run, where the snapshot that would identify it is what the run is
+            about to write.
+    """
+    found: set[Path] = set()
+
+    for path in paths:
+        path = Path(path)
+        candidates = [path] if path.is_file() else path.rglob("*")
+        for candidate in candidates:
+            if not candidate.is_file():
+                continue
+            if candidate.suffix.lower() not in DATA_SUFFIXES:
+                continue
+            if include_unpaired or is_negative_fixture(candidate):
+                found.add(candidate.resolve())
+
+    return sorted(found)
 
 
 def snapshot_files_field(files_validated: List[str]) -> List[str]:

@@ -54,7 +54,7 @@ from rdflib.term import Node
 
 from omb.core.constants import FAST_STORE, Extensions
 from omb.core.iri_utils import get_local_name, normalize_iri
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
 from omb.utils.graph_loader import load_graph, load_graphs
 from omb.utils.print_formatter import normalize_path_for_display
@@ -823,6 +823,7 @@ def _run_tests() -> bool:
 
 def main() -> int:
     """Main entry point."""
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description="Generate JSON-LD context files from OWL/SHACL artifacts"
     )

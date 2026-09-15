@@ -46,7 +46,6 @@ See also:
 
 import json
 import re
-import warnings
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -131,14 +130,14 @@ class RegistryResolver:
         """Load docs/registry.json."""
         registry_path = self.root_dir / "docs" / "registry.json"
         if not registry_path.exists():
-            warnings.warn(f"Registry file not found: {registry_path}")
+            logger.warning("Registry file not found: %s", registry_path)
             return
 
         try:
             with registry_path.open("r", encoding="utf-8") as f:
                 self._registry = json.load(f)
         except Exception as e:
-            warnings.warn(f"Could not load registry: {e}")
+            logger.warning("Could not load registry: %s", e)
 
     def _load_catalog(self) -> None:
         """
@@ -196,7 +195,7 @@ class RegistryResolver:
                             self._fixtures_catalog[test_id] = path
 
         except Exception as e:
-            warnings.warn(f"Could not parse test catalog: {e}")
+            logger.warning("Could not parse test catalog: %s", e)
 
     def _normalize_catalog_path(self, base_dir: str, uri: str) -> Path:
         """
@@ -243,14 +242,14 @@ class RegistryResolver:
         """
         catalog_path = self.root_dir / "artifacts" / "catalog-v001.xml"
         if not catalog_path.exists():
-            warnings.warn(f"Artifacts catalog not found: {catalog_path}")
+            logger.warning("Artifacts catalog not found: %s", catalog_path)
             return
 
         try:
             tree = ET.parse(catalog_path)
             root = tree.getroot()
         except Exception as e:
-            warnings.warn(f"Could not parse artifacts catalog: {e}")
+            logger.warning("Could not parse artifacts catalog: %s", e)
             return
 
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
@@ -335,7 +334,7 @@ class RegistryResolver:
             tree = ET.parse(catalog_path)
             root = tree.getroot()
         except Exception as e:
-            warnings.warn(f"Could not parse imports catalog: {e}")
+            logger.warning("Could not parse imports catalog: %s", e)
             return {}, {}, {}
 
         ns = {"cat": "urn:oasis:names:tc:entity:xmlns:xml:catalog"}
@@ -809,7 +808,9 @@ class RegistryResolver:
                 "category": "test-data",
             }
 
-    def create_temporary_domain(self, paths: List[Path | str]) -> Optional[str]:
+    def create_temporary_domain(
+        self, paths: List[Path | str], treat_all_as_negative: bool = False
+    ) -> Optional[str]:
         """
         Create a temporary domain from already-discovered JSON-LD files.
 
@@ -819,6 +820,13 @@ class RegistryResolver:
 
         Args:
             paths: List of JSON-LD file paths
+            treat_all_as_negative: Register every file as a negative fixture even when
+                no ``.expected`` snapshot sits beside it yet. This is what makes
+                ``--update-expected`` able to record a *first* snapshot: the normal rule
+                asks for the snapshot that the run is about to write, so a brand-new
+                fixture was classified as ordinary data, ``check-failing-tests`` found
+                nothing to do, and the run reported success having recorded nothing.
+                Only ever set for an explicit recording run.
 
         Returns:
             Temporary domain name, or None if no files found
@@ -845,14 +853,26 @@ class RegistryResolver:
         # therefore means the same thing it would mean inside the repository, and the
         # record of what a failure must look like is what marks the file as allowed to
         # fail. See ``omb.core.negative_fixtures``.
-        invalid_files = [p for p in unique_file_paths if is_negative_fixture(p)]
-        valid_files = [p for p in unique_file_paths if not is_negative_fixture(p)]
+        if treat_all_as_negative:
+            invalid_files = list(unique_file_paths)
+            valid_files = []
+        else:
+            invalid_files = [p for p in unique_file_paths if is_negative_fixture(p)]
+            valid_files = [p for p in unique_file_paths if not is_negative_fixture(p)]
         for path in invalid_files:
-            logger.info(
-                "Negative fixture: %s is paired with %s, so it is expected to fail",
-                path.name,
-                expected_snapshot_path(path).name,
-            )
+            if is_negative_fixture(path):
+                logger.info(
+                    "Negative fixture: %s is paired with %s, so it is expected to fail",
+                    path.name,
+                    expected_snapshot_path(path).name,
+                )
+            else:
+                logger.info(
+                    "Recording candidate: %s has no %s yet; a snapshot will be written "
+                    "if it fails validation",
+                    path.name,
+                    expected_snapshot_path(path).name,
+                )
         if valid_files:
             self.add_temporary_test_entries(temp_domain, valid_files, test_type="valid")
         if invalid_files:
@@ -895,7 +915,10 @@ class RegistryResolver:
         registered: List[str] = []
 
         if not artifact_dir.is_dir():
+            logger.warning("Artifact directory does not exist: %s", artifact_dir)
             return registered
+
+        skipped: List[str] = []
 
         for child in sorted(artifact_dir.iterdir()):
             if not child.is_dir():
@@ -906,8 +929,12 @@ class RegistryResolver:
             shacl_path = child / f"{domain}.shacl.ttl"
             context_path = child / f"{domain}.context.jsonld"
 
-            # Need at least the ontology file
+            # Need at least the ontology file. Say so out loud: a directory that is
+            # nearly right (generated by a partial run, or named differently from its
+            # files) is otherwise skipped in silence, and the run continues to a
+            # "validation passed" that checked nothing against these shapes.
             if not owl_path.exists():
+                skipped.append(f"{child.name} (no {domain}.owl.ttl)")
                 continue
 
             # Determine repo-relative path for the domain
@@ -951,6 +978,23 @@ class RegistryResolver:
                     )
 
             registered.append(domain)
+
+        if skipped:
+            logger.warning(
+                "Ignored %d directory/directories under %s: %s. Each artifact domain "
+                "must be a directory holding {domain}.owl.ttl (and normally "
+                "{domain}.shacl.ttl, {domain}.context.jsonld).",
+                len(skipped),
+                artifact_dir,
+                "; ".join(skipped),
+            )
+
+        if not registered:
+            logger.warning(
+                "No artifact domains registered from %s — validation will find no "
+                "shapes for types defined there.",
+                artifact_dir,
+            )
 
         # Rebuild IRI index with newly registered domains
         if registered:

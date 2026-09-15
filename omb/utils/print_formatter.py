@@ -10,6 +10,35 @@ from typing import Union
 from rdflib import RDF, Graph, Namespace
 
 
+def ensure_utf8_output() -> None:
+    """Make ``stdout``/``stderr`` able to carry the emoji this package prints.
+
+    Every OMB ``main()`` calls this first. Python picks the console's encoding for
+    ``sys.stdout``, which on Windows is a legacy code page (cp1252) unless UTF-8 mode
+    is on — and the first thing the validation suite prints is "🔍", so an installed
+    ``onto-validate`` died there with ``UnicodeEncodeError`` before doing any work::
+
+        UnicodeEncodeError: 'charmap' codec can't encode character '\\U0001f50d'
+
+    The repository never saw this because its ``justfile`` exports ``PYTHONUTF8=1``,
+    and the equivalent stream re-wrapping lived under ``if __name__ == "__main__"``,
+    which the ``onto-validate`` console script and ``python -m omb`` both bypass.
+
+    Safe to call repeatedly, and on streams that cannot be reconfigured (a pipe
+    replaced by a test harness, a ``StringIO``): those are left untouched.
+    """
+    for stream_name in ("stdout", "stderr"):
+        stream = getattr(sys, stream_name, None)
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="backslashreplace")
+        except (ValueError, OSError):
+            # Detached or already-closed stream: printing is the caller's problem now.
+            continue
+
+
 def normalize_text(text: str) -> str:
     """Standardizes text by scrubbing variable blank node IDs for test comparison."""
     text = unicodedata.normalize("NFC", text)

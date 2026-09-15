@@ -91,7 +91,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 
 # NOTE: This module uses urllib.request (not the ``requests`` library) for
 # consistency with ``graph_loader.py`` which also uses urllib for HTTPS
@@ -953,6 +953,7 @@ def _run_tests() -> bool:
 
 def main():
     """CLI entry point for http_artifact_resolver."""
+    configure_cli_logging()
     import argparse
     import sys
 
