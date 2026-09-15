@@ -124,6 +124,10 @@ test-failing:
 test-unit:
     uv run --frozen --group dev --extra publish python -m pytest tests/ -q
 
+# Consumer behavior, also exercised in the development container and installed distributions.
+test-contract:
+    {{run}} python -m pytest tests/contract -q
+
 # Check every sh:in that models an ASAM enumeration against its pinned source.
 # Requires the ASAM standards submodules:
 #   git submodule update --init --recursive submodules/asam-openx-standards

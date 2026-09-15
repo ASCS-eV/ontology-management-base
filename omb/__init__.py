@@ -17,8 +17,9 @@ PUBLIC API:
 
 Together with the result types it returns (``omb.core.result.ValidationResult``,
 ``ReturnCodes``, and ``omb.api.FixtureReport``), that is what carries a stability
-promise. Everything else — resolvers, loaders, the validator classes, the CLI
-modules — is internal and may change in any release.
+promise. The five documented console commands and ``python -m omb`` are supported
+interfaces too. Their Python implementation modules, resolvers, loaders and validator
+classes remain internal. See docs/validation/consumer-contract.md.
 
 Importing this package configures nothing: logging, output encoding and exit codes
 are the calling application's business. OMB's own loggers live under the ``omb``

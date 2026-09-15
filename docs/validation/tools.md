@@ -7,7 +7,9 @@ This repository provides a small set of focused tools.
 - `omb.api` — the supported surface for other repositories: `validate_data`,
   `check_negative_fixtures`, `FixtureReport`/`FixtureOutcome`, plus
   `omb.core.result.ValidationResult` and `ReturnCodes`. See [Python API](python-api.md).
-  Everything below is internal and may change in any release.
+  The five installed commands below and `python -m omb` are also supported.
+  Their implementation modules are internal. See the [consumer contract](consumer-contract.md)
+  for feature coverage, defaults, side effects, and verification.
 
 ## Installed Commands
 

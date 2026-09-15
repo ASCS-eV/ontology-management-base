@@ -120,7 +120,6 @@ from typing import List
 
 from omb.core.logging import configure_cli_logging
 from omb.core.negative_fixtures import (
-    collect_negative_fixtures,
     expected_snapshot_path,
     snapshot_files_field,
 )
@@ -528,16 +527,14 @@ def check_failing_tests_all(
             print("\n", flush=True)
 
             if result.return_code == 210:
-                if update_expected and result.shapes_loaded == 0:
+                if update_expected and result.report_graph is None:
                     # The fixture "failed" only because nothing could check it.
                     # Recording that pins the misconfiguration into the snapshot, and
                     # the fixture then passes forever without a shape ever looking at
                     # it — the exact failure mode this check exists to prevent.
                     print(
-                        f"\n❌ Refusing to record {expected_path_display}: no SHACL "
-                        f"shapes were loaded for {test_path}, so its failure says "
-                        f"nothing about the data. Register the artifacts that define "
-                        f"its types (--artifacts) and re-run.",
+                        f"\n❌ Refusing to record {expected_path_display}: validation "
+                        f"did not produce a SHACL report. {result.report_text}",
                         file=sys.stderr,
                         flush=True,
                     )
@@ -594,7 +591,7 @@ def check_failing_tests_all(
                     # --- DEBUGGING BLOCK END ---
 
                     return 1
-            elif recording_new:
+            elif recording_new and result.return_code == ReturnCodes.SUCCESS:
                 # Nothing to record: a file that passes validation is not a negative
                 # fixture, and writing a snapshot of a *passing* run would invent one.
                 # Not an error — a recording run is allowed to be pointed at a mixed
@@ -931,37 +928,21 @@ def main() -> int:
                     file=sys.stderr,
                 )
 
+        if len(valid_paths) != len(data_paths):
+            return ReturnCodes.GENERAL_ERROR
+
         if not valid_paths:
             print("❌ Error: No valid paths provided.", file=sys.stderr)
             return ReturnCodes.GENERAL_ERROR
 
         # Auto-discover top-level files and fixture mappings
-        top_level_files, iri_to_file, metadata = discover_data_hierarchy(valid_paths)
+        top_level_files, iri_to_file, metadata = discover_data_hierarchy(
+            valid_paths, include_did_documents=True
+        )
 
         if not top_level_files:
-            # Every file is referenced by another, so the hierarchy walk calls them all
-            # fixtures. A directory of negative fixtures looks exactly like this —
-            # they cross-reference each other freely — and answering "nothing to
-            # validate" there sends a caller away from the very files they named.
-            paired = [
-                Path(path)
-                for path in collect_negative_fixtures([Path(p) for p in valid_paths])
-            ]
-            if paired:
-                print(
-                    f"   Found {len(paired)} negative fixture(s); none of the supplied "
-                    f"files is top-level, so they are checked against their snapshots."
-                )
-                top_level_files = paired
-            else:
-                print(
-                    "❌ Error: No top-level files found to validate: every discovered "
-                    "file is referenced by another, so all of them were taken for "
-                    "fixtures. Name the file(s) to validate directly, or pass "
-                    "--per-resource to validate each document on its own.",
-                    file=sys.stderr,
-                )
-                return ReturnCodes.GENERAL_ERROR
+            print("❌ Error: No JSON-LD data files found to validate.", file=sys.stderr)
+            return ReturnCodes.GENERAL_ERROR
 
         print(f"   Found {len(top_level_files)} top-level file(s) to validate")
         print(f"   Found {metadata['fixture_count']} fixture(s) for IRI resolution")
@@ -1012,15 +993,9 @@ def main() -> int:
                         file=sys.stderr,
                     )
 
-        # Create temporary domain with the files to validate. In per-resource
-        # mode there are no "fixtures": every document (including DID documents
-        # that would otherwise only be used for cross-reference resolution) is
-        # validated as its own isolated resource, so fold the fixture files in.
+        # Discovery includes all requested documents, while sibling files are only
+        # registered for reference resolution. Per-resource uses these same inputs.
         domain_files = list(top_level_files)
-        if args.per_resource and iri_to_file:
-            existing = {Path(f).resolve() for f in domain_files}
-            fixture_files = sorted({Path(f).resolve() for f in iri_to_file.values()})
-            domain_files += [f for f in fixture_files if f not in existing]
         # A recording run classifies every named file as a candidate negative fixture:
         # the snapshot that normally does the classifying is the very thing it is about
         # to write. Only for `--run check-failing-tests --update-expected`, so an

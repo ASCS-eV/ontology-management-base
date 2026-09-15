@@ -164,19 +164,17 @@ def validate_data(
 
     if not valid_paths:
         return _error_result("No valid paths provided")
+    missing = [str(path) for path in data_paths if not Path(path).exists()]
+    if missing:
+        return _error_result("Data paths do not exist: " + ", ".join(missing))
 
-    top_level_files, iri_to_file, metadata = discover_data_hierarchy(valid_paths)
+    top_level_files, iri_to_file, metadata = discover_data_hierarchy(
+        valid_paths, include_did_documents=True
+    )
     duplicate_warnings = _duplicate_warnings(metadata.get("duplicate_ids", []))
 
-    # Negative fixtures are excluded from conformance checking, exactly as the CLI
-    # excludes them — but silently dropping them let a directory of nothing but
-    # negative fixtures return conforms=True over an empty file list, which is the
-    # one answer that is never true. Name them, and refuse to call it success.
-    #
-    # Found from the supplied paths rather than from top_level_files: fixtures that
-    # cross-reference each other are all "referenced", so the hierarchy can hand back
-    # no top-level file at all, and the caller would then get a bare "nothing to
-    # validate" instead of being pointed at check_negative_fixtures().
+    # Every requested document is input, regardless of its identifier scheme.
+    # Siblings discovered only for reference resolution are not promoted to inputs.
     negative_fixtures = collect_negative_fixtures(valid_paths)
     fixture_warnings = [
         f"Skipped negative fixture (verify with check_negative_fixtures): "
@@ -196,27 +194,13 @@ def validate_data(
             )
             result.return_code = ReturnCodes.SKIPPED
         else:
-            result = _error_result(
-                "No top-level files found to validate: every discovered file is "
-                "referenced by another, so all of them were taken for fixtures. Name "
-                "the file(s) to validate directly, or use per_resource=True to "
-                "validate each document on its own."
-            )
+            result = _error_result("No JSON-LD data files found to validate.")
         result.warnings.extend(duplicate_warnings + fixture_warnings)
         return result
 
     resolver = _build_resolver(active_root, enable_http, iri_to_file, artifacts)
 
     domain_files = list(conformance_files)
-    if per_resource and iri_to_file:
-        existing = {Path(file_path).resolve() for file_path in domain_files}
-        fixture_files = sorted(
-            {Path(file_path).resolve() for file_path in iri_to_file.values()}
-        )
-        domain_files += [
-            file_path for file_path in fixture_files if file_path not in existing
-        ]
-
     temp_domain = resolver.create_temporary_domain(domain_files)
 
     if not temp_domain:
@@ -301,6 +285,11 @@ def check_negative_fixtures(
         report.errors.append("No valid paths provided")
         return report
 
+    missing = [str(path) for path in data_paths if not Path(path).exists()]
+    if missing:
+        report.errors.append("Data paths do not exist: " + ", ".join(missing))
+        return report
+
     candidates = collect_negative_fixtures(valid_paths, include_unpaired=update)
     if not candidates:
         report.errors.append(
@@ -310,7 +299,7 @@ def check_negative_fixtures(
         )
         return report
 
-    _, iri_to_file, _ = discover_data_hierarchy(valid_paths)
+    _, iri_to_file, _ = discover_data_hierarchy(valid_paths, include_did_documents=True)
     resolver = _build_resolver(active_root, enable_http, iri_to_file, artifacts)
 
     validator = ShaclValidator(
@@ -325,6 +314,8 @@ def check_negative_fixtures(
     for data_path in candidates:
         report.outcomes.append(_check_one_fixture(validator, data_path, update=update))
 
+    if update and not any(outcome.recorded for outcome in report.outcomes):
+        report.errors.append("No negative fixture snapshots were recorded.")
     return report
 
 
@@ -339,7 +330,16 @@ def _check_one_fixture(
     snapshot_path = expected_snapshot_path(data_path)
     recording_new = update and not snapshot_path.is_file()
 
-    result = validator.validate([data_path])
+    try:
+        result = validator.validate([data_path])
+    except (RuntimeError, ValueError, OSError) as error:
+        return FixtureOutcome(
+            data_path=data_path,
+            snapshot_path=snapshot_path,
+            ok=False,
+            return_code=ReturnCodes.GENERAL_ERROR,
+            message=str(error),
+        )
     # Reduced to bare filenames so the snapshot stays independent of where the pair
     # lives; see omb.core.negative_fixtures.snapshot_files_field.
     snapshot_result = dataclasses.replace(
@@ -348,7 +348,7 @@ def _check_one_fixture(
     report_text = validator.format_result(snapshot_result)
 
     if result.return_code != ReturnCodes.CONFORMANCE_ERROR:
-        if recording_new:
+        if recording_new and result.return_code == ReturnCodes.SUCCESS:
             return FixtureOutcome(
                 data_path=data_path,
                 snapshot_path=snapshot_path,
@@ -376,7 +376,7 @@ def _check_one_fixture(
         )
 
     if update:
-        if result.shapes_loaded == 0:
+        if result.report_graph is None:
             # The fixture "failed" only because nothing could check it. Recording that
             # would pin the misconfiguration into the snapshot, and the fixture would
             # then pass forever without a shape ever looking at it.
@@ -386,9 +386,8 @@ def _check_one_fixture(
                 ok=False,
                 return_code=result.return_code,
                 message=(
-                    f"Refusing to record {snapshot_path.name}: no SHACL shapes were "
-                    f"loaded for {data_path.name}, so its failure says nothing about "
-                    f"the data. Register the artifacts that define its types."
+                    f"Refusing to record {snapshot_path.name}: {data_path.name} did not "
+                    f"produce a SHACL validation report. {result.report_text}"
                 ),
                 report_text=report_text,
             )

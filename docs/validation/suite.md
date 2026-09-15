@@ -16,7 +16,9 @@ just validate --run check-data-conformance --domain hdmap
 
 ## Data Paths Mode
 
-Use `--data-paths` to validate arbitrary files. Fixtures are auto-discovered from referenced IRIs:
+Use `--data-paths` to validate JSON-LD files. Every document in a requested directory
+is input, including DID documents. Siblings of explicitly named files are available
+for reference resolution only:
 
 ```bash
 just validate --data-paths path/to/data.jsonld
@@ -72,7 +74,8 @@ just validate --run check-failing-tests --data-paths ./my/case.json --update-exp
 
 In a recording run every named file is a candidate fixture: those that fail get a
 snapshot written, those that pass are reported as "not a negative fixture" and left as
-ordinary data. Review the recorded snapshot before committing it.
+ordinary data. A recording run producing no negative snapshots fails. Review the
+recorded snapshot before committing it.
 
 An explicit `--run check-failing-tests` over `--data-paths` that finds no negative
 fixture at all exits non-zero and says so, rather than reporting success for a run that
@@ -109,10 +112,11 @@ produce. A subdirectory without the `.owl.ttl` is reported and skipped.
 
     SHACL calls an empty shapes graph conformant, so a forgotten or misspelled
     `--artifacts`, a half-generated artifacts directory, or an `@type` no catalog knows
-    would otherwise print "Validation PASSED" having checked nothing. When no shape is
-    loaded for the supplied data, validation fails with `210` and names the unresolved
-    types instead. Add `--strict` to fail on *any* unresolved IRI, not just on an empty
-    shapes graph.
+    would otherwise print "Validation PASSED" having checked nothing. Both merged and
+    per-resource validation require an active SHACL target in every input document;
+    empty documents and untargeted inputs fail with `210`. Property shapes and implicit
+    node shapes count too. See the [consumer contract](consumer-contract.md) for strict
+    mode, reference resolution and coverage semantics.
 
 ## Inference Mode
 

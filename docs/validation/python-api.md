@@ -21,7 +21,7 @@ Data splits in two, and the split is what makes a green test run mean something:
 
 | Your data | Function | Passes when |
 |---|---|---|
-| must conform | `validate_data` | every file validated cleanly against at least one shape |
+| must conform | `validate_data` | every input contributes an active SHACL target and the merged graph conforms |
 | must fail (negative fixture) | `check_negative_fixtures` | every fixture failed in the way its `.expected` snapshot records |
 
 A data file is a **negative fixture** if and only if a `.expected` snapshot sits beside
@@ -61,7 +61,7 @@ Useful fields on the returned `ValidationResult`:
 | `conforms` | the verdict |
 | `return_code` | 0, `210` conformance error, `100` skipped |
 | `report_text` | the formatted report |
-| `shapes_loaded` | how many `sh:NodeShape`s were in play — `0` is always a failure |
+| `shapes_loaded` | number of discovered node/property shapes, including implicit shapes |
 | `types_routed` / `types_unrouted` | which `@type` IRIs found a schema |
 | `per_type_shape_count` | shapes targeting each found type |
 | `warnings` | advisory notes, including skipped negative fixtures |
@@ -91,6 +91,7 @@ check_negative_fixtures(["tests/data/invalid/fail01_missing_serial.json"],
 
 In a recording run every named file is a candidate: those that fail get a snapshot
 written, those that pass are reported as "not a negative fixture" and left alone.
+A recording run that produces no negative snapshot fails.
 
 ## In a pytest suite
 
@@ -107,7 +108,7 @@ def test_valid_instances_conform():
 
 def test_invalid_instances_still_fail_as_recorded():
     report = check_negative_fixtures(["tests/data/invalid"], artifacts=ARTIFACTS)
-    assert report.ok, "\n".join(f.message for f in report.failures)
+    assert report.ok, "\n".join(report.errors + [f.message for f in report.failures])
 ```
 
 ## Logging and output
@@ -125,8 +126,10 @@ logging.getLogger("omb").addHandler(my_handler)      # or route it yourself
 
 `omb.api` (its functions, `FixtureReport`, `FixtureOutcome`) plus
 `omb.core.result.ValidationResult` and `ReturnCodes` are the supported surface.
-Resolvers, loaders, validator classes and the CLI modules are internal and may change
-in any release.
+The five documented console commands and `python -m omb` are supported too.
+Resolvers, loaders, validator classes and CLI implementation modules are internal.
+See the [consumer contract](consumer-contract.md) for defaults, failure modes, input
+discovery and the feature-to-test matrix.
 
 ## Equivalent CLI
 
@@ -134,9 +137,9 @@ Everything above is also available from the command line — see
 [Validation Suite](suite.md):
 
 ```bash
-onto-validate --run check-data-conformance --data-paths tests/data/valid --artifacts artifacts
-onto-validate --run check-failing-tests   --data-paths tests/data/invalid --artifacts artifacts
-onto-validate --run check-failing-tests   --data-paths tests/data/invalid --artifacts artifacts --update-expected
+onto-validate --run check-data-conformance --data-paths tests/data/valid --artifacts artifacts --strict --offline
+onto-validate --run check-failing-tests   --data-paths tests/data/invalid --artifacts artifacts --offline
+onto-validate --run check-failing-tests   --data-paths tests/data/invalid --artifacts artifacts --offline --update-expected
 ```
 
 The CLI's exit code is the return code (`0`, `210`, …), so it drops straight into CI.

@@ -256,6 +256,10 @@ Funded by the European Union. Views and opinions expressed are however those of 
 <img src="https://raw.githubusercontent.com/ika-rwth-aachen/omega-prime/refs/heads/main/docs/funded_by_eu.svg"
 style="width:4in" />
 
+## Consumer contract
+
+See the [supported interfaces and feature tests](docs/validation/consumer-contract.md) for PyPI and Docker usage.
+
 ## License
 
 See [LICENSE](LICENSE) for details.

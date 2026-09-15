@@ -92,7 +92,7 @@ omb/
 
 **Dependency rule:** Never import upward (utils cannot import from validators).
 `api.py` sits above all of them and is the only module other repositories should import;
-everything else is internal and may change in any release. See
+the documented CLI commands are also supported, while implementation imports are internal. See
 `docs/validation/python-api.md`.
 
 ### Catalog-Driven Design
@@ -119,7 +119,9 @@ Four checks run in sequence (selectable via `--run`):
 3. **check-data-conformance** — SHACL validation of instance data
 4. **check-failing-tests** — Negative fixtures fail as expected, matched against their `.expected` snapshot. A data file is a negative fixture *iff* a `.expected` snapshot sits beside it (same stem), so this works identically in domain mode and data-paths mode. `--update-expected` records snapshots, including the first one for a new fixture.
 
-**Vacuity guard:** validation fails when no SHACL shape was loaded for the data. An empty
+**Coverage guard:** both merged and per-resource validation require each requested
+document to contribute an RDF term targeted by an active SHACL shape. Empty and
+untargeted documents fail; pySHACL discovers node/property shapes and implicit shapes. An empty
 shapes graph is conformant by definition, so without this a forgotten `--artifacts`, a
 half-generated artifacts directory or an unknown `@type` reported "Validation PASSED".
 
