@@ -4,6 +4,7 @@
 
 ```mermaid
 classDiagram
+class Attribute_Provenance
 class Class_definition_for_CodeArtifactBase
 class Class_definition_for_CodeAsset
 class Class_definition_for_Content
@@ -23,6 +24,7 @@ class Class_definition_for_SoftwareResourceBase
 
 ### Class Hierarchy
 
+- Attribute Provenance (https://w3id.org/ascs-ev/envited-x/envited-x/v3/AttributeProvenance)
 - Class definition for CodeArtifactBase (https://w3id.org/ascs-ev/envited-x/envited-x/v3/CodeArtifactBase)
 - Class definition for CodeAsset (https://w3id.org/ascs-ev/envited-x/envited-x/v3/CodeAsset)
 - Class definition for Content (https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content)
@@ -43,6 +45,7 @@ class Class_definition_for_SoftwareResourceBase
 
 |Class|IRI|Description|Parents|
 |---|---|---|---|
+|Attribute Provenance|https://w3id.org/ascs-ev/envited-x/envited-x/v3/AttributeProvenance|Records the derivation method and responsible software agent for one or more metadata attributes that were automatically filled.|Activity|
 |Class definition for CodeArtifactBase|https://w3id.org/ascs-ev/envited-x/envited-x/v3/CodeArtifactBase|Base class coupling ENVITED-X code assets to gx:CodeArtifact.|CodeArtifact|
 |Class definition for CodeAsset|https://w3id.org/ascs-ev/envited-x/envited-x/v3/CodeAsset|A structured digital asset in the ENVITED-X Data Space representing a code artifact.
                     Carries domain-specific metadata while delegating GX compliance
@@ -78,6 +81,7 @@ class Class_definition_for_SoftwareResourceBase
 - gx: <https://w3id.org/gaia-x/development#>
 - manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
 - owl: <http://www.w3.org/2002/07/owl#>
+- prov: <http://www.w3.org/ns/prov#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - schema: <https://schema.org/>
 - sh: <http://www.w3.org/ns/shacl#>
@@ -86,6 +90,10 @@ class Class_definition_for_SoftwareResourceBase
 
 ### SHACL Properties
 
+#### envited-x:attributeName {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-attributename .property-anchor }
+#### envited-x:confidence {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-confidence .property-anchor }
+#### envited-x:derivationMethod {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-derivationmethod .property-anchor }
+#### envited-x:hasAttributeProvenance {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasattributeprovenance .property-anchor }
 #### envited-x:hasCodeArtifact {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hascodeartifact .property-anchor }
 #### envited-x:hasContent {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hascontent .property-anchor }
 #### envited-x:hasDataSource {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasdatasource .property-anchor }
@@ -97,11 +105,13 @@ class Class_definition_for_SoftwareResourceBase
 #### envited-x:hasResourceDescription {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasresourcedescription .property-anchor }
 #### envited-x:hasServiceOffering {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasserviceoffering .property-anchor }
 #### envited-x:hasSoftwareResource {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hassoftwareresource .property-anchor }
+#### envited-x:llmModel {: #prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-llmmodel .property-anchor }
 #### gx:copyrightOwnedBy {: #prop-https---w3id-org-gaia-x-development-copyrightownedby .property-anchor }
 #### gx:license {: #prop-https---w3id-org-gaia-x-development-license .property-anchor }
 #### gx:providedBy {: #prop-https---w3id-org-gaia-x-development-providedby .property-anchor }
 #### gx:resourcePolicy {: #prop-https---w3id-org-gaia-x-development-resourcepolicy .property-anchor }
 #### gx:serviceOfferingTermsAndConditions {: #prop-https---w3id-org-gaia-x-development-serviceofferingtermsandconditions .property-anchor }
+#### gx:version {: #prop-https---w3id-org-gaia-x-development-version .property-anchor }
 #### manifest:hasAccessRole {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasaccessrole .property-anchor }
 #### manifest:hasArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasartifacts .property-anchor }
 #### manifest:hasCategory {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hascategory .property-anchor }
@@ -109,6 +119,8 @@ class Class_definition_for_SoftwareResourceBase
 #### manifest:hasManifestReference {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasmanifestreference .property-anchor }
 #### manifest:hasReferencedArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts .property-anchor }
 #### manifest:iri {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-iri .property-anchor }
+#### prov:endedAtTime {: #prop-http---www-w3-org-ns-prov-endedattime .property-anchor }
+#### prov:wasAssociatedWith {: #prop-http---www-w3-org-ns-prov-wasassociatedwith .property-anchor }
 #### rdf:type {: #prop-http---www-w3-org-1999-02-22-rdf-syntax-ns-type .property-anchor }
 #### schema:description {: #prop-https---schema-org-description .property-anchor }
 #### schema:name {: #prop-https---schema-org-name .property-anchor }
@@ -164,3 +176,12 @@ class Class_definition_for_SoftwareResourceBase
 |DomainSpecificationShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasdatasource"></a>hasDataSource|0||||envited-x.shacl.ttl|
 |DomainSpecificationShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasquality"></a>hasQuality|0||||envited-x.shacl.ttl|
 |DomainSpecificationShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasquantity"></a>hasQuantity|0||||envited-x.shacl.ttl|
+|DomainSpecificationShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-hasattributeprovenance"></a>hasAttributeProvenance|0||Records which metadata attributes were automatically derived, by which tool and method.||envited-x.shacl.ttl|
+|AttributeProvenanceShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-attributename"></a>attributeName|1|1|The name of the metadata attribute whose provenance is declared.|<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|AttributeProvenanceShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-derivationmethod"></a>derivationMethod|1|1|The method used to derive the attribute value.||envited-x.shacl.ttl|
+|AttributeProvenanceShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-confidence"></a>confidence||1|Confidence level of the derived value.||envited-x.shacl.ttl|
+|AttributeProvenanceShape|prov|<a id="prop-http---www-w3-org-ns-prov-wasassociatedwith"></a>wasAssociatedWith|1|1|The software agent (tool or service) that produced this attribute value.||envited-x.shacl.ttl|
+|AttributeProvenanceShape|prov|<a id="prop-http---www-w3-org-ns-prov-endedattime"></a>endedAtTime||1|Timestamp when the attribute was derived.|<http://www.w3.org/2001/XMLSchema#dateTime>|envited-x.shacl.ttl|
+|SoftwareAgentShape|schema|name|1|1|Human-readable name of the software agent.|<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareAgentShape|gx|<a id="prop-https---w3id-org-gaia-x-development-version"></a>version|1|1|Version identifier of the software agent.|<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
+|SoftwareAgentShape|envited-x|<a id="prop-https---w3id-org-ascs-ev-envited-x-envited-x-v3-llmmodel"></a>llmModel||1|Identifier of the LLM model used, if derivation method is llm-inference. Absent for non-LLM methods.|<http://www.w3.org/2001/XMLSchema#string>|envited-x.shacl.ttl|
