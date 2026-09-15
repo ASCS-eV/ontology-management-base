@@ -117,14 +117,40 @@ def make_isolated_venv(venv_dir: Path) -> Path:
     return vpy
 
 
+def declared_minimums() -> list[str]:
+    """Pin every runtime dependency to the lowest version pyproject.toml claims to support.
+
+    Derived, never hard-coded: a literal list here drifts silently from the floors the
+    package actually advertises, so raising a floor would leave this check proving an
+    unsupported version still works, and lowering one would leave the new floor untested.
+
+    ``rdflib>=7.6.0`` becomes ``rdflib==7.6.0``, and ``pyshacl>=0.31.0,<0.41`` becomes
+    ``pyshacl==0.31.0`` — only the text up to the next specifier is the floor, or the
+    pin would carry the upper bound along with it. A dependency declared without a
+    ``>=`` floor has no minimum to prove and is left to the resolver.
+    """
+    import tomllib
+
+    manifest = tomllib.loads((REPO_ROOT / "pyproject.toml").read_text("utf-8"))
+    pins = []
+    for requirement in manifest["project"]["dependencies"]:
+        name, separator, remainder = requirement.partition(">=")
+        if separator:
+            floor = remainder.split(",")[0]
+            pins.append(f"{name.strip()}=={floor.strip()}")
+    if not pins:
+        _fail("no >= floors found in [project] dependencies", None)
+    return pins
+
+
 def install_wheel(
     vpy: Path, wheel: Path, *, publish: bool = False, minimum: bool = False
 ) -> None:
     print(f"[3/6] Installing {wheel.name} into the isolated venv ...")
     requirement = str(wheel) + ("[publish]" if publish else "")
-    dependencies = (
-        ["pyshacl==0.31.0", "rdflib==7.6.0", "oxrdflib==0.5.0"] if minimum else []
-    )
+    dependencies = declared_minimums() if minimum else []
+    if minimum:
+        print(f"      pinning declared floors: {', '.join(dependencies)}")
     proc = _run(
         [str(vpy), "-m", "pip", "install", requirement, "pytest>=8", *dependencies]
     )
