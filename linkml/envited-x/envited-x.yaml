@@ -1,0 +1,265 @@
+# LinkML source for the envited-x ontology.
+#
+# Build and measure with:  just verify-linkml envited-x
+# What cannot be expressed, and the alternatives:  linkml/GAPS.md
+#
+# envited-x extends Gaia-X and sits above manifest. Both are imported rather
+# than referenced by IRI, which is what makes the generated artifacts correct:
+#
+#   * `is_a: VirtualResource` yields a real `rdfs:subClassOf gx:VirtualResource`,
+#     where a local stand-in carrying `class_uri` would silently mint
+#     `envited-x:VirtualResource` instead (linkml/GAPS.md S1, D5b).
+#   * gx slots are inherited BY NAME - no `slot_uri:` - so they keep their own
+#     namespace in the OWL as well as the SHACL. A slot redeclared here as
+#     `slot_uri: gx:license` comes out as `envited-x:license` in the OWL and
+#     `gx:license` in the SHACL; inherited, it is `gx:license` in both
+#     (linkml/GAPS.md S6). `name` and `description` come along too, because gx
+#     already maps them to sdo:name / sdo:description with sdo bound to
+#     https://schema.org/ - matching the hand-written shapes exactly.
+#
+# Nothing here is declared in the gx or manifest namespace; --no-mergeimports
+# keeps their definitions in their own artifacts.
+
+id: https://w3id.org/ascs-ev/envited-x/envited-x/v3
+name: envited-x
+title: Ontology definition for envited-x
+description: >-
+  ENVITED-X Data Space ontology with common classes for defining a digital
+  asset in the simulation domain.
+license: https://www.eclipse.org/legal/epl-2.0/
+source: https://github.com/ASCS-eV/ontology-management-base
+see_also:
+  - https://ascs-ev.github.io/EVES/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  envited-x: https://w3id.org/ascs-ev/envited-x/envited-x/v3/
+  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v5/
+  gx: https://w3id.org/gaia-x/development#
+  owl: http://www.w3.org/2002/07/owl#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  # schema.org, bound as `sdo` as Gaia-X does: LinkML's built-in types already
+  # bind `schema` to http://schema.org/, and a mismatch is a hard error.
+  sdo: https://schema.org/
+  dcterms: http://purl.org/dc/terms/
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: envited-x
+default_range: string
+
+annotations:
+  owl:versionInfo: v3
+  dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+
+imports:
+  - linkml:types
+  # gx schemas must be imported by mapped name: their ids use '#'
+  # (https://w3id.org/gaia-x/development#resource) and an absolute-IRI import of
+  # one fails with "Unknown CURIE prefix: https". The cost is that gen-owl then
+  # derives the owl:imports IRI from the import name. See linkml/GAPS.md S6.
+  # The umbrella schema, not the individual files: importing `slots` alone
+  # leaves an incomplete closure (slots.yaml references ranges such as
+  # InterconnectionPointIdentifier that only gaia-x.yaml pulls in).
+  - gaia-x
+  # manifest's id uses '/', so it can be imported by absolute IRI and gets a
+  # correct owl:imports.
+  - https://w3id.org/ascs-ev/envited-x/manifest/v5
+
+classes:
+
+  SimulationAsset:
+    class_uri: envited-x:SimulationAsset
+    description: A simulation asset described by a resource description, domain specification and manifest.
+    slots: [hasResourceDescription, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasResourceDescription: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  SoftwareAsset:
+    class_uri: envited-x:SoftwareAsset
+    description: A software asset described by a software resource, domain specification and manifest.
+    slots: [hasSoftwareResource, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasSoftwareResource: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  ServiceAsset:
+    class_uri: envited-x:ServiceAsset
+    description: A service asset described by a service offering, domain specification and manifest.
+    slots: [hasServiceOffering, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasServiceOffering: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  CodeAsset:
+    class_uri: envited-x:CodeAsset
+    description: A code asset described by a code artifact, domain specification and manifest.
+    slots: [hasCodeArtifact, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasCodeArtifact: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  # The four Gaia-X extensions. `is_a` on the imported class, and the gx slots
+  # listed by name - not redeclared - so they keep the gx namespace.
+  ResourceDescription:
+    class_uri: envited-x:ResourceDescription
+    is_a: VirtualResource
+    description: Gaia-X compliant description of the resource behind a simulation asset.
+    slots: [name, description, license]
+    slot_usage:
+      name: {required: true}
+      description: {required: true}
+
+  SoftwareResourceBase:
+    class_uri: envited-x:SoftwareResourceBase
+    is_a: SoftwareResource
+    description: Gaia-X compliant description of the software behind a software asset.
+    slots: [name, description, license, copyrightOwnedBy, resourcePolicy]
+    slot_usage:
+      name: {required: true}
+      description: {required: true}
+
+  ServiceOfferingBase:
+    class_uri: envited-x:ServiceOfferingBase
+    is_a: ServiceOffering
+    description: Gaia-X compliant description of the service behind a service asset.
+    slots: [name, description, providedBy, serviceOfferingTermsAndConditions]
+    slot_usage:
+      name: {required: true}
+      description: {required: true}
+
+  CodeArtifactBase:
+    class_uri: envited-x:CodeArtifactBase
+    is_a: CodeArtifact
+    description: Gaia-X compliant description of the code artifact behind a code asset.
+    slots: [name, description, license, copyrightOwnedBy, resourcePolicy]
+    slot_usage:
+      name: {required: true}
+      description: {required: true}
+
+  # The facet base classes below are specialised by every domain ontology
+  # (ositrace:Content, hdmap:Content, ...). LinkML names are global across an
+  # import closure, so a domain's own `Content` would collide with envited-x's.
+  # The bases are abstract - no instance is typed with them - so it is envited-x
+  # that takes the prefixed LinkML names, leaving the plain names free for every
+  # domain. class_uri keeps the published IRIs unchanged.
+  EnvitedXDomainSpecification:
+    class_uri: envited-x:DomainSpecification
+    description: Domain specific metadata extension of an asset.
+    slots: [hasContent, hasFormat, hasDataSource, hasQuality, hasQuantity]
+    slot_usage:
+      hasContent: {required: true, multivalued: true}
+      hasFormat: {required: true, multivalued: true}
+
+  # LinkML class names are global across the import closure and manifest already
+  # defines `Manifest`, so this one needs a different LinkML name. With
+  # --no-use-native-uris the class_uri below is honoured, so it still emits
+  # envited-x:Manifest in the OWL as well as the SHACL.
+  EnvitedXManifest:
+    class_uri: envited-x:Manifest
+    is_a: Manifest              # the imported manifest:Manifest
+    description: ENVITED-X manifest describing the contents of an asset.
+
+  EnvitedXContent:
+    class_uri: envited-x:Content
+    description: Base class for the content facet of a domain specification.
+
+  EnvitedXDataSource:
+    class_uri: envited-x:DataSource
+    description: Base class for the data source facet of a domain specification.
+
+  EnvitedXFormat:
+    class_uri: envited-x:Format
+    description: Base class for the format facet of a domain specification.
+
+  EnvitedXQuality:
+    class_uri: envited-x:Quality
+    description: Base class for the quality facet of a domain specification.
+
+  EnvitedXQuantity:
+    class_uri: envited-x:Quantity
+    description: Base class for the quantity facet of a domain specification.
+
+# Only envited-x's OWN properties are declared here. name, description, license,
+# copyrightOwnedBy, resourcePolicy, providedBy and
+# serviceOfferingTermsAndConditions are inherited from the gx `slots` schema.
+slots:
+
+  # A resource description is given inline or as a link: slot-level any_of over
+  # the two classes. gen-shacl renders it as sh:or ( [sh:class A] [sh:class B] ).
+  # A union range gives RDFS inference nothing to type the node with, so the
+  # instance's own @type selects the alternative - as it already does in every
+  # instance. linkml/GAPS.md M5.
+  hasResourceDescription:
+    slot_uri: envited-x:hasResourceDescription
+    description: Links an asset to its ResourceDescription, inline or as a link.
+    any_of:
+      - range: ResourceDescription
+      - range: Link
+    inlined: true
+
+  hasSoftwareResource:
+    slot_uri: envited-x:hasSoftwareResource
+    description: Links a SoftwareAsset to its GX-compliant SoftwareResourceBase.
+    any_of:
+      - range: SoftwareResourceBase
+      - range: Link
+    inlined: true
+
+  hasServiceOffering:
+    slot_uri: envited-x:hasServiceOffering
+    description: Links a ServiceAsset to its GX-compliant ServiceOfferingBase.
+    any_of:
+      - range: ServiceOfferingBase
+      - range: Link
+    inlined: true
+
+  hasCodeArtifact:
+    slot_uri: envited-x:hasCodeArtifact
+    description: Links a CodeAsset to its GX-compliant CodeArtifactBase.
+    any_of:
+      - range: CodeArtifactBase
+      - range: Link
+    inlined: true
+
+  hasDomainSpecification:
+    slot_uri: envited-x:hasDomainSpecification
+    description: Links an asset to its domain specific metadata.
+    range: EnvitedXDomainSpecification
+    inlined: true
+
+  hasManifest:
+    slot_uri: envited-x:hasManifest
+    description: Links an asset to its manifest, inline or as a link.
+    any_of:
+      - range: EnvitedXManifest
+      - range: Link
+    inlined: true
+
+  hasContent:
+    slot_uri: envited-x:hasContent
+    range: EnvitedXContent
+    inlined: true
+
+  hasDataSource:
+    slot_uri: envited-x:hasDataSource
+    range: EnvitedXDataSource
+    inlined: true
+
+  hasFormat:
+    slot_uri: envited-x:hasFormat
+    range: EnvitedXFormat
+    inlined: true
+
+  hasQuality:
+    slot_uri: envited-x:hasQuality
+    range: EnvitedXQuality
+    inlined: true
+
+  hasQuantity:
+    slot_uri: envited-x:hasQuantity
+    range: EnvitedXQuantity
+    inlined: true

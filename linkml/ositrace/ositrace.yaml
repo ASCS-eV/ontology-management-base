@@ -1,0 +1,680 @@
+# LinkML source for the ositrace ontology.
+#
+# Build and measure with:  just verify-linkml ositrace
+# What cannot be expressed, and the alternatives:  linkml/GAPS.md
+#
+# ositrace specialises envited-x (an OSI trace is an envited-x:SimulationAsset)
+# and references georeference. Both are imported, never restated:
+#
+#   * the facet classes (Content, Format, ...) are `is_a` their envited-x
+#     counterparts, giving real rdfs:subClassOf axioms;
+#   * the facet properties (hasContent, hasFormat, ...) are `is_a` the envited-x
+#     properties. In LinkML a property hierarchy is slot `is_a` - it is what
+#     gen-owl renders as rdfs:subPropertyOf. (`subproperty_of` means something
+#     else: it declares a value set of ontology terms.)
+#
+# LinkML names are global across the import closure. envited-x gives its
+# abstract facet bases prefixed names (EnvitedXContent, ...), so ositrace's own
+# classes keep the plain names. Slots that share a name with envited-x or
+# Gaia-X get a unique LinkML name here.
+# `class_uri`/`slot_uri` keep the published IRIs (honoured under
+# --no-use-native-uris) and `alias` keeps the JSON-LD terms, so neither the
+# ontology nor any instance changes.
+
+id: https://w3id.org/ascs-ev/envited-x/ositrace/v6
+name: ositrace
+title: Ontology definition for ositrace
+description: >-
+    An ontology with common classes to describe ASAM OSI trace files,
+    including single-channel .osi and multi-channel .mcap formats.
+license: https://www.eclipse.org/legal/epl-2.0/
+source: https://github.com/ASCS-eV/ontology-management-base
+see_also:
+  - https://ascs-ev.github.io/EVES/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  ositrace: https://w3id.org/ascs-ev/envited-x/ositrace/v6/
+  envited-x: https://w3id.org/ascs-ev/envited-x/envited-x/v3/
+  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v5/
+  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v5/
+  # Ontology-IRI bases for CURIE imports - the same idiom as `linkml:types`.
+  # CURIE local part + prefix = the imported schema's `id`, so gen-owl emits the
+  # correct owl:imports IRI. See the note on `imports` below.
+  envitedx_ontology: https://w3id.org/ascs-ev/envited-x/envited-x/
+  georeference_ontology: https://w3id.org/ascs-ev/envited-x/georeference/
+  owl: http://www.w3.org/2002/07/owl#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  dcterms: http://purl.org/dc/terms/
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: ositrace
+default_range: string
+
+# Literal-valued header terms. IRI-valued ones (owl:versionIRI,
+# owl:priorVersion, dcterms:identifier, dcterms:conformsTo,
+# prov:wasDerivedFrom, dcterms:references) and structured contributors cannot
+# be expressed: annotations are always emitted as literals. linkml/GAPS.md D1.
+annotations:
+  owl:versionInfo: v6
+  dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+
+# Dependencies are imported as CURIEs, the idiom LinkML uses for `linkml:types`.
+# An absolute-IRI import is not usable for envited-x: linkml_runtime resolves the
+# imported schema's own relative imports (envited-x -> gaia-x) against its IRI
+# with os.path.normpath, which collapses `https://` to `https:/` and breaks the
+# closure. A CURIE whose local part contains no `/` avoids that code path and
+# still expands to the dependency's `id`. See linkml/GAPS.md S4.
+imports:
+  - linkml:types
+  - envitedx_ontology:v3
+  - georeference_ontology:v5
+
+classes:
+
+  OSITrace:
+    class_uri: ositrace:OSITrace
+    is_a: SimulationAsset
+    description: Attributes for ASAM OSI trace files.
+    slots: [ositraceHasResourceDescription, ositraceHasDomainSpecification, ositraceHasManifest]
+    slot_usage:
+      ositraceHasResourceDescription: {required: true}
+      ositraceHasDomainSpecification: {required: true}
+      ositraceHasManifest: {required: true}
+
+  DomainSpecification:
+    class_uri: ositrace:DomainSpecification
+    is_a: EnvitedXDomainSpecification
+    description: >-
+      OSI trace DomainSpecification containing additional metadata information
+      of the simulation asset.
+    slots: [ositraceHasContent, ositraceHasFormat, ositraceHasQuality, ositraceHasQuantity, ositraceHasDataSource, hasGeoreference]
+    slot_usage:
+      ositraceHasContent: {required: true}
+      ositraceHasFormat: {required: true}
+      ositraceHasQuality: {required: true}
+      ositraceHasQuantity: {required: true}
+      ositraceHasDataSource: {required: true}
+
+  Content:
+    class_uri: ositrace:Content
+    is_a: EnvitedXContent
+    description: Attributes for the content of ASAM OSI trace files.
+    slots: [roadTypes, laneTypes, levelOfDetail, trafficDirection, granularity, scenarioIdentifier, startTime, stopTime, hasHostMovingObject, hasTargetMovingObject, hasEvent]
+    slot_usage:
+      granularity: {required: true}
+      startTime: {required: true}
+      stopTime: {required: true}
+      hasHostMovingObject: {required: true}
+
+  DataSource:
+    class_uri: ositrace:DataSource
+    is_a: EnvitedXDataSource
+    description: Attributes for the data source of ASAM OSI trace files.
+    slots: [usedDataSources, measurementSystem]
+
+  Format:
+    class_uri: ositrace:Format
+    is_a: EnvitedXFormat
+    description: >-
+      Attributes for the format of ASAM OSI trace files, covering both
+      single-channel .osi files and multi-channel MCAP containers.
+    slots: [ositraceFormatType, fileFormat, ositraceVersion, hasChannel, compression, osiTraceFormatVersion, zeroTime, minOsiVersion, maxOsiVersion, minProtobufVersion, maxProtobufVersion]
+    # A format is EITHER a single-channel trace file (.osi / .txth) OR a
+    # multi-channel MCAP container. This is the idiomatic LinkML statement of
+    # that disjunction, stated once; gen-owl renders it as owl:unionOf and
+    # gen-shacl as sh:or (linkml/GAPS.md M5).
+    any_of:
+      - description: Single-channel trace file (.osi binary or .txth text).
+        slot_conditions:
+          ositraceFormatType: {required: true}
+          ositraceVersion: {required: true}
+          fileFormat: {equals_string_in: [OSI, TXTH]}
+      - description: Multi-channel MCAP container.
+        slot_conditions:
+          fileFormat: {required: true, equals_string: MCAP}
+          hasChannel: {required: true}
+
+  Channel:
+    class_uri: ositrace:Channel
+    description: >-
+      Represents a single channel in an MCAP container file. Each channel
+      carries messages of one OSI top-level type at a specific OSI schema
+      version. Linked from ositrace:Format via ositrace:hasChannel.
+    slots: [topic, messageType, osiVersion, protobufVersion, numberOfMessages, ositraceDescription]
+    slot_usage:
+      topic: {required: true}
+      messageType: {required: true}
+      osiVersion: {required: true}
+
+  Quality:
+    class_uri: ositrace:Quality
+    is_a: EnvitedXQuality
+    description: Attributes for the quality of ASAM OSI trace files.
+    slots: [precision, accuracyLaneModel2d, accuracyLaneModelHeight, accuracySignals, accuracyObjects, calibration, validationReport, validationReportType]
+
+  Quantity:
+    class_uri: ositrace:Quantity
+    is_a: EnvitedXQuantity
+    description: Attributes for the quantity of ASAM OSI trace files.
+    slots: [numberFrames, numberOfChannels]
+
+  MovingObject:
+    class_uri: ositrace:MovingObject
+    description: Attributes for moving objects in ASAM OSI trace files.
+    slots: [ositraceIdentifier, ositraceDescription]
+    slot_usage:
+      ositraceIdentifier: {required: true}
+
+  Event:
+    class_uri: ositrace:Event
+    description: Attributes for event in ASAM OSI trace files.
+    slots: [time, tag, ositraceDescription]
+    slot_usage:
+      time: {required: true}
+      tag: {required: true}
+
+slots:
+
+  # --- specialisations of envited-x properties ------------------------------
+  ositraceHasResourceDescription:
+    is_a: hasResourceDescription
+    alias: hasResourceDescription
+    slot_uri: ositrace:hasResourceDescription
+    description: Links an OSI trace asset to a standard ResourceDescription instance from envited-x.
+    multivalued: false
+    inlined: true
+    any_of:
+      - range: ResourceDescription
+      - range: Link
+
+  ositraceHasDomainSpecification:
+    is_a: hasDomainSpecification
+    alias: hasDomainSpecification
+    slot_uri: ositrace:hasDomainSpecification
+    description: >-
+      Links an OSI trace asset to its specific metadata (DomainSpecification),
+      which may contain additional OSI trace-specific attributes.
+    range: DomainSpecification
+    multivalued: false
+    inlined: true
+
+  ositraceHasManifest:
+    is_a: hasManifest
+    alias: hasManifest
+    slot_uri: ositrace:hasManifest
+    description: >-
+      Links an OSI Trace asset to its manifest: an inline envited-x:Manifest, or
+      a manifest:Link pointing to an external manifest representation.
+    multivalued: false
+    inlined: true
+    any_of:
+      - range: EnvitedXManifest
+      - range: Link
+
+  ositraceHasContent:
+    is_a: hasContent
+    alias: hasContent
+    slot_uri: ositrace:hasContent
+    description: "Attributes describing the content of the OSI trace."
+    range: Content
+    multivalued: false
+    inlined: true
+
+  ositraceHasDataSource:
+    is_a: hasDataSource
+    alias: hasDataSource
+    slot_uri: ositrace:hasDataSource
+    description: "Data sources used to create the OSI trace."
+    range: DataSource
+    multivalued: false
+    inlined: true
+
+  ositraceHasFormat:
+    is_a: hasFormat
+    alias: hasFormat
+    slot_uri: ositrace:hasFormat
+    description: "File format details of the OSI trace."
+    range: Format
+    multivalued: false
+    inlined: true
+
+  ositraceHasQuality:
+    is_a: hasQuality
+    alias: hasQuality
+    slot_uri: ositrace:hasQuality
+    description: "Quality metrics of the OSI trace."
+    range: Quality
+    multivalued: false
+    inlined: true
+
+  ositraceHasQuantity:
+    is_a: hasQuantity
+    alias: hasQuantity
+    slot_uri: ositrace:hasQuantity
+    description: "Quantitative metrics describing the OSI trace."
+    range: Quantity
+    multivalued: false
+    inlined: true
+
+  # --- ositrace's own relations ---------------------------------------------
+  hasGeoreference:
+    slot_uri: ositrace:hasGeoreference
+    description: Links an OSI trace DomainSpecification to its georeferencing information.
+    range: Georeference
+    multivalued: false
+    inlined: true
+
+  hasHostMovingObject:
+    slot_uri: ositrace:hasHostMovingObject
+    description: Host moving object in trace file.
+    range: MovingObject
+    multivalued: false
+    inlined: true
+
+  hasTargetMovingObject:
+    slot_uri: ositrace:hasTargetMovingObject
+    description: Target moving object(s) in trace file.
+    range: MovingObject
+    multivalued: true
+    inlined_as_list: true
+
+  hasEvent:
+    slot_uri: ositrace:hasEvent
+    description: Description of events of interest in trace file.
+    range: Event
+    multivalued: true
+    inlined_as_list: true
+
+  hasChannel:
+    slot_uri: ositrace:hasChannel
+    description: Channels in the MCAP container. Each channel carries messages of one OSI top-level type.
+    range: Channel
+    multivalued: true
+    inlined_as_list: true
+
+  # --- homonyms of Gaia-X slots: same local name, unrelated property ---------
+
+  ositraceDescription:
+    alias: description
+    slot_uri: ositrace:description
+    description: "Human-readable description of this channel."
+    range: "string"
+    examples: [{value: "Front-left radar sensor data output"}]
+
+  ositraceFormatType:
+    alias: formatType
+    slot_uri: ositrace:formatType
+    description: "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."
+    range: "FormatTypeEnum"
+    examples: [{value: "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData"}]
+
+  ositraceIdentifier:
+    alias: identifier
+    slot_uri: ositrace:identifier
+    description: "Moving object identifier in trace file."
+    range: "integer"
+    minimum_value: 0
+    examples: [{value: "42"}]
+
+  ositraceVersion:
+    alias: version
+    slot_uri: ositrace:version
+    description: "Version of data format (OSI version / protobuf version)."
+    range: "string"
+    examples: [{value: "3.7.0"}]
+
+  # --- ositrace datatype properties ------------------------------------------
+  roadTypes:
+    slot_uri: ositrace:roadTypes
+    description: "Covered/used road types, defined over the ASAM OpenDRIVE element t_road_type. Complete e_roadType enumeration (13 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 \u00a710.4 'Road type'. No e_roadType value is deprecated."
+    range: "RoadTypesEnum"
+    multivalued: true
+    examples: [{value: "[motorway, rural]"}]
+
+  laneTypes:
+    slot_uri: ositrace:laneTypes
+    description: "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 \u00a711.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'sidewalk' (use 'walking'), 'bus' and 'taxi' (use the lane <access> element), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), and 'special1', 'special2', 'special3' with no replacement named. 'bidirectional' is deprecated by the v1.9.0 specification \u00a711.8 in favour of the lane @direction attribute, but is not marked deprecated in the schema. Prefer the non-deprecated spellings in new self-descriptions."
+    range: "LaneTypesEnum"
+    multivalued: true
+    examples: [{value: "shoulder, curb, ..."}]
+
+  levelOfDetail:
+    slot_uri: ositrace:levelOfDetail
+    description: "Covered object classes. Complete ASAM OpenDRIVE e_objectType enumeration (27 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 \u00a713 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'patch' (use 'roadSurface'), 'railing' and 'soundBarrier' (use 'barrier'), 'streetLamp' and 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian' with no replacement named - describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."
+    range: "LevelOfDetailEnum"
+    multivalued: true
+    examples: [{value: "trees, street lamps, road patches..."}]
+
+  trafficDirection:
+    slot_uri: ositrace:trafficDirection
+    description: "Traffic direction, i.e. right-hand or left-hand traffic"
+    range: "TrafficDirectionEnum"
+    examples: [{value: "right-hand traffic"}]
+
+  granularity:
+    slot_uri: ositrace:granularity
+    description: "Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."
+    range: "GranularityEnum"
+    multivalued: true
+    examples: [{value: "object list, detection list"}]
+
+  scenarioIdentifier:
+    slot_uri: ositrace:scenarioIdentifier
+    description: "Identifier of scenario performed in the trace file"
+    range: "string"
+    multivalued: true
+    examples: [{value: "119"}]
+
+  startTime:
+    slot_uri: ositrace:startTime
+    description: "Exact start timestamp of the recorded trace"
+    range: "datetime"
+    pattern: ".*(Z|[+-]\\d{2}:\\d{2})$"
+    examples: [{value: "2024-05-11T13:20:03.250320Z"}]
+
+  stopTime:
+    slot_uri: ositrace:stopTime
+    description: "Exact stop timestamp of the recorded trace"
+    range: "datetime"
+    pattern: ".*(Z|[+-]\\d{2}:\\d{2})$"
+    examples: [{value: "2024-05-11T13:20:05.250120Z"}]
+
+  measurementSystem:
+    slot_uri: ositrace:measurementSystem
+    description: "Main acquisition device"
+    range: "string"
+    examples: [{value: "PMSF DroneTracker; ARS 548 Sensor Output"}]
+
+  usedDataSources:
+    slot_uri: ositrace:usedDataSources
+    description: "Basic data for the creation of the trace."
+    range: "string"
+    multivalued: true
+    examples: [{value: "scanner, camera, osm network, aerial images, ..."}]
+
+  fileFormat:
+    slot_uri: ositrace:fileFormat
+    description: "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."
+    range: "FileFormatEnum"
+    examples: [{value: "OSI"}]
+
+  compression:
+    slot_uri: ositrace:compression
+    description: "MCAP chunk compression algorithm."
+    range: "CompressionEnum"
+    examples: [{value: "zstd"}]
+
+  osiTraceFormatVersion:
+    slot_uri: ositrace:osiTraceFormatVersion
+    description: "MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace')."
+    range: "string"
+    examples: [{value: "net.asam.osi.trace"}]
+
+  zeroTime:
+    slot_uri: ositrace:zeroTime
+    description: "Zero-time reference point for the MCAP recording."
+    range: "datetime"
+    examples: [{value: "2024-06-03T14:37:10Z"}]
+
+  minOsiVersion:
+    slot_uri: ositrace:minOsiVersion
+    description: "Minimum OSI schema version across all channels."
+    range: "string"
+    examples: [{value: "3.6.0"}]
+
+  maxOsiVersion:
+    slot_uri: ositrace:maxOsiVersion
+    description: "Maximum OSI schema version across all channels."
+    range: "string"
+    examples: [{value: "3.7.0"}]
+
+  minProtobufVersion:
+    slot_uri: ositrace:minProtobufVersion
+    description: "Minimum protobuf version across all channels."
+    range: "string"
+    examples: [{value: "3.20.0"}]
+
+  maxProtobufVersion:
+    slot_uri: ositrace:maxProtobufVersion
+    description: "Maximum protobuf version across all channels."
+    range: "string"
+    examples: [{value: "3.21.0"}]
+
+  topic:
+    slot_uri: ositrace:topic
+    description: "Unique MCAP topic name identifying this channel."
+    range: "string"
+    examples: [{value: "RadarSensorFL.OSMPSensorDataOut"}]
+
+  messageType:
+    slot_uri: ositrace:messageType
+    description: "OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."
+    range: "MessageTypeEnum"
+    examples: [{value: "SensorData"}]
+
+  osiVersion:
+    slot_uri: ositrace:osiVersion
+    description: "OSI schema version used by this channel."
+    range: "string"
+    examples: [{value: "3.7.0"}]
+
+  protobufVersion:
+    slot_uri: ositrace:protobufVersion
+    description: "Protobuf version used for serialization in this channel."
+    range: "string"
+    examples: [{value: "3.20.0"}]
+
+  numberOfMessages:
+    slot_uri: ositrace:numberOfMessages
+    description: "Number of messages in this channel."
+    range: "integer"
+    minimum_value: 0
+    examples: [{value: "1448"}]
+
+  accuracySignals:
+    slot_uri: ositrace:accuracySignals
+    description: "Accuracy of traffic relevant objects, signs and signals."
+    range: "float"
+    examples: [{value: "0.1"}]
+
+  accuracyObjects:
+    slot_uri: ositrace:accuracyObjects
+    description: "Accuracy of objects in the traffic space, which do not directly affect the traffic."
+    range: "float"
+    examples: [{value: "0.1"}]
+
+  accuracyLaneModelHeight:
+    slot_uri: ositrace:accuracyLaneModelHeight
+    description: "Accuracy lane modell height"
+    range: "float"
+    examples: [{value: "0.1"}]
+
+  precision:
+    slot_uri: ositrace:precision
+    description: "Precision of measured road network (relative accuracy)."
+    range: "float"
+    examples: [{value: "0.01"}]
+
+  accuracyLaneModel2d:
+    slot_uri: ositrace:accuracyLaneModel2d
+    description: "Accuracy of lane modell 2d."
+    range: "float"
+    examples: [{value: "0.1"}]
+
+  calibration:
+    slot_uri: ositrace:calibration
+    description: "Description of any calibration steps performed prior to measurement."
+    range: "string"
+    examples: [{value: "Calibration performed at origin"}]
+
+  validationReport:
+    slot_uri: ositrace:validationReport
+    description: "Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."
+    range: "uri"
+    examples: [{value: "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar"}]
+
+  validationReportType:
+    slot_uri: ositrace:validationReportType
+    description: "Type of OSI trace validation report, if any exists. As mime-type."
+    range: "string"
+    examples: [{value: "application/xqar"}]
+
+  numberFrames:
+    slot_uri: ositrace:numberFrames
+    description: "Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."
+    range: "integer"
+    minimum_value: 0
+    examples: [{value: "1000"}]
+
+  numberOfChannels:
+    slot_uri: ositrace:numberOfChannels
+    description: "Number of channels in the MCAP container (MCAP files only)."
+    range: "integer"
+    minimum_value: 1
+    examples: [{value: "3"}]
+
+  time:
+    slot_uri: ositrace:time
+    description: "Exact timestamp of the event in the recorded trace."
+    range: "datetime"
+    pattern: ".*(Z|[+-]\\d{2}:\\d{2})$"
+    examples: [{value: "2024-05-11T13:20:03.250320Z"}]
+
+  tag:
+    slot_uri: ositrace:tag
+    description: "Unique tag of the event in trace file."
+    range: "string"
+    examples: [{value: "42"}]
+
+enums:
+  # Closed, standardised value sets (ASAM OpenDRIVE / OSI enumerations): an
+  # enum is the right mechanism here.
+  RoadTypesEnum:
+    permissible_values:
+      "bicycle":
+      "lowSpeed":
+      "motorway":
+      "pedestrian":
+      "rural":
+      "townArterial":
+      "townCollector":
+      "townExpressway":
+      "townLocal":
+      "townPlayStreet":
+      "townPrivate":
+      "town":
+      "unknown":
+
+  LaneTypesEnum:
+    permissible_values:
+      "HOV":
+      "bidirectional":
+      "biking":
+      "border":
+      "bus":
+      "connectingRamp":
+      "curb":
+      "driving":
+      "entry":
+      "exit":
+      "median":
+      "mwyEntry":
+      "mwyExit":
+      "none":
+      "offRamp":
+      "onRamp":
+      "parking":
+      "rail":
+      "restricted":
+      "roadWorks":
+      "shared":
+      "shoulder":
+      "sidewalk":
+      "slipLane":
+      "special1":
+      "special2":
+      "special3":
+      "stop":
+      "taxi":
+      "tram":
+      "walking":
+
+  LevelOfDetailEnum:
+    permissible_values:
+      "barrier":
+      "bike":
+      "building":
+      "bus":
+      "car":
+      "crosswalk":
+      "gantry":
+      "motorbike":
+      "none":
+      "obstacle":
+      "parkingSpace":
+      "patch":
+      "pedestrian":
+      "pole":
+      "railing":
+      "roadMark":
+      "roadSurface":
+      "soundBarrier":
+      "streetLamp":
+      "trafficIsland":
+      "trailer":
+      "train":
+      "tram":
+      "tree":
+      "truck":
+      "van":
+      "vegetation":
+      "wind":
+
+  TrafficDirectionEnum:
+    permissible_values:
+      "left-hand":
+      "right-hand":
+
+  GranularityEnum:
+    permissible_values:
+      "object list":
+      "detection list":
+      "raw data":
+
+  FormatTypeEnum:
+    permissible_values:
+      "ASAM OSI GroundTruth":
+      "ASAM OSI HostVehicleData":
+      "ASAM OSI MotionRequest":
+      "ASAM OSI SensorData":
+      "ASAM OSI SensorView":
+      "ASAM OSI SensorViewConfiguration":
+      "ASAM OSI StreamingUpdate":
+      "ASAM OSI TrafficCommand":
+      "ASAM OSI TrafficCommandUpdate":
+      "ASAM OSI TrafficUpdate":
+
+  FileFormatEnum:
+    permissible_values:
+      "OSI":
+      "TXTH":
+      "MCAP":
+
+  CompressionEnum:
+    permissible_values:
+      "uncompressed":
+      "zstd":
+      "lz4":
+
+  MessageTypeEnum:
+    permissible_values:
+      "GroundTruth":
+      "SensorView":
+      "SensorData":
+      "SensorViewConfiguration":
+      "HostVehicleData":
+      "TrafficCommand":
+      "TrafficCommandUpdate":
+      "TrafficUpdate":
+      "MotionRequest":
+      "StreamingUpdate":

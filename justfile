@@ -76,6 +76,28 @@ generate:
     done
     echo "[OK] Artifacts generated"
 
+# Only the LinkML generators run, with the per-domain flags from
+# linkml/<domain>/gen-flags.env; the build fails if gen-shacl skips a constraint.
+# Build a LinkML domain into a scratch directory, leaving artifacts/ untouched.
+build-linkml domain outdir:
+    ./scripts/build_linkml_domain.sh {{domain}} {{outdir}}
+
+# Covers the ontology header, vocabulary, JSON-LD context, SHACL verdicts and
+# mutation probes derived from the committed shapes. Declared deviations live in
+# linkml/<domain>/equivalence-exceptions.yaml; anything else fails the run.
+# Check a candidate artifact set against the committed one for equivalence.
+compare-linkml domain outdir:
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate {{outdir}}
+
+# Build a LinkML domain and immediately check it for equivalence.
+verify-linkml domain:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    out="$(mktemp -d)"
+    trap 'rm -rf "${out}"' EXIT
+    ./scripts/build_linkml_domain.sh {{domain}} "${out}/{{domain}}"
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate "${out}/{{domain}}"
+
 # Generate artifacts for a single domain, e.g. `just generate-domain openlabel-v2`.
 generate-domain domain:
     #!/usr/bin/env bash
