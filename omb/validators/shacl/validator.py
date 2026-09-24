@@ -421,7 +421,7 @@ class ShaclValidator:
         NOT merged in, since fully-materialized ``rdf:type`` triples are
         sufficient for SHACL ``sh:class`` / ``sh:closed`` evaluation.
         """
-        from rdflib import RDF, RDFS, URIRef
+        from rdflib import RDF, RDFS, Literal
 
         work = Graph(store=FAST_STORE)
         work += data_graph
@@ -434,7 +434,11 @@ class ShaclValidator:
                 for cls in closed_ontology.objects(p, RDFS.domain):
                     if (s, RDF.type, cls) not in work:
                         new.append((s, RDF.type, cls))
-                if isinstance(o, URIRef):
+                # rdfs3 types every non-literal object, blank nodes included -
+                # the same !isLiteral rule as apply_rdfs_inference. Inline
+                # (blank-node) values are the common case in JSON-LD instances,
+                # and sh:class on them depends on this.
+                if not isinstance(o, Literal):
                     for cls in closed_ontology.objects(p, RDFS.range):
                         if (o, RDF.type, cls) not in work:
                             new.append((o, RDF.type, cls))
