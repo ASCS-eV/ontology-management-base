@@ -250,6 +250,40 @@ def compare_vocab(
     extra_sub = cand_sub - base_sub
     if extra_sub:
         advisory.append(f"{len(extra_sub)} additional subClassOf axiom(s)")
+
+    # The property hierarchy: rdfs7 lets a consumer that queries the super-property
+    # find every sub-property's values, so a missing axiom changes what it sees.
+    def named_superproperties(graph: Graph) -> Set[Tuple[str, str]]:
+        return {
+            (str(s), str(o))
+            for s, o in graph.subject_objects(RDFS.subPropertyOf)
+            if isinstance(o, URIRef) and str(s).startswith(namespace)
+        }
+
+    base_subprop = named_superproperties(base_owl)
+    cand_subprop = named_superproperties(cand_owl)
+    for sub, sup in sorted(base_subprop - cand_subprop):
+        problems.append(f"subPropertyOf MISSING {sub} -> {sup}")
+    extra_subprop = cand_subprop - base_subprop
+    if extra_subprop:
+        advisory.append(f"{len(extra_subprop)} additional subPropertyOf axiom(s)")
+
+    # An equivalence is a definition: it makes every individual that satisfies it an
+    # instance of the class, so gaining or losing one changes what the ontology
+    # entails. Compared by the classes that carry one, since the restrictions are
+    # blank nodes.
+    def defined_classes(graph: Graph) -> Set[str]:
+        return {
+            str(s)
+            for s in graph.subjects(OWL.equivalentClass, None)
+            if str(s).startswith(namespace)
+        }
+
+    base_defined, cand_defined = defined_classes(base_owl), defined_classes(cand_owl)
+    for cls in sorted(base_defined - cand_defined):
+        problems.append(f"equivalentClass MISSING on {cls}")
+    for cls in sorted(cand_defined - base_defined):
+        problems.append(f"equivalentClass ADDED on {cls}")
     return problems
 
 
@@ -637,6 +671,7 @@ def build_probes(
         original = _load_instance(base_root, instance)
         current[:] = [instance]
         stem = instance.stem
+        absent: Set[Tuple[object, object]] = set()
         triples = sorted(original, key=lambda tr: (str(tr[0]), str(tr[1]), str(tr[2])))
         for s, p, o in triples:
             entry = constraints.get(p)
@@ -654,6 +689,15 @@ def build_probes(
                 mutant += original
                 mutant.remove((s, p, None))
                 emit(mutant, stem, f"{local}-missing")
+            elif (s, p) not in absent:
+                # An optional property: leaving it out must not add a violation on
+                # either side, so a candidate that requires it shows up as a probe
+                # that only the candidate catches.
+                absent.add((s, p))
+                mutant = Graph()
+                mutant += original
+                mutant.remove((s, p, None))
+                emit(mutant, stem, f"{local}-absent")
             if entry.get("maxCount") is not None and int(entry["maxCount"]) == 1:
                 mutant = Graph()
                 mutant += original
@@ -720,6 +764,33 @@ def compare_probes(
 
 
 # --------------------------------------------------------------------------
+def dependent_domains(repo_root: Path, ontology: URIRef) -> List[str]:
+    """The domains whose ontology imports *ontology*, directly or through other imports."""
+    imports: Dict[str, Set[str]] = {}
+    iri_of: Dict[str, str] = {}
+    for owl_file in sorted((repo_root / "artifacts").glob("*/*.owl.ttl")):
+        if owl_file.stem.removesuffix(".owl") != owl_file.parent.name:
+            continue
+        graph = Graph().parse(owl_file, format="turtle")
+        node = _ontology_node(graph)
+        if node is None:
+            continue
+        name = owl_file.parent.name
+        iri_of[name] = str(node)
+        imports[name] = {str(o) for o in graph.objects(node, OWL.imports)}
+    found: Set[str] = set()
+    frontier = {str(ontology)}
+    while frontier:
+        layer = {
+            name
+            for name, deps in imports.items()
+            if deps & frontier and name not in found
+        }
+        found |= layer
+        frontier = {iri_of[name] for name in layer}
+    return sorted(found)
+
+
 def load_exceptions(path: Path) -> dict:
     """Read the domain's declared, reviewed deviations.
 
@@ -749,6 +820,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         metavar="DOMAIN=DIR",
         help="also swap this candidate domain in on the candidate side "
         "(repeatable), for a candidate that depends on another candidate",
+    )
+    parser.add_argument(
+        "--dependents",
+        action="store_true",
+        help="also run the shacl and probe layers on the test instances of every "
+        "domain that imports this one, directly or through other imports: a "
+        "constraint a domain inherits from this one is measured on that domain's data",
     )
     parser.add_argument("--layers", nargs="*", default=list(LAYERS), choices=LAYERS)
     parser.add_argument("--repo-root", type=Path, default=REPO_ROOT)
@@ -788,6 +866,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     data_dir = repo_root / "tests" / "data" / domain
     instances = sorted(data_dir.rglob("*.json"))
+    # The context layer compares this domain's own terms; the verdict layers also
+    # see the data of the domains that inherit its constraints.
+    verdict_instances = list(instances)
+    if args.dependents and ontology is not None:
+        for dependent in dependent_domains(repo_root, ontology):
+            verdict_instances.extend(
+                sorted((repo_root / "tests" / "data" / dependent).rglob("*.json"))
+            )
 
     exceptions = load_exceptions(
         repo_root / "linkml" / domain / "equivalence-exceptions.yaml"
@@ -829,11 +915,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             )
             if "shacl" in args.layers:
                 findings["shacl"] = compare_shacl(
-                    base_root, cand_root, instances, allowed_constraints, accepted
+                    base_root,
+                    cand_root,
+                    verdict_instances,
+                    allowed_constraints,
+                    accepted,
                 )
             if "probe" in args.layers:
                 probes = build_probes(
-                    instances, base_root, repo_root, workdir / "probes", args.max_probes
+                    verdict_instances,
+                    base_root,
+                    repo_root,
+                    workdir / "probes",
+                    args.max_probes,
                 )
                 problems, discriminating, total, notes = compare_probes(
                     base_root, cand_root, probes
