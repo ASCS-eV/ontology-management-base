@@ -7,15 +7,25 @@
 =                                                                                                                                                    =
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: did:web:test.manifest.net:Manifest:test_invalid_fail_05_wrong_mimeType_instance                                               =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasArtifacts                                                                   =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Error:            Value does not conform to Shape manifest:LinkShape. See details for more information.                                         =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasFileMetadata                                                                =
-=    Error:            Value does not conform to Shape manifest:FileMetadataShape. See details for more information.                                 =
+= 🔹 [Violation] Node: did:web:test.manifest.net:Manifest:test_invalid_fail_05_wrong_mimeType_instance                                               =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasArtifacts                                                                   =
+=    Error:            hasArtifacts (Manifest): Associates a Manifest instance with its artifacts, represented as Link instances; only applicable    =
+=                      within Manifest instances.                                                                                                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/mimeType                                                                       =
-=    Error:            Validation of the MIME type failed!                                                                                           =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata                                                                =
+=    Error:            hasFileMetadata (ArtifactLink): Associates a FileMetadata instance with its corresponding Link; only applicable within Link   =
+=                      instances.                                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata                                                                =
+=    Error:            hasFileMetadata (Link): Associates a FileMetadata instance with its corresponding Link; only applicable within Link           =
+=                      instances.                                                                                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/mimeType                                                                       =
+=    Error:            mimeType (FileMetadata): Defines the MIME type of the file.                                                                   =
 ======================================================================================================================================================

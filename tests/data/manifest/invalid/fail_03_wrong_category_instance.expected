@@ -8,10 +8,11 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasCategory                                                                    =
-=    Error:            A link used in hasLicense must have a category belonging to manifest:LicenseCategory.                                         =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasCategory                                                                    =
+=    Error:            hasCategory (LicenseLink): General property to indicate the category of an artifact.                                          =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.manifest.net:Manifest:test_invalid_fail_03_wrong_category_instance                                               =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasLicense                                                                     =
-=    Error:            Value does not conform to Shape manifest:LicenseLinkReferenceShape. See details for more information.                         =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasLicense                                                                     =
+=    Error:            hasLicense (Manifest): Associates a Manifest instance with its corresponding license; only applicable within Manifest         =
+=                      instances.                                                                                                                    =
 ======================================================================================================================================================

@@ -1,210 +1,622 @@
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-
-<https://w3id.org/ascs-ev/envited-x/manifest/v5> a owl:Ontology ;
-    rdfs:label "Ontology definition for manifest"@en ;
-    rdfs:comment "An ontology with common classes to describe the structure as list of contents of a domain specific asset using a manifest.json e.g. in an archive."@en ;
-
-    dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
-    dcterms:contributor [
-        a foaf:Person ;
-        foaf:name "Johannes Demer" ;
-        org:memberOf <https://www.asc-s.de/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Carlo van Driesten" ;
-        org:memberOf <https://www.bmwgroup.com/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Mirco Nierenz" ;
-        org:memberOf <https://triangraphics.de/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Erik Konietzko" ;
-        org:memberOf <https://www.ipk.fraunhofer.de/> ;
-    ] ;
-
-    # Permanent identifier for the ontology (not version-specific)
-    dcterms:identifier <https://w3id.org/ascs-ev/envited-x/manifest> ;
-
-    # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
-
-    # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
-
-    # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/manifest/v5> ;
-    owl:versionInfo "v5" ;
-
-    # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes> ;
-
-    # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies
-    dcterms:references <https://w3id.org/ascs-ev/envited-x/envited-x/> ;
-    rdfs:seeAlso <https://ascs-ev.github.io/EVES/> .
-
-
-manifest:Manifest a owl:Class ;
-    rdfs:label "Class definition for Manifest"@en ;
-    rdfs:comment """Defines the structure of an asset (e.g. simulation asset) as list of contents
-                    using a manifest.json, listing explicitely included artifacts, referenced
-                    artifacts and license information as linked properties. Typically used for
-                    archives."""@en ;
-    owl:equivalentClass [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasManifestReference ;
-        owl:cardinality 1
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasLicense ;
-        owl:cardinality 1
-    ] ;
-    owl:equivalentClass [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasArtifacts ;
-        owl:someValuesFrom manifest:Link
-    ] ;
-    owl:equivalentClass [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasReferencedArtifacts ;
-        owl:minCardinality 0
-    ] .
-
-
-manifest:Link a owl:Class ;
-    rdfs:label "Class definition for Link"@en ;
-    rdfs:comment """Defines a Link instance that connects to data and mandatory metadata
-                    within an asset or related published simulation assets; can include
-                    web references."""@en ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasFileMetadata ;
-        owl:cardinality 1
-    ] .
-
-
-manifest:FileMetadata a owl:Class ;
-    rdfs:label "Class definition for File Metadata"@en ;
-    rdfs:comment "Represents the properties of a data file referenced within a Link instance."@en ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty manifest:hasDimensions ;
-        owl:minCardinality 0
-    ] .
-
-
-manifest:Dimensions a owl:Class ;
-    rdfs:label "Class definition for Dimensions"@en ;
-    rdfs:comment "General class for defining the dimensions of a data file, e.g., of type image or video, referenced inside a manifest:FileMetadata."@en .
-
-### Object properties
-
-manifest:hasLink a owl:ObjectProperty ;
-    rdfs:label "has Link"@en ;
-    rdfs:comment "States that a subject has a Link instance."@en ;
-    # The range is Link, but no domain is specified
-    rdfs:range manifest:Link .
-
-
-manifest:hasManifestReference a owl:ObjectProperty ;
-    rdfs:label "has Manifest Reference"@en ;
-    rdfs:comment "Links a Manifest to its corresponding manifest reference file, defining the structure and contents of a digital asset; only applicable within Manifest instances."@en ;
-    rdfs:subPropertyOf manifest:hasLink ;
-    rdfs:domain manifest:Manifest ;
-    rdfs:range manifest:Link .
-
-
-manifest:hasLicense a owl:ObjectProperty ;
-    rdfs:label "has License"@en ;
-    rdfs:comment "Associates a Manifest instance with its corresponding license; only applicable within Manifest instances."@en ;
-    rdfs:domain manifest:Manifest ;
-    rdfs:range manifest:Link .
-
-
-manifest:hasArtifacts a owl:ObjectProperty ;
-    rdfs:label "has Artifacts"@en ;
-    rdfs:comment "Associates a Manifest instance with its artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
-    rdfs:subPropertyOf manifest:hasLink ;
-    rdfs:domain manifest:Manifest ;
-    rdfs:range manifest:Link .
-
-
-manifest:hasReferencedArtifacts a owl:ObjectProperty ;
-    rdfs:label "has Referenced Artifacts"@en ;
-    rdfs:comment "Associates a Manifest instance with its referenced artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
-    rdfs:subPropertyOf manifest:hasLink ;
-    rdfs:domain manifest:Manifest ;
-    rdfs:range manifest:Link .
-
-
-manifest:hasFileMetadata a owl:ObjectProperty ;
-    rdfs:label "has File Metadata"@en ;
-    rdfs:comment "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
-    rdfs:domain manifest:Link ;
-    rdfs:range manifest:FileMetadata .
-
-
-manifest:hasDimensions a owl:ObjectProperty ;
-    rdfs:label "has Dimensions"@en ;
-    rdfs:comment "Links a Dimensions instance to its associated FileMetadata, defining the size and scale of the data file; applicable only within FileMetadata instances."@en ;
-    rdfs:domain manifest:FileMetadata ;
-    rdfs:range manifest:Dimensions .
-
-## Define a general access role class
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+xsd:anyURI a rdfs:Datatype ;
+	owl:equivalentClass xsd:string .
+skos:note a owl:DatatypeProperty ;
+	rdfs:comment "Additional information about the linked artifact."@en ;
+	rdfs:label "note"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+sh:conformsTo a owl:ObjectProperty ;
+	rdfs:comment "Specifies ontology conformance."@en ;
+	rdfs:label "shapesConformsTo"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	skos:prefLabel "conformsTo"@en .
 manifest:AccessRole a owl:Class ;
-    rdfs:label "AccessRole"@en ;
-    rdfs:comment "A class representing different access roles of artifacts in a manifest."@en .
-
-## General accessRole property
-manifest:hasAccessRole a owl:ObjectProperty ;
-    rdfs:label "has AccessRole"@en ;
-    rdfs:comment "General property to indicate the access role of an artifact."@en ;
-    rdfs:domain manifest:Link ;
-    rdfs:range manifest:AccessRole .
-
-## Define specific access role types as named individuals (NOT subclasses)
-manifest:isPublic a manifest:AccessRole, owl:NamedIndividual ;
-    rdfs:label "Public Access Role"@en ;
-    rdfs:comment "Indicates that the artifact access role is public."@en .
-
-## Define a general category class
+	rdfs:comment "A class representing different access roles of artifacts in a manifest."@en ;
+	rdfs:label "AccessRole"@en ;
+	rdfs:subClassOf _:b2213b5dada92 , _:becb563f47c2c , _:bf1c00e5806f5 ;
+	skos:exactMatch manifest:AccessRole ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:ArtifactLink a owl:Class ;
+	rdfs:comment "A Link to an artifact of a manifest: its content, license or a referenced artifact."@en ;
+	rdfs:label "ArtifactLink"@en ;
+	rdfs:subClassOf manifest:Link ;
+	skos:exactMatch manifest:ArtifactLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
 manifest:Category a owl:Class ;
-    rdfs:label "Category"@en ;
-    rdfs:comment "A class representing different categories of artifacts in a manifest."@en .
-
-## General category property
-manifest:hasCategory a owl:ObjectProperty ;
-    rdfs:label "has Category"@en ;
-    rdfs:comment "General property to indicate the category of an artifact."@en ;
-    rdfs:domain manifest:Link ;
-    rdfs:range manifest:Category .
-
-# New Category Classes
+	rdfs:comment "A class representing different categories of artifacts in a manifest."@en ;
+	rdfs:label "Category"@en ;
+	rdfs:subClassOf _:b196a71add24e , _:b41e4ba9a55ff , _:be32e101423ff ;
+	skos:exactMatch manifest:Category ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:Dimensions a owl:Class ;
+	rdfs:comment "General class for defining the dimensions of a data file, e.g., of type image or video, referenced inside a manifest:FileMetadata."@en ;
+	rdfs:label "Dimensions"@en ;
+	rdfs:subClassOf _:b0b2724ad608b , _:b19b443055e4e , _:b5ec52c15a538 , _:b6b7ad6fe6f60 , _:b8fb3a30d9835 , _:b99b53b0fd652 , _:b99e595774c92 , _:ba9b427a5a06c , _:bc8cc12153873 , _:bd9957536569d , _:be662ebaa44f8 , _:bf7249b0f1bb8 ;
+	skos:exactMatch manifest:Dimensions ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:FileMetadata a owl:Class ;
+	rdfs:comment "Represents the properties of a data file referenced within a Link instance."@en ;
+	rdfs:label "FileMetadata"@en ;
+	rdfs:subClassOf _:b2f8c93a11b83 , _:b3ccc8c7cad3e , _:b41d89f087cae , _:b4676770ac2e6 , _:b4d3492acb958 , _:b4e8f95f2453f , _:b5754f376a394 , _:b579426a4fd30 , _:b60680279bfa8 , _:b609e3110d0d3 , _:b61d1a3a46e4d , _:b724ad44986a8 , _:b7f41b42364d3 , _:b84fc2ed6e14a , _:b85a15e94d313 , _:b954d28b7b9f3 , _:ba4af6b738b30 , _:bb1f4a07dec0f , _:bb39538bf248a , _:bd834346486f8 , _:be9ac2ec96c18 ;
+	skos:exactMatch manifest:FileMetadata ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
 manifest:LicenseCategory a owl:Class ;
-    rdfs:subClassOf manifest:Category .
-
+	rdfs:label "LicenseCategory"@en ;
+	rdfs:subClassOf manifest:Category ;
+	skos:exactMatch manifest:LicenseCategory ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:LicenseLink a owl:Class ;
+	rdfs:comment "A Link used for the license of a manifest."@en ;
+	rdfs:label "LicenseLink"@en ;
+	rdfs:subClassOf manifest:ArtifactLink , _:b19cd7dd2e7c0 , _:b853a39ca0c59 , _:b89a63a3ba50b ;
+	skos:exactMatch manifest:LicenseLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:Link a owl:Class ;
+	rdfs:comment "Defines a Link instance that connects to data and mandatory metadata within an asset or related published simulation assets; can include web references."@en ;
+	rdfs:label "Link"@en ;
+	rdfs:subClassOf _:b0b77e73ad61c , _:b0d523a7a1362 , _:b0e9dd2f764a2 , _:b229a910509ae , _:b36e5bde7ad4a , _:b3a47973099c6 , _:b408e64c13f47 , _:b4122476a1de1 , _:b45973fabaf0d , _:b5c73e0f8601c , _:b702029a62ce8 , _:b76dc0961b043 , _:b9109e9b378c2 , _:b9994e4198a78 , _:bba14feb9b90b , _:bcd6e3dbe42cd , _:be03033ab99db ;
+	skos:exactMatch manifest:Link ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:Manifest a owl:Class ;
+	rdfs:comment "Defines the structure of an asset (e.g. simulation asset) as list of contents using a manifest.json, listing explicitely included artifacts, referenced artifacts and license information as linked properties. Typically used for archives."@en ;
+	rdfs:label "Manifest"@en ;
+	rdfs:subClassOf _:b33ae5e324589 , _:b3f9250ca66ac , _:b474820ecf552 , _:b5e57bc604643 , _:b70e10ff21fbd , _:bb10cdc601494 , _:bb1175918cb1b , _:bc868ccc0f919 , _:bdc7c589164ca , _:bf6bab40038a0 ;
+	skos:exactMatch manifest:Manifest ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:ManifestAccessRoleEnum a owl:Class ;
+	rdfs:comment "The access roles manifest defines."@en ;
+	rdfs:label "ManifestAccessRoleEnum"@en ;
+	owl:oneOf _:b15f4e2c197cf ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	linkml:permissible_values manifest:isPublic .
 manifest:ManifestCategory a owl:Class ;
-    rdfs:subClassOf manifest:Category .
-
+	rdfs:label "ManifestCategory"@en ;
+	rdfs:subClassOf manifest:Category ;
+	skos:exactMatch manifest:ManifestCategory ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:ManifestCategoryEnum a owl:Class ;
+	rdfs:comment "The artifact categories manifest defines."@en ;
+	rdfs:label "ManifestCategoryEnum"@en ;
+	owl:oneOf _:bea6423767c00 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	linkml:permissible_values manifest:isLicense , manifest:isManifest , manifest:isMiscellaneous .
+manifest:ManifestLink a owl:Class ;
+	rdfs:comment "A Link used for the self-reference of a manifest."@en ;
+	rdfs:label "ManifestLink"@en ;
+	rdfs:subClassOf manifest:Link , _:b0d23e1a24d5f , _:bbba00972f0bf , _:be560109d0489 ;
+	skos:exactMatch manifest:ManifestLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
 manifest:MiscellaneousCategory a owl:Class ;
-    rdfs:subClassOf manifest:Category .
-
-# Base individual updated to the new class
-manifest:isLicense a manifest:LicenseCategory, owl:NamedIndividual ;
-    rdfs:label "License Category"@en ;
-    rdfs:comment "Indicates that the artifact category is a license."@en .
-
-manifest:isManifest a manifest:ManifestCategory, owl:NamedIndividual ;
-    rdfs:label "Manifest Category"@en ;
-    rdfs:comment "Indicates that the artifact category is a manifest."@en .
-
-manifest:isMiscellaneous a manifest:Miscellaneous, owl:NamedIndividual ;
-    rdfs:label "Miscellaneous Category"@en ;
-    rdfs:comment "Indicates that the artifact category is miscellaneous."@en .
+	rdfs:label "MiscellaneousCategory"@en ;
+	rdfs:subClassOf manifest:Category ;
+	skos:exactMatch manifest:MiscellaneousCategory ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:UnitEnum\#inches a owl:Class ;
+	rdfs:label "inches"@en ;
+	rdfs:subClassOf manifest:UnitEnum .
+manifest:UnitEnum\#metres a owl:Class ;
+	rdfs:label "metres"@en ;
+	rdfs:subClassOf manifest:UnitEnum .
+manifest:UnitEnum\#pixels a owl:Class ;
+	rdfs:label "pixels"@en ;
+	rdfs:subClassOf manifest:UnitEnum .
+manifest:UnitEnum a owl:Class ;
+	rdfs:label "UnitEnum"@en ;
+	owl:unionOf _:b371e4c455744 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	linkml:permissible_values manifest:UnitEnum\#inches , manifest:UnitEnum\#metres , manifest:UnitEnum\#pixels .
+manifest:cid a owl:DatatypeProperty ;
+	rdfs:comment "Defines the IPFS CIDv1 identifier of the file."@en ;
+	rdfs:label "cid"@en ;
+	rdfs:range _:be470300e01fc ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:depth a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the depth (z-axis) of the item in appropriate units."@en ;
+	rdfs:label "depth"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:filePath a owl:DatatypeProperty ;
+	rdfs:comment "A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...')."@en ;
+	rdfs:label "filePath"@en ;
+	rdfs:range xsd:anyURI ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:fileSize a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the file size in bytes."@en ;
+	rdfs:label "manifestFileSize"@en ;
+	rdfs:range xsd:integer ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	skos:prefLabel "fileSize"@en .
+manifest:filename a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the file name (excluding the path) along with its extension."@en ;
+	rdfs:label "filename"@en ;
+	rdfs:range _:bbc211196a2b4 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasAccessRole a owl:ObjectProperty ;
+	rdfs:comment "General property to indicate the access role of an artifact."@en ;
+	rdfs:label "hasAccessRole"@en ;
+	rdfs:range manifest:AccessRole ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasArtifacts a owl:ObjectProperty ;
+	rdfs:comment "Associates a Manifest instance with its artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	rdfs:label "hasArtifacts"@en ;
+	rdfs:range manifest:ArtifactLink ;
+	rdfs:subPropertyOf manifest:hasLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasCategory a owl:ObjectProperty ;
+	rdfs:comment "General property to indicate the category of an artifact."@en ;
+	rdfs:label "hasCategory"@en ;
+	rdfs:range manifest:Category ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasDimensions a owl:ObjectProperty ;
+	rdfs:comment "Links a Dimensions instance to its associated FileMetadata, defining the size and scale of the data file; applicable only within FileMetadata instances."@en ;
+	rdfs:label "hasDimensions"@en ;
+	rdfs:range manifest:Dimensions ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasFileMetadata a owl:ObjectProperty ;
+	rdfs:comment "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	rdfs:label "hasFileMetadata"@en ;
+	rdfs:range manifest:FileMetadata ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasLicense a owl:ObjectProperty ;
+	rdfs:comment "Associates a Manifest instance with its corresponding license; only applicable within Manifest instances."@en ;
+	rdfs:label "hasLicense"@en ;
+	rdfs:range manifest:LicenseLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasLink a owl:ObjectProperty ;
+	rdfs:comment "States that a subject has a Link instance."@en ;
+	rdfs:label "hasLink"@en ;
+	rdfs:range manifest:Link ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasManifestReference a owl:ObjectProperty ;
+	rdfs:comment "Links a Manifest to its corresponding manifest reference file, defining the structure and contents of a digital asset; only applicable within Manifest instances."@en ;
+	rdfs:label "hasManifestReference"@en ;
+	rdfs:range manifest:ManifestLink ;
+	rdfs:subPropertyOf manifest:hasLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:hasReferencedArtifacts a owl:ObjectProperty ;
+	rdfs:comment "Associates a Manifest instance with its referenced artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	rdfs:label "hasReferencedArtifacts"@en ;
+	rdfs:range manifest:ArtifactLink ;
+	rdfs:subPropertyOf manifest:hasLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:height a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the height (y-axis) of the item in appropriate units."@en ;
+	rdfs:label "height"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:id a owl:ObjectProperty ;
+	rdfs:comment "The IRI of a named individual."@en ;
+	rdfs:label "id"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:iri a owl:ObjectProperty ;
+	rdfs:comment "IRI required if the file is RDF/JSON-LD."@en ;
+	rdfs:label "iri"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:isLicense dcterms:title "License Category"@en ;
+	a owl:NamedIndividual , manifest:LicenseCategory , manifest:ManifestCategoryEnum ;
+	rdfs:comment "Indicates that the artifact category is a license."@en ;
+	rdfs:label "isLicense"@en .
+manifest:isManifest dcterms:title "Manifest Category"@en ;
+	a owl:NamedIndividual , manifest:ManifestCategory , manifest:ManifestCategoryEnum ;
+	rdfs:comment "Indicates that the artifact category is a manifest."@en ;
+	rdfs:label "isManifest"@en .
+manifest:isMiscellaneous dcterms:title "Miscellaneous Category"@en ;
+	a owl:NamedIndividual , manifest:ManifestCategoryEnum , manifest:MiscellaneousCategory ;
+	rdfs:comment "Indicates that the artifact category is miscellaneous."@en ;
+	rdfs:label "isMiscellaneous"@en .
+manifest:isPublic dcterms:title "Public Access Role"@en ;
+	a owl:NamedIndividual , manifest:AccessRole , manifest:ManifestAccessRoleEnum ;
+	rdfs:comment "Indicates that the artifact access role is public."@en ;
+	rdfs:label "isPublic"@en .
+manifest:mimeType a owl:DatatypeProperty ;
+	rdfs:comment "Defines the MIME type of the file."@en ;
+	rdfs:label "mimeType"@en ;
+	rdfs:range _:b915d9c64b981 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:timestamp a owl:DatatypeProperty ;
+	rdfs:comment "Represents a date or time associated with the file, such as recording time or creation time."@en ;
+	rdfs:label "timestamp"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:unit a owl:ObjectProperty ;
+	rdfs:comment "Specifies the unit of measurement (e.g., metres, inches)."@en ;
+	rdfs:label "unit"@en ;
+	rdfs:range manifest:UnitEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+manifest:width a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the width (x-axis) of the item in appropriate units."@en ;
+	rdfs:label "width"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
+<https://w3id.org/ascs-ev/envited-x/manifest/v6> dcterms:conformsTo manifest:shapes ;
+	dcterms:contributor <https://github.com/MircoNierenz> , <https://github.com/jdsika> , <https://github.com/jtdemer> , <https://github.com/konierik> ;
+	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/manifest"@en ;
+	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
+	dcterms:references <https://w3id.org/ascs-ev/envited-x/envited-x/> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:title "Ontology definition for manifest"@en ;
+	a owl:Ontology ;
+	rdfs:comment "An ontology with common classes to describe the structure as list of contents of a domain specific asset using a manifest.json e.g. in an archive."@en ;
+	rdfs:label "manifest"@en ;
+	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
+	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/manifest/v5> ;
+	owl:versionIRI <https://w3id.org/ascs-ev/envited-x/manifest/v6> ;
+	owl:versionInfo "v6"@en ;
+	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+_:b042cb4581421 a owl:Restriction ;
+	owl:onProperty manifest:shapesConformsTo ;
+	owl:someValuesFrom xsd:string .
+_:b0b2724ad608b a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:height .
+_:b0b77e73ad61c a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasAccessRole .
+_:b0ba8caeff02e rdf:first _:b41efb08e8a04 ;
+	rdf:rest rdf:nil .
+_:b0d23e1a24d5f a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b0d523a7a1362 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty manifest:iri .
+_:b0e9dd2f764a2 a owl:Restriction ;
+	owl:allValuesFrom manifest:AccessRole ;
+	owl:onProperty manifest:hasAccessRole .
+_:b12ec65c875dd rdf:first xsd:string ;
+	rdf:rest _:b92a00e9cd4b0 .
+_:b15382593e8bb a owl:Restriction ;
+	owl:onProperty manifest:iri ;
+	owl:someValuesFrom xsd:string .
+_:b15f4e2c197cf rdf:first manifest:isPublic ;
+	rdf:rest rdf:nil .
+_:b196a71add24e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:id .
+_:b19b443055e4e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:height .
+_:b19cd7dd2e7c0 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b1c3e3b0a6dca a owl:Restriction ;
+	owl:onProperty manifest:hasFileMetadata ;
+	owl:someValuesFrom _:bb067132c7fe7 .
+_:b1c3e3b0a6dca_1 a owl:Restriction ;
+	owl:onProperty manifest:hasFileMetadata ;
+	owl:someValuesFrom _:bb067132c7fe7_1 .
+_:b1c3e3b0a6dca_2 a owl:Restriction ;
+	owl:onProperty manifest:hasFileMetadata ;
+	owl:someValuesFrom _:bb067132c7fe7_2 .
+_:b1c6f48f2aaf6 a rdfs:Datatype ;
+	owl:intersectionOf _:b21f6786ebff7 .
+_:b21f6786ebff7 rdf:first xsd:string ;
+	rdf:rest _:bc51b6e4ebc93_1 .
+_:b2213b5dada92 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:id .
+_:b229a910509ae a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b2610a93df32d rdf:first manifest:UnitEnum\#pixels ;
+	rdf:rest rdf:nil .
+_:b2f8c93a11b83 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasDimensions .
+_:b3193e04af64c xsd:pattern "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" .
+_:b3193e04af64c_1 xsd:pattern "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" .
+_:b33ae5e324589 a owl:Restriction ;
+	owl:allValuesFrom manifest:LicenseLink ;
+	owl:onProperty manifest:hasLicense .
+_:b36e5bde7ad4a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty skos:note .
+_:b371e4c455744 rdf:first manifest:UnitEnum\#metres ;
+	rdf:rest _:b99d81d05b505 .
+_:b3a47973099c6 a owl:Restriction ;
+	owl:allValuesFrom manifest:FileMetadata ;
+	owl:onProperty manifest:hasFileMetadata .
+_:b3a4aed7cb923 xsd:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
+_:b3a4aed7cb923_1 xsd:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
+_:b3ccc8c7cad3e a owl:Restriction ;
+	owl:allValuesFrom _:bf4ef25b82967 ;
+	owl:onProperty manifest:cid .
+_:b3f9250ca66ac a owl:Restriction ;
+	owl:allValuesFrom manifest:ArtifactLink ;
+	owl:onProperty manifest:hasArtifacts .
+_:b408e64c13f47 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty sh:conformsTo .
+_:b40a5ff57fc4f a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b7e354790d6e1 .
+_:b40a5ff57fc4f_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b7e354790d6e1_1 .
+_:b4122476a1de1 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty sh:conformsTo .
+_:b41d89f087cae a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:fileSize .
+_:b41e4ba9a55ff a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty manifest:id .
+_:b41efb08e8a04 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b6af16f471c61 .
+_:b41efb08e8a04_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b6af16f471c61_1 .
+_:b45973fabaf0d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:b4676770ac2e6 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:fileSize .
+_:b474820ecf552 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasArtifacts .
+_:b4d3492acb958 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasDimensions .
+_:b4e8f95f2453f a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:filePath .
+_:b55036ff84a3c rdfs:subClassOf _:b15382593e8bb ;
+	owl:intersectionOf _:b8cbfd3e586e9 .
+_:b57338f467338 xsd:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
+_:b57338f467338_1 xsd:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
+_:b5754f376a394 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:cid .
+_:b579426a4fd30 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:filename .
+_:b5c654a85881d rdfs:subClassOf _:b63a8a6110dd3 ;
+	owl:intersectionOf _:bac9fbe9bfc73 .
+_:b5c73e0f8601c a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty skos:note .
+_:b5e57bc604643 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasReferencedArtifacts .
+_:b5ec52c15a538 a owl:Restriction ;
+	owl:allValuesFrom manifest:UnitEnum ;
+	owl:onProperty manifest:unit .
+_:b60680279bfa8 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:filePath .
+_:b609e3110d0d3 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:mimeType .
+_:b61d1a3a46e4d a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty manifest:fileSize .
+_:b63a8a6110dd3 a owl:Restriction ;
+	owl:onProperty manifest:note ;
+	owl:someValuesFrom xsd:string .
+_:b6af16f471c61 rdf:first _:b3a4aed7cb923 ;
+	rdf:rest rdf:nil .
+_:b6af16f471c61_1 rdf:first _:b3a4aed7cb923_1 ;
+	rdf:rest rdf:nil .
+_:b6b1cfc648f76 rdf:first manifest:ArtifactLink ;
+	rdf:rest rdf:nil .
+_:b6b1cfc648f76_1 rdf:first manifest:ArtifactLink ;
+	rdf:rest rdf:nil .
+_:b6b1cfc648f76_2 rdf:first manifest:ArtifactLink ;
+	rdf:rest rdf:nil .
+_:b6b7ad6fe6f60 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:depth .
+_:b6ca6b8aba362 a rdfs:Datatype ;
+	owl:intersectionOf _:b8daa0b6ef228 .
+_:b6f8dfdd9618f rdf:first manifest:isMiscellaneous ;
+	rdf:rest rdf:nil .
+_:b702029a62ce8 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:b70e10ff21fbd a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasLicense .
+_:b724ad44986a8 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:timestamp .
+_:b73b99fc9c5e1 rdf:first xsd:string ;
+	rdf:rest _:b9375387d24e3 .
+_:b76dc0961b043 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty skos:note .
+_:b7e158ee78f51 xsd:pattern "application/ld+json" .
+_:b7e158ee78f51_1 xsd:pattern "application/ld+json" .
+_:b7e158ee78f51_2 xsd:pattern "application/ld+json" .
+_:b7e354790d6e1 rdf:first _:b3193e04af64c ;
+	rdf:rest rdf:nil .
+_:b7e354790d6e1_1 rdf:first _:b3193e04af64c_1 ;
+	rdf:rest rdf:nil .
+_:b7f41b42364d3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:mimeType .
+_:b7f5e070ae003 rdfs:subClassOf _:b042cb4581421 ;
+	owl:intersectionOf _:b8f0db2df1235 .
+_:b7fc8665f9a94 rdf:first _:b57338f467338 ;
+	rdf:rest rdf:nil .
+_:b7fc8665f9a94_1 rdf:first _:b57338f467338_1 ;
+	rdf:rest rdf:nil .
+_:b84fc2ed6e14a a owl:Restriction ;
+	owl:allValuesFrom _:b1c6f48f2aaf6 ;
+	owl:onProperty manifest:mimeType .
+_:b853a39ca0c59 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b85a15e94d313 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:filename .
+_:b89a63a3ba50b a owl:Restriction ;
+	owl:allValuesFrom manifest:LicenseCategory ;
+	owl:onProperty manifest:hasCategory .
+_:b8cbfd3e586e9 rdf:first _:b1c3e3b0a6dca_1 ;
+	rdf:rest _:b6b1cfc648f76_1 .
+_:b8daa0b6ef228 rdf:first xsd:string ;
+	rdf:rest _:bc51b6e4ebc93 .
+_:b8f0db2df1235 rdf:first _:b1c3e3b0a6dca ;
+	rdf:rest _:b6b1cfc648f76 .
+_:b8fb3a30d9835 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:width .
+_:b9109e9b378c2 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:iri .
+_:b915d9c64b981 a rdfs:Datatype ;
+	owl:intersectionOf _:b73b99fc9c5e1 .
+_:b92a00e9cd4b0 rdf:first _:b40a5ff57fc4f ;
+	rdf:rest rdf:nil .
+_:b9375387d24e3 rdf:first _:bc1f99bbd9088 ;
+	rdf:rest rdf:nil .
+_:b954d28b7b9f3 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:cid .
+_:b9994e4198a78 a owl:Restriction ;
+	owl:allValuesFrom manifest:Category ;
+	owl:onProperty manifest:hasCategory .
+_:b99b53b0fd652 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:depth .
+_:b99d81d05b505 rdf:first manifest:UnitEnum\#inches ;
+	rdf:rest _:b2610a93df32d .
+_:b99e595774c92 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:width .
+_:ba4af6b738b30 a owl:Restriction ;
+	owl:allValuesFrom manifest:Dimensions ;
+	owl:onProperty manifest:hasDimensions .
+_:ba9b427a5a06c a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:height .
+_:bac9fbe9bfc73 rdf:first _:b1c3e3b0a6dca_2 ;
+	rdf:rest _:b6b1cfc648f76_2 .
+_:bb067132c7fe7 a owl:Restriction ;
+	owl:allValuesFrom _:bcae6645dcced ;
+	owl:onProperty manifest:mimeType .
+_:bb067132c7fe7_1 a owl:Restriction ;
+	owl:allValuesFrom _:bcae6645dcced_1 ;
+	owl:onProperty manifest:mimeType .
+_:bb067132c7fe7_2 a owl:Restriction ;
+	owl:allValuesFrom _:bcae6645dcced_2 ;
+	owl:onProperty manifest:mimeType .
+_:bb10cdc601494 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasLicense .
+_:bb1175918cb1b a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasManifestReference .
+_:bb1f4a07dec0f a owl:Restriction ;
+	owl:allValuesFrom xsd:dateTime ;
+	owl:onProperty manifest:timestamp .
+_:bb39538bf248a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:timestamp .
+_:bba013a40090b rdf:first _:b7e158ee78f51 ;
+	rdf:rest rdf:nil .
+_:bba013a40090b_1 rdf:first _:b7e158ee78f51_1 ;
+	rdf:rest rdf:nil .
+_:bba013a40090b_2 rdf:first _:b7e158ee78f51_2 ;
+	rdf:rest rdf:nil .
+_:bba14feb9b90b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:bba21c56cb750 rdf:first manifest:isManifest ;
+	rdf:rest _:b6f8dfdd9618f .
+_:bbba00972f0bf a owl:Restriction ;
+	owl:allValuesFrom manifest:ManifestCategory ;
+	owl:onProperty manifest:hasCategory .
+_:bbc211196a2b4 a rdfs:Datatype ;
+	owl:intersectionOf _:bc580df912bef .
+_:bc1f99bbd9088 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b7fc8665f9a94 .
+_:bc1f99bbd9088_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b7fc8665f9a94_1 .
+_:bc51b6e4ebc93 rdf:first _:b41efb08e8a04_1 ;
+	rdf:rest rdf:nil .
+_:bc51b6e4ebc93_1 rdf:first _:bc1f99bbd9088_1 ;
+	rdf:rest rdf:nil .
+_:bc51b6e4ebc93_2 rdf:first _:b40a5ff57fc4f_1 ;
+	rdf:rest rdf:nil .
+_:bc580df912bef rdf:first xsd:string ;
+	rdf:rest _:b0ba8caeff02e .
+_:bc868ccc0f919 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasManifestReference .
+_:bc8cc12153873 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:unit .
+_:bcae6645dcced a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bba013a40090b .
+_:bcae6645dcced_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bba013a40090b_1 .
+_:bcae6645dcced_2 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bba013a40090b_2 .
+_:bcd6e3dbe42cd a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasAccessRole .
+_:bd834346486f8 a owl:Restriction ;
+	owl:allValuesFrom xsd:anyURI ;
+	owl:onProperty manifest:filePath .
+_:bd9957536569d a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:depth .
+_:bdc7c589164ca a owl:Restriction ;
+	owl:allValuesFrom manifest:ManifestLink ;
+	owl:onProperty manifest:hasManifestReference .
+_:be03033ab99db a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:iri .
+_:be32e101423ff a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:id .
+_:be470300e01fc a rdfs:Datatype ;
+	owl:intersectionOf _:b12ec65c875dd .
+_:be560109d0489 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:be662ebaa44f8 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:unit .
+_:be9ac2ec96c18 a owl:Restriction ;
+	owl:allValuesFrom _:b6ca6b8aba362 ;
+	owl:onProperty manifest:filename .
+_:bea3e9ade291e rdf:first xsd:string ;
+	rdf:rest _:bc51b6e4ebc93_2 .
+_:bea6423767c00 rdf:first manifest:isLicense ;
+	rdf:rest _:bba21c56cb750 .
+_:becb563f47c2c a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty manifest:id .
+_:bf1c00e5806f5 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:id .
+_:bf4ef25b82967 a rdfs:Datatype ;
+	owl:intersectionOf _:bea3e9ade291e .
+_:bf6bab40038a0 a owl:Restriction ;
+	owl:allValuesFrom manifest:ArtifactLink ;
+	owl:onProperty manifest:hasReferencedArtifacts .
+_:bf7249b0f1bb8 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:width .

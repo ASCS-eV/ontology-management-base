@@ -17,8 +17,8 @@
       "schema": "https://schema.org/",
       "hdmap": "https://w3id.org/ascs-ev/envited-x/hdmap/v6/",
       "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
       "accuracyLaneModel2d": {
          "@id": "hdmap:accuracyLaneModel2d",
          "@type": "xsd:float"

@@ -23,6 +23,11 @@ export PYTHONIOENCODING := "utf-8"
 # LinkML domains that `just generate` builds (space-separated; add new domains here).
 LINKML_DOMAINS := "openlabel-v2"
 
+# LinkML domains that `just generate` builds with scripts/build_linkml_domain.sh and
+# their linkml/<domain>/gen-flags.env, in import order: a domain after the domains
+# it imports. Their artifacts/ directories are generated, never hand-edited.
+LINKML_BUILD_DOMAINS := "manifest georeference envited-x ositrace"
+
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"
 
@@ -62,26 +67,54 @@ format:
 # Generate artifacts for every OMB LinkML domain. MUST stay byte-identical to the
 # committed artifacts/ (CI fails on any diff) — the flags + `tr`/`sed` cleanup below
 # are load-bearing; change them only alongside a reviewed artifact re-record.
+# Output is deterministic by default; --diff-stable derives blank-node labels from
+# each node's neighbourhood, so an edit does not renumber unrelated blank nodes.
 generate:
     #!/usr/bin/env bash
     set -euo pipefail
     for domain in {{LINKML_DOMAINS}}; do
         echo "  Processing $domain..."
         mkdir -p "artifacts/$domain"
-        {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
-        {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
-        {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+        {{run}} gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
+        {{run}} gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
+        {{run}} gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+    done
+    for domain in {{LINKML_BUILD_DOMAINS}}; do
+        echo "  Processing $domain..."
+        {{run}} bash scripts/build_linkml_domain.sh "$domain" "artifacts/$domain"
     done
     echo "[OK] Artifacts generated"
+
+# Only the LinkML generators run, with the per-domain flags from
+# linkml/<domain>/gen-flags.env; the build fails if gen-shacl skips a constraint.
+# Build a LinkML domain into a scratch directory, leaving artifacts/ untouched.
+build-linkml domain outdir:
+    ./scripts/build_linkml_domain.sh {{domain}} {{outdir}}
+
+# Covers the ontology header, vocabulary, JSON-LD context, SHACL verdicts and
+# mutation probes derived from the committed shapes. Declared deviations live in
+# linkml/<domain>/equivalence-exceptions.yaml; anything else fails the run.
+# Check a candidate artifact set against the committed one for equivalence.
+compare-linkml domain outdir:
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate {{outdir}}
+
+# Build a LinkML domain and immediately check it for equivalence.
+verify-linkml domain:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    out="$(mktemp -d)"
+    trap 'rm -rf "${out}"' EXIT
+    ./scripts/build_linkml_domain.sh {{domain}} "${out}/{{domain}}"
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate "${out}/{{domain}}"
 
 # Generate artifacts for a single domain, e.g. `just generate-domain openlabel-v2`.
 generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p "artifacts/{{domain}}"
-    {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
-    {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.shacl.ttl"
-    {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.context.jsonld"
+    {{run}} gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
+    {{run}} gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.shacl.ttl"
+    {{run}} gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.context.jsonld"
     echo "[OK] Artifacts generated for {{domain}}"
 
 # Rebuild and sync Gaia-X artifacts from the service-characteristics submodule.

@@ -8,17 +8,19 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail05_prefixed_filepath_bypass_coercion                                      =
-=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasManifest                                                                   =
-=    Error:            Each SimulationAsset must have exactly one manifest. If linked, it MUST be of category envited-x:isManifest and include a     =
-=                      manifest:iri.                                                                                                                 =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasManifest                                                                   =
+=    Error:            hasManifest (SimulationAsset): Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external =
+=                      manifest by its IRI, typically a DID.                                                                                         =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/filePath                                                                       =
-=    Error:            Validation of URI failed!                                                                                                     =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/filePath                                                                       =
+=    Error:            filePath (FileMetadata): A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json',   =
+=                      'ipfs://...', 's3://...', 'https://...').                                                                                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasFileMetadata                                                                =
-=    Error:            Value does not conform to Shape manifest:FileMetadataShape. See details for more information.                                 =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata                                                                =
+=    Error:            hasFileMetadata (Link): Associates a FileMetadata instance with its corresponding Link; only applicable within Link           =
+=                      instances.                                                                                                                    =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail05_prefixed_filepath_bypass_coercion                                      =
 =    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasManifest                                                                    =

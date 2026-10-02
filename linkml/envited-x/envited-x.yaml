@@ -1,0 +1,517 @@
+# LinkML source for the envited-x ontology.
+#
+# Build with:  just generate   (artifacts/envited-x/ is generated from this file)
+# What cannot be expressed, and the alternatives:  linkml/GAPS.md
+#
+# envited-x extends Gaia-X and sits above manifest. Both are imported rather
+# than referenced by IRI, which is what makes the generated artifacts correct:
+#
+#   * `is_a: VirtualResource` yields a real `rdfs:subClassOf gx:VirtualResource`,
+#     where a local stand-in carrying `class_uri` would silently mint
+#     `envited-x:VirtualResource` instead.
+#   * gx slots are inherited BY NAME - no `slot_uri:` - so they keep their own
+#     namespace in the OWL as well as the SHACL. `name` and `description` come
+#     along too, because gx already maps them to sdo:name / sdo:description with
+#     sdo bound to https://schema.org/.
+#
+# Nothing here is declared in the gx or manifest namespace; --no-mergeimports
+# keeps their definitions in their own artifacts.
+#
+# ENVITED-X narrows manifest's open link vocabulary: every link of an ENVITED-X
+# asset or manifest takes its access role and category from the closed lists
+# below. A link is written inline and typed only as manifest:Link, so the
+# narrowing is stated as the range of the property it hangs from, and the SHACL
+# (generated with --inlined-as-node) checks the link against that range's shape.
+# The leaf domains reuse those shapes by IRI (envited-x:ExtendedLinkShape,
+# envited-x:ManifestLinkReferenceShape, envited-x:ManifestShape, ...).
+
+id: https://w3id.org/ascs-ev/envited-x/envited-x/v4
+name: envited-x
+title: Ontology definition for envited-x
+description: >-
+  ENVITED-X Data Space ontology with common classes for defining a digital
+  asset in the simulation domain.
+license: https://www.eclipse.org/legal/epl-2.0/
+source: https://github.com/ASCS-eV/ontology-management-base
+conforms_to: https://w3id.org/ascs-ev/envited-x/envited-x/v4/shapes
+contributors:
+  - https://github.com/jdsika
+  - https://github.com/MircoNierenz
+  - https://github.com/konierik
+see_also:
+  - https://ascs-ev.github.io/EVES/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  envited-x: https://w3id.org/ascs-ev/envited-x/envited-x/v4/
+  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v6/
+  gx: https://w3id.org/gaia-x/development#
+  # Ontology-IRI base for the Gaia-X CURIE import below.
+  gaiax_ontology: https://w3id.org/gaia-x/
+  owl: http://www.w3.org/2002/07/owl#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  # The link shapes inherit manifest's skos:note and sh:conformsTo slots; under
+  # --exclude-imports their paths only expand with the prefixes declared here.
+  skos: http://www.w3.org/2004/02/skos/core#
+  sh: http://www.w3.org/ns/shacl#
+  # schema.org, bound as `sdo` as Gaia-X does: LinkML's built-in types already
+  # bind `schema` to http://schema.org/, and a mismatch is a hard error.
+  sdo: https://schema.org/
+  dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: envited-x
+default_range: string
+
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources and are emitted as IRIs; see linkml/GAPS.md
+# G16 for what remains.
+annotations:
+  owl:versionInfo: v4
+  owl:versionIRI: https://w3id.org/ascs-ev/envited-x/envited-x/v4
+  owl:priorVersion: https://w3id.org/ascs-ev/envited-x/envited-x/v3
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/envited-x
+  dcterms:references: https://w3id.org/gaia-x/development#
+  dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
+
+imports:
+  - linkml:types
+  # The Gaia-X umbrella schema, imported as a CURIE that expands to the Gaia-X
+  # ontology IRI (https://w3id.org/gaia-x/development#), so gen-owl emits that
+  # owl:imports; importmap.json points it at the local schema. The umbrella, not
+  # the individual files: importing `slots` alone leaves an incomplete closure
+  # (slots.yaml references ranges such as InterconnectionPointIdentifier that only
+  # gaia-x.yaml pulls in).
+  - gaiax_ontology:development#
+  # manifest's id uses '/', so it can be imported by absolute IRI and gets a
+  # correct owl:imports.
+  - https://w3id.org/ascs-ev/envited-x/manifest/v6
+
+classes:
+
+  SimulationAsset:
+    class_uri: envited-x:SimulationAsset
+    description: >-
+      A structured digital asset in the ENVITED-X Data Space that aggregates
+      metadata and a structured manifest. Every SimulationAsset is linked to a
+      ResourceDescription, which provides essential metadata, and a Manifest,
+      which defines its internal structure and licensing information.
+    slots: [hasResourceDescription, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasResourceDescription:
+        required: true
+        multivalued: false
+        any_of:
+          - range: ResourceDescription
+          - range: ExtendedLink
+      hasDomainSpecification: {required: false, multivalued: true}
+      # A simulation asset's inline manifest lists its simulation data,
+      # documentation, metadata and media.
+      hasManifest:
+        required: true
+        multivalued: false
+        any_of:
+          - range: SimulationManifest
+          - range: ManifestLinkReference
+
+  SoftwareAsset:
+    class_uri: envited-x:SoftwareAsset
+    description: >-
+      A structured digital asset in the ENVITED-X Data Space representing a
+      software resource. Carries domain-specific metadata while delegating GX
+      compliance to the linked SoftwareResourceBase node.
+    slots: [hasSoftwareResource, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasSoftwareResource: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  ServiceAsset:
+    class_uri: envited-x:ServiceAsset
+    description: >-
+      A structured digital asset in the ENVITED-X Data Space representing a
+      service offering. Carries domain-specific metadata while delegating GX
+      compliance to the linked ServiceOfferingBase node.
+    slots: [hasServiceOffering, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasServiceOffering: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  CodeAsset:
+    class_uri: envited-x:CodeAsset
+    description: >-
+      A structured digital asset in the ENVITED-X Data Space representing a code
+      artifact. Carries domain-specific metadata while delegating GX compliance
+      to the linked CodeArtifactBase node.
+    slots: [hasCodeArtifact, hasDomainSpecification, hasManifest]
+    slot_usage:
+      hasCodeArtifact: {required: true, multivalued: false}
+      hasDomainSpecification: {required: false, multivalued: true}
+      hasManifest: {required: true, multivalued: false}
+
+  # The four Gaia-X extensions. `is_a` on the imported class, and the gx slots
+  # listed by name - not redeclared - so they keep the gx namespace. The license
+  # is gx:license: a list of SPDX identifiers, IRIs or LicenseRef- identifiers.
+  ResourceDescription:
+    class_uri: envited-x:ResourceDescription
+    is_a: VirtualResource
+    description: >-
+      A base class for ENVITED-X resource descriptions, containing common
+      metadata such as name and description of the simulation asset.
+    slots: [name, description, license]
+    slot_usage:
+      name: {required: true}
+      description: {required: true}
+
+  SoftwareResourceBase:
+    class_uri: envited-x:SoftwareResourceBase
+    is_a: SoftwareResource
+    description: Base class coupling ENVITED-X software assets to gx:SoftwareResource.
+    slots: [name, description, license, copyrightOwnedBy, resourcePolicy]
+    slot_usage:
+      name: {required: true}
+
+  ServiceOfferingBase:
+    class_uri: envited-x:ServiceOfferingBase
+    is_a: ServiceOffering
+    description: Base class coupling ENVITED-X service assets to gx:ServiceOffering.
+    slots: [name, description, providedBy, serviceOfferingTermsAndConditions]
+    slot_usage:
+      name: {required: true}
+
+  CodeArtifactBase:
+    class_uri: envited-x:CodeArtifactBase
+    is_a: CodeArtifact
+    description: Base class coupling ENVITED-X code assets to gx:CodeArtifact.
+    slots: [name, description, license, copyrightOwnedBy, resourcePolicy]
+    slot_usage:
+      name: {required: true}
+
+  # The facet base classes below are specialised by every domain ontology
+  # (ositrace:Content, hdmap:Content, ...). LinkML names are global across an
+  # import closure, so a domain's own `Content` would collide with envited-x's.
+  # The bases are abstract - no instance is typed with them - so it is envited-x
+  # that takes the prefixed LinkML names, leaving the plain names free for every
+  # domain. class_uri keeps the published IRIs unchanged.
+  #
+  # A format is optional here: a code, service or survey asset has none, and the
+  # domains that do have one require it themselves.
+  EnvitedXDomainSpecification:
+    class_uri: envited-x:DomainSpecification
+    description: >-
+      A metadata extension that enriches an asset with additional structured
+      information. Unlike envited-x:ResourceDescription, extensions do not
+      represent standalone retrievable data assets but serve as auxiliary
+      metadata linked to an asset.
+    slots: [hasContent, hasFormat, hasDataSource, hasQuality, hasQuantity]
+    slot_usage:
+      hasContent: {required: true, multivalued: true}
+      hasFormat: {required: false, multivalued: true}
+
+  # LinkML class names are global across the import closure and manifest already
+  # defines `Manifest`, so this one needs a different LinkML name. With
+  # --no-use-native-uris the class_uri below is honoured, so it still emits
+  # envited-x:Manifest in the OWL as well as the SHACL.
+  EnvitedXManifest:
+    class_uri: envited-x:Manifest
+    is_a: Manifest              # the imported manifest:Manifest
+    description: >-
+      Defines a general manifest structure that can be extended for specific
+      asset types, such as HD maps or vehicle models. Every link it lists uses
+      the ENVITED-X access roles and categories.
+    slot_usage:
+      hasManifestReference: {range: EnvitedXManifestLink}
+      hasLicense: {range: LicenseLinkReference}
+      hasArtifacts: {range: ExtendedLink}
+      hasReferencedArtifacts: {range: ExtendedLink}
+
+  SimulationManifest:
+    class_uri: envited-x:SimulationManifest
+    is_a: EnvitedXManifest
+    description: >-
+      The manifest of a simulation asset: among its artifacts it has at least one
+      link each of category simulation data, documentation, metadata and media.
+    all_of:
+      - slot_conditions:
+          hasArtifacts:
+            has_member:
+              range_expression:
+                slot_conditions:
+                  hasCategory: {equals_string: isSimulationData, required: true}
+      - slot_conditions:
+          hasArtifacts:
+            has_member:
+              range_expression:
+                slot_conditions:
+                  hasCategory: {equals_string: isDocumentation, required: true}
+      - slot_conditions:
+          hasArtifacts:
+            has_member:
+              range_expression:
+                slot_conditions:
+                  hasCategory: {equals_string: isMetadata, required: true}
+      - slot_conditions:
+          hasArtifacts:
+            has_member:
+              range_expression:
+                slot_conditions:
+                  hasCategory: {equals_string: isMedia, required: true}
+
+  # The ENVITED-X link vocabulary, shared by every ENVITED-X link class.
+  EnvitedXLinkVocabulary:
+    mixin: true
+    description: The access role and category of a link come from the ENVITED-X vocabulary.
+    slots: [hasAccessRole, hasCategory]
+    slot_usage:
+      hasAccessRole: {range: EnvitedXAccessRoleEnum}
+      hasCategory: {range: EnvitedXCategoryEnum}
+
+  ExtendedLink:
+    class_uri: envited-x:ExtendedLink
+    is_a: ArtifactLink
+    mixins: [EnvitedXLinkVocabulary]
+    description: A manifest link whose access role and category come from the ENVITED-X vocabulary.
+
+  ManifestLinkReference:
+    class_uri: envited-x:ManifestLinkReference
+    is_a: ExtendedLink
+    description: >-
+      A link to an asset's manifest held elsewhere: it has the category
+      envited-x:isManifest and names the manifest by its IRI, typically a DID.
+    slot_usage:
+      hasCategory: {range: EnvitedXManifestCategoryEnum}
+      iri: {required: true}
+
+  LicenseLinkReference:
+    class_uri: envited-x:LicenseLinkReference
+    is_a: LicenseLink
+    mixins: [EnvitedXLinkVocabulary]
+    description: >-
+      The license link of an ENVITED-X manifest. The license itself is stated by
+      gx:license on the resource description.
+    slot_usage:
+      hasCategory: {range: EnvitedXLicenseCategoryEnum}
+
+  # LinkML names are global across the import closure, so the self-reference
+  # needs a name of its own next to manifest's ManifestLink.
+  EnvitedXManifestLink:
+    class_uri: envited-x:ManifestLink
+    is_a: ManifestLink
+    mixins: [EnvitedXLinkVocabulary]
+    description: The self-reference of an ENVITED-X manifest.
+    slot_usage:
+      hasCategory: {range: EnvitedXManifestCategoryEnum}
+
+  EnvitedXContent:
+    class_uri: envited-x:Content
+    description: Defines the content that can be extended for specific asset types.
+
+  EnvitedXDataSource:
+    class_uri: envited-x:DataSource
+    description: >-
+      Defines which data resources or measurement systems were used that can be
+      extended for specific asset types.
+
+  EnvitedXFormat:
+    class_uri: envited-x:Format
+    description: >-
+      Contains properties to describe the format that can be extended for
+      specific asset types.
+
+  EnvitedXQuality:
+    class_uri: envited-x:Quality
+    description: >-
+      Contains properties to describe general quality criteria that can be
+      extended for specific asset types.
+
+  EnvitedXQuantity:
+    class_uri: envited-x:Quantity
+    description: >-
+      Contains properties to describe the quantity related criteria that can be
+      extended for specific asset types.
+
+# Only envited-x's OWN properties are declared here. name, description, license,
+# copyrightOwnedBy, resourcePolicy, providedBy and
+# serviceOfferingTermsAndConditions are inherited from the gx `slots` schema.
+slots:
+
+  # A resource description is given inline or as a link. The four kinds of asset
+  # have their own sub-properties, so this property's range covers all of their
+  # descriptions; each asset class narrows it to its own.
+  hasResourceDescription:
+    slot_uri: envited-x:hasResourceDescription
+    description: >-
+      Links an asset or its subclass to its associated ResourceDescription, which
+      provides essential metadata such as name and description, inline or as a
+      link.
+    any_of:
+      - range: ResourceDescription
+      - range: SoftwareResourceBase
+      - range: ServiceOfferingBase
+      - range: CodeArtifactBase
+      - range: ExtendedLink
+    inlined: true
+
+  hasSoftwareResource:
+    slot_uri: envited-x:hasSoftwareResource
+    is_a: hasResourceDescription
+    description: Links a SoftwareAsset to its GX-compliant SoftwareResourceBase.
+    any_of:
+      - range: SoftwareResourceBase
+      - range: ExtendedLink
+    inlined: true
+
+  hasServiceOffering:
+    slot_uri: envited-x:hasServiceOffering
+    is_a: hasResourceDescription
+    description: Links a ServiceAsset to its GX-compliant ServiceOfferingBase.
+    any_of:
+      - range: ServiceOfferingBase
+      - range: ExtendedLink
+    inlined: true
+
+  hasCodeArtifact:
+    slot_uri: envited-x:hasCodeArtifact
+    is_a: hasResourceDescription
+    description: Links a CodeAsset to its GX-compliant CodeArtifactBase.
+    any_of:
+      - range: CodeArtifactBase
+      - range: ExtendedLink
+    inlined: true
+
+  hasDomainSpecification:
+    slot_uri: envited-x:hasDomainSpecification
+    description: >-
+      Links an asset to one or more metadata extensions (e.g., georeference
+      metadata, sensor calibration) that provide additional structured
+      information.
+    range: EnvitedXDomainSpecification
+    inlined: true
+
+  hasManifest:
+    slot_uri: envited-x:hasManifest
+    description: >-
+      Links an asset to its manifest: an inline envited-x:Manifest, or a link
+      that names an external manifest by its IRI, typically a DID.
+    any_of:
+      - range: EnvitedXManifest
+      - range: ManifestLinkReference
+    inlined: true
+
+  hasContent:
+    slot_uri: envited-x:hasContent
+    description: Links a DomainSpecification to the content of the asset.
+    range: EnvitedXContent
+    inlined: true
+
+  hasDataSource:
+    slot_uri: envited-x:hasDataSource
+    description: Links a DomainSpecification to how the asset was created.
+    range: EnvitedXDataSource
+    inlined: true
+
+  hasFormat:
+    slot_uri: envited-x:hasFormat
+    description: Links a DomainSpecification to the format details of the asset.
+    range: EnvitedXFormat
+    inlined: true
+
+  hasQuality:
+    slot_uri: envited-x:hasQuality
+    description: Links a DomainSpecification to the quality or accuracy aspects of the asset.
+    range: EnvitedXQuality
+    inlined: true
+
+  hasQuantity:
+    slot_uri: envited-x:hasQuantity
+    description: Links a DomainSpecification to the quantity of the asset.
+    range: EnvitedXQuantity
+    inlined: true
+
+enums:
+
+  # The ENVITED-X access roles and categories: named individuals of manifest's
+  # open AccessRole and Category classes. The enums close their own classes, so
+  # an ENVITED-X link admits exactly these values.
+  EnvitedXAccessRoleEnum:
+    implements: [owl:NamedIndividual]
+    description: The access roles an ENVITED-X link can have.
+    permissible_values:
+      isPublic:
+        meaning: envited-x:isPublic
+        instantiates: [manifest:AccessRole]
+        title: Public Access Role
+        description: Indicates that the artifact access role is public in the envited-x context.
+      isOwner:
+        meaning: envited-x:isOwner
+        instantiates: [manifest:AccessRole]
+        title: Owner Access Role
+        description: Indicates that the artifact access role is owner in the envited-x context.
+      isRegistered:
+        meaning: envited-x:isRegistered
+        instantiates: [manifest:AccessRole]
+        title: Registered Access Role
+        description: Indicates that the artifact access role is registered user in the envited-x context.
+
+  EnvitedXCategoryEnum:
+    implements: [owl:NamedIndividual]
+    description: The categories an ENVITED-X link can have.
+    permissible_values:
+      isManifest:
+        meaning: envited-x:isManifest
+        instantiates: [manifest:ManifestCategory]
+        title: Manifest Category
+        description: Indicates that the artifact category is a manifest in the envited-x context.
+      isLicense:
+        meaning: envited-x:isLicense
+        instantiates: [manifest:LicenseCategory]
+        title: License Category
+        description: Indicates that the artifact category is a license file in the envited-x context.
+      isMiscellaneous:
+        meaning: envited-x:isMiscellaneous
+        instantiates: [manifest:MiscellaneousCategory]
+        title: Miscellaneous Category
+        description: Indicates that the artifact category is miscellaneous in the envited-x context.
+      isSimulationData:
+        meaning: envited-x:isSimulationData
+        instantiates: [manifest:Category]
+        title: Simulation Data Category
+        description: Indicates that the artifact category is simulation data.
+      isDocumentation:
+        meaning: envited-x:isDocumentation
+        instantiates: [manifest:Category]
+        title: Documentation Category
+        description: Indicates that the artifact category is documentation in the envited-x context.
+      isMedia:
+        meaning: envited-x:isMedia
+        instantiates: [manifest:Category]
+        title: Media Category
+        description: Indicates that the artifact category is media content in the envited-x context.
+      isMetadata:
+        meaning: envited-x:isMetadata
+        instantiates: [manifest:Category]
+        title: Metadata Category
+        description: Indicates that the artifact category is metadata in the envited-x context.
+      isValidationReport:
+        meaning: envited-x:isValidationReport
+        instantiates: [manifest:Category]
+        title: Validation Report Category
+        description: Indicates that the artifact category is a validation report in the envited-x context.
+
+  # The one category a manifest link and a license link can have.
+  EnvitedXManifestCategoryEnum:
+    implements: [owl:NamedIndividual]
+    description: The category of a link to a manifest.
+    permissible_values:
+      isManifest:
+        meaning: envited-x:isManifest
+
+  EnvitedXLicenseCategoryEnum:
+    implements: [owl:NamedIndividual]
+    description: The category of a license link.
+    permissible_values:
+      isLicense:
+        meaning: envited-x:isLicense

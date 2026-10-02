@@ -1,0 +1,214 @@
+# LinkML source for the georeference ontology.
+#
+# Build and measure with:  just verify-linkml georeference
+# What cannot be expressed, and the alternatives:  linkml/GAPS.md
+#
+# georeference references no other ontology, so it can be ported without first
+# porting anything else. ositrace, hdmap and other domains import it.
+
+id: https://w3id.org/ascs-ev/envited-x/georeference/v6
+name: georeference
+title: Ontology definition for Georeferencing
+description: >-
+    Georeferencing ontology with common classes for location, coordinate
+    reference systems, and spatial properties.
+license: https://www.eclipse.org/legal/epl-2.0/
+source: https://github.com/ASCS-eV/ontology-management-base
+conforms_to: https://w3id.org/ascs-ev/envited-x/georeference/v6/shapes
+contributors:
+  - https://github.com/jdsika
+  - https://github.com/3Dbastian
+  - https://github.com/MircoNierenz
+see_also:
+  - https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v6/
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: georeference
+default_range: string
+
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources and are emitted as IRIs; see linkml/GAPS.md
+# G16 for what remains.
+annotations:
+  owl:versionInfo: v6
+  owl:versionIRI: https://w3id.org/ascs-ev/envited-x/georeference/v6
+  owl:priorVersion: https://w3id.org/ascs-ev/envited-x/georeference/v5
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/georeference
+  dcterms:references: https://w3id.org/ascs-ev/envited-x/hdmap/v6/
+  dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
+
+imports:
+  - linkml:types
+
+classes:
+
+  Georeference:
+    class_uri: georeference:Georeference
+    description: >-
+      A georeferencing dataset that defines the coordinate system, location, and
+      spatial properties of a simulation asset. This class serves as an optional
+      metadata extension and does not function as a standalone data resource.
+    slots: [hasProjectLocation, hasGeodeticReferenceSystem]
+    slot_usage:
+      hasProjectLocation: {required: true}
+      hasGeodeticReferenceSystem: {required: true}
+
+  ProjectLocation:
+    class_uri: georeference:ProjectLocation
+    description: Describes where the asset is located.
+    slots: [georeferenceCountry, state, georeferenceRegion, city, relationOrArea, hasBoundingBox]
+    slot_usage:
+      hasBoundingBox: {required: true}
+
+  BoundingBox:
+    class_uri: georeference:BoundingBox
+    description: Bounding box of the asset in world coordinates.
+    slots: [xMin, yMin, xMax, yMax]
+    slot_usage:
+      xMin: {required: true}
+      yMin: {required: true}
+      xMax: {required: true}
+      yMax: {required: true}
+
+  GeodeticReferenceSystem:
+    class_uri: georeference:GeodeticReferenceSystem
+    description: >-
+      Positions (origin and viewpoint), projection and height system of the
+      asset.
+    slots: [hasOrigin, hasViewPoint, codeEPSG, coordinateSystemName, heightSystem]
+    slot_usage:
+      hasOrigin: {required: true}
+    # The coordinate reference system must be identified by an EPSG code or,
+    # alternatively, by name. This is the idiomatic LinkML statement of an
+    # "at least one of" constraint; gen-owl renders it as owl:unionOf and
+    # gen-shacl as sh:or (linkml/GAPS.md M5).
+    any_of:
+      - slot_conditions:
+          codeEPSG: {required: true}
+      - slot_conditions:
+          coordinateSystemName: {required: true}
+
+  LatLonCoordinate:
+    class_uri: georeference:LatLonCoordinate
+    description: A position in world coordinates.
+    slots: [lat, lon]
+    slot_usage:
+      lat: {required: true}
+      lon: {required: true}
+
+slots:
+
+  hasProjectLocation:
+    slot_uri: georeference:hasProjectLocation
+    description: >-
+      Contains properties (state, city, region, country, bounding) to describe
+      the location of the asset.
+    range: ProjectLocation
+    inlined: true
+
+  hasGeodeticReferenceSystem:
+    slot_uri: georeference:hasGeodeticReferenceSystem
+    description: >-
+      Properties for positions (e.g., origin and viewpoint), projection type and
+      height system of the asset.
+    range: GeodeticReferenceSystem
+    inlined: true
+
+  hasBoundingBox:
+    slot_uri: georeference:hasBoundingBox
+    description: Defines the bounding box in world coordinates of the asset.
+    range: BoundingBox
+    inlined: true
+
+  hasOrigin:
+    slot_uri: georeference:hasOrigin
+    description: Defines the center position of the asset in world coordinates.
+    range: LatLonCoordinate
+    inlined: true
+
+  hasViewPoint:
+    slot_uri: georeference:hasViewPoint
+    description: Defines the imported viewpoint position of the asset in world coordinates.
+    range: LatLonCoordinate
+    inlined: true
+
+  # LinkML names are global across an import closure, and Gaia-X - imported
+  # alongside georeference by envited-x's dependants - has its own `country`
+  # (free text) and `region` (vcard:region, a NUTS2 code). These are different
+  # properties: georeference's are an ISO 3166-1 code and a free-text region
+  # name. They therefore keep their own IRIs under unique LinkML names; `alias`
+  # keeps the JSON-LD terms unchanged.
+  georeferenceCountry:
+    alias: country
+    slot_uri: georeference:country
+    description: >-
+      Defines an ISO 3166-1, alpha-2 code for the country in which the asset
+      centre is located.
+    pattern: "^[a-zA-Z]{2}$"
+    examples: [{value: DE}]
+
+  state:
+    slot_uri: georeference:state
+    description: >-
+      Defines an ISO 3166-2 code for the state or province in which the asset
+      centre is located.
+    pattern: "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$"
+    examples: [{value: DE-BY}]
+
+  georeferenceRegion:
+    alias: region
+    slot_uri: georeference:region
+    description: Specifies the name of the region in which the asset's centre is located.
+    examples: [{value: Upper Bavaria}]
+
+  city:
+    slot_uri: georeference:city
+    description: Specifies the name of the city in which the asset's centre is located.
+    examples: [{value: Munich}]
+
+  relationOrArea:
+    slot_uri: georeference:relationOrArea
+    description: >-
+      Describes the area in which the asset is located, such as the name of the
+      main street or the greater area.
+    examples: [{value: "Highway A8, Greater Area Ingolstadt"}]
+
+  xMin: {slot_uri: georeference:xMin, range: float, description: Defines the minimum bounding box value along the x-axis.}
+  yMin: {slot_uri: georeference:yMin, range: float, description: Defines the minimum bounding box value along the y-axis.}
+  xMax: {slot_uri: georeference:xMax, range: float, description: Defines the maximum bounding box value along the x-axis.}
+  yMax: {slot_uri: georeference:yMax, range: float, description: Defines the maximum bounding box value along the y-axis.}
+  lat: {slot_uri: georeference:lat, range: float, description: Defines a world latitude value (on the y-axis) in degrees.}
+  lon: {slot_uri: georeference:lon, range: float, description: Defines a world longitude value (on the x-axis) in degrees.}
+
+  codeEPSG:
+    slot_uri: georeference:codeEPSG
+    description: Defines the projection EPSG code for the asset.
+    range: integer
+
+  coordinateSystemName:
+    slot_uri: georeference:coordinateSystemName
+    description: >-
+      Describes the coordinate system name of the asset as an alternative to the
+      EPSG code.
+
+  # A closed set of values: an enum is the right mechanism here, unlike the
+  # extensible category vocabulary in manifest (linkml/GAPS.md D7).
+  heightSystem:
+    slot_uri: georeference:heightSystem
+    description: Defines the height system type of the asset.
+    range: HeightSystemEnum
+
+enums:
+  HeightSystemEnum:
+    permissible_values:
+      Ellipsoidal height:
+      Orthometric height:
+      Local height:

@@ -1,7 +1,7 @@
 @prefix surface-model: <https://w3id.org/ascs-ev/envited-x/surface-model/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -48,7 +48,7 @@ surface-model:SurfaceModelShape a sh:NodeShape ;
         sh:maxCount 1 ;
         sh:or (
             # Case 1: Inline manifest node
-            [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ]
+            [ sh:and ( manifest:ManifestShape envited-x:SimulationManifestShape ) ]
             
             # Case 2: Linked manifest reference (improved logic from Point A)
             [ sh:node envited-x:ManifestLinkReferenceShape ]

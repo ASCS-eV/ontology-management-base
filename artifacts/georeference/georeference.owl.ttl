@@ -1,223 +1,375 @@
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-# Ontology Metadata
-<https://w3id.org/ascs-ev/envited-x/georeference/v5> a owl:Ontology ;
-    rdfs:label "Ontology definition for Georeferencing"@en ;
-    rdfs:comment "Georeferencing ontology with common classes for location, coordinate reference systems, and spatial properties."@en ;
-
-    dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
-    dcterms:contributor [
-        a foaf:Person ;
-        foaf:name "Carlo van Driesten" ;
-        org:memberOf <https://www.bmwgroup.com/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Sebastian Tuttas" ;
-        org:memberOf <https://www.3d-mapping.de/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Mirco Nierenz" ;
-        org:memberOf <https://triangraphics.de/> ;
-    ] ;
-
-    # Permanent identifier for the ontology (not version-specific)
-    dcterms:identifier <https://w3id.org/ascs-ev/envited-x/georeference> ;
-
-    # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
-
-    # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
-
-    # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
-    owl:versionInfo "v5" ;
-
-    # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/georeference/v5/shapes> ;
-
-    # References to related ontologies
-    dcterms:references <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> ;
-    rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md> .
-
-georeference:Georeference a owl:Class ;
-    rdfs:label "Class definition for Georeference"@en ;
-    rdfs:comment """A georeferencing dataset that defines the coordinate system, location, and spatial properties of a simulation asset.
-                    This class serves as an optional metadata extension and does not function as a standalone data resource."""@en ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty georeference:hasGeodeticReferenceSystem ;
-        owl:cardinality 1
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty georeference:hasProjectLocation ;
-        owl:cardinality 1
-    ] .
-
-### **Geodetic Reference System**
-georeference:GeodeticReferenceSystem a owl:Class ;
-    rdfs:label "Class definition for GeodeticReferenceSystem"@en ;
-    rdfs:comment "Defines the reference system used to represent coordinates, including projection type and ellipsoid model."@en ;
-
-    # Must have an EPSG code OR a Coordinate System Name
-    owl:equivalentClass [
-        a owl:Class ;
-        owl:unionOf (
-            [ a owl:Restriction ; owl:onProperty georeference:codeEPSG ; owl:cardinality 1 ]
-            [ a owl:Restriction ; owl:onProperty georeference:coordinateSystemName ; owl:cardinality 1 ]
-        )
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty georeference:hasOrigin ;
-        owl:cardinality 1 ;
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty georeference:hasViewPoint ;
-        owl:maxCardinality 1 ;
-        owl:someValuesFrom  georeference:LatLonCoordinate
-    ] .
-
-georeference:ProjectLocation a owl:Class ;
-    rdfs:label "Class definition for ProjectLocation"@en ;
-    rdfs:comment "Contains attributes describing the location of a simulation asset, such as country, region, city, and bounding box."@en ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty georeference:hasBoundingBox ;
-        owl:cardinality 1 ;
-    ] .
-
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
 georeference:BoundingBox a owl:Class ;
-    rdfs:label "Class definition for BoundingBox"@en ;
-    rdfs:comment "Defines a rectangular spatial extent using minimum and maximum values for the x and y axes."@en .
-
+	rdfs:comment "Bounding box of the asset in world coordinates."@en ;
+	rdfs:label "BoundingBox"@en ;
+	rdfs:subClassOf _:b149db98057f7 , _:b3b98bb110f7e , _:b4eabee38d395 , _:b5089d6824f2b , _:b547c92d63500 , _:b6534a694469e , _:b67dd569d935f , _:b7beb5694e77e , _:bae6fdb98451a , _:bb5cf5d61fe7b , _:be7deb8ad17b2 , _:beba645842b1c ;
+	skos:exactMatch georeference:BoundingBox ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:GeodeticReferenceSystem a owl:Class ;
+	rdfs:comment "Positions (origin and viewpoint), projection and height system of the asset."@en ;
+	rdfs:label "GeodeticReferenceSystem"@en ;
+	rdfs:subClassOf _:b082c7fac1eeb , _:b0e12c609b0e7 , _:b23af1d4525bd , _:b2dc96810a18a , _:b3708849928ed , _:b5d6ec46a4c31 , _:b696296fa3daa , _:b6b3037f398f8 , _:b7d7735374f0b , _:b85d300bfad42 , _:ba1fc777284e7 , _:ba4cecde3ef3b , _:bb1086e591c7f , _:bcb2a4a3c878d , _:bd38bf2a6789d , _:bf9b41c8198d1 ;
+	skos:exactMatch georeference:GeodeticReferenceSystem ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:Georeference a owl:Class ;
+	rdfs:comment "A georeferencing dataset that defines the coordinate system, location, and spatial properties of a simulation asset. This class serves as an optional metadata extension and does not function as a standalone data resource."@en ;
+	rdfs:label "Georeference"@en ;
+	rdfs:subClassOf _:b16309eeb509b , _:b2989d3793611 , _:b6fd75c665664 , _:bc480c3b179e8 , _:bda647818b43a , _:bee55ead258c2 ;
+	skos:exactMatch georeference:Georeference ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:HeightSystemEnum\#Ellipsoidal\%20height a owl:Class ;
+	rdfs:label "Ellipsoidal height"@en ;
+	rdfs:subClassOf georeference:HeightSystemEnum .
+georeference:HeightSystemEnum\#Local\%20height a owl:Class ;
+	rdfs:label "Local height"@en ;
+	rdfs:subClassOf georeference:HeightSystemEnum .
+georeference:HeightSystemEnum\#Orthometric\%20height a owl:Class ;
+	rdfs:label "Orthometric height"@en ;
+	rdfs:subClassOf georeference:HeightSystemEnum .
+georeference:HeightSystemEnum a owl:Class ;
+	rdfs:label "HeightSystemEnum"@en ;
+	owl:unionOf _:bee6e25af22bc ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> ;
+	linkml:permissible_values georeference:HeightSystemEnum\#Ellipsoidal\%20height , georeference:HeightSystemEnum\#Local\%20height , georeference:HeightSystemEnum\#Orthometric\%20height .
 georeference:LatLonCoordinate a owl:Class ;
-    rdfs:label "Class definition for LatLonCoordinate"@en ;
-    rdfs:comment "Defines world coordinates in latitude and longitude, expressed in degrees."@en .
-
-### **Object Properties**
-georeference:hasGeodeticReferenceSystem a owl:ObjectProperty ;
-    rdfs:label "has geodetic reference system"@en ;
-    rdfs:comment "Links a Georeference to its Geodetic Reference System. REQUIRED (1 per Georeference)."@en ;
-    rdfs:domain georeference:Georeference ;
-    rdfs:range georeference:GeodeticReferenceSystem .
-
-georeference:hasProjectLocation a owl:ObjectProperty ;
-    rdfs:label "has project location"@en ;
-    rdfs:comment "Links a Georeference to its Project Location details, which includes the bounding box. REQUIRED (1 per Georeference)."@en ;
-    rdfs:domain georeference:Georeference ;
-    rdfs:range georeference:ProjectLocation .
-
-georeference:hasBoundingBox a owl:ObjectProperty ;
-    rdfs:label "has bounding box"@en ;
-    rdfs:comment "Bounding Box is only allowed inside ProjectLocation and defines its spatial extent."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range georeference:BoundingBox .
-
-georeference:hasOrigin a owl:ObjectProperty ;
-    rdfs:label "has origin"@en ;
-    rdfs:comment "Defines the origin position of the asset in world coordinates. REQUIRED."@en ;
-    rdfs:domain georeference:GeodeticReferenceSystem ;
-    rdfs:range georeference:LatLonCoordinate .
-
-georeference:hasViewPoint a owl:ObjectProperty ;
-    rdfs:label "has view point"@en ;
-    rdfs:comment "Defines the viewpoint position of the asset in world coordinates. OPTIONAL."@en ;
-    rdfs:domain georeference:GeodeticReferenceSystem ;
-    rdfs:range georeference:LatLonCoordinate .
-
-### **Datatype Properties (Missing definitions added)**
-
-georeference:codeEPSG a owl:DatatypeProperty ;
-    rdfs:label "EPSG code"@en ;
-    rdfs:comment "Defines the projection EPSG code for the asset."@en ;
-    rdfs:domain georeference:GeodeticReferenceSystem ;
-    rdfs:range xsd:integer .
-
-georeference:coordinateSystemName a owl:DatatypeProperty ;
-    rdfs:label "coordinate system name"@en ;
-    rdfs:comment "Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
-    rdfs:domain georeference:GeodeticReferenceSystem ;
-    rdfs:range xsd:string .
-
-georeference:heightSystem a owl:DatatypeProperty ;
-    rdfs:label "height system"@en ;
-    rdfs:comment "Defines the height system type of the asset."@en ;
-    rdfs:domain georeference:GeodeticReferenceSystem ;
-    rdfs:range xsd:string .
-
-georeference:lat a owl:DatatypeProperty ;
-    rdfs:label "latitude"@en ;
-    rdfs:comment "Defines a world latitude value in degrees."@en ;
-    rdfs:domain georeference:LatLonCoordinate ;
-    rdfs:range xsd:float .
-
-georeference:lon a owl:DatatypeProperty ;
-    rdfs:label "longitude"@en ;
-    rdfs:comment "Defines a world longitude value in degrees."@en ;
-    rdfs:domain georeference:LatLonCoordinate ;
-    rdfs:range xsd:float .
-
-georeference:country a owl:DatatypeProperty ;
-    rdfs:label "country"@en ;
-    rdfs:comment "Defines an ISO 3166-1, alpha-2 code for the country."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range xsd:string .
-
-georeference:state a owl:DatatypeProperty ;
-    rdfs:label "state"@en ;
-    rdfs:comment "Defines an ISO 3166-2 code for the state or province."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range xsd:string .
-
-georeference:region a owl:DatatypeProperty ;
-    rdfs:label "region"@en ;
-    rdfs:comment "Specifies the name of the region."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range xsd:string .
-
+	rdfs:comment "A position in world coordinates."@en ;
+	rdfs:label "LatLonCoordinate"@en ;
+	rdfs:subClassOf _:b050c9a6e2126 , _:b40480c37b123 , _:b6300f8e50750 , _:b88b21cdd09a7 , _:b95915be88ba3 , _:ba82e975b8f05 ;
+	skos:exactMatch georeference:LatLonCoordinate ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:ProjectLocation a owl:Class ;
+	rdfs:comment "Describes where the asset is located."@en ;
+	rdfs:label "ProjectLocation"@en ;
+	rdfs:subClassOf _:b2412e6e29aef , _:b25abae3bfe4a , _:b2d037a8e3e7a , _:b342fd412a877 , _:b6132495d1ad0 , _:b738163a3987b , _:b7b6bf7be9809 , _:b8160c2325ed5 , _:b8f0a38791768 , _:b9ced8e1a9c77 , _:ba2ab10152014 , _:bb4f7202cd387 , _:bbb5785f75b7d , _:bc9ad426074d3 , _:bd83d1e928e68 , _:bde2a403086fc , _:bec00aa24fd60 , _:bf0d025a616e5 ;
+	skos:exactMatch georeference:ProjectLocation ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
 georeference:city a owl:DatatypeProperty ;
-    rdfs:label "city"@en ;
-    rdfs:comment "Specifies the name of the city."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range xsd:string .
-
+	rdfs:comment "Specifies the name of the city in which the asset's centre is located."@en ;
+	rdfs:label "city"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:codeEPSG a owl:DatatypeProperty ;
+	rdfs:comment "Defines the projection EPSG code for the asset."@en ;
+	rdfs:label "codeEPSG"@en ;
+	rdfs:range xsd:integer ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:coordinateSystemName a owl:DatatypeProperty ;
+	rdfs:comment "Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
+	rdfs:label "coordinateSystemName"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:country a owl:DatatypeProperty ;
+	rdfs:comment "Defines an ISO 3166-1, alpha-2 code for the country in which the asset centre is located."@en ;
+	rdfs:label "georeferenceCountry"@en ;
+	rdfs:range _:beba1b3bf1c9d ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> ;
+	skos:prefLabel "country"@en .
+georeference:hasBoundingBox a owl:ObjectProperty ;
+	rdfs:comment "Defines the bounding box in world coordinates of the asset."@en ;
+	rdfs:label "hasBoundingBox"@en ;
+	rdfs:range georeference:BoundingBox ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:hasGeodeticReferenceSystem a owl:ObjectProperty ;
+	rdfs:comment "Properties for positions (e.g., origin and viewpoint), projection type and height system of the asset."@en ;
+	rdfs:label "hasGeodeticReferenceSystem"@en ;
+	rdfs:range georeference:GeodeticReferenceSystem ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:hasOrigin a owl:ObjectProperty ;
+	rdfs:comment "Defines the center position of the asset in world coordinates."@en ;
+	rdfs:label "hasOrigin"@en ;
+	rdfs:range georeference:LatLonCoordinate ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:hasProjectLocation a owl:ObjectProperty ;
+	rdfs:comment "Contains properties (state, city, region, country, bounding) to describe the location of the asset."@en ;
+	rdfs:label "hasProjectLocation"@en ;
+	rdfs:range georeference:ProjectLocation ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:hasViewPoint a owl:ObjectProperty ;
+	rdfs:comment "Defines the imported viewpoint position of the asset in world coordinates."@en ;
+	rdfs:label "hasViewPoint"@en ;
+	rdfs:range georeference:LatLonCoordinate ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:heightSystem a owl:ObjectProperty ;
+	rdfs:comment "Defines the height system type of the asset."@en ;
+	rdfs:label "heightSystem"@en ;
+	rdfs:range georeference:HeightSystemEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:lat a owl:DatatypeProperty ;
+	rdfs:comment "Defines a world latitude value (on the y-axis) in degrees."@en ;
+	rdfs:label "lat"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:lon a owl:DatatypeProperty ;
+	rdfs:comment "Defines a world longitude value (on the x-axis) in degrees."@en ;
+	rdfs:label "lon"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:region a owl:DatatypeProperty ;
+	rdfs:comment "Specifies the name of the region in which the asset's centre is located."@en ;
+	rdfs:label "georeferenceRegion"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> ;
+	skos:prefLabel "region"@en .
 georeference:relationOrArea a owl:DatatypeProperty ;
-    rdfs:label "relation or area"@en ;
-    rdfs:comment "Describes the area in which the asset is located."@en ;
-    rdfs:domain georeference:ProjectLocation ;
-    rdfs:range xsd:string .
-
-georeference:xMin a owl:DatatypeProperty ;
-    rdfs:label "xMin"@en ;
-    rdfs:comment "Defines the minimum bounding box value along the x-axis."@en ;
-    rdfs:domain georeference:BoundingBox ;
-    rdfs:range xsd:float .
-
-georeference:yMin a owl:DatatypeProperty ;
-    rdfs:label "yMin"@en ;
-    rdfs:comment "Defines the minimum bounding box value along the y-axis."@en ;
-    rdfs:domain georeference:BoundingBox ;
-    rdfs:range xsd:float .
-
+	rdfs:comment "Describes the area in which the asset is located, such as the name of the main street or the greater area."@en ;
+	rdfs:label "relationOrArea"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:state a owl:DatatypeProperty ;
+	rdfs:comment "Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
+	rdfs:label "state"@en ;
+	rdfs:range _:b9ae74ab3aad9 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
 georeference:xMax a owl:DatatypeProperty ;
-    rdfs:label "xMax"@en ;
-    rdfs:comment "Defines the maximum bounding box value along the x-axis."@en ;
-    rdfs:domain georeference:BoundingBox ;
-    rdfs:range xsd:float .
-
+	rdfs:comment "Defines the maximum bounding box value along the x-axis."@en ;
+	rdfs:label "xMax"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:xMin a owl:DatatypeProperty ;
+	rdfs:comment "Defines the minimum bounding box value along the x-axis."@en ;
+	rdfs:label "xMin"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
 georeference:yMax a owl:DatatypeProperty ;
-    rdfs:label "yMax"@en ;
-    rdfs:comment "Defines the maximum bounding box value along the y-axis."@en ;
-    rdfs:domain georeference:BoundingBox ;
-    rdfs:range xsd:float .
+	rdfs:comment "Defines the maximum bounding box value along the y-axis."@en ;
+	rdfs:label "yMax"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+georeference:yMin a owl:DatatypeProperty ;
+	rdfs:comment "Defines the minimum bounding box value along the y-axis."@en ;
+	rdfs:label "yMin"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
+<https://w3id.org/ascs-ev/envited-x/georeference/v6> dcterms:conformsTo georeference:shapes ;
+	dcterms:contributor <https://github.com/3Dbastian> , <https://github.com/MircoNierenz> , <https://github.com/jdsika> ;
+	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/georeference"@en ;
+	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
+	dcterms:references <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:title "Ontology definition for Georeferencing"@en ;
+	a owl:Ontology ;
+	rdfs:comment "Georeferencing ontology with common classes for location, coordinate reference systems, and spatial properties."@en ;
+	rdfs:label "georeference"@en ;
+	rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md> ;
+	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
+	owl:versionIRI <https://w3id.org/ascs-ev/envited-x/georeference/v6> ;
+	owl:versionInfo "v6"@en ;
+	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+_:b050c9a6e2126 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:lat .
+_:b082c7fac1eeb a owl:Restriction ;
+	owl:allValuesFrom georeference:LatLonCoordinate ;
+	owl:onProperty georeference:hasViewPoint .
+_:b0e12c609b0e7 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:codeEPSG .
+_:b149db98057f7 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:xMin .
+_:b16309eeb509b a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:hasGeodeticReferenceSystem .
+_:b1d4a51a1ab61 xsd:pattern "^[a-zA-Z]{2}$" .
+_:b1d4a51a1ab61_1 xsd:pattern "^[a-zA-Z]{2}$" .
+_:b1f2835ed2e7c rdf:first _:ba4f22af68f4e ;
+	rdf:rest rdf:nil .
+_:b23af1d4525bd a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:hasViewPoint .
+_:b2412e6e29aef a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:region .
+_:b25abae3bfe4a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:city .
+_:b2989d3793611 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:hasGeodeticReferenceSystem .
+_:b2d037a8e3e7a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:hasBoundingBox .
+_:b2dc96810a18a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:coordinateSystemName .
+_:b342fd412a877 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:relationOrArea .
+_:b3708849928ed owl:unionOf _:b90b98426ae1e .
+_:b3b98bb110f7e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:yMax .
+_:b40480c37b123 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:lon .
+_:b4eabee38d395 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:xMax .
+_:b5089d6824f2b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:yMin .
+_:b52f68ac32313 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bfa17d56aeda6 .
+_:b547c92d63500 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:xMax .
+_:b5d6ec46a4c31 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:hasOrigin .
+_:b6132495d1ad0 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:region .
+_:b6300f8e50750 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:lat .
+_:b6534a694469e a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMax .
+_:b67dd569d935f a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMin .
+_:b696296fa3daa a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:heightSystem .
+_:b6b3037f398f8 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:coordinateSystemName .
+_:b6fd75c665664 a owl:Restriction ;
+	owl:allValuesFrom georeference:GeodeticReferenceSystem ;
+	owl:onProperty georeference:hasGeodeticReferenceSystem .
+_:b738163a3987b a owl:Restriction ;
+	owl:allValuesFrom _:bc4d847414eae ;
+	owl:onProperty georeference:state .
+_:b7b6bf7be9809 a owl:Restriction ;
+	owl:allValuesFrom _:b52f68ac32313 ;
+	owl:onProperty georeference:country .
+_:b7beb5694e77e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:xMin .
+_:b7d7735374f0b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:hasOrigin .
+_:b8160c2325ed5 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:relationOrArea .
+_:b824c04b5c587 rdf:first georeference:HeightSystemEnum\#Local\%20height ;
+	rdf:rest rdf:nil .
+_:b84cf16c6e5dd rdf:first georeference:HeightSystemEnum\#Orthometric\%20height ;
+	rdf:rest _:b824c04b5c587 .
+_:b85d300bfad42 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:hasViewPoint .
+_:b88b21cdd09a7 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:lon .
+_:b8f0a38791768 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:region .
+_:b90b98426ae1e rdf:first _:ba23fe18dc6cb ;
+	rdf:rest _:b9147a5be4fa7 .
+_:b9147a5be4fa7 rdf:first _:bb3f21611124d ;
+	rdf:rest rdf:nil .
+_:b9252cb6aeee3 rdf:first _:ba4f22af68f4e_1 ;
+	rdf:rest rdf:nil .
+_:b95915be88ba3 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lon .
+_:b9ae74ab3aad9 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b9252cb6aeee3 .
+_:b9ced8e1a9c77 a owl:Restriction ;
+	owl:allValuesFrom georeference:BoundingBox ;
+	owl:onProperty georeference:hasBoundingBox .
+_:ba1fc777284e7 a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty georeference:codeEPSG .
+_:ba23fe18dc6cb a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:codeEPSG .
+_:ba2ab10152014 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:country .
+_:ba4cecde3ef3b a owl:Restriction ;
+	owl:allValuesFrom georeference:LatLonCoordinate ;
+	owl:onProperty georeference:hasOrigin .
+_:ba4f22af68f4e xsd:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
+_:ba4f22af68f4e_1 xsd:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
+_:ba82e975b8f05 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lat .
+_:bae6fdb98451a a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:yMin .
+_:bb1086e591c7f a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:coordinateSystemName .
+_:bb3f21611124d a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:coordinateSystemName .
+_:bb4f7202cd387 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:hasBoundingBox .
+_:bb5cf5d61fe7b a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMax .
+_:bbb5785f75b7d a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:relationOrArea .
+_:bc480c3b179e8 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:hasProjectLocation .
+_:bc4d847414eae a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b1f2835ed2e7c .
+_:bc9ad426074d3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:city .
+_:bcb2a4a3c878d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:codeEPSG .
+_:bccc1985289bb rdf:first _:b1d4a51a1ab61_1 ;
+	rdf:rest rdf:nil .
+_:bd38bf2a6789d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:heightSystem .
+_:bd83d1e928e68 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:state .
+_:bda647818b43a a owl:Restriction ;
+	owl:allValuesFrom georeference:ProjectLocation ;
+	owl:onProperty georeference:hasProjectLocation .
+_:bde2a403086fc a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty georeference:country .
+_:be7deb8ad17b2 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:yMax .
+_:beba1b3bf1c9d a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bccc1985289bb .
+_:beba645842b1c a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMin .
+_:bec00aa24fd60 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty georeference:state .
+_:bee55ead258c2 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty georeference:hasProjectLocation .
+_:bee6e25af22bc rdf:first georeference:HeightSystemEnum\#Ellipsoidal\%20height ;
+	rdf:rest _:b84cf16c6e5dd .
+_:bf0d025a616e5 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty georeference:city .
+_:bf9b41c8198d1 a owl:Restriction ;
+	owl:allValuesFrom georeference:HeightSystemEnum ;
+	owl:onProperty georeference:heightSystem .
+_:bfa17d56aeda6 rdf:first _:b1d4a51a1ab61 ;
+	rdf:rest rdf:nil .

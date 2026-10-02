@@ -1,12 +1,12 @@
 {
    "@context": {
-      "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "cmns-q": "https://www.omg.org/spec/Commons/Quantities/",
       "linkml": "https://w3id.org/linkml/",
       "openlabel_v2": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       "schema": "https://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
       "AdminTag": {
          "@id": "AdminTag"
       },
@@ -14,541 +14,360 @@
          "@id": "Behaviour"
       },
       "BehaviourCommunication": {
+         "@type": "@vocab",
          "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "text": "skos:notation",
             "description": "skos:prefLabel",
             "meaning": "@id",
-            "text": "skos:notation"
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
          },
-         "@id": "BehaviourCommunication",
-         "@type": "@vocab"
+         "@id": "BehaviourCommunication"
       },
       "ConnectivityCommunication": {
+         "@type": "@vocab",
          "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "text": "skos:notation",
             "description": "skos:prefLabel",
             "meaning": "@id",
-            "text": "skos:notation"
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
          },
-         "@id": "ConnectivityCommunication",
-         "@type": "@vocab"
+         "@id": "ConnectivityCommunication"
       },
       "ConnectivityPositioning": {
+         "@type": "@vocab",
          "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "text": "skos:notation",
             "description": "skos:prefLabel",
             "meaning": "@id",
-            "text": "skos:notation"
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
          },
-         "@id": "ConnectivityPositioning",
-         "@type": "@vocab"
+         "@id": "ConnectivityPositioning"
       },
       "DaySunElevation": {
-         "@id": "DaySunElevation",
-         "@type": "xsd:boolean"
-      },
-      "DaySunPosition": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DaySunPosition",
-         "@type": "@vocab"
-      },
-      "DrivableAreaEdge": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DrivableAreaEdge",
-         "@type": "@vocab"
-      },
-      "DrivableAreaSurfaceCondition": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DrivableAreaSurfaceCondition",
-         "@type": "@vocab"
-      },
-      "DrivableAreaSurfaceFeature": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DrivableAreaSurfaceFeature",
-         "@type": "@vocab"
-      },
-      "DrivableAreaSurfaceType": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DrivableAreaSurfaceType",
-         "@type": "@vocab"
-      },
-      "DrivableAreaType": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "DrivableAreaType",
-         "@type": "@vocab"
-      },
-      "EnvironmentParticulates": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "EnvironmentParticulates",
-         "@type": "@vocab"
-      },
-      "GeometryTransverse": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "GeometryTransverse",
-         "@type": "@vocab"
-      },
-      "HorizontalCurves": {
-         "@id": "HorizontalCurves",
-         "@type": "xsd:boolean"
-      },
-      "HorizontalStraights": {
-         "@id": "HorizontalStraights",
-         "@type": "xsd:boolean"
-      },
-      "IlluminationArtificial": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "IlluminationArtificial",
-         "@type": "@vocab"
-      },
-      "IlluminationCloudiness": {
-         "@id": "IlluminationCloudiness",
-         "@type": "xsd:boolean"
-      },
-      "IlluminationLowLight": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "IlluminationLowLight",
-         "@type": "@vocab"
-      },
-      "JunctionIntersection": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "JunctionIntersection",
-         "@type": "@vocab"
-      },
-      "JunctionRoundabout": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "JunctionRoundabout",
-         "@type": "@vocab"
-      },
-      "LaneSpecificationDimensions": {
-         "@id": "LaneSpecificationDimensions",
-         "@type": "xsd:boolean"
-      },
-      "LaneSpecificationLaneCount": {
-         "@id": "LaneSpecificationLaneCount",
-         "@type": "xsd:boolean"
-      },
-      "LaneSpecificationMarking": {
-         "@id": "LaneSpecificationMarking",
-         "@type": "xsd:boolean"
-      },
-      "LaneSpecificationTravelDirection": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "LaneSpecificationTravelDirection",
-         "@type": "@vocab"
-      },
-      "LaneSpecificationType": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "LaneSpecificationType",
-         "@type": "@vocab"
-      },
-      "LongitudinalDownSlope": {
-         "@id": "LongitudinalDownSlope",
-         "@type": "xsd:boolean"
-      },
-      "LongitudinalLevelPlane": {
-         "@id": "LongitudinalLevelPlane",
-         "@type": "xsd:boolean"
-      },
-      "LongitudinalUpSlope": {
-         "@id": "LongitudinalUpSlope",
-         "@type": "xsd:boolean"
-      },
-      "MotionAccelerate": {
-         "@id": "MotionAccelerate",
-         "@type": "xsd:boolean"
-      },
-      "MotionAway": {
-         "@id": "MotionAway",
-         "@type": "xsd:boolean"
-      },
-      "MotionCross": {
-         "@id": "MotionCross",
-         "@type": "xsd:boolean"
-      },
-      "MotionCutIn": {
-         "@id": "MotionCutIn",
-         "@type": "xsd:boolean"
-      },
-      "MotionCutOut": {
-         "@id": "MotionCutOut",
-         "@type": "xsd:boolean"
-      },
-      "MotionDecelerate": {
-         "@id": "MotionDecelerate",
-         "@type": "xsd:boolean"
-      },
-      "MotionDrive": {
-         "@id": "MotionDrive",
-         "@type": "xsd:boolean"
-      },
-      "MotionLaneChangeLeft": {
-         "@id": "MotionLaneChangeLeft",
-         "@type": "xsd:boolean"
-      },
-      "MotionLaneChangeRight": {
-         "@id": "MotionLaneChangeRight",
-         "@type": "xsd:boolean"
-      },
-      "MotionOvertake": {
-         "@id": "MotionOvertake",
-         "@type": "xsd:boolean"
-      },
-      "MotionReverse": {
-         "@id": "MotionReverse",
-         "@type": "xsd:boolean"
-      },
-      "MotionRun": {
-         "@id": "MotionRun",
-         "@type": "xsd:boolean"
-      },
-      "MotionSlide": {
-         "@id": "MotionSlide",
-         "@type": "xsd:boolean"
-      },
-      "MotionStop": {
-         "@id": "MotionStop",
-         "@type": "xsd:boolean"
-      },
-      "MotionTowards": {
-         "@id": "MotionTowards",
-         "@type": "xsd:boolean"
-      },
-      "MotionTurn": {
-         "@id": "MotionTurn",
-         "@type": "xsd:boolean"
-      },
-      "MotionTurnLeft": {
-         "@id": "MotionTurnLeft",
-         "@type": "xsd:boolean"
-      },
-      "MotionTurnRight": {
-         "@id": "MotionTurnRight",
-         "@type": "xsd:boolean"
-      },
-      "MotionUTurn": {
-         "@id": "MotionUTurn",
-         "@type": "xsd:boolean"
-      },
-      "MotionWalk": {
-         "@id": "MotionWalk",
-         "@type": "xsd:boolean"
-      },
-      "Odd": {
-         "@id": "Odd"
-      },
-      "OddDynamicElements": {
-         "@id": "OddDynamicElements"
-      },
-      "OddEnvironment": {
-         "@id": "OddEnvironment"
-      },
-      "OddScenery": {
-         "@id": "OddScenery"
-      },
-      "ParticulatesDust": {
-         "@id": "ParticulatesDust",
-         "@type": "xsd:boolean"
-      },
-      "ParticulatesMarine": {
-         "@id": "ParticulatesMarine",
-         "@type": "xsd:boolean"
-      },
-      "ParticulatesPollution": {
-         "@id": "ParticulatesPollution",
-         "@type": "xsd:boolean"
-      },
-      "ParticulatesVolcanic": {
-         "@id": "ParticulatesVolcanic",
-         "@type": "xsd:boolean"
-      },
-      "ParticulatesWater": {
-         "@id": "ParticulatesWater",
-         "@type": "xsd:boolean"
-      },
-      "QuantitativeValue": {
-         "@id": "schema:QuantitativeValue"
-      },
-      "RainType": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "RainType",
-         "@type": "@vocab"
-      },
-      "RoadUser": {
-         "@id": "RoadUser"
-      },
-      "RoadUserAnimal": {
-         "@id": "RoadUserAnimal",
-         "@type": "xsd:boolean"
-      },
-      "RoadUserHuman": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "RoadUserHuman",
-         "@type": "@vocab"
-      },
-      "RoadUserVehicle": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "RoadUserVehicle",
-         "@type": "@vocab"
-      },
-      "Scenario": {
-         "@id": "Scenario"
-      },
-      "SceneryFixedStructure": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SceneryFixedStructure",
-         "@type": "@vocab"
-      },
-      "ScenerySpecialStructure": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "ScenerySpecialStructure",
-         "@type": "@vocab"
-      },
-      "SceneryTemporaryStructure": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SceneryTemporaryStructure",
-         "@type": "@vocab"
-      },
-      "SceneryZone": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SceneryZone",
-         "@type": "@vocab"
-      },
-      "SignsInformation": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SignsInformation",
-         "@type": "@vocab"
-      },
-      "SignsRegulatory": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SignsRegulatory",
-         "@type": "@vocab"
-      },
-      "SignsWarning": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "SignsWarning",
-         "@type": "@vocab"
-      },
-      "SubjectVehicleSpeed": {
-         "@id": "SubjectVehicleSpeed",
-         "@type": "xsd:boolean"
-      },
-      "Tag": {
-         "@id": "Tag"
-      },
-      "TrafficAgentDensity": {
-         "@id": "TrafficAgentDensity",
-         "@type": "xsd:boolean"
-      },
-      "TrafficAgentType": {
-         "@id": "TrafficAgentType",
-         "@type": "xsd:boolean"
-      },
-      "TrafficFlowRate": {
-         "@id": "TrafficFlowRate",
-         "@type": "xsd:boolean"
-      },
-      "TrafficSpecialVehicle": {
-         "@id": "TrafficSpecialVehicle",
-         "@type": "xsd:boolean"
-      },
-      "TrafficVolume": {
-         "@id": "TrafficVolume",
-         "@type": "xsd:boolean"
-      },
-      "WeatherRain": {
-         "@id": "WeatherRain",
-         "@type": "xsd:boolean"
-      },
-      "WeatherSnow": {
-         "@id": "WeatherSnow",
-         "@type": "xsd:boolean"
-      },
-      "WeatherWind": {
-         "@id": "WeatherWind",
-         "@type": "xsd:boolean"
+         "@type": "xsd:boolean",
+         "@id": "DaySunElevation"
       },
       "daySunElevationValue": {
-         "@id": "daySunElevationValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "daySunElevationValue"
+      },
+      "DaySunPosition": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DaySunPosition"
+      },
+      "DrivableAreaEdge": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DrivableAreaEdge"
+      },
+      "DrivableAreaSurfaceCondition": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DrivableAreaSurfaceCondition"
+      },
+      "DrivableAreaSurfaceFeature": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DrivableAreaSurfaceFeature"
+      },
+      "DrivableAreaSurfaceType": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DrivableAreaSurfaceType"
+      },
+      "DrivableAreaType": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "DrivableAreaType"
+      },
+      "EnvironmentParticulates": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "EnvironmentParticulates"
+      },
+      "GeometryTransverse": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "GeometryTransverse"
       },
       "hasLowerBound": {
-         "@id": "cmns-q:hasLowerBound",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "cmns-q:hasLowerBound"
       },
       "hasTag": {
-         "@id": "hasTag",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasTag"
       },
       "hasUpperBound": {
-         "@id": "cmns-q:hasUpperBound",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "cmns-q:hasUpperBound"
+      },
+      "HorizontalCurves": {
+         "@type": "xsd:boolean",
+         "@id": "HorizontalCurves"
       },
       "horizontalCurvesValue": {
-         "@id": "horizontalCurvesValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "horizontalCurvesValue"
+      },
+      "HorizontalStraights": {
+         "@type": "xsd:boolean",
+         "@id": "HorizontalStraights"
+      },
+      "IlluminationArtificial": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "IlluminationArtificial"
+      },
+      "IlluminationCloudiness": {
+         "@type": "xsd:boolean",
+         "@id": "IlluminationCloudiness"
       },
       "illuminationCloudinessValue": {
-         "@id": "illuminationCloudinessValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "illuminationCloudinessValue"
+      },
+      "IlluminationLowLight": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "IlluminationLowLight"
+      },
+      "JunctionIntersection": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "JunctionIntersection"
+      },
+      "JunctionRoundabout": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "JunctionRoundabout"
+      },
+      "LaneSpecificationDimensions": {
+         "@type": "xsd:boolean",
+         "@id": "LaneSpecificationDimensions"
       },
       "laneSpecificationDimensionsValue": {
-         "@id": "laneSpecificationDimensionsValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "laneSpecificationDimensionsValue"
+      },
+      "LaneSpecificationLaneCount": {
+         "@type": "xsd:boolean",
+         "@id": "LaneSpecificationLaneCount"
       },
       "laneSpecificationLaneCountValue": {
-         "@id": "laneSpecificationLaneCountValue",
-         "@type": "xsd:integer"
+         "@type": "xsd:integer",
+         "@id": "laneSpecificationLaneCountValue"
+      },
+      "LaneSpecificationMarking": {
+         "@type": "xsd:boolean",
+         "@id": "LaneSpecificationMarking"
+      },
+      "LaneSpecificationTravelDirection": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "LaneSpecificationTravelDirection"
+      },
+      "LaneSpecificationType": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "LaneSpecificationType"
       },
       "licenseURI": {
          "@id": "licenseURI"
       },
+      "LongitudinalDownSlope": {
+         "@type": "xsd:boolean",
+         "@id": "LongitudinalDownSlope"
+      },
       "longitudinalDownSlopeValue": {
-         "@id": "longitudinalDownSlopeValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "longitudinalDownSlopeValue"
+      },
+      "LongitudinalLevelPlane": {
+         "@type": "xsd:boolean",
+         "@id": "LongitudinalLevelPlane"
+      },
+      "LongitudinalUpSlope": {
+         "@type": "xsd:boolean",
+         "@id": "LongitudinalUpSlope"
       },
       "longitudinalUpSlopeValue": {
-         "@id": "longitudinalUpSlopeValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "longitudinalUpSlopeValue"
       },
       "maxValue": {
-         "@id": "schema:maxValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "schema:maxValue"
       },
       "minValue": {
-         "@id": "schema:minValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "schema:minValue"
+      },
+      "MotionAccelerate": {
+         "@type": "xsd:boolean",
+         "@id": "MotionAccelerate"
       },
       "motionAccelerateValue": {
-         "@id": "motionAccelerateValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "motionAccelerateValue"
+      },
+      "MotionAway": {
+         "@type": "xsd:boolean",
+         "@id": "MotionAway"
+      },
+      "MotionCross": {
+         "@type": "xsd:boolean",
+         "@id": "MotionCross"
+      },
+      "MotionCutIn": {
+         "@type": "xsd:boolean",
+         "@id": "MotionCutIn"
+      },
+      "MotionCutOut": {
+         "@type": "xsd:boolean",
+         "@id": "MotionCutOut"
+      },
+      "MotionDecelerate": {
+         "@type": "xsd:boolean",
+         "@id": "MotionDecelerate"
       },
       "motionDecelerateValue": {
-         "@id": "motionDecelerateValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "motionDecelerateValue"
+      },
+      "MotionDrive": {
+         "@type": "xsd:boolean",
+         "@id": "MotionDrive"
       },
       "motionDriveValue": {
-         "@id": "motionDriveValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "motionDriveValue"
+      },
+      "MotionLaneChangeLeft": {
+         "@type": "xsd:boolean",
+         "@id": "MotionLaneChangeLeft"
+      },
+      "MotionLaneChangeRight": {
+         "@type": "xsd:boolean",
+         "@id": "MotionLaneChangeRight"
+      },
+      "MotionOvertake": {
+         "@type": "xsd:boolean",
+         "@id": "MotionOvertake"
+      },
+      "MotionReverse": {
+         "@type": "xsd:boolean",
+         "@id": "MotionReverse"
+      },
+      "MotionRun": {
+         "@type": "xsd:boolean",
+         "@id": "MotionRun"
+      },
+      "MotionSlide": {
+         "@type": "xsd:boolean",
+         "@id": "MotionSlide"
+      },
+      "MotionStop": {
+         "@type": "xsd:boolean",
+         "@id": "MotionStop"
+      },
+      "MotionTowards": {
+         "@type": "xsd:boolean",
+         "@id": "MotionTowards"
+      },
+      "MotionTurn": {
+         "@type": "xsd:boolean",
+         "@id": "MotionTurn"
+      },
+      "MotionTurnLeft": {
+         "@type": "xsd:boolean",
+         "@id": "MotionTurnLeft"
+      },
+      "MotionTurnRight": {
+         "@type": "xsd:boolean",
+         "@id": "MotionTurnRight"
+      },
+      "MotionUTurn": {
+         "@type": "xsd:boolean",
+         "@id": "MotionUTurn"
+      },
+      "MotionWalk": {
+         "@type": "xsd:boolean",
+         "@id": "MotionWalk"
+      },
+      "Odd": {
+         "@id": "Odd"
       },
       "ownerEmail": {
          "@id": "ownerEmail"
@@ -559,13 +378,70 @@
       "ownerURL": {
          "@id": "ownerURL"
       },
+      "ParticulatesDust": {
+         "@type": "xsd:boolean",
+         "@id": "ParticulatesDust"
+      },
+      "ParticulatesMarine": {
+         "@type": "xsd:boolean",
+         "@id": "ParticulatesMarine"
+      },
+      "ParticulatesPollution": {
+         "@type": "xsd:boolean",
+         "@id": "ParticulatesPollution"
+      },
+      "ParticulatesVolcanic": {
+         "@type": "xsd:boolean",
+         "@id": "ParticulatesVolcanic"
+      },
+      "ParticulatesWater": {
+         "@type": "xsd:boolean",
+         "@id": "ParticulatesWater"
+      },
       "particulatesWaterValue": {
-         "@id": "particulatesWaterValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "particulatesWaterValue"
+      },
+      "RainType": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "RainType"
+      },
+      "RoadUser": {
+         "@id": "RoadUser"
+      },
+      "RoadUserAnimal": {
+         "@type": "xsd:boolean",
+         "@id": "RoadUserAnimal"
+      },
+      "RoadUserHuman": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "RoadUserHuman"
+      },
+      "RoadUserVehicle": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "RoadUserVehicle"
       },
       "scenarioCreatedDate": {
-         "@id": "scenarioCreatedDate",
-         "@type": "xsd:dateTime"
+         "@type": "xsd:dateTime",
+         "@id": "scenarioCreatedDate"
       },
       "scenarioDefinition": {
          "@id": "scenarioDefinition"
@@ -591,36 +467,160 @@
       "scenarioVisualisationURL": {
          "@id": "scenarioVisualisationURL"
       },
+      "SceneryFixedStructure": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SceneryFixedStructure"
+      },
+      "ScenerySpecialStructure": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "ScenerySpecialStructure"
+      },
+      "SceneryTemporaryStructure": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SceneryTemporaryStructure"
+      },
+      "SceneryZone": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SceneryZone"
+      },
+      "SignsInformation": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SignsInformation"
+      },
+      "SignsRegulatory": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SignsRegulatory"
+      },
+      "SignsWarning": {
+         "@type": "@vocab",
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
+         },
+         "@id": "SignsWarning"
+      },
+      "SubjectVehicleSpeed": {
+         "@type": "xsd:boolean",
+         "@id": "SubjectVehicleSpeed"
+      },
       "subjectVehicleSpeedValue": {
-         "@id": "subjectVehicleSpeedValue",
-         "@type": "xsd:integer"
+         "@type": "xsd:integer",
+         "@id": "subjectVehicleSpeedValue"
+      },
+      "TrafficAgentDensity": {
+         "@type": "xsd:boolean",
+         "@id": "TrafficAgentDensity"
       },
       "trafficAgentDensityValue": {
-         "@id": "trafficAgentDensityValue",
-         "@type": "xsd:integer"
+         "@type": "xsd:integer",
+         "@id": "trafficAgentDensityValue"
+      },
+      "TrafficAgentType": {
+         "@type": "xsd:boolean",
+         "@id": "TrafficAgentType"
       },
       "trafficAgentTypeValue": {
          "@id": "trafficAgentTypeValue"
       },
+      "TrafficFlowRate": {
+         "@type": "xsd:boolean",
+         "@id": "TrafficFlowRate"
+      },
       "trafficFlowRateValue": {
-         "@id": "trafficFlowRateValue",
-         "@type": "xsd:integer"
+         "@type": "xsd:integer",
+         "@id": "trafficFlowRateValue"
+      },
+      "TrafficSpecialVehicle": {
+         "@type": "xsd:boolean",
+         "@id": "TrafficSpecialVehicle"
+      },
+      "TrafficVolume": {
+         "@type": "xsd:boolean",
+         "@id": "TrafficVolume"
       },
       "trafficVolumeValue": {
-         "@id": "trafficVolumeValue",
-         "@type": "xsd:integer"
+         "@type": "xsd:integer",
+         "@id": "trafficVolumeValue"
+      },
+      "WeatherRain": {
+         "@type": "xsd:boolean",
+         "@id": "WeatherRain"
       },
       "weatherRainValue": {
-         "@id": "weatherRainValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "weatherRainValue"
+      },
+      "WeatherSnow": {
+         "@type": "xsd:boolean",
+         "@id": "WeatherSnow"
       },
       "weatherSnowValue": {
-         "@id": "weatherSnowValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "weatherSnowValue"
+      },
+      "WeatherWind": {
+         "@type": "xsd:boolean",
+         "@id": "WeatherWind"
       },
       "weatherWindValue": {
-         "@id": "weatherWindValue",
-         "@type": "xsd:decimal"
+         "@type": "xsd:decimal",
+         "@id": "weatherWindValue"
+      },
+      "OddDynamicElements": {
+         "@id": "OddDynamicElements"
+      },
+      "OddEnvironment": {
+         "@id": "OddEnvironment"
+      },
+      "OddScenery": {
+         "@id": "OddScenery"
+      },
+      "QuantitativeValue": {
+         "@id": "schema:QuantitativeValue"
+      },
+      "Scenario": {
+         "@id": "Scenario"
+      },
+      "Tag": {
+         "@id": "Tag"
       }
    }
 }

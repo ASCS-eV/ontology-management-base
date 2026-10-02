@@ -16,8 +16,8 @@
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "schema": "https://schema.org/",
       "environment-model": "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "georeference": "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
       "creationToolName": {
          "@id": "environment-model:creationToolName"
       },

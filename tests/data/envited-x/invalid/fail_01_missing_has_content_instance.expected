@@ -8,12 +8,11 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasContent                                                                    =
-=    Error:            Each DomainSpecification must link to at least one envited-x:Content via envited-x:hasContent.                                =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasContent                                                                    =
+=    Error:            hasContent (EnvitedXDomainSpecification): Links a DomainSpecification to the content of the asset.                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_01_missing_has_content_instance                                  =
-=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasDomainSpecification                                                        =
-=    Error:            A SimulationAsset may have one or more DomainSpecifications (e.g. georeference metadata, sensor calibration) to provide       =
-=                      additional structured metadata. Each extension MUST conform to envited-x:DomainSpecificationShape (at least one               =
-=                      envited-x:hasContent and one envited-x:hasFormat).                                                                            =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasDomainSpecification                                                        =
+=    Error:            hasDomainSpecification (SimulationAsset): Links an asset to one or more metadata extensions (e.g., georeference metadata,     =
+=                      sensor calibration) that provide additional structured information.                                                           =
 ======================================================================================================================================================

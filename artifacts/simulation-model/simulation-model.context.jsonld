@@ -16,7 +16,7 @@
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "schema": "https://schema.org/",
       "simulation-model": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
       "hasContent": {
          "@id": "simulation-model:hasContent",
          "@type": "@id"

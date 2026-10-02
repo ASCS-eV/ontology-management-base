@@ -1,312 +1,432 @@
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix gx: <https://w3id.org/gaia-x/development#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-
-# The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes>
-    a owl:Ontology ;
-    # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v5> .
-
-manifest:ManifestShape a sh:NodeShape ;
-    sh:closed false ;
-    
-    sh:property
-        [   sh:name "manifest reference"@en ;
-            sh:description "Self-reference to the manifest.json providing the structure and list of contents for a domain specific asset."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:node manifest:ManifestLinkReferenceShape ;
-            sh:order 0 ;
-            sh:path manifest:hasManifestReference
-        ] ,
-        [   sh:name "license"@en ;
-            sh:description "Defines the license valid for all content referenced in the manifest. Does not apply to linked data(sets) with explicit license terms."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:node manifest:LicenseLinkReferenceShape ;
-            sh:order 1 ;
-            sh:path manifest:hasLicense
-        ] ,
-        [   sh:name "artifact links"@en ;
-            sh:description "Defines the links to all relevant artifacts for a digital asset. This is extended by the domain specific ontology."@en ;
-            sh:minCount 1 ;
-            sh:node manifest:LinkShape ;
-            sh:order 2 ;
-            sh:path manifest:hasArtifacts
-        ] ,
-        [   sh:name "external artifact links"@en ;
-            sh:description "Defines the links to all related referenced artifacts for a digital asset. This is extended by the domain specific ontology."@en ;
-            sh:minCount 0 ;
-            sh:node manifest:LinkShape ;
-            sh:order 3 ;
-            sh:path manifest:hasReferencedArtifacts
-        ] ;
-    sh:targetClass manifest:Manifest .
-
-#################################################################
-# Shape for manifest:Link
-# (specialization of manifest:Link that points to licenses)
-#################################################################
-manifest:LicenseLinkReferenceShape a sh:NodeShape ;
-    # Ensures base link metadata (filePath, mimeType, etc.)
-    sh:node manifest:LinkShape ;
-    
-    # Specific Narrowing for Licenses:
-    sh:property [
-        sh:path manifest:hasCategory ;
-        sh:class manifest:LicenseCategory ;
-        sh:message "A link used in hasLicense must have a category belonging to manifest:LicenseCategory."@en ;
-    ] .
-
-## Specialized Shape for manifest references
-manifest:ManifestLinkReferenceShape a sh:NodeShape ;
-    sh:node manifest:LinkShape ;
-    sh:property [
-        sh:path manifest:hasCategory ;
-        sh:class manifest:ManifestCategory ;
-        sh:message "A link used in hasManifestReference must have a category belonging to manifest:ManifestCategory."@en ;
-    ] .
-
-manifest:LinkShape a sh:NodeShape ;
-    sh:closed false ;
-    
-    sh:property [
-        sh:name "IRI"@en ;
-        sh:description "IRI required if the file is RDF/JSON-LD."@en ;
-        sh:nodeKind sh:IRI ;
-        sh:maxCount 1 ;
-        sh:minCount 0 ;
-        sh:path manifest:iri ;
-        sh:message "IRI link is required if this file is an RDF/JSON-LD resource."@en ;
-        sh:order 0 ;
-    ],
-    [
-        sh:description "Additional information about the manifest reference."@en ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:datatype xsd:string ;
-        sh:path skos:note ;
-        sh:message "A skos:note can provide supplementary information about the manifest reference."@en ;
-    ],
-    [
-        sh:description "Specifies ontology conformance."@en ;
-        sh:minCount 0 ;
-        sh:nodeKind sh:IRI ;
-        sh:path sh:conformsTo ;
-        sh:message "Ontology conformance should be provided for JSON-LD files."@en ;
-    ],
-    [
-        sh:name "access role"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:class manifest:AccessRole ;
-        sh:path manifest:hasAccessRole ;
-        sh:message "Validation of accessRole failed!"@en ;
-    ],
-    [
-        sh:name "category"@en ;
-        sh:description "Specifies artifact category."@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:class manifest:Category ;
-        sh:path manifest:hasCategory ;
-        sh:message "Each manifest:Link must have exactly one assigned category."@en ;
-    ],
-    [   
-        sh:name "file metadata"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:node manifest:FileMetadataShape ;
-        sh:path manifest:hasFileMetadata ;
-    ] ;
-    # Conditional constraint for manifest:mimeType
-    sh:or (
-        [   # Branch 1: MIME type is NOT "application/ld+json"
-            sh:property [
-                sh:path ( manifest:hasFileMetadata manifest:mimeType ) ;
-                sh:not [ sh:pattern "^application/ld\\+json$" ] ;
-            ]
-        ]
-        [   # Branch 2: MIME type IS "application/ld+json" but the link is part of manifest:hasManifestReference (exception)
-            sh:property [
-                sh:path ( manifest:hasFileMetadata manifest:mimeType ) ;
-                sh:pattern "^application/ld\\+json$" ;
-                sh:minCount 1 ;
-            ] ;
-            sh:property [
-                sh:path [ sh:inversePath manifest:hasManifestReference ] ;
-                sh:minCount 1 ;
-                sh:message "This link is a manifest reference so the extra properties are not required." ;
-            ]
-        ]
-        [   # Branch 3: MIME type IS "application/ld+json" and NOT part of manifest:hasManifestReference,
-            # so require the additional properties.
-            sh:property [
-                sh:path ( manifest:hasFileMetadata manifest:mimeType ) ;
-                sh:pattern "^application/ld\\+json$" ;
-                sh:minCount 1 ;
-            ] ;
-            sh:property [
-                sh:path manifest:iri ;
-                sh:minCount 1 ;
-                sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, an IRI is required." ;
-            ] ;
-            sh:property [
-                sh:path skos:note ;
-                sh:minCount 1 ;
-                sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, a skos:note is required." ;
-            ] ;
-            sh:property [
-                sh:path sh:conformsTo ;
-                sh:minCount 1 ;
-                sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, ontology conformance is required." ;
-            ]
-        ]
-    ) ;
-
-    sh:targetClass manifest:Link .
-
-
-manifest:FileMetadataShape a sh:NodeShape ;
-    sh:closed false ;
-    
-    sh:property 
-        [   # Path or location for local/remote retrieval
-            sh:name "file location"@en ;
-            sh:description "A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...')."@en ;
-            skos:example "./metadata/gxMetadata.json";
-            sh:datatype xsd:anyURI ;
-            sh:message "Validation of URI failed!"@en ;
-            sh:order 1 ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path manifest:filePath  
-        ],
-        [
-            sh:name "mime type"@en ;
-            sh:description "Defines the MIME type of the file."@en ;
-            skos:example "application/pdf";
-            sh:datatype xsd:string;
-            sh:message "Validation of the MIME type failed!"@en ;
-            sh:order 2;
-            sh:maxCount 1;
-            sh:minCount 1;
-            sh:path manifest:mimeType;
-            sh:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$"^^xsd:string;
-        ],
-        [ 
-            sh:name "content identifier"@en ;
-            sh:description "Defines the IPFS CIDv1 identifier of the file."@en ;
-            skos:example "bafkreic6xmosvgr4a5735itquknu2ljf4fon7wohrzlmabepwkkxtih6um";
-            sh:datatype xsd:string;
-            sh:message "The CIDv1 identifier is not valid or is a CIDv0 identifier."@en ;
-            sh:order 3;
-            sh:maxCount 1;
-            sh:minCount 0;
-            sh:path manifest:cid;
-            sh:pattern "^((?!Qm[1-9A-HJ-NP-Za-km-z]{44,})|b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" 
-        ],     
-        
-        [
-            sh:name "file size"@en ;
-            sh:description "Specifies the file size in bytes."@en ;
-            skos:example "1048576" ;
-            sh:datatype xsd:integer ;
-            sh:message "Validation of file size failed!"@en ;
-            sh:order 4 ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:path manifest:fileSize ;
-        ],
-        [
-            sh:name "filename"@en ;
-            sh:description "Specifies the file name (excluding the path) along with its extension."@en ;
-            skos:example "example.txt" ;
-            sh:datatype xsd:string ;
-            sh:message "Filename validation failed!"@en ;
-            sh:order 5 ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:path manifest:filename ;
-            sh:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" ;
-        ],
-        [
-            sh:name "timestamp"@en ;
-            sh:description "Represents a date or time associated with the file, such as recording time or creation time."@en ;
-            skos:example "2022-04-01T00:00:00" ;
-            sh:datatype xsd:dateTime ;
-            sh:message "Validation of timestamp failed!"@en ;
-            sh:order 6 ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:path manifest:timestamp ;
-        ],
-        [
-            sh:name "file dimensions"@en ;
-            sh:description "Defines the dimensions for images and videos."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:node manifest:DimensionsShape ;
-            sh:order 7 ;
-            sh:path manifest:hasDimensions ;
-        ] ;
-    sh:targetClass manifest:FileMetadata .
-
-
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+manifest:AccessRoleShape a sh:NodeShape ;
+	rdfs:comment "A class representing different access roles of artifacts in a manifest."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b29fd1fd84066 ;
+	sh:property _:bb18190489075 ;
+	sh:targetClass manifest:AccessRole .
+manifest:ArtifactLinkShape a sh:NodeShape ;
+	rdfs:comment "A Link to an artifact of a manifest: its content, license or a referenced artifact."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b5b31114b11b1 ;
+	sh:node manifest:LinkShape ;
+	sh:property _:b071420624e9b , _:b1ef93801069a , _:b72044cf39e4d , _:ba7fb0dab929b , _:baf3941d5ec2c , _:bd0f0e0098008 ;
+	sh:sparql _:b39aa01adc96f , _:b4b6b91ef9a07 , _:b59bf9506ba2a ;
+	sh:targetClass manifest:ArtifactLink .
+manifest:CategoryShape a sh:NodeShape ;
+	rdfs:comment "A class representing different categories of artifacts in a manifest."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b51f39d9daedc ;
+	sh:property _:b38b66393a9c7 ;
+	sh:targetClass manifest:Category .
 manifest:DimensionsShape a sh:NodeShape ;
-    sh:closed false ;
-    
-    sh:property 
-        [
-            sh:name "unit" ;
-            sh:description "Specifies the unit of measurement (e.g., metres, inches)."@en ;
-            skos:example "metres" ;
-            sh:message "Unit must be a valid measurement unit."@en ;
-            sh:order 0 ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path manifest:unit ;
-            sh:in ("metres" "inches" "pixels") ;
-        ],
-        [
-            sh:name "width" ;
-            sh:description "Specifies the width (x-axis) of the item in appropriate units."@en ;
-            skos:example "1920.0" ;
-            sh:datatype xsd:float ;
-            sh:message "Width must be a positive number."@en ;
-            sh:order 1 ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path manifest:width ;
-            sh:minExclusive "0.0"^^xsd:float ;
-        ],
-        [
-            sh:name "height" ;
-            sh:description "Specifies the height (y-axis) of the item in appropriate units."@en ;
-            skos:example "1080.0" ;
-            sh:datatype xsd:float ;
-            sh:message "Height must be a positive number."@en ;
-            sh:order 2 ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path manifest:height ;
-            sh:minExclusive "0.0"^^xsd:float ;
-        ],
-        [
-            sh:name "depth" ;
-            sh:description "Specifies the depth (z-axis) of the item in appropriate units."@en ;
-            skos:example "0.0" ;
-            sh:datatype xsd:float ;
-            sh:message "Depth must be a positive number."@en ;
-            sh:order 3 ;
-            sh:maxCount 1 ;
-            sh:minCount 0 ;
-            sh:path manifest:depth ;
-            sh:minExclusive "0.0"^^xsd:float ;
-        ];
-    sh:targetClass manifest:Dimensions .
+	rdfs:comment "General class for defining the dimensions of a data file, e.g., of type image or video, referenced inside a manifest:FileMetadata."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bf9929816e44e ;
+	sh:property _:b5680ca11d49c , _:bde4130c85a73 , _:be53f5e78d60b , _:bfc3475433359 ;
+	sh:targetClass manifest:Dimensions .
+manifest:FileMetadataShape a sh:NodeShape ;
+	rdfs:comment "Represents the properties of a data file referenced within a Link instance."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bd8c61f41c8f2 ;
+	sh:property _:b1ca2da6f7ef2 , _:b4e4ef07ba03e , _:b552b271e6c79 , _:b9824406cc335 , _:ba3b55228ce8f , _:bc03e0ce73259 , _:bea5acc110a61 ;
+	sh:targetClass manifest:FileMetadata .
+manifest:LicenseCategoryShape a sh:NodeShape ;
+	sh:closed false ;
+	sh:ignoredProperties _:bccfdfd3c1e63 ;
+	sh:node manifest:CategoryShape ;
+	sh:property _:b9eb0eb385f6b ;
+	sh:targetClass manifest:LicenseCategory .
+manifest:LicenseLinkShape a sh:NodeShape ;
+	rdfs:comment "A Link used for the license of a manifest."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bc5bbd0cf4d58 ;
+	sh:node manifest:ArtifactLinkShape ;
+	sh:property _:b0c477d1d19f0 , _:b149a1fb07b6f , _:b4a62777a2a63 , _:b6c9e249cbdd1 , _:bc111c6ab68f0 , _:bd9d3e20fc83b ;
+	sh:targetClass manifest:LicenseLink .
+manifest:LinkShape a sh:NodeShape ;
+	rdfs:comment "Defines a Link instance that connects to data and mandatory metadata within an asset or related published simulation assets; can include web references."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bc192af765f14 ;
+	sh:property _:b09fc78b0b6b9 , _:b0f89362b0bd6 , _:b2e4e3eac7d87 , _:b505930b04223 , _:bc5ee44aa199e , _:bd115152c4bfe ;
+	sh:targetClass manifest:Link .
+manifest:ManifestCategoryShape a sh:NodeShape ;
+	sh:closed false ;
+	sh:ignoredProperties _:b26d1879d5ec1 ;
+	sh:node manifest:CategoryShape ;
+	sh:property _:beaed71ba61f7 ;
+	sh:targetClass manifest:ManifestCategory .
+manifest:ManifestLinkShape a sh:NodeShape ;
+	rdfs:comment "A Link used for the self-reference of a manifest."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b036cea6d566b ;
+	sh:node manifest:LinkShape ;
+	sh:property _:b136936972796 , _:b1a57f0b81bb1 , _:b42d825713d7e , _:b46b0c2e29914 , _:be42f0c4feb25 , _:bf4f44bc40200 ;
+	sh:targetClass manifest:ManifestLink .
+manifest:ManifestShape a sh:NodeShape ;
+	rdfs:comment "Defines the structure of an asset (e.g. simulation asset) as list of contents using a manifest.json, listing explicitely included artifacts, referenced artifacts and license information as linked properties. Typically used for archives."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b397a0aed78f0 ;
+	sh:property _:b1755470c15a7 , _:b53343a59f138 , _:b7e9d004713f6 , _:b88f906b11b16 ;
+	sh:targetClass manifest:Manifest .
+manifest:MiscellaneousCategoryShape a sh:NodeShape ;
+	sh:closed false ;
+	sh:ignoredProperties _:b1cdfe41047ac ;
+	sh:node manifest:CategoryShape ;
+	sh:property _:b8637adb60ca1 ;
+	sh:targetClass manifest:MiscellaneousCategory .
+_:b036cea6d566b rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b071420624e9b sh:datatype xsd:string ;
+	sh:description "Additional information about the linked artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "note (ArtifactLink): Additional information about the linked artifact."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:note .
+_:b09fc78b0b6b9 sh:datatype xsd:string ;
+	sh:description "Additional information about the linked artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "note (Link): Additional information about the linked artifact."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:note .
+_:b0c477d1d19f0 sh:description "Specifies ontology conformance."@en ;
+	sh:message "shapesConformsTo (LicenseLink): Specifies ontology conformance."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 2 ;
+	sh:path sh:conformsTo .
+_:b0f89362b0bd6 sh:description "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasFileMetadata (Link): Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:FileMetadataShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path manifest:hasFileMetadata .
+_:b136936972796 sh:description "Specifies ontology conformance."@en ;
+	sh:message "shapesConformsTo (ManifestLink): Specifies ontology conformance."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 2 ;
+	sh:path sh:conformsTo .
+_:b149a1fb07b6f sh:description "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasFileMetadata (LicenseLink): Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:FileMetadataShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path manifest:hasFileMetadata .
+_:b1755470c15a7 sh:description "Associates a Manifest instance with its corresponding license; only applicable within Manifest instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasLicense (Manifest): Associates a Manifest instance with its corresponding license; only applicable within Manifest instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:LicenseLinkShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path manifest:hasLicense .
+_:b1a57f0b81bb1 sh:datatype xsd:string ;
+	sh:description "Additional information about the linked artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "note (ManifestLink): Additional information about the linked artifact."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:note .
+_:b1ca2da6f7ef2 sh:description "Links a Dimensions instance to its associated FileMetadata, defining the size and scale of the data file; applicable only within FileMetadata instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasDimensions (FileMetadata): Links a Dimensions instance to its associated FileMetadata, defining the size and scale of the data file; applicable only within FileMetadata instances."@en ;
+	sh:node manifest:DimensionsShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 6 ;
+	sh:path manifest:hasDimensions .
+_:b1cdfe41047ac rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b1ef93801069a sh:class manifest:AccessRole ;
+	sh:description "General property to indicate the access role of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasAccessRole (ArtifactLink): General property to indicate the access role of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path manifest:hasAccessRole .
+_:b26d1879d5ec1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b29fd1fd84066 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b2e4e3eac7d87 sh:class manifest:Category ;
+	sh:description "General property to indicate the category of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasCategory (Link): General property to indicate the category of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 4 ;
+	sh:path manifest:hasCategory .
+_:b38b66393a9c7 sh:description "The IRI of a named individual."@en ;
+	sh:maxCount 1 ;
+	sh:message "id (Category): The IRI of a named individual."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:id .
+_:b397a0aed78f0 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b39aa01adc96f a sh:SPARQLConstraint ;
+	sh:message "A JSON-LD artifact needs a skos:note." ;
+	sh:select "SELECT $this WHERE {\n    $this <https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata> ?pre0_node .\n    ?pre0_node <https://w3id.org/ascs-ev/envited-x/manifest/v6/mimeType> ?pre0_node_0 .\n    FILTER ( ?pre0_node_0 = \"application/ld+json\" )\n    FILTER NOT EXISTS { $this <http://www.w3.org/2004/02/skos/core#note> ?post . }\n}" .
+_:b42d825713d7e sh:class manifest:ManifestCategory ;
+	sh:description "General property to indicate the category of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasCategory (ManifestLink): General property to indicate the category of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 4 ;
+	sh:path manifest:hasCategory .
+_:b46b0c2e29914 sh:description "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasFileMetadata (ManifestLink): Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:FileMetadataShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path manifest:hasFileMetadata .
+_:b4a62777a2a63 sh:class manifest:AccessRole ;
+	sh:description "General property to indicate the access role of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasAccessRole (LicenseLink): General property to indicate the access role of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path manifest:hasAccessRole .
+_:b4b6b91ef9a07 a sh:SPARQLConstraint ;
+	sh:message "A JSON-LD artifact needs its ontology conformance." ;
+	sh:select "SELECT $this WHERE {\n    $this <https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata> ?pre0_node .\n    ?pre0_node <https://w3id.org/ascs-ev/envited-x/manifest/v6/mimeType> ?pre0_node_0 .\n    FILTER ( ?pre0_node_0 = \"application/ld+json\" )\n    FILTER NOT EXISTS { $this <http://www.w3.org/ns/shacl#conformsTo> ?post . }\n}" .
+_:b4e4ef07ba03e sh:datatype xsd:dateTime ;
+	sh:description "Represents a date or time associated with the file, such as recording time or creation time."@en ;
+	sh:maxCount 1 ;
+	sh:message "timestamp (FileMetadata): Represents a date or time associated with the file, such as recording time or creation time."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path manifest:timestamp .
+_:b505930b04223 sh:class manifest:AccessRole ;
+	sh:description "General property to indicate the access role of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasAccessRole (Link): General property to indicate the access role of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path manifest:hasAccessRole .
+_:b51f39d9daedc rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b53343a59f138 sh:description "Associates a Manifest instance with its referenced artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	sh:message "hasReferencedArtifacts (Manifest): Associates a Manifest instance with its referenced artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	sh:node manifest:ArtifactLinkShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path manifest:hasReferencedArtifacts .
+_:b552b271e6c79 sh:datatype xsd:string ;
+	sh:description "Defines the IPFS CIDv1 identifier of the file."@en ;
+	sh:maxCount 1 ;
+	sh:message "cid (FileMetadata): Defines the IPFS CIDv1 identifier of the file."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path manifest:cid ;
+	sh:pattern "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" .
+_:b5680ca11d49c sh:datatype xsd:float ;
+	sh:description "Specifies the height (y-axis) of the item in appropriate units."@en ;
+	sh:maxCount 1 ;
+	sh:message "height (Dimensions): Specifies the height (y-axis) of the item in appropriate units."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path manifest:height .
+_:b59bf9506ba2a a sh:SPARQLConstraint ;
+	sh:message "A JSON-LD artifact needs an IRI." ;
+	sh:select "SELECT $this WHERE {\n    $this <https://w3id.org/ascs-ev/envited-x/manifest/v6/hasFileMetadata> ?pre0_node .\n    ?pre0_node <https://w3id.org/ascs-ev/envited-x/manifest/v6/mimeType> ?pre0_node_0 .\n    FILTER ( ?pre0_node_0 = \"application/ld+json\" )\n    FILTER NOT EXISTS { $this <https://w3id.org/ascs-ev/envited-x/manifest/v6/iri> ?post . }\n}" .
+_:b5b31114b11b1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b6c9e249cbdd1 sh:datatype xsd:string ;
+	sh:description "Additional information about the linked artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "note (LicenseLink): Additional information about the linked artifact."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path skos:note .
+_:b72044cf39e4d sh:description "Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasFileMetadata (ArtifactLink): Associates a FileMetadata instance with its corresponding Link; only applicable within Link instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:FileMetadataShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path manifest:hasFileMetadata .
+_:b7be35e24e470 rdf:first "inches" ;
+	rdf:rest _:bef412037cb71 .
+_:b7e9d004713f6 sh:description "Associates a Manifest instance with its artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	sh:message "hasArtifacts (Manifest): Associates a Manifest instance with its artifacts, represented as Link instances; only applicable within Manifest instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:ArtifactLinkShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path manifest:hasArtifacts .
+_:b8637adb60ca1 sh:description "The IRI of a named individual."@en ;
+	sh:maxCount 1 ;
+	sh:message "id (MiscellaneousCategory): The IRI of a named individual."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:id .
+_:b88f906b11b16 sh:description "Links a Manifest to its corresponding manifest reference file, defining the structure and contents of a digital asset; only applicable within Manifest instances."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasManifestReference (Manifest): Links a Manifest to its corresponding manifest reference file, defining the structure and contents of a digital asset; only applicable within Manifest instances."@en ;
+	sh:minCount 1 ;
+	sh:node manifest:ManifestLinkShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 0 ;
+	sh:path manifest:hasManifestReference .
+_:b9824406cc335 sh:datatype xsd:anyURI ;
+	sh:description "A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...')."@en ;
+	sh:maxCount 1 ;
+	sh:message "filePath (FileMetadata): A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...')."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path manifest:filePath .
+_:b9eb0eb385f6b sh:description "The IRI of a named individual."@en ;
+	sh:maxCount 1 ;
+	sh:message "id (LicenseCategory): The IRI of a named individual."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:id .
+_:ba3b55228ce8f sh:datatype xsd:string ;
+	sh:description "Specifies the file name (excluding the path) along with its extension."@en ;
+	sh:maxCount 1 ;
+	sh:message "filename (FileMetadata): Specifies the file name (excluding the path) along with its extension."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path manifest:filename ;
+	sh:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
+_:ba7fb0dab929b sh:class manifest:Category ;
+	sh:description "General property to indicate the category of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasCategory (ArtifactLink): General property to indicate the category of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 4 ;
+	sh:path manifest:hasCategory .
+_:baf3941d5ec2c sh:description "IRI required if the file is RDF/JSON-LD."@en ;
+	sh:maxCount 1 ;
+	sh:message "iri (ArtifactLink): IRI required if the file is RDF/JSON-LD."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:iri .
+_:bb18190489075 sh:description "The IRI of a named individual."@en ;
+	sh:maxCount 1 ;
+	sh:message "id (AccessRole): The IRI of a named individual."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:id .
+_:bc03e0ce73259 sh:datatype xsd:integer ;
+	sh:description "Specifies the file size in bytes."@en ;
+	sh:maxCount 1 ;
+	sh:message "manifestFileSize (FileMetadata): Specifies the file size in bytes."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path manifest:fileSize .
+_:bc111c6ab68f0 sh:description "IRI required if the file is RDF/JSON-LD."@en ;
+	sh:maxCount 1 ;
+	sh:message "iri (LicenseLink): IRI required if the file is RDF/JSON-LD."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:iri .
+_:bc192af765f14 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bc5bbd0cf4d58 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bc5ee44aa199e sh:description "Specifies ontology conformance."@en ;
+	sh:message "shapesConformsTo (Link): Specifies ontology conformance."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 2 ;
+	sh:path sh:conformsTo .
+_:bccfdfd3c1e63 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bd0f0e0098008 sh:description "Specifies ontology conformance."@en ;
+	sh:message "shapesConformsTo (ArtifactLink): Specifies ontology conformance."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 2 ;
+	sh:path sh:conformsTo .
+_:bd115152c4bfe sh:description "IRI required if the file is RDF/JSON-LD."@en ;
+	sh:maxCount 1 ;
+	sh:message "iri (Link): IRI required if the file is RDF/JSON-LD."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:iri .
+_:bd8c61f41c8f2 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bd9d3e20fc83b sh:class manifest:LicenseCategory ;
+	sh:description "General property to indicate the category of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasCategory (LicenseLink): General property to indicate the category of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 4 ;
+	sh:path manifest:hasCategory .
+_:bde4130c85a73 sh:datatype xsd:float ;
+	sh:description "Specifies the depth (z-axis) of the item in appropriate units."@en ;
+	sh:maxCount 1 ;
+	sh:message "depth (Dimensions): Specifies the depth (z-axis) of the item in appropriate units."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path manifest:depth .
+_:be42f0c4feb25 sh:class manifest:AccessRole ;
+	sh:description "General property to indicate the access role of an artifact."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasAccessRole (ManifestLink): General property to indicate the access role of an artifact."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path manifest:hasAccessRole .
+_:be53f5e78d60b sh:datatype xsd:float ;
+	sh:description "Specifies the width (x-axis) of the item in appropriate units."@en ;
+	sh:maxCount 1 ;
+	sh:message "width (Dimensions): Specifies the width (x-axis) of the item in appropriate units."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path manifest:width .
+_:bea5acc110a61 sh:datatype xsd:string ;
+	sh:description "Defines the MIME type of the file."@en ;
+	sh:maxCount 1 ;
+	sh:message "mimeType (FileMetadata): Defines the MIME type of the file."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path manifest:mimeType ;
+	sh:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
+_:beaed71ba61f7 sh:description "The IRI of a named individual."@en ;
+	sh:maxCount 1 ;
+	sh:message "id (ManifestCategory): The IRI of a named individual."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:id .
+_:bef412037cb71 rdf:first "pixels" ;
+	rdf:rest rdf:nil .
+_:bf4f44bc40200 sh:description "IRI required if the file is RDF/JSON-LD."@en ;
+	sh:maxCount 1 ;
+	sh:message "iri (ManifestLink): IRI required if the file is RDF/JSON-LD."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 0 ;
+	sh:path manifest:iri .
+_:bf9929816e44e rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bfc3475433359 sh:description "Specifies the unit of measurement (e.g., metres, inches)."@en ;
+	sh:in _:bfc489631cb7d ;
+	sh:maxCount 1 ;
+	sh:message "unit (Dimensions): Specifies the unit of measurement (e.g., metres, inches)."@en ;
+	sh:minCount 1 ;
+	sh:order 0 ;
+	sh:path manifest:unit .
+_:bfc489631cb7d rdf:first "metres" ;
+	rdf:rest _:b7be35e24e470 .

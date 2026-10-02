@@ -1,0 +1,14 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                            ['fail_06_simulation_manifest_without_media_instance.json']                                             =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_06_simulation_manifest_without_media_instance                    =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasManifest                                                                   =
+=    Error:            hasManifest (SimulationAsset): Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external =
+=                      manifest by its IRI, typically a DID.                                                                                         =
+======================================================================================================================================================

@@ -1,8 +1,8 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix survey: <https://w3id.org/gaia-x4plcaad/ontologies/survey/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
@@ -43,7 +43,7 @@ survey:SurveyResultDataOfferingShape a sh:NodeShape ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:or (
-            [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ]
+            [ sh:and ( manifest:ManifestShape envited-x:SimulationManifestShape ) ]
             [ sh:node envited-x:ManifestLinkReferenceShape ]
         ) ;
         sh:message "Each SurveyResultDataOffering must have exactly one manifest."@en ;

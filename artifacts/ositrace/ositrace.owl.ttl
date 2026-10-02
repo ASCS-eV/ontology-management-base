@@ -1,271 +1,1609 @@
-@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix org: <http://www.w3.org/ns/org#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix georeference_ontology: <https://w3id.org/ascs-ev/envited-x/georeference/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v7/> .
+@prefix envitedx_ontology: <https://w3id.org/ascs-ev/envited-x/envited-x/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix gx: <https://w3id.org/gaia-x/development#> .
-
-<https://w3id.org/ascs-ev/envited-x/ositrace/v6> a owl:Ontology ;
-    rdfs:label "Ontology definition for ositrace"@en ;
-    rdfs:comment "An ontology with common classes to describe ASAM OSI trace files, including single-channel .osi and multi-channel .mcap formats."@en ;
-
-    dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
-    dcterms:contributor [
-        a foaf:Person ;
-        foaf:name "Pierre R. Mai" ;
-        org:memberOf <https://pmsf.eu/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Carlo van Driesten" ;
-        org:memberOf <https://www.bmwgroup.com/> ;
-    ] ;
-
-    # Permanent identifier for the ontology (not version-specific)
-    dcterms:identifier <https://w3id.org/ascs-ev/envited-x/ositrace> ;
-
-    # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
-
-    # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.3> ;
-
-    # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/ositrace/v6> ;
-    owl:versionInfo "v6" ;
-    owl:priorVersion <https://w3id.org/ascs-ev/envited-x/ositrace/v5> ;
-
-    # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
-                <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
-
-    # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes> ;
-
-    # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies/specifications
-    dcterms:references <https://github.com/OpenSimulationInterface> ;
-    rdfs:seeAlso <https://ascs-ev.github.io/EVES/> .
-
-ositrace:OSITrace a owl:Class ;
-    rdfs:label "Class definition for OSITrace"@en ;
-    rdfs:comment "Attributes for ASAM OSI trace files."@en ;
-    rdfs:subClassOf envited-x:SimulationAsset ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasDomainSpecification ;
-        owl:someValuesFrom ositrace:DomainSpecification
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasResourceDescription ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:ResourceDescription manifest:Link )
-        ]
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasManifest ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:Manifest manifest:Link )
-        ]
-    ] .
-
-ositrace:DomainSpecification a owl:Class ;
-    rdfs:label "Class definition for DomainSpecification"@en ;
-    rdfs:comment "OSI trace DomainSpecification containing additional metadata information of the simulation asset."@en ;
-    rdfs:subClassOf envited-x:DomainSpecification ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasContent ;
-        owl:minCardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasDataSource ;
-        owl:minCardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasFormat ;
-        owl:minCardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasQuality ;
-        owl:minCardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasQuantity ;
-        owl:minCardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasGeoreference ;
-        owl:minCardinality 0
-    ] .
-
-ositrace:Content a owl:Class ;
-    rdfs:label "Class definition for Content"@en ;
-    rdfs:comment "Attributes for the content of ASAM OSI trace files."@en ;
-    rdfs:subClassOf envited-x:Content ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasHostMovingObject ;
-        owl:cardinality 1
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasTargetMovingObject ;
-        owl:minCardinality 0
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty ositrace:hasEvent ;
-        owl:minCardinality 0
-    ] .
-
-ositrace:DataSource a owl:Class ;
-    rdfs:label "Class definition for DataSource"@en ;
-    rdfs:comment "Attributes for the data source of ASAM OSI trace files."@en ;
-    rdfs:subClassOf envited-x:DataSource .
-
-ositrace:Format a owl:Class ;
-    rdfs:label "Class definition for Format"@en ;
-    rdfs:comment "Attributes for the format of ASAM OSI trace files, covering both single-channel .osi files and multi-channel MCAP containers."@en ;
-    rdfs:subClassOf envited-x:Format .
-
-ositrace:Quality a owl:Class ;
-    rdfs:label "Class definition for Quality"@en ;
-    rdfs:comment "Attributes for the quality of ASAM OSI trace files."@en ;
-    rdfs:subClassOf envited-x:Quality .
-
-ositrace:Quantity a owl:Class ;
-    rdfs:label "Class definition for Quantity"@en ;
-    rdfs:comment "Attributes for the quantity of ASAM OSI trace files."@en ;
-    rdfs:subClassOf envited-x:Quantity .
-
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
 ositrace:Channel a owl:Class ;
-    rdfs:label "Class definition for Channel"@en ;
-    rdfs:comment "Represents a single channel in an MCAP container file. Each channel carries messages of one OSI top-level type at a specific OSI schema version. Linked from ositrace:Format via ositrace:hasChannel."@en .
-
-ositrace:MovingObject a owl:Class ;
-    rdfs:label "Class definition for MovingObject"@en ;
-    rdfs:comment "Attributes for moving objects in ASAM OSI trace files."@en .
-
+	rdfs:comment "Represents a single channel in an MCAP container file. Each channel carries messages of one OSI top-level type at a specific OSI schema version. Linked from ositrace:Format via ositrace:hasChannel."@en ;
+	rdfs:label "Channel"@en ;
+	rdfs:subClassOf _:b2480a4a8e2cf , _:b27b1cd93b20e , _:b2dbd01d4b518 , _:b30809769f6ba , _:b3a830c467fe2 , _:b3bb30b12d19b , _:b3d067ab87df3 , _:b4f55a2121dbe , _:b5624747d6cba , _:b5647c0b7fbb2 , _:b60ab0071c298 , _:b654d32c89101 , _:bb6833192b46a , _:bb93f8ae17a7d , _:bb9ccaff152f0 , _:bcde686ac5e0b , _:bd4285fbc2886 , _:bfcbf895969cc ;
+	skos:exactMatch ositrace:Channel ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:CompressionEnum\#lz4 a owl:Class ;
+	rdfs:label "lz4"@en ;
+	rdfs:subClassOf ositrace:CompressionEnum .
+ositrace:CompressionEnum\#uncompressed a owl:Class ;
+	rdfs:label "uncompressed"@en ;
+	rdfs:subClassOf ositrace:CompressionEnum .
+ositrace:CompressionEnum\#zstd a owl:Class ;
+	rdfs:label "zstd"@en ;
+	rdfs:subClassOf ositrace:CompressionEnum .
+ositrace:CompressionEnum a owl:Class ;
+	rdfs:label "CompressionEnum"@en ;
+	owl:unionOf _:bf513f128b09a ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:CompressionEnum\#lz4 , ositrace:CompressionEnum\#uncompressed , ositrace:CompressionEnum\#zstd .
+ositrace:Content a owl:Class ;
+	rdfs:comment "Attributes for the content of ASAM OSI trace files."@en ;
+	rdfs:label "Content"@en ;
+	rdfs:subClassOf envited-x:Content , _:b0c1ff792569c , _:b17ca43d4e6ff , _:b19eee7fd2cf8 , _:b1e140a32c3df , _:b2238cb3aeed9 , _:b32c456f3aedc , _:b3e24fd24a2cf , _:b4325dd858b69 , _:b46e73b49d2a9 , _:b5b9a5aaf9b9b , _:b68fc08d61095 , _:b709b147db388 , _:b73195e12c3ce , _:b8271ddf87644 , _:b8baf8477eaaa , _:ba3cc1730d749 , _:bb11f313ea6c0 , _:bbda21f6aed94 , _:bc406e66811af , _:bc43d7d8677ee , _:bdbe2b904eaf4 , _:bdbe7a16008d9 , _:be3b150a726fe , _:bf02f33141a2d , _:bf8421514e70c , _:bfc10a4dcc453 ;
+	skos:exactMatch ositrace:Content ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:DataSource a owl:Class ;
+	rdfs:comment "Attributes for the data source of ASAM OSI trace files."@en ;
+	rdfs:label "DataSource"@en ;
+	rdfs:subClassOf envited-x:DataSource , _:b7a9109333ba2 , _:b83a826d62043 , _:b989ad613f83d , _:baa730d80a5a5 , _:bbbcd842ace9b ;
+	skos:exactMatch ositrace:DataSource ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:DomainSpecification a owl:Class ;
+	rdfs:comment "OSI trace DomainSpecification containing additional metadata information of the simulation asset."@en ;
+	rdfs:label "DomainSpecification"@en ;
+	rdfs:subClassOf envited-x:DomainSpecification , _:b0166e36222ee , _:b02a633b00590 , _:b0e1541fc42c3 , _:b229fba0bf74a , _:b4b16012b1cba , _:b54ff38807bbb , _:b5f4f7085d55c , _:b61b519b3811a , _:b6d20be4c01a4 , _:b88c707ab383a , _:b8e7d8dc74096 , _:ba8734f9f4ad0 , _:bc089a80ed04d , _:bc591ac3783e4 , _:bc5c1cfdd003f , _:bcfbe21b33de0 , _:bd61c445abcec , _:bf886fe58638a ;
+	skos:exactMatch ositrace:DomainSpecification ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
 ositrace:Event a owl:Class ;
-    rdfs:label "Class definition for Event"@en ;
-    rdfs:comment "Attributes for event in ASAM OSI trace files."@en .
-
-#### Object properties
-
-### hasDomainSpecification (ositrace -> DomainSpecification)
-ositrace:hasDomainSpecification a owl:ObjectProperty ;
-    rdfs:label "Object property: hasDomainSpecification"@en ;
-    rdfs:comment "Links an OSI trace asset to its specific metadata (DomainSpecification), which may contain additional OSI trace-specific attributes."@en ;
-    rdfs:subPropertyOf envited-x:hasDomainSpecification ;
-    rdfs:domain ositrace:OSITrace ;
-    rdfs:range ositrace:DomainSpecification .
-
-### hasResourceDescription (ositrace -> envited-x:ResourceDescription)
-ositrace:hasResourceDescription a owl:ObjectProperty ;
-    rdfs:label "Object property: hasResourceDescription"@en ;
-    rdfs:comment "Links an OSI trace asset to a standard ResourceDescription instance from envited-x."@en ;
-    rdfs:subPropertyOf envited-x:hasResourceDescription ;
-    rdfs:domain ositrace:OSITrace ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:ResourceDescription manifest:Link )
-    ] .
-
-### hasManifest (ositrace -> envited-x:Manifest or manifest:Link)
-ositrace:hasManifest a owl:ObjectProperty ;
-    rdfs:label "Object property: hasManifest"@en ;
-    rdfs:comment """
-                Links an OSI Trace asset to its manifest.
-                The value can be either:
-                - an inline envited-x:Manifest node (embedded manifest structure), or
-                - an manifest:Link node (a link that points via manifest:iri
-                to an external manifest representation, typically identified by a DID).
-                """@en ;
-    rdfs:subPropertyOf envited-x:hasManifest ;
-    rdfs:domain ositrace:OSITrace ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:Manifest manifest:Link )
-    ] .
-
-### hasGeoreference (DomainSpecification -> georeference:Georeference)
-ositrace:hasGeoreference a owl:ObjectProperty ;
-    rdfs:label "Object property: hasGeoreference"@en ;
-    rdfs:comment "Links a DomainSpecification to a georeference:Georeference describing how the OSI trace is georeferenced."@en ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range georeference:Georeference .
-
-### hasContent (DomainSpecification -> Content)
-ositrace:hasContent a owl:ObjectProperty ;
-    rdfs:label "Object property: hasContent"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of ositrace:Content that describes the OSI trace's content."@en ;
-    rdfs:subPropertyOf envited-x:hasContent ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range ositrace:Content .
-
-### hasDataSource (DomainSpecification -> DataSource)
-ositrace:hasDataSource a owl:ObjectProperty ;
-    rdfs:label "Object property: hasDataSource"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of ositrace:DataSource that describes how the OSI trace was generated or recorded."@en ;
-    rdfs:subPropertyOf envited-x:hasDataSource ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range ositrace:DataSource .
-
-### hasFormat (DomainSpecification -> Format)
-ositrace:hasFormat a owl:ObjectProperty ;
-    rdfs:label "Object property: hasFormat"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of ositrace:Format that describes the OSI trace file format details."@en ;
-    rdfs:subPropertyOf envited-x:hasFormat ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range ositrace:Format .
-
-### hasQuality (DomainSpecification -> Quality)
-ositrace:hasQuality a owl:ObjectProperty ;
-    rdfs:label "Object property: hasQuality"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of ositrace:Quality describing the OSI trace's accuracy and reliability aspects."@en ;
-    rdfs:subPropertyOf envited-x:hasQuality ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range ositrace:Quality .
-
-### hasQuantity (DomainSpecification -> Quantity)
-ositrace:hasQuantity a owl:ObjectProperty ;
-    rdfs:label "Object property: hasQuantity"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of ositrace:Quantity describing the OSI trace's quantity metrics (frames, objects, events, etc.)."@en ;
-    rdfs:subPropertyOf envited-x:hasQuantity ;
-    rdfs:domain ositrace:DomainSpecification ;
-    rdfs:range ositrace:Quantity .
-
-### hasChannel (Format -> Channel)
+	rdfs:comment "Attributes for event in ASAM OSI trace files."@en ;
+	rdfs:label "Event"@en ;
+	rdfs:subClassOf _:b40a4e9b03d53 , _:b4cfac40677aa , _:b7028739173c4 , _:b855614669c64 , _:b8afdcbd78c33 , _:b90c04d477d4b , _:ba461537c9bd3 , _:bb9bce15a3dd2 , _:be52c58f5dd0a ;
+	skos:exactMatch ositrace:Event ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:FileFormatEnum\#MCAP a owl:Class ;
+	rdfs:label "MCAP"@en ;
+	rdfs:subClassOf ositrace:FileFormatEnum .
+ositrace:FileFormatEnum\#OSI a owl:Class ;
+	rdfs:label "OSI"@en ;
+	rdfs:subClassOf ositrace:FileFormatEnum .
+ositrace:FileFormatEnum\#TXTH a owl:Class ;
+	rdfs:label "TXTH"@en ;
+	rdfs:subClassOf ositrace:FileFormatEnum .
+ositrace:FileFormatEnum a owl:Class ;
+	rdfs:label "FileFormatEnum"@en ;
+	owl:unionOf _:b398f9a6fd4f4 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:FileFormatEnum\#MCAP , ositrace:FileFormatEnum\#OSI , ositrace:FileFormatEnum\#TXTH .
+ositrace:Format a owl:Class ;
+	rdfs:comment "Attributes for the format of ASAM OSI trace files, covering both single-channel .osi files and multi-channel MCAP containers."@en ;
+	rdfs:label "Format"@en ;
+	rdfs:subClassOf envited-x:Format , _:b0f5a3c9cf557 , _:b2109eb15b2a5 , _:b27ac8cffe819 , _:b297356269cde , _:b2a2cc7ca3508 , _:b2fcb68d3bdce , _:b3de3b9786179 , _:b45a7018f8b72 , _:b67e5a46c7c49 , _:b6a51f50b0289 , _:b7ab4e86b455b , _:b82ba53fb58cc , _:b8805861cf2fa , _:b906d1ee3628b , _:b961cfeb4d6e6 , _:b9f71ef6807e4 , _:ba34fd81e5dab , _:bac591a759683 , _:bae8aef1acdad , _:bb8e1589febc5 , _:bb96d328190d6 , _:bba8c53df9d37 , _:bc71350492c59 , _:bc74fff932513 , _:bc79da95e3f7e , _:bd6aff14a83dd , _:bd6bd48242860 , _:be2f1fc6bf011 , _:be4a1868a70e6 , _:bf645d02b3434 , _:bf776060615b9 , _:bf9aafaaf9996 , _:bffec89b8ff1b ;
+	skos:exactMatch ositrace:Format ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20GroundTruth a owl:Class ;
+	rdfs:label "ASAM OSI GroundTruth"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20HostVehicleData a owl:Class ;
+	rdfs:label "ASAM OSI HostVehicleData"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20MotionRequest a owl:Class ;
+	rdfs:label "ASAM OSI MotionRequest"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorData a owl:Class ;
+	rdfs:label "ASAM OSI SensorData"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorView a owl:Class ;
+	rdfs:label "ASAM OSI SensorView"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorViewConfiguration a owl:Class ;
+	rdfs:label "ASAM OSI SensorViewConfiguration"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20StreamingUpdate a owl:Class ;
+	rdfs:label "ASAM OSI StreamingUpdate"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommand a owl:Class ;
+	rdfs:label "ASAM OSI TrafficCommand"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommandUpdate a owl:Class ;
+	rdfs:label "ASAM OSI TrafficCommandUpdate"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficUpdate a owl:Class ;
+	rdfs:label "ASAM OSI TrafficUpdate"@en ;
+	rdfs:subClassOf ositrace:FormatTypeEnum .
+ositrace:FormatTypeEnum a owl:Class ;
+	rdfs:label "FormatTypeEnum"@en ;
+	owl:unionOf _:b4fcdd9f8b45a ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:FormatTypeEnum\#ASAM\%20OSI\%20GroundTruth , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20HostVehicleData , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20MotionRequest , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorData , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorView , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorViewConfiguration , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20StreamingUpdate , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommand , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommandUpdate , ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficUpdate .
+ositrace:GranularityEnum\#detection\%20list a owl:Class ;
+	rdfs:label "detection list"@en ;
+	rdfs:subClassOf ositrace:GranularityEnum .
+ositrace:GranularityEnum\#object\%20list a owl:Class ;
+	rdfs:label "object list"@en ;
+	rdfs:subClassOf ositrace:GranularityEnum .
+ositrace:GranularityEnum\#raw\%20data a owl:Class ;
+	rdfs:label "raw data"@en ;
+	rdfs:subClassOf ositrace:GranularityEnum .
+ositrace:GranularityEnum a owl:Class ;
+	rdfs:label "GranularityEnum"@en ;
+	owl:unionOf _:b12440b7eefc3 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:GranularityEnum\#detection\%20list , ositrace:GranularityEnum\#object\%20list , ositrace:GranularityEnum\#raw\%20data .
+ositrace:LaneTypesEnum\#HOV a owl:Class ;
+	rdfs:label "HOV"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#bidirectional a owl:Class ;
+	rdfs:label "bidirectional"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#biking a owl:Class ;
+	rdfs:label "biking"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#border a owl:Class ;
+	rdfs:label "border"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#bus a owl:Class ;
+	rdfs:label "bus"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#connectingRamp a owl:Class ;
+	rdfs:label "connectingRamp"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#curb a owl:Class ;
+	rdfs:label "curb"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#driving a owl:Class ;
+	rdfs:label "driving"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#entry a owl:Class ;
+	rdfs:label "entry"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#exit a owl:Class ;
+	rdfs:label "exit"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#median a owl:Class ;
+	rdfs:label "median"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#mwyEntry a owl:Class ;
+	rdfs:label "mwyEntry"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#mwyExit a owl:Class ;
+	rdfs:label "mwyExit"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#none a owl:Class ;
+	rdfs:label "none"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#offRamp a owl:Class ;
+	rdfs:label "offRamp"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#onRamp a owl:Class ;
+	rdfs:label "onRamp"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#parking a owl:Class ;
+	rdfs:label "parking"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#rail a owl:Class ;
+	rdfs:label "rail"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#restricted a owl:Class ;
+	rdfs:label "restricted"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#roadWorks a owl:Class ;
+	rdfs:label "roadWorks"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#shared a owl:Class ;
+	rdfs:label "shared"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#shoulder a owl:Class ;
+	rdfs:label "shoulder"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#sidewalk a owl:Class ;
+	rdfs:label "sidewalk"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#slipLane a owl:Class ;
+	rdfs:label "slipLane"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#special1 a owl:Class ;
+	rdfs:label "special1"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#special2 a owl:Class ;
+	rdfs:label "special2"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#special3 a owl:Class ;
+	rdfs:label "special3"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#stop a owl:Class ;
+	rdfs:label "stop"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#taxi a owl:Class ;
+	rdfs:label "taxi"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#tram a owl:Class ;
+	rdfs:label "tram"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum\#walking a owl:Class ;
+	rdfs:label "walking"@en ;
+	rdfs:subClassOf ositrace:LaneTypesEnum .
+ositrace:LaneTypesEnum a owl:Class ;
+	rdfs:label "LaneTypesEnum"@en ;
+	owl:unionOf _:b720822e1d36f ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:LaneTypesEnum\#HOV , ositrace:LaneTypesEnum\#bidirectional , ositrace:LaneTypesEnum\#biking , ositrace:LaneTypesEnum\#border , ositrace:LaneTypesEnum\#bus , ositrace:LaneTypesEnum\#connectingRamp , ositrace:LaneTypesEnum\#curb , ositrace:LaneTypesEnum\#driving , ositrace:LaneTypesEnum\#entry , ositrace:LaneTypesEnum\#exit , ositrace:LaneTypesEnum\#median , ositrace:LaneTypesEnum\#mwyEntry , ositrace:LaneTypesEnum\#mwyExit , ositrace:LaneTypesEnum\#none , ositrace:LaneTypesEnum\#offRamp , ositrace:LaneTypesEnum\#onRamp , ositrace:LaneTypesEnum\#parking , ositrace:LaneTypesEnum\#rail , ositrace:LaneTypesEnum\#restricted , ositrace:LaneTypesEnum\#roadWorks , ositrace:LaneTypesEnum\#shared , ositrace:LaneTypesEnum\#shoulder , ositrace:LaneTypesEnum\#sidewalk , ositrace:LaneTypesEnum\#slipLane , ositrace:LaneTypesEnum\#special1 , ositrace:LaneTypesEnum\#special2 , ositrace:LaneTypesEnum\#special3 , ositrace:LaneTypesEnum\#stop , ositrace:LaneTypesEnum\#taxi , ositrace:LaneTypesEnum\#tram , ositrace:LaneTypesEnum\#walking .
+ositrace:LevelOfDetailEnum\#barrier a owl:Class ;
+	rdfs:label "barrier"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#bike a owl:Class ;
+	rdfs:label "bike"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#building a owl:Class ;
+	rdfs:label "building"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#bus a owl:Class ;
+	rdfs:label "bus"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#car a owl:Class ;
+	rdfs:label "car"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#crosswalk a owl:Class ;
+	rdfs:label "crosswalk"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#gantry a owl:Class ;
+	rdfs:label "gantry"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#motorbike a owl:Class ;
+	rdfs:label "motorbike"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#none a owl:Class ;
+	rdfs:label "none"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#obstacle a owl:Class ;
+	rdfs:label "obstacle"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#parkingSpace a owl:Class ;
+	rdfs:label "parkingSpace"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#patch a owl:Class ;
+	rdfs:label "patch"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#pedestrian a owl:Class ;
+	rdfs:label "pedestrian"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#pole a owl:Class ;
+	rdfs:label "pole"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#railing a owl:Class ;
+	rdfs:label "railing"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#roadMark a owl:Class ;
+	rdfs:label "roadMark"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#roadSurface a owl:Class ;
+	rdfs:label "roadSurface"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#soundBarrier a owl:Class ;
+	rdfs:label "soundBarrier"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#streetLamp a owl:Class ;
+	rdfs:label "streetLamp"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#trafficIsland a owl:Class ;
+	rdfs:label "trafficIsland"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#trailer a owl:Class ;
+	rdfs:label "trailer"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#train a owl:Class ;
+	rdfs:label "train"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#tram a owl:Class ;
+	rdfs:label "tram"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#tree a owl:Class ;
+	rdfs:label "tree"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#truck a owl:Class ;
+	rdfs:label "truck"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#van a owl:Class ;
+	rdfs:label "van"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#vegetation a owl:Class ;
+	rdfs:label "vegetation"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum\#wind a owl:Class ;
+	rdfs:label "wind"@en ;
+	rdfs:subClassOf ositrace:LevelOfDetailEnum .
+ositrace:LevelOfDetailEnum a owl:Class ;
+	rdfs:label "LevelOfDetailEnum"@en ;
+	owl:unionOf _:bb16ad03af29a ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:LevelOfDetailEnum\#barrier , ositrace:LevelOfDetailEnum\#bike , ositrace:LevelOfDetailEnum\#building , ositrace:LevelOfDetailEnum\#bus , ositrace:LevelOfDetailEnum\#car , ositrace:LevelOfDetailEnum\#crosswalk , ositrace:LevelOfDetailEnum\#gantry , ositrace:LevelOfDetailEnum\#motorbike , ositrace:LevelOfDetailEnum\#none , ositrace:LevelOfDetailEnum\#obstacle , ositrace:LevelOfDetailEnum\#parkingSpace , ositrace:LevelOfDetailEnum\#patch , ositrace:LevelOfDetailEnum\#pedestrian , ositrace:LevelOfDetailEnum\#pole , ositrace:LevelOfDetailEnum\#railing , ositrace:LevelOfDetailEnum\#roadMark , ositrace:LevelOfDetailEnum\#roadSurface , ositrace:LevelOfDetailEnum\#soundBarrier , ositrace:LevelOfDetailEnum\#streetLamp , ositrace:LevelOfDetailEnum\#trafficIsland , ositrace:LevelOfDetailEnum\#trailer , ositrace:LevelOfDetailEnum\#train , ositrace:LevelOfDetailEnum\#tram , ositrace:LevelOfDetailEnum\#tree , ositrace:LevelOfDetailEnum\#truck , ositrace:LevelOfDetailEnum\#van , ositrace:LevelOfDetailEnum\#vegetation , ositrace:LevelOfDetailEnum\#wind .
+ositrace:MessageTypeEnum\#GroundTruth a owl:Class ;
+	rdfs:label "GroundTruth"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#HostVehicleData a owl:Class ;
+	rdfs:label "HostVehicleData"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#MotionRequest a owl:Class ;
+	rdfs:label "MotionRequest"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#SensorData a owl:Class ;
+	rdfs:label "SensorData"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#SensorView a owl:Class ;
+	rdfs:label "SensorView"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#SensorViewConfiguration a owl:Class ;
+	rdfs:label "SensorViewConfiguration"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#StreamingUpdate a owl:Class ;
+	rdfs:label "StreamingUpdate"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#TrafficCommand a owl:Class ;
+	rdfs:label "TrafficCommand"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#TrafficCommandUpdate a owl:Class ;
+	rdfs:label "TrafficCommandUpdate"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum\#TrafficUpdate a owl:Class ;
+	rdfs:label "TrafficUpdate"@en ;
+	rdfs:subClassOf ositrace:MessageTypeEnum .
+ositrace:MessageTypeEnum a owl:Class ;
+	rdfs:label "MessageTypeEnum"@en ;
+	owl:unionOf _:b35e0e84d16d9 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:MessageTypeEnum\#GroundTruth , ositrace:MessageTypeEnum\#HostVehicleData , ositrace:MessageTypeEnum\#MotionRequest , ositrace:MessageTypeEnum\#SensorData , ositrace:MessageTypeEnum\#SensorView , ositrace:MessageTypeEnum\#SensorViewConfiguration , ositrace:MessageTypeEnum\#StreamingUpdate , ositrace:MessageTypeEnum\#TrafficCommand , ositrace:MessageTypeEnum\#TrafficCommandUpdate , ositrace:MessageTypeEnum\#TrafficUpdate .
+ositrace:MovingObject a owl:Class ;
+	rdfs:comment "Attributes for moving objects in ASAM OSI trace files."@en ;
+	rdfs:label "MovingObject"@en ;
+	rdfs:subClassOf _:b6cbe52674922 , _:b917e81cc245c , _:baba2bb8f649d , _:bcdcd03fd6a81 , _:bd00c0910a97d , _:be9376e78bb59 ;
+	skos:exactMatch ositrace:MovingObject ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:OSITrace a owl:Class ;
+	rdfs:comment "Attributes for ASAM OSI trace files."@en ;
+	rdfs:label "OSITrace"@en ;
+	rdfs:subClassOf envited-x:SimulationAsset , _:b00a81a1e74c6 , _:b0c07bf7e5744 , _:b3b5f388dc9ea , _:b46add8d51692 , _:b5b838f228642 , _:b7e244d583110 , _:b87626acb82e1 , _:bd9da6300afd0 , _:be6e16c710960 ;
+	skos:exactMatch ositrace:OSITrace ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:Quality a owl:Class ;
+	rdfs:comment "Attributes for the quality of ASAM OSI trace files."@en ;
+	rdfs:label "Quality"@en ;
+	rdfs:subClassOf envited-x:Quality , _:b03d96e671f96 , _:b077984595e7f , _:b1dd3c6c194c9 , _:b228c69076d62 , _:b24f94589239d , _:b2f5154a6b34e , _:b3b14a42fed4e , _:b437ab519b948 , _:b49836c4a036f , _:b65d380926c3f , _:b6ece50bd6832 , _:b79a0945876bb , _:b8b5cc34c8bcd , _:b93427368127c , _:bc605a6a65b33 , _:bc8b8ad0528f8 , _:bd20a05398936 , _:bd7ffc357765c , _:bdbf8a640624b , _:beda1dd73a63a , _:bf81948ad1bf0 , _:bf8b841444c24 , _:bf9086f9a5a56 , _:bfbdfb831dad9 ;
+	skos:exactMatch ositrace:Quality ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:Quantity a owl:Class ;
+	rdfs:comment "Attributes for the quantity of ASAM OSI trace files."@en ;
+	rdfs:label "Quantity"@en ;
+	rdfs:subClassOf envited-x:Quantity , _:b2e00c98553cf , _:b8b7f2030bda4 , _:b8ed1afb8cba2 , _:b9bd28087dd49 , _:bd7db5db03cf8 , _:beec02e893e57 ;
+	skos:exactMatch ositrace:Quantity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:RoadTypesEnum\#bicycle a owl:Class ;
+	rdfs:label "bicycle"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#lowSpeed a owl:Class ;
+	rdfs:label "lowSpeed"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#motorway a owl:Class ;
+	rdfs:label "motorway"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#pedestrian a owl:Class ;
+	rdfs:label "pedestrian"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#rural a owl:Class ;
+	rdfs:label "rural"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#town a owl:Class ;
+	rdfs:label "town"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townArterial a owl:Class ;
+	rdfs:label "townArterial"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townCollector a owl:Class ;
+	rdfs:label "townCollector"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townExpressway a owl:Class ;
+	rdfs:label "townExpressway"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townLocal a owl:Class ;
+	rdfs:label "townLocal"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townPlayStreet a owl:Class ;
+	rdfs:label "townPlayStreet"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#townPrivate a owl:Class ;
+	rdfs:label "townPrivate"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum\#unknown a owl:Class ;
+	rdfs:label "unknown"@en ;
+	rdfs:subClassOf ositrace:RoadTypesEnum .
+ositrace:RoadTypesEnum a owl:Class ;
+	rdfs:label "RoadTypesEnum"@en ;
+	owl:unionOf _:b331843be2a44 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:RoadTypesEnum\#bicycle , ositrace:RoadTypesEnum\#lowSpeed , ositrace:RoadTypesEnum\#motorway , ositrace:RoadTypesEnum\#pedestrian , ositrace:RoadTypesEnum\#rural , ositrace:RoadTypesEnum\#town , ositrace:RoadTypesEnum\#townArterial , ositrace:RoadTypesEnum\#townCollector , ositrace:RoadTypesEnum\#townExpressway , ositrace:RoadTypesEnum\#townLocal , ositrace:RoadTypesEnum\#townPlayStreet , ositrace:RoadTypesEnum\#townPrivate , ositrace:RoadTypesEnum\#unknown .
+ositrace:TrafficDirectionEnum\#left-hand a owl:Class ;
+	rdfs:label "left-hand"@en ;
+	rdfs:subClassOf ositrace:TrafficDirectionEnum .
+ositrace:TrafficDirectionEnum\#right-hand a owl:Class ;
+	rdfs:label "right-hand"@en ;
+	rdfs:subClassOf ositrace:TrafficDirectionEnum .
+ositrace:TrafficDirectionEnum a owl:Class ;
+	rdfs:label "TrafficDirectionEnum"@en ;
+	owl:unionOf _:b5ef8ff512302 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	linkml:permissible_values ositrace:TrafficDirectionEnum\#left-hand , ositrace:TrafficDirectionEnum\#right-hand .
+ositrace:accuracyLaneModel2d a owl:DatatypeProperty ;
+	rdfs:comment "Accuracy of lane modell 2d."@en ;
+	rdfs:label "accuracyLaneModel2d"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:accuracyLaneModelHeight a owl:DatatypeProperty ;
+	rdfs:comment "Accuracy lane modell height"@en ;
+	rdfs:label "accuracyLaneModelHeight"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:accuracyObjects a owl:DatatypeProperty ;
+	rdfs:comment "Accuracy of objects in the traffic space, which do not directly affect the traffic."@en ;
+	rdfs:label "accuracyObjects"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:accuracySignals a owl:DatatypeProperty ;
+	rdfs:comment "Accuracy of traffic relevant objects, signs and signals."@en ;
+	rdfs:label "accuracySignals"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:calibration a owl:DatatypeProperty ;
+	rdfs:comment "Description of any calibration steps performed prior to measurement."@en ;
+	rdfs:label "calibration"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:compression a owl:ObjectProperty ;
+	rdfs:comment "MCAP chunk compression algorithm."@en ;
+	rdfs:label "compression"@en ;
+	rdfs:range ositrace:CompressionEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:description a owl:DatatypeProperty ;
+	rdfs:comment "Human-readable description of this channel."@en ;
+	rdfs:label "ositraceDescription"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "description"@en .
+ositrace:fileFormat a owl:ObjectProperty ;
+	rdfs:comment "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
+	rdfs:label "fileFormat"@en ;
+	rdfs:range ositrace:FileFormatEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:formatType a owl:ObjectProperty ;
+	rdfs:comment "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."@en ;
+	rdfs:label "ositraceFormatType"@en ;
+	rdfs:range ositrace:FormatTypeEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "formatType"@en .
+ositrace:granularity a owl:ObjectProperty ;
+	rdfs:comment "Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+	rdfs:label "granularity"@en ;
+	rdfs:range ositrace:GranularityEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
 ositrace:hasChannel a owl:ObjectProperty ;
-    rdfs:label "Object property: hasChannel"@en ;
-    rdfs:comment "Links an MCAP Format to one or more Channel instances, each describing a single message stream within the MCAP container."@en ;
-    rdfs:domain ositrace:Format ;
-    rdfs:range ositrace:Channel .
-
-### hasTargetMovingObject (Content -> MovingObject)
-ositrace:hasTargetMovingObject a owl:ObjectProperty ;
-    rdfs:label "Object property: hasTargetMovingObject"@en ;
-    rdfs:comment "Links Content to an instance of ositrace:MovingObject describing target entities within the OSI trace."@en ;
-    rdfs:domain ositrace:Content ;
-    rdfs:range ositrace:MovingObject .
-
-### hasHostMovingObject (Content -> MovingObject)
-ositrace:hasHostMovingObject a owl:ObjectProperty ;
-    rdfs:label "Object property: hasHostMovingObject"@en ;
-    rdfs:comment "Links Content to an instance of ositrace:MovingObject describing the host vehicle entity within the OSI trace."@en ;
-    rdfs:domain ositrace:Content ;
-    rdfs:range ositrace:MovingObject .
-
-### hasEvent (Content -> Event)
+	rdfs:comment "Channels in the MCAP container. Each channel carries messages of one OSI top-level type."@en ;
+	rdfs:label "hasChannel"@en ;
+	rdfs:range ositrace:Channel ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:hasContent a owl:ObjectProperty ;
+	rdfs:comment "Attributes describing the content of the OSI trace."@en ;
+	rdfs:label "ositraceHasContent"@en ;
+	rdfs:range ositrace:Content ;
+	rdfs:subPropertyOf envited-x:hasContent ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasContent"@en .
+ositrace:hasDataSource a owl:ObjectProperty ;
+	rdfs:comment "Data sources used to create the OSI trace."@en ;
+	rdfs:label "ositraceHasDataSource"@en ;
+	rdfs:range ositrace:DataSource ;
+	rdfs:subPropertyOf envited-x:hasDataSource ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasDataSource"@en .
+ositrace:hasDomainSpecification a owl:ObjectProperty ;
+	rdfs:comment "Links an OSI trace asset to its specific metadata (DomainSpecification), which may contain additional OSI trace-specific attributes."@en ;
+	rdfs:label "ositraceHasDomainSpecification"@en ;
+	rdfs:range ositrace:DomainSpecification ;
+	rdfs:subPropertyOf envited-x:hasDomainSpecification ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasDomainSpecification"@en .
 ositrace:hasEvent a owl:ObjectProperty ;
-    rdfs:label "Object property: hasEvent"@en ;
-    rdfs:comment "Links Content to an instance of ositrace:Event describing discrete events recorded in the OSI trace."@en ;
-    rdfs:domain ositrace:Content ;
-    rdfs:range ositrace:Event .
+	rdfs:comment "Description of events of interest in trace file."@en ;
+	rdfs:label "hasEvent"@en ;
+	rdfs:range ositrace:Event ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:hasFormat a owl:ObjectProperty ;
+	rdfs:comment "File format details of the OSI trace."@en ;
+	rdfs:label "ositraceHasFormat"@en ;
+	rdfs:range ositrace:Format ;
+	rdfs:subPropertyOf envited-x:hasFormat ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasFormat"@en .
+ositrace:hasGeoreference a owl:ObjectProperty ;
+	rdfs:comment "Links an OSI trace DomainSpecification to its georeferencing information."@en ;
+	rdfs:label "hasGeoreference"@en ;
+	rdfs:range georeference:Georeference ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:hasHostMovingObject a owl:ObjectProperty ;
+	rdfs:comment "Host moving object in trace file."@en ;
+	rdfs:label "hasHostMovingObject"@en ;
+	rdfs:range ositrace:MovingObject ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:hasManifest a owl:DatatypeProperty ;
+	rdfs:comment "Links an OSI Trace asset to its manifest: an inline envited-x:Manifest, or a manifest:Link pointing to an external manifest representation."@en ;
+	rdfs:label "ositraceHasManifest"@en ;
+	rdfs:range _:b0be6e6df44e8 ;
+	rdfs:subPropertyOf envited-x:hasManifest ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasManifest"@en .
+ositrace:hasQuality a owl:ObjectProperty ;
+	rdfs:comment "Quality metrics of the OSI trace."@en ;
+	rdfs:label "ositraceHasQuality"@en ;
+	rdfs:range ositrace:Quality ;
+	rdfs:subPropertyOf envited-x:hasQuality ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasQuality"@en .
+ositrace:hasQuantity a owl:ObjectProperty ;
+	rdfs:comment "Quantitative metrics describing the OSI trace."@en ;
+	rdfs:label "ositraceHasQuantity"@en ;
+	rdfs:range ositrace:Quantity ;
+	rdfs:subPropertyOf envited-x:hasQuantity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasQuantity"@en .
+ositrace:hasResourceDescription a owl:DatatypeProperty ;
+	rdfs:comment "Links an OSI trace asset to a standard ResourceDescription instance from envited-x."@en ;
+	rdfs:label "ositraceHasResourceDescription"@en ;
+	rdfs:range _:b66fa28f0521a ;
+	rdfs:subPropertyOf envited-x:hasResourceDescription ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "hasResourceDescription"@en .
+ositrace:hasTargetMovingObject a owl:ObjectProperty ;
+	rdfs:comment "Target moving object(s) in trace file."@en ;
+	rdfs:label "hasTargetMovingObject"@en ;
+	rdfs:range ositrace:MovingObject ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:identifier a owl:DatatypeProperty ;
+	rdfs:comment "Moving object identifier in trace file."@en ;
+	rdfs:label "ositraceIdentifier"@en ;
+	rdfs:range _:bef8c59615c17 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "identifier"@en .
+ositrace:laneTypes a owl:ObjectProperty ;
+	rdfs:comment "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'sidewalk' (use 'walking'), 'bus' and 'taxi' (use the lane <access> element), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), and 'special1', 'special2', 'special3' with no replacement named. 'bidirectional' is deprecated by the v1.9.0 specification §11.8 in favour of the lane @direction attribute, but is not marked deprecated in the schema. Prefer the non-deprecated spellings in new self-descriptions."@en ;
+	rdfs:label "laneTypes"@en ;
+	rdfs:range ositrace:LaneTypesEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:levelOfDetail a owl:ObjectProperty ;
+	rdfs:comment "Covered object classes. Complete ASAM OpenDRIVE e_objectType enumeration (27 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'patch' (use 'roadSurface'), 'railing' and 'soundBarrier' (use 'barrier'), 'streetLamp' and 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian' with no replacement named - describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."@en ;
+	rdfs:label "levelOfDetail"@en ;
+	rdfs:range ositrace:LevelOfDetailEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:maxOsiVersion a owl:DatatypeProperty ;
+	rdfs:comment "Maximum OSI schema version across all channels."@en ;
+	rdfs:label "maxOsiVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:maxProtobufVersion a owl:DatatypeProperty ;
+	rdfs:comment "Maximum protobuf version across all channels."@en ;
+	rdfs:label "maxProtobufVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:measurementSystem a owl:DatatypeProperty ;
+	rdfs:comment "Main acquisition device"@en ;
+	rdfs:label "measurementSystem"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:messageType a owl:ObjectProperty ;
+	rdfs:comment "OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."@en ;
+	rdfs:label "messageType"@en ;
+	rdfs:range ositrace:MessageTypeEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:minOsiVersion a owl:DatatypeProperty ;
+	rdfs:comment "Minimum OSI schema version across all channels."@en ;
+	rdfs:label "minOsiVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:minProtobufVersion a owl:DatatypeProperty ;
+	rdfs:comment "Minimum protobuf version across all channels."@en ;
+	rdfs:label "minProtobufVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:numberFrames a owl:DatatypeProperty ;
+	rdfs:comment "Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."@en ;
+	rdfs:label "numberFrames"@en ;
+	rdfs:range _:bb6ff9d88b8e2 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:numberOfChannels a owl:DatatypeProperty ;
+	rdfs:comment "Number of channels in the MCAP container (MCAP files only)."@en ;
+	rdfs:label "numberOfChannels"@en ;
+	rdfs:range _:ba3a69074b526 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:numberOfMessages a owl:DatatypeProperty ;
+	rdfs:comment "Number of messages in this channel."@en ;
+	rdfs:label "numberOfMessages"@en ;
+	rdfs:range _:b28fb43e0b87e ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:osiTraceFormatVersion a owl:DatatypeProperty ;
+	rdfs:comment "MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace')."@en ;
+	rdfs:label "osiTraceFormatVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:osiVersion a owl:DatatypeProperty ;
+	rdfs:comment "OSI schema version used by this channel."@en ;
+	rdfs:label "osiVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:precision a owl:DatatypeProperty ;
+	rdfs:comment "Precision of measured road network (relative accuracy)."@en ;
+	rdfs:label "precision"@en ;
+	rdfs:range xsd:float ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:protobufVersion a owl:DatatypeProperty ;
+	rdfs:comment "Protobuf version used for serialization in this channel."@en ;
+	rdfs:label "protobufVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:roadTypes a owl:ObjectProperty ;
+	rdfs:comment "Covered/used road types, defined over the ASAM OpenDRIVE element t_road_type. Complete e_roadType enumeration (13 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §10.4 'Road type'. No e_roadType value is deprecated."@en ;
+	rdfs:label "roadTypes"@en ;
+	rdfs:range ositrace:RoadTypesEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:scenarioIdentifier a owl:DatatypeProperty ;
+	rdfs:comment "Identifier of scenario performed in the trace file"@en ;
+	rdfs:label "scenarioIdentifier"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:startTime a owl:DatatypeProperty ;
+	rdfs:comment "Exact start timestamp of the recorded trace"@en ;
+	rdfs:label "startTime"@en ;
+	rdfs:range _:b54fa5d14a0ea ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:stopTime a owl:DatatypeProperty ;
+	rdfs:comment "Exact stop timestamp of the recorded trace"@en ;
+	rdfs:label "stopTime"@en ;
+	rdfs:range _:b266a9ca1eb5a ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:tag a owl:DatatypeProperty ;
+	rdfs:comment "Unique tag of the event in trace file."@en ;
+	rdfs:label "tag"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:time a owl:DatatypeProperty ;
+	rdfs:comment "Exact timestamp of the event in the recorded trace."@en ;
+	rdfs:label "time"@en ;
+	rdfs:range _:bcf90e2aebfdf ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:topic a owl:DatatypeProperty ;
+	rdfs:comment "Unique MCAP topic name identifying this channel."@en ;
+	rdfs:label "topic"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:trafficDirection a owl:ObjectProperty ;
+	rdfs:comment "Traffic direction, i.e. right-hand or left-hand traffic"@en ;
+	rdfs:label "trafficDirection"@en ;
+	rdfs:range ositrace:TrafficDirectionEnum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:usedDataSources a owl:DatatypeProperty ;
+	rdfs:comment "Basic data for the creation of the trace."@en ;
+	rdfs:label "usedDataSources"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:validationReport a owl:DatatypeProperty ;
+	rdfs:comment "Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."@en ;
+	rdfs:label "validationReport"@en ;
+	rdfs:range xsd:anyURI ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:validationReportType a owl:DatatypeProperty ;
+	rdfs:comment "Type of OSI trace validation report, if any exists. As mime-type."@en ;
+	rdfs:label "validationReportType"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+ositrace:version a owl:DatatypeProperty ;
+	rdfs:comment "Version of data format (OSI version / protobuf version)."@en ;
+	rdfs:label "ositraceVersion"@en ;
+	rdfs:range xsd:string ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	skos:prefLabel "version"@en .
+ositrace:zeroTime a owl:DatatypeProperty ;
+	rdfs:comment "Zero-time reference point for the MCAP recording."@en ;
+	rdfs:label "zeroTime"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
+<https://w3id.org/ascs-ev/envited-x/ositrace/v7> dcterms:conformsTo ositrace:shapes ;
+	dcterms:contributor <https://github.com/jdsika> , <https://github.com/pmai> ;
+	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/ositrace"@en ;
+	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
+	dcterms:references <https://github.com/OpenSimulationInterface> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:title "Ontology definition for ositrace"@en ;
+	a owl:Ontology ;
+	rdfs:comment "An ontology with common classes to describe ASAM OSI trace files, including single-channel .osi and multi-channel .mcap formats."@en ;
+	rdfs:label "ositrace"@en ;
+	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
+	owl:imports envitedx_ontology:v4 , georeference_ontology:v6 ;
+	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/ositrace/v6> ;
+	owl:versionIRI <https://w3id.org/ascs-ev/envited-x/ositrace/v7> ;
+	owl:versionInfo "v7"@en ;
+	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+_:b009bd9c3255b rdf:first manifest:Link ;
+	rdf:rest rdf:nil .
+_:b009bd9c3255b_1 rdf:first manifest:Link ;
+	rdf:rest rdf:nil .
+_:b00a81a1e74c6 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasDomainSpecification .
+_:b00da3629c904 rdf:first _:bed447026b00c_3 ;
+	rdf:rest rdf:nil .
+_:b00f2f86bca90 rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficUpdate ;
+	rdf:rest rdf:nil .
+_:b0166e36222ee a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasFormat .
+_:b02a633b00590 a owl:Restriction ;
+	owl:allValuesFrom georeference:Georeference ;
+	owl:onProperty ositrace:hasGeoreference .
+_:b02b081b756f9 rdf:first ositrace:LaneTypesEnum\#bus ;
+	rdf:rest _:b2b6bd155ff54 .
+_:b036480f714a9 rdf:first ositrace:LaneTypesEnum\#tram ;
+	rdf:rest _:b71e58f6b62b2 .
+_:b03d96e671f96 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:accuracyLaneModel2d .
+_:b0468813f36d2 rdf:first xsd:dateTime ;
+	rdf:rest _:be069ce0d7316 .
+_:b0665e2394a9c rdf:first ositrace:LevelOfDetailEnum\#train ;
+	rdf:rest _:b4fd012400131 .
+_:b077984595e7f a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty ositrace:accuracyLaneModelHeight .
+_:b07c5c02c59d4 rdf:first ositrace:LaneTypesEnum\#biking ;
+	rdf:rest _:bdea6ebccc01d .
+_:b09a7e6c181d9 a rdfs:Datatype ;
+	owl:intersectionOf _:b0c2f8b7a689c .
+_:b0be6e6df44e8 owl:unionOf _:be41ffbad450b .
+_:b0c07bf7e5744 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasResourceDescription .
+_:b0c1ff792569c a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:scenarioIdentifier .
+_:b0c2f8b7a689c rdf:first xsd:dateTime ;
+	rdf:rest _:b5ff869e366d2_1 .
+_:b0e1541fc42c3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasGeoreference .
+_:b0ec388729903 rdf:first xsd:dateTime ;
+	rdf:rest _:b5ff869e366d2 .
+_:b0f5a3c9cf557 a owl:Restriction ;
+	owl:allValuesFrom ositrace:Channel ;
+	owl:onProperty ositrace:hasChannel .
+_:b0f6df811b012 rdf:first ositrace:MessageTypeEnum\#SensorViewConfiguration ;
+	rdf:rest _:bd612a03c21b2 .
+_:b10f591541d8a rdf:first ositrace:LevelOfDetailEnum\#roadMark ;
+	rdf:rest _:b85f54a54b177 .
+_:b111da4135e2a rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorData ;
+	rdf:rest _:beabcc159d00a .
+_:b12440b7eefc3 rdf:first ositrace:GranularityEnum\#object\%20list ;
+	rdf:rest _:b129526edffb6 .
+_:b129526edffb6 rdf:first ositrace:GranularityEnum\#detection\%20list ;
+	rdf:rest _:bfbeb6590f269 .
+_:b12bd6f7b14c3 rdf:first ositrace:LevelOfDetailEnum\#van ;
+	rdf:rest _:be89ee8a0ecfc .
+_:b1383fc2c9844 rdf:first ositrace:TrafficDirectionEnum\#right-hand ;
+	rdf:rest rdf:nil .
+_:b1704b6d3c27a a rdfs:Datatype ;
+	owl:intersectionOf _:b69f5fbe72ef0 .
+_:b1745ef1ca0ca rdf:first ositrace:MessageTypeEnum\#TrafficCommand ;
+	rdf:rest _:b3b7f757857e8 .
+_:b17ca43d4e6ff a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:laneTypes .
+_:b19d62ecca8f5 rdf:first ositrace:RoadTypesEnum\#rural ;
+	rdf:rest _:b732ea63de36f .
+_:b19eee7fd2cf8 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:hasEvent .
+_:b1b4f2b5e0262 rdf:first ositrace:LaneTypesEnum\#shared ;
+	rdf:rest _:b9b43343ca8ab .
+_:b1dd3c6c194c9 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:validationReport .
+_:b1dec1ddbf52d rdf:first ositrace:RoadTypesEnum\#lowSpeed ;
+	rdf:rest _:b9a1e305723d8 .
+_:b1e140a32c3df a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:trafficDirection .
+_:b20b4a01d0bf8 rdf:first ositrace:CompressionEnum\#zstd ;
+	rdf:rest _:bf8546208c784 .
+_:b2109eb15b2a5 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:minOsiVersion .
+_:b2238cb3aeed9 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:roadTypes .
+_:b228b6699993c rdf:first ositrace:LaneTypesEnum\#parking ;
+	rdf:rest _:b34deba52a189 .
+_:b228c69076d62 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:accuracySignals .
+_:b229fba0bf74a a owl:Restriction ;
+	owl:allValuesFrom ositrace:Content ;
+	owl:onProperty ositrace:hasContent .
+_:b23c28805bdb5 a rdfs:Datatype ;
+	owl:intersectionOf _:bf596d711210d .
+_:b2480a4a8e2cf a owl:Restriction ;
+	owl:allValuesFrom ositrace:MessageTypeEnum ;
+	owl:onProperty ositrace:messageType .
+_:b24f94589239d a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty ositrace:precision .
+_:b261b9152b550 a rdfs:Datatype ;
+	owl:oneOf _:b44bfa496c540 .
+_:b266a9ca1eb5a a rdfs:Datatype ;
+	owl:intersectionOf _:bfa53de16b87e .
+_:b27ac8cffe819 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:compression .
+_:b27b1cd93b20e a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:protobufVersion .
+_:b288a91ca72a6 rdf:first envited-x:Manifest ;
+	rdf:rest _:b009bd9c3255b .
+_:b28fb43e0b87e a rdfs:Datatype ;
+	owl:intersectionOf _:bd1a299e34653 .
+_:b28ffbf0e3089 rdf:first ositrace:LevelOfDetailEnum\#bike ;
+	rdf:rest _:bc6f5669632be .
+_:b297356269cde a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:maxProtobufVersion .
+_:b29fab023d2f7 rdf:first ositrace:LevelOfDetailEnum\#parkingSpace ;
+	rdf:rest _:b2a9afe56a715 .
+_:b2a1b3e3db36a rdf:first ositrace:RoadTypesEnum\#townPrivate ;
+	rdf:rest _:bfa12f3087d78 .
+_:b2a2cc7ca3508 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:fileFormat .
+_:b2a50bd9763d3 rdf:first _:bd1663cb6595c ;
+	rdf:rest rdf:nil .
+_:b2a9afe56a715 rdf:first ositrace:LevelOfDetailEnum\#patch ;
+	rdf:rest _:bac7f6ebde0d2 .
+_:b2b6bd155ff54 rdf:first ositrace:LaneTypesEnum\#connectingRamp ;
+	rdf:rest _:b81f80dc10ca9 .
+_:b2dbd01d4b518 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:messageType .
+_:b2e00c98553cf a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:numberOfChannels .
+_:b2f5154a6b34e a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:validationReportType .
+_:b2fcb68d3bdce a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:version .
+_:b302048237459 rdf:first _:b7cbe1c7f5b5e ;
+	rdf:rest _:bf52eb1e008ab .
+_:b30809769f6ba a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:osiVersion .
+_:b32c456f3aedc a owl:Restriction ;
+	owl:allValuesFrom ositrace:LaneTypesEnum ;
+	owl:onProperty ositrace:laneTypes .
+_:b331843be2a44 rdf:first ositrace:RoadTypesEnum\#bicycle ;
+	rdf:rest _:b1dec1ddbf52d .
+_:b34deba52a189 rdf:first ositrace:LaneTypesEnum\#rail ;
+	rdf:rest _:bdb60ad2fde8c .
+_:b3503b503488b rdf:first _:bed447026b00c ;
+	rdf:rest rdf:nil .
+_:b3503b503488b_1 rdf:first _:b758862792a51_1 ;
+	rdf:rest rdf:nil .
+_:b3503b503488b_2 rdf:first _:bed447026b00c_1 ;
+	rdf:rest rdf:nil .
+_:b35e0e84d16d9 rdf:first ositrace:MessageTypeEnum\#GroundTruth ;
+	rdf:rest _:b4e3196cf2cab .
+_:b3889c352c4a9 rdf:first ositrace:RoadTypesEnum\#pedestrian ;
+	rdf:rest _:b19d62ecca8f5 .
+_:b398f9a6fd4f4 rdf:first ositrace:FileFormatEnum\#OSI ;
+	rdf:rest _:b510bdb3e988d .
+_:b3a830c467fe2 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:description .
+_:b3b14a42fed4e a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty ositrace:accuracySignals .
+_:b3b5f388dc9ea a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasManifest .
+_:b3b7f757857e8 rdf:first ositrace:MessageTypeEnum\#TrafficCommandUpdate ;
+	rdf:rest _:bd3b4349b16ac .
+_:b3bb30b12d19b a owl:Restriction ;
+	owl:allValuesFrom _:bd02964a08813 ;
+	owl:onProperty ositrace:numberOfMessages .
+_:b3c10000d940b rdf:first ositrace:LevelOfDetailEnum\#car ;
+	rdf:rest _:ba0356a55cae7 .
+_:b3c78087b838b rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20StreamingUpdate ;
+	rdf:rest _:bee4ff7418a3e .
+_:b3ccc4717fb16 rdf:first ositrace:MessageTypeEnum\#SensorData ;
+	rdf:rest _:b0f6df811b012 .
+_:b3d067ab87df3 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:numberOfMessages .
+_:b3daa3b48e452 rdf:first "TXTH" ;
+	rdf:rest rdf:nil .
+_:b3de3b9786179 a owl:Restriction ;
+	owl:allValuesFrom ositrace:FormatTypeEnum ;
+	owl:onProperty ositrace:formatType .
+_:b3e24fd24a2cf a owl:Restriction ;
+	owl:allValuesFrom _:b09a7e6c181d9 ;
+	owl:onProperty ositrace:startTime .
+_:b402c3f6d2470 rdf:first ositrace:LaneTypesEnum\#entry ;
+	rdf:rest _:b7b7839b1d45b .
+_:b40a4e9b03d53 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:tag .
+_:b4325dd858b69 a owl:Restriction ;
+	owl:allValuesFrom ositrace:RoadTypesEnum ;
+	owl:onProperty ositrace:roadTypes .
+_:b435a4a7c4d39 xsd:minInclusive 0 .
+_:b435a4a7c4d39_1 xsd:minInclusive 0 .
+_:b435a4a7c4d39_2 xsd:minInclusive 0 .
+_:b435a4a7c4d39_3 xsd:minInclusive 0 .
+_:b435a4a7c4d39_4 xsd:minInclusive 0 .
+_:b437ab519b948 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:accuracyLaneModelHeight .
+_:b44bfa496c540 rdf:first "OSI" ;
+	rdf:rest _:b3daa3b48e452 .
+_:b452d9f7ccdc2 rdf:first ositrace:LevelOfDetailEnum\#bus ;
+	rdf:rest _:b3c10000d940b .
+_:b45a7018f8b72 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:osiTraceFormatVersion .
+_:b46add8d51692 a owl:Restriction ;
+	owl:allValuesFrom ositrace:DomainSpecification ;
+	owl:onProperty ositrace:hasDomainSpecification .
+_:b46e73b49d2a9 a owl:Restriction ;
+	owl:allValuesFrom ositrace:Event ;
+	owl:onProperty ositrace:hasEvent .
+_:b4709b39b1579 rdf:first _:b6094bff322bc ;
+	rdf:rest _:b5e9f6c7f15cf .
+_:b476d246c0114 rdf:first ositrace:LaneTypesEnum\#mwyEntry ;
+	rdf:rest _:b6dab3a194a9c .
+_:b49836c4a036f a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:accuracyObjects .
+_:b4b16012b1cba a owl:Restriction ;
+	owl:allValuesFrom ositrace:Quantity ;
+	owl:onProperty ositrace:hasQuantity .
+_:b4c3103b5a88d rdf:first _:b7dc64442c04f ;
+	rdf:rest rdf:nil .
+_:b4c3103b5a88d_1 rdf:first _:b7dc64442c04f_1 ;
+	rdf:rest rdf:nil .
+_:b4c3103b5a88d_2 rdf:first _:b7dc64442c04f_2 ;
+	rdf:rest rdf:nil .
+_:b4c3103b5a88d_3 rdf:first _:b7dc64442c04f_3 ;
+	rdf:rest rdf:nil .
+_:b4c3103b5a88d_4 rdf:first _:b7dc64442c04f_4 ;
+	rdf:rest rdf:nil .
+_:b4c3103b5a88d_5 rdf:first _:b7dc64442c04f_5 ;
+	rdf:rest rdf:nil .
+_:b4cc35de62336 rdf:first ositrace:LevelOfDetailEnum\#wind ;
+	rdf:rest rdf:nil .
+_:b4cfac40677aa a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:time .
+_:b4dbe5fa92907 rdf:first xsd:integer ;
+	rdf:rest _:b00da3629c904 .
+_:b4e3196cf2cab rdf:first ositrace:MessageTypeEnum\#SensorView ;
+	rdf:rest _:b3ccc4717fb16 .
+_:b4f55a2121dbe a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:messageType .
+_:b4fcdd9f8b45a rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20GroundTruth ;
+	rdf:rest _:b7a3f897d5121 .
+_:b4fce49de7b69 rdf:first ositrace:LaneTypesEnum\#none ;
+	rdf:rest _:bbf2f3102aee5 .
+_:b4fd012400131 rdf:first ositrace:LevelOfDetailEnum\#tram ;
+	rdf:rest _:bee54ce7963d6 .
+_:b510bdb3e988d rdf:first ositrace:FileFormatEnum\#TXTH ;
+	rdf:rest _:b8c1f0b7cdfde .
+_:b54fa5d14a0ea a rdfs:Datatype ;
+	owl:intersectionOf _:b0468813f36d2 .
+_:b54ff38807bbb a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasDataSource .
+_:b5624747d6cba a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:topic .
+_:b5647c0b7fbb2 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:protobufVersion .
+_:b57cd71364a03 rdf:first ositrace:LaneTypesEnum\#special3 ;
+	rdf:rest _:b91b9f4bca245 .
+_:b5b16b24fb2aa rdf:first ositrace:LevelOfDetailEnum\#gantry ;
+	rdf:rest _:b6f74d5d3aafc .
+_:b5b838f228642 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasDomainSpecification .
+_:b5b9a5aaf9b9b a owl:Restriction ;
+	owl:allValuesFrom ositrace:MovingObject ;
+	owl:onProperty ositrace:hasTargetMovingObject .
+_:b5e9f6c7f15cf rdf:first _:b9ebf4fa061be ;
+	rdf:rest rdf:nil .
+_:b5ef8ff512302 rdf:first ositrace:TrafficDirectionEnum\#left-hand ;
+	rdf:rest _:b1383fc2c9844 .
+_:b5f1f46291544 rdf:first ositrace:LaneTypesEnum\#taxi ;
+	rdf:rest _:b036480f714a9 .
+_:b5f4f7085d55c a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasQuantity .
+_:b5ff869e366d2 rdf:first _:bea795b29b14e_2 ;
+	rdf:rest rdf:nil .
+_:b5ff869e366d2_1 rdf:first _:bea795b29b14e_3 ;
+	rdf:rest rdf:nil .
+_:b5ff869e366d2_2 rdf:first _:bea795b29b14e_4 ;
+	rdf:rest rdf:nil .
+_:b6094bff322bc a owl:Restriction ;
+	owl:allValuesFrom _:bfdddb8feb69c ;
+	owl:onProperty ositrace:fileFormat .
+_:b60ab0071c298 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:osiVersion .
+_:b6165ccdf2dbd xsd:minInclusive 1 .
+_:b6165ccdf2dbd_1 xsd:minInclusive 1 .
+_:b61b519b3811a a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasQuality .
+_:b654d32c89101 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:protobufVersion .
+_:b65ba19567033 rdf:first _:bea795b29b14e_1 ;
+	rdf:rest rdf:nil .
+_:b65d380926c3f a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:validationReportType .
+_:b66fa28f0521a owl:unionOf _:bc3f9e60c9aa5 .
+_:b67e5a46c7c49 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:maxOsiVersion .
+_:b68fc08d61095 a owl:Restriction ;
+	owl:allValuesFrom ositrace:GranularityEnum ;
+	owl:onProperty ositrace:granularity .
+_:b69eca1f9600e rdf:first _:b939e7d35787b ;
+	rdf:rest rdf:nil .
+_:b69f5fbe72ef0 rdf:first xsd:dateTime ;
+	rdf:rest _:b5ff869e366d2_2 .
+_:b6a51f50b0289 a owl:Restriction ;
+	owl:allValuesFrom ositrace:CompressionEnum ;
+	owl:onProperty ositrace:compression .
+_:b6a828f32d128 rdf:first ositrace:LaneTypesEnum\#driving ;
+	rdf:rest _:b402c3f6d2470 .
+_:b6c0a53ab1597 rdf:first ositrace:MessageTypeEnum\#StreamingUpdate ;
+	rdf:rest rdf:nil .
+_:b6c43b32b8d2c rdf:first xsd:integer ;
+	rdf:rest _:b3503b503488b_2 .
+_:b6cbe52674922 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:description .
+_:b6d20be4c01a4 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasFormat .
+_:b6dab3a194a9c rdf:first ositrace:LaneTypesEnum\#mwyExit ;
+	rdf:rest _:b4fce49de7b69 .
+_:b6dda8f8a2d33 rdf:first ositrace:LevelOfDetailEnum\#soundBarrier ;
+	rdf:rest _:bc1bc974f2e3f .
+_:b6ece50bd6832 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:precision .
+_:b6f4b0f55bde5 rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20MotionRequest ;
+	rdf:rest _:b111da4135e2a .
+_:b6f74d5d3aafc rdf:first ositrace:LevelOfDetailEnum\#motorbike ;
+	rdf:rest _:b92cfa8c7ece7 .
+_:b7028739173c4 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:description .
+_:b709b147db388 a owl:Restriction ;
+	owl:allValuesFrom ositrace:MovingObject ;
+	owl:onProperty ositrace:hasHostMovingObject .
+_:b71e58f6b62b2 rdf:first ositrace:LaneTypesEnum\#walking ;
+	rdf:rest rdf:nil .
+_:b720822e1d36f rdf:first ositrace:LaneTypesEnum\#HOV ;
+	rdf:rest _:ba0abdcb14a5a .
+_:b7232334f634e rdf:first ositrace:LaneTypesEnum\#onRamp ;
+	rdf:rest _:b228b6699993c .
+_:b73195e12c3ce a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:trafficDirection .
+_:b732ea63de36f rdf:first ositrace:RoadTypesEnum\#townArterial ;
+	rdf:rest _:b8f188f08aa86 .
+_:b74ee465e1758 rdf:first ositrace:LevelOfDetailEnum\#railing ;
+	rdf:rest _:b10f591541d8a .
+_:b758862792a51 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:b8c3ac9908e44 .
+_:b758862792a51_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:b8c3ac9908e44_1 .
+_:b79a0945876bb a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:accuracyLaneModelHeight .
+_:b7a3f897d5121 rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20HostVehicleData ;
+	rdf:rest _:b6f4b0f55bde5 .
+_:b7a9109333ba2 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:measurementSystem .
+_:b7ab4e86b455b a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:version .
+_:b7b7839b1d45b rdf:first ositrace:LaneTypesEnum\#exit ;
+	rdf:rest _:bc809ea9594a3 .
+_:b7cbe1c7f5b5e a owl:Restriction ;
+	owl:allValuesFrom _:b261b9152b550 ;
+	owl:onProperty ositrace:fileFormat .
+_:b7dc64442c04f xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7dc64442c04f_1 xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7dc64442c04f_2 xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7dc64442c04f_3 xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7dc64442c04f_4 xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7dc64442c04f_5 xsd:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b7e244d583110 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasManifest .
+_:b81f80dc10ca9 rdf:first ositrace:LaneTypesEnum\#curb ;
+	rdf:rest _:b6a828f32d128 .
+_:b8271ddf87644 a owl:Restriction ;
+	owl:allValuesFrom _:b1704b6d3c27a ;
+	owl:onProperty ositrace:stopTime .
+_:b828e0e445ef0 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:ositraceFormatType .
+_:b82ba53fb58cc a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:zeroTime .
+_:b83290c8a68f6 rdf:first ositrace:MessageTypeEnum\#MotionRequest ;
+	rdf:rest _:b6c0a53ab1597 .
+_:b834ff289b844 rdf:first ositrace:LevelOfDetailEnum\#trailer ;
+	rdf:rest _:b0665e2394a9c .
+_:b83a826d62043 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:measurementSystem .
+_:b855614669c64 a owl:Restriction ;
+	owl:allValuesFrom _:be0faa0d9292d ;
+	owl:onProperty ositrace:time .
+_:b85f54a54b177 rdf:first ositrace:LevelOfDetailEnum\#roadSurface ;
+	rdf:rest _:b6dda8f8a2d33 .
+_:b870aaf783421 owl:unionOf _:b288a91ca72a6 .
+_:b87626acb82e1 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasResourceDescription .
+_:b8805861cf2fa a owl:Restriction ;
+	owl:allValuesFrom ositrace:FileFormatEnum ;
+	owl:onProperty ositrace:fileFormat .
+_:b88c707ab383a a owl:Restriction ;
+	owl:allValuesFrom ositrace:Quality ;
+	owl:onProperty ositrace:hasQuality .
+_:b8afdcbd78c33 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:tag .
+_:b8b5cc34c8bcd a owl:Restriction ;
+	owl:allValuesFrom xsd:anyURI ;
+	owl:onProperty ositrace:validationReport .
+_:b8b7f2030bda4 a owl:Restriction ;
+	owl:allValuesFrom _:bd5eb83471d9e ;
+	owl:onProperty ositrace:numberOfChannels .
+_:b8baf8477eaaa a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:startTime .
+_:b8c1f0b7cdfde rdf:first ositrace:FileFormatEnum\#MCAP ;
+	rdf:rest rdf:nil .
+_:b8c3ac9908e44 rdf:first _:b6165ccdf2dbd ;
+	rdf:rest rdf:nil .
+_:b8c3ac9908e44_1 rdf:first _:b6165ccdf2dbd_1 ;
+	rdf:rest rdf:nil .
+_:b8e7d8dc74096 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasDataSource .
+_:b8ed1afb8cba2 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:numberFrames .
+_:b8f188f08aa86 rdf:first ositrace:RoadTypesEnum\#townCollector ;
+	rdf:rest _:be5ff6f65e931 .
+_:b906d1ee3628b a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:minProtobufVersion .
+_:b90c04d477d4b a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:time .
+_:b917e81cc245c a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty ositrace:identifier .
+_:b91b9f4bca245 rdf:first ositrace:LaneTypesEnum\#stop ;
+	rdf:rest _:b5f1f46291544 .
+_:b92cfa8c7ece7 rdf:first ositrace:LevelOfDetailEnum\#none ;
+	rdf:rest _:b950b18b8c827 .
+_:b93427368127c a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:accuracySignals .
+_:b939e7d35787b owl:intersectionOf _:b4709b39b1579 .
+_:b93c0aa1e9e69 rdf:first ositrace:LaneTypesEnum\#sidewalk ;
+	rdf:rest _:bbcfc711324ce .
+_:b950b18b8c827 rdf:first ositrace:LevelOfDetailEnum\#obstacle ;
+	rdf:rest _:b29fab023d2f7 .
+_:b961cfeb4d6e6 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:version .
+_:b975779ec6fce rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommandUpdate ;
+	rdf:rest _:b00f2f86bca90 .
+_:b975eae834ada rdf:first xsd:integer ;
+	rdf:rest _:beca7b81bb5bf .
+_:b979d8a9cc72c owl:unionOf _:bb229e6f92253 .
+_:b989ad613f83d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:measurementSystem .
+_:b9925a7862761 rdf:first ositrace:LaneTypesEnum\#special1 ;
+	rdf:rest _:bae6a35048657 .
+_:b9a1e305723d8 rdf:first ositrace:RoadTypesEnum\#motorway ;
+	rdf:rest _:b3889c352c4a9 .
+_:b9b43343ca8ab rdf:first ositrace:LaneTypesEnum\#shoulder ;
+	rdf:rest _:b93c0aa1e9e69 .
+_:b9bd28087dd49 a owl:Restriction ;
+	owl:allValuesFrom _:b23c28805bdb5 ;
+	owl:onProperty ositrace:numberFrames .
+_:b9ebf4fa061be a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty ositrace:hasChannel .
+_:b9f510da8dfe1 rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorViewConfiguration ;
+	rdf:rest _:b3c78087b838b .
+_:b9f71ef6807e4 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:osiTraceFormatVersion .
+_:ba0356a55cae7 rdf:first ositrace:LevelOfDetailEnum\#crosswalk ;
+	rdf:rest _:b5b16b24fb2aa .
+_:ba0abdcb14a5a rdf:first ositrace:LaneTypesEnum\#bidirectional ;
+	rdf:rest _:b07c5c02c59d4 .
+_:ba13b7abf5eb0 rdf:first ositrace:LevelOfDetailEnum\#pole ;
+	rdf:rest _:b74ee465e1758 .
+_:ba34fd81e5dab a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:maxProtobufVersion .
+_:ba3a69074b526 a rdfs:Datatype ;
+	owl:intersectionOf _:b975eae834ada .
+_:ba3cc1730d749 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:stopTime .
+_:ba461537c9bd3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:tag .
+_:ba8734f9f4ad0 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasQuantity .
+_:baa730d80a5a5 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:usedDataSources .
+_:baba2bb8f649d a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:identifier .
+_:bac591a759683 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:minOsiVersion .
+_:bac7f6ebde0d2 rdf:first ositrace:LevelOfDetailEnum\#pedestrian ;
+	rdf:rest _:ba13b7abf5eb0 .
+_:bae6a35048657 rdf:first ositrace:LaneTypesEnum\#special2 ;
+	rdf:rest _:b57cd71364a03 .
+_:bae8aef1acdad a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:minOsiVersion .
+_:baf029206634b owl:intersectionOf _:b302048237459 .
+_:bb11f313ea6c0 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:startTime .
+_:bb16ad03af29a rdf:first ositrace:LevelOfDetailEnum\#barrier ;
+	rdf:rest _:b28ffbf0e3089 .
+_:bb1c4aaad507c rdf:first _:bed447026b00c_2 ;
+	rdf:rest rdf:nil .
+_:bb229e6f92253 rdf:first envited-x:ResourceDescription ;
+	rdf:rest _:bb8b3e55b6045 .
+_:bb319324e4035 rdf:first _:baf029206634b ;
+	rdf:rest _:b69eca1f9600e .
+_:bb33bd14c0420 rdf:first ositrace:RoadTypesEnum\#unknown ;
+	rdf:rest rdf:nil .
+_:bb6833192b46a a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:topic .
+_:bb6ff9d88b8e2 a rdfs:Datatype ;
+	owl:intersectionOf _:b4dbe5fa92907 .
+_:bb7cf286da75c rdf:first _:bea795b29b14e_5 ;
+	rdf:rest rdf:nil .
+_:bb8b3e55b6045 rdf:first manifest:Link ;
+	rdf:rest rdf:nil .
+_:bb8b3e55b6045_1 rdf:first manifest:Link ;
+	rdf:rest rdf:nil .
+_:bb8e1589febc5 a owl:Restriction ;
+	owl:allValuesFrom xsd:dateTime ;
+	owl:onProperty ositrace:zeroTime .
+_:bb93f8ae17a7d a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:topic .
+_:bb96d328190d6 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:hasChannel .
+_:bb9bce15a3dd2 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:description .
+_:bb9ccaff152f0 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:description .
+_:bba8c53df9d37 owl:unionOf _:bb319324e4035 .
+_:bbbcd842ace9b a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:usedDataSources .
+_:bbcfc711324ce rdf:first ositrace:LaneTypesEnum\#slipLane ;
+	rdf:rest _:b9925a7862761 .
+_:bbda21f6aed94 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:granularity .
+_:bbf2f3102aee5 rdf:first ositrace:LaneTypesEnum\#offRamp ;
+	rdf:rest _:b7232334f634e .
+_:bc02992cca948 rdf:first ositrace:RoadTypesEnum\#townLocal ;
+	rdf:rest _:bdb981cb89c53 .
+_:bc089a80ed04d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasContent .
+_:bc1bc974f2e3f rdf:first ositrace:LevelOfDetailEnum\#streetLamp ;
+	rdf:rest _:bf0b26b747861 .
+_:bc3f9e60c9aa5 rdf:first envited-x:ResourceDescription ;
+	rdf:rest _:bb8b3e55b6045_1 .
+_:bc406e66811af a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasHostMovingObject .
+_:bc43d7d8677ee a owl:Restriction ;
+	owl:allValuesFrom ositrace:LevelOfDetailEnum ;
+	owl:onProperty ositrace:levelOfDetail .
+_:bc591ac3783e4 a owl:Restriction ;
+	owl:allValuesFrom ositrace:DataSource ;
+	owl:onProperty ositrace:hasDataSource .
+_:bc59ce79ee55a rdf:first xsd:integer ;
+	rdf:rest _:b3503b503488b_1 .
+_:bc5c1cfdd003f a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:hasContent .
+_:bc605a6a65b33 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:accuracyLaneModel2d .
+_:bc6f5669632be rdf:first ositrace:LevelOfDetailEnum\#building ;
+	rdf:rest _:b452d9f7ccdc2 .
+_:bc71350492c59 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:compression .
+_:bc74fff932513 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:maxOsiVersion .
+_:bc79da95e3f7e a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:maxOsiVersion .
+_:bc809ea9594a3 rdf:first ositrace:LaneTypesEnum\#median ;
+	rdf:rest _:b476d246c0114 .
+_:bc85f5b50d617 rdf:first ositrace:LevelOfDetailEnum\#truck ;
+	rdf:rest _:b12bd6f7b14c3 .
+_:bc8b8ad0528f8 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:accuracyObjects .
+_:bcdcd03fd6a81 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:description .
+_:bcde686ac5e0b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:osiVersion .
+_:bcf90e2aebfdf a rdfs:Datatype ;
+	owl:intersectionOf _:bcfa8cada012b .
+_:bcfa8cada012b rdf:first xsd:dateTime ;
+	rdf:rest _:b65ba19567033 .
+_:bcfbe21b33de0 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:hasGeoreference .
+_:bd00c0910a97d a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:description .
+_:bd02964a08813 a rdfs:Datatype ;
+	owl:intersectionOf _:b6c43b32b8d2c .
+_:bd1663cb6595c a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:ositraceVersion .
+_:bd1a299e34653 rdf:first xsd:integer ;
+	rdf:rest _:bb1c4aaad507c .
+_:bd20a05398936 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty ositrace:accuracyLaneModel2d .
+_:bd3b4349b16ac rdf:first ositrace:MessageTypeEnum\#TrafficUpdate ;
+	rdf:rest _:b83290c8a68f6 .
+_:bd4285fbc2886 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:numberOfMessages .
+_:bd5eb83471d9e a rdfs:Datatype ;
+	owl:intersectionOf _:bc59ce79ee55a .
+_:bd612a03c21b2 rdf:first ositrace:MessageTypeEnum\#HostVehicleData ;
+	rdf:rest _:b1745ef1ca0ca .
+_:bd61c445abcec a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasQuality .
+_:bd6aff14a83dd a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:osiTraceFormatVersion .
+_:bd6bd48242860 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:formatType .
+_:bd7db5db03cf8 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:numberFrames .
+_:bd7ffc357765c a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:precision .
+_:bd9da6300afd0 a owl:Restriction ;
+	owl:allValuesFrom _:b979d8a9cc72c ;
+	owl:onProperty ositrace:hasResourceDescription .
+_:bdac8876900ae rdf:first _:b435a4a7c4d39 ;
+	rdf:rest rdf:nil .
+_:bdac8876900ae_1 rdf:first _:b435a4a7c4d39_1 ;
+	rdf:rest rdf:nil .
+_:bdac8876900ae_2 rdf:first _:b435a4a7c4d39_2 ;
+	rdf:rest rdf:nil .
+_:bdac8876900ae_3 rdf:first _:b435a4a7c4d39_3 ;
+	rdf:rest rdf:nil .
+_:bdac8876900ae_4 rdf:first _:b435a4a7c4d39_4 ;
+	rdf:rest rdf:nil .
+_:bdb60ad2fde8c rdf:first ositrace:LaneTypesEnum\#restricted ;
+	rdf:rest _:becb83610960d .
+_:bdb981cb89c53 rdf:first ositrace:RoadTypesEnum\#townPlayStreet ;
+	rdf:rest _:b2a1b3e3db36a .
+_:bdbe2b904eaf4 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:scenarioIdentifier .
+_:bdbe7a16008d9 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:hasTargetMovingObject .
+_:bdbf8a640624b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:validationReport .
+_:bdea6ebccc01d rdf:first ositrace:LaneTypesEnum\#border ;
+	rdf:rest _:b02b081b756f9 .
+_:be069ce0d7316 rdf:first _:bea795b29b14e ;
+	rdf:rest rdf:nil .
+_:be0faa0d9292d a rdfs:Datatype ;
+	owl:intersectionOf _:b0ec388729903 .
+_:be2f1fc6bf011 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:formatType .
+_:be3b150a726fe a owl:Restriction ;
+	owl:allValuesFrom ositrace:TrafficDirectionEnum ;
+	owl:onProperty ositrace:trafficDirection .
+_:be41ffbad450b rdf:first envited-x:Manifest ;
+	rdf:rest _:b009bd9c3255b_1 .
+_:be4a1868a70e6 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:minProtobufVersion .
+_:be52c58f5dd0a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:description .
+_:be5ff6f65e931 rdf:first ositrace:RoadTypesEnum\#townExpressway ;
+	rdf:rest _:bc02992cca948 .
+_:be6e16c710960 a owl:Restriction ;
+	owl:allValuesFrom _:b870aaf783421 ;
+	owl:onProperty ositrace:hasManifest .
+_:be867d50de7ea rdf:first _:bed447026b00c_4 ;
+	rdf:rest rdf:nil .
+_:be89ee8a0ecfc rdf:first ositrace:LevelOfDetailEnum\#vegetation ;
+	rdf:rest _:b4cc35de62336 .
+_:be9376e78bb59 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:identifier .
+_:bea795b29b14e a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d .
+_:bea795b29b14e_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d_1 .
+_:bea795b29b14e_2 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d_2 .
+_:bea795b29b14e_3 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d_3 .
+_:bea795b29b14e_4 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d_4 .
+_:bea795b29b14e_5 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b4c3103b5a88d_5 .
+_:beabcc159d00a rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20SensorView ;
+	rdf:rest _:b9f510da8dfe1 .
+_:beb7c10770103 rdf:first xsd:integer ;
+	rdf:rest _:be867d50de7ea .
+_:beca7b81bb5bf rdf:first _:b758862792a51 ;
+	rdf:rest rdf:nil .
+_:becb83610960d rdf:first ositrace:LaneTypesEnum\#roadWorks ;
+	rdf:rest _:b1b4f2b5e0262 .
+_:bed447026b00c a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae .
+_:bed447026b00c_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae_1 .
+_:bed447026b00c_2 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae_2 .
+_:bed447026b00c_3 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae_3 .
+_:bed447026b00c_4 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae_4 .
+_:beda1dd73a63a a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:calibration .
+_:bee4ff7418a3e rdf:first ositrace:FormatTypeEnum\#ASAM\%20OSI\%20TrafficCommand ;
+	rdf:rest _:b975779ec6fce .
+_:bee54ce7963d6 rdf:first ositrace:LevelOfDetailEnum\#tree ;
+	rdf:rest _:bc85f5b50d617 .
+_:beec02e893e57 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:numberOfChannels .
+_:bef8c59615c17 a rdfs:Datatype ;
+	owl:intersectionOf _:beb7c10770103 .
+_:bf02f33141a2d a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:levelOfDetail .
+_:bf0b26b747861 rdf:first ositrace:LevelOfDetailEnum\#trafficIsland ;
+	rdf:rest _:b834ff289b844 .
+_:bf513f128b09a rdf:first ositrace:CompressionEnum\#uncompressed ;
+	rdf:rest _:b20b4a01d0bf8 .
+_:bf52eb1e008ab rdf:first _:b828e0e445ef0 ;
+	rdf:rest _:b2a50bd9763d3 .
+_:bf596d711210d rdf:first xsd:integer ;
+	rdf:rest _:b3503b503488b .
+_:bf645d02b3434 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:fileFormat .
+_:bf776060615b9 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:minProtobufVersion .
+_:bf81948ad1bf0 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:calibration .
+_:bf8421514e70c a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:hasHostMovingObject .
+_:bf8546208c784 rdf:first ositrace:CompressionEnum\#lz4 ;
+	rdf:rest rdf:nil .
+_:bf886fe58638a a owl:Restriction ;
+	owl:allValuesFrom ositrace:Format ;
+	owl:onProperty ositrace:hasFormat .
+_:bf8b841444c24 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:calibration .
+_:bf9086f9a5a56 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty ositrace:accuracyObjects .
+_:bf914ee0baadd rdf:first "MCAP" ;
+	rdf:rest rdf:nil .
+_:bf9aafaaf9996 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty ositrace:maxProtobufVersion .
+_:bfa12f3087d78 rdf:first ositrace:RoadTypesEnum\#town ;
+	rdf:rest _:bb33bd14c0420 .
+_:bfa53de16b87e rdf:first xsd:dateTime ;
+	rdf:rest _:bb7cf286da75c .
+_:bfbdfb831dad9 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty ositrace:validationReportType .
+_:bfbeb6590f269 rdf:first ositrace:GranularityEnum\#raw\%20data ;
+	rdf:rest rdf:nil .
+_:bfc10a4dcc453 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty ositrace:stopTime .
+_:bfcbf895969cc a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:description .
+_:bfdddb8feb69c a rdfs:Datatype ;
+	owl:oneOf _:bf914ee0baadd .
+_:bffec89b8ff1b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ositrace:zeroTime .

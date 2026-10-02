@@ -1,76 +1,148 @@
 {
-   "comments": {
-      "description": "Auto-generated JSON-LD context for compact instance syntax",
-      "generator": "context_generator.py",
-      "source_owl": "artifacts/envited-x/envited-x.owl.ttl",
-      "source_shacl": "artifacts/envited-x/envited-x.shacl.ttl",
-      "note": "Transitional artifact - will be replaced by LinkML-generated context"
-   },
    "@context": {
-      "@version": 1.1,
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "gaiax_ontology": "https://w3id.org/gaia-x/",
+      "gx": "https://w3id.org/gaia-x/development#",
+      "linkml": "https://w3id.org/linkml/",
+      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
       "owl": "http://www.w3.org/2002/07/owl#",
+      "prov": "http://www.w3.org/ns/prov#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "schema": "https://schema.org/",
       "sh": "http://www.w3.org/ns/shacl#",
       "skos": "http://www.w3.org/2004/02/skos/core#",
-      "schema": "https://schema.org/",
-      "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "gx": "https://w3id.org/gaia-x/development#",
+      "@vocab": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
       "hasCodeArtifact": {
-         "@id": "envited-x:hasCodeArtifact",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasCodeArtifact"
       },
       "hasContent": {
-         "@id": "envited-x:hasContent"
+         "@type": "@id",
+         "@id": "hasContent"
       },
       "hasDataSource": {
-         "@id": "envited-x:hasDataSource"
+         "@type": "@id",
+         "@id": "hasDataSource"
       },
       "hasDomainSpecification": {
-         "@id": "envited-x:hasDomainSpecification",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasDomainSpecification"
       },
       "hasFormat": {
-         "@id": "envited-x:hasFormat"
+         "@type": "@id",
+         "@id": "hasFormat"
       },
       "hasManifest": {
-         "@id": "envited-x:hasManifest",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasManifest"
       },
       "hasQuality": {
-         "@id": "envited-x:hasQuality"
+         "@type": "@id",
+         "@id": "hasQuality"
       },
       "hasQuantity": {
-         "@id": "envited-x:hasQuantity"
+         "@type": "@id",
+         "@id": "hasQuantity"
       },
       "hasResourceDescription": {
-         "@id": "envited-x:hasResourceDescription",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasResourceDescription"
       },
       "hasServiceOffering": {
-         "@id": "envited-x:hasServiceOffering",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasServiceOffering"
       },
       "hasSoftwareResource": {
-         "@id": "envited-x:hasSoftwareResource",
-         "@type": "@id"
+         "@type": "@id",
+         "@id": "hasSoftwareResource"
       },
-      "CodeArtifactBase": "envited-x:CodeArtifactBase",
-      "CodeAsset": "envited-x:CodeAsset",
-      "Content": "envited-x:Content",
-      "DataSource": "envited-x:DataSource",
-      "DomainSpecification": "envited-x:DomainSpecification",
-      "Format": "envited-x:Format",
-      "Manifest": "envited-x:Manifest",
-      "Quality": "envited-x:Quality",
-      "Quantity": "envited-x:Quantity",
-      "ResourceDescription": "envited-x:ResourceDescription",
-      "ServiceAsset": "envited-x:ServiceAsset",
-      "ServiceOfferingBase": "envited-x:ServiceOfferingBase",
-      "SimulationAsset": "envited-x:SimulationAsset",
-      "SoftwareAsset": "envited-x:SoftwareAsset",
-      "SoftwareResourceBase": "envited-x:SoftwareResourceBase"
+      "CodeArtifactBase": {
+         "@id": "CodeArtifactBase"
+      },
+      "CodeAsset": {
+         "@id": "CodeAsset"
+      },
+      "EnvitedXContent": {
+         "@id": "Content"
+      },
+      "EnvitedXDataSource": {
+         "@id": "DataSource"
+      },
+      "EnvitedXDomainSpecification": {
+         "@id": "DomainSpecification"
+      },
+      "EnvitedXFormat": {
+         "@id": "Format"
+      },
+      "EnvitedXLinkVocabulary": {
+         "@id": "EnvitedXLinkVocabulary",
+         "@context": {
+            "hasAccessRole": {
+               "@id": "manifest:hasAccessRole"
+            },
+            "hasCategory": {
+               "@id": "manifest:hasCategory"
+            }
+         }
+      },
+      "EnvitedXManifest": {
+         "@id": "Manifest"
+      },
+      "EnvitedXManifestLink": {
+         "@id": "ManifestLink",
+         "@context": {
+            "hasCategory": {
+               "@id": "manifest:hasCategory"
+            }
+         }
+      },
+      "EnvitedXQuality": {
+         "@id": "Quality"
+      },
+      "EnvitedXQuantity": {
+         "@id": "Quantity"
+      },
+      "ExtendedLink": {
+         "@id": "ExtendedLink"
+      },
+      "LicenseLinkReference": {
+         "@id": "LicenseLinkReference",
+         "@context": {
+            "hasCategory": {
+               "@id": "manifest:hasCategory"
+            }
+         }
+      },
+      "ManifestLinkReference": {
+         "@id": "ManifestLinkReference",
+         "@context": {
+            "hasCategory": {
+               "@id": "manifest:hasCategory"
+            }
+         }
+      },
+      "ResourceDescription": {
+         "@id": "ResourceDescription"
+      },
+      "ServiceAsset": {
+         "@id": "ServiceAsset"
+      },
+      "ServiceOfferingBase": {
+         "@id": "ServiceOfferingBase"
+      },
+      "SimulationAsset": {
+         "@id": "SimulationAsset"
+      },
+      "SimulationManifest": {
+         "@id": "SimulationManifest"
+      },
+      "SoftwareAsset": {
+         "@id": "SoftwareAsset"
+      },
+      "SoftwareResourceBase": {
+         "@id": "SoftwareResourceBase"
+      }
    }
 }
