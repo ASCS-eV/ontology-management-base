@@ -744,8 +744,8 @@ wheels = [
 
 [[package]]
 name = "linkml"
-version = "0.0.0.post4902.dev0+94d3cc59"
-source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline#94d3cc59397f0516c941964134ade98b344fffda" }
+version = "0.0.0.post4903.dev0+e3081ef8"
+source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline#e3081ef8bf192da11ffec6281af155cc09fff66f" }
 dependencies = [
     { name = "antlr4-python3-runtime" },
     { name = "click" },
@@ -783,8 +783,8 @@ diff-stable = [
 
 [[package]]
 name = "linkml-runtime"
-version = "0.0.0.post4902.dev0+94d3cc59"
-source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml_runtime&rev=feat%2Fenvited-x-pipeline#94d3cc59397f0516c941964134ade98b344fffda" }
+version = "0.0.0.post4903.dev0+e3081ef8"
+source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml_runtime&rev=feat%2Fenvited-x-pipeline#e3081ef8bf192da11ffec6281af155cc09fff66f" }
 dependencies = [
     { name = "click" },
     { name = "curies" },
