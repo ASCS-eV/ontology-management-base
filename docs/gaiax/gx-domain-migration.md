@@ -112,7 +112,7 @@ For each domain, properties are reorganized into three layers:
 owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/general/v3> .
 
 # After
-owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> .
+owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 ```
 
 ## Naming Changes (Part 2)

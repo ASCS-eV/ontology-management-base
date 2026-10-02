@@ -34,9 +34,9 @@ class Class_definition_for_SurfaceModel
 
 ## Prefixes
 
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/>
-- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
+- georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/>
+- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - sh: <http://www.w3.org/ns/shacl#>

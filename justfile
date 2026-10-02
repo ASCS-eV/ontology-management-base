@@ -23,6 +23,11 @@ export PYTHONIOENCODING := "utf-8"
 # LinkML domains that `just generate` builds (space-separated; add new domains here).
 LINKML_DOMAINS := "openlabel-v2"
 
+# LinkML domains that `just generate` builds with scripts/build_linkml_domain.sh and
+# their linkml/<domain>/gen-flags.env, in import order: a domain after the domains
+# it imports. Their artifacts/ directories are generated, never hand-edited.
+LINKML_BUILD_DOMAINS := "manifest georeference envited-x ositrace"
+
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"
 
@@ -73,6 +78,10 @@ generate:
         {{run}} gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
         {{run}} gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
         {{run}} gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+    done
+    for domain in {{LINKML_BUILD_DOMAINS}}; do
+        echo "  Processing $domain..."
+        {{run}} bash scripts/build_linkml_domain.sh "$domain" "artifacts/$domain"
     done
     echo "[OK] Artifacts generated"
 

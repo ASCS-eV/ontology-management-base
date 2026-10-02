@@ -41,11 +41,11 @@ class Content_or_OpenLABEL_Dynamic_Annotation
 ## Prefixes
 
 - environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/>
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
+- georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/>
 - gx: <https://w3id.org/gaia-x/development#>
 - hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/>
-- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
+- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/>
 - openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -56,7 +56,7 @@ class Content_or_OpenLABEL_Dynamic_Annotation
 
 ### SHACL Properties
 
-#### manifest:hasReferencedArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts .property-anchor }
+#### manifest:hasReferencedArtifacts {: #prop-https---w3id-org-ascs-ev-envited-x-manifest-v6-hasreferencedartifacts .property-anchor }
 #### scenario:abstractionLevel {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-abstractionlevel .property-anchor }
 #### scenario:accuracyObjects {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-accuracyobjects .property-anchor }
 #### scenario:aim {: #prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-aim .property-anchor }
@@ -96,7 +96,7 @@ class Content_or_OpenLABEL_Dynamic_Annotation
 |ScenarioShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hasresourcedescription"></a>hasResourceDescription|1|1|||scenario.shacl.ttl|
 |ScenarioShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hasdomainspecification"></a>hasDomainSpecification|1|1|||scenario.shacl.ttl|
 |ScenarioShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hasmanifest"></a>hasManifest|1|1|||scenario.shacl.ttl|
-|ScenarioManifestConstraints|manifest|<a id="prop-https---w3id-org-ascs-ev-envited-x-manifest-v5-hasreferencedartifacts"></a>hasReferencedArtifacts|||||scenario.shacl.ttl|
+|ScenarioManifestConstraints|manifest|<a id="prop-https---w3id-org-ascs-ev-envited-x-manifest-v6-hasreferencedartifacts"></a>hasReferencedArtifacts|||||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hascontent"></a>hasContent|1||Attributes describing the content of the scenario.||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hasformat"></a>hasFormat|1|1|File format details of the scenario.||scenario.shacl.ttl|
 |DomainSpecificationShape|scenario|<a id="prop-https---w3id-org-ascs-ev-envited-x-scenario-v6-hasquality"></a>hasQuality|0|1|Quality metrics of the scenario.||scenario.shacl.ttl|

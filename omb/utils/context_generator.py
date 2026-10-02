@@ -857,12 +857,12 @@ def _run_tests() -> bool:
     try:
         g = Graph()
         g.bind("gx", "https://w3id.org/gaia-x/development#")
-        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v6/")
 
         ns_lookup = _build_ns_prefix_lookup(g)
         assert _lookup_prefix(ns_lookup, "https://w3id.org/gaia-x/development#") == "gx"
         assert (
-            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5")
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v6")
             == "manifest"
         )
 

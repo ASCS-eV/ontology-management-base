@@ -1,0 +1,39 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                            ['fail_04_artifact_with_manifest_vocabulary_instance.json']                                             =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Error:            Value must conform to every Shape in ('manifest:ArtifactLinkShape', 'envited-x:EnvitedXLinkVocabularyShape'). See details for =
+=                      more information.                                                                                                             =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_04_artifact_with_manifest_vocabulary_instance                    =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasManifest                                                                   =
+=    Error:            hasManifest (SimulationAsset): Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external =
+=                      manifest by its IRI, typically a DID.                                                                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasAccessRole                                                                  =
+=    Error:            hasAccessRole (EnvitedXLinkVocabulary): General property to indicate the access role of an artifact.                          =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasAccessRole                                                                  =
+=    Error:            hasAccessRole (ExtendedLink): General property to indicate the access role of an artifact.                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:registry.envited-x.net:Manifest:v9R2nTpW8mXq4YkL7bJz5AfG3dH6eS1c                                                      =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasArtifacts                                                                   =
+=    Error:            hasArtifacts (EnvitedXManifest): Associates a Manifest instance with its artifacts, represented as Link instances; only       =
+=                      applicable within Manifest instances.                                                                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasCategory                                                                    =
+=    Error:            hasCategory (EnvitedXLinkVocabulary): General property to indicate the category of an artifact.                               =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasCategory                                                                    =
+=    Error:            hasCategory (ExtendedLink): General property to indicate the category of an artifact.                                         =
+======================================================================================================================================================

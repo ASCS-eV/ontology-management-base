@@ -1,220 +1,206 @@
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-
-# The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/georeference/v5/shapes>
-    a owl:Ontology ;
-    # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/georeference/v5> .
-
-georeference:GeoreferenceShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:property [
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-        sh:node georeference:ProjectLocationShape ;
-        sh:name "project location object"@en ;
-        sh:description "Contains properties (state, city, region, country, bounding) to describe the location of the simulation asset."@en ;
-        sh:order 0 ;
-        sh:path georeference:hasProjectLocation
-    ], [
-        sh:maxCount 1 ;
-        sh:minCount 1 ;
-        sh:node georeference:GeodeticReferenceSystemShape ;
-        sh:name "geodetic reference system object"@en ;
-        sh:description "This ontology includes properties for positions (e.g., origin and viewpoint), projection type, and an ellipsoidal height system, which together define a geodetic reference system."@en ;
-        sh:order 1 ;
-        sh:path georeference:hasGeodeticReferenceSystem
-    ] ;
-    sh:targetClass georeference:Georeference .
-
-georeference:GeodeticReferenceSystemShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:or (
-        [ sh:minCount 1 ; sh:path georeference:codeEPSG ]
-        [ sh:minCount 1 ; sh:path georeference:coordinateSystemName ]
-    ) ;
-    sh:property [
-        skos:example "Lat: 1.234; Lon 45.23"@en ;
-        sh:description "Defines the center position of the asset in world coordinates."@en ;
-        sh:message "Validation of origin failed!"@en ;
-        sh:name "origin"@en ;
-        sh:node georeference:LatLonCoordinateShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 0 ;
-        sh:path georeference:hasOrigin
-    ], [
-        skos:example "Lat: 1.234; Lon 45.23"@en ;
-        sh:description "Defines the imported viewpoint position of the asset in world coordinates."@en ;
-        sh:message "Validation of view point failed!"@en ;
-        sh:name "view point"@en ;
-        sh:node georeference:LatLonCoordinateShape ;
-        sh:maxCount 1 ;
-        sh:order 1 ;
-        sh:path georeference:hasViewPoint
-    ], [
-        skos:example "32632" ;
-        sh:datatype xsd:integer ;
-        sh:description "Defines the projection EPSG code for the asset."@en ;
-        sh:message "Validation of codeEPSG failed!"@en ;
-        sh:name "EPSG code"@en ;
-        sh:maxCount 1 ;
-        sh:order 2 ;
-        sh:path georeference:codeEPSG
-    ], [
-        skos:example "UTM, None" ;
-        sh:datatype xsd:string ;
-        sh:description "Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
-        sh:message "Validation of coordinateSystemName failed!"@en ;
-        sh:name "coordinate system name"@en ;
-        sh:maxCount 1 ;
-        sh:order 3 ;
-        sh:path georeference:coordinateSystemName
-    ], [
-        skos:example "Ellipsoidal height" ;
-        sh:description "Defines the height system type of the asset."@en ;
-        sh:in ("Ellipsoidal height" "Orthometric height" "Local height") ;
-        sh:maxCount 1 ;
-        sh:message "Validation of heightSystem failed!"@en ;
-        sh:name "height system"@en ;
-        sh:order 4 ;
-        sh:path georeference:heightSystem
-    ] ;
-    sh:targetClass georeference:GeodeticReferenceSystem .
-
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 georeference:BoundingBoxShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:property [
-        skos:example "1.0" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines the minimum bounding box value along the x-axis."@en ;
-        sh:message "Validation of xMin failed!"@en ;
-        sh:name "xMin"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 0 ;
-        sh:path georeference:xMin
-    ], [
-        skos:example "2.0" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines the minimum bounding box value along the y-axis."@en ;
-        sh:message "Validation of yMin failed!"@en ;
-        sh:name "yMin"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 1 ;
-        sh:path georeference:yMin
-    ], [
-        skos:example "11.0" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines the maximum bounding box value along the x-axis."@en ;
-        sh:message "Validation of xMax failed!"@en ;
-        sh:name "xMax"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 2 ;
-        sh:path georeference:xMax
-    ], [
-        skos:example "12.0" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines the maximum bounding box value along the y-axis."@en ;
-        sh:message "Validation of yMax failed!"@en ;
-        sh:name "yMax"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 3 ;
-        sh:path georeference:yMax
-    ] ;
-    sh:targetClass georeference:BoundingBox .
-
+	rdfs:comment "Bounding box of the asset in world coordinates."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:becef859f66eb ;
+	sh:property _:b1bfe3d636a16 , _:b1fa0ae627370 , _:bb4ab245ebaf0 , _:bc3ebfd90e7e5 ;
+	sh:targetClass georeference:BoundingBox .
+georeference:GeodeticReferenceSystemShape a sh:NodeShape ;
+	rdfs:comment "Positions (origin and viewpoint), projection and height system of the asset."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b0b2fd1ab33bb ;
+	sh:or _:bff27b79f4ef4 ;
+	sh:property _:b0aee2f33a8b3 , _:b90b4a44cfc42 , _:bd7f5ce28e6eb , _:bf169ae208d75 , _:bf34c6705ad4a ;
+	sh:targetClass georeference:GeodeticReferenceSystem .
+georeference:GeoreferenceShape a sh:NodeShape ;
+	rdfs:comment "A georeferencing dataset that defines the coordinate system, location, and spatial properties of a simulation asset. This class serves as an optional metadata extension and does not function as a standalone data resource."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b01cdda4132fd ;
+	sh:property _:b85fe824c85da , _:bb470478577da ;
+	sh:targetClass georeference:Georeference .
 georeference:LatLonCoordinateShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:property [
-        skos:example "52.540721" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines a world latitude value (on the y-axis) in degrees."@en ;
-        sh:message "Validation of lat failed!"@en ;
-        sh:name "lat"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 0 ;
-        sh:path georeference:lat
-    ], [
-        skos:example "13.412511" ;
-        sh:datatype xsd:float ;
-        sh:description "Defines a world longitude value (on the x-axis) in degrees."@en ;
-        sh:message "Validation of lon failed!"@en ;
-        sh:name "lon"@en ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 1 ;
-        sh:path georeference:lon
-    ] ;
-    sh:targetClass georeference:LatLonCoordinate .
-
+	rdfs:comment "A position in world coordinates."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b5c64a11ad30c ;
+	sh:property _:bbba4d7d1742b , _:bcb6143c2b9f9 ;
+	sh:targetClass georeference:LatLonCoordinate .
 georeference:ProjectLocationShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:property [
-        skos:example "DE-BY" ;
-        sh:datatype xsd:string ;
-        sh:description "Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
-        sh:message "Validation of state failed!"@en ;
-        sh:maxCount 1 ;
-        sh:name "state"@en ;
-        sh:order 1 ;
-        sh:path georeference:state ;
-        sh:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$"
-    ], [
-        skos:example "Munich" ;
-        sh:datatype xsd:string ;
-        sh:description "Specifies the name of the city in which the asset's centre is located."@en ;
-        sh:message "Validation of city failed!"@en ;
-        sh:maxCount 1 ;
-        sh:name "city"@en ;
-        sh:order 3 ;
-        sh:path georeference:city
-    ], [
-        skos:example "Upper Bavaria" ;
-        sh:datatype xsd:string ;
-        sh:description "Specifies the name of the region in which the asset's centre is located."@en ;
-        sh:message "Validation of region failed!"@en ;
-        sh:maxCount 1 ;
-        sh:name "region"@en ;
-        sh:order 2 ;
-        sh:path georeference:region
-    ], [
-        skos:example "DE" ;
-        sh:datatype xsd:string ;
-        sh:description "Defines an ISO 3166-1, alpha-2 code for the country in which the asset centre is located."@en ;
-        sh:maxCount 1 ;
-        sh:message "Validation of country failed!"@en ;
-        sh:name "country"@en ;
-        sh:order 0 ;
-        sh:path georeference:country ;
-        sh:pattern "^[a-zA-Z]{2}$"
-    ], [
-        skos:example "Lat: 1.234- 1.345; Lon 45.23-45.34" ;
-        sh:description "Defines the bounding box in world coordinates of the asset."@en ;
-        sh:message "Validation of boundingBox failed!"@en ;
-        sh:name "bounding box"@en ;
-        sh:node georeference:BoundingBoxShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:order 5 ;
-        sh:path georeference:hasBoundingBox
-    ], [
-        skos:example "Highway A8, Greater Area Ingolstadt"@en ;
-        sh:datatype xsd:string ;
-        sh:description "Describes the area in which the asset is located, such as the name of the main street or the landscape region."@en ;
-        sh:message "Validation of relationOrArea failed!"@en ;
-        sh:maxCount 1 ;
-        sh:name "relation or area"@en ;
-        sh:order 4 ;
-        sh:path georeference:relationOrArea
-    ] ;
-    sh:targetClass georeference:ProjectLocation .
+	rdfs:comment "Describes where the asset is located."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b4a3dbeed4ea7 ;
+	sh:property _:b398018e6f4a8 , _:b5ae183708957 , _:b6fad22a7e46e , _:b8d25c622f7a3 , _:bedae19e99de7 , _:bf402cfa52639 ;
+	sh:targetClass georeference:ProjectLocation .
+_:b01cdda4132fd rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b0aee2f33a8b3 sh:datatype xsd:integer ;
+	sh:description "Defines the projection EPSG code for the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "codeEPSG (GeodeticReferenceSystem): Defines the projection EPSG code for the asset."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path georeference:codeEPSG .
+_:b0b2fd1ab33bb rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b1bfe3d636a16 sh:datatype xsd:float ;
+	sh:description "Defines the maximum bounding box value along the y-axis."@en ;
+	sh:maxCount 1 ;
+	sh:message "yMax (BoundingBox): Defines the maximum bounding box value along the y-axis."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path georeference:yMax .
+_:b1fa0ae627370 sh:datatype xsd:float ;
+	sh:description "Defines the minimum bounding box value along the y-axis."@en ;
+	sh:maxCount 1 ;
+	sh:message "yMin (BoundingBox): Defines the minimum bounding box value along the y-axis."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path georeference:yMin .
+_:b292f83141bfa sh:minCount 1 ;
+	sh:path georeference:codeEPSG .
+_:b398018e6f4a8 sh:description "Defines the bounding box in world coordinates of the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasBoundingBox (ProjectLocation): Defines the bounding box in world coordinates of the asset."@en ;
+	sh:minCount 1 ;
+	sh:node georeference:BoundingBoxShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path georeference:hasBoundingBox .
+_:b3c51d3cd4a69 rdf:first "Ellipsoidal height" ;
+	rdf:rest _:be752bfcc6be2 .
+_:b448ad192f929 sh:property _:ba3652e071b35 .
+_:b4a3dbeed4ea7 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b4ad2e5c6857a rdf:first "Local height" ;
+	rdf:rest rdf:nil .
+_:b5ae183708957 sh:datatype xsd:string ;
+	sh:description "Describes the area in which the asset is located, such as the name of the main street or the greater area."@en ;
+	sh:maxCount 1 ;
+	sh:message "relationOrArea (ProjectLocation): Describes the area in which the asset is located, such as the name of the main street or the greater area."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path georeference:relationOrArea .
+_:b5c64a11ad30c rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b6fad22a7e46e sh:datatype xsd:string ;
+	sh:description "Specifies the name of the city in which the asset's centre is located."@en ;
+	sh:maxCount 1 ;
+	sh:message "city (ProjectLocation): Specifies the name of the city in which the asset's centre is located."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path georeference:city .
+_:b85fe824c85da sh:description "Properties for positions (e.g., origin and viewpoint), projection type and height system of the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasGeodeticReferenceSystem (Georeference): Properties for positions (e.g., origin and viewpoint), projection type and height system of the asset."@en ;
+	sh:minCount 1 ;
+	sh:node georeference:GeodeticReferenceSystemShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path georeference:hasGeodeticReferenceSystem .
+_:b8d25c622f7a3 sh:datatype xsd:string ;
+	sh:description "Specifies the name of the region in which the asset's centre is located."@en ;
+	sh:maxCount 1 ;
+	sh:message "georeferenceRegion (ProjectLocation): Specifies the name of the region in which the asset's centre is located."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path georeference:region .
+_:b90b4a44cfc42 sh:description "Defines the imported viewpoint position of the asset in world coordinates."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasViewPoint (GeodeticReferenceSystem): Defines the imported viewpoint position of the asset in world coordinates."@en ;
+	sh:node georeference:LatLonCoordinateShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path georeference:hasViewPoint .
+_:ba3652e071b35 sh:minCount 1 ;
+	sh:path georeference:coordinateSystemName .
+_:ba5e7e3c59a78 rdf:first _:b448ad192f929 ;
+	rdf:rest rdf:nil .
+_:bb470478577da sh:description "Contains properties (state, city, region, country, bounding) to describe the location of the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasProjectLocation (Georeference): Contains properties (state, city, region, country, bounding) to describe the location of the asset."@en ;
+	sh:minCount 1 ;
+	sh:node georeference:ProjectLocationShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 0 ;
+	sh:path georeference:hasProjectLocation .
+_:bb4ab245ebaf0 sh:datatype xsd:float ;
+	sh:description "Defines the minimum bounding box value along the x-axis."@en ;
+	sh:maxCount 1 ;
+	sh:message "xMin (BoundingBox): Defines the minimum bounding box value along the x-axis."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path georeference:xMin .
+_:bbba4d7d1742b sh:datatype xsd:float ;
+	sh:description "Defines a world longitude value (on the x-axis) in degrees."@en ;
+	sh:maxCount 1 ;
+	sh:message "lon (LatLonCoordinate): Defines a world longitude value (on the x-axis) in degrees."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path georeference:lon .
+_:bc3ebfd90e7e5 sh:datatype xsd:float ;
+	sh:description "Defines the maximum bounding box value along the x-axis."@en ;
+	sh:maxCount 1 ;
+	sh:message "xMax (BoundingBox): Defines the maximum bounding box value along the x-axis."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path georeference:xMax .
+_:bcb6143c2b9f9 sh:datatype xsd:float ;
+	sh:description "Defines a world latitude value (on the y-axis) in degrees."@en ;
+	sh:maxCount 1 ;
+	sh:message "lat (LatLonCoordinate): Defines a world latitude value (on the y-axis) in degrees."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path georeference:lat .
+_:bd7f5ce28e6eb sh:description "Defines the center position of the asset in world coordinates."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasOrigin (GeodeticReferenceSystem): Defines the center position of the asset in world coordinates."@en ;
+	sh:minCount 1 ;
+	sh:node georeference:LatLonCoordinateShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 0 ;
+	sh:path georeference:hasOrigin .
+_:be752bfcc6be2 rdf:first "Orthometric height" ;
+	rdf:rest _:b4ad2e5c6857a .
+_:becef859f66eb rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bedae19e99de7 sh:datatype xsd:string ;
+	sh:description "Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
+	sh:maxCount 1 ;
+	sh:message "state (ProjectLocation): Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path georeference:state ;
+	sh:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
+_:bf169ae208d75 sh:datatype xsd:string ;
+	sh:description "Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
+	sh:maxCount 1 ;
+	sh:message "coordinateSystemName (GeodeticReferenceSystem): Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path georeference:coordinateSystemName .
+_:bf34c6705ad4a sh:description "Defines the height system type of the asset."@en ;
+	sh:in _:b3c51d3cd4a69 ;
+	sh:maxCount 1 ;
+	sh:message "heightSystem (GeodeticReferenceSystem): Defines the height system type of the asset."@en ;
+	sh:order 4 ;
+	sh:path georeference:heightSystem .
+_:bf402cfa52639 sh:datatype xsd:string ;
+	sh:description "Defines an ISO 3166-1, alpha-2 code for the country in which the asset centre is located."@en ;
+	sh:maxCount 1 ;
+	sh:message "georeferenceCountry (ProjectLocation): Defines an ISO 3166-1, alpha-2 code for the country in which the asset centre is located."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path georeference:country ;
+	sh:pattern "^[a-zA-Z]{2}$" .
+_:bfee765647b82 sh:property _:b292f83141bfa .
+_:bff27b79f4ef4 rdf:first _:bfee765647b82 ;
+	rdf:rest _:ba5e7e3c59a78 .

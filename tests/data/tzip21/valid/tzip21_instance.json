@@ -88,19 +88,19 @@
       {
          "@type": "tzip21:OntologyConformanceAttribute",
          "name": "com.github.ascs-ev.ontology-management-base.envited-x.ontology",
-         "value": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+         "value": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
          "type": "uri"
       },
       {
          "@type": "tzip21:OntologyConformanceAttribute",
          "name": "com.github.ascs-ev.ontology-management-base.manifest.ontology",
-         "value": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+         "value": "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
          "type": "uri"
       },
       {
          "@type": "tzip21:OntologyConformanceAttribute",
          "name": "com.github.ascs-ev.ontology-management-base.georeference.ontology",
-         "value": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+         "value": "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
          "type": "uri"
       }
    ],

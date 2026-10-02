@@ -9,10 +9,10 @@
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:registry.envited-x.net::ResourceDescription:fA1l3bArN4mM1sS1nGnAm3                                                    =
 =    Property:         https://schema.org/name                                                                                                       =
-=    Error:            Each ResourceDescription must have a human-readable name of the entity.                                                       =
+=    Error:            name (ResourceDescription): A human readable name of the entity.                                                              =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.envited-x.net:SimulationAsset:test_invalid_fail_03_bare_name_missing_name_instance                               =
-=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasResourceDescription                                                        =
-=    Error:            envited-x:hasResourceDescription must be either (a) an inline envited-x:ResourceDescription, or (b) a valid manifest:Link     =
-=                      (LinkShape + ExtendedLinkShape).                                                                                              =
+=    Property:         https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasResourceDescription                                                        =
+=    Error:            hasResourceDescription (SimulationAsset): Links an asset or its subclass to its associated ResourceDescription, which         =
+=                      provides essential metadata such as name and description, inline or as a link.                                                =
 ======================================================================================================================================================

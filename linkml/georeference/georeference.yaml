@@ -6,7 +6,7 @@
 # georeference references no other ontology, so it can be ported without first
 # porting anything else. ositrace, hdmap and other domains import it.
 
-id: https://w3id.org/ascs-ev/envited-x/georeference/v5
+id: https://w3id.org/ascs-ev/envited-x/georeference/v6
 name: georeference
 title: Ontology definition for Georeferencing
 description: >-
@@ -14,24 +14,29 @@ description: >-
     reference systems, and spatial properties.
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
+conforms_to: https://w3id.org/ascs-ev/envited-x/georeference/v6/shapes
 see_also:
   - https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md
 
 prefixes:
   linkml: https://w3id.org/linkml/
-  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v5/
+  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v6/
   owl: http://www.w3.org/2002/07/owl#
   dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
 default_prefix: georeference
 default_range: string
 
-# Literal-valued header terms. IRI-valued ones (owl:versionIRI,
-# dcterms:identifier, dcterms:conformsTo, prov:wasDerivedFrom,
-# dcterms:references) and structured contributors cannot be expressed:
-# annotations are always emitted as literals. See linkml/GAPS.md D1.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
+# take resources and are emitted as IRIs; see linkml/GAPS.md D1 for what remains.
 annotations:
-  owl:versionInfo: v5
+  owl:versionInfo: v6
+  owl:versionIRI: https://w3id.org/ascs-ev/envited-x/georeference/v6
+  owl:priorVersion: https://w3id.org/ascs-ev/envited-x/georeference/v5
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/georeference
+  dcterms:references: https://w3id.org/ascs-ev/envited-x/hdmap/v6/
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
 
 imports:

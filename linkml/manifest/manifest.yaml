@@ -1,13 +1,18 @@
 # LinkML source for the manifest ontology.
 #
-# Build and measure with:  just verify-linkml manifest
+# Build with:  just generate   (artifacts/manifest/ is generated from this file)
 # What cannot be expressed, and the alternatives:  linkml/GAPS.md
 #
 # manifest is the base of the ENVITED-X ontology stack: it references no other
-# domain, so it is the one ontology that can be ported without first porting
-# something else. envited-x imports it; the leaf domains import envited-x.
+# domain. envited-x imports it; the leaf domains import envited-x.
+#
+# The SHACL is generated with --inlined-as-node: a value written inline (a link,
+# its file metadata, its dimensions) is checked against its range class's shape,
+# whatever type it states, and a reference to a named individual (an access role,
+# a category) is checked by its type. Access roles and categories therefore carry
+# an identifier: they are referenced, never inlined.
 
-id: https://w3id.org/ascs-ev/envited-x/manifest/v5
+id: https://w3id.org/ascs-ev/envited-x/manifest/v6
 name: manifest
 title: Ontology definition for manifest
 description: >-
@@ -16,30 +21,52 @@ description: >-
     archive.
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
+conforms_to: https://w3id.org/ascs-ev/envited-x/manifest/v6/shapes
 see_also:
   - https://ascs-ev.github.io/EVES/
 
 prefixes:
   linkml: https://w3id.org/linkml/
-  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v5/
+  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v6/
   skos: http://www.w3.org/2004/02/skos/core#
   sh: http://www.w3.org/ns/shacl#
   owl: http://www.w3.org/2002/07/owl#
+  xsd: http://www.w3.org/2001/XMLSchema#
   dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
 default_prefix: manifest
 default_range: string
 
-# Literal-valued header terms; the IRI-valued ones (owl:versionIRI,
-# owl:priorVersion, dcterms:identifier, dcterms:conformsTo,
-# prov:wasDerivedFrom, dcterms:references) cannot be expressed at all -
-# annotations are always literals. See linkml/GAPS.md D1.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
+# take resources, so their values are emitted as IRIs. dcterms:identifier is a
+# literal by its DCMI range. Structured contributors cannot be expressed: see
+# linkml/GAPS.md D1.
 annotations:
-  owl:versionInfo: v5
+  owl:versionInfo: v6
+  owl:versionIRI: https://w3id.org/ascs-ev/envited-x/manifest/v6
+  owl:priorVersion: https://w3id.org/ascs-ev/envited-x/manifest/v5
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/manifest
+  dcterms:references: https://w3id.org/ascs-ev/envited-x/envited-x/
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
 
 imports:
   - linkml:types
+
+types:
+
+  # A URI reference held as data - a file location such as
+  # './visualization/foo.png', 'ipfs://...' or 'https://...' - not a link to a
+  # resource. Derived from string, it stays an xsd:anyURI literal in every
+  # artifact: as an IRI node, JSON-LD would resolve a relative path against the
+  # document base and bake a machine-specific absolute IRI into the RDF.
+  UriReference:
+    typeof: string
+    uri: xsd:anyURI
+    description: >-
+      An absolute or relative URI reference (RFC 3986), kept as an xsd:anyURI
+      literal.
 
 classes:
 
@@ -93,14 +120,53 @@ classes:
         required: true
         multivalued: false
 
-  # A license link is a Link whose category is a license category. The
-  # hand-written ontology states this as target-less SHACL shapes
-  # (LicenseLinkReferenceShape, ManifestLinkReferenceShape); LinkML states it as
-  # a subclass with a narrowed slot. No data change follows: hasLicense declares
-  # rdfs:range manifest:LicenseLink, so RDFS inference types the node.
+  # Every link of a manifest except its self-reference is an artifact link. An
+  # artifact link to an RDF/JSON-LD document identifies the resource, says what
+  # it is and the ontology it conforms to. The self-reference is the manifest
+  # file itself, so it is a ManifestLink, which is not an artifact link.
+  ArtifactLink:
+    class_uri: manifest:ArtifactLink
+    is_a: Link
+    description: >-
+      A Link to an artifact of a manifest: its content, license or a referenced
+      artifact.
+    rules:
+      - description: A JSON-LD artifact needs an IRI.
+        preconditions:
+          slot_conditions:
+            hasFileMetadata:
+              range_expression:
+                slot_conditions:
+                  mimeType: {equals_string: application/ld+json}
+        postconditions:
+          slot_conditions:
+            iri: {required: true}
+      - description: A JSON-LD artifact needs a skos:note.
+        preconditions:
+          slot_conditions:
+            hasFileMetadata:
+              range_expression:
+                slot_conditions:
+                  mimeType: {equals_string: application/ld+json}
+        postconditions:
+          slot_conditions:
+            note: {required: true}
+      - description: A JSON-LD artifact needs its ontology conformance.
+        preconditions:
+          slot_conditions:
+            hasFileMetadata:
+              range_expression:
+                slot_conditions:
+                  mimeType: {equals_string: application/ld+json}
+        postconditions:
+          slot_conditions:
+            shapesConformsTo: {required: true}
+
+  # A license link is an artifact link whose category is a license category.
+  # hasLicense declares it as its range.
   LicenseLink:
     class_uri: manifest:LicenseLink
-    is_a: Link
+    is_a: ArtifactLink
     description: A Link used for the license of a manifest.
     slot_usage:
       hasCategory:
@@ -162,13 +228,18 @@ classes:
         required: false
         multivalued: false
 
+  # Access roles and categories are open vocabularies: a domain contributes its
+  # own named individuals (envited-x does). Each is a referenced individual, so
+  # the classes carry an identifier.
   AccessRole:
     class_uri: manifest:AccessRole
     description: A class representing different access roles of artifacts in a manifest.
+    slots: [id]
 
   Category:
     class_uri: manifest:Category
     description: A class representing different categories of artifacts in a manifest.
+    slots: [id]
 
   LicenseCategory:
     class_uri: manifest:LicenseCategory
@@ -184,6 +255,11 @@ classes:
 
 slots:
 
+  id:
+    identifier: true
+    range: uriorcurie
+    description: The IRI of a named individual.
+
   hasLink:
     slot_uri: manifest:hasLink
     description: States that a subject has a Link instance.
@@ -192,6 +268,7 @@ slots:
 
   hasManifestReference:
     slot_uri: manifest:hasManifestReference
+    is_a: hasLink
     description: >-
       Links a Manifest to its corresponding manifest reference file, defining
       the structure and contents of a digital asset; only applicable within
@@ -209,18 +286,20 @@ slots:
 
   hasArtifacts:
     slot_uri: manifest:hasArtifacts
+    is_a: hasLink
     description: >-
       Associates a Manifest instance with its artifacts, represented as Link
       instances; only applicable within Manifest instances.
-    range: Link
+    range: ArtifactLink
     inlined: true
 
   hasReferencedArtifacts:
     slot_uri: manifest:hasReferencedArtifacts
+    is_a: hasLink
     description: >-
       Associates a Manifest instance with its referenced artifacts, represented
       as Link instances; only applicable within Manifest instances.
-    range: Link
+    range: ArtifactLink
     inlined: true
 
   hasFileMetadata:
@@ -257,7 +336,7 @@ slots:
 
   note:
     slot_uri: skos:note
-    description: Additional information about the manifest reference.
+    description: Additional information about the linked artifact.
     range: string
 
   # LinkML slot names are global across an import closure, and the Gaia-X
@@ -273,20 +352,12 @@ slots:
     range: uri
     multivalued: true
 
-  # MUST stay `string`, not `uri`. filePath holds relative paths such as
-  # './visualization/foo.png'. With range `uri` gen-shacl forces
-  # sh:nodeKind sh:IRI, the context has to coerce with "@type": "@id", and JSON-LD
-  # then resolves the relative path against the document base - baking
-  # 'file:///home/<user>/.../foo.png' into the RDF, different on every machine.
-  # The hand-written shape says sh:datatype xsd:anyURI (a literal); `string` is
-  # the closest LinkML can get, losing the datatype but preserving the value.
-  # See linkml/GAPS.md D5.
   filePath:
     slot_uri: manifest:filePath
     description: >-
       A local or remote path/URL from which the file can be retrieved (e.g.
       './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...').
-    range: uri
+    range: UriReference
     examples:
       - value: ./metadata/gxMetadata.json
 
@@ -298,11 +369,13 @@ slots:
     examples:
       - value: application/pdf
 
+  # A CIDv1 in one of its multibase encodings: base32 (b / B), base58btc (z) or
+  # base16 (F). A CIDv0 ('Qm...') matches none of them.
   cid:
     slot_uri: manifest:cid
     description: Defines the IPFS CIDv1 identifier of the file.
     range: string
-    pattern: "^((?!Qm[1-9A-HJ-NP-Za-km-z]{44,})|b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$"
+    pattern: "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$"
     examples:
       - value: bafkreic6xmosvgr4a5735itquknu2ljf4fon7wohrzlmabepwkkxtih6um
 
@@ -339,9 +412,9 @@ slots:
     examples:
       - value: metres
 
-  # sh:minExclusive "0.0" cannot be expressed: LinkML has only minimum_value,
-  # which generates sh:minInclusive. Leaving the bound off entirely is more
-  # honest than silently admitting zero. See linkml/GAPS.md D6.
+  # The dimensions are positive numbers. The metamodel has no exclusive bound
+  # (minimum_value is inclusive), so "greater than 0" cannot be stated; see
+  # linkml/GAPS.md G8.
   width:
     slot_uri: manifest:width
     description: Specifies the width (x-axis) of the item in appropriate units.
@@ -361,11 +434,45 @@ slots:
     description: Specifies the depth (z-axis) of the item in appropriate units.
     range: float
     examples:
-      - value: "0.0"
+      - value: "0.5"
 
 enums:
+
   UnitEnum:
     permissible_values:
       metres:
       inches:
       pixels:
+
+  # The named individuals manifest defines for its own vocabularies. The enums
+  # close only their own classes; AccessRole and Category stay open for the
+  # individuals other domains add.
+  ManifestAccessRoleEnum:
+    implements: [owl:NamedIndividual]
+    description: The access roles manifest defines.
+    permissible_values:
+      isPublic:
+        meaning: manifest:isPublic
+        instantiates: [manifest:AccessRole]
+        title: Public Access Role
+        description: Indicates that the artifact access role is public.
+
+  ManifestCategoryEnum:
+    implements: [owl:NamedIndividual]
+    description: The artifact categories manifest defines.
+    permissible_values:
+      isLicense:
+        meaning: manifest:isLicense
+        instantiates: [manifest:LicenseCategory]
+        title: License Category
+        description: Indicates that the artifact category is a license.
+      isManifest:
+        meaning: manifest:isManifest
+        instantiates: [manifest:ManifestCategory]
+        title: Manifest Category
+        description: Indicates that the artifact category is a manifest.
+      isMiscellaneous:
+        meaning: manifest:isMiscellaneous
+        instantiates: [manifest:MiscellaneousCategory]
+        title: Miscellaneous Category
+        description: Indicates that the artifact category is miscellaneous.

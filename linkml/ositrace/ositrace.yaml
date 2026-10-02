@@ -21,7 +21,7 @@
 # --no-use-native-uris) and `alias` keeps the JSON-LD terms, so neither the
 # ontology nor any instance changes.
 
-id: https://w3id.org/ascs-ev/envited-x/ositrace/v6
+id: https://w3id.org/ascs-ev/envited-x/ositrace/v7
 name: ositrace
 title: Ontology definition for ositrace
 description: >-
@@ -29,15 +29,16 @@ description: >-
     including single-channel .osi and multi-channel .mcap formats.
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
+conforms_to: https://w3id.org/ascs-ev/envited-x/ositrace/v7/shapes
 see_also:
   - https://ascs-ev.github.io/EVES/
 
 prefixes:
   linkml: https://w3id.org/linkml/
-  ositrace: https://w3id.org/ascs-ev/envited-x/ositrace/v6/
-  envited-x: https://w3id.org/ascs-ev/envited-x/envited-x/v3/
-  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v5/
-  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v5/
+  ositrace: https://w3id.org/ascs-ev/envited-x/ositrace/v7/
+  envited-x: https://w3id.org/ascs-ev/envited-x/envited-x/v4/
+  manifest: https://w3id.org/ascs-ev/envited-x/manifest/v6/
+  georeference: https://w3id.org/ascs-ev/envited-x/georeference/v6/
   # Ontology-IRI bases for CURIE imports - the same idiom as `linkml:types`.
   # CURIE local part + prefix = the imported schema's `id`, so gen-owl emits the
   # correct owl:imports IRI. See the note on `imports` below.
@@ -46,16 +47,20 @@ prefixes:
   owl: http://www.w3.org/2002/07/owl#
   xsd: http://www.w3.org/2001/XMLSchema#
   dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
 default_prefix: ositrace
 default_range: string
 
-# Literal-valued header terms. IRI-valued ones (owl:versionIRI,
-# owl:priorVersion, dcterms:identifier, dcterms:conformsTo,
-# prov:wasDerivedFrom, dcterms:references) and structured contributors cannot
-# be expressed: annotations are always emitted as literals. linkml/GAPS.md D1.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
+# take resources and are emitted as IRIs; see linkml/GAPS.md D1 for what remains.
 annotations:
-  owl:versionInfo: v6
+  owl:versionInfo: v7
+  owl:versionIRI: https://w3id.org/ascs-ev/envited-x/ositrace/v7
+  owl:priorVersion: https://w3id.org/ascs-ev/envited-x/ositrace/v6
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/ositrace
+  dcterms:references: https://github.com/OpenSimulationInterface
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
 
 # Dependencies are imported as CURIEs, the idiom LinkML uses for `linkml:types`.
@@ -66,8 +71,8 @@ annotations:
 # still expands to the dependency's `id`. See linkml/GAPS.md S4.
 imports:
   - linkml:types
-  - envitedx_ontology:v3
-  - georeference_ontology:v5
+  - envitedx_ontology:v4
+  - georeference_ontology:v6
 
 classes:
 
@@ -510,7 +515,7 @@ slots:
   validationReport:
     slot_uri: ositrace:validationReport
     description: "Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."
-    range: "uri"
+    range: UriReference
     examples: [{value: "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar"}]
 
   validationReportType:

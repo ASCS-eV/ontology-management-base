@@ -1,545 +1,790 @@
-@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix georeference_ontology: <https://w3id.org/ascs-ev/envited-x/georeference/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix ositrace: <https://w3id.org/ascs-ev/envited-x/ositrace/v7/> .
+@prefix envitedx_ontology: <https://w3id.org/ascs-ev/envited-x/envited-x/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-
-# The Shapes Graph URI appends "/shapes" to the Ontology URI
-<https://w3id.org/ascs-ev/envited-x/ositrace/v6/shapes>
-    a owl:Ontology ;
-    # The Shapes Graph must import the Domain Ontology
-    owl:imports <https://w3id.org/ascs-ev/envited-x/ositrace/v6> .
-
-### OSITrace SHACL Shape
-ositrace:OSITraceShape a sh:NodeShape ;
-    sh:closed false ;
-
-    # 1) hasResourceDescription: Aligning with the flexible logic in envited-x:SimulationAssetShape
-    sh:property [
-        sh:path ositrace:hasResourceDescription ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:or (
-            [ sh:node envited-x:ResourceDescriptionShape ]
-            [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ]
-        ) ;
-        sh:message "Each OSI trace must have exactly one associated ResourceDescription (either inline conforming to envited-x:ResourceDescriptionShape or a valid manifest:Link)."@en ;
-        sh:order 2 ;
-    ],
-
-    # 2) hasDomainSpecification: Mandatory domain-specific extension for OSI traces.
-    [
-        sh:path ositrace:hasDomainSpecification ;
-        sh:node ositrace:DomainSpecificationShape ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Each OSI trace must have one associated DomainSpecification object with content, format, quality, quantity, and dataSource."@en ;
-        sh:order 1 ;
-    ],
-
-    # 3) hasManifest: Updated to reuse the ManifestLinkReferenceShape for linked manifests.
-    [
-        sh:path ositrace:hasManifest ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:or (
-            # Case 1: Inline manifest node
-            [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ]
-
-            # Case 2: Linked manifest reference (improved logic from Point A)
-            [ sh:node envited-x:ManifestLinkReferenceShape ]
-        ) ;
-        sh:message "Each OSI trace must have exactly one manifest. If linked, it must be a valid envited-x link specifically of category envited-x:isManifest and include a manifest:iri."@en ;
-        sh:order 3 ;
-    ] ;
-    sh:targetClass ositrace:OSITrace .
-
-### DomainSpecification SHACL Shape
-ositrace:DomainSpecificationShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property
-        [ sh:maxCount 1 ;
-          sh:minCount 1 ;
-          sh:node ositrace:ContentShape ;
-          sh:name "content"@en ;
-          sh:description "Attributes describing the content of the OSI trace."@en ;
-          sh:order 1 ;
-          sh:path ositrace:hasContent ],
-        [ sh:maxCount 1 ;
-          sh:minCount 1 ;
-          sh:node ositrace:FormatShape ;
-          sh:name "format"@en ;
-          sh:description "File format details of the OSI trace."@en ;
-          sh:order 2 ;
-          sh:path ositrace:hasFormat ],
-        [ sh:maxCount 1 ;
-          sh:minCount 1 ;
-          sh:node ositrace:QualityShape ;
-          sh:name "quality"@en ;
-          sh:description "Quality metrics of the OSI trace."@en ;
-          sh:order 3 ;
-          sh:path ositrace:hasQuality ],
-        [ sh:maxCount 1 ;
-          sh:minCount 1 ;
-          sh:node ositrace:QuantityShape ;
-          sh:name "quantity"@en ;
-          sh:description "Quantitative metrics describing the OSI trace."@en ;
-          sh:order 4 ;
-          sh:path ositrace:hasQuantity ],
-        [ sh:maxCount 1 ;
-          sh:minCount 1 ;
-          sh:node ositrace:DataSourceShape ;
-          sh:name "data source"@en ;
-          sh:description "Data sources used to create the OSI trace."@en ;
-          sh:order 5 ;
-          sh:path ositrace:hasDataSource ],
-        [ sh:maxCount 1 ;
-          sh:node georeference:GeoreferenceShape ;
-          sh:name "georeference"@en ;
-          sh:description "Georeferencing information for the OSI trace."@en ;
-          sh:order 6 ;
-          sh:path ositrace:hasGeoreference ] ;
-    sh:targetClass ositrace:DomainSpecification .
-
-ositrace:ContentShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "[motorway, rural]" ;
-            sh:description "Covered/used road types, defined over the ASAM OpenDRIVE element t_road_type. Complete e_roadType enumeration (13 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §10.4 'Road type'. No e_roadType value is deprecated."@en ;
-            sh:in ("bicycle" "lowSpeed" "motorway" "pedestrian" "rural" "townArterial" "townCollector" "townExpressway" "townLocal" "townPlayStreet" "townPrivate" "town" "unknown") ;
-            sh:message "Validation of roadTypes failed!"@en ;
-            sh:name "road types"@en ;
-            sh:order 0 ;
-            sh:path ositrace:roadTypes ],
-        [ skos:example "shoulder, curb, ..." ;
-            sh:description "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'sidewalk' (use 'walking'), 'bus' and 'taxi' (use the lane <access> element), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), and 'special1', 'special2', 'special3' with no replacement named. 'bidirectional' is deprecated by the v1.9.0 specification §11.8 in favour of the lane @direction attribute, but is not marked deprecated in the schema. Prefer the non-deprecated spellings in new self-descriptions."@en ;
-            sh:in ("HOV" "bidirectional" "biking" "border" "bus" "connectingRamp" "curb" "driving" "entry" "exit" "median" "mwyEntry" "mwyExit" "none" "offRamp" "onRamp" "parking" "rail" "restricted" "roadWorks" "shared" "shoulder" "sidewalk" "slipLane" "special1" "special2" "special3" "stop" "taxi" "tram" "walking") ;
-            sh:message "Validation of laneTypes failed! Must be a known ASAM OpenDRIVE e_laneType."@en ;
-            sh:name "lane types"@en ;
-            sh:order 1 ;
-            sh:path ositrace:laneTypes ],
-        [ skos:example "trees, street lamps, road patches..." ;
-            sh:description "Covered object classes. Complete ASAM OpenDRIVE e_objectType enumeration (27 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'patch' (use 'roadSurface'), 'railing' and 'soundBarrier' (use 'barrier'), 'streetLamp' and 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian' with no replacement named - describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."@en ;
-            sh:in ("barrier" "bike" "building" "bus" "car" "crosswalk" "gantry" "motorbike" "none" "obstacle" "parkingSpace" "patch" "pedestrian" "pole" "railing" "roadMark" "roadSurface" "soundBarrier" "streetLamp" "trafficIsland" "trailer" "train" "tram" "tree" "truck" "van" "vegetation" "wind") ;
-            sh:message "Validation of levelOfDetail failed! Must be a known ASAM OpenDRIVE e_objectType."@en ;
-            sh:name "level of detail"@en ;
-            sh:order 2 ;
-            sh:path ositrace:levelOfDetail ],
-        [ skos:example "right-hand traffic"@en ;
-            sh:description "Traffic direction, i.e. right-hand or left-hand traffic"@en ;
-            sh:in ("left-hand" "right-hand") ;
-            sh:maxCount 1 ;
-            sh:message "Validation of trafficDirection failed!"@en ;
-            sh:name "traffic direction"@en ;
-            sh:order 3 ;
-            sh:path ositrace:trafficDirection ],
-        [ skos:example "object list, detection list"@en ;
-            sh:description "Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
-            sh:in ("object list" "detection list" "raw data") ;
-            sh:message "Validation of granularity failed!"@en ;
-            sh:minCount 1 ;
-            sh:name "granularity"@en ;
-            sh:order 4 ;
-            sh:path ositrace:granularity ],
-        [ skos:example "119" ;
-            sh:datatype xsd:string ;
-            sh:description "Identifier of scenario performed in the trace file"@en ;
-            sh:message "Validation of scenarioIdentifier failed!"@en ;
-            sh:name "scenario identifier"@en ;
-            sh:order 5 ;
-            sh:path ositrace:scenarioIdentifier ],
-        [ skos:example "2024-05-11T13:20:03.250320Z" ;
-            sh:datatype xsd:dateTime ;
-            sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" ;
-            sh:message "Value must be a valid xsd:dateTime with a timezone (ending in 'Z' or '+/-HH:MM')."@en ;
-            sh:description "Exact start timestamp of the recorded trace"@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:name "start time"@en ;
-            sh:order 6 ;
-            sh:path ositrace:startTime ],
-        [ skos:example "2024-05-11T13:20:05.250120Z" ;
-            sh:datatype xsd:dateTime ;
-            sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" ;
-            sh:message "Value must be a valid xsd:dateTime with a timezone (ending in 'Z' or '+/-HH:MM')."@en ;
-            sh:description "Exact stop timestamp of the recorded trace"@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:name "stop time"@en ;
-            sh:order 7 ;
-            sh:path ositrace:stopTime ],
-        [ sh:description "Host moving object in trace file"@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:name "host moving object"@en ;
-            sh:node ositrace:MovingObjectShape ;
-            sh:order 8 ;
-            sh:path ositrace:hasHostMovingObject ],
-        [ sh:description "Target moving object(s) in trace file"@en ;
-            sh:name "target moving object(s)"@en ;
-            sh:node ositrace:MovingObjectShape ;
-            sh:order 9 ;
-            sh:path ositrace:hasTargetMovingObject ],
-        [ sh:description "Description of events of interest in trace file"@en ;
-            sh:minCount 0 ;
-            sh:name "events"@en ;
-            sh:node ositrace:EventShape ;
-            sh:order 10 ;
-            sh:path ositrace:hasEvent ] ;
-    sh:targetClass ositrace:Content .
-
-ositrace:DataSourceShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "PMSF DroneTracker; ARS 548 Sensor Output" ;
-            sh:datatype xsd:string ;
-            sh:description "Main acquisition device"@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of measurementSystem failed!"@en ;
-            sh:name "measurement system"@en ;
-            sh:order 1 ;
-            sh:path ositrace:measurementSystem ],
-        [ skos:example "scanner, camera, osm network, aerial images, ..."@en ;
-            sh:datatype xsd:string ;
-            sh:description "Basic data for the creation of the trace."@en ;
-            sh:message "Validation of usedDataSources failed!"@en ;
-            sh:name "used data sources"@en ;
-            sh:order 0 ;
-            sh:path ositrace:usedDataSources ] ;
-    sh:targetClass ositrace:DataSource .
-
-### Format SHACL Shape (disjunction: single-channel .osi/.txth or multi-channel .mcap)
-ositrace:FormatShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:or (
-        [ sh:node ositrace:SingleChannelFormatShape ]
-        [ sh:node ositrace:MultiChannelFormatShape ]
-    ) ;
-    sh:message "Format must conform to either SingleChannelFormatShape (.osi or .txth) or MultiChannelFormatShape (.mcap)."@en ;
-    sh:targetClass ositrace:Format .
-
-### SingleChannelFormatShape — validates single-channel .osi and .txth trace files
-ositrace:SingleChannelFormatShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:description "Validation shape for single-channel trace files, covering both serializations ASAM OSI v3.8.0 defines for them: binary .osi and plain-text .txth."@en ;
-    sh:property [ skos:example "ASAM OSI GroundTruth; ASAM OSI SensorView; ASAM OSI SensorData" ;
-            sh:description "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."@en ;
-            sh:in ("ASAM OSI GroundTruth" "ASAM OSI HostVehicleData" "ASAM OSI MotionRequest" "ASAM OSI SensorData" "ASAM OSI SensorView" "ASAM OSI SensorViewConfiguration" "ASAM OSI StreamingUpdate" "ASAM OSI TrafficCommand" "ASAM OSI TrafficCommandUpdate" "ASAM OSI TrafficUpdate") ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of formatType failed! Must be a top-level OSI message type listed in the ASAM OSI trace file naming conventions."@en ;
-            sh:name "type"@en ;
-            sh:order 0 ;
-            sh:path ositrace:formatType ],
-        [ skos:example "OSI" ;
-            sh:description "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
-            sh:in ("OSI" "TXTH") ;
-            sh:maxCount 1 ;
-            sh:message "Validation of fileFormat failed! Single-channel traces must be 'OSI' (.osi binary) or 'TXTH' (.txth plain text)."@en ;
-            sh:name "file format"@en ;
-            sh:order 2 ;
-            sh:path ositrace:fileFormat ],
-        [ skos:example "3.7.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Version of data format (OSI version / protobuf version)."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of version failed!"@en ;
-            sh:name "version"@en ;
-            sh:order 1 ;
-            sh:path ositrace:version ] .
-
-### MultiChannelFormatShape — validates multi-channel MCAP container files
-ositrace:MultiChannelFormatShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:description "Validation shape for multi-channel MCAP container files."@en ;
-    sh:property [ skos:example "MCAP" ;
-            sh:description "File format discriminator. Must be 'MCAP' for multi-channel files."@en ;
-            sh:in ("MCAP") ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of fileFormat failed! Must be 'MCAP'."@en ;
-            sh:name "file format"@en ;
-            sh:order 0 ;
-            sh:path ositrace:fileFormat ],
-        [ sh:description "Channels in the MCAP container. Each channel carries messages of one OSI top-level type."@en ;
-            sh:minCount 1 ;
-            sh:node ositrace:ChannelShape ;
-            sh:message "Validation of hasChannel failed! At least one channel is required."@en ;
-            sh:name "channels"@en ;
-            sh:order 1 ;
-            sh:path ositrace:hasChannel ],
-        [ skos:example "zstd" ;
-            sh:description "MCAP chunk compression algorithm."@en ;
-            sh:in ("uncompressed" "zstd" "lz4") ;
-            sh:maxCount 1 ;
-            sh:message "Validation of compression failed! Must be one of: uncompressed, zstd, lz4."@en ;
-            sh:name "compression"@en ;
-            sh:order 2 ;
-            sh:path ositrace:compression ],
-        [ skos:example "net.asam.osi.trace" ;
-            sh:datatype xsd:string ;
-            sh:description "MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace')."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of osiTraceFormatVersion failed!"@en ;
-            sh:name "OSI trace format version"@en ;
-            sh:order 3 ;
-            sh:path ositrace:osiTraceFormatVersion ],
-        [ skos:example "2024-06-03T14:37:10Z" ;
-            sh:datatype xsd:dateTime ;
-            sh:description "Zero-time reference point for the MCAP recording."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of zeroTime failed!"@en ;
-            sh:name "zero time"@en ;
-            sh:order 4 ;
-            sh:path ositrace:zeroTime ],
-        [ skos:example "3.6.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Minimum OSI schema version across all channels."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of minOsiVersion failed!"@en ;
-            sh:name "min OSI version"@en ;
-            sh:order 5 ;
-            sh:path ositrace:minOsiVersion ],
-        [ skos:example "3.7.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Maximum OSI schema version across all channels."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of maxOsiVersion failed!"@en ;
-            sh:name "max OSI version"@en ;
-            sh:order 6 ;
-            sh:path ositrace:maxOsiVersion ],
-        [ skos:example "3.20.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Minimum protobuf version across all channels."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of minProtobufVersion failed!"@en ;
-            sh:name "min protobuf version"@en ;
-            sh:order 7 ;
-            sh:path ositrace:minProtobufVersion ],
-        [ skos:example "3.21.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Maximum protobuf version across all channels."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of maxProtobufVersion failed!"@en ;
-            sh:name "max protobuf version"@en ;
-            sh:order 8 ;
-            sh:path ositrace:maxProtobufVersion ] .
-
-### ChannelShape — validates individual channels within an MCAP container
+@prefix sh: <http://www.w3.org/ns/shacl#> .
 ositrace:ChannelShape a sh:NodeShape ;
-    sh:closed false ;
-    sh:description "Validation shape for a single channel in an MCAP container."@en ;
-    sh:property [ skos:example "RadarSensorFL.OSMPSensorDataOut" ;
-            sh:datatype xsd:string ;
-            sh:description "Unique MCAP topic name identifying this channel."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of topic failed! Each channel must have exactly one topic name."@en ;
-            sh:name "topic"@en ;
-            sh:order 0 ;
-            sh:path ositrace:topic ],
-        [ skos:example "SensorData" ;
-            sh:description "OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."@en ;
-            sh:in ("GroundTruth" "SensorView" "SensorData" "SensorViewConfiguration" "HostVehicleData" "TrafficCommand" "TrafficCommandUpdate" "TrafficUpdate" "MotionRequest" "StreamingUpdate") ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of messageType failed! Must be one of the 10 OSI top-level types: GroundTruth, SensorView, SensorData, SensorViewConfiguration, HostVehicleData, TrafficCommand, TrafficCommandUpdate, TrafficUpdate, MotionRequest, StreamingUpdate."@en ;
-            sh:name "message type"@en ;
-            sh:order 1 ;
-            sh:path ositrace:messageType ],
-        [ skos:example "3.7.0" ;
-            sh:datatype xsd:string ;
-            sh:description "OSI schema version used by this channel."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:message "Validation of osiVersion failed!"@en ;
-            sh:name "OSI version"@en ;
-            sh:order 2 ;
-            sh:path ositrace:osiVersion ],
-        [ skos:example "3.20.0" ;
-            sh:datatype xsd:string ;
-            sh:description "Protobuf version used for serialization in this channel."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of protobufVersion failed!"@en ;
-            sh:name "protobuf version"@en ;
-            sh:order 3 ;
-            sh:path ositrace:protobufVersion ],
-        [ skos:example "1448" ;
-            sh:datatype xsd:integer ;
-            sh:minInclusive 0 ;
-            sh:description "Number of messages in this channel."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of numberOfMessages failed!"@en ;
-            sh:name "number of messages"@en ;
-            sh:order 4 ;
-            sh:path ositrace:numberOfMessages ],
-        [ skos:example "Front-left radar sensor data output" ;
-            sh:datatype xsd:string ;
-            sh:description "Human-readable description of this channel."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of description failed!"@en ;
-            sh:name "description"@en ;
-            sh:order 5 ;
-            sh:path ositrace:description ] ;
-    sh:targetClass ositrace:Channel .
-
-ositrace:QualityShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "0.1" ;
-            sh:datatype xsd:float ;
-            sh:description "Accuracy of traffic relevant objects, signs and signals."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of accuracySignals failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "accuracy signals"@en ;
-            sh:order 3 ;
-            sh:path ositrace:accuracySignals ],
-        [ skos:example "0.1" ;
-            sh:datatype xsd:float ;
-            sh:description "Accuracy of objects in the traffic space, which do not directly affect the traffic."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of accuracyObjects failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "accuracy objects"@en ;
-            sh:order 4 ;
-            sh:path ositrace:accuracyObjects ],
-        [ skos:example "0.1" ;
-            sh:datatype xsd:float ;
-            sh:description "Accuracy lane modell height"@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of accuracyLaneModelHeight failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "accuracy lane model height"@en ;
-            sh:order 2 ;
-            sh:path ositrace:accuracyLaneModelHeight ],
-        [ skos:example "0.01" ;
-            sh:datatype xsd:float ;
-            sh:description "Precision of measured road network (relative accuracy)."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of precision failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "precision"@en ;
-            sh:order 0 ;
-            sh:path ositrace:precision ],
-        [ skos:example "0.1" ;
-            sh:datatype xsd:float ;
-            sh:description "Accuracy of lane modell 2d."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of accuracyLaneModel2d failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "accuracy lane model 2d"@en ;
-            sh:order 1 ;
-            sh:path ositrace:accuracyLaneModel2d ],
-        [ skos:example "Calibration performed at origin" ;
-            sh:datatype xsd:string ;
-            sh:description "Description of any calibration steps performed prior to measurement."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of calibration failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "calibration"@en ;
-            sh:order 5 ;
-            sh:path ositrace:calibration ],
-        [ skos:example "https://github.com/mygroup/myproject/osi_trace_validation_report.xqar" ;
-            sh:datatype xsd:anyURI ;
-            sh:description "Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of validationReport failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "validation report"@en ;
-            sh:order 6 ;
-            sh:path ositrace:validationReport ],
-        [ skos:example "application/xqar" ;
-            sh:datatype xsd:string ;
-            sh:description "Type of OSI trace validation report, if any exists. As mime-type."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of validationReportType failed!"@en ;
-            sh:minCount 0 ;
-            sh:name "validation report type"@en ;
-            sh:order 7 ;
-            sh:path ositrace:validationReportType ] ;
-    sh:targetClass ositrace:Quality .
-
-ositrace:QuantityShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "1000" ;
-            sh:datatype xsd:integer ;
-            sh:minInclusive 0 ;
-            sh:description "Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of numberFrames failed!"@en ;
-            sh:name "number frames"@en ;
-            sh:order 0 ;
-            sh:path ositrace:numberFrames ],
-        [ skos:example "3" ;
-            sh:datatype xsd:integer ;
-            sh:minInclusive 1 ;
-            sh:description "Number of channels in the MCAP container (MCAP files only)."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of numberOfChannels failed!"@en ;
-            sh:name "number of channels"@en ;
-            sh:order 1 ;
-            sh:path ositrace:numberOfChannels ] ;
-    sh:targetClass ositrace:Quantity .
-
-ositrace:MovingObjectShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "42" ;
-            sh:datatype xsd:integer ;
-            sh:minInclusive 0 ;
-            sh:description "Moving object identifier in trace file."@en ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-            sh:message "Validation of identifier failed!"@en ;
-            sh:name "identifier"@en ;
-            sh:order 1 ;
-            sh:path ositrace:identifier ],
-        [ skos:example "PMSF Mercedes CLS Ego Vehicle" ;
-            sh:datatype xsd:string ;
-            sh:description "Description of moving object in the trace file."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of description failed!"@en ;
-            sh:name "description"@en ;
-            sh:order 2 ;
-            sh:path ositrace:description ] ;
-    sh:targetClass ositrace:MovingObject .
-
+	rdfs:comment "Represents a single channel in an MCAP container file. Each channel carries messages of one OSI top-level type at a specific OSI schema version. Linked from ositrace:Format via ositrace:hasChannel."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b9b804e7d9496 ;
+	sh:property _:b17338d7eba10 , _:b199492bee26a , _:b37db9245b439 , _:b77de4ff85777 , _:b7baf86f208d8 , _:bf4783791b509 ;
+	sh:targetClass ositrace:Channel .
+ositrace:ContentShape a sh:NodeShape ;
+	rdfs:comment "Attributes for the content of ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b380bed190ee5 ;
+	sh:node envited-x:ContentShape ;
+	sh:property _:b4791a55d160f , _:b5bd49cf5ec78 , _:b5f4ea897236a , _:b71f5268dd07b , _:b8073dadb9944 , _:b8dc5ab915abf , _:bbdd38560ab90 , _:bc4fbe80b2343 , _:bcbaa3c22caa2 , _:bdfd538410c78 , _:be481c8e745b6 ;
+	sh:targetClass ositrace:Content .
+ositrace:DataSourceShape a sh:NodeShape ;
+	rdfs:comment "Attributes for the data source of ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b6ba87147a78b ;
+	sh:node envited-x:DataSourceShape ;
+	sh:property _:b28053a98f771 , _:b33cf10830b7e ;
+	sh:targetClass ositrace:DataSource .
+ositrace:DomainSpecificationShape a sh:NodeShape ;
+	rdfs:comment "OSI trace DomainSpecification containing additional metadata information of the simulation asset."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b231d2e2f87b7 ;
+	sh:node envited-x:DomainSpecificationShape ;
+	sh:property _:b2f3241c08d38 , _:b3d89c45a2ef8 , _:b547a23663a21 , _:b5f2222497fd2 , _:b92960de2e143 , _:ba4e55a037bbc , _:ba8407c7ace37 , _:bc05133abed25 , _:be05cfe62e497 , _:bee93b7ce4e12 , _:bf697f09b5cd9 ;
+	sh:targetClass ositrace:DomainSpecification .
 ositrace:EventShape a sh:NodeShape ;
-    sh:closed false ;
-
-    sh:property [ skos:example "2024-05-11T13:20:03.250320Z" ;
-            sh:datatype xsd:dateTime ;
-            sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" ;
-            sh:message "Value must be a valid xsd:dateTime with a timezone (ending in 'Z' or '+/-HH:MM')."@en ;
-            sh:description "Exact timestamp of the event in the recorded trace."@en ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:name "time"@en ;
-            sh:order 1 ;
-            sh:path ositrace:time ],
-        [ skos:example "42" ;
-            sh:datatype xsd:string ;
-            sh:description "Unique tag of the event in trace file."@en ;
-            sh:minCount 1 ;
-            sh:maxCount 1 ;
-            sh:message "Validation of tag failed!"@en ;
-            sh:name "tag"@en ;
-            sh:order 2 ;
-            sh:path ositrace:tag ],
-        [ skos:example "Beginning of cut-in manoever."@en ;
-            sh:datatype xsd:string ;
-            sh:description "Description of event in the trace file."@en ;
-            sh:maxCount 1 ;
-            sh:message "Validation of description failed!"@en ;
-            sh:name "description"@en ;
-            sh:order 3 ;
-            sh:path ositrace:description ] ;
-    sh:targetClass ositrace:Event .
+	rdfs:comment "Attributes for event in ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:baf925b9a590e ;
+	sh:property _:b31eeaf755b38 , _:b973414301c10 , _:bfdfd815d655c ;
+	sh:targetClass ositrace:Event .
+ositrace:FormatShape a sh:NodeShape ;
+	rdfs:comment "Attributes for the format of ASAM OSI trace files, covering both single-channel .osi files and multi-channel MCAP containers."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bb98445383f88 ;
+	sh:node envited-x:FormatShape ;
+	sh:or _:bcf0571837f9c ;
+	sh:property _:b2075f4becf09 , _:b3ed06c02fe7e , _:b5f42e667cb6b , _:b6d3432e0436f , _:b80ff77c64d97 , _:b842701ef990b , _:b96b4a2149678 , _:ba0fb55549fd7 , _:bab263091a8c6 , _:baf298735147e , _:beabdcbb8ff42 ;
+	sh:targetClass ositrace:Format .
+ositrace:MovingObjectShape a sh:NodeShape ;
+	rdfs:comment "Attributes for moving objects in ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b6749e0c781c1 ;
+	sh:property _:b0cee19a6f1d8 , _:bed1b7e82f9dc ;
+	sh:targetClass ositrace:MovingObject .
+ositrace:OSITraceShape a sh:NodeShape ;
+	rdfs:comment "Attributes for ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b11d3a8c39344 ;
+	sh:node envited-x:SimulationAssetShape ;
+	sh:property _:b282f4e978df9 , _:b2dce89d82189 , _:b875da7b4b02a , _:b96802e714230 , _:bce2b4f78bfff , _:bfe55423530c8 ;
+	sh:targetClass ositrace:OSITrace .
+ositrace:QualityShape a sh:NodeShape ;
+	rdfs:comment "Attributes for the quality of ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b04ae8949188f ;
+	sh:node envited-x:QualityShape ;
+	sh:property _:b2bc6d93e6d31 , _:b2f64ff67cf17 , _:b3f9f1a903d47 , _:b40fd6dc63174 , _:b8f48d1325bee , _:b9037d403f4c4 , _:bc99bffb0851d , _:bfde3b04b56c7 ;
+	sh:targetClass ositrace:Quality .
+ositrace:QuantityShape a sh:NodeShape ;
+	rdfs:comment "Attributes for the quantity of ASAM OSI trace files."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b5108b2093145 ;
+	sh:node envited-x:QuantityShape ;
+	sh:property _:b6a12387924e1 , _:be3257079a407 ;
+	sh:targetClass ositrace:Quantity .
+_:b02d5b1ca6ed9 rdf:first "motorbike" ;
+	rdf:rest _:b2b610b65b8dc .
+_:b04ae8949188f rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b068dcdbac564 rdf:first "HOV" ;
+	rdf:rest _:ba15acf7c1982 .
+_:b07c8b64120c0 rdf:first "obstacle" ;
+	rdf:rest _:bbbfebbe50d21 .
+_:b0a500cb9223b rdf:first "zstd" ;
+	rdf:rest _:b15b13f96c193 .
+_:b0b43a495523d rdf:first _:b4c67a6c4f35e ;
+	rdf:rest rdf:nil .
+_:b0b43a495523d_1 rdf:first _:b4c67a6c4f35e_1 ;
+	rdf:rest rdf:nil .
+_:b0ba56405937b rdf:first "right-hand" ;
+	rdf:rest rdf:nil .
+_:b0cee19a6f1d8 sh:datatype xsd:integer ;
+	sh:description "Moving object identifier in trace file."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceIdentifier (MovingObject): Moving object identifier in trace file."@en ;
+	sh:minCount 1 ;
+	sh:minInclusive 0 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:identifier .
+_:b0e127a808c83 rdf:first "left-hand" ;
+	rdf:rest _:b0ba56405937b .
+_:b11d3a8c39344 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b15b13f96c193 rdf:first "lz4" ;
+	rdf:rest rdf:nil .
+_:b1688dd8bd0be rdf:first "motorway" ;
+	rdf:rest _:b2647e5345b6d .
+_:b16afa162d612 rdf:first "TXTH" ;
+	rdf:rest _:b1a9124e2efca .
+_:b16b25fba4c3c rdf:first "raw data" ;
+	rdf:rest rdf:nil .
+_:b17338d7eba10 sh:datatype xsd:integer ;
+	sh:description "Number of messages in this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "numberOfMessages (Channel): Number of messages in this channel."@en ;
+	sh:minInclusive 0 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path ositrace:numberOfMessages .
+_:b18dd449e2d9d rdf:first _:b7144c1a152a7 ;
+	rdf:rest rdf:nil .
+_:b19407f87bc8d rdf:first "tree" ;
+	rdf:rest _:b95a5a2e491bf .
+_:b199492bee26a sh:datatype xsd:string ;
+	sh:description "OSI schema version used by this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "osiVersion (Channel): OSI schema version used by this channel."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path ositrace:osiVersion .
+_:b19b0c0cf70d8 rdf:first "biking" ;
+	rdf:rest _:bd4819d10f0af .
+_:b1a9124e2efca rdf:first "MCAP" ;
+	rdf:rest rdf:nil .
+_:b1cefb97f98e5 rdf:first "townPlayStreet" ;
+	rdf:rest _:b2eb95ad121ac .
+_:b1d5bc8e9c607 rdf:first "stop" ;
+	rdf:rest _:bae8a766b7786 .
+_:b2075f4becf09 sh:datatype xsd:string ;
+	sh:description "Maximum protobuf version across all channels."@en ;
+	sh:maxCount 1 ;
+	sh:message "maxProtobufVersion (Format): Maximum protobuf version across all channels."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 10 ;
+	sh:path ositrace:maxProtobufVersion .
+_:b231d2e2f87b7 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b2647e5345b6d rdf:first "pedestrian" ;
+	rdf:rest _:b29db2d993c1a .
+_:b28053a98f771 sh:datatype xsd:string ;
+	sh:description "Main acquisition device"@en ;
+	sh:maxCount 1 ;
+	sh:message "measurementSystem (DataSource): Main acquisition device"@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path ositrace:measurementSystem .
+_:b282f4e978df9 sh:description "Links an asset or its subclass to its associated ResourceDescription, which provides essential metadata such as name and description, inline or as a link."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasResourceDescription (OSITrace): Links an asset or its subclass to its associated ResourceDescription, which provides essential metadata such as name and description, inline or as a link."@en ;
+	sh:minCount 1 ;
+	sh:or _:b6137123eff8c ;
+	sh:order 3 ;
+	sh:path envited-x:hasResourceDescription .
+_:b29db2d993c1a rdf:first "rural" ;
+	rdf:rest _:b668c6b465a34 .
+_:b2b473163dc64 rdfs:comment "Multi-channel MCAP container."@en ;
+	sh:property _:b7ecaa3428f47 , _:bd43b4d1c00d9 .
+_:b2b610b65b8dc rdf:first "none" ;
+	rdf:rest _:b07c8b64120c0 .
+_:b2bc6d93e6d31 sh:datatype xsd:float ;
+	sh:description "Accuracy lane modell height"@en ;
+	sh:maxCount 1 ;
+	sh:message "accuracyLaneModelHeight (Quality): Accuracy lane modell height"@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path ositrace:accuracyLaneModelHeight .
+_:b2c5492af7d87 rdf:first "train" ;
+	rdf:rest _:be7355685bb76 .
+_:b2dce89d82189 sh:description "Links an asset to one or more metadata extensions (e.g., georeference metadata, sensor calibration) that provide additional structured information."@en ;
+	sh:message "hasDomainSpecification (OSITrace): Links an asset to one or more metadata extensions (e.g., georeference metadata, sensor calibration) that provide additional structured information."@en ;
+	sh:node envited-x:DomainSpecificationShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 4 ;
+	sh:path envited-x:hasDomainSpecification .
+_:b2eb95ad121ac rdf:first "townPrivate" ;
+	rdf:rest _:bedc19f29d19d .
+_:b2f3241c08d38 sh:description "Links a DomainSpecification to the format details of the asset."@en ;
+	sh:message "hasFormat (DomainSpecification): Links a DomainSpecification to the format details of the asset."@en ;
+	sh:node envited-x:FormatShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 7 ;
+	sh:path envited-x:hasFormat .
+_:b2f64ff67cf17 sh:datatype xsd:float ;
+	sh:description "Accuracy of lane modell 2d."@en ;
+	sh:maxCount 1 ;
+	sh:message "accuracyLaneModel2d (Quality): Accuracy of lane modell 2d."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path ositrace:accuracyLaneModel2d .
+_:b31eeaf755b38 sh:datatype xsd:string ;
+	sh:description "Human-readable description of this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceDescription (Event): Human-readable description of this channel."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path ositrace:description .
+_:b331d5dcaeacf rdf:first "bus" ;
+	rdf:rest _:b4b511c16e126 .
+_:b33cf10830b7e sh:datatype xsd:string ;
+	sh:description "Basic data for the creation of the trace."@en ;
+	sh:message "usedDataSources (DataSource): Basic data for the creation of the trace."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:usedDataSources .
+_:b34178aa99f37 rdf:first "van" ;
+	rdf:rest _:bb677b78010a7 .
+_:b343107b05bd1 rdf:first "uncompressed" ;
+	rdf:rest _:b0a500cb9223b .
+_:b3556ea0010fe rdf:first "object list" ;
+	rdf:rest _:ba9ea6c36ed18 .
+_:b366efb4c3244 rdf:first "building" ;
+	rdf:rest _:b331d5dcaeacf .
+_:b37db9245b439 sh:description "OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."@en ;
+	sh:in _:bd56ee24bbe4b ;
+	sh:maxCount 1 ;
+	sh:message "messageType (Channel): OSI top-level message type carried by this channel. Same ten ASAM OSI v3.8.0 types as ositrace:formatType on ositrace:SingleChannelFormatShape, in the bare lexical form: formatType == 'ASAM OSI ' + messageType."@en ;
+	sh:minCount 1 ;
+	sh:order 1 ;
+	sh:path ositrace:messageType .
+_:b380bed190ee5 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b380f95b82f14 rdf:first "railing" ;
+	rdf:rest _:b4b3069ee9071 .
+_:b3d89c45a2ef8 sh:description "Attributes describing the content of the OSI trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasContent (DomainSpecification): Attributes describing the content of the OSI trace."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:ContentShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 0 ;
+	sh:path ositrace:hasContent .
+_:b3ed06c02fe7e sh:description "Channels in the MCAP container. Each channel carries messages of one OSI top-level type."@en ;
+	sh:message "hasChannel (Format): Channels in the MCAP container. Each channel carries messages of one OSI top-level type."@en ;
+	sh:node ositrace:ChannelShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path ositrace:hasChannel .
+_:b3f9f1a903d47 sh:datatype xsd:float ;
+	sh:description "Precision of measured road network (relative accuracy)."@en ;
+	sh:maxCount 1 ;
+	sh:message "precision (Quality): Precision of measured road network (relative accuracy)."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:precision .
+_:b40fd6dc63174 sh:datatype xsd:anyURI ;
+	sh:description "Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."@en ;
+	sh:maxCount 1 ;
+	sh:message "validationReport (Quality): Link to OSI trace file validation report, if any exists. The report should be of type 'vv-report:VvReport' according to https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 6 ;
+	sh:path ositrace:validationReport .
+_:b4127eedc6f01 rdf:first "bus" ;
+	rdf:rest _:b819b0078981e .
+_:b4791a55d160f sh:description "Covered object classes. Complete ASAM OpenDRIVE e_objectType enumeration (27 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'patch' (use 'roadSurface'), 'railing' and 'soundBarrier' (use 'barrier'), 'streetLamp' and 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian' with no replacement named - describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."@en ;
+	sh:in _:bd0ca605180a1 ;
+	sh:message "levelOfDetail (Content): Covered object classes. Complete ASAM OpenDRIVE e_objectType enumeration (27 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Object.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §13 'Objects', plus 'truck', which is not an e_objectType in any schema pinned by this repository and is carried as an ENVITED-X ecosystem extension for parity with hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'patch' (use 'roadSurface'), 'railing' and 'soundBarrier' (use 'barrier'), 'streetLamp' and 'wind' (use 'pole'), and 'car', 'bus', 'trailer', 'bike', 'motorbike', 'tram', 'train', 'pedestrian' with no replacement named - describe traffic participants as ositrace:MovingObject instead. Prefer the non-deprecated values in new self-descriptions."@en ;
+	sh:order 2 ;
+	sh:path ositrace:levelOfDetail .
+_:b4b1f7c0f6d9f rdf:first "MCAP" ;
+	rdf:rest rdf:nil .
+_:b4b3069ee9071 rdf:first "roadMark" ;
+	rdf:rest _:b5d5575081467 .
+_:b4b511c16e126 rdf:first "car" ;
+	rdf:rest _:bf17ee7f82511 .
+_:b4c67a6c4f35e sh:node manifest:LinkShape .
+_:b4c67a6c4f35e_1 sh:node manifest:LinkShape .
+_:b4ecca6a8c44d rdf:first "TrafficCommandUpdate" ;
+	rdf:rest _:bd588b67dacde .
+_:b4fbc4c1dd81a rdf:first "soundBarrier" ;
+	rdf:rest _:be9d598432590 .
+_:b5108b2093145 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b51229527360a rdf:first "ASAM OSI TrafficUpdate" ;
+	rdf:rest rdf:nil .
+_:b5325d6c7e091 rdf:first "OSI" ;
+	rdf:rest _:b16afa162d612 .
+_:b547a23663a21 sh:description "Links a DomainSpecification to the quality or accuracy aspects of the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasQuality (DomainSpecification): Links a DomainSpecification to the quality or accuracy aspects of the asset."@en ;
+	sh:node envited-x:QualityShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 9 ;
+	sh:path envited-x:hasQuality .
+_:b57a82c839c39 rdf:first "TXTH" ;
+	rdf:rest rdf:nil .
+_:b57b5bf99fcbc rdf:first "sidewalk" ;
+	rdf:rest _:bad565667cffa .
+_:b5bd49cf5ec78 sh:description "Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'sidewalk' (use 'walking'), 'bus' and 'taxi' (use the lane <access> element), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), and 'special1', 'special2', 'special3' with no replacement named. 'bidirectional' is deprecated by the v1.9.0 specification §11.8 in favour of the lane @direction attribute, but is not marked deprecated in the schema. Prefer the non-deprecated spellings in new self-descriptions."@en ;
+	sh:in _:b068dcdbac564 ;
+	sh:message "laneTypes (Content): Covered lane types. Complete ASAM OpenDRIVE e_laneType enumeration (31 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Lane.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §11.8 'Additional lane properties'. Identical to the v1.8+ branch enforced on hdmap:DomainSpecificationShape. Deprecated by ASAM OpenDRIVE V1.9.0 and accepted here only so that existing assets stay valid: 'sidewalk' (use 'walking'), 'bus' and 'taxi' (use the lane <access> element), 'mwyEntry' (use 'entry'), 'mwyExit' (use 'exit'), and 'special1', 'special2', 'special3' with no replacement named. 'bidirectional' is deprecated by the v1.9.0 specification §11.8 in favour of the lane @direction attribute, but is not marked deprecated in the schema. Prefer the non-deprecated spellings in new self-descriptions."@en ;
+	sh:order 1 ;
+	sh:path ositrace:laneTypes .
+_:b5d5575081467 rdf:first "roadSurface" ;
+	rdf:rest _:b4fbc4c1dd81a .
+_:b5dd4a6504474 rdf:first "shoulder" ;
+	rdf:rest _:b57b5bf99fcbc .
+_:b5f0b24530576 rdf:first _:bef017110bbaa_1 ;
+	rdf:rest _:b0b43a495523d .
+_:b5f2222497fd2 sh:description "Links an OSI trace DomainSpecification to its georeferencing information."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasGeoreference (DomainSpecification): Links an OSI trace DomainSpecification to its georeferencing information."@en ;
+	sh:node georeference:GeoreferenceShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 5 ;
+	sh:path ositrace:hasGeoreference .
+_:b5f42e667cb6b sh:datatype xsd:string ;
+	sh:description "Minimum OSI schema version across all channels."@en ;
+	sh:maxCount 1 ;
+	sh:message "minOsiVersion (Format): Minimum OSI schema version across all channels."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 7 ;
+	sh:path ositrace:minOsiVersion .
+_:b5f4ea897236a sh:description "Description of events of interest in trace file."@en ;
+	sh:message "hasEvent (Content): Description of events of interest in trace file."@en ;
+	sh:node ositrace:EventShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 10 ;
+	sh:path ositrace:hasEvent .
+_:b5fe3ce62328b rdf:first "ASAM OSI StreamingUpdate" ;
+	rdf:rest _:b69c542459b61 .
+_:b6137123eff8c rdf:first _:bef017110bbaa ;
+	rdf:rest _:b18dd449e2d9d .
+_:b6222f0aebde6 rdf:first "driving" ;
+	rdf:rest _:be7bd53f0fe9d .
+_:b6485b61ca6a7 sh:node envited-x:ManifestShape .
+_:b649a006e56a7 rdf:first "lowSpeed" ;
+	rdf:rest _:b1688dd8bd0be .
+_:b6621c41a4e28 rdf:first "rail" ;
+	rdf:rest _:bf192b1bb718e .
+_:b66475050faf9 rdf:first "tram" ;
+	rdf:rest _:bc7f058226386 .
+_:b668c6b465a34 rdf:first "townArterial" ;
+	rdf:rest _:bbcf8e80c3c63 .
+_:b6714eee301e2 rdf:first "StreamingUpdate" ;
+	rdf:rest rdf:nil .
+_:b6749e0c781c1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b6819e80cc63f rdf:first "SensorViewConfiguration" ;
+	rdf:rest _:b876d70825021 .
+_:b69c0c3ce71be rdf:first "ASAM OSI SensorData" ;
+	rdf:rest _:b78b2e1e61299 .
+_:b69c542459b61 rdf:first "ASAM OSI TrafficCommand" ;
+	rdf:rest _:ba48c0eed19b1 .
+_:b6a12387924e1 sh:datatype xsd:integer ;
+	sh:description "Number of channels in the MCAP container (MCAP files only)."@en ;
+	sh:maxCount 1 ;
+	sh:message "numberOfChannels (Quantity): Number of channels in the MCAP container (MCAP files only)."@en ;
+	sh:minInclusive 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path ositrace:numberOfChannels .
+_:b6a75bf0f42bc rdf:first "OSI" ;
+	rdf:rest _:b57a82c839c39 .
+_:b6ba87147a78b rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b6d3432e0436f sh:datatype xsd:string ;
+	sh:description "MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace')."@en ;
+	sh:maxCount 1 ;
+	sh:message "osiTraceFormatVersion (Format): MCAP metadata record name identifying the file as an OSI trace (always 'net.asam.osi.trace')."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path ositrace:osiTraceFormatVersion .
+_:b6e0238dcabef rdf:first _:b6485b61ca6a7 ;
+	rdf:rest _:b0b43a495523d_1 .
+_:b7144c1a152a7 sh:node envited-x:ExtendedLinkShape .
+_:b71f5268dd07b sh:description "Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+	sh:in _:b3556ea0010fe ;
+	sh:message "granularity (Content): Level of granularity of the trace content, aligned with what the ASAM OSI top-level message types carry: 'object list' for GroundTruth and for the DetectedMovingObject/DetectedStationaryObject lists of SensorData; 'detection list' for the SensorData FeatureData detections; 'raw data' for the unprocessed sensor input of SensorView (radar and lidar Reflection lists, camera image data, ultrasonic). Without 'raw data' a SensorView trace cannot satisfy this mandatory property. See ASAM OSI v3.8.0 osi_sensorview.proto, osi_sensordata.proto and osi_groundtruth.proto, pinned at submodules/asam-openx-standards/submodules/open-simulation-interface."@en ;
+	sh:minCount 1 ;
+	sh:order 4 ;
+	sh:path ositrace:granularity .
+_:b751a98e6bb53 rdf:first "bicycle" ;
+	rdf:rest _:b649a006e56a7 .
+_:b77de4ff85777 sh:datatype xsd:string ;
+	sh:description "Protobuf version used for serialization in this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "protobufVersion (Channel): Protobuf version used for serialization in this channel."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path ositrace:protobufVersion .
+_:b78b2e1e61299 rdf:first "ASAM OSI SensorView" ;
+	rdf:rest _:b8d1054bb6ed1 .
+_:b7b472bddf1f6 rdf:first "wind" ;
+	rdf:rest rdf:nil .
+_:b7baf86f208d8 sh:datatype xsd:string ;
+	sh:description "Human-readable description of this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceDescription (Channel): Human-readable description of this channel."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path ositrace:description .
+_:b7ecaa3428f47 sh:in _:b4b1f7c0f6d9f ;
+	sh:minCount 1 ;
+	sh:path ositrace:fileFormat .
+_:b7f68116a3a56 rdf:first "trafficIsland" ;
+	rdf:rest _:b904aaf01080f .
+_:b8001c3fa86e7 rdf:first "mwyExit" ;
+	rdf:rest _:b8a47e1513079 .
+_:b8073dadb9944 sh:datatype xsd:dateTime ;
+	sh:description "Exact start timestamp of the recorded trace"@en ;
+	sh:maxCount 1 ;
+	sh:message "startTime (Content): Exact start timestamp of the recorded trace"@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 6 ;
+	sh:path ositrace:startTime ;
+	sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:b80ff77c64d97 sh:datatype xsd:dateTime ;
+	sh:description "Zero-time reference point for the MCAP recording."@en ;
+	sh:maxCount 1 ;
+	sh:message "zeroTime (Format): Zero-time reference point for the MCAP recording."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 6 ;
+	sh:path ositrace:zeroTime .
+_:b819b0078981e rdf:first "connectingRamp" ;
+	rdf:rest _:bab9b5f569fc1 .
+_:b842701ef990b sh:datatype xsd:string ;
+	sh:description "Minimum protobuf version across all channels."@en ;
+	sh:maxCount 1 ;
+	sh:message "minProtobufVersion (Format): Minimum protobuf version across all channels."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 9 ;
+	sh:path ositrace:minProtobufVersion .
+_:b875da7b4b02a sh:description "Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external manifest by its IRI, typically a DID."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasManifest (OSITrace): Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external manifest by its IRI, typically a DID."@en ;
+	sh:minCount 1 ;
+	sh:or _:bb1906e33d0bb ;
+	sh:order 5 ;
+	sh:path envited-x:hasManifest .
+_:b876d70825021 rdf:first "HostVehicleData" ;
+	rdf:rest _:bd963571ead49 .
+_:b88dd0db31cac rdf:first "special2" ;
+	rdf:rest _:bcee87a4986a9 .
+_:b8a47e1513079 rdf:first "none" ;
+	rdf:rest _:b96f95516e5af .
+_:b8a57b5f6e5ad rdf:first "bike" ;
+	rdf:rest _:b366efb4c3244 .
+_:b8d1054bb6ed1 rdf:first "ASAM OSI SensorViewConfiguration" ;
+	rdf:rest _:b5fe3ce62328b .
+_:b8dc5ab915abf sh:description "Target moving object(s) in trace file."@en ;
+	sh:message "hasTargetMovingObject (Content): Target moving object(s) in trace file."@en ;
+	sh:node ositrace:MovingObjectShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 9 ;
+	sh:path ositrace:hasTargetMovingObject .
+_:b8f48d1325bee sh:datatype xsd:float ;
+	sh:description "Accuracy of objects in the traffic space, which do not directly affect the traffic."@en ;
+	sh:maxCount 1 ;
+	sh:message "accuracyObjects (Quality): Accuracy of objects in the traffic space, which do not directly affect the traffic."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path ositrace:accuracyObjects .
+_:b9037d403f4c4 sh:datatype xsd:string ;
+	sh:description "Description of any calibration steps performed prior to measurement."@en ;
+	sh:maxCount 1 ;
+	sh:message "calibration (Quality): Description of any calibration steps performed prior to measurement."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path ositrace:calibration .
+_:b904aaf01080f rdf:first "trailer" ;
+	rdf:rest _:b2c5492af7d87 .
+_:b91a1e3930c97 rdf:first "special1" ;
+	rdf:rest _:b88dd0db31cac .
+_:b92960de2e143 sh:description "Links a DomainSpecification to the quantity of the asset."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasQuantity (DomainSpecification): Links a DomainSpecification to the quantity of the asset."@en ;
+	sh:node envited-x:QuantityShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 10 ;
+	sh:path envited-x:hasQuantity .
+_:b9362b8a0c6fd rdf:first "ASAM OSI HostVehicleData" ;
+	rdf:rest _:bcea103531dcf .
+_:b95a5a2e491bf rdf:first "truck" ;
+	rdf:rest _:b34178aa99f37 .
+_:b96802e714230 sh:description "Links an OSI trace asset to a standard ResourceDescription instance from envited-x."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasResourceDescription (OSITrace): Links an OSI trace asset to a standard ResourceDescription instance from envited-x."@en ;
+	sh:minCount 1 ;
+	sh:or _:b5f0b24530576 ;
+	sh:order 0 ;
+	sh:path ositrace:hasResourceDescription .
+_:b96b4a2149678 sh:datatype xsd:string ;
+	sh:description "Version of data format (OSI version / protobuf version)."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceVersion (Format): Version of data format (OSI version / protobuf version)."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path ositrace:version .
+_:b96f95516e5af rdf:first "offRamp" ;
+	rdf:rest _:ba507ef2e1f22 .
+_:b973414301c10 sh:datatype xsd:string ;
+	sh:description "Unique tag of the event in trace file."@en ;
+	sh:maxCount 1 ;
+	sh:message "tag (Event): Unique tag of the event in trace file."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path ositrace:tag .
+_:b9b804e7d9496 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b9f2b3b8982e2 rdf:first "MotionRequest" ;
+	rdf:rest _:b6714eee301e2 .
+_:ba00e946f3d6b rdf:first "SensorView" ;
+	rdf:rest _:ba5baf957b88c .
+_:ba0fb55549fd7 sh:description "Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
+	sh:in _:b5325d6c7e091 ;
+	sh:maxCount 1 ;
+	sh:message "fileFormat (Format): Serialization of the single-channel trace file, per ASAM OSI v3.8.0 'OSI trace file formats' section 'Single channel trace file formats': 'OSI' for the binary .osi format (messages prefixed by a four-byte little-endian unsigned length), 'TXTH' for the human-readable .txth format (protocol buffer text format, newline-separated). Not required, so single-channel self-descriptions that omit it stay valid; but because this shape is sh:closed false the property was previously accepted with any value, so declaring it outside {OSI, TXTH} is now a violation. The multi-channel counterpart is the mandatory 'MCAP' discriminator on ositrace:MultiChannelFormatShape."@en ;
+	sh:order 1 ;
+	sh:path ositrace:fileFormat .
+_:ba15acf7c1982 rdf:first "bidirectional" ;
+	rdf:rest _:b19b0c0cf70d8 .
+_:ba48c0eed19b1 rdf:first "ASAM OSI TrafficCommandUpdate" ;
+	rdf:rest _:b51229527360a .
+_:ba4e55a037bbc sh:description "Quantitative metrics describing the OSI trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasQuantity (DomainSpecification): Quantitative metrics describing the OSI trace."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:QuantityShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path ositrace:hasQuantity .
+_:ba507ef2e1f22 rdf:first "onRamp" ;
+	rdf:rest _:bb99c742c4e80 .
+_:ba5baf957b88c rdf:first "SensorData" ;
+	rdf:rest _:b6819e80cc63f .
+_:ba8407c7ace37 sh:description "Data sources used to create the OSI trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasDataSource (DomainSpecification): Data sources used to create the OSI trace."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:DataSourceShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 4 ;
+	sh:path ositrace:hasDataSource .
+_:ba877d9dbf91a rdf:first "exit" ;
+	rdf:rest _:bc5f78a9385f7 .
+_:ba9ea6c36ed18 rdf:first "detection list" ;
+	rdf:rest _:b16b25fba4c3c .
+_:bab263091a8c6 sh:description "MCAP chunk compression algorithm."@en ;
+	sh:in _:b343107b05bd1 ;
+	sh:maxCount 1 ;
+	sh:message "compression (Format): MCAP chunk compression algorithm."@en ;
+	sh:order 4 ;
+	sh:path ositrace:compression .
+_:bab9b5f569fc1 rdf:first "curb" ;
+	rdf:rest _:b6222f0aebde6 .
+_:bad565667cffa rdf:first "slipLane" ;
+	rdf:rest _:b91a1e3930c97 .
+_:bae236d50c21b rdf:first "pole" ;
+	rdf:rest _:b380f95b82f14 .
+_:bae8a766b7786 rdf:first "taxi" ;
+	rdf:rest _:b66475050faf9 .
+_:baf298735147e sh:description "Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."@en ;
+	sh:in _:bc0d4a0f6fb31 ;
+	sh:maxCount 1 ;
+	sh:message "ositraceFormatType (Format): Top-level OSI message type carried by the trace file. Complete set of the ten single-channel trace file types enumerated in ASAM OSI v3.8.0 'OSI trace file naming conventions' (sv, svc, gt, hvd, sd, tc, tcu, tu, mr, su), pinned at submodules/asam-openx-standards/submodules/open-simulation-interface. This property and ositrace:messageType on ositrace:ChannelShape model the same ten OSI types in two lexical forms: formatType == 'ASAM OSI ' + messageType. Unifying them would invalidate existing self-descriptions, so both spellings are kept; a future major version should collapse them."@en ;
+	sh:order 0 ;
+	sh:path ositrace:formatType .
+_:baf925b9a590e rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bb0f9886d4f39 rdf:first "mwyEntry" ;
+	rdf:rest _:b8001c3fa86e7 .
+_:bb1906e33d0bb rdf:first _:bb3c510e62525 ;
+	rdf:rest _:bcd9d73c7e17f .
+_:bb3c510e62525 sh:node envited-x:SimulationManifestShape .
+_:bb677b78010a7 rdf:first "vegetation" ;
+	rdf:rest _:b7b472bddf1f6 .
+_:bb779c19c1fe5 rdf:first "gantry" ;
+	rdf:rest _:b02d5b1ca6ed9 .
+_:bb98445383f88 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bb99c742c4e80 rdf:first "parking" ;
+	rdf:rest _:b6621c41a4e28 .
+_:bbbfebbe50d21 rdf:first "parkingSpace" ;
+	rdf:rest _:be3de984b45e3 .
+_:bbcf8e80c3c63 rdf:first "townCollector" ;
+	rdf:rest _:bf41a24bc8835 .
+_:bbdd38560ab90 sh:description "Traffic direction, i.e. right-hand or left-hand traffic"@en ;
+	sh:in _:b0e127a808c83 ;
+	sh:maxCount 1 ;
+	sh:message "trafficDirection (Content): Traffic direction, i.e. right-hand or left-hand traffic"@en ;
+	sh:order 3 ;
+	sh:path ositrace:trafficDirection .
+_:bbef7561e9e25 rdf:first _:b2b473163dc64 ;
+	rdf:rest rdf:nil .
+_:bc05133abed25 sh:description "Quality metrics of the OSI trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasQuality (DomainSpecification): Quality metrics of the OSI trace."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:QualityShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path ositrace:hasQuality .
+_:bc0d4a0f6fb31 rdf:first "ASAM OSI GroundTruth" ;
+	rdf:rest _:b9362b8a0c6fd .
+_:bc40eb6f78277 sh:minCount 1 ;
+	sh:path ositrace:version .
+_:bc4fbe80b2343 sh:description "Covered/used road types, defined over the ASAM OpenDRIVE element t_road_type. Complete e_roadType enumeration (13 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §10.4 'Road type'. No e_roadType value is deprecated."@en ;
+	sh:in _:b751a98e6bb53 ;
+	sh:message "roadTypes (Content): Covered/used road types, defined over the ASAM OpenDRIVE element t_road_type. Complete e_roadType enumeration (13 values) as defined in submodules/asam-openx-standards/standards/asam-opendrive/schema/OpenDRIVE_Road.xsd (ASAM OpenDRIVE V1.9.0) and specified in ASAM OpenDRIVE v1.9.0 §10.4 'Road type'. No e_roadType value is deprecated."@en ;
+	sh:order 0 ;
+	sh:path ositrace:roadTypes .
+_:bc57458d0a1ca rdf:first "shared" ;
+	rdf:rest _:b5dd4a6504474 .
+_:bc5f78a9385f7 rdf:first "median" ;
+	rdf:rest _:bb0f9886d4f39 .
+_:bc753e4ea5f17 rdf:first "roadWorks" ;
+	rdf:rest _:bc57458d0a1ca .
+_:bc7f058226386 rdf:first "walking" ;
+	rdf:rest rdf:nil .
+_:bc99bffb0851d sh:datatype xsd:float ;
+	sh:description "Accuracy of traffic relevant objects, signs and signals."@en ;
+	sh:maxCount 1 ;
+	sh:message "accuracySignals (Quality): Accuracy of traffic relevant objects, signs and signals."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path ositrace:accuracySignals .
+_:bcbaa3c22caa2 sh:description "Host moving object in trace file."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasHostMovingObject (Content): Host moving object in trace file."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:MovingObjectShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 8 ;
+	sh:path ositrace:hasHostMovingObject .
+_:bcd9d73c7e17f rdf:first _:beee0e32f0440 ;
+	rdf:rest rdf:nil .
+_:bce2b4f78bfff sh:description "Links an OSI Trace asset to its manifest: an inline envited-x:Manifest, or a manifest:Link pointing to an external manifest representation."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasManifest (OSITrace): Links an OSI Trace asset to its manifest: an inline envited-x:Manifest, or a manifest:Link pointing to an external manifest representation."@en ;
+	sh:minCount 1 ;
+	sh:or _:b6e0238dcabef ;
+	sh:order 2 ;
+	sh:path ositrace:hasManifest .
+_:bcea103531dcf rdf:first "ASAM OSI MotionRequest" ;
+	rdf:rest _:b69c0c3ce71be .
+_:bcee87a4986a9 rdf:first "special3" ;
+	rdf:rest _:b1d5bc8e9c607 .
+_:bcf0571837f9c rdf:first _:beac0105f3131 ;
+	rdf:rest _:bbef7561e9e25 .
+_:bd0ca605180a1 rdf:first "barrier" ;
+	rdf:rest _:b8a57b5f6e5ad .
+_:bd43b4d1c00d9 sh:minCount 1 ;
+	sh:path ositrace:hasChannel .
+_:bd4819d10f0af rdf:first "border" ;
+	rdf:rest _:b4127eedc6f01 .
+_:bd56ee24bbe4b rdf:first "GroundTruth" ;
+	rdf:rest _:ba00e946f3d6b .
+_:bd588b67dacde rdf:first "TrafficUpdate" ;
+	rdf:rest _:b9f2b3b8982e2 .
+_:bd963571ead49 rdf:first "TrafficCommand" ;
+	rdf:rest _:b4ecca6a8c44d .
+_:bdbb47ad1e8cf rdf:first "pedestrian" ;
+	rdf:rest _:bae236d50c21b .
+_:bdfd538410c78 sh:datatype xsd:string ;
+	sh:description "Identifier of scenario performed in the trace file"@en ;
+	sh:message "scenarioIdentifier (Content): Identifier of scenario performed in the trace file"@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path ositrace:scenarioIdentifier .
+_:be05cfe62e497 sh:description "Links a DomainSpecification to how the asset was created."@en ;
+	sh:maxCount 1 ;
+	sh:message "hasDataSource (DomainSpecification): Links a DomainSpecification to how the asset was created."@en ;
+	sh:node envited-x:DataSourceShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 8 ;
+	sh:path envited-x:hasDataSource .
+_:be3257079a407 sh:datatype xsd:integer ;
+	sh:description "Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."@en ;
+	sh:maxCount 1 ;
+	sh:message "numberFrames (Quantity): Number of frames/messages in the trace file. For MCAP files, this is the total across all channels."@en ;
+	sh:minInclusive 0 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:numberFrames .
+_:be3579b9e8358 sh:in _:b6a75bf0f42bc ;
+	sh:path ositrace:fileFormat .
+_:be3de984b45e3 rdf:first "patch" ;
+	rdf:rest _:bdbb47ad1e8cf .
+_:be481c8e745b6 sh:datatype xsd:dateTime ;
+	sh:description "Exact stop timestamp of the recorded trace"@en ;
+	sh:maxCount 1 ;
+	sh:message "stopTime (Content): Exact stop timestamp of the recorded trace"@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 7 ;
+	sh:path ositrace:stopTime ;
+	sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:be7355685bb76 rdf:first "tram" ;
+	rdf:rest _:b19407f87bc8d .
+_:be7bd53f0fe9d rdf:first "entry" ;
+	rdf:rest _:ba877d9dbf91a .
+_:be9d598432590 rdf:first "streetLamp" ;
+	rdf:rest _:b7f68116a3a56 .
+_:beabdcbb8ff42 sh:datatype xsd:string ;
+	sh:description "Maximum OSI schema version across all channels."@en ;
+	sh:maxCount 1 ;
+	sh:message "maxOsiVersion (Format): Maximum OSI schema version across all channels."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 8 ;
+	sh:path ositrace:maxOsiVersion .
+_:beac0105f3131 rdfs:comment "Single-channel trace file (.osi binary or .txth text)."@en ;
+	sh:property _:bc40eb6f78277 , _:be3579b9e8358 , _:bf699f2bce5c6 .
+_:bed1b7e82f9dc sh:datatype xsd:string ;
+	sh:description "Human-readable description of this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceDescription (MovingObject): Human-readable description of this channel."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path ositrace:description .
+_:bedc19f29d19d rdf:first "town" ;
+	rdf:rest _:bf3415bb29914 .
+_:bee93b7ce4e12 sh:description "File format details of the OSI trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasFormat (DomainSpecification): File format details of the OSI trace."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:FormatShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path ositrace:hasFormat .
+_:beee0e32f0440 sh:node envited-x:ManifestLinkReferenceShape .
+_:bef017110bbaa sh:node envited-x:ResourceDescriptionShape .
+_:bef017110bbaa_1 sh:node envited-x:ResourceDescriptionShape .
+_:bf17ee7f82511 rdf:first "crosswalk" ;
+	rdf:rest _:bb779c19c1fe5 .
+_:bf192b1bb718e rdf:first "restricted" ;
+	rdf:rest _:bc753e4ea5f17 .
+_:bf334787419e6 rdf:first "townLocal" ;
+	rdf:rest _:b1cefb97f98e5 .
+_:bf3415bb29914 rdf:first "unknown" ;
+	rdf:rest rdf:nil .
+_:bf41a24bc8835 rdf:first "townExpressway" ;
+	rdf:rest _:bf334787419e6 .
+_:bf4783791b509 sh:datatype xsd:string ;
+	sh:description "Unique MCAP topic name identifying this channel."@en ;
+	sh:maxCount 1 ;
+	sh:message "topic (Channel): Unique MCAP topic name identifying this channel."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:topic .
+_:bf697f09b5cd9 sh:description "Links a DomainSpecification to the content of the asset."@en ;
+	sh:message "hasContent (DomainSpecification): Links a DomainSpecification to the content of the asset."@en ;
+	sh:minCount 1 ;
+	sh:node envited-x:ContentShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 6 ;
+	sh:path envited-x:hasContent .
+_:bf699f2bce5c6 sh:minCount 1 ;
+	sh:path ositrace:formatType .
+_:bfde3b04b56c7 sh:datatype xsd:string ;
+	sh:description "Type of OSI trace validation report, if any exists. As mime-type."@en ;
+	sh:maxCount 1 ;
+	sh:message "validationReportType (Quality): Type of OSI trace validation report, if any exists. As mime-type."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 7 ;
+	sh:path ositrace:validationReportType .
+_:bfdfd815d655c sh:datatype xsd:dateTime ;
+	sh:description "Exact timestamp of the event in the recorded trace."@en ;
+	sh:maxCount 1 ;
+	sh:message "time (Event): Exact timestamp of the event in the recorded trace."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path ositrace:time ;
+	sh:pattern ".*(Z|[+-]\\d{2}:\\d{2})$" .
+_:bfe55423530c8 sh:description "Links an OSI trace asset to its specific metadata (DomainSpecification), which may contain additional OSI trace-specific attributes."@en ;
+	sh:maxCount 1 ;
+	sh:message "ositraceHasDomainSpecification (OSITrace): Links an OSI trace asset to its specific metadata (DomainSpecification), which may contain additional OSI trace-specific attributes."@en ;
+	sh:minCount 1 ;
+	sh:node ositrace:DomainSpecificationShape ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path ositrace:hasDomainSpecification .

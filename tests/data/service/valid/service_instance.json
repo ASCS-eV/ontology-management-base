@@ -2,8 +2,8 @@
    "@context": [
       "https://w3id.org/gaia-x/development#",
       "https://w3id.org/gaia-x4plcaad/ontologies/service/v2/",
-      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
       {
          "@vocab": null
       }
@@ -54,8 +54,8 @@
       "iri": "did:web:test.fixture.net:Manifest:test_service_manifest_reference",
       "note": "Reference to the service manifest.",
       "conformsTo": [
-         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v6/"
       ],
       "hasAccessRole": {
          "@type": "manifest:AccessRole",

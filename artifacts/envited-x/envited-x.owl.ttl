@@ -1,407 +1,830 @@
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix gx: <https://w3id.org/gaia-x/development#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix org: <http://www.w3.org/ns/org#> .
+@prefix gx: <https://w3id.org/gaia-x/development#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-
-
-# Ontology metadata
-<https://w3id.org/ascs-ev/envited-x/envited-x/v3> a owl:Ontology ;
-    rdfs:label "Ontology definition for envited-x"@en ;
-    rdfs:comment "ENVITED-X Data Space ontology with common classes for defining a digital asset in the simulation domain."@en ;
-
-    dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
-    dcterms:contributor [
-        a foaf:Person ;
-        foaf:name "Carlo van Driesten" ;
-        org:memberOf <https://www.bmwgroup.com/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Mirco Nierenz" ;
-        org:memberOf <https://triangraphics.de/> ;
-    ] , [
-        a foaf:Person ;
-        foaf:name "Erik Konietzko" ;
-        org:memberOf <https://www.ipk.fraunhofer.de/> ;
-    ] ;
-
-    # Permanent identifier for the ontology (not version-specific)
-    dcterms:identifier <https://w3id.org/ascs-ev/envited-x/envited-x> ;
-
-    # GitHub repository where the ontology is maintained
-    dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
-
-    # Specific GitHub release used for publishing this version
-    prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.1.0> ;
-
-    # Versioning
-    owl:versionIRI <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
-    owl:versionInfo "v3" ;
-
-    # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v5> ,
-                <https://w3id.org/gaia-x/development#> ;
-
-    # Reference to SHACL validation rules
-    dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/envited-x/v3/shapes> ;
-
-    # Additional references to the ENVITED Ecosystem Specification (EVES) or related ontologies
-    dcterms:references <https://w3id.org/gaia-x/development#> ;
-    rdfs:seeAlso <https://ascs-ev.github.io/EVES/> .
-
-
-#
-# Core simulation asset class for the ENVITED-X Data Space
-#
-envited-x:SimulationAsset a owl:Class ;
-    rdfs:label "Class definition for SimulationAsset"@en ;
-    rdfs:comment """A structured digital asset in the ENVITED-X Data Space that aggregates metadata and a structured manifest.
-                    This class serves as a modular container for various simulation-related resources, ensuring interoperability and extensibility.
-                    Every SimulationAsset must be linked to at least one ResourceDescription, which provides essential metadata,
-                    and a Manifest, which defines its internal structure and licensing information.
-                    Subclasses of SimulationAsset can be introduced to represent specific asset types, such as HD Maps or Vehicle Models."""@en ;
-    rdfs:subClassOf owl:Thing ;
-    # Coupling to Gaia-X through a subclass of gx:VirtualResource
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasResourceDescription ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:ResourceDescription manifest:Link )
-        ]
-    ] ;
-    # Optional coupling to DomainSpecification
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasDomainSpecification ;
-        owl:minCardinality 0
-    ] ;
-    # Coupling to a Manifest (exactly one value for envited-x:hasManifest)
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasManifest ;
-        owl:cardinality 1
-    ] .
-
-#
-# SoftwareAsset — wrapper for software resources
-#
-envited-x:SoftwareAsset a owl:Class ;
-    rdfs:label "Class definition for SoftwareAsset"@en ;
-    rdfs:comment """A structured digital asset in the ENVITED-X Data Space representing a software resource.
-                    Carries domain-specific metadata while delegating GX compliance
-                    to the linked SoftwareResourceBase node."""@en ;
-    rdfs:subClassOf owl:Thing ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasSoftwareResource ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:SoftwareResourceBase manifest:Link )
-        ]
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasDomainSpecification ;
-        owl:minCardinality 0
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasManifest ;
-        owl:cardinality 1
-    ] .
-
-#
-# ServiceAsset — wrapper for service offerings
-#
-envited-x:ServiceAsset a owl:Class ;
-    rdfs:label "Class definition for ServiceAsset"@en ;
-    rdfs:comment """A structured digital asset in the ENVITED-X Data Space representing a service offering.
-                    Carries domain-specific metadata while delegating GX compliance
-                    to the linked ServiceOfferingBase node."""@en ;
-    rdfs:subClassOf owl:Thing ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasServiceOffering ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:ServiceOfferingBase manifest:Link )
-        ]
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasDomainSpecification ;
-        owl:minCardinality 0
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasManifest ;
-        owl:cardinality 1
-    ] .
-
-#
-# CodeAsset — wrapper for code artifacts
-#
-envited-x:CodeAsset a owl:Class ;
-    rdfs:label "Class definition for CodeAsset"@en ;
-    rdfs:comment """A structured digital asset in the ENVITED-X Data Space representing a code artifact.
-                    Carries domain-specific metadata while delegating GX compliance
-                    to the linked CodeArtifactBase node."""@en ;
-    rdfs:subClassOf owl:Thing ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasCodeArtifact ;
-        owl:someValuesFrom [
-            a owl:Class ;
-            owl:unionOf ( envited-x:CodeArtifactBase manifest:Link )
-        ]
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasDomainSpecification ;
-        owl:minCardinality 0
-    ] ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasManifest ;
-        owl:cardinality 1
-    ] .
-
-# Ensures wrapper types, base resources, and ResourceDescription are mutually disjoint.
-[ a owl:AllDisjointClasses ;
-  owl:members (
-    envited-x:SimulationAsset
-    envited-x:SoftwareAsset
-    envited-x:ServiceAsset
-    envited-x:CodeAsset
-    envited-x:ResourceDescription
-    envited-x:SoftwareResourceBase
-    envited-x:ServiceOfferingBase
-    envited-x:CodeArtifactBase
-  )
-] .
-
-# Couples the SimulationAsset to the GaiaX Data Ecosystem
-envited-x:ResourceDescription a owl:Class ;
-    rdfs:label "Class definition for ResourceDescription"@en ;
-    rdfs:comment """A base class for ENVITED-X resource descriptions, containing common metadata such as name and description of the simulation asset.
-                    This class extends gx:VirtualResource and can be further specialized by domain-specific ontologies (e.g., HD Maps, Vehicle Models, or Sensor Data)."""@en ;
-    rdfs:subClassOf gx:VirtualResource .
-
-# GX-coupled base resource classes
-envited-x:SoftwareResourceBase a owl:Class ;
-    rdfs:label "Class definition for SoftwareResourceBase"@en ;
-    rdfs:comment "Base class coupling ENVITED-X software assets to gx:SoftwareResource."@en ;
-    rdfs:subClassOf gx:SoftwareResource .
-
-envited-x:ServiceOfferingBase a owl:Class ;
-    rdfs:label "Class definition for ServiceOfferingBase"@en ;
-    rdfs:comment "Base class coupling ENVITED-X service assets to gx:ServiceOffering."@en ;
-    rdfs:subClassOf gx:ServiceOffering .
-
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix gaiax_ontology: <https://w3id.org/gaia-x/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix schema: <https://schema.org/> .
 envited-x:CodeArtifactBase a owl:Class ;
-    rdfs:label "Class definition for CodeArtifactBase"@en ;
-    rdfs:comment "Base class coupling ENVITED-X code assets to gx:CodeArtifact."@en ;
-    rdfs:subClassOf gx:CodeArtifact .
-
-
-envited-x:DomainSpecification a owl:Class ;
-    rdfs:label "Class definition for DomainSpecification"@en ;
-    rdfs:comment """A metadata extension that enriches a SimulationAsset with additional structured information.
-                    Unlike envited-x:ResourceDescription, extensions do not represent standalone retrievable data assets but
-                    serve as auxiliary metadata linked to a SimulationAsset."""@en ;
-    rdfs:subClassOf [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasContent ;
-        owl:someValuesFrom envited-x:Content
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasFormat ;
-        owl:someValuesFrom envited-x:Format
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasDataSource ;
-        owl:minCardinality 0
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasQuality ;
-        owl:minCardinality 0
-    ] , [
-        a owl:Restriction ;
-        owl:onProperty envited-x:hasQuantity ;
-        owl:minCardinality 0
-    ] .
-
-envited-x:Manifest a owl:Class ;
-    rdfs:label "Class definition for Manifest"@en ;
-    rdfs:comment "Defines a general manifest structure that can be extended for specific asset types, such as HD maps or vehicle models."@en ;
-    rdfs:subClassOf manifest:Manifest .
-
+	rdfs:comment "Base class coupling ENVITED-X code assets to gx:CodeArtifact."@en ;
+	rdfs:label "CodeArtifactBase"@en ;
+	rdfs:subClassOf gx:CodeArtifact , _:b04e3db3b29a5 , _:b0baebe70df60 , _:b0fa2ef1b0d1f , _:b10d97f052f7e , _:b14f311180904 , _:b1536eac4f7d9 , _:b7b3fda3fba87 , _:b93310cb0d9f3 , _:ba248fdb58033 , _:bc5750221e694 , _:bdf4b7a9ef085 , _:bf456b25b0d1a ;
+	skos:exactMatch envited-x:CodeArtifactBase ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:CodeAsset a owl:Class ;
+	rdfs:comment "A structured digital asset in the ENVITED-X Data Space representing a code artifact. Carries domain-specific metadata while delegating GX compliance to the linked CodeArtifactBase node."@en ;
+	rdfs:label "CodeAsset"@en ;
+	rdfs:subClassOf _:b02a89172d6d4 , _:b34da523b73ea , _:b605fc30d80e5 , _:b94212e06a08d , _:b98b5542dbbfd , _:b9ffb8b66e3c7 , _:bbea9051facae , _:bc7ef2d724d83 ;
+	skos:exactMatch envited-x:CodeAsset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:Content a owl:Class ;
-    rdfs:label "Class definition for Content"@en ;
-    rdfs:comment "Defines the content that can be extended for specific asset types."@en .
-
+	rdfs:comment "Defines the content that can be extended for specific asset types."@en ;
+	rdfs:label "EnvitedXContent"@en ;
+	skos:exactMatch envited-x:EnvitedXContent ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:DataSource a owl:Class ;
-    rdfs:label "Class definition for DataSource"@en ;
-    rdfs:comment "Defines which data resources or measurement systems were used that can be extended for specific asset types."@en .
-
+	rdfs:comment "Defines which data resources or measurement systems were used that can be extended for specific asset types."@en ;
+	rdfs:label "EnvitedXDataSource"@en ;
+	skos:exactMatch envited-x:EnvitedXDataSource ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:DomainSpecification a owl:Class ;
+	rdfs:comment "A metadata extension that enriches an asset with additional structured information. Unlike envited-x:ResourceDescription, extensions do not represent standalone retrievable data assets but serve as auxiliary metadata linked to an asset."@en ;
+	rdfs:label "EnvitedXDomainSpecification"@en ;
+	rdfs:subClassOf _:b1cfcd7a0fad6 , _:b20fc724bde52 , _:b280803f2d172 , _:b2bdc4dbe89d2 , _:b539eb17e9d4a , _:b7319ce5ea186 , _:b88b92c69ba75 , _:b9c9110962db8 , _:ba7c4b43c1065 , _:bcce7e407df3e , _:be01c8ce410b3 , _:bf27c5d784273 , _:bf2a040a59b8a ;
+	skos:exactMatch envited-x:EnvitedXDomainSpecification ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:EnvitedXAccessRoleEnum a owl:Class ;
+	rdfs:comment "The access roles an ENVITED-X link can have."@en ;
+	rdfs:label "EnvitedXAccessRoleEnum"@en ;
+	owl:oneOf _:baf5e16f82266 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
+	linkml:permissible_values envited-x:isOwner , envited-x:isPublic , envited-x:isRegistered .
+envited-x:EnvitedXCategoryEnum a owl:Class ;
+	rdfs:comment "The categories an ENVITED-X link can have."@en ;
+	rdfs:label "EnvitedXCategoryEnum"@en ;
+	owl:oneOf _:b1b9bbaa17a3b ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
+	linkml:permissible_values envited-x:isDocumentation , envited-x:isLicense , envited-x:isManifest , envited-x:isMedia , envited-x:isMetadata , envited-x:isMiscellaneous , envited-x:isSimulationData , envited-x:isValidationReport .
+envited-x:EnvitedXLicenseCategoryEnum a owl:Class ;
+	rdfs:comment "The category of a license link."@en ;
+	rdfs:label "EnvitedXLicenseCategoryEnum"@en ;
+	owl:oneOf _:beb5f61eee88c ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
+	linkml:permissible_values envited-x:isLicense .
+envited-x:EnvitedXLinkVocabulary a owl:Class ;
+	rdfs:comment "The access role and category of a link come from the ENVITED-X vocabulary."@en ;
+	rdfs:label "EnvitedXLinkVocabulary"@en ;
+	rdfs:subClassOf _:b1886e1c6ad90 , _:b5448fbbbb3c7 , _:b8336fc49e0e8 , _:b91987136fc9e , _:bbdc96be89168 , _:bf10606980694 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:EnvitedXManifestCategoryEnum a owl:Class ;
+	rdfs:comment "The category of a link to a manifest."@en ;
+	rdfs:label "EnvitedXManifestCategoryEnum"@en ;
+	owl:oneOf _:b924cd32243b6 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
+	linkml:permissible_values envited-x:isManifest .
+envited-x:ExtendedLink a owl:Class ;
+	rdfs:comment "A manifest link whose access role and category come from the ENVITED-X vocabulary."@en ;
+	rdfs:label "ExtendedLink"@en ;
+	rdfs:subClassOf envited-x:EnvitedXLinkVocabulary , manifest:ArtifactLink ;
+	skos:exactMatch envited-x:ExtendedLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:Format a owl:Class ;
-    rdfs:label "Class definition for Format"@en ;
-    rdfs:comment "Contains properties to describe the format that can be extended for specific asset types."@en .
-
+	rdfs:comment "Contains properties to describe the format that can be extended for specific asset types."@en ;
+	rdfs:label "EnvitedXFormat"@en ;
+	skos:exactMatch envited-x:EnvitedXFormat ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:LicenseLinkReference a owl:Class ;
+	rdfs:comment "The license link of an ENVITED-X manifest. The license itself is stated by gx:license on the resource description."@en ;
+	rdfs:label "LicenseLinkReference"@en ;
+	rdfs:subClassOf envited-x:EnvitedXLinkVocabulary , manifest:LicenseLink , _:b243926348b3e , _:b3141f6e81fda , _:bc57b2db49a55 ;
+	skos:exactMatch envited-x:LicenseLinkReference ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:Manifest a owl:Class ;
+	rdfs:comment "Defines a general manifest structure that can be extended for specific asset types, such as HD maps or vehicle models. Every link it lists uses the ENVITED-X access roles and categories."@en ;
+	rdfs:label "EnvitedXManifest"@en ;
+	rdfs:subClassOf manifest:Manifest , _:b05a15c1ffaa0 , _:b1e50c1f2682d , _:b20859d5ee5fa , _:b447644076095 , _:b53cf23cb6128 , _:b5b131e840a98 , _:b86293c95cb47 , _:b9848d92d11c2 , _:bbca9b5ffc15e , _:bc8be22698db3 , _:bd012db74feff , _:be0eb0513d201 ;
+	skos:exactMatch envited-x:EnvitedXManifest ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:ManifestLink a owl:Class ;
+	rdfs:comment "The self-reference of an ENVITED-X manifest."@en ;
+	rdfs:label "EnvitedXManifestLink"@en ;
+	rdfs:subClassOf envited-x:EnvitedXLinkVocabulary , manifest:ManifestLink , _:b2cf485270c11 , _:bd68b0bf4e710 , _:bf1e1a4aeb8b5 ;
+	skos:exactMatch envited-x:EnvitedXManifestLink ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:ManifestLinkReference a owl:Class ;
+	rdfs:comment "A link to an asset's manifest held elsewhere: it has the category envited-x:isManifest and names the manifest by its IRI, typically a DID."@en ;
+	rdfs:label "ManifestLinkReference"@en ;
+	rdfs:subClassOf envited-x:ExtendedLink , _:b1c8e549da1d3 , _:b4e6b0ff523a2 , _:b5c10c306ef4a , _:b66c2df880c78 , _:b9c8afffde540 , _:bf38888853359 ;
+	skos:exactMatch envited-x:ManifestLinkReference ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:Quality a owl:Class ;
-    rdfs:label "Class definition for Quality"@en ;
-    rdfs:comment "Contains properties to describe general quality criteria that can be extended for specific asset types."@en .
-
+	rdfs:comment "Contains properties to describe general quality criteria that can be extended for specific asset types."@en ;
+	rdfs:label "EnvitedXQuality"@en ;
+	skos:exactMatch envited-x:EnvitedXQuality ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:Quantity a owl:Class ;
-    rdfs:label "Class definition for Quantity"@en ;
-    rdfs:comment "Contains properties to describe the quantity related criteria that can be extended for specific asset types."@en .
-
-# Object properties
-
-#### hasResourceDescription (SimulationAsset -> ResourceDescription)
-envited-x:hasResourceDescription a owl:ObjectProperty ;
-    rdfs:label "has resource description"@en ;
-    rdfs:comment "Links an asset or its subclass to its associated ResourceDescription, which provides essential metadata such as name and description."@en ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:ResourceDescription manifest:Link )
-    ] .
-
-# Type-specific linking properties (sub-properties of hasResourceDescription)
-envited-x:hasSoftwareResource a owl:ObjectProperty ;
-    rdfs:label "has software resource"@en ;
-    rdfs:comment "Links a SoftwareAsset to its GX-compliant SoftwareResourceBase."@en ;
-    rdfs:domain envited-x:SoftwareAsset ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:SoftwareResourceBase manifest:Link )
-    ] ;
-    rdfs:subPropertyOf envited-x:hasResourceDescription .
-
-envited-x:hasServiceOffering a owl:ObjectProperty ;
-    rdfs:label "has service offering"@en ;
-    rdfs:comment "Links a ServiceAsset to its GX-compliant ServiceOfferingBase."@en ;
-    rdfs:domain envited-x:ServiceAsset ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:ServiceOfferingBase manifest:Link )
-    ] ;
-    rdfs:subPropertyOf envited-x:hasResourceDescription .
-
-envited-x:hasCodeArtifact a owl:ObjectProperty ;
-    rdfs:label "has code artifact"@en ;
-    rdfs:comment "Links a CodeAsset to its GX-compliant CodeArtifactBase."@en ;
-    rdfs:domain envited-x:CodeAsset ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:CodeArtifactBase manifest:Link )
-    ] ;
-    rdfs:subPropertyOf envited-x:hasResourceDescription .
-
-### hasDomainSpecification (SimulationAsset -> DomainSpecification)
-envited-x:hasDomainSpecification a owl:ObjectProperty ;
-    rdfs:label "has domain specification"@en ;
-    rdfs:comment """Links a SimulationAsset to one or more metadata extensions (e.g., georeference metadata, sensor calibration)
-                    that provide additional structured information. Extensions do not function as independent data resources
-                    but rather as supplementary metadata specific to a given SimulationAsset."""@en ;
-    rdfs:range envited-x:DomainSpecification .
-
-### hasManifest (SimulationAsset -> inline Manifest OR Link)
-envited-x:hasManifest a owl:ObjectProperty ;
-    rdfs:label "has manifest"@en ;
-    rdfs:comment """Links a simulation asset or its subclass to the associated manifest.
-                    The value can be either:
-                    - an inline envited-x:Manifest node (embedded manifest structure), or
-                    - a manifest:Link node (a link that points via manifest:iri
-                    to an external manifest representation, typically identified by a DID).
-                    """@en ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( envited-x:Manifest manifest:Link )
-    ] .
-
-### hasContent (DomainSpecification -> Content)
+	rdfs:comment "Contains properties to describe the quantity related criteria that can be extended for specific asset types."@en ;
+	rdfs:label "EnvitedXQuantity"@en ;
+	skos:exactMatch envited-x:EnvitedXQuantity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:ResourceDescription a owl:Class ;
+	rdfs:comment "A base class for ENVITED-X resource descriptions, containing common metadata such as name and description of the simulation asset."@en ;
+	rdfs:label "ResourceDescription"@en ;
+	rdfs:subClassOf gx:VirtualResource , _:b1af79d072993 , _:b31443fe5dd31 , _:b3b28a38d72e5 , _:b71e7fcfdc4d7 , _:b8ea2a08cf77c , _:bc3153d08ae75 , _:bf99f73e0c312 , _:bfcc6415dd42c ;
+	skos:exactMatch envited-x:ResourceDescription ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:ServiceAsset a owl:Class ;
+	rdfs:comment "A structured digital asset in the ENVITED-X Data Space representing a service offering. Carries domain-specific metadata while delegating GX compliance to the linked ServiceOfferingBase node."@en ;
+	rdfs:label "ServiceAsset"@en ;
+	rdfs:subClassOf _:b1e56264a40f1 , _:b39e85c3c1f30 , _:b5d710e843c31 , _:b64ea8fd4ce5e , _:b7d78654aacc8 , _:be7c0e4451ee6 , _:bea0e7ba6003c , _:beba49831736d ;
+	skos:exactMatch envited-x:ServiceAsset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:ServiceOfferingBase a owl:Class ;
+	rdfs:comment "Base class coupling ENVITED-X service assets to gx:ServiceOffering."@en ;
+	rdfs:label "ServiceOfferingBase"@en ;
+	rdfs:subClassOf gx:ServiceOffering , _:b018b984c3019 , _:b052589077a09 , _:b12c0674d76ac , _:b22be16123ca1 , _:b2acdd3c2a44e , _:b7a9eb2c784fe , _:b8ef0bc647da8 , _:b8fb3aa38e21a , _:ba82d8c887e7c , _:bb4d9af98fd24 , _:bef6401c0f4b0 ;
+	skos:exactMatch envited-x:ServiceOfferingBase ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:SimulationAsset a owl:Class ;
+	rdfs:comment "A structured digital asset in the ENVITED-X Data Space that aggregates metadata and a structured manifest. Every SimulationAsset is linked to a ResourceDescription, which provides essential metadata, and a Manifest, which defines its internal structure and licensing information."@en ;
+	rdfs:label "SimulationAsset"@en ;
+	rdfs:subClassOf _:b153c22f4cbdb , _:b21e74b4eed8d , _:b54892e775f2e , _:b94ff9d7661a1 , _:ba18003019cd3 , _:bafdb8900e94b , _:bc46d58a6cabb , _:bfc4c13eb44fe ;
+	skos:exactMatch envited-x:SimulationAsset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:SimulationManifest a owl:Class ;
+	rdfs:comment "The manifest of a simulation asset: among its artifacts it has at least one link each of category simulation data, documentation, metadata and media."@en ;
+	rdfs:label "SimulationManifest"@en ;
+	rdfs:subClassOf envited-x:Manifest , _:b7334167017d6 , _:b7334167017d6_1 , _:b7334167017d6_2 , _:b7334167017d6_3 ;
+	skos:exactMatch envited-x:SimulationManifest ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:SoftwareAsset a owl:Class ;
+	rdfs:comment "A structured digital asset in the ENVITED-X Data Space representing a software resource. Carries domain-specific metadata while delegating GX compliance to the linked SoftwareResourceBase node."@en ;
+	rdfs:label "SoftwareAsset"@en ;
+	rdfs:subClassOf _:b000cb0306dca , _:b04dc38d1c4e7 , _:b318ff89e26e9 , _:b348689b73130 , _:b534140b81b7e , _:b6b5b26efbb61 , _:ba9fb6a074adc , _:bf55e24130dba ;
+	skos:exactMatch envited-x:SoftwareAsset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:SoftwareResourceBase a owl:Class ;
+	rdfs:comment "Base class coupling ENVITED-X software assets to gx:SoftwareResource."@en ;
+	rdfs:label "SoftwareResourceBase"@en ;
+	rdfs:subClassOf gx:SoftwareResource , _:b1628655121ff , _:b32269d1d086e , _:b3d8bca7a1c12 , _:b87945318a2cd , _:b978b90988f58 , _:ba452f31b5874 , _:bce7d9d8f46be , _:bd2a12c233322 , _:be7cd1f35c937 , _:bef4cc163832c , _:bf5204a8de90e , _:bff5bdf792211 ;
+	skos:exactMatch envited-x:SoftwareResourceBase ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasCodeArtifact a owl:DatatypeProperty ;
+	rdfs:comment "Links a CodeAsset to its GX-compliant CodeArtifactBase."@en ;
+	rdfs:label "hasCodeArtifact"@en ;
+	rdfs:range _:bc8634e009ac6 ;
+	rdfs:subPropertyOf envited-x:hasResourceDescription ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:hasContent a owl:ObjectProperty ;
-    rdfs:label "Object property: hasContent"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of envited-x:Content that describes the SimulationAsset`s content."@en ;
-    rdfs:domain envited-x:DomainSpecification ;
-    rdfs:range envited-x:Content .
-
-### hasDataSource (DomainSpecification -> DataSource)
+	rdfs:comment "Links a DomainSpecification to the content of the asset."@en ;
+	rdfs:label "hasContent"@en ;
+	rdfs:range envited-x:Content ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:hasDataSource a owl:ObjectProperty ;
-    rdfs:label "Object property: hasDataSource"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of envited-x:DataSource that describes how the SimulationAsset was created."@en ;
-    rdfs:domain envited-x:DomainSpecification ;
-    rdfs:range envited-x:DataSource .
-
-### hasFormat (DomainSpecification -> Format)
+	rdfs:comment "Links a DomainSpecification to how the asset was created."@en ;
+	rdfs:label "hasDataSource"@en ;
+	rdfs:range envited-x:DataSource ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasDomainSpecification a owl:ObjectProperty ;
+	rdfs:comment "Links an asset to one or more metadata extensions (e.g., georeference metadata, sensor calibration) that provide additional structured information."@en ;
+	rdfs:label "hasDomainSpecification"@en ;
+	rdfs:range envited-x:DomainSpecification ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:hasFormat a owl:ObjectProperty ;
-    rdfs:label "Object property: hasFormat"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of envited-x:Format that describes the SimulationAsset`s format details."@en ;
-    rdfs:domain envited-x:DomainSpecification ;
-    rdfs:range envited-x:Format .
-
-### hasQuality (DomainSpecification -> Quality)
+	rdfs:comment "Links a DomainSpecification to the format details of the asset."@en ;
+	rdfs:label "hasFormat"@en ;
+	rdfs:range envited-x:Format ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasManifest a owl:DatatypeProperty ;
+	rdfs:comment "Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external manifest by its IRI, typically a DID."@en ;
+	rdfs:label "hasManifest"@en ;
+	rdfs:range _:bf84866605c56 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:hasQuality a owl:ObjectProperty ;
-    rdfs:label "Object property: hasQuality"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of envited-x:Quality describing the SimulationAsset`s quality or accuracy aspects."@en ;
-    rdfs:domain envited-x:DomainSpecification ;
-    rdfs:range envited-x:Quality .
-
-### hasQuantity (DomainSpecification -> Quantity)
+	rdfs:comment "Links a DomainSpecification to the quality or accuracy aspects of the asset."@en ;
+	rdfs:label "hasQuality"@en ;
+	rdfs:range envited-x:Quality ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:hasQuantity a owl:ObjectProperty ;
-    rdfs:label "Object property: hasQuantity"@en ;
-    rdfs:comment "Links a DomainSpecification to an instance of envited-x:Quantity describing the SimulationAsset`s quantity."@en ;
-    rdfs:domain envited-x:DomainSpecification ;
-    rdfs:range envited-x:Quantity .
-
-### Define specific category types as named individuals, extending manifest categories
-envited-x:isManifest a manifest:ManifestCategory, owl:NamedIndividual ;
-    rdfs:label "Manifest Category"@en ;
-    rdfs:comment "Indicates that the artifact category is a manifest in the envited-x context."@en .
-
-envited-x:isLicense a manifest:LicenseCategory, owl:NamedIndividual ;
-    rdfs:label "License Category"@en ;
-    rdfs:comment "Indicates that the artifact category is a license file in the envited-x context."@en .
-
-envited-x:isMiscellaneous a manifest:MiscellaneousCategory, owl:NamedIndividual ;
-    rdfs:label "Miscellaneous Category"@en ;
-    rdfs:comment "Indicates that the artifact category is miscellaneous in the envited-x context."@en .
-
-envited-x:isSimulationData a manifest:Category, owl:NamedIndividual ;
-    rdfs:label "Simulation Data Category"@en ;
-    rdfs:comment "Indicates that the artifact category is simulation data."@en .
-
-envited-x:isDocumentation a manifest:Category, owl:NamedIndividual ;
-    rdfs:label "Documentation Category"@en ;
-    rdfs:comment "Indicates that the artifact category is documentation in the envited-x context."@en .
-
-envited-x:isMedia a manifest:Category, owl:NamedIndividual ;
-    rdfs:label "Media Category"@en ;
-    rdfs:comment "Indicates that the artifact category is media content in the envited-x context."@en .
-
-envited-x:isMetadata a manifest:Category, owl:NamedIndividual ;
-    rdfs:label "Metadata Category"@en ;
-    rdfs:comment "Indicates that the artifact category is metadata in the envited-x context."@en .
-
-envited-x:isValidationReport a manifest:Category, owl:NamedIndividual ;
-    rdfs:label "Validation Report Category"@en ;
-    rdfs:comment "Indicates that the artifact category is a validation report in the envited-x context."@en .
-
-### Define specific access role types as named individuals
-envited-x:isPublic a manifest:AccessRole, owl:NamedIndividual ;
-    rdfs:label "Public Access Role"@en ;
-    rdfs:comment "Indicates that the artifact access role is public in the envited-x context."@en .
-
-envited-x:isOwner a manifest:AccessRole, owl:NamedIndividual ;
-    rdfs:label "Owner Access Role"@en ;
-    rdfs:comment "Indicates that the artifact access role is owner in the envited-x context."@en .
-
-envited-x:isRegistered a manifest:AccessRole, owl:NamedIndividual ;
-    rdfs:label "Registered Access Role"@en ;
-    rdfs:comment "Indicates that the artifact access role is registered user in the envited-x context."@en .
+	rdfs:comment "Links a DomainSpecification to the quantity of the asset."@en ;
+	rdfs:label "hasQuantity"@en ;
+	rdfs:range envited-x:Quantity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasResourceDescription a owl:DatatypeProperty ;
+	rdfs:comment "Links an asset or its subclass to its associated ResourceDescription, which provides essential metadata such as name and description, inline or as a link."@en ;
+	rdfs:label "hasResourceDescription"@en ;
+	rdfs:range _:b2cf3a68a42bf ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasServiceOffering a owl:DatatypeProperty ;
+	rdfs:comment "Links a ServiceAsset to its GX-compliant ServiceOfferingBase."@en ;
+	rdfs:label "hasServiceOffering"@en ;
+	rdfs:range _:b9ba3915195f7 ;
+	rdfs:subPropertyOf envited-x:hasResourceDescription ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:hasSoftwareResource a owl:DatatypeProperty ;
+	rdfs:comment "Links a SoftwareAsset to its GX-compliant SoftwareResourceBase."@en ;
+	rdfs:label "hasSoftwareResource"@en ;
+	rdfs:range _:b0f370546976a ;
+	rdfs:subPropertyOf envited-x:hasResourceDescription ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
+envited-x:isDocumentation dcterms:title "Documentation Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:Category ;
+	rdfs:comment "Indicates that the artifact category is documentation in the envited-x context."@en ;
+	rdfs:label "isDocumentation"@en .
+envited-x:isLicense dcterms:title "License Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , envited-x:EnvitedXLicenseCategoryEnum , manifest:LicenseCategory ;
+	rdfs:comment "Indicates that the artifact category is a license file in the envited-x context."@en ;
+	rdfs:label "isLicense"@en .
+envited-x:isManifest dcterms:title "Manifest Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , envited-x:EnvitedXManifestCategoryEnum , manifest:ManifestCategory ;
+	rdfs:comment "Indicates that the artifact category is a manifest in the envited-x context."@en ;
+	rdfs:label "isManifest"@en .
+envited-x:isMedia dcterms:title "Media Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:Category ;
+	rdfs:comment "Indicates that the artifact category is media content in the envited-x context."@en ;
+	rdfs:label "isMedia"@en .
+envited-x:isMetadata dcterms:title "Metadata Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:Category ;
+	rdfs:comment "Indicates that the artifact category is metadata in the envited-x context."@en ;
+	rdfs:label "isMetadata"@en .
+envited-x:isMiscellaneous dcterms:title "Miscellaneous Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:MiscellaneousCategory ;
+	rdfs:comment "Indicates that the artifact category is miscellaneous in the envited-x context."@en ;
+	rdfs:label "isMiscellaneous"@en .
+envited-x:isOwner dcterms:title "Owner Access Role"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXAccessRoleEnum , manifest:AccessRole ;
+	rdfs:comment "Indicates that the artifact access role is owner in the envited-x context."@en ;
+	rdfs:label "isOwner"@en .
+envited-x:isPublic dcterms:title "Public Access Role"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXAccessRoleEnum , manifest:AccessRole ;
+	rdfs:comment "Indicates that the artifact access role is public in the envited-x context."@en ;
+	rdfs:label "isPublic"@en .
+envited-x:isRegistered dcterms:title "Registered Access Role"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXAccessRoleEnum , manifest:AccessRole ;
+	rdfs:comment "Indicates that the artifact access role is registered user in the envited-x context."@en ;
+	rdfs:label "isRegistered"@en .
+envited-x:isSimulationData dcterms:title "Simulation Data Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:Category ;
+	rdfs:comment "Indicates that the artifact category is simulation data."@en ;
+	rdfs:label "isSimulationData"@en .
+envited-x:isValidationReport dcterms:title "Validation Report Category"@en ;
+	a owl:NamedIndividual , envited-x:EnvitedXCategoryEnum , manifest:Category ;
+	rdfs:comment "Indicates that the artifact category is a validation report in the envited-x context."@en ;
+	rdfs:label "isValidationReport"@en .
+<https://w3id.org/ascs-ev/envited-x/envited-x/v4> dcterms:conformsTo envited-x:shapes ;
+	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/envited-x"@en ;
+	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:references gx: ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:title "Ontology definition for envited-x"@en ;
+	a owl:Ontology ;
+	rdfs:comment "ENVITED-X Data Space ontology with common classes for defining a digital asset in the simulation domain."@en ;
+	rdfs:label "envited-x"@en ;
+	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
+	owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v6> , gx: ;
+	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
+	owl:versionIRI <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
+	owl:versionInfo "v4"@en ;
+	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+_:b000cb0306dca a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:b018b984c3019 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:name .
+_:b02a89172d6d4 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:b04dc38d1c4e7 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasSoftwareResource .
+_:b04e3db3b29a5 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:description .
+_:b052589077a09 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty schema:name .
+_:b05a15c1ffaa0 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasManifestReference .
+_:b08650d8faa83 rdf:first _:b9eb6294b75ad_1 ;
+	rdf:rest _:b630b1092441f_1 .
+_:b0baebe70df60 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:name .
+_:b0dc38160e717 rdf:first _:b8dc28ea3f09f_1 ;
+	rdf:rest _:b440d70e8428c_1 .
+_:b0f2968a95444 rdf:first envited-x:ManifestLinkReference ;
+	rdf:rest rdf:nil .
+_:b0f2968a95444_1 rdf:first envited-x:ManifestLinkReference ;
+	rdf:rest rdf:nil .
+_:b0f2968a95444_2 rdf:first envited-x:ManifestLinkReference ;
+	rdf:rest rdf:nil .
+_:b0f2968a95444_3 rdf:first envited-x:ManifestLinkReference ;
+	rdf:rest rdf:nil .
+_:b0f370546976a owl:unionOf _:b2a176dd46bb4 .
+_:b0fa2ef1b0d1f a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty schema:description .
+_:b0fba7eb50202 a rdfs:Datatype ;
+	owl:intersectionOf _:b0dc38160e717 .
+_:b10d97f052f7e a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty schema:name .
+_:b12c0674d76ac a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:serviceOfferingTermsAndConditions .
+_:b14f311180904 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:resourcePolicy .
+_:b1536eac4f7d9 a owl:Restriction ;
+	owl:allValuesFrom _:b4a2a3eecfafc ;
+	owl:onProperty gx:license .
+_:b153c22f4cbdb a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:b1628655121ff a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty schema:name .
+_:b16fe8279854e rdf:first _:b9e366afd8d27 ;
+	rdf:rest _:bdcf10b944524 .
+_:b1886e1c6ad90 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b1a16ccba682b rdf:first envited-x:Manifest ;
+	rdf:rest _:b0f2968a95444_3 .
+_:b1af79d072993 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:name .
+_:b1b9bbaa17a3b rdf:first envited-x:isManifest ;
+	rdf:rest _:b5a39bd3e76c9 .
+_:b1bdbdb9cf368 rdf:first envited-x:ServiceOfferingBase ;
+	rdf:rest _:bffa7e2997cb3 .
+_:b1c8e549da1d3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:iri .
+_:b1cfcd7a0fad6 a owl:Restriction ;
+	owl:allValuesFrom envited-x:Content ;
+	owl:onProperty envited-x:hasContent .
+_:b1e50c1f2682d a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasArtifacts .
+_:b1e56264a40f1 a owl:Restriction ;
+	owl:allValuesFrom _:bee0c14ee738e ;
+	owl:onProperty envited-x:hasServiceOffering .
+_:b1eea84f4c386 owl:unionOf _:b3bf906b38399 .
+_:b20562d45fbce rdf:first envited-x:isSimulationData ;
+	rdf:rest _:baa3a40775550 .
+_:b20859d5ee5fa a owl:Restriction ;
+	owl:allValuesFrom envited-x:LicenseLinkReference ;
+	owl:onProperty manifest:hasLicense .
+_:b20988b939e13 rdf:first xsd:anyURI ;
+	rdf:rest _:bba30b29fdad1 .
+_:b20988b939e13_1 rdf:first xsd:anyURI ;
+	rdf:rest _:bba30b29fdad1_1 .
+_:b20988b939e13_2 rdf:first xsd:anyURI ;
+	rdf:rest _:bba30b29fdad1_2 .
+_:b20fc724bde52 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasQuality .
+_:b21e74b4eed8d a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasResourceDescription .
+_:b22be16123ca1 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:name .
+_:b2359584a0d19 rdf:first envited-x:Manifest ;
+	rdf:rest _:b0f2968a95444 .
+_:b2359584a0d19_1 rdf:first envited-x:Manifest ;
+	rdf:rest _:b0f2968a95444_1 .
+_:b2359584a0d19_2 rdf:first envited-x:Manifest ;
+	rdf:rest _:b0f2968a95444_2 .
+_:b243926348b3e a owl:Restriction ;
+	owl:allValuesFrom envited-x:EnvitedXLicenseCategoryEnum ;
+	owl:onProperty manifest:hasCategory .
+_:b2713ec76d45a rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:b2713ec76d45a_1 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:b2713ec76d45a_2 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:b280803f2d172 a owl:Restriction ;
+	owl:allValuesFrom envited-x:Quantity ;
+	owl:onProperty envited-x:hasQuantity .
+_:b2a176dd46bb4 rdf:first envited-x:SoftwareResourceBase ;
+	rdf:rest _:bbd2b66ca0a47_1 .
+_:b2acdd3c2a44e a owl:Restriction ;
+	owl:allValuesFrom _:bac9ec5941ed3 ;
+	owl:onProperty gx:providedBy .
+_:b2bdc4dbe89d2 a owl:Restriction ;
+	owl:allValuesFrom envited-x:Format ;
+	owl:onProperty envited-x:hasFormat .
+_:b2cf3a68a42bf owl:unionOf _:ba612f41de4eb .
+_:b2cf485270c11 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b3141f6e81fda a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b31443fe5dd31 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:description .
+_:b318ff89e26e9 a owl:Restriction ;
+	owl:allValuesFrom envited-x:DomainSpecification ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:b32269d1d086e a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty schema:description .
+_:b348689b73130 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:b34da523b73ea a owl:Restriction ;
+	owl:allValuesFrom _:b5de9974b8ca5 ;
+	owl:onProperty envited-x:hasManifest .
+_:b39e85c3c1f30 a owl:Restriction ;
+	owl:allValuesFrom envited-x:DomainSpecification ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:b3a4be3c848e3 a rdfs:Datatype ;
+	owl:intersectionOf _:b7b26dd91b955 .
+_:b3b26197acdb0 rdf:first envited-x:CodeArtifactBase ;
+	rdf:rest _:b2713ec76d45a_1 .
+_:b3b28a38d72e5 a owl:Restriction ;
+	owl:allValuesFrom _:b0fba7eb50202 ;
+	owl:onProperty gx:license .
+_:b3bf906b38399 rdf:first envited-x:SimulationManifest ;
+	rdf:rest _:b709dd7f4ae0b .
+_:b3d8bca7a1c12 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:name .
+_:b3f8d4fee9e48 rdf:first envited-x:isOwner ;
+	rdf:rest _:b634f3f942f40 .
+_:b440d70e8428c rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:b440d70e8428c_1 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:b440d70e8428c_2 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:b447644076095 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasArtifacts .
+_:b4a2a3eecfafc a rdfs:Datatype ;
+	owl:intersectionOf _:b4d3f15b3a5a7 .
+_:b4d3f15b3a5a7 rdf:first _:b8dc28ea3f09f ;
+	rdf:rest _:b440d70e8428c .
+_:b4e6b0ff523a2 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasCategory .
+_:b534140b81b7e a owl:Restriction ;
+	owl:allValuesFrom _:b741b477ff48d ;
+	owl:onProperty envited-x:hasManifest .
+_:b539eb17e9d4a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasDataSource .
+_:b53cf23cb6128 a owl:Restriction ;
+	owl:allValuesFrom envited-x:ExtendedLink ;
+	owl:onProperty manifest:hasReferencedArtifacts .
+_:b5448fbbbb3c7 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasCategory .
+_:b54892e775f2e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasResourceDescription .
+_:b5604c1d2855d rdf:first envited-x:ServiceOfferingBase ;
+	rdf:rest _:b5e79fa4af135 .
+_:b5a39bd3e76c9 rdf:first envited-x:isLicense ;
+	rdf:rest _:bd37dfa0b8c93 .
+_:b5a60a2b06a6d rdf:first _:b9eb6294b75ad ;
+	rdf:rest _:b630b1092441f .
+_:b5b131e840a98 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasManifestReference .
+_:b5c0eb75f657a rdf:first gx:NaturalPerson ;
+	rdf:rest rdf:nil .
+_:b5c10c306ef4a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasCategory .
+_:b5d710e843c31 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:b5de9974b8ca5 owl:unionOf _:b2359584a0d19_2 .
+_:b5e79fa4af135 rdf:first envited-x:CodeArtifactBase ;
+	rdf:rest _:b2713ec76d45a_2 .
+_:b605fc30d80e5 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:b628d6d047ff5 rdf:first gx:LegalPerson ;
+	rdf:rest _:b5c0eb75f657a .
+_:b630b1092441f rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:b630b1092441f_1 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:b634f3f942f40 rdf:first envited-x:isRegistered ;
+	rdf:rest rdf:nil .
+_:b64ea8fd4ce5e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasServiceOffering .
+_:b65ff1e853f84 rdf:first envited-x:isValidationReport ;
+	rdf:rest rdf:nil .
+_:b66c2df880c78 a owl:Restriction ;
+	owl:allValuesFrom envited-x:EnvitedXManifestCategoryEnum ;
+	owl:onProperty manifest:hasCategory .
+_:b6903204346dc rdf:first envited-x:CodeArtifactBase ;
+	rdf:rest _:b2713ec76d45a .
+_:b6b5b26efbb61 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasSoftwareResource .
+_:b6d5e822e3080 owl:unionOf _:b89ee9fc8c3c3 .
+_:b709dd7f4ae0b rdf:first envited-x:ManifestLinkReference ;
+	rdf:rest rdf:nil .
+_:b7163d19b38ee xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
+_:b7163d19b38ee_1 xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
+_:b7163d19b38ee_2 xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
+_:b71e7fcfdc4d7 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty schema:description .
+_:b7319ce5ea186 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasDataSource .
+_:b7334167017d6 a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty manifest:hasArtifacts .
+_:b7334167017d6_1 a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty manifest:hasArtifacts .
+_:b7334167017d6_2 a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty manifest:hasArtifacts .
+_:b7334167017d6_3 a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty manifest:hasArtifacts .
+_:b735ee81974e8 rdf:first envited-x:isMetadata ;
+	rdf:rest _:b65ff1e853f84 .
+_:b741b477ff48d owl:unionOf _:b2359584a0d19_1 .
+_:b7a0525e0dd81 rdf:first envited-x:ServiceOfferingBase ;
+	rdf:rest _:bffa7e2997cb3_1 .
+_:b7a9eb2c784fe a owl:Restriction ;
+	owl:allValuesFrom gx:TermsAndConditions ;
+	owl:onProperty gx:serviceOfferingTermsAndConditions .
+_:b7b26dd91b955 rdf:first _:b8dc28ea3f09f_2 ;
+	rdf:rest _:b440d70e8428c_2 .
+_:b7b3fda3fba87 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:copyrightOwnedBy .
+_:b7d78654aacc8 a owl:Restriction ;
+	owl:allValuesFrom _:bc7687f4de41b ;
+	owl:onProperty envited-x:hasManifest .
+_:b8297601d3520 rdf:first envited-x:SPDX ;
+	rdf:rest _:b20988b939e13 .
+_:b8297601d3520_1 rdf:first envited-x:SPDX ;
+	rdf:rest _:b20988b939e13_1 .
+_:b8297601d3520_2 rdf:first envited-x:SPDX ;
+	rdf:rest _:b20988b939e13_2 .
+_:b8336fc49e0e8 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasAccessRole .
+_:b86293c95cb47 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasLicense .
+_:b87945318a2cd a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:description .
+_:b88b92c69ba75 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasFormat .
+_:b89ee9fc8c3c3 rdf:first envited-x:ResourceDescription ;
+	rdf:rest _:bf4f75b565ee7 .
+_:b8dc28ea3f09f a rdfs:Datatype ;
+	owl:unionOf _:b8297601d3520 .
+_:b8dc28ea3f09f_1 a rdfs:Datatype ;
+	owl:unionOf _:b8297601d3520_1 .
+_:b8dc28ea3f09f_2 a rdfs:Datatype ;
+	owl:unionOf _:b8297601d3520_2 .
+_:b8ea2a08cf77c a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:description .
+_:b8ef0bc647da8 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:description .
+_:b8fb3aa38e21a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty gx:providedBy .
+_:b91987136fc9e a owl:Restriction ;
+	owl:allValuesFrom envited-x:EnvitedXCategoryEnum ;
+	owl:onProperty manifest:hasCategory .
+_:b924cd32243b6 rdf:first envited-x:isManifest ;
+	rdf:rest rdf:nil .
+_:b930c951ba720 rdf:first envited-x:SoftwareResourceBase ;
+	rdf:rest _:bbd2b66ca0a47 .
+_:b93310cb0d9f3 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:license .
+_:b94212e06a08d a owl:Restriction ;
+	owl:allValuesFrom _:bd34b57526f26 ;
+	owl:onProperty envited-x:hasCodeArtifact .
+_:b94ff9d7661a1 a owl:Restriction ;
+	owl:allValuesFrom _:b6d5e822e3080 ;
+	owl:onProperty envited-x:hasResourceDescription .
+_:b978b90988f58 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:description .
+_:b9848d92d11c2 a owl:Restriction ;
+	owl:allValuesFrom envited-x:ManifestLink ;
+	owl:onProperty manifest:hasManifestReference .
+_:b98b5542dbbfd a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:b9ba3915195f7 owl:unionOf _:b7a0525e0dd81 .
+_:b9c8afffde540 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty manifest:iri .
+_:b9c9110962db8 a owl:Restriction ;
+	owl:allValuesFrom envited-x:Quality ;
+	owl:onProperty envited-x:hasQuality .
+_:b9e366afd8d27 owl:unionOf _:b628d6d047ff5 .
+_:b9eb6294b75ad owl:unionOf _:bf157d73da166 .
+_:b9eb6294b75ad_1 owl:unionOf _:bf157d73da166_1 .
+_:b9ffb8b66e3c7 a owl:Restriction ;
+	owl:allValuesFrom envited-x:DomainSpecification ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:ba066f4c5c841 a rdfs:Datatype ;
+	owl:intersectionOf _:b08650d8faa83 .
+_:ba18003019cd3 a owl:Restriction ;
+	owl:allValuesFrom envited-x:DomainSpecification ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:ba248fdb58033 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:description .
+_:ba452f31b5874 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:name .
+_:ba612f41de4eb rdf:first envited-x:ResourceDescription ;
+	rdf:rest _:bab07eee62eef .
+_:ba7c4b43c1065 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasQuantity .
+_:ba82d8c887e7c a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty schema:description .
+_:ba97f3fab8fd2 a rdfs:Datatype ;
+	owl:intersectionOf _:b5a60a2b06a6d .
+_:ba9fb6a074adc a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:baa3a40775550 rdf:first envited-x:isDocumentation ;
+	rdf:rest _:bea1be4763278 .
+_:bab07eee62eef rdf:first envited-x:SoftwareResourceBase ;
+	rdf:rest _:b5604c1d2855d .
+_:bac9ec5941ed3 owl:intersectionOf _:b16fe8279854e .
+_:baf5e16f82266 rdf:first envited-x:isPublic ;
+	rdf:rest _:b3f8d4fee9e48 .
+_:bafdb8900e94b a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:bb4d9af98fd24 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:providedBy .
+_:bb979130b86e1 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:bb979130b86e1_1 rdf:first xsd:string ;
+	rdf:rest rdf:nil .
+_:bba30b29fdad1 rdf:first _:bd19e616d14a1 ;
+	rdf:rest rdf:nil .
+_:bba30b29fdad1_1 rdf:first _:bd19e616d14a1_1 ;
+	rdf:rest rdf:nil .
+_:bba30b29fdad1_2 rdf:first _:bd19e616d14a1_2 ;
+	rdf:rest rdf:nil .
+_:bbca9b5ffc15e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasReferencedArtifacts .
+_:bbd2b66ca0a47 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:bbd2b66ca0a47_1 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:bbdc96be89168 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty manifest:hasAccessRole .
+_:bbea9051facae a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasCodeArtifact .
+_:bc3153d08ae75 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:name .
+_:bc46d58a6cabb a owl:Restriction ;
+	owl:allValuesFrom _:b1eea84f4c386 ;
+	owl:onProperty envited-x:hasManifest .
+_:bc5750221e694 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:resourcePolicy .
+_:bc57b2db49a55 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasCategory .
+_:bc7687f4de41b owl:unionOf _:b2359584a0d19 .
+_:bc7ef2d724d83 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasCodeArtifact .
+_:bc8634e009ac6 owl:unionOf _:b3b26197acdb0 .
+_:bc8be22698db3 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasLicense .
+_:bc8e9437508fe owl:unionOf _:b930c951ba720 .
+_:bcce7e407df3e a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasContent .
+_:bce7d9d8f46be a owl:Restriction ;
+	owl:allValuesFrom _:ba97f3fab8fd2 ;
+	owl:onProperty gx:copyrightOwnedBy .
+_:bd012db74feff a owl:Restriction ;
+	owl:allValuesFrom envited-x:ExtendedLink ;
+	owl:onProperty manifest:hasArtifacts .
+_:bd19e616d14a1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bfaa391e11443 .
+_:bd19e616d14a1_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bfaa391e11443_1 .
+_:bd19e616d14a1_2 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:bfaa391e11443_2 .
+_:bd2a12c233322 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:resourcePolicy .
+_:bd34b57526f26 owl:unionOf _:b6903204346dc .
+_:bd37dfa0b8c93 rdf:first envited-x:isMiscellaneous ;
+	rdf:rest _:b20562d45fbce .
+_:bd68b0bf4e710 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasCategory .
+_:bdcf10b944524 rdf:first gx:Participant ;
+	rdf:rest rdf:nil .
+_:bdf4b7a9ef085 a owl:Restriction ;
+	owl:allValuesFrom _:ba066f4c5c841 ;
+	owl:onProperty gx:copyrightOwnedBy .
+_:be01c8ce410b3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasQuality .
+_:be0eb0513d201 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty manifest:hasReferencedArtifacts .
+_:be7c0e4451ee6 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:be7cd1f35c937 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty gx:resourcePolicy .
+_:bea0e7ba6003c a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasDomainSpecification .
+_:bea1be4763278 rdf:first envited-x:isMedia ;
+	rdf:rest _:b735ee81974e8 .
+_:beb5f61eee88c rdf:first envited-x:isLicense ;
+	rdf:rest rdf:nil .
+_:beba49831736d a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasServiceOffering .
+_:bee0c14ee738e owl:unionOf _:b1bdbdb9cf368 .
+_:bef4cc163832c a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:license .
+_:bef6401c0f4b0 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:description .
+_:bf10606980694 a owl:Restriction ;
+	owl:allValuesFrom envited-x:EnvitedXAccessRoleEnum ;
+	owl:onProperty manifest:hasAccessRole .
+_:bf157d73da166 rdf:first gx:LegalPerson ;
+	rdf:rest _:bb979130b86e1 .
+_:bf157d73da166_1 rdf:first gx:LegalPerson ;
+	rdf:rest _:bb979130b86e1_1 .
+_:bf1e1a4aeb8b5 a owl:Restriction ;
+	owl:allValuesFrom envited-x:EnvitedXManifestCategoryEnum ;
+	owl:onProperty manifest:hasCategory .
+_:bf27c5d784273 a owl:Restriction ;
+	owl:allValuesFrom envited-x:DataSource ;
+	owl:onProperty envited-x:hasDataSource .
+_:bf2a040a59b8a a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty envited-x:hasQuantity .
+_:bf38888853359 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty manifest:iri .
+_:bf456b25b0d1a a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty schema:name .
+_:bf4f75b565ee7 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:bf5204a8de90e a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:copyrightOwnedBy .
+_:bf55e24130dba a owl:Restriction ;
+	owl:allValuesFrom _:bc8e9437508fe ;
+	owl:onProperty envited-x:hasSoftwareResource .
+_:bf84866605c56 owl:unionOf _:b1a16ccba682b .
+_:bf99f73e0c312 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty gx:license .
+_:bfaa391e11443 rdf:first _:b7163d19b38ee ;
+	rdf:rest rdf:nil .
+_:bfaa391e11443_1 rdf:first _:b7163d19b38ee_1 ;
+	rdf:rest rdf:nil .
+_:bfaa391e11443_2 rdf:first _:b7163d19b38ee_2 ;
+	rdf:rest rdf:nil .
+_:bfc4c13eb44fe a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty envited-x:hasManifest .
+_:bfcc6415dd42c a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty schema:name .
+_:bff5bdf792211 a owl:Restriction ;
+	owl:allValuesFrom _:b3a4be3c848e3 ;
+	owl:onProperty gx:license .
+_:bffa7e2997cb3 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .
+_:bffa7e2997cb3_1 rdf:first envited-x:ExtendedLink ;
+	rdf:rest rdf:nil .

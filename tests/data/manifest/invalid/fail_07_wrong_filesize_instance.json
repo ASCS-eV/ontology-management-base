@@ -1,6 +1,6 @@
 {
    "@context": [
-      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
       {
          "skos": "http://www.w3.org/2004/02/skos/core#"
       }

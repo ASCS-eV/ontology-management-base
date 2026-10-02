@@ -35,6 +35,11 @@ mkdir -p "${outdir}"
     2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' \
     > "${outdir}/${domain}.owl.ttl"
 
+# --inlined-as-node: a value written inline (a link, its file metadata) is checked
+# against its range class's shape whatever type it states, as the hand-written
+# shapes check it with sh:node; a reference to a named individual keeps sh:class.
+# Every domain is generated with it, because their shapes reference each other.
+#
 # gen-shacl skips a LinkML rule or class expression (any_of, all_of,
 # exactly_one_of, none_of) it cannot translate exactly, and reports a skipped
 # rule only at DEBUG level. Keep its log and fail on any skip, so a dropped
@@ -43,6 +48,7 @@ shacl_log="$(mktemp)"
 # shellcheck disable=SC2086
 "${run}/gen-shacl" --diff-stable --normalize-prefixes --no-metadata \
     --default-language en --non-closed --suffix Shape --no-expand-subproperty-of \
+    --inlined-as-node \
     ${SHACL_EXTRA_FLAGS} --message-template "{name} ({class}): {description}" \
     --log_level DEBUG "${schema}" 2>"${shacl_log}" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' \
     > "${outdir}/${domain}.shacl.ttl"
@@ -72,5 +78,24 @@ for f in "${outdir}/${domain}.owl.ttl" "${outdir}/${domain}.shacl.ttl" \
         exit 1
     fi
 done
+
+# An IRI that is an unexpanded CURIE (`<sh:conformsTo>`, `<xsd:float>`) matches
+# nothing, so a shape using it as a path or datatype silently constrains nothing or
+# rejects everything. It appears when a schema's shapes use a prefix the schema does
+# not declare (linkml/GAPS.md M10, G13). Read the output and fail on one.
+"${run}/python" - "${repo}/scripts" "${outdir}/${domain}.owl.ttl" "${outdir}/${domain}.shacl.ttl" <<'EOF'
+import sys
+from rdflib import Graph
+
+sys.path.insert(0, sys.argv[1])
+from compare_artifacts import unexpanded_iris
+
+found = unexpanded_iris(*(Graph().parse(path, format="turtle") for path in sys.argv[2:]))
+if found:
+    print("[ERR] unexpanded IRIs - declare their prefixes in the schema:", file=sys.stderr)
+    for iri, count in sorted(found.items()):
+        print(f"      <{iri}> ({count} use(s))", file=sys.stderr)
+    sys.exit(1)
+EOF
 
 echo "[OK] ${domain} -> ${outdir}"

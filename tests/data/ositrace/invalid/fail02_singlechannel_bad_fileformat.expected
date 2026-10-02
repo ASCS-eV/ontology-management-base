@@ -8,13 +8,85 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Format must conform to either SingleChannelFormatShape (.osi or .txth) or MultiChannelFormatShape (.mcap).                    =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/ositrace/v7/fileFormat> Literal("MCAP", datatype=xsd:string) ;                     =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/formatType> Literal("ASAM OSI SensorData", datatype=xsd:string) ;             =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/version> Literal("3.6.0/3.20.0", datatype=xsd:string) ; rdf:type              =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Format>, <https://w3id.org/ascs-ev/envited-x/ositrace/v7/Format>, [          =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/ositrace/v7/Channel> ; owl:onProperty <https://w3id.org/ascs-           =
+=                      ev/envited-x/ositrace/v7/hasChannel> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom             =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/CompressionEnum> ; owl:onProperty <https://w3id.org/ascs-                     =
+=                      ev/envited-x/ositrace/v7/compression> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/FileFormatEnum> ; owl:onProperty <https://w3id.org/ascs-                      =
+=                      ev/envited-x/ositrace/v7/fileFormat> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom             =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/FormatTypeEnum> ; owl:onProperty <https://w3id.org/ascs-                      =
+=                      ev/envited-x/ositrace/v7/formatType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom             =
+=                      xsd:dateTime ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/zeroTime> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:string ; owl:onProperty <https://w3id.org/ascs-                          =
+=                      ev/envited-x/ositrace/v7/maxOsiVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom          =
+=                      xsd:string ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/maxProtobufVersion> ; rdf:type owl:Restriction,   =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:string ; owl:onProperty <https://w3id.org/ascs-                          =
+=                      ev/envited-x/ositrace/v7/minOsiVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom          =
+=                      xsd:string ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/minProtobufVersion> ; rdf:type owl:Restriction,   =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:string ; owl:onProperty <https://w3id.org/ascs-                          =
+=                      ev/envited-x/ositrace/v7/osiTraceFormatVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom  =
+=                      xsd:string ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/version> ; rdf:type owl:Restriction, rdfs:Class,  =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/ositrace/v7/compression> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality           =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/fileFormat> ; rdf:type    =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/formatType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/ositrace/v7/maxOsiVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality         =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/maxProtobufVersion> ;     =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/minOsiVersion> ; rdf:type owl:Restriction, rdfs:Class,         =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/ositrace/v7/minProtobufVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality    =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/osiTraceFormatVersion> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/version> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                           =
+=                      ev/envited-x/ositrace/v7/zeroTime> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", =
+=                      datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/compression> ; rdf:type                =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/fileFormat> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/ositrace/v7/formatType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality            =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/hasChannel> ; rdf:type    =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/maxOsiVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [     =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/ositrace/v7/maxProtobufVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality    =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/minOsiVersion> ; rdf:type =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/minProtobufVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ],  =
+=                      [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                              =
+=                      ev/envited-x/ositrace/v7/osiTraceFormatVersion> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/version> ; rdf:type       =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/ositrace/v7/zeroTime> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [          =
+=                      owl:unionOf ( [ owl:intersectionOf ( [ owl:allValuesFrom <http://recursion.too.deep> ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/ositrace/v7/fileFormat> ; rdf:type owl:Restriction, rdfs:Resource ] [ owl:allValuesFrom xsd:string ;             =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/ositraceFormatType> ; rdf:type owl:Restriction, rdfs:Resource  =
+=                      ] [ owl:allValuesFrom xsd:string ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/ositraceVersion> ; rdf:type =
+=                      owl:Restriction, rdfs:Resource ] ) ; rdf:type rdfs:Resource ] [ owl:intersectionOf ( [ owl:allValuesFrom                      =
+=                      <http://recursion.too.deep> ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/ositrace/v7/fileFormat> ; rdf:type           =
+=                      owl:Restriction, rdfs:Resource ] [ owl:allValuesFrom owl:Thing ; owl:onProperty <https://w3id.org/ascs-                       =
+=                      ev/envited-x/ositrace/v7/hasChannel> ; rdf:type owl:Restriction, rdfs:Resource ] ) ; rdf:type rdfs:Resource ] ) ; rdf:type    =
+=                      rdfs:Class ], rdfs:Resource ] must conform to one or more shapes in [ rdfs:comment Literal("Single-channel trace file (.osi   =
+=                      binary or .txth text).", lang=en) ; sh:property [ sh:in ( Literal("OSI", datatype=xsd:string) Literal("TXTH",                 =
+=                      datatype=xsd:string) ) ; sh:path ositrace:fileFormat ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path            =
+=                      ositrace:formatType ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ositrace:version ] ] , [ rdfs:comment       =
+=                      Literal("Multi-channel MCAP container.", lang=en) ; sh:property [ sh:in ( Literal("MCAP", datatype=xsd:string) ) ;            =
+=                      sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ositrace:fileFormat ], [ sh:minCount Literal("1",                    =
+=                      datatype=xsd:integer) ; sh:path ositrace:hasChannel ] ]                                                                       =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.ositrace.net:OSITrace:test_invalid_singlechannel_bad_fileformat                                                  =
-=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasDomainSpecification                                                         =
-=    Error:            Each OSI trace must have one associated DomainSpecification object with content, format, quality, quantity, and dataSource.   =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v7/hasDomainSpecification                                                         =
+=    Error:            ositraceHasDomainSpecification (OSITrace): Links an OSI trace asset to its specific metadata (DomainSpecification), which may =
+=                      contain additional OSI trace-specific attributes.                                                                             =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasFormat                                                                      =
-=    Error:            Value does not conform to Shape ositrace:FormatShape. See details for more information.                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v7/hasFormat                                                                      =
+=    Error:            ositraceHasFormat (DomainSpecification): File format details of the OSI trace.                                                =
 ======================================================================================================================================================

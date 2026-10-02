@@ -31,7 +31,7 @@
    "gaia-x": "../../submodules/service-characteristics/linkml/gaia-x",
    "gaia-x-entity": "../../submodules/service-characteristics/linkml/gaia-x-entity",
    "gpu": "../../submodules/service-characteristics/linkml/gpu",
-   "https://w3id.org/ascs-ev/envited-x/manifest/v5": "../manifest/manifest",
+   "https://w3id.org/ascs-ev/envited-x/manifest/v6": "../manifest/manifest",
    "image": "../../submodules/service-characteristics/linkml/image",
    "instantiation-requirement": "../../submodules/service-characteristics/linkml/instantiation-requirement",
    "interconnection-service-offering": "../../submodules/service-characteristics/linkml/interconnection-service-offering",
@@ -63,5 +63,6 @@
    "sub-processor-data-transfer": "../../submodules/service-characteristics/linkml/sub-processor-data-transfer",
    "third-country-data-transfer": "../../submodules/service-characteristics/linkml/third-country-data-transfer",
    "vm-image": "../../submodules/service-characteristics/linkml/vm-image",
-   "water-usage-effectiveness": "../../submodules/service-characteristics/linkml/water-usage-effectiveness"
+   "water-usage-effectiveness": "../../submodules/service-characteristics/linkml/water-usage-effectiveness",
+   "gaiax_ontology:development#": "../../submodules/service-characteristics/linkml/gaia-x"
 }
