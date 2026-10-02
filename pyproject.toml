@@ -53,8 +53,9 @@ dev = [
     "ruff>=0.15.0",
     # linkml: dev-only tooling for artifact generation. In a dependency group (not a
     # published extra) so its git-URL reference never lands in the wheel's
-    # Requires-Dist — PyPI forbids direct-URL deps in uploaded metadata.
-    "linkml @ git+https://github.com/ASCS-eV/linkml.git@feat/envited-x-pipeline#subdirectory=packages/linkml",
+    # Requires-Dist — PyPI forbids direct-URL deps in uploaded metadata. The
+    # diff-stable extra provides diffable-rdf, which the generators' --diff-stable needs.
+    "linkml[diff-stable] @ git+https://github.com/ASCS-eV/linkml.git@feat/envited-x-pipeline#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
     "mkdocs-awesome-pages-plugin>=2.9.3",

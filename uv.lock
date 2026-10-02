@@ -744,8 +744,8 @@ wheels = [
 
 [[package]]
 name = "linkml"
-version = "0.0.0.post4841.dev0+3026d817"
-source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline#3026d817860fd1a28813264b22c7873abde9e5fd" }
+version = "0.0.0.post4902.dev0+94d3cc59"
+source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline#94d3cc59397f0516c941964134ade98b344fffda" }
 dependencies = [
     { name = "antlr4-python3-runtime" },
     { name = "click" },
@@ -776,15 +776,19 @@ dependencies = [
     { name = "watchdog" },
 ]
 
+[package.optional-dependencies]
+diff-stable = [
+    { name = "linkml-runtime", extra = ["diff-stable"] },
+]
+
 [[package]]
 name = "linkml-runtime"
-version = "0.0.0.post4841.dev0+3026d817"
-source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml_runtime&rev=feat%2Fenvited-x-pipeline#3026d817860fd1a28813264b22c7873abde9e5fd" }
+version = "0.0.0.post4902.dev0+94d3cc59"
+source = { git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml_runtime&rev=feat%2Fenvited-x-pipeline#94d3cc59397f0516c941964134ade98b344fffda" }
 dependencies = [
     { name = "click" },
     { name = "curies" },
     { name = "deprecated" },
-    { name = "diffable-rdf" },
     { name = "hbreader" },
     { name = "json-flattener" },
     { name = "jsonasobj2" },
@@ -796,6 +800,11 @@ dependencies = [
     { name = "pyyaml" },
     { name = "rdflib" },
     { name = "requests" },
+]
+
+[package.optional-dependencies]
+diff-stable = [
+    { name = "diffable-rdf" },
 ]
 
 [[package]]
@@ -1063,7 +1072,7 @@ publish = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "linkml" },
+    { name = "linkml", extra = ["diff-stable"] },
     { name = "mkdocs-awesome-pages-plugin" },
     { name = "mkdocs-exclude" },
     { name = "mkdocs-material" },
@@ -1090,7 +1099,7 @@ provides-extras = ["publish", "docs"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "linkml", git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline" },
+    { name = "linkml", extras = ["diff-stable"], git = "https://github.com/ASCS-eV/linkml.git?subdirectory=packages%2Flinkml&rev=feat%2Fenvited-x-pipeline" },
     { name = "mkdocs-awesome-pages-plugin", specifier = ">=2.9.3" },
     { name = "mkdocs-exclude", specifier = ">=1.0.0" },
     { name = "mkdocs-material", specifier = ">=9.5.0" },
@@ -1219,11 +1228,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.11.0"
+version = "4.12.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/78/9b/560e4be8e26f6fd133a03630a8df0c663b9e8d61b4ade152b72005aec83b/platformdirs-4.11.0.tar.gz", hash = "sha256:0555d18370482847566ffabcaa53ad7c6c1c29f195989ae1ed634a05f76ea1e0", size = 31953, upload-time = "2026-07-21T13:09:36.565Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/17/c8/721b3855fe457da514fe249247d404b9b39c5d16532278f70ebaa6acf18b/platformdirs-4.12.2.tar.gz", hash = "sha256:eab5f70271a490ef74618bb314fbb86e3c7e82fa3b9c922c2ea0e0a1a155d329", size = 59353, upload-time = "2026-09-29T18:27:56.009Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7d/68/d8d58938dfb1370b266a1a729e6d77a985be23689a0496498ee17b2cbf90/platformdirs-4.11.0-py3-none-any.whl", hash = "sha256:360ccded2b7fce0af0ff80cc8f5942a1c5d99b0e856033acb030bfc634709e74", size = 23247, upload-time = "2026-07-21T13:09:35.422Z" },
+    { url = "https://files.pythonhosted.org/packages/d0/89/446044f33aba0348d35e433f56d12206d010a5281a1df54054d4cfb82388/platformdirs-4.12.2-py3-none-any.whl", hash = "sha256:29dbf06d96c500bc6bdbce75fb0a14d63279c93b1842f97e72a135b33e856983", size = 32457, upload-time = "2026-09-29T18:27:54.43Z" },
 ]
 
 [[package]]

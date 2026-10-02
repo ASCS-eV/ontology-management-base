@@ -1710,7 +1710,7 @@ openlabel_v2:weatherWindValue a owl:DatatypeProperty ;
 	skos:editorialNote "v1 description: \"Wind speed (m/s)\" (PAS 1883:2020, Section 5.3.1.1)."@en ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
 	skos:note "ISO 34503:2023, 10.2.3"@en .
-<https://w3id.org/ascs-ev/envited-x/openlabel/v2> dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
+<https://w3id.org/ascs-ev/envited-x/openlabel/v2> dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
 	dcterms:title "ASAM OpenLABEL Scenario Tagging Ontology"@en ;
 	pav:version "2.0.0"@en ;
 	a owl:Ontology ;
