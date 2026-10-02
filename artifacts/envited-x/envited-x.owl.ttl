@@ -258,9 +258,11 @@ envited-x:isValidationReport dcterms:title "Validation Report Category"@en ;
 	rdfs:comment "Indicates that the artifact category is a validation report in the envited-x context."@en ;
 	rdfs:label "isValidationReport"@en .
 <https://w3id.org/ascs-ev/envited-x/envited-x/v4> dcterms:conformsTo envited-x:shapes ;
+	dcterms:contributor <https://github.com/MircoNierenz> , <https://github.com/jdsika> , <https://github.com/konierik> ;
 	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
 	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/envited-x"@en ;
 	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references gx: ;
 	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 	dcterms:title "Ontology definition for envited-x"@en ;

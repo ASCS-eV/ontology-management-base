@@ -707,9 +707,11 @@ ositrace:zeroTime a owl:DatatypeProperty ;
 	rdfs:range xsd:dateTime ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ositrace/v7> .
 <https://w3id.org/ascs-ev/envited-x/ositrace/v7> dcterms:conformsTo ositrace:shapes ;
+	dcterms:contributor <https://github.com/jdsika> , <https://github.com/pmai> ;
 	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
 	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/ositrace"@en ;
 	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references <https://github.com/OpenSimulationInterface> ;
 	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 	dcterms:title "Ontology definition for ositrace"@en ;

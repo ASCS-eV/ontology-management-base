@@ -145,9 +145,11 @@ georeference:yMin a owl:DatatypeProperty ;
 	rdfs:range xsd:float ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/georeference/v6> .
 <https://w3id.org/ascs-ev/envited-x/georeference/v6> dcterms:conformsTo georeference:shapes ;
+	dcterms:contributor <https://github.com/3Dbastian> , <https://github.com/MircoNierenz> , <https://github.com/jdsika> ;
 	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
 	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/georeference"@en ;
 	dcterms:license <https://www.eclipse.org/legal/epl-2.0/> ;
+	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> ;
 	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
 	dcterms:title "Ontology definition for Georeferencing"@en ;

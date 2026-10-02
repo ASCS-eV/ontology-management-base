@@ -15,6 +15,10 @@ description: >-
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
 conforms_to: https://w3id.org/ascs-ev/envited-x/georeference/v6/shapes
+contributors:
+  - https://github.com/jdsika
+  - https://github.com/3Dbastian
+  - https://github.com/MircoNierenz
 see_also:
   - https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md
 
@@ -28,8 +32,9 @@ prefixes:
 default_prefix: georeference
 default_range: string
 
-# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
-# take resources and are emitted as IRIs; see linkml/GAPS.md D1 for what remains.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources and are emitted as IRIs; see linkml/GAPS.md
+# G16 for what remains.
 annotations:
   owl:versionInfo: v6
   owl:versionIRI: https://w3id.org/ascs-ev/envited-x/georeference/v6
@@ -38,6 +43,7 @@ annotations:
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/georeference
   dcterms:references: https://w3id.org/ascs-ev/envited-x/hdmap/v6/
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
 
 imports:
   - linkml:types

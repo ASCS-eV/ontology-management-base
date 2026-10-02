@@ -30,6 +30,9 @@ description: >-
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
 conforms_to: https://w3id.org/ascs-ev/envited-x/ositrace/v7/shapes
+contributors:
+  - https://github.com/pmai
+  - https://github.com/jdsika
 see_also:
   - https://ascs-ev.github.io/EVES/
 
@@ -52,8 +55,9 @@ prefixes:
 default_prefix: ositrace
 default_range: string
 
-# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
-# take resources and are emitted as IRIs; see linkml/GAPS.md D1 for what remains.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources and are emitted as IRIs; see linkml/GAPS.md
+# G16 for what remains.
 annotations:
   owl:versionInfo: v7
   owl:versionIRI: https://w3id.org/ascs-ev/envited-x/ositrace/v7
@@ -62,6 +66,7 @@ annotations:
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/ositrace
   dcterms:references: https://github.com/OpenSimulationInterface
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
 
 # Dependencies are imported as CURIEs, the idiom LinkML uses for `linkml:types`.
 # An absolute-IRI import is not usable for envited-x: linkml_runtime resolves the

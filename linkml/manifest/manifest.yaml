@@ -22,6 +22,11 @@ description: >-
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
 conforms_to: https://w3id.org/ascs-ev/envited-x/manifest/v6/shapes
+contributors:
+  - https://github.com/jtdemer
+  - https://github.com/jdsika
+  - https://github.com/MircoNierenz
+  - https://github.com/konierik
 see_also:
   - https://ascs-ev.github.io/EVES/
 
@@ -38,10 +43,10 @@ prefixes:
 default_prefix: manifest
 default_range: string
 
-# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
-# take resources, so their values are emitted as IRIs. dcterms:identifier is a
-# literal by its DCMI range. Structured contributors cannot be expressed: see
-# linkml/GAPS.md D1.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources, so their values are emitted as IRIs.
+# dcterms:identifier is a literal by its DCMI range. Contributors are named by
+# their GitHub accounts: see linkml/GAPS.md G16.
 annotations:
   owl:versionInfo: v6
   owl:versionIRI: https://w3id.org/ascs-ev/envited-x/manifest/v6
@@ -50,6 +55,7 @@ annotations:
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/manifest
   dcterms:references: https://w3id.org/ascs-ev/envited-x/envited-x/
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
 
 imports:
   - linkml:types

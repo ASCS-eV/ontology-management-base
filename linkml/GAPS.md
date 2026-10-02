@@ -21,10 +21,10 @@ What the generated artifacts cannot state, per domain:
 
 | Domain | Remaining |
 |---|---|
-| manifest | D1; G8 (`width`, `height`, `depth` greater than 0) |
-| georeference | D1 |
-| envited-x | D1; D11 (bare class terms) |
-| ositrace | D1 |
+| manifest | G8 (`width`, `height`, `depth` greater than 0); G16 |
+| georeference | G16 |
+| envited-x | D11 (bare class terms); G16 |
+| ositrace | G16 |
 
 The generators come from the ASCS-eV LinkML fork, pinned in `uv.lock`. Besides
 upstream LinkML the models use these fork features: `--inlined-as-node`,
@@ -90,10 +90,13 @@ and the like are standardised closed sets; an enum is correct and renders as
 **M8 — Header from schema metadata.** `description` becomes `rdfs:comment`
 under `--metadata-profile rdfs`; `see_also`, `source`, `license` and
 `conforms_to` give `rdfs:seeAlso`, `dcterms:source`, `dcterms:license` and
-`dcterms:conformsTo`. `annotations` give the rest: `owl:versionInfo`,
-`dcterms:creator` and `dcterms:identifier` as literals, and `owl:versionIRI`,
-`owl:priorVersion`, `prov:wasDerivedFrom` and `dcterms:references` as IRIs,
-because those properties take resources. What cannot be expressed is D1.
+`dcterms:conformsTo`, and `contributors` gives one `dcterms:contributor` IRI per
+contributor: their GitHub account. `annotations` give the rest:
+`owl:versionInfo`, `dcterms:creator` and `dcterms:identifier` as literals, and
+`owl:versionIRI`, `owl:priorVersion`, `prov:wasDerivedFrom`,
+`dcterms:references` and `dcterms:publisher` (ASCS e.V., `https://www.asc-s.de/`)
+as IRIs, because those properties take resources. What cannot be expressed is
+G16.
 
 **M9 — Narrowing is a subclass, stated where the value sits.** "A license link
 is a link whose category is a license category" is `LicenseLink is_a
@@ -144,14 +147,6 @@ against a document base. A link to a resource is `uri`, an IRI node
 
 ## Open decisions
 
-**D1 — Header terms LinkML cannot state.** Structured `dcterms:contributor`
-nodes (a `foaf:Person` with name and organisation) have no metamodel
-counterpart; `contributors` takes IRIs only. Under `--default-language en` every
-string annotation is language-tagged, `owl:versionInfo` and
-`dcterms:identifier` included. `rdfs:label` comes from the schema `name`, and
-`title` becomes `dcterms:title`. *Choose:* contributors as IRIs (for example
-ORCID), or left out of the header.
-
 **D11 — Bare class terms in the envited-x context.** The renamed envited-x
 classes (M4) lose their bare context terms (`Content`, `Format`, `Manifest`, …).
 No instance uses a bare class name, and every instance expands to the same RDF.
@@ -175,6 +170,7 @@ No instance uses a bare class name, and every instance expands to the same RDF.
 | G13 | with `--exclude-imports`, gen-shacl no longer knows prefixes declared only in imported schemas: datatype and path CURIEs from `linkml:types` (`xsd:`) or Gaia-X (`sdo:`) are emitted unexpanded, e.g. `sh:datatype <xsd:float>`, which no value matches | silently rejects every value of those slots | expand with the full closure's namespaces; schemas declare the prefixes their shapes use (`xsd:`, `sdo:`) |
 | G14 | rule converter: a rule without preconditions is skipped | "always" is written as a class expression instead (`has_member` in `all_of`) | translate unconditional postconditions |
 | G15 | slot-level `equals_string` on an enum-ranged slot raises in gen-shacl, although a class-expression condition accepts it | a slot narrowed to one value uses a one-value enum (M12) | resolve the value as `_add_enum` does |
+| G16 | `contributors` has the range `uriorcurie`, and the metamodel has no structured agent; under `--default-language en` every string annotation is language-tagged; the ontology's `rdfs:label` is the schema `name` (`title` becomes `dcterms:title`) | the header names contributors by IRI only, without name or organisation (a `foaf:Person` node cannot be stated); `owl:versionInfo` and `dcterms:identifier` carry `@en` | metamodel change for structured agents; leave non-linguistic annotations untagged |
 
 ---
 

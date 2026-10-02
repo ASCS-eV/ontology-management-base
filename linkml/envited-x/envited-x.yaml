@@ -34,6 +34,10 @@ description: >-
 license: https://www.eclipse.org/legal/epl-2.0/
 source: https://github.com/ASCS-eV/ontology-management-base
 conforms_to: https://w3id.org/ascs-ev/envited-x/envited-x/v4/shapes
+contributors:
+  - https://github.com/jdsika
+  - https://github.com/MircoNierenz
+  - https://github.com/konierik
 see_also:
   - https://ascs-ev.github.io/EVES/
 
@@ -59,8 +63,9 @@ prefixes:
 default_prefix: envited-x
 default_range: string
 
-# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom and dcterms:references
-# take resources and are emitted as IRIs; see linkml/GAPS.md D1 for what remains.
+# owl:versionIRI, owl:priorVersion, prov:wasDerivedFrom, dcterms:references and
+# dcterms:publisher take resources and are emitted as IRIs; see linkml/GAPS.md
+# G16 for what remains.
 annotations:
   owl:versionInfo: v4
   owl:versionIRI: https://w3id.org/ascs-ev/envited-x/envited-x/v4
@@ -69,6 +74,7 @@ annotations:
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/envited-x
   dcterms:references: https://w3id.org/gaia-x/development#
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
 
 imports:
   - linkml:types
