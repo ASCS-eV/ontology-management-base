@@ -41,8 +41,11 @@ import sys
 from pathlib import Path
 from typing import List, Optional, Tuple
 
+from omb.core.logging import configure_cli_logging
+from omb.core.paths import builtin_data_root
 from omb.core.result import ReturnCodes, ValidationResult
 from omb.utils.file_collector import collect_jsonld_files as _collect_jsonld_files
+from omb.utils.print_formatter import ensure_utf8_output
 
 # Import from the modular SHACL structure
 from omb.validators.shacl.validator import (
@@ -116,14 +119,16 @@ def validate_files(
 
     Args:
         paths: List of file or directory paths to validate
-        root_dir: Repository root directory (default: cwd)
+        root_dir: Root of OMB's built-in data (default: ``builtin_data_root()``)
         inference_mode: Inference mode for RDFS/OWL inference
 
     Returns:
         ValidationResult with validation outcome
     """
     if root_dir is None:
-        root_dir = Path.cwd()
+        # Not cwd: for an installed package the working directory is the caller's
+        # repository, which holds no catalogs, so every lookup silently came up empty.
+        root_dir = builtin_data_root()
 
     # Collect files
     jsonld_files = collect_jsonld_files(paths)
@@ -186,10 +191,13 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main():
-    """Command-line entry point."""
+def main() -> int:
+    """Command-line entry point. Returns a process exit code."""
+    configure_cli_logging()
+    ensure_utf8_output()
     parser = argparse.ArgumentParser(
-        description="Validate JSON-LD files against SHACL shapes using registry discovery"
+        prog="onto-check-conformance",
+        description="Validate JSON-LD files against SHACL shapes using registry discovery",
     )
     parser.add_argument(
         "paths", nargs="*", help="JSON-LD files or directories to validate"
@@ -197,8 +205,19 @@ def main():
     parser.add_argument(
         "--root",
         type=Path,
-        default=Path.cwd(),
-        help="Repository root directory (default: current directory)",
+        default=None,
+        help="Root of OMB's built-in data (default: the data shipped with the "
+        "installed package, or the repository root in a source checkout)",
+    )
+    parser.add_argument(
+        "--artifacts",
+        type=Path,
+        nargs="+",
+        default=None,
+        metavar="DIR",
+        help="Additional artifact directories to register for schema discovery, "
+        "each holding {domain}/{domain}.owl.ttl (+ .shacl.ttl, .context.jsonld). "
+        "Required to validate data whose types are defined outside OMB.",
     )
     parser.add_argument(
         "--inference",
@@ -213,27 +232,36 @@ def main():
     args = parser.parse_args()
 
     if args.test:
-        success = _run_tests()
-        sys.exit(0 if success else 1)
+        return ReturnCodes.SUCCESS if _run_tests() else ReturnCodes.GENERAL_ERROR
 
     if not args.paths:
         parser.print_help()
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
 
     # Collect files
     jsonld_files = collect_jsonld_files(args.paths)
 
     if not jsonld_files:
         print("Error: No JSON-LD files found", file=sys.stderr)
-        sys.exit(1)
+        return ReturnCodes.GENERAL_ERROR
+
+    # Default to OMB's own data root rather than the working directory: the CLI is
+    # installed, so cwd is the consumer's repository, where the catalogs are not.
+    root_dir = args.root.resolve() if args.root else builtin_data_root()
+    artifact_dirs = [d.resolve() for d in args.artifacts] if args.artifacts else None
 
     # Run validation
     return_code, _ = validate_data_conformance(
-        jsonld_files, args.root.resolve(), args.inference, args.debug, args.logfile
+        jsonld_files,
+        root_dir,
+        args.inference,
+        args.debug,
+        args.logfile,
+        artifact_dirs=artifact_dirs,
     )
 
-    sys.exit(return_code)
+    return return_code
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

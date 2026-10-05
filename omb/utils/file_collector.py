@@ -57,6 +57,8 @@ import argparse
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Union
+from omb.core.logging import configure_cli_logging
+
 
 # Type alias for flexible path input (single or multiple)
 PathsInput = Union[str, Path, List[Union[str, Path]]]
@@ -454,6 +456,9 @@ def extract_jsonld_iris(file_path: Path) -> tuple:
     except Exception:
         return None, set()
 
+    if not isinstance(doc, dict):
+        return None, set()
+
     root_id = doc.get("@id") or doc.get("id")
     referenced: Set[str] = set()
 
@@ -504,6 +509,8 @@ def _is_did_document(file_path: Path, root_id: Optional[str]) -> bool:
 
 def discover_data_hierarchy(
     paths: List[Union[str, Path]],
+    *,
+    include_did_documents: bool = False,
 ) -> tuple:
     """
     Discover top-level files and fixture mappings from paths.
@@ -521,6 +528,8 @@ def discover_data_hierarchy(
 
     Args:
         paths: List of files or directories to process
+        include_did_documents: Include every document under requested directories
+            as validation input. Parent-directory scans still only supply references.
 
     Returns:
         Tuple of (files_to_validate, iri_to_file_map, metadata)
@@ -581,7 +590,7 @@ def discover_data_hierarchy(
     for f, fid in file_ids.items():
         # Only non-DID documents found under explicitly provided directories are
         # auto-promoted to top-level validation inputs.
-        if f not in did_documents and any(
+        if (include_did_documents or f not in did_documents) and any(
             root in f.parents or f == root for root in validation_dirs
         ):
             top_level.add(f)
@@ -671,6 +680,7 @@ def _run_tests() -> bool:
 
 def main():
     """CLI entry point for file_collector."""
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description="Collect files by extension from paths"
     )

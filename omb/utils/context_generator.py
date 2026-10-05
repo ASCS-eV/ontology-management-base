@@ -22,6 +22,9 @@ USAGE:
     # Generate contexts for all domains
     python -m omb.utils.context_generator --all
 
+    # Generate from caller-owned inputs into a separate output tree
+    onto-generate-context --all --artifacts ./my-artifacts --output ./contexts
+
     # Test round-trip equivalence
     python -m omb.utils.context_generator --test-roundtrip manifest
 
@@ -38,6 +41,7 @@ NOTES:
 - This is a transitional tool bridging to full LinkML adoption
 - Context files enable compact JSON-LD syntax without explicit @value/@type
 - The generator extracts datatypes from sh:datatype, sh:class, sh:nodeKind
+- Installed output defaults to ./generated-contexts; package data remains read-only
 """
 
 import argparse
@@ -49,15 +53,17 @@ from typing import Any, Dict, List, Optional, Set
 
 from rdflib import RDF, Graph, Namespace, URIRef
 from rdflib.collection import Collection
+from rdflib.exceptions import ParserError
 from rdflib.namespace import OWL, RDFS, XSD
 from rdflib.term import Node
 
 from omb.core.constants import FAST_STORE, Extensions
 from omb.core.iri_utils import get_local_name, normalize_iri
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
+from omb.core.result import ReturnCodes
 from omb.utils.graph_loader import load_graph, load_graphs
-from omb.utils.print_formatter import normalize_path_for_display
+from omb.utils.print_formatter import ensure_utf8_output, normalize_path_for_display
 
 logger = get_logger(__name__)
 
@@ -420,17 +426,52 @@ def extract_classes(owl_graph: Graph, domain_iri: str) -> Set[str]:
     return classes
 
 
-def generate_context(domain: str) -> Optional[Dict[str, Any]]:
+def _is_source_checkout() -> bool:
+    return (ROOT_DIR / "pyproject.toml").is_file() and (ROOT_DIR / "omb").is_dir()
+
+
+def _uses_source_artifacts(artifacts_dir: Path) -> bool:
+    return _is_source_checkout() and artifacts_dir.resolve() == ARTIFACTS_DIR.resolve()
+
+
+def _validate_domain(domain: str) -> None:
+    if not domain or domain in {".", ".."} or "/" in domain or "\\" in domain:
+        raise ValueError(f"Domain must be a single directory name: {domain!r}")
+
+
+def _context_output_dir(
+    artifacts_dir: Optional[Path], output_dir: Optional[Path]
+) -> Path:
+    if output_dir is not None:
+        output = Path(output_dir)
+    elif artifacts_dir is None and _is_source_checkout():
+        output = ARTIFACTS_DIR
+    else:
+        output = Path.cwd() / "generated-contexts"
+    if not _is_source_checkout() and output.resolve().is_relative_to(
+        ROOT_DIR.parent.resolve()
+    ):
+        raise ValueError("Context output must be outside the installed package")
+    return output
+
+
+def generate_context(
+    domain: str, *, artifacts_dir: Optional[Path] = None
+) -> Optional[Dict[str, Any]]:
     """
     Generate a JSON-LD context for a domain.
 
     Args:
         domain: Domain name (e.g., 'manifest', 'hdmap')
+        artifacts_dir: Input root containing domain directories; defaults to
+            the built-in artifacts. No files are written by this function.
 
     Returns:
         JSON-LD context dictionary, or None if generation fails
     """
-    domain_dir = ARTIFACTS_DIR / domain
+    _validate_domain(domain)
+    artifacts_dir = Path(artifacts_dir) if artifacts_dir is not None else ARTIFACTS_DIR
+    domain_dir = artifacts_dir / domain
     owl_path = domain_dir / f"{domain}{Extensions.OWL}"
     shacl_path = domain_dir / f"{domain}{Extensions.SHACL}"
 
@@ -561,18 +602,20 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
         # Map bare class names to full IRIs for @type expansion
         context[class_name] = f"{prefix}:{class_name}"
 
-    # Build source_shacl value (single path or list)
+    # Keep source metadata relative to the caller's artifact root, including
+    # its directory name, so it does not expose machine-specific absolute paths.
+    source_root = artifacts_dir.parent
     if len(shacl_paths) == 1:
-        source_shacl = shacl_paths[0].relative_to(ROOT_DIR).as_posix()
+        source_shacl = shacl_paths[0].relative_to(source_root).as_posix()
     else:
-        source_shacl = [p.relative_to(ROOT_DIR).as_posix() for p in shacl_paths]
+        source_shacl = [p.relative_to(source_root).as_posix() for p in shacl_paths]
 
     # Build the full context document
     context_doc = {
         "comments": {
             "description": "Auto-generated JSON-LD context for compact instance syntax",
             "generator": "context_generator.py",
-            "source_owl": owl_path.relative_to(ROOT_DIR).as_posix(),
+            "source_owl": owl_path.relative_to(source_root).as_posix(),
             "source_shacl": source_shacl,
             "note": "Transitional artifact - will be replaced by LinkML-generated context",
         },
@@ -583,7 +626,12 @@ def generate_context(domain: str) -> Optional[Dict[str, Any]]:
 
 
 def _write_context(
-    domain: str, context_doc: Dict[str, Any], dry_run: bool = False
+    domain: str,
+    context_doc: Dict[str, Any],
+    dry_run: bool = False,
+    *,
+    artifacts_dir: Optional[Path] = None,
+    output_dir: Optional[Path] = None,
 ) -> Optional[Path]:
     """Write context document to file only if content has changed.
 
@@ -591,20 +639,23 @@ def _write_context(
         domain: Domain name
         context_doc: The context document to write
         dry_run: If True, do not write the file
+        artifacts_dir: Input root, used to select safe output defaults
+        output_dir: Context output root containing domain directories
 
     Returns:
         Path if file was written, None if unchanged or dry_run
     """
-    if domain in EXTERNAL_LINKML_DOMAINS:
+    _validate_domain(domain)
+    output_root = _context_output_dir(artifacts_dir, output_dir)
+    if _uses_source_artifacts(output_root) and domain in EXTERNAL_LINKML_DOMAINS:
         # Safety net for every entry point (--all, --domain, direct API calls):
         # this generator cannot reproduce an externally generated context and
         # would replace it with a small, incorrect stub.
-        logger.warning(
-            "Refusing to write context for externally generated domain: %s", domain
+        raise ValueError(
+            f"Refusing to write context for externally generated source domain: {domain}"
         )
-        return None
 
-    output_path = ARTIFACTS_DIR / domain / f"{domain}{Extensions.CONTEXT}"
+    output_path = output_root / domain / f"{domain}{Extensions.CONTEXT}"
     new_content = json.dumps(context_doc, indent=3) + "\n"
 
     if dry_run:
@@ -621,37 +672,47 @@ def _write_context(
 def generate_all_contexts(
     exclude: Optional[List[str]] = None,
     dry_run: bool = False,
+    *,
+    artifacts_dir: Optional[Path] = None,
+    output_dir: Optional[Path] = None,
 ) -> Dict[str, Optional[Path]]:
     """
     Generate contexts for all domains in artifacts/.
 
     Args:
-        exclude: Additional domains to skip. Domains in
-            ``EXTERNAL_LINKML_DOMAINS`` are always skipped. Pass None to also
-            auto-detect LinkML-managed domains (those with a linkml/<domain>/
-            folder).
+        exclude: Domains to skip. For source artifacts, externally managed
+            LinkML domains are always skipped; None also auto-detects local
+            LinkML sources and context metadata.
         dry_run: If True, generate but do not write files
+        artifacts_dir: Input artifact root; defaults to built-in artifacts
+        output_dir: Context output root; installed defaults use
+            ./generated-contexts, source defaults update artifacts in place
 
     Returns:
-        Dict mapping domain names to output paths (or None if
-        failed/unchanged/skipped)
+        Dict mapping processed domains to paths (None if unchanged or dry run).
+        Excluded domains are omitted. Raises ValueError for failed generation
+        or when no eligible domains exist.
     """
-    # Domains generated by an external LinkML pipeline have no local
-    # linkml/<domain>/ source, so this generator cannot reproduce their context
-    # and must never overwrite it. This is unconditional: an explicit `exclude`
-    # argument narrows the auto-detection below, it does not re-enable these.
-    exclude_set: Set[str] = set(EXTERNAL_LINKML_DOMAINS)
+    # Source LinkML contexts belong to the contributor pipeline. An explicit
+    # exclude list cannot re-enable its externally maintained domains, while
+    # caller artifact roots do not inherit this repository's domain ownership.
+    artifact_root = Path(artifacts_dir) if artifacts_dir is not None else ARTIFACTS_DIR
+    if not artifact_root.is_dir():
+        raise ValueError(f"Artifacts directory not found: {artifact_root}")
+    output_root = _context_output_dir(artifacts_dir, output_dir)
+    source_artifacts = _uses_source_artifacts(artifact_root)
+    exclude_set: Set[str] = set(EXTERNAL_LINKML_DOMAINS) if source_artifacts else set()
 
     if exclude is not None:
         exclude_set.update(exclude)
-    else:
+    elif source_artifacts:
         # Auto-detect LinkML-managed domains (they have their own generated context)
         if LINKML_DIR.is_dir():
             for d in LINKML_DIR.iterdir():
                 if d.is_dir() and (d / f"{d.name}.yaml").exists():
                     exclude_set.add(d.name)
         # Also exclude domains whose context was generated by external LinkML
-        for ctx_file in ARTIFACTS_DIR.glob("*/*.context.jsonld"):
+        for ctx_file in artifact_root.glob("*/*.context.jsonld"):
             domain = ctx_file.parent.name
             if domain not in exclude_set:
                 try:
@@ -665,14 +726,13 @@ def generate_all_contexts(
                     pass
     results: Dict[str, Optional[Path]] = {}
 
-    for domain_dir in sorted(ARTIFACTS_DIR.iterdir()):
+    for domain_dir in sorted(artifact_root.iterdir()):
         if not domain_dir.is_dir():
             continue
 
         domain = domain_dir.name
         if domain in exclude_set:
             logger.info("Skipping excluded domain: %s", domain)
-            results[domain] = None
             continue
 
         owl_path = domain_dir / f"{domain}{Extensions.OWL}"
@@ -680,16 +740,27 @@ def generate_all_contexts(
             logger.debug("No OWL file in %s, skipping", domain)
             continue
 
-        context_doc = generate_context(domain)
+        context_doc = generate_context(domain, artifacts_dir=artifact_root)
         if context_doc:
-            results[domain] = _write_context(domain, context_doc, dry_run=dry_run)
+            results[domain] = _write_context(
+                domain,
+                context_doc,
+                dry_run=dry_run,
+                artifacts_dir=artifact_root,
+                output_dir=output_root,
+            )
         else:
-            results[domain] = None
+            raise ValueError(f"Context generation failed for domain: {domain}")
+
+    if not results:
+        raise ValueError(f"No eligible ontology domains found in: {artifact_root}")
 
     return results
 
 
-def test_context_roundtrip(domain: str, instance_path: Path) -> bool:
+def test_context_roundtrip(
+    domain: str, instance_path: Path, *, contexts_dir: Optional[Path] = None
+) -> bool:
     """
     Test that a compact instance produces equivalent RDF triples.
 
@@ -701,13 +772,16 @@ def test_context_roundtrip(domain: str, instance_path: Path) -> bool:
     Args:
         domain: Domain name
         instance_path: Path to a verbose JSON-LD instance
+        contexts_dir: Root containing contexts to test; defaults to artifacts
 
     Returns:
         True if graphs are isomorphic, False otherwise
     """
     from rdflib.compare import isomorphic
 
-    context_path = ARTIFACTS_DIR / domain / f"{domain}{Extensions.CONTEXT}"
+    _validate_domain(domain)
+    context_root = Path(contexts_dir) if contexts_dir is not None else ARTIFACTS_DIR
+    context_path = context_root / domain / f"{domain}{Extensions.CONTEXT}"
     if not context_path.exists():
         logger.error(
             "Context file not found: %s",
@@ -821,112 +895,123 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main() -> int:
-    """Main entry point."""
+def _run_cli(args: argparse.Namespace) -> int:
+    if args.exclude is not None and not args.all:
+        raise ValueError("--exclude requires --all")
+    if args.instance is not None and not args.test_roundtrip:
+        raise ValueError("--instance requires --test-roundtrip")
+    if args.test:
+        return ReturnCodes.SUCCESS if _run_tests() else ReturnCodes.GENERAL_ERROR
+
+    artifacts_dir = args.artifacts or ARTIFACTS_DIR
+    if not artifacts_dir.is_dir():
+        raise ValueError(f"Artifacts directory not found: {artifacts_dir}")
+
+    if args.test_roundtrip:
+        _validate_domain(args.test_roundtrip)
+        if not args.instance:
+            test_dir = ROOT_DIR / "tests" / "data" / args.test_roundtrip / "valid"
+            instances = sorted(test_dir.glob("*.json")) + sorted(
+                test_dir.glob("*.jsonld")
+            )
+            if not instances:
+                raise ValueError("No instance file found; pass --instance PATH")
+            args.instance = instances[0]
+        success = test_context_roundtrip(
+            args.test_roundtrip,
+            args.instance,
+            contexts_dir=args.output or artifacts_dir,
+        )
+        return ReturnCodes.SUCCESS if success else ReturnCodes.GENERAL_ERROR
+
+    if args.all:
+        results = generate_all_contexts(
+            exclude=args.exclude,
+            dry_run=args.dry_run,
+            artifacts_dir=args.artifacts,
+            output_dir=args.output,
+        )
+        written_count = sum(p is not None for p in results.values())
+        total_count = len(results)
+        if args.dry_run:
+            print(f"Dry run: {total_count} context files would be generated")
+        elif written_count:
+            print(f"Updated {written_count}/{total_count} context files")
+        else:
+            print(f"All {total_count} context files unchanged")
+        return ReturnCodes.SUCCESS
+
+    if args.domain:
+        _validate_domain(args.domain)
+        if not (artifacts_dir / args.domain).is_dir():
+            raise ValueError(f"Unknown domain: {args.domain}")
+        if (
+            _uses_source_artifacts(artifacts_dir)
+            and args.domain in EXTERNAL_LINKML_DOMAINS
+        ):
+            raise ValueError(
+                f"Refusing to generate context for '{args.domain}': it is produced "
+                "by an external LinkML pipeline and has no local linkml/ source."
+            )
+        context_doc = generate_context(args.domain, artifacts_dir=artifacts_dir)
+        if not context_doc:
+            raise ValueError(f"Context generation failed for domain: {args.domain}")
+        if args.dry_run:
+            print(json.dumps(context_doc, indent=3))
+        else:
+            _write_context(
+                args.domain,
+                context_doc,
+                artifacts_dir=args.artifacts,
+                output_dir=args.output,
+            )
+        return ReturnCodes.SUCCESS
+
+    raise ValueError("Choose --domain DOMAIN, --all, --test-roundtrip DOMAIN or --test")
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    """Run the context CLI, returning 1 for invalid inputs or failed generation."""
+    ensure_utf8_output()
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description="Generate JSON-LD context files from OWL/SHACL artifacts"
     )
+    action = parser.add_mutually_exclusive_group(required=True)
+    action.add_argument("--domain", help="Generate context for a specific domain")
+    action.add_argument(
+        "--all", action="store_true", help="Generate all eligible domains"
+    )
+    action.add_argument(
+        "--test-roundtrip", metavar="DOMAIN", help="Test round-trip equivalence"
+    )
+    action.add_argument("--test", action="store_true", help="Run self-tests")
     parser.add_argument(
-        "--domain",
-        help="Generate context for a specific domain",
+        "--artifacts", type=Path, help="Input root containing <domain>/<domain>.owl.ttl"
     )
     parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Generate contexts for all domains",
+        "--output",
+        type=Path,
+        help="Context output root (installed default: ./generated-contexts)",
     )
     parser.add_argument(
         "--exclude",
         nargs="*",
         default=None,
-        help="Additional domains to exclude (gx is always excluded)",
+        help="Additional domains to exclude with --all; source LinkML guards still apply",
     )
     parser.add_argument(
-        "--test-roundtrip",
-        metavar="DOMAIN",
-        help="Test round-trip equivalence for a domain",
+        "--instance", type=Path, help="Instance file for round-trip test"
     )
     parser.add_argument(
-        "--instance",
-        type=Path,
-        help="Instance file for round-trip test",
+        "--dry-run", action="store_true", help="Generate without writing files"
     )
-    parser.add_argument(
-        "--test",
-        action="store_true",
-        help="Run self-tests",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be generated without writing files",
-    )
-
-    args = parser.parse_args()
-
-    if args.test:
-        success = _run_tests()
-        return 0 if success else 1
-
-    if args.test_roundtrip:
-        if not args.instance:
-            # Try to find a valid instance
-            test_dir = ROOT_DIR / "tests" / "data" / args.test_roundtrip / "valid"
-            instances = list(test_dir.glob("*.json")) + list(test_dir.glob("*.jsonld"))
-            if instances:
-                args.instance = instances[0]
-            else:
-                print(f"No instance file found for {args.test_roundtrip}")
-                return 1
-
-        success = test_context_roundtrip(args.test_roundtrip, args.instance)
-        return 0 if success else 1
-
-    if args.all:
-        results = generate_all_contexts(exclude=args.exclude, dry_run=args.dry_run)
-        exclude_set = set(EXTERNAL_LINKML_DOMAINS) | set(args.exclude or [])
-        written_count = sum(1 for p in results.values() if p is not None)
-        total_count = len([d for d in results if d not in exclude_set])
-        if args.dry_run:
-            print(f"\nDry run: {total_count} context files would be generated")
-        elif written_count > 0:
-            print(f"\nUpdated {written_count}/{total_count} context files")
-        else:
-            print(f"\nAll {total_count} context files unchanged")
-        return 0
-
-    if args.domain:
-        domain_dir = ARTIFACTS_DIR / args.domain
-        if not domain_dir.is_dir():
-            print(f"Unknown domain: {args.domain}")
-            print(
-                "Available: "
-                + ", ".join(
-                    d.name
-                    for d in sorted(ARTIFACTS_DIR.iterdir())
-                    if d.is_dir() and (d / f"{d.name}{Extensions.OWL}").exists()
-                )
-            )
-            return 1
-
-        if args.domain in EXTERNAL_LINKML_DOMAINS:
-            print(
-                f"Refusing to generate context for '{args.domain}': it is produced "
-                "by an external LinkML pipeline and has no local linkml/ source."
-            )
-            return 1
-
-        context_doc = generate_context(args.domain)
-        if context_doc:
-            if args.dry_run:
-                print(json.dumps(context_doc, indent=3))
-            else:
-                _write_context(args.domain, context_doc)
-            return 0
-        return 1
-
-    parser.print_help()
-    return 0
+    args = parser.parse_args(argv)
+    try:
+        return _run_cli(args)
+    except (OSError, ValueError, RuntimeError, SyntaxError, ParserError) as exc:
+        logger.error("Context generation failed: %s", exc)
+        return ReturnCodes.GENERAL_ERROR
 
 
 if __name__ == "__main__":

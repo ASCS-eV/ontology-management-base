@@ -59,7 +59,7 @@ from rdflib import Graph, Namespace
 from rdflib.term import Literal
 
 from omb.core.constants import ASAM_OPENDRIVE_SCHEMA_DIR
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.utils.xsd_enum_extractor import (
     EnumType,
     extract_enums_from_dir,
@@ -505,6 +505,7 @@ def _run_tests() -> bool:
 
 def main() -> None:
     """Entry point for standalone execution."""
+    configure_cli_logging()
     if "--test" in sys.argv:
         success = _run_tests()
         sys.exit(0 if success else 1)

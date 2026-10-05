@@ -77,6 +77,12 @@ jobs:
           print("OK: no direct-URL dependencies in built distributions.")
           PY
 
+      - name: Test the release wheel and sdist outside the checkout
+        run: |
+          python scripts/verify_wheel_install.py --wheel "dist/*.whl"
+          python scripts/verify_wheel_install.py --sdist "dist/*.tar.gz" --publish
+          python scripts/verify_wheel_install.py --wheel "dist/*.whl" --minimum
+
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:

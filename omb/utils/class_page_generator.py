@@ -49,7 +49,7 @@ from urllib.parse import quote
 import rdflib
 from rdflib import OWL, RDF, RDFS, Namespace, URIRef
 
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
 
 PAV = Namespace("http://purl.org/pav/")
@@ -1098,6 +1098,7 @@ def generate_all_class_pages(domains: Optional[List[str]] = None) -> None:
 
 def main():
     """CLI entry point."""
+    configure_cli_logging()
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -1122,4 +1123,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

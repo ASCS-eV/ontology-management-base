@@ -36,7 +36,7 @@ from rdflib.namespace import RDFS, SKOS, Namespace
 PAV = Namespace("http://purl.org/pav/")
 
 from omb.core.constants import FAST_STORE  # noqa: E402
-from omb.core.logging import get_logger  # noqa: E402
+from omb.core.logging import configure_cli_logging, get_logger  # noqa: E402
 from omb.core.negative_fixtures import is_negative_fixture  # noqa: E402
 from omb.core.paths import builtin_data_root  # noqa: E402
 from omb.utils.file_collector import (  # noqa: E402
@@ -777,6 +777,7 @@ def generate_ontoenv(
 
 
 def main():
+    configure_cli_logging()
     parser = argparse.ArgumentParser()
     parser.add_argument("--release-tag", "-r", default=None)
     parser.add_argument("--dry-run", "-n", action="store_true")
@@ -830,4 +831,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -19,13 +19,50 @@ class TestGetLogger:
         assert logger is not None
         assert isinstance(logger, logging.Logger)
 
-    def test_shortens_module_path(self):
-        """get_logger should shorten long module paths."""
+    def test_keeps_full_dotted_module_path(self):
+        """get_logger should keep the full dotted name, so `omb` addresses the package.
+
+        A host application silences or re-routes all of OMB with one
+        logging.getLogger("omb") call; that only works while the loggers stay in the
+        hierarchy. Shortened names ("file_collector") also collided with same-named
+        loggers belonging to the application.
+        """
         from omb.core.logging import get_logger
 
         logger = get_logger("omb.utils.file_collector")
 
-        assert logger.name == "file_collector"
+        assert logger.name == "omb.utils.file_collector"
+
+    def test_import_does_not_touch_root_handlers(self):
+        """Getting a logger must not configure (or de-configure) the root logger.
+
+        Modules call get_logger(__name__) at import time. When that configured
+        logging, importing omb removed the importing application's handlers.
+        """
+        import importlib
+
+        from omb.core.logging import get_logger
+
+        root = logging.getLogger()
+        app_stream = io.StringIO()
+        app_handler = logging.StreamHandler(app_stream)
+        root.addHandler(app_handler)
+        try:
+            get_logger("omb.some.module")
+            importlib.import_module("omb.utils.registry_resolver")
+
+            assert app_handler in root.handlers
+        finally:
+            root.removeHandler(app_handler)
+
+    def test_package_logger_has_null_handler(self):
+        """The `omb` logger carries a NullHandler so lastResort never writes to stderr."""
+        from omb.core.logging import PACKAGE_LOGGER_NAME, get_logger
+
+        get_logger("omb.anything")
+
+        package_logger = logging.getLogger(PACKAGE_LOGGER_NAME)
+        assert any(isinstance(h, logging.NullHandler) for h in package_logger.handlers)
 
     def test_preserves_simple_name(self):
         """get_logger should preserve simple names without dots."""

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ontology-management-base"
-version = "0.4.0"
+version = "0.5.0"
 description = "Ontology validation tools and management for the ENVITED-X ecosystem"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -24,7 +24,13 @@ classifiers = [
 
 dependencies = [
     "rdflib>=7.6.0",
-    "pyshacl>=0.31.0",
+    # Capped at the next minor on purpose: the per-document coverage check reads
+    # pySHACL internals (ShapesGraph, Shape.focus_nodes, Shape.set_advanced) that are
+    # not part of its documented API. A change there would not necessarily alter any
+    # validation report, so the recorded .expected snapshots would keep matching while
+    # the coverage guarantee quietly weakened. Raise the cap deliberately, after
+    # re-running the suite against the new minor.
+    "pyshacl>=0.31.0,<0.41",
     "oxrdflib>=0.5.0",
 ]
 

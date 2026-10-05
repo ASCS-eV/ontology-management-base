@@ -24,7 +24,9 @@ STANDALONE TESTING:
     python3 -m omb.utils.properties_updater [--verbose]
 
     Options:
-      --verbose   Verbose output
+      --artifacts PATH   Read caller-owned ontology domain directories
+      --output PATH      Write artifacts/ and docs/ beneath this directory
+      --verbose          Verbose output
 
 DEPENDENCIES:
 =============
@@ -35,21 +37,26 @@ NOTES:
 - PROPERTIES.md files live with artifacts for each ontology domain.
 - Docs consume artifacts PROPERTIES via pymdownx.snippets.
 - Artifact links resolve to docs/artifacts/<domain>/<versionInfo>.
+- Installed output defaults to ./generated-docs; package data remains read-only.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
 import rdflib
 from rdflib import OWL, RDF, RDFS, URIRef
+from rdflib.exceptions import ParserError
 
-from omb.core.logging import get_logger
+from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
+from omb.core.result import ReturnCodes
+from omb.utils.print_formatter import ensure_utf8_output
 
 logger = get_logger(__name__)
 
@@ -546,13 +553,26 @@ def _find_first_file(domain_dir: Path, suffix: str) -> Optional[Path]:
     return matches[0] if matches else None
 
 
-def generate_properties_docs() -> None:
-    """Generate PROPERTIES.md files for all domains."""
-    if not ARTIFACTS_DIR.exists():
-        logger.error("Artifacts directory not found: %s", ARTIFACTS_DIR)
-        return
+def generate_properties_docs(
+    artifacts_dir: Optional[Path] = None, output_dir: Optional[Path] = None
+) -> List[str]:
+    """Generate domain PROPERTIES.md files and return the generated domain names.
 
-    for domain_dir in sorted([d for d in ARTIFACTS_DIR.iterdir() if d.is_dir()]):
+    ``artifacts_dir`` contains the input domain folders; ``output_dir`` contains
+    the output domain folders. Source defaults update artifacts in place.
+    Installed defaults write to ./generated-docs/artifacts.
+    """
+    artifact_root = Path(artifacts_dir) if artifacts_dir is not None else ARTIFACTS_DIR
+    output_root = (
+        Path(output_dir)
+        if output_dir is not None
+        else _documentation_output_dir(artifacts_dir, None) / "artifacts"
+    )
+    if not artifact_root.is_dir():
+        raise ValueError(f"Artifacts directory not found: {artifact_root}")
+
+    generated = []
+    for domain_dir in sorted(d for d in artifact_root.iterdir() if d.is_dir()):
         domain = domain_dir.name
         shacl_files = sorted(domain_dir.glob("*.shacl.ttl"))
         if not shacl_files:
@@ -577,9 +597,15 @@ def generate_properties_docs() -> None:
             domain, classes, all_properties, all_prefixes
         )
 
-        properties_file = domain_dir / "PROPERTIES.md"
+        properties_file = output_root / domain / "PROPERTIES.md"
+        properties_file.parent.mkdir(parents=True, exist_ok=True)
         properties_file.write_text(properties_content, encoding="utf-8", newline="\n")
+        generated.append(domain)
         logger.info("Updated PROPERTIES.md for %s", domain)
+
+    if not generated:
+        raise ValueError(f"No SHACL domain artifacts found in: {artifact_root}")
+    return generated
 
 
 def generate_registry_table(registry: dict) -> str:
@@ -640,9 +666,18 @@ def generate_registry_table(registry: dict) -> str:
     return "\n".join([header, *rows])
 
 
-def update_catalog_table(catalog_path: Path, table_markdown: str) -> None:
-    """Replace registry table in catalog.md with updated content."""
-    content = catalog_path.read_text(encoding="utf-8")
+def update_catalog_table(
+    catalog_path: Path, table_markdown: str, *, create: bool = False
+) -> None:
+    """Replace the marked table, preserving surrounding prose and comments.
+
+    With ``create=True``, supply the template for a new consumer output tree.
+    Existing pages always require markers, so authored content is not replaced.
+    """
+    if create and not catalog_path.exists():
+        content = f"# Ontology Catalog\n\n{START_MARKER}\n{END_MARKER}\n"
+    else:
+        content = catalog_path.read_text(encoding="utf-8")
     if START_MARKER not in content or END_MARKER not in content:
         raise ValueError("Catalog markers not found in catalog.md")
 
@@ -650,6 +685,7 @@ def update_catalog_table(catalog_path: Path, table_markdown: str) -> None:
     _, after = rest.split(END_MARKER, 1)
     updated = f"{before}{START_MARKER}\n{table_markdown}\n{END_MARKER}{after}"
 
+    catalog_path.parent.mkdir(parents=True, exist_ok=True)
     catalog_path.write_text(updated, encoding="utf-8", newline="\n")
     logger.info("Updated catalog table in %s", catalog_path)
 
@@ -662,21 +698,24 @@ def _read_version_file(domain_dir: Path) -> Optional[str]:
     return _normalize_version_info(version_file.read_text(encoding="utf-8").strip())
 
 
-def _discover_artifact_files(domain_dir: Path, domain: str) -> Dict[str, Optional[str]]:
+def _discover_artifact_files(domain_dir: Path, domain: str) -> dict:
     """Discover artifact files from a domain directory."""
-    files: Dict[str, Optional[str]] = {}
+    files: dict = {}
+    artifact_parent = domain_dir.parent.parent
     owl = domain_dir / f"{domain}.owl.ttl"
     if owl.exists():
-        files["ontology"] = str(owl.relative_to(ARTIFACTS_DIR.parent))
+        files["ontology"] = owl.relative_to(artifact_parent).as_posix()
     shacl_paths = sorted(domain_dir.glob("*.shacl.ttl"))
     if shacl_paths:
-        files["shacl"] = [str(p.relative_to(ARTIFACTS_DIR.parent)) for p in shacl_paths]
+        files["shacl"] = [
+            p.relative_to(artifact_parent).as_posix() for p in shacl_paths
+        ]
     jsonld = domain_dir / f"{domain}.context.jsonld"
     if jsonld.exists():
-        files["jsonld"] = str(jsonld.relative_to(ARTIFACTS_DIR.parent))
+        files["jsonld"] = jsonld.relative_to(artifact_parent).as_posix()
     props = domain_dir / "PROPERTIES.md"
     if props.exists():
-        files["properties"] = str(props.relative_to(ARTIFACTS_DIR.parent))
+        files["properties"] = props.relative_to(artifact_parent).as_posix()
     return files
 
 
@@ -723,9 +762,16 @@ def _generate_properties_page(
     page_path.write_text("\n".join(page_content), encoding="utf-8", newline="\n")
 
 
-def update_properties_pages(registry: dict) -> None:
-    """Generate docs/ontologies/properties/{domain}.md pages."""
-    PROPERTIES_DIR.mkdir(parents=True, exist_ok=True)
+def update_properties_pages(
+    registry: dict,
+    *,
+    artifacts_dir: Optional[Path] = None,
+    properties_dir: Optional[Path] = None,
+) -> None:
+    """Generate domain pages using the selected artifacts and output directory."""
+    artifact_root = artifacts_dir if artifacts_dir is not None else ARTIFACTS_DIR
+    properties_root = properties_dir if properties_dir is not None else PROPERTIES_DIR
+    properties_root.mkdir(parents=True, exist_ok=True)
 
     registry_domains = set(registry.get("ontologies", {}).keys())
 
@@ -736,18 +782,18 @@ def update_properties_pages(registry: dict) -> None:
         latest_entry = domain_entry.get("versions", {}).get(latest, {})
         version_dir = _resolve_version_dir(latest_entry, latest)
 
-        properties_path = ARTIFACTS_DIR / domain / "PROPERTIES.md"
+        properties_path = artifact_root / domain / "PROPERTIES.md"
         if not properties_path.exists():
             continue
 
         files = latest_entry.get("files", {})
         _generate_properties_page(
-            domain, version_dir, files, PROPERTIES_DIR / f"{domain}.md"
+            domain, version_dir, files, properties_root / f"{domain}.md"
         )
 
     # Process domains with PROPERTIES.md but not in registry (e.g. gx).
     # Skip if a hand-maintained page already exists (committed to git).
-    for domain_dir in sorted(ARTIFACTS_DIR.iterdir()):
+    for domain_dir in sorted(artifact_root.iterdir()):
         if not domain_dir.is_dir():
             continue
         domain = domain_dir.name
@@ -757,7 +803,7 @@ def update_properties_pages(registry: dict) -> None:
         if not properties_path.exists():
             continue
 
-        page_path = PROPERTIES_DIR / f"{domain}.md"
+        page_path = properties_root / f"{domain}.md"
         if page_path.exists():
             logger.info("Keeping existing properties page for %s", domain)
             continue
@@ -767,16 +813,21 @@ def update_properties_pages(registry: dict) -> None:
         _generate_properties_page(domain, version_dir, files, page_path)
         logger.info("Generated properties page for unregistered domain: %s", domain)
 
-    logger.info("Updated properties pages in %s", PROPERTIES_DIR)
+    logger.info("Updated properties pages in %s", properties_root)
 
 
 def _build_overview_row(
-    domain: str, version_dir: str, files: dict, artifacts_prefix: str
+    domain: str,
+    version_dir: str,
+    files: dict,
+    artifacts_prefix: str,
+    artifacts_dir: Optional[Path] = None,
 ) -> str:
     """Build a single overview table row."""
     artifacts_base = f"{artifacts_prefix}/{domain}/{version_dir}"
 
-    properties_path = ARTIFACTS_DIR / domain / "PROPERTIES.md"
+    artifact_root = artifacts_dir if artifacts_dir is not None else ARTIFACTS_DIR
+    properties_path = artifact_root / domain / "PROPERTIES.md"
     has_properties = properties_path.exists()
     properties_link = (
         f"[{domain} Properties](properties/{domain}.md)" if has_properties else ""
@@ -808,8 +859,15 @@ def _build_overview_row(
     return "|" + "|".join([domain, version_dir, properties_link, artifact_links]) + "|"
 
 
-def update_properties_overview(registry: dict) -> None:
-    """Generate docs/ontologies/properties.md overview page."""
+def update_properties_overview(
+    registry: dict,
+    *,
+    artifacts_dir: Optional[Path] = None,
+    overview_path: Optional[Path] = None,
+) -> None:
+    """Generate the domain overview using the selected artifact and output paths."""
+    artifact_root = artifacts_dir if artifacts_dir is not None else ARTIFACTS_DIR
+    output_path = overview_path if overview_path is not None else PROPERTIES_OVERVIEW
     ontologies = registry.get("ontologies", {})
 
     overview_lines = [
@@ -838,7 +896,7 @@ def update_properties_overview(registry: dict) -> None:
         files = latest_entry.get("files", {})
         all_domains[domain] = (version_dir, files)
 
-    for domain_dir in sorted(ARTIFACTS_DIR.iterdir()):
+    for domain_dir in sorted(artifact_root.iterdir()):
         if not domain_dir.is_dir():
             continue
         domain = domain_dir.name
@@ -854,13 +912,18 @@ def update_properties_overview(registry: dict) -> None:
         version_dir, files = all_domains[domain]
         overview_lines.append(
             _build_overview_row(
-                domain, version_dir, files, PROPERTIES_OVERVIEW_ARTIFACTS_PREFIX
+                domain,
+                version_dir,
+                files,
+                PROPERTIES_OVERVIEW_ARTIFACTS_PREFIX,
+                artifact_root,
             )
         )
 
     content = "\n".join(overview_lines + [""])
-    PROPERTIES_OVERVIEW.write_text(content, encoding="utf-8", newline="\n")
-    logger.info("Updated domains overview: %s", PROPERTIES_OVERVIEW)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(content, encoding="utf-8", newline="\n")
+    logger.info("Updated domains overview: %s", output_path)
 
 
 def load_registry() -> dict:
@@ -868,23 +931,137 @@ def load_registry() -> dict:
     return json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
 
 
-def generate_all() -> None:
-    """Run all generation steps."""
-    generate_properties_docs()
-    registry = load_registry()
-    update_properties_pages(registry)
-    update_properties_overview(registry)
-    table_markdown = generate_registry_table(registry)
-    update_catalog_table(CATALOG_PATH, table_markdown)
+def _is_source_checkout() -> bool:
+    return (ROOT_DIR / "pyproject.toml").is_file() and (ROOT_DIR / "omb").is_dir()
 
 
-def _parse_args() -> argparse.Namespace:
+def _documentation_output_dir(
+    artifacts_dir: Optional[Path], output_dir: Optional[Path]
+) -> Path:
+    if output_dir is not None:
+        output = Path(output_dir)
+    elif artifacts_dir is None and _is_source_checkout():
+        output = ROOT_DIR
+    else:
+        output = Path.cwd() / "generated-docs"
+    if not _is_source_checkout() and output.resolve().is_relative_to(
+        ROOT_DIR.parent.resolve()
+    ):
+        raise ValueError("Documentation output must be outside the installed package")
+    return output
+
+
+def _consumer_registry(artifacts_dir: Path, domains: List[str]) -> dict:
+    """Describe the current caller artifacts without requiring a release registry."""
+    ontologies = {}
+    for domain in domains:
+        domain_dir = artifacts_dir / domain
+        owl_file = _find_first_file(domain_dir, ".owl.ttl")
+        iri = ""
+        version = _read_version_file(domain_dir)
+        if owl_file is not None:
+            graph = parse_graph(owl_file, "turtle")
+            ontology = next(graph.subjects(RDF.type, OWL.Ontology), None)
+            if ontology is not None:
+                iri = str(ontology)
+                if version is None:
+                    version = _best_literal(graph.objects(ontology, OWL.versionInfo))
+        version = _normalize_version_info(version or "unknown")
+        if "/" in version or "\\" in version:
+            raise ValueError(
+                f"Version must be a directory name for {domain}: {version!r}"
+            )
+        files = _discover_artifact_files(domain_dir, domain)
+        if owl_file is not None:
+            files["ontology"] = owl_file.relative_to(artifacts_dir.parent).as_posix()
+        files["properties"] = f"artifacts/{domain}/PROPERTIES.md"
+        ontologies[domain] = {
+            "iri": iri,
+            "latest": version,
+            "versions": {version: {"versionInfo": version, "files": files}},
+        }
+    return {"ontologies": ontologies}
+
+
+def _copy_consumer_sources(
+    registry: dict, artifacts_dir: Path, output_root: Path
+) -> None:
+    """Populate the versioned files referenced by the generated Markdown pages."""
+    for domain, entry in registry["ontologies"].items():
+        version = entry["latest"]
+        target_dir = output_root / "docs" / "artifacts" / domain / version
+        target_dir.mkdir(parents=True, exist_ok=True)
+        files = entry["versions"][version]["files"]
+        for kind, paths in files.items():
+            for path in paths if isinstance(paths, list) else [paths]:
+                source = (
+                    output_root / "artifacts" / domain / "PROPERTIES.md"
+                    if kind == "properties"
+                    else artifacts_dir.parent / path
+                )
+                target = target_dir / source.name
+                if source.resolve() != target.resolve():
+                    shutil.copyfile(source, target)
+
+
+def generate_all(
+    artifacts_dir: Optional[Path] = None, output_dir: Optional[Path] = None
+) -> None:
+    """Generate property documentation from built-in or caller-owned artifacts.
+
+    With no arguments in a source checkout, preserve the contributor workflow
+    and its release registry. Otherwise write artifacts/PROPERTIES.md and docs/
+    beneath ``output_dir`` (default ./generated-docs), deriving a current-version
+    registry and catalog template from the selected artifact inputs.
+    """
+    artifact_root = Path(artifacts_dir) if artifacts_dir is not None else ARTIFACTS_DIR
+    output_root = _documentation_output_dir(artifacts_dir, output_dir)
+    contributor = artifacts_dir is None and output_dir is None and _is_source_checkout()
+    output_artifacts = output_root / "artifacts"
+    output_docs = output_root / "docs"
+    domains = generate_properties_docs(artifact_root, output_artifacts)
+    registry = (
+        load_registry() if contributor else _consumer_registry(artifact_root, domains)
+    )
+    update_properties_pages(
+        registry,
+        artifacts_dir=output_artifacts,
+        properties_dir=output_docs / "ontologies" / "properties",
+    )
+    update_properties_overview(
+        registry,
+        artifacts_dir=output_artifacts,
+        overview_path=output_docs / "ontologies" / "properties.md",
+    )
+    if not contributor:
+        _copy_consumer_sources(registry, artifact_root, output_root)
+        (output_docs / "registry.json").write_text(
+            json.dumps(registry, indent=2) + "\n", encoding="utf-8", newline="\n"
+        )
+    update_catalog_table(
+        output_docs / "ontologies" / "catalog.md",
+        generate_registry_table(registry),
+        create=not contributor,
+    )
+
+
+def _parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--verbose", action="store_true", help="Verbose output")
-    return parser.parse_args()
+    parser.add_argument(
+        "--artifacts",
+        type=Path,
+        help="Input root containing ontology domain directories",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Output root for artifacts/ and docs/ (installed default: ./generated-docs)",
+    )
+    return parser.parse_args(argv)
 
 
 def _run_tests() -> bool:
@@ -902,14 +1079,21 @@ def _run_tests() -> bool:
     return all_passed
 
 
-def main() -> None:
-    """CLI entry point."""
-    args = _parse_args()
+def main(argv: Optional[List[str]] = None) -> int:
+    """CLI entry point. Returns a process exit code."""
+    ensure_utf8_output()
+    configure_cli_logging()
+    args = _parse_args(argv)
     if args.verbose:
         logger.setLevel("DEBUG")
 
-    generate_all()
+    try:
+        generate_all(artifacts_dir=args.artifacts, output_dir=args.output)
+    except (OSError, ValueError, RuntimeError, SyntaxError, ParserError) as exc:
+        logger.error("Documentation generation failed: %s", exc)
+        return ReturnCodes.GENERAL_ERROR
+    return ReturnCodes.SUCCESS
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

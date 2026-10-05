@@ -608,9 +608,9 @@ class TestExternalLinkMLDomainExclusion:
         """No exclude argument, however crafted, may re-enable gx."""
         called: list[str] = []
 
-        def _spy(domain: str):
+        def _spy(domain: str, **kwargs):
             called.append(domain)
-            return None
+            return {"@context": {}}
 
         monkeypatch.setattr(context_generator, "generate_context", _spy)
 
@@ -629,5 +629,169 @@ class TestExternalLinkMLDomainExclusion:
             lambda *a, **k: wrote.append(a) or True,
         )
 
-        assert _write_context("gx", {"@context": {"broken": "stub"}}) is None
+        with pytest.raises(ValueError, match="externally generated source domain"):
+            _write_context("gx", {"@context": {"broken": "stub"}})
         assert wrote == []
+
+
+@pytest.fixture
+def external_context_artifacts(tmp_path):
+    """A caller domain named gx must not inherit the source repository's exclusion."""
+    artifacts = tmp_path / "caller-artifacts"
+    domain = artifacts / "gx"
+    domain.mkdir(parents=True)
+    (domain / "gx.owl.ttl").write_text(
+        "@prefix ex: <https://example.org/demo/> .\n"
+        "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n"
+        "ex: a owl:Ontology . ex:Thing a owl:Class .\n",
+        encoding="utf-8",
+    )
+    (domain / "gx.shacl.ttl").write_text(
+        "@prefix ex: <https://example.org/demo/> .\n"
+        "@prefix sh: <http://www.w3.org/ns/shacl#> .\n"
+        "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n"
+        "ex:Shape a sh:NodeShape; sh:targetClass ex:Thing;\n"
+        " sh:property [ sh:path ex:count; sh:datatype xsd:integer ] .\n",
+        encoding="utf-8",
+    )
+    return artifacts
+
+
+@pytest.mark.parametrize("selection", [["--domain", "gx"], ["--all"]])
+def test_main_external_artifacts_writes_caller_output(
+    external_context_artifacts, tmp_path, selection
+):
+    artifacts = external_context_artifacts
+    output = tmp_path / "output"
+    before = {p: p.read_bytes() for p in artifacts.rglob("*") if p.is_file()}
+
+    assert (
+        context_generator.main(
+            [*selection, "--artifacts", str(artifacts), "--output", str(output)]
+        )
+        == 0
+    )
+
+    result = json.loads((output / "gx/gx.context.jsonld").read_text(encoding="utf-8"))
+    assert result["@context"]["Thing"] == "ex:Thing"
+    assert result["@context"]["count"]["@type"] == "xsd:integer"
+    assert result["comments"]["source_owl"] == "caller-artifacts/gx/gx.owl.ttl"
+    assert {p: p.read_bytes() for p in artifacts.rglob("*") if p.is_file()} == before
+
+
+def test_main_all_unchanged_reports_success(
+    external_context_artifacts, tmp_path, capsys
+):
+    args = [
+        "--all",
+        "--artifacts",
+        str(external_context_artifacts),
+        "--output",
+        str(tmp_path / "output"),
+    ]
+    assert context_generator.main(args) == 0
+    output = tmp_path / "output/gx/gx.context.jsonld"
+    first_mtime = output.stat().st_mtime_ns
+    assert context_generator.main(args) == 0
+    assert output.stat().st_mtime_ns == first_mtime
+    assert "All 1 context files unchanged" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("failure", ["missing", "empty", "no-shacl", "malformed"])
+def test_main_all_invalid_artifacts_returns_error(
+    external_context_artifacts, tmp_path, failure, capsys
+):
+    artifacts = external_context_artifacts
+    if failure == "missing":
+        artifacts = tmp_path / "missing"
+    elif failure == "empty":
+        artifacts = tmp_path / "empty"
+        artifacts.mkdir()
+    elif failure == "no-shacl":
+        (artifacts / "gx/gx.shacl.ttl").unlink()
+    else:
+        (artifacts / "gx/gx.owl.ttl").write_text("not valid Turtle", encoding="utf-8")
+
+    assert (
+        context_generator.main(
+            [
+                "--all",
+                "--artifacts",
+                str(artifacts),
+                "--output",
+                str(tmp_path / "output"),
+            ]
+        )
+        == 1
+    )
+    assert "unchanged" not in capsys.readouterr().out
+    assert not (tmp_path / "output").exists()
+
+
+def test_main_domain_traversal_returns_error(external_context_artifacts, tmp_path):
+    assert (
+        context_generator.main(
+            [
+                "--domain",
+                "../gx",
+                "--artifacts",
+                str(external_context_artifacts),
+                "--output",
+                str(tmp_path / "output"),
+            ]
+        )
+        == 1
+    )
+    assert not (tmp_path / "output").exists()
+
+
+def test_main_dry_run_does_not_create_output(external_context_artifacts, tmp_path):
+    assert (
+        context_generator.main(
+            [
+                "--all",
+                "--artifacts",
+                str(external_context_artifacts),
+                "--output",
+                str(tmp_path / "output"),
+                "--dry-run",
+            ]
+        )
+        == 0
+    )
+    assert not (tmp_path / "output").exists()
+
+
+@pytest.mark.parametrize("extra", [["--exclude", "gx"], ["--instance", "data.json"]])
+def test_main_incompatible_options_return_error(
+    external_context_artifacts, tmp_path, extra
+):
+    assert (
+        context_generator.main(
+            [
+                "--domain",
+                "gx",
+                "--artifacts",
+                str(external_context_artifacts),
+                "--output",
+                str(tmp_path / "output"),
+                *extra,
+            ]
+        )
+        == 1
+    )
+    assert not (tmp_path / "output").exists()
+
+
+def test_main_external_default_output_is_cwd(
+    external_context_artifacts, tmp_path, monkeypatch
+):
+    monkeypatch.chdir(tmp_path)
+    assert (
+        context_generator.main(
+            ["--domain", "gx", "--artifacts", str(external_context_artifacts)]
+        )
+        == 0
+    )
+    assert (tmp_path / "generated-contexts/gx/gx.context.jsonld").is_file()
+    assert not (external_context_artifacts / "gx/gx.context.jsonld").exists()

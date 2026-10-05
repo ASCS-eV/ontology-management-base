@@ -45,7 +45,7 @@ Read these before making changes; they are authoritative for repo workflows.
 ## Architecture & Catalog Rules
 
 - Catalog-driven architecture: validators must never scan the filesystem directly.
-- `registry_updater.py` writes catalogs (and is the only place using `file_collector.py`); `registry_resolver.py` reads catalogs.
+- `registry_updater.py` writes catalogs; `registry_resolver.py` reads them. `file_collector.py` is shared discovery: catalog building and `--data-paths` hierarchy discovery use it, but nothing uses it to decide what a validator loads.
 - Missing catalog entries should fail fast with clear errors; no silent fallbacks.
 
 ## Generated Artifacts & Line Endings (Windows/Linux CI)

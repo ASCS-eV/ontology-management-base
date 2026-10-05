@@ -6,6 +6,25 @@ This package contains utilities for managing ontologies, including:
 - Documentation generation
 - Validation tools
 
+PUBLIC API:
+===========
+``omb.api`` is the supported surface for other repositories:
+
+    from omb.api import check_negative_fixtures, validate_data
+
+    validate_data(paths, artifacts=[...])          # data that must conform
+    check_negative_fixtures(paths, artifacts=[...])  # data that must fail
+
+Together with the result types it returns (``omb.core.result.ValidationResult``,
+``ReturnCodes``, and ``omb.api.FixtureReport``), that is what carries a stability
+promise. The five documented console commands and ``python -m omb`` are supported
+interfaces too. Their Python implementation modules, resolvers, loaders and validator
+classes remain internal. See docs/validation/consumer-contract.md.
+
+Importing this package configures nothing: logging, output encoding and exit codes
+are the calling application's business. OMB's own loggers live under the ``omb``
+name, so ``logging.getLogger("omb")`` addresses all of them at once.
+
 The package version has a single source of truth: the ``version`` field in
 ``pyproject.toml``. ``__version__`` below is *derived* from the installed package
 metadata (which the build backend fills in from ``pyproject.toml``), so it can
