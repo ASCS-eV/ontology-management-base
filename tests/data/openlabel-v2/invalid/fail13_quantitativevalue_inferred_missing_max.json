@@ -1,6 +1,6 @@
 {
    "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-   "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail08_maxcount",
+   "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail13_qv_inferred_missing_max",
    "@type": "Tag",
    "AdminTag": {
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
@@ -10,21 +10,18 @@
       "scenarioCreatedDate": "2024-01-15T10:00:00",
       "scenarioDefinition": "Scenario Definition Content",
       "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario/",
-      "scenarioDescription": "Invalid: multiple values for single-valued enum (sh:maxCount 1)",
-      "scenarioName": "Invalid_MaxCount",
+      "scenarioDescription": "Invalid: untyped QuantitativeValue (type inferred from minValue) is still missing required maxValue",
+      "scenarioName": "Invalid_Inferred_QuantitativeValue_Missing_Max",
       "scenarioParentReference": "UUID-PARENT-1234",
       "scenarioUniqueReference": "UUID-UNIQUE-5678",
       "scenarioVersion": "2.0.0",
       "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
-   "Odd": {
-      "DrivableAreaType": [
-         "MotorwayManaged",
-         "RoadTypeRural"
-      ],
-      "ConnectivityCommunication": [
-         "V2vCellular",
-         "V2iWifi"
-      ]
+   "Behaviour": {
+      "MotionAccelerate": true,
+      "motionAccelerateValue": {
+         "minValue": "0.5"
+      },
+      "MotionDrive": false
    }
 }

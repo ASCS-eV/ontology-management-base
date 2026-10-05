@@ -1,15 +1,8 @@
 {
-   "@context": [
-      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      {
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "https://schema.org/"
-      }
-   ],
+   "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
    "@id": "did:web:test.openlabel-v2.net:Tag:test_invalid_fail11_traffic_agent_wrong_enum",
    "@type": "Tag",
    "AdminTag": {
-      "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
       "ownerEmail": "contact@bmw.de",
       "ownerName": "BMW AG",
@@ -25,15 +18,10 @@
       "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
    "Odd": {
-      "@type": "Odd",
       "TrafficAgentType": true,
       "trafficAgentTypeValue": [
-         {
-            "@id": "openlabel_v2:RainTypeDynamic"
-         },
-         {
-            "@id": "openlabel_v2:NonExistentRoadUser"
-         }
+         "RainTypeDynamic",
+         "NonExistentRoadUser"
       ]
    }
 }

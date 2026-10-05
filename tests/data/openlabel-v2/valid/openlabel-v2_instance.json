@@ -1,15 +1,8 @@
 {
-   "@context": [
-      "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-      {
-         "xsd": "http://www.w3.org/2001/XMLSchema#",
-         "schema": "https://schema.org/"
-      }
-   ],
+   "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
    "@id": "did:web:test.openlabel-v2.net:Tag:test_valid_openlabel-v2_instance",
    "@type": "Tag",
    "AdminTag": {
-      "@type": "AdminTag",
       "licenseURI": "https://creativecommons.org/licenses/by/4.0/",
       "ownerEmail": "contact@bmw.de",
       "ownerName": "BMW AG",
@@ -25,14 +18,12 @@
       "scenarioVisualisationURL": "https://example.com/visualization.png"
    },
    "Behaviour": {
-      "@type": "Behaviour",
       "BehaviourCommunication": [
          "CommunicationSignalLeft",
          "CommunicationHeadlightFlash"
       ],
       "MotionAccelerate": true,
       "motionAccelerateValue": {
-         "@type": "schema:QuantitativeValue",
          "minValue": "0.5",
          "maxValue": "2.5"
       },
@@ -58,7 +49,6 @@
       "MotionWalk": false
    },
    "Odd": {
-      "@type": "Odd",
       "DrivableAreaEdge": [
          "EdgeShoulderPavedOrGravel",
          "EdgeLineMarkers"
@@ -120,12 +110,8 @@
       "trafficAgentDensityValue": 15,
       "TrafficAgentType": true,
       "trafficAgentTypeValue": [
-         {
-            "@id": "openlabel_v2:VehicleCar"
-         },
-         {
-            "@id": "openlabel_v2:HumanPedestrian"
-         }
+         "VehicleCar",
+         "HumanPedestrian"
       ],
       "TrafficFlowRate": true,
       "trafficFlowRateValue": 1200,
@@ -134,7 +120,6 @@
       "TrafficSpecialVehicle": false
    },
    "RoadUser": {
-      "@type": "RoadUser",
       "RoadUserVehicle": "VehicleCar",
       "RoadUserAnimal": false,
       "RoadUserHuman": "HumanDriver",
