@@ -1,6 +1,7 @@
 @prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
 @prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
 @prefix gx: <https://w3id.org/gaia-x/development#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -548,6 +549,13 @@ envited-x:DomainSpecificationShape a sh:NodeShape ;
         sh:minCount 0 ;
         sh:message "Optional: a DomainSpecification may specify quantity-related information via envited-x:hasQuantity."@en ;
     ] ;
+    sh:property [
+        sh:path envited-x:hasAttributeProvenance ;
+        sh:node envited-x:AttributeProvenanceShape ;
+        sh:minCount 0 ;
+        sh:description "Records which metadata attributes were automatically derived, by which tool and method."@en ;
+        sh:message "Optional: a DomainSpecification may declare provenance for automatically derived attributes via envited-x:hasAttributeProvenance."@en ;
+    ] ;
 
     sh:targetClass envited-x:DomainSpecification .
 
@@ -590,3 +598,97 @@ envited-x:QuantityShape a sh:NodeShape ;
 
     sh:message "Node must be of type envited-x:Quantity." ;
     sh:targetClass envited-x:Quantity .
+
+
+###################################################################
+# Attribute Provenance Shape — validates provenance annotations
+# for automatically derived metadata attributes.
+###################################################################
+
+envited-x:AttributeProvenanceShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "Declares how a metadata attribute was derived and which software agent produced it."@en ;
+    sh:property [
+        skos:example "scenarioCategory" ;
+        sh:datatype xsd:string ;
+        sh:description "The name of the metadata attribute whose provenance is declared."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AttributeProvenance must declare exactly one attributeName."@en ;
+        sh:name "attribute name"@en ;
+        sh:order 0 ;
+        sh:path envited-x:attributeName
+    ] , [
+        skos:example "rule-based-inference" ;
+        sh:description "The method used to derive the attribute value."@en ;
+        sh:in ("extraction" "calculation" "rule-based-inference" "llm-inference" "manual") ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "derivationMethod must be one of: extraction, calculation, rule-based-inference, llm-inference, manual."@en ;
+        sh:name "derivation method"@en ;
+        sh:order 1 ;
+        sh:path envited-x:derivationMethod
+    ] , [
+        skos:example "high" ;
+        sh:description "Confidence level of the derived value."@en ;
+        sh:in ("high" "medium" "low") ;
+        sh:maxCount 1 ;
+        sh:message "confidence must be one of: high, medium, low."@en ;
+        sh:name "confidence"@en ;
+        sh:order 2 ;
+        sh:path envited-x:confidence
+    ] , [
+        sh:description "The software agent (tool or service) that produced this attribute value."@en ;
+        sh:node envited-x:SoftwareAgentShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each AttributeProvenance must reference exactly one prov:wasAssociatedWith software agent."@en ;
+        sh:name "software agent"@en ;
+        sh:order 3 ;
+        sh:path prov:wasAssociatedWith
+    ] , [
+        sh:datatype xsd:dateTime ;
+        sh:description "Timestamp when the attribute was derived."@en ;
+        sh:maxCount 1 ;
+        sh:name "generation time"@en ;
+        sh:order 4 ;
+        sh:path prov:endedAtTime
+    ] ;
+    sh:targetClass envited-x:AttributeProvenance .
+
+
+envited-x:SoftwareAgentShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "Identifies a software tool or LLM model that derived metadata values."@en ;
+    sh:property [
+        skos:example "sl-5-8-asset-tools/llm_enricher" ;
+        sh:datatype xsd:string ;
+        sh:description "Human-readable name of the software agent."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A SoftwareAgent must have a schema:name."@en ;
+        sh:name "name"@en ;
+        sh:order 0 ;
+        sh:path schema:name
+    ] , [
+        skos:example "0.1.0" ;
+        sh:datatype xsd:string ;
+        sh:description "Version identifier of the software agent."@en ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A SoftwareAgent must declare its gx:version."@en ;
+        sh:name "version"@en ;
+        sh:order 1 ;
+        sh:path gx:version
+    ] , [
+        skos:example "claude-sonnet-4" ;
+        sh:datatype xsd:string ;
+        sh:description "Identifier of the LLM model used, if derivation method is llm-inference. Absent for non-LLM methods."@en ;
+        sh:maxCount 1 ;
+        sh:name "LLM model"@en ;
+        sh:order 2 ;
+        sh:path envited-x:llmModel
+    ] .
+    # Note: No sh:targetClass here — this shape is validated indirectly via
+    # sh:node reference from AttributeProvenanceShape. We do not claim
+    # authority over all prov:SoftwareAgent instances globally.
