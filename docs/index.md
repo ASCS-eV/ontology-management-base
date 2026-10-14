@@ -13,7 +13,7 @@ This repository at [ASCS-eV/ontology-management-base](https://github.com/ASCS-eV
 - Search and discover domains via `docs/registry.json`
 - Validate data and schemas with the catalog-based tooling
 - Understand the Gaia-X connection and Gaia-X4PLC-AAD publishing workflow
-- Follow the long-term ENVITED ecosystem strategy and future LinkML migration
+- Follow the long-term ENVITED ecosystem strategy and the LinkML models the generated ontologies are built from
 
 ## Start Here
 

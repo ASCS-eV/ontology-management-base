@@ -1,7 +1,7 @@
 @prefix surface-model: <https://w3id.org/ascs-ev/envited-x/surface-model/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix org: <http://www.w3.org/ns/org#> .
@@ -45,8 +45,8 @@
     owl:versionInfo "v6" ;
 
     # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
-                <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ,
+                <https://w3id.org/ascs-ev/envited-x/georeference/v6> ;
 
     # Reference to SHACL validation rules
     dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/surface-model/v6/shapes> ;

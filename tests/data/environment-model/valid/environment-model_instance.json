@@ -2,9 +2,9 @@
    "@context": [
       "https://w3id.org/gaia-x/development#",
       "https://w3id.org/ascs-ev/envited-x/environment-model/v5/",
-      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
-      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
       {
          "@vocab": null
       }
@@ -96,8 +96,8 @@
       "iri": "did:web:test.fixture.net:Manifest:test_environment-model_manifest_reference",
       "note": "Ensure that 'manifest_reference.json' contains all required categories: simulationData, documentation, metadata, media.",
       "conformsTo": [
-         "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-         "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+         "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+         "https://w3id.org/ascs-ev/envited-x/manifest/v6/"
       ],
       "hasAccessRole": {
          "@type": "manifest:AccessRole",

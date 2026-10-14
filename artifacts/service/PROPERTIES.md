@@ -31,8 +31,8 @@ class Class_definition_for_Service
 
 ## Prefixes
 
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
+- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - service: <https://w3id.org/gaia-x4plcaad/ontologies/service/v2/>
 - sh: <http://www.w3.org/ns/shacl#>

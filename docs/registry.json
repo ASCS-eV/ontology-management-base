@@ -66,13 +66,13 @@
       },
       "envited-x": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/envited-x/v3",
-         "latest": "v3",
+         "iri": "https://w3id.org/ascs-ev/envited-x/envited-x/v4",
+         "latest": "v4",
          "versions": {
-            "v3": {
+            "v4": {
                "releaseTag": "v0.5.1",
-               "versionInfo": "v3",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/envited-x/v3",
+               "versionInfo": "v4",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/envited-x/v4",
                "files": {
                   "ontology": "artifacts/envited-x/envited-x.owl.ttl",
                   "shacl": [
@@ -129,13 +129,13 @@
       },
       "georeference": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/georeference/v5",
-         "latest": "v5",
+         "iri": "https://w3id.org/ascs-ev/envited-x/georeference/v6",
+         "latest": "v6",
          "versions": {
-            "v5": {
+            "v6": {
                "releaseTag": "v0.5.1",
-               "versionInfo": "v5",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/georeference/v5",
+               "versionInfo": "v6",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/georeference/v6",
                "files": {
                   "ontology": "artifacts/georeference/georeference.owl.ttl",
                   "shacl": [
@@ -213,13 +213,13 @@
       },
       "manifest": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/manifest/v5",
-         "latest": "v5",
+         "iri": "https://w3id.org/ascs-ev/envited-x/manifest/v6",
+         "latest": "v6",
          "versions": {
-            "v5": {
+            "v6": {
                "releaseTag": "v0.5.1",
-               "versionInfo": "v5",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/manifest/v5",
+               "versionInfo": "v6",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/manifest/v6",
                "files": {
                   "ontology": "artifacts/manifest/manifest.owl.ttl",
                   "shacl": [
@@ -238,7 +238,7 @@
          "latest": "v1",
          "versions": {
             "v1": {
-               "releaseTag": "v0.5.0",
+               "releaseTag": "v0.5.1",
                "versionInfo": "v1",
                "versionIri": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1",
                "files": {
@@ -297,13 +297,13 @@
       },
       "ositrace": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/ositrace/v6",
-         "latest": "v6",
+         "iri": "https://w3id.org/ascs-ev/envited-x/ositrace/v7",
+         "latest": "v7",
          "versions": {
-            "v6": {
+            "v7": {
                "releaseTag": "v0.5.1",
-               "versionInfo": "v6",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/ositrace/v6",
+               "versionInfo": "v7",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/ositrace/v7",
                "files": {
                   "ontology": "artifacts/ositrace/ositrace.owl.ttl",
                   "shacl": [

@@ -29,8 +29,8 @@ class Class_definition_for_Format
 ## Prefixes
 
 - automotive-simulator: <https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/>
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
-- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
+- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - sh: <http://www.w3.org/ns/shacl#>
 - simulated-sensor: <https://w3id.org/gaia-x4plcaad/ontologies/simulated-sensor/v2/>
