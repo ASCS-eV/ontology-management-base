@@ -1,0 +1,42 @@
+@prefix ontology-header: <https://w3id.org/ascs-ev/envited-x/ontology-header/v1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+ontology-header:OntologyHeaderShape a sh:NodeShape ;
+	rdfs:comment "The header of an ENVITED-X ontology. An ontology whose LinkML schema instantiates this class is typed with it, and its header is checked against these constraints."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:be85f1b91a49b ;
+	sh:property _:b45e5681ef2f7 , _:b4dc7b6732373 , _:b857a289c7a28 , _:b983e0bf3b468 ;
+	sh:targetClass ontology-header:OntologyHeader .
+_:b45e5681ef2f7 sh:description "The organisation that publishes the ontology."@en ;
+	sh:maxCount 1 ;
+	sh:message "ontologyPublisher (OntologyHeader): The organisation that publishes the ontology."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path dcterms:publisher .
+_:b4dc7b6732373 sh:description "A related ontology or specification the ontology builds on."@en ;
+	sh:maxCount 1 ;
+	sh:message "ontologyReferences (OntologyHeader): A related ontology or specification the ontology builds on."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path dcterms:references .
+_:b857a289c7a28 sh:description "The release of the repository this version is published from."@en ;
+	sh:maxCount 1 ;
+	sh:message "ontologyDerivation (OntologyHeader): The release of the repository this version is published from."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path prov:wasDerivedFrom .
+_:b983e0bf3b468 sh:description "The ontology IRI of the version this one replaces. Absent from a first version."@en ;
+	sh:maxCount 1 ;
+	sh:message "ontologyPriorVersion (OntologyHeader): The ontology IRI of the version this one replaces. Absent from a first version."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 0 ;
+	sh:path owl:priorVersion .
+_:be85f1b91a49b rdf:first rdf:type ;
+	rdf:rest rdf:nil .

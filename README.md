@@ -198,6 +198,9 @@ Hook flow (via `hooks/copy_artifacts.py`):
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5` | [manifest/manifest.owl.ttl](artifacts/manifest/manifest.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/context` | [manifest/manifest.context.jsonld](artifacts/manifest/manifest.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes` | [manifest/manifest.shacl.ttl](artifacts/manifest/manifest.shacl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ontology-header/v1` | [ontology-header/ontology-header.owl.ttl](artifacts/ontology-header/ontology-header.owl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/ontology-header/v1/context` | [ontology-header/ontology-header.context.jsonld](artifacts/ontology-header/ontology-header.context.jsonld) |
+| `https://w3id.org/ascs-ev/envited-x/ontology-header/v1/shapes` | [ontology-header/ontology-header.shacl.ttl](artifacts/ontology-header/ontology-header.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/openlabel/v2` | [openlabel-v2/openlabel-v2.owl.ttl](artifacts/openlabel-v2/openlabel-v2.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/openlabel/v2/context` | [openlabel-v2/openlabel-v2.context.jsonld](artifacts/openlabel-v2/openlabel-v2.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/openlabel/v2/shapes` | [openlabel-v2/openlabel-v2.shacl.ttl](artifacts/openlabel-v2/openlabel-v2.shacl.ttl) |

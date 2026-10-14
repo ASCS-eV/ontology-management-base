@@ -26,7 +26,7 @@ LINKML_DOMAINS := "openlabel-v2"
 # LinkML domains that `just generate` builds with scripts/build_linkml_domain.sh and
 # their linkml/<domain>/gen-flags.env, in import order: a domain after the domains
 # it imports. Their artifacts/ directories are generated, never hand-edited.
-LINKML_BUILD_DOMAINS := ""
+LINKML_BUILD_DOMAINS := "ontology-header"
 
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"

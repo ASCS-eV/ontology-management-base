@@ -1,0 +1,93 @@
+# LinkML source for the ontology-header profile.
+#
+# Build with:  just generate   (artifacts/ontology-header/ is generated from this file)
+# What cannot be expressed, and the alternatives:  linkml/GAPS.md
+#
+# A schema profile in LinkML's sense: OntologyHeader is a metaclass. A domain
+# schema imports this schema and states `instantiates: [ontology-header:OntologyHeader]`;
+# its header annotations then take the RDF term and the OWL role declared here
+# (linkml/GAPS.md M8). The domains generate with --no-mergeimports and
+# --exclude-imports, so the metaclass stays in this ontology and the domains
+# owl:imports it.
+#
+# The shapes check the header of every ontology typed ontology-header:OntologyHeader,
+# which gen-owl asserts for each ontology that instantiates it.
+
+id: https://w3id.org/ascs-ev/envited-x/ontology-header/v1
+name: ontology-header
+title: Ontology definition for ontology-header
+description: >-
+    The header every ENVITED-X ontology states about itself: the version it
+    replaces, the release it is published from, the resources it references and
+    its publisher, each named by its IRI.
+source: https://github.com/ASCS-eV/ontology-management-base
+contributors:
+  - https://github.com/jdsika
+see_also:
+  - https://github.com/ASCS-eV/ontology-management-base/blob/main/linkml/GAPS.md
+
+license: https://www.eclipse.org/legal/epl-2.0/
+
+conforms_to: https://w3id.org/ascs-ev/envited-x/ontology-header/v1/shapes
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  ontology-header: https://w3id.org/ascs-ev/envited-x/ontology-header/v1/
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: ontology-header
+default_range: string
+
+# This ontology's own header follows the profile it defines.
+instantiates: [ontology-header:OntologyHeader]
+annotations:
+  owl:versionInfo: v1
+  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/ontology-header
+  dcterms:publisher: https://www.asc-s.de/
+
+imports:
+  - linkml:types
+
+classes:
+
+  # Only the annotations whose values are resources are declared: an undeclared
+  # annotation is already a literal (owl:versionInfo, dcterms:identifier,
+  # dcterms:creator). Each predicate is an OWL annotation property, so the
+  # ontologies state no logical axioms about it, and nodeidentifier makes its
+  # value an IRI whatever generator flags a domain uses. The domains match an
+  # annotation by its predicate; the attribute names are prefixed because LinkML
+  # names are global across an import closure, and Gaia-X has a `publisher` slot.
+  OntologyHeader:
+    class_uri: ontology-header:OntologyHeader
+    description: >-
+      The header of an ENVITED-X ontology. An ontology whose LinkML schema
+      instantiates this class is typed with it, and its header is checked
+      against these constraints.
+    attributes:
+      ontologyPriorVersion:
+        slot_uri: owl:priorVersion
+        description: >-
+          The ontology IRI of the version this one replaces. Absent from a
+          first version.
+        range: nodeidentifier
+        implements: [owl:AnnotationProperty]
+      ontologyDerivation:
+        slot_uri: prov:wasDerivedFrom
+        description: The release of the repository this version is published from.
+        range: nodeidentifier
+        required: true
+        implements: [owl:AnnotationProperty]
+      ontologyReferences:
+        slot_uri: dcterms:references
+        description: A related ontology or specification the ontology builds on.
+        range: nodeidentifier
+        implements: [owl:AnnotationProperty]
+      ontologyPublisher:
+        slot_uri: dcterms:publisher
+        description: The organisation that publishes the ontology.
+        range: nodeidentifier
+        required: true
+        implements: [owl:AnnotationProperty]

@@ -232,6 +232,27 @@
             }
          }
       },
+      "ontology-header": {
+         "namespace": "ascs-ev",
+         "iri": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1",
+         "latest": "v1",
+         "versions": {
+            "v1": {
+               "releaseTag": "v0.5.0",
+               "versionInfo": "v1",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1",
+               "files": {
+                  "ontology": "artifacts/ontology-header/ontology-header.owl.ttl",
+                  "shacl": [
+                     "artifacts/ontology-header/ontology-header.shacl.ttl"
+                  ],
+                  "jsonld": "artifacts/ontology-header/ontology-header.context.jsonld",
+                  "properties": "artifacts/ontology-header/PROPERTIES.md",
+                  "instance": "tests/data/ontology-header/valid/ontology_header_instance.json"
+               }
+            }
+         }
+      },
       "openlabel": {
          "namespace": "asam",
          "iri": "https://openlabel.asam.net/V1-0-0/ontologies/",

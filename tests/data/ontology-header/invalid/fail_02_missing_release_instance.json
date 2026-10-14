@@ -1,0 +1,18 @@
+{
+   "@context": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
+   "@id": "did:web:test.ontology-header.net:Ontology:test_invalid_fail_02_missing_release_instance",
+   "@type": [
+      "owl:Ontology",
+      "ontology-header:OntologyHeader"
+   ],
+   "owl:versionInfo": "v2",
+   "owl:priorVersion": {
+      "@id": "https://w3id.org/ascs-ev/envited-x/example-domain/v1"
+   },
+   "dcterms:references": {
+      "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v6"
+   },
+   "dcterms:publisher": {
+      "@id": "https://www.asc-s.de/"
+   }
+}
