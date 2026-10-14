@@ -1,0 +1,549 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                                      ['fail15_removed_behaviour_terms.json']                                                       =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Error:            If motionAccelerateTrafficAgentValue is provided, MotionAccelerateTrafficAgent must be true.                                  =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication                                                        =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication> Literal("CommunicationHorn",                  =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAway> Literal("true" = True,                    =
+=                      datatype=xsd:boolean) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> Literal("3",      =
+=                      datatype=xsd:decimal) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateValue> Literal("2.0",                =
+=                      datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-ev/envited-x/openlabel/v2/Behaviour>, [ owl:allValuesFrom              =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioningEnum> ; owl:onProperty <https://w3id.org/ascs-           =
+=                      ev/envited-x/openlabel/v2/BehaviourPositioning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom  =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignallingEnum> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ =
+=                      owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue>      =
+=                      xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty          =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionAccelerateEgo> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type        =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ; rdf:type owl:Restriction,    =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction,       =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionDecelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ; rdf:type                =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type                 =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource  =
+=                      ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction, rdfs:Class,              =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ; rdf:type owl:Restriction,      =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean =
+=                      ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class,        =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionStop> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom       =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality         =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality  =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality           =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality      =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioning> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class,  =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality         =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality  =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality           =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] is       =
+=                      closed. It cannot have value: Literal("CommunicationHorn", datatype=xsd:string)                                               =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAway                                                                    =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication> Literal("CommunicationHorn",                  =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAway> Literal("true" = True,                    =
+=                      datatype=xsd:boolean) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> Literal("3",      =
+=                      datatype=xsd:decimal) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateValue> Literal("2.0",                =
+=                      datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-ev/envited-x/openlabel/v2/Behaviour>, [ owl:allValuesFrom              =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioningEnum> ; owl:onProperty <https://w3id.org/ascs-           =
+=                      ev/envited-x/openlabel/v2/BehaviourPositioning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom  =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignallingEnum> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ =
+=                      owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue>      =
+=                      xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty          =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionAccelerateEgo> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type        =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ; rdf:type owl:Restriction,    =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction,       =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionDecelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ; rdf:type                =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type                 =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource  =
+=                      ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction, rdfs:Class,              =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ; rdf:type owl:Restriction,      =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean =
+=                      ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class,        =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionStop> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom       =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality         =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality  =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality           =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality      =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioning> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class,  =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality         =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality  =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality           =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] is       =
+=                      closed. It cannot have value: Literal("true" = True, datatype=xsd:boolean)                                                    =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateValue                                                         =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication> Literal("CommunicationHorn",                  =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAway> Literal("true" = True,                    =
+=                      datatype=xsd:boolean) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> Literal("3",      =
+=                      datatype=xsd:decimal) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateValue> Literal("2.0",                =
+=                      datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-ev/envited-x/openlabel/v2/Behaviour>, [ owl:allValuesFrom              =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioningEnum> ; owl:onProperty <https://w3id.org/ascs-           =
+=                      ev/envited-x/openlabel/v2/BehaviourPositioning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom  =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignallingEnum> ; owl:onProperty <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ =
+=                      owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue>      =
+=                      xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> xsd:decimal ) ] ; owl:onProperty          =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionAccelerateEgo> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type        =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ; rdf:type owl:Restriction,    =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction,       =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionDecelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ; rdf:type                =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type                 =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource  =
+=                      ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction, rdfs:Class,              =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ; rdf:type owl:Restriction,      =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean =
+=                      ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class,        =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
+=                      ev/envited-x/openlabel/v2/MotionStop> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom       =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality         =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality  =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality           =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality      =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality          =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourPositioning> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignalling> ; rdf:type owl:Restriction, rdfs:Class,  =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionAccelerate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateEgo> ;   =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionAccelerateTrafficAgent> ; rdf:type owl:Restriction,     =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionCross> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutAcross> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionCutIn> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionCutOut> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality         =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDecelerate> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionDrive> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionLaneChange> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeLeft> ;  =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionLaneChangeRight> ; rdf:type owl:Restriction,            =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleJog> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality  =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionNonVehicleWait> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionOvertake> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionParkingManoeuvre> ; rdf:type owl:Restriction,           =
+=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/MotionPass> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality           =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionReverse> ;         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionRun> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/MotionSlide> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionStop> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionTurnLeft> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionTurnRight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionUTurn> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/MotionWalk> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/MotionYield> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/motionAccelerateEgoValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionAccelerateTrafficAgentValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDecelerateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/motionDriveValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] is       =
+=                      closed. It cannot have value: Literal("2.0", datatype=xsd:string)                                                             =
+======================================================================================================================================================

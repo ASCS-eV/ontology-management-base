@@ -26,22 +26,29 @@
    },
    "Behaviour": {
       "@type": "Behaviour",
-      "BehaviourCommunication": [
-         "CommunicationHeadlightFlash",
-         "CommunicationHorn",
-         "CommunicationSignalEmergency",
-         "CommunicationSignalHazard",
-         "CommunicationSignalLeft",
-         "CommunicationSignalRight",
-         "CommunicationSignalSlowing",
-         "CommunicationWave"
+      "BehaviourSignalling": [
+         "ExternalSignalling",
+         "ExternalWarningSignalling",
+         "ExternalIntentSignalling",
+         "ExternalEmergencySignalling",
+         "InternalSignalling",
+         "InternalWarningSignalling",
+         "InternalIntentSignalling",
+         "InternalEmergencySignalling"
+      ],
+      "BehaviourPositioning": [
+         "PremanoeuvrePositioning",
+         "PostmanoeuvrePositioning"
       ],
       "MotionAccelerate": true,
-      "motionAccelerateValue": {
+      "MotionAccelerateEgo": true,
+      "motionAccelerateEgoValue": {
          "@type": "schema:QuantitativeValue",
          "minValue": "0.001",
          "maxValue": "9.81"
       },
+      "MotionAccelerateTrafficAgent": true,
+      "motionAccelerateTrafficAgentValue": "3.0",
       "MotionDecelerate": true,
       "motionDecelerateValue": {
          "@type": "schema:QuantitativeValue",
@@ -50,53 +57,98 @@
       },
       "MotionDrive": true,
       "motionDriveValue": "130.5",
-      "MotionAway": true,
       "MotionCross": true,
+      "MotionCutAcross": true,
       "MotionCutIn": true,
       "MotionCutOut": true,
+      "MotionLaneChange": true,
       "MotionLaneChangeLeft": true,
       "MotionLaneChangeRight": true,
+      "MotionNonVehicleJog": true,
+      "MotionNonVehicleTurnLeft": true,
+      "MotionNonVehicleTurnRight": true,
+      "MotionNonVehicleWait": true,
       "MotionOvertake": true,
+      "MotionParkingManoeuvre": true,
+      "MotionPass": true,
       "MotionReverse": true,
       "MotionRun": true,
       "MotionSlide": true,
       "MotionStop": true,
-      "MotionTowards": true,
-      "MotionTurn": true,
       "MotionTurnLeft": true,
       "MotionTurnRight": true,
       "MotionUTurn": true,
-      "MotionWalk": true
+      "MotionWalk": true,
+      "MotionYield": true
    },
    "Odd": {
       "@type": "Odd",
-      "ConnectivityCommunication": "V2vCellular",
-      "ConnectivityPositioning": "PositioningGalileo",
+      "ConnectivityCommunication": [
+         "CommunicationTypeFleetManagement",
+         "CommunicationTypeTrafficManagement",
+         "CommunicationTypeV2X",
+         "CommunicationV2i",
+         "CommunicationV2v",
+         "CommunicationV2N",
+         "CommunicationV2P",
+         "CommunicationTechnologyCellular",
+         "CommunicationTechnologyDSRC",
+         "CommunicationTechnologyITSG5",
+         "CommunicationTechnologySatellite",
+         "CommunicationTechnologySidelinkPC5",
+         "CommunicationTechnologyWLAN",
+         "CommunicationDownlinkLatency",
+         "CommunicationDownlinkThroughput",
+         "CommunicationUplinkLatency",
+         "CommunicationUplinkThroughput"
+      ],
+      "ConnectivityPositioning": [
+         "PositioningSatellite",
+         "PositioningGalileo",
+         "PositioningGlonass",
+         "PositioningGps",
+         "PositioningSatelliteRTK",
+         "PositioningSatelliteBeiDou",
+         "PositioningLocal",
+         "PositioningLocalNavIC",
+         "PositioningLocalQZSS",
+         "PositioningLocalIRINSS"
+      ],
+      "ConnectivityRTKCorrection": [
+         "ConnectivityRTKCorrectionCountrySpecific",
+         "ConnectivityRTKCorrectionGlobalSpecific",
+         "ConnectivityRTKCorrectionSiteSpecific"
+      ],
       "DaySunElevation": true,
       "daySunElevationValue": 0.0,
       "DaySunPosition": "SunPositionLeft",
       "DrivableAreaEdge": [
          "EdgeLineMarkers",
+         "EdgeShoulder",
          "EdgeShoulderGrass",
          "EdgeShoulderPavedOrGravel",
+         "EdgeSnowbanks",
          "EdgeSolidBarriers",
-         "EdgeTemporaryLineMarkers"
+         "EdgeTemporaryLineMarkers",
+         "EdgeBurningMaterials",
+         "EdgeSheerDrop",
+         "EdgeWaterOnRoadside"
       ],
-      "DrivableAreaSurfaceCondition": "SurfaceConditionIcy",
-      "DrivableAreaSurfaceFeature": "SurfaceFeaturePothole",
-      "DrivableAreaSurfaceType": "SurfaceTypeSegmented",
-      "DrivableAreaType": "MotorwayManaged",
-      "EnvironmentParticulates": "ParticulatesMarine",
-      "GeometryTransverse": "TransverseBarriers",
+      "DrivableAreaSurfaceCondition": "ContaminationSettledAsh",
+      "DrivableAreaSurfaceFeature": "SurfaceFeatureEarthquakeVertical",
+      "DrivableAreaSurfaceType": "SurfaceTypeGraniteSetts",
+      "DrivableAreaType": "PrimaryRoadsManaged",
+      "EnvironmentParticulates": "ParticulatesInsectSwarms",
+      "GeometryTransverse": "TransverseSuperelevationBanking",
       "HorizontalCurves": true,
       "horizontalCurvesValue": 50.0,
       "HorizontalStraights": true,
-      "IlluminationArtificial": "ArtificialVehicleLighting",
+      "IlluminationArtificial": "ArtificialVehicleIndorLights",
       "IlluminationCloudiness": true,
       "illuminationCloudinessValue": 8.0,
-      "IlluminationLowLight": "LowLightAmbient",
-      "JunctionIntersection": "IntersectionYJunction",
-      "JunctionRoundabout": "RoundaboutDoubleSignal",
+      "IlluminationNatural": "IlluminationLowLight",
+      "JunctionIntersection": "TTJunctionsNonSignalised",
+      "JunctionRoundabout": "MultipleNonSignalised",
       "LaneSpecificationDimensions": true,
       "laneSpecificationDimensionsValue": {
          "@type": "schema:QuantitativeValue",
@@ -105,7 +157,15 @@
       },
       "LaneSpecificationLaneCount": true,
       "laneSpecificationLaneCountValue": 5,
-      "LaneSpecificationMarking": true,
+      "LaneSpecificationMarking": [
+         "BlurredLaneMarking",
+         "ClearLaneMarking",
+         "LaneMarkingNoLine",
+         "TemporaryLaneMarking"
+      ],
+      "LaneSpecificationSpeedLimit": true,
+      "SpeedLimit": 30.0,
+      "LaneSpecificationUsage": true,
       "LaneSpecificationTravelDirection": "TravelDirectionLeft",
       "LaneSpecificationType": [
          "LaneTypeBus",
@@ -120,9 +180,12 @@
       "LongitudinalLevelPlane": false,
       "LongitudinalUpSlope": true,
       "longitudinalUpSlopeValue": 8.3,
+      "ParticulatesBlowingDebris": true,
       "ParticulatesDust": true,
-      "ParticulatesMarine": true,
+      "ParticulatesIntensity": 2.5,
       "ParticulatesPollution": true,
+      "ParticulatesSand": true,
+      "ParticulatesSize": 0.1,
       "ParticulatesVolcanic": true,
       "ParticulatesWater": true,
       "particulatesWaterValue": 100.0,
@@ -130,10 +193,26 @@
       "SceneryFixedStructure": "FixedStructureVegetation",
       "ScenerySpecialStructure": "SpecialStructureTunnel",
       "SceneryTemporaryStructure": "TemporaryStructureConstructionDetour",
-      "SceneryZone": "ZoneSchool",
-      "SignsInformation": "InformationSignsVariableTemporary",
+      "SceneryZone": "FreightDistributionCentre",
+      "SignFeature": [
+         "FixedSigns",
+         "MovableSigns"
+      ],
+      "SignsInformation": "InformationSignsVariable",
       "SignsRegulatory": "RegulatorySignsVariableFullTime",
       "SignsWarning": "WarningSignsVariableTemporary",
+      "SpecialStructuresDimensionHeight": true,
+      "DimensionHeight": 4.5,
+      "SpecialStructuresDimensionLength": true,
+      "DimensionLength": 1200.0,
+      "SpecialStructuresDimensionShoulderWidth": true,
+      "DimensionShoulderWidth": 1.0,
+      "SpecialStructuresDimensionWidth": true,
+      "DimensionWidth": 9.5,
+      "SpecialStructuresUsage": [
+         "SpecialStructuresUsageDrivingOn",
+         "SpecialStructuresUsageDrivingUnder"
+      ],
       "SubjectVehicleSpeed": true,
       "subjectVehicleSpeedValue": {
          "@type": "schema:QuantitativeValue",
@@ -144,22 +223,37 @@
       "trafficAgentDensityValue": 0,
       "TrafficAgentType": true,
       "trafficAgentTypeValue": [
-         {
-            "@id": "openlabel_v2:VehicleTruck"
-         },
-         {
-            "@id": "openlabel_v2:VehicleEmergency"
-         },
-         {
-            "@id": "openlabel_v2:HumanCyclist"
-         },
-         {
-            "@id": "openlabel_v2:HumanWheelchairUser"
-         }
+         "TrafficAgentTypeVehicle",
+         "VehicleAgricultural",
+         "VehicleBus",
+         "VehicleCar",
+         "VehicleConstruction",
+         "VehicleEmergency",
+         "VehicleTram",
+         "VehicleTruck",
+         "VehicleVan",
+         "TrafficAgentTypeNonMotor",
+         "TrafficAgentTypeHuman",
+         "HumanCyclist",
+         "HumanMotorcycle",
+         "HumanTransporter",
+         "HumanStroller",
+         "VehicleWheelchair",
+         "HumanPedestrian",
+         "HumanEscooter",
+         "TrafficAgentTypeAnimal",
+         "HumanAnimalRider"
       ],
       "TrafficFlowRate": true,
       "trafficFlowRateValue": 9999,
       "TrafficSpecialVehicle": true,
+      "trafficSpecialVehicleValue": [
+         "TrafficSpecialVehicleAmbulance",
+         "TrafficSpecialVehiclePolice",
+         "TrafficSpecialVehicleWork",
+         "TrafficSpecialVehicleTrafficManagement",
+         "TrafficSpecialVehicleFireEngine"
+      ],
       "TrafficVolume": true,
       "trafficVolumeValue": 100000,
       "WeatherRain": true,
@@ -167,17 +261,7 @@
       "WeatherSnow": true,
       "weatherSnowValue": 0.5,
       "WeatherWind": true,
-      "weatherWindValue": 33.3
-   },
-   "RoadUser": {
-      "@type": "RoadUser",
-      "RoadUserAnimal": true,
-      "RoadUserHuman": "HumanWheelchairUser",
-      "RoadUserVehicle": "VehicleEmergency",
-      "motionDriveValue": {
-         "@type": "schema:QuantitativeValue",
-         "minValue": "0.0",
-         "maxValue": "200.0"
-      }
+      "weatherWindValue": 33.3,
+      "ParticulatesInsectSwarms": true
    }
 }

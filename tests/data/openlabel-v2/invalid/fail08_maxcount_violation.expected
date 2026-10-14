@@ -8,8 +8,8 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityCommunication                                                     =
-=    Error:            ConnectivityCommunication (Odd): Type of communication connectivity. ISO 34503:2023, 10.5 a)                                  =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition                                                                =
+=    Error:            DaySunPosition (Odd): Position of the sun relative to the direction of travel. ISO 34503:2023, 10.4 a) 1)                     =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
 =    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaType                                                              =

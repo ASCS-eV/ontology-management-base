@@ -26,8 +26,8 @@
    },
    "Behaviour": {
       "@type": "Behaviour",
-      "MotionAccelerate": true,
-      "motionAccelerateValue": {
+      "MotionAccelerateEgo": true,
+      "motionAccelerateEgoValue": {
          "@type": "schema:QuantitativeValue"
       },
       "MotionDrive": false

@@ -13,14 +13,24 @@
       "Behaviour": {
          "@id": "Behaviour"
       },
-      "BehaviourCommunication": {
+      "BehaviourPositioning": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "BehaviourCommunication",
+         "@id": "BehaviourPositioning",
+         "@type": "@vocab"
+      },
+      "BehaviourSignalling": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "BehaviourSignalling",
          "@type": "@vocab"
       },
       "ConnectivityCommunication": {
@@ -43,6 +53,16 @@
          "@id": "ConnectivityPositioning",
          "@type": "@vocab"
       },
+      "ConnectivityRTKCorrection": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "ConnectivityRTKCorrection",
+         "@type": "@vocab"
+      },
       "DaySunElevation": {
          "@id": "DaySunElevation",
          "@type": "xsd:boolean"
@@ -56,6 +76,22 @@
          },
          "@id": "DaySunPosition",
          "@type": "@vocab"
+      },
+      "DimensionHeight": {
+         "@id": "DimensionHeight",
+         "@type": "xsd:decimal"
+      },
+      "DimensionLength": {
+         "@id": "DimensionLength",
+         "@type": "xsd:decimal"
+      },
+      "DimensionShoulderWidth": {
+         "@id": "DimensionShoulderWidth",
+         "@type": "xsd:decimal"
+      },
+      "DimensionWidth": {
+         "@id": "DimensionWidth",
+         "@type": "xsd:decimal"
       },
       "DrivableAreaEdge": {
          "@context": {
@@ -149,14 +185,14 @@
          "@id": "IlluminationCloudiness",
          "@type": "xsd:boolean"
       },
-      "IlluminationLowLight": {
+      "IlluminationNatural": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
             "description": "skos:prefLabel",
             "meaning": "@id",
             "text": "skos:notation"
          },
-         "@id": "IlluminationLowLight",
+         "@id": "IlluminationNatural",
          "@type": "@vocab"
       },
       "JunctionIntersection": {
@@ -188,7 +224,17 @@
          "@type": "xsd:boolean"
       },
       "LaneSpecificationMarking": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
          "@id": "LaneSpecificationMarking",
+         "@type": "@vocab"
+      },
+      "LaneSpecificationSpeedLimit": {
+         "@id": "LaneSpecificationSpeedLimit",
          "@type": "xsd:boolean"
       },
       "LaneSpecificationTravelDirection": {
@@ -211,6 +257,10 @@
          "@id": "LaneSpecificationType",
          "@type": "@vocab"
       },
+      "LaneSpecificationUsage": {
+         "@id": "LaneSpecificationUsage",
+         "@type": "xsd:boolean"
+      },
       "LongitudinalDownSlope": {
          "@id": "LongitudinalDownSlope",
          "@type": "xsd:boolean"
@@ -227,12 +277,20 @@
          "@id": "MotionAccelerate",
          "@type": "xsd:boolean"
       },
-      "MotionAway": {
-         "@id": "MotionAway",
+      "MotionAccelerateEgo": {
+         "@id": "MotionAccelerateEgo",
+         "@type": "xsd:boolean"
+      },
+      "MotionAccelerateTrafficAgent": {
+         "@id": "MotionAccelerateTrafficAgent",
          "@type": "xsd:boolean"
       },
       "MotionCross": {
          "@id": "MotionCross",
+         "@type": "xsd:boolean"
+      },
+      "MotionCutAcross": {
+         "@id": "MotionCutAcross",
          "@type": "xsd:boolean"
       },
       "MotionCutIn": {
@@ -251,6 +309,10 @@
          "@id": "MotionDrive",
          "@type": "xsd:boolean"
       },
+      "MotionLaneChange": {
+         "@id": "MotionLaneChange",
+         "@type": "xsd:boolean"
+      },
       "MotionLaneChangeLeft": {
          "@id": "MotionLaneChangeLeft",
          "@type": "xsd:boolean"
@@ -259,8 +321,32 @@
          "@id": "MotionLaneChangeRight",
          "@type": "xsd:boolean"
       },
+      "MotionNonVehicleJog": {
+         "@id": "MotionNonVehicleJog",
+         "@type": "xsd:boolean"
+      },
+      "MotionNonVehicleTurnLeft": {
+         "@id": "MotionNonVehicleTurnLeft",
+         "@type": "xsd:boolean"
+      },
+      "MotionNonVehicleTurnRight": {
+         "@id": "MotionNonVehicleTurnRight",
+         "@type": "xsd:boolean"
+      },
+      "MotionNonVehicleWait": {
+         "@id": "MotionNonVehicleWait",
+         "@type": "xsd:boolean"
+      },
       "MotionOvertake": {
          "@id": "MotionOvertake",
+         "@type": "xsd:boolean"
+      },
+      "MotionParkingManoeuvre": {
+         "@id": "MotionParkingManoeuvre",
+         "@type": "xsd:boolean"
+      },
+      "MotionPass": {
+         "@id": "MotionPass",
          "@type": "xsd:boolean"
       },
       "MotionReverse": {
@@ -279,14 +365,6 @@
          "@id": "MotionStop",
          "@type": "xsd:boolean"
       },
-      "MotionTowards": {
-         "@id": "MotionTowards",
-         "@type": "xsd:boolean"
-      },
-      "MotionTurn": {
-         "@id": "MotionTurn",
-         "@type": "xsd:boolean"
-      },
       "MotionTurnLeft": {
          "@id": "MotionTurnLeft",
          "@type": "xsd:boolean"
@@ -303,6 +381,10 @@
          "@id": "MotionWalk",
          "@type": "xsd:boolean"
       },
+      "MotionYield": {
+         "@id": "MotionYield",
+         "@type": "xsd:boolean"
+      },
       "Odd": {
          "@id": "Odd"
       },
@@ -315,17 +397,33 @@
       "OddScenery": {
          "@id": "OddScenery"
       },
+      "ParticulatesBlowingDebris": {
+         "@id": "ParticulatesBlowingDebris",
+         "@type": "xsd:boolean"
+      },
       "ParticulatesDust": {
          "@id": "ParticulatesDust",
          "@type": "xsd:boolean"
       },
-      "ParticulatesMarine": {
-         "@id": "ParticulatesMarine",
+      "ParticulatesInsectSwarms": {
+         "@id": "ParticulatesInsectSwarms",
          "@type": "xsd:boolean"
+      },
+      "ParticulatesIntensity": {
+         "@id": "ParticulatesIntensity",
+         "@type": "xsd:decimal"
       },
       "ParticulatesPollution": {
          "@id": "ParticulatesPollution",
          "@type": "xsd:boolean"
+      },
+      "ParticulatesSand": {
+         "@id": "ParticulatesSand",
+         "@type": "xsd:boolean"
+      },
+      "ParticulatesSize": {
+         "@id": "ParticulatesSize",
+         "@type": "xsd:decimal"
       },
       "ParticulatesVolcanic": {
          "@id": "ParticulatesVolcanic",
@@ -346,33 +444,6 @@
             "text": "skos:notation"
          },
          "@id": "RainType",
-         "@type": "@vocab"
-      },
-      "RoadUser": {
-         "@id": "RoadUser"
-      },
-      "RoadUserAnimal": {
-         "@id": "RoadUserAnimal",
-         "@type": "xsd:boolean"
-      },
-      "RoadUserHuman": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "RoadUserHuman",
-         "@type": "@vocab"
-      },
-      "RoadUserVehicle": {
-         "@context": {
-            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
-            "description": "skos:prefLabel",
-            "meaning": "@id",
-            "text": "skos:notation"
-         },
-         "@id": "RoadUserVehicle",
          "@type": "@vocab"
       },
       "Scenario": {
@@ -418,6 +489,16 @@
          "@id": "SceneryZone",
          "@type": "@vocab"
       },
+      "SignFeature": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "SignFeature",
+         "@type": "@vocab"
+      },
       "SignsInformation": {
          "@context": {
             "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
@@ -447,6 +528,36 @@
          },
          "@id": "SignsWarning",
          "@type": "@vocab"
+      },
+      "SpecialStructuresDimensionHeight": {
+         "@id": "SpecialStructuresDimensionHeight",
+         "@type": "xsd:boolean"
+      },
+      "SpecialStructuresDimensionLength": {
+         "@id": "SpecialStructuresDimensionLength",
+         "@type": "xsd:boolean"
+      },
+      "SpecialStructuresDimensionShoulderWidth": {
+         "@id": "SpecialStructuresDimensionShoulderWidth",
+         "@type": "xsd:boolean"
+      },
+      "SpecialStructuresDimensionWidth": {
+         "@id": "SpecialStructuresDimensionWidth",
+         "@type": "xsd:boolean"
+      },
+      "SpecialStructuresUsage": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "SpecialStructuresUsage",
+         "@type": "@vocab"
+      },
+      "SpeedLimit": {
+         "@id": "SpeedLimit",
+         "@type": "xsd:decimal"
       },
       "SubjectVehicleSpeed": {
          "@id": "SubjectVehicleSpeed",
@@ -538,8 +649,12 @@
          "@id": "schema:minValue",
          "@type": "xsd:decimal"
       },
-      "motionAccelerateValue": {
-         "@id": "motionAccelerateValue",
+      "motionAccelerateEgoValue": {
+         "@id": "motionAccelerateEgoValue",
+         "@type": "xsd:decimal"
+      },
+      "motionAccelerateTrafficAgentValue": {
+         "@id": "motionAccelerateTrafficAgentValue",
          "@type": "xsd:decimal"
       },
       "motionDecelerateValue": {
@@ -600,11 +715,28 @@
          "@type": "xsd:integer"
       },
       "trafficAgentTypeValue": {
-         "@id": "trafficAgentTypeValue"
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "trafficAgentTypeValue",
+         "@type": "@vocab"
       },
       "trafficFlowRateValue": {
          "@id": "trafficFlowRateValue",
          "@type": "xsd:integer"
+      },
+      "trafficSpecialVehicleValue": {
+         "@context": {
+            "@vocab": "https://w3id.org/ascs-ev/envited-x/openlabel/v2/",
+            "description": "skos:prefLabel",
+            "meaning": "@id",
+            "text": "skos:notation"
+         },
+         "@id": "trafficSpecialVehicleValue",
+         "@type": "@vocab"
       },
       "trafficVolumeValue": {
          "@id": "trafficVolumeValue",

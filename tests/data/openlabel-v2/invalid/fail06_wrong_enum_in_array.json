@@ -26,9 +26,9 @@
    },
    "Behaviour": {
       "@type": "Behaviour",
-      "BehaviourCommunication": [
-         "CommunicationSignalLeft",
-         "InvalidCommunicationType"
+      "BehaviourSignalling": [
+         "ExternalIntentSignalling",
+         "InvalidSignallingType"
       ],
       "MotionDrive": false
    }

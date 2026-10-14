@@ -103,9 +103,11 @@
 =                      ev/envited-x/openlabel/v2/ConnectivityCommunication> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
 =                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioningEnum> ; owl:onProperty              =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityPositioning> ; rdf:type owl:Restriction, rdfs:Class,             =
-=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPositionEnum> ; owl:onProperty    =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [   =
-=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdgeEnum> ; owl:onProperty                     =
+=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityRTKCorrectionEnum> ;        =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ConnectivityRTKCorrection> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPositionEnum> ;       =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ; rdf:type owl:Restriction, rdfs:Class,       =
+=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdgeEnum> ; owl:onProperty  =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
 =                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceConditionEnum> ; owl:onProperty         =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; rdf:type owl:Restriction, rdfs:Class,        =
@@ -122,90 +124,121 @@
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/GeometryTransverse> ; rdf:type owl:Restriction, rdfs:Class,   =
 =                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificialEnum> ;           =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationArtificial> ; rdf:type owl:Restriction,           =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLightEnum> ; =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationLowLight> ; rdf:type owl:Restriction, rdfs:Class, =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationNaturalEnum> ;  =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationNatural> ; rdf:type owl:Restriction, rdfs:Class,  =
 =                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersectionEnum> ;             =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection> ; rdf:type owl:Restriction, rdfs:Class, =
 =                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundaboutEnum> ;               =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout> ; rdf:type owl:Restriction, rdfs:Class,   =
-=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirectionEnum> ; =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTypeEnum>  =
-=                      ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType> ; rdf:type owl:Restriction,          =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum> ;             =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type owl:Restriction, rdfs:Class,             =
-=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructureEnum> ;            =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction,            =
+=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationMarkingEnum> ;         =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationMarking> ; rdf:type owl:Restriction,         =
 =                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-                                                      =
-=                      ev/envited-x/openlabel/v2/ScenerySpecialStructureEnum> ; owl:onProperty <https://w3id.org/ascs-                               =
-=                      ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
-=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructureEnum> ; owl:onProperty            =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; rdf:type owl:Restriction, rdfs:Class,           =
-=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZoneEnum> ; owl:onProperty       =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [      =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationTravelDirectionEnum> ; owl:onProperty <https://w3id.org/ascs-                      =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationTypeEnum> ; owl:onProperty                =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainTypeEnum> ; owl:onProperty                        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [         =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructureEnum> ; owl:onProperty                =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructureEnum> ; owl:onProperty         =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; rdf:type owl:Restriction, rdfs:Class,             =
+=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructureEnum> ;        =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZoneEnum> ;          =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryZone> ; rdf:type owl:Restriction, rdfs:Class,          =
+=                      rdfs:Resource ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignFeatureEnum> ; owl:onProperty       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignFeature> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [      =
 =                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformationEnum> ; owl:onProperty                     =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
 =                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatoryEnum> ; owl:onProperty                      =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [  =
 =                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarningEnum> ; owl:onProperty <https://w3id.org/ascs- =
-=                      ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [        =
-=                      owl:intersectionOf ( xsd:integer [ owl:onDatatype xsd:integer ; owl:withRestrictions ( <http://recursion.too.deep> ) ;        =
-=                      rdf:type rdfs:Datatype, rdfs:Resource ] ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ; owl:onProperty <https://w3id.org/ascs-  =
-=                      ev/envited-x/openlabel/v2/trafficAgentDensityValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
-=                      owl:allValuesFrom [ owl:intersectionOf ( xsd:integer [ owl:onDatatype xsd:integer ; owl:withRestrictions (                    =
-=                      <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ;         =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficFlowRateValue> ; rdf:type owl:Restriction, rdfs:Class, =
+=                      ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom          =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructuresUsageEnum> ; owl:onProperty <https://w3id.org/ascs-         =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresUsage> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentTypeEnum> ; owl:onProperty                     =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentTypeValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficSpecialVehicleEnum> ; owl:onProperty           =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficSpecialVehicleValue> ; rdf:type owl:Restriction, rdfs:Class,          =
 =                      rdfs:Resource ], [ owl:allValuesFrom [ owl:intersectionOf ( xsd:integer [ owl:onDatatype xsd:integer ; owl:withRestrictions ( =
 =                      <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ;         =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficVolumeValue> ; rdf:type owl:Restriction, rdfs:Class,   =
-=                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> [    =
-=                      owl:intersectionOf ( xsd:integer <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ] ; owl:onProperty =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue> ; rdf:type owl:Restriction, rdfs:Class,     =
-=                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> [    =
-=                      owl:intersectionOf ( xsd:integer <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ] ; owl:onProperty =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentDensityValue> ; rdf:type owl:Restriction,         =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:intersectionOf ( xsd:integer [ owl:onDatatype xsd:integer ;            =
+=                      owl:withRestrictions ( <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ; rdf:type rdfs:Datatype,    =
+=                      rdfs:Resource ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficFlowRateValue> ; rdf:type            =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:intersectionOf ( xsd:integer [ owl:onDatatype         =
+=                      xsd:integer ; owl:withRestrictions ( <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ; rdf:type     =
+=                      rdfs:Datatype, rdfs:Resource ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficVolumeValue> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-            =
+=                      ev/envited-x/openlabel/v2/QuantitativeValue> [ owl:intersectionOf ( xsd:integer <http://recursion.too.deep> ) ; rdf:type      =
+=                      rdfs:Datatype, rdfs:Resource ] ) ] ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/laneSpecificationLaneCountValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [         =
+=                      owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue> [ owl:intersectionOf (  =
+=                      xsd:integer <http://recursion.too.deep> ) ; rdf:type rdfs:Datatype, rdfs:Resource ] ) ] ; owl:onProperty                      =
 =                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/subjectVehicleSpeedValue> ; rdf:type owl:Restriction, rdfs:Class,            =
 =                      rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-ev/envited-x/openlabel/v2/QuantitativeValue>      =
 =                      xsd:decimal ) ] ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/laneSpecificationDimensionsValue> ;         =
-=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom [ owl:unionOf ( <https://w3id.org/ascs-            =
-=                      ev/envited-x/openlabel/v2/RoadUserHumanEnum> <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RoadUserVehicleEnum> ) ] ;      =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficAgentTypeValue> ; rdf:type owl:Restriction,            =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/DaySunElevation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom       =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/HorizontalCurves> ; rdf:type owl:Restriction,   =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunElevation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [  =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/HorizontalCurves> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/HorizontalStraights> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
 =                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/IlluminationCloudiness> ; rdf:type              =
 =                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationDimensions> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [             =
 =                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationLaneCount> ; =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
-=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationMarking> ; rdf:type owl:Restriction, rdfs:Class,            =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LaneSpecificationSpeedLimit> ; rdf:type owl:Restriction, rdfs:Class,         =
 =                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
-=                      ev/envited-x/openlabel/v2/LongitudinalDownSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalLevelPlane> ; rdf:type              =
-=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationUsage> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalDownSlope> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/LongitudinalLevelPlane> ; rdf:type owl:Restriction, rdfs:Class,              =
+=                      rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                     =
 =                      ev/envited-x/openlabel/v2/LongitudinalUpSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust> ; rdf:type owl:Restriction,   =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/ParticulatesMarine> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom    =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesPollution> ; rdf:type               =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesBlowingDebris> ; rdf:type           =
 =                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/ParticulatesDust> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesInsectSwarms> ; rdf:type            =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/ParticulatesPollution> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesSand> ; rdf:type owl:Restriction,   =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
 =                      ev/envited-x/openlabel/v2/ParticulatesVolcanic> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom  =
 =                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ; rdf:type owl:Restriction,  =
 =                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom   =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ; rdf:type                 =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionHeight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                                        =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionLength> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                                        =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionShoulderWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                                                        =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [         =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ;        =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource   =
+=                      ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentType> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficFlowRate> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [  =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficSpecialVehicle> ;      =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty                       =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficVolume> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [    =
+=                      owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherRain> ; rdf:type       =
 =                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-        =
-=                      ev/envited-x/openlabel/v2/TrafficAgentType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom      =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficFlowRate> ; rdf:type owl:Restriction,    =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/TrafficSpecialVehicle> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficVolume> ; rdf:type owl:Restriction,      =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/WeatherRain> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
-=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherSnow> ; rdf:type owl:Restriction,        =
-=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:boolean ; owl:onProperty <https://w3id.org/ascs-                         =
-=                      ev/envited-x/openlabel/v2/WeatherWind> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      ev/envited-x/openlabel/v2/WeatherSnow> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom           =
+=                      xsd:boolean ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/WeatherWind> ; rdf:type owl:Restriction,        =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/DimensionHeight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom       =
+=                      xsd:decimal ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionLength> ; rdf:type owl:Restriction,    =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/DimensionShoulderWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
+=                      owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionWidth> ; rdf:type    =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-        =
+=                      ev/envited-x/openlabel/v2/ParticulatesIntensity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
+=                      xsd:decimal ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesSize> ; rdf:type owl:Restriction,   =
+=                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/openlabel/v2/SpeedLimit> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
 =                      xsd:decimal ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/daySunElevationValue> ; rdf:type                =
 =                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-        =
 =                      ev/envited-x/openlabel/v2/horizontalCurvesValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom =
@@ -220,16 +253,19 @@
 =                      xsd:decimal ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherSnowValue> ; rdf:type owl:Restriction,   =
 =                      rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom xsd:decimal ; owl:onProperty <https://w3id.org/ascs-                         =
 =                      ev/envited-x/openlabel/v2/weatherWindValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
-=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
-=                      ev/envited-x/openlabel/v2/ConnectivityCommunication> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
-=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/ConnectivityPositioning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
-=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/DaySunElevation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality      =
-=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ;        =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunElevation> ;       =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; rdf:type owl:Restriction,     =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ; rdf:type owl:Restriction, rdfs:Class,       =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/DimensionHeight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality      =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionLength> ;       =
+=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionShoulderWidth> ; rdf:type owl:Restriction,           =
 =                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
+=                      ev/envited-x/openlabel/v2/DimensionWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality       =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [            =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [              =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
@@ -246,7 +282,7 @@
 =                      rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
 =                      ev/envited-x/openlabel/v2/IlluminationCloudiness> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/IlluminationLowLight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality =
+=                      ev/envited-x/openlabel/v2/IlluminationNatural> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality  =
 =                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection> ;  =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout> ; rdf:type owl:Restriction, rdfs:Class,   =
@@ -255,28 +291,38 @@
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationLaneCount> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [              =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/LaneSpecificationMarking> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationSpeedLimit> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [             =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationUsage> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalDownSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalLevelPlane> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalUpSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality  =
-=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust> ;      =
-=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine> ; rdf:type owl:Restriction, rdfs:Class,   =
-=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/ParticulatesBlowingDebris> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesDust> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/ParticulatesInsectSwarms> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesIntensity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/ParticulatesPollution> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/ParticulatesVolcanic> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality =
-=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ;     =
+=                      ev/envited-x/openlabel/v2/ParticulatesSand> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality     =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesSize> ;      =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type owl:Restriction, rdfs:Class,             =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesVolcanic> ; rdf:type owl:Restriction, rdfs:Class, =
 =                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
-=                      ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
-=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesWater> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality    =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type     =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                           =
 =                      ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
 =                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
@@ -287,6 +333,16 @@
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory> ; rdf:type owl:Restriction, rdfs:Class,      =
 =                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
 =                      ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality         =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionHeight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionLength> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionShoulderWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [         =
+=                      owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpeedLimit> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality           =
 =                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ;   =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ;              =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ; rdf:type owl:Restriction, rdfs:Class,  =
@@ -334,11 +390,20 @@
 =                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
 =                      ev/envited-x/openlabel/v2/ConnectivityPositioning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ConnectivityRTKCorrection> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/DaySunElevation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
 =                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DaySunPosition> ;        =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge> ; rdf:type owl:Restriction, rdfs:Class,     =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionHeight> ; rdf:type owl:Restriction, rdfs:Class,      =
 =                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/DimensionLength> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionShoulderWidth>  =
+=                      ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;            =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/DimensionWidth> ; rdf:type owl:Restriction, rdfs:Class,       =
+=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/openlabel/v2/DrivableAreaEdge> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceCondition> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [            =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/DrivableAreaSurfaceFeature> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [              =
@@ -357,7 +422,7 @@
 =                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
 =                      ev/envited-x/openlabel/v2/IlluminationCloudiness> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/IlluminationLowLight> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
+=                      ev/envited-x/openlabel/v2/IlluminationNatural> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality  =
 =                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionIntersection> ;  =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/JunctionRoundabout> ; rdf:type owl:Restriction, rdfs:Class,   =
@@ -368,38 +433,63 @@
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationMarking> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationSpeedLimit> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [             =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationTravelDirection> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LaneSpecificationType> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/LaneSpecificationUsage> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalDownSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalLevelPlane> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/LongitudinalUpSlope> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality  =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesDust> ;      =
-=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesMarine> ; rdf:type owl:Restriction, rdfs:Class,   =
-=                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/ParticulatesBlowingDebris> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesDust> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/ParticulatesInsectSwarms> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesIntensity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/ParticulatesPollution> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/openlabel/v2/ParticulatesVolcanic> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesWater> ;     =
+=                      ev/envited-x/openlabel/v2/ParticulatesSand> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesSize> ;      =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type owl:Restriction, rdfs:Class,             =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/ParticulatesVolcanic> ; rdf:type owl:Restriction, rdfs:Class, =
 =                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
-=                      ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
-=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/ParticulatesWater> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality    =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/RainType> ; rdf:type     =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SceneryFixedStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource =
+=                      ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                           =
 =                      ev/envited-x/openlabel/v2/ScenerySpecialStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                 =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/SceneryTemporaryStructure> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [               =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/SceneryZone> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation> ;      =
-=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsRegulatory> ; rdf:type owl:Restriction, rdfs:Class,      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignFeature> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsInformation> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SignsRegulatory> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality      =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SpecialStructuresDimensionHeight> ; rdf:type owl:Restriction, rdfs:Class,    =
 =                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
-=                      ev/envited-x/openlabel/v2/SignsWarning> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality         =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionLength> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [        =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionShoulderWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresDimensionWidth> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [         =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpecialStructuresUsage> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                  =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/SpeedLimit> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality           =
 =                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/SubjectVehicleSpeed> ;   =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
 =                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/TrafficAgentDensity> ; rdf:type owl:Restriction, rdfs:Class,  =
@@ -438,12 +528,14 @@
 =                      ev/envited-x/openlabel/v2/trafficAgentTypeValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [                   =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
 =                      ev/envited-x/openlabel/v2/trafficFlowRateValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/trafficVolumeValue> ;    =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                                   =
+=                      ev/envited-x/openlabel/v2/trafficSpecialVehicleValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [              =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/openlabel/v2/trafficVolumeValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality   =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherRainValue> ;      =
 =                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ;              =
-=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherRainValue> ; rdf:type owl:Restriction, rdfs:Class,     =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherSnowValue> ; rdf:type owl:Restriction, rdfs:Class,     =
 =                      rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
-=                      ev/envited-x/openlabel/v2/weatherSnowValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality     =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/openlabel/v2/weatherWindValue> ;      =
-=                      rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] is closed. It cannot have value: Literal("this should  =
-=                      fail on closed shape", datatype=xsd:string)                                                                                   =
+=                      ev/envited-x/openlabel/v2/weatherWindValue> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] is       =
+=                      closed. It cannot have value: Literal("this should fail on closed shape", datatype=xsd:string)                                =
 ======================================================================================================================================================

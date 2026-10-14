@@ -30,9 +30,9 @@
          "MotorwayManaged",
          "RoadTypeRural"
       ],
-      "ConnectivityCommunication": [
-         "V2vCellular",
-         "V2iWifi"
+      "DaySunPosition": [
+         "SunPositionFront",
+         "SunPositionLeft"
       ]
    }
 }
