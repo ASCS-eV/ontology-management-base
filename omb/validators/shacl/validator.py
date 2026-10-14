@@ -48,6 +48,7 @@ from omb.utils.graph_loader import (
     load_turtle_files,
 )
 from omb.utils.print_formatter import (
+    extract_violation_messages,
     format_advisory_results,
     format_shacl_validation_result,
     normalize_path_for_display,
@@ -286,6 +287,7 @@ class ShaclValidator:
             triples_count=len(combined_graph),
             inferred_count=inferred_count,
             duration_seconds=duration,
+            violations=self._violation_messages(report_graph),
             **routing,
         )
 
@@ -400,10 +402,28 @@ class ShaclValidator:
                     report_graph=report_graph,
                     files_validated=[self._rel_path(f)],
                     triples_count=len(combined),
+                    violations=self._violation_messages(report_graph),
                     **routing,
                 )
             )
         return results
+
+    @staticmethod
+    def _violation_messages(report_graph: Optional[Graph]) -> List[str]:
+        """Structured, one-line-per-violation form of ``report_graph``.
+
+        ``report_text`` is pySHACL's multi-line human report, so API consumers
+        previously had to parse it to learn anything specific about a failure.
+        This populates ``ValidationResult.violations`` with the same information
+        already structured. It deliberately does NOT touch ``errors``, which is
+        reserved for infrastructure failures: a constraint violation is a
+        successful validation run that returned ``conforms=False``. The printed
+        report and the recorded ``.expected`` snapshots go through
+        ``format_shacl_validation_result`` and are unaffected.
+        """
+        if report_graph is None:
+            return []
+        return extract_violation_messages(report_graph)
 
     def _abox_inference(self, data_graph: Graph, closed_ontology: Graph) -> Graph:
         """Fast ABox RDFS inference against a pre-closed TBox.

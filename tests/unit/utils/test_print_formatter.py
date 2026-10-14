@@ -94,3 +94,78 @@ def test_format_data_conformance_result_with_errors():
     )
     output = buffer.getvalue()
     assert "SHACL validation failed" in output
+
+
+def _violation_report(pairs, severity=None):
+    """Builds a report graph as a chain of nested ``sh:detail`` results.
+
+    ``pairs`` is an ordered list of ``(result_uri, result_path)`` hops; every hop
+    but the last carries only pySHACL's generic "does not conform" message, and
+    the last one carries the constraint that actually failed.
+    """
+    from rdflib import URIRef
+
+    SH = Namespace("http://www.w3.org/ns/shacl#")
+    g = Graph()
+    previous = None
+    for index, (name, path) in enumerate(pairs):
+        node = URIRef(name)
+        g.add((node, RDF.type, SH.ValidationResult))
+        g.add((node, SH.resultPath, URIRef("https://example.org/v1/" + path)))
+        g.add((node, SH.focusNode, URIRef("urn:node%d" % index)))
+        is_leaf = index == len(pairs) - 1
+        message = "value is too small" if is_leaf else "Value does not conform to Shape"
+        g.add((node, SH.resultMessage, Literal(message)))
+        if is_leaf and severity is not None:
+            g.add((node, SH.resultSeverity, severity))
+        if previous is not None:
+            g.add((previous, SH.detail, node))
+        previous = node
+    return g
+
+
+def test_extract_violation_messages_follows_detail_chain_and_builds_path():
+    """Only the leaf is reported, located by every hop traversed to reach it."""
+    g = _violation_report(
+        [("urn:r1", "road_network"), ("urn:r2", "lane"), ("urn:r3", "width")]
+    )
+    assert print_formatter.extract_violation_messages(g) == [
+        "value is too small (at road_network/lane/width)"
+    ]
+
+
+def test_extract_violation_messages_deduplicates_violation_reached_twice():
+    """A nested shape is validated standalone AND through its parent.
+
+    Both routes report the same violation, so it must collapse to a single
+    message, kept at the longest (document-rooted) path.
+    """
+    from rdflib import URIRef
+
+    SH = Namespace("http://www.w3.org/ns/shacl#")
+    g = _violation_report([("urn:r1", "road_network"), ("urn:r2", "width")])
+    standalone = URIRef("urn:r3")
+    g.add((standalone, RDF.type, SH.ValidationResult))
+    g.add((standalone, SH.resultPath, URIRef("https://example.org/v1/width")))
+    g.add((standalone, SH.focusNode, URIRef("urn:node1")))
+    g.add((standalone, SH.resultMessage, Literal("value is too small")))
+
+    assert print_formatter.extract_violation_messages(g) == [
+        "value is too small (at road_network/width)"
+    ]
+
+
+def test_extract_violation_messages_excludes_advisory_results_by_default():
+    """Warnings must not leak into a consumer's error list, but stay reachable."""
+    SH = Namespace("http://www.w3.org/ns/shacl#")
+    g = _violation_report(
+        [("urn:r1", "road_network"), ("urn:r2", "width")], severity=SH.Warning
+    )
+    assert print_formatter.extract_violation_messages(g) == []
+    assert print_formatter.extract_violation_messages(g, advisory=True) == [
+        "value is too small (at road_network/width)"
+    ]
+
+
+def test_extract_violation_messages_empty_graph_returns_no_messages():
+    assert print_formatter.extract_violation_messages(Graph()) == []

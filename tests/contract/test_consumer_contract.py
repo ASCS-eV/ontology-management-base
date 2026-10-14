@@ -173,6 +173,7 @@ def test_supported_shacl_targets_accept_and_reject(consumer, per_resource, shape
     )
     assert not result.conforms and result.return_code == 210
     assert not result.errors  # a real constraint violation, not a coverage failure
+    assert result.violations  # ...but it IS reported, structured, one line each
     if not per_resource:
         assert result.report_graph is not None
 

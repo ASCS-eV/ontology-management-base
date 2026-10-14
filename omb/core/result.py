@@ -102,13 +102,20 @@ class ValidationResult:
         triples_count: Total number of RDF triples processed
         inferred_count: Number of triples added by inference
         duration_seconds: Time taken for validation
-        errors: List of specific error messages
+        errors: Infrastructure failures that prevented validation from producing a
+            verdict (unreadable file, no shapes loaded, missing dependency). A
+            SHACL constraint violation is NOT an error -- it is a successful
+            validation with ``conforms=False``, reported via ``violations``.
         warnings: List of warning messages
         shapes_loaded: Number of node/property shapes discovered by pySHACL (including implicit shapes)
         target_types: Sorted @type IRIs found in validated data
         types_routed: Target types that resolve to a domain/imported namespace
         types_unrouted: Target types that resolve to neither
         per_type_shape_count: Shapes targeting each found @type IRI
+        violations: One concise ``message (at path)`` line per distinct SHACL
+            constraint violation, derived from ``report_graph``. Gives API
+            consumers the structured form of what ``report_text`` renders for
+            humans, so they no longer have to parse the textual report.
     """
 
     conforms: bool
@@ -126,6 +133,7 @@ class ValidationResult:
     types_routed: List[str] = field(default_factory=list)
     types_unrouted: List[str] = field(default_factory=list)
     per_type_shape_count: Dict[str, int] = field(default_factory=dict)
+    violations: List[str] = field(default_factory=list)
 
     @classmethod
     def success(

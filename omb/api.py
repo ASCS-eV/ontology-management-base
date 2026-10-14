@@ -494,6 +494,7 @@ def _aggregate_results(
         inferred_count=sum(result.inferred_count for result in results),
         duration_seconds=sum(result.duration_seconds for result in results),
         errors=[error for result in results for error in result.errors],
+        violations=[v for result in results for v in result.violations],
         warnings=[warning for result in results for warning in result.warnings],
         shapes_loaded=max((result.shapes_loaded for result in results), default=0),
         target_types=sorted(

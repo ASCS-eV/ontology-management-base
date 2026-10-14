@@ -5,7 +5,7 @@ import textwrap
 import unicodedata
 from io import StringIO
 from pathlib import Path
-from typing import Union
+from typing import List, Union
 
 from rdflib import RDF, Graph, Namespace
 
@@ -196,6 +196,97 @@ def _extract_and_sort_errors(report_graph: Graph, advisory: bool = False):
         )
     )
     return error_rows
+
+
+def _local_name(term) -> str:
+    """Final path or fragment segment of an IRI -- the property or component name."""
+    return str(term).rsplit("/", 1)[-1].rsplit("#", 1)[-1]
+
+
+def _iter_violation_leaves(report_graph: Graph, node, path: tuple, sh: Namespace):
+    """Yields ``(path, result)`` for every leaf result reachable from ``node``.
+
+    ``path`` accumulates the ``sh:resultPath`` of each hop traversed, so a leaf
+    carries the full location of the value that actually failed.
+    """
+    segment = report_graph.value(node, sh.resultPath)
+    if segment is not None:
+        path = path + (_local_name(segment),)
+    details = list(report_graph.objects(node, sh.detail))
+    if not details:
+        yield path, node
+        return
+    for detail in details:
+        for item in _iter_violation_leaves(report_graph, detail, path, sh):
+            yield item
+
+
+def extract_violation_messages(
+    report_graph: Graph, advisory: bool = False
+) -> List[str]:
+    """Returns one concise ``message (at path)`` line per distinct violation.
+
+    pySHACL reports a failure inside a nested shape as a CHAIN of results: every
+    hop carries only a generic "Value does not conform to Shape X. See details
+    for more information.", and the constraint that actually failed hangs off
+    ``sh:detail``. A caller that wants a short, machine-comparable error list has
+    to walk that chain itself, or parse the human-readable ``report_text``.
+
+    This returns only the leaves -- the results carrying a real message -- and
+    rebuilds each one's location from the ``sh:resultPath`` of every hop
+    traversed to reach it. A violation deep inside a nested object therefore
+    reads as ``road_network/overhead_structure/tunnel_phase`` instead of as three
+    separate "does not conform" lines with no path at all.
+
+    The same violation surfaces once per shape that reaches it, because pySHACL
+    validates a nested shape standalone as well as through each of its parents.
+    Leaves are de-duplicated on what identifies the violation itself (focus node,
+    offending value, constraint component and message) and reported at the
+    longest path, which is the one rooted at the validated document.
+
+    Args:
+        report_graph: SHACL validation report graph.
+        advisory: If False (default), return only results that make the graph
+            non-conformant. If True, return only ``sh:Warning``/``sh:Info``
+            results. Mirrors :func:`_extract_and_sort_errors` so advisory results
+            stay out of consumers' error lists.
+
+    Returns:
+        Sorted, de-duplicated messages. Blank node IDs are scrubbed, so the
+        result is stable across runs and safe to compare in tests.
+    """
+    sh = Namespace("http://www.w3.org/ns/shacl#")
+    nested = set(report_graph.objects(None, sh.detail))
+    roots = [
+        result
+        for result in report_graph.subjects(RDF.type, sh.ValidationResult)
+        if result not in nested
+    ]
+
+    best = {}
+    for root in roots:
+        for path, leaf in _iter_violation_leaves(report_graph, root, (), sh):
+            severity = report_graph.value(leaf, sh.resultSeverity)
+            if (_severity_name(severity) in ADVISORY_SEVERITIES) != advisory:
+                continue
+            component = _local_name(
+                report_graph.value(leaf, sh.sourceConstraintComponent)
+            )
+            message = _clean(report_graph.value(leaf, sh.resultMessage)).strip()
+            signature = (
+                _clean(report_graph.value(leaf, sh.focusNode)),
+                _clean(report_graph.value(leaf, sh.value)),
+                component,
+                message,
+            )
+            text = message or "{} violated".format(component)
+            location = "/".join(path)
+            rendered = "{} (at {})".format(text, location) if location else text
+            previous = best.get(signature)
+            if previous is None or len(path) > previous[0]:
+                best[signature] = (len(path), rendered)
+
+    return sorted(rendered for _, rendered in best.values())
 
 
 def format_artifact_coherence_result(
