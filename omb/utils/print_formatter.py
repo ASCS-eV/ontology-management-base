@@ -201,7 +201,8 @@ def _clean(val) -> str:
         return ""
     v = str(val)
     v = re.sub(r"N[a-f0-9]{32}", "[BNODE]", v)
-    return v
+    v = _collapse_truncated_nodes(v)
+    return _sort_sh_in_values(v)
 
 
 def _get_visual_width(text: str) -> int:
@@ -343,8 +344,7 @@ def _violation_message(message) -> str:
     (``sh:in`` value order, cut-off node renderings) put in a fixed form, and long
     node renderings shortened.
     """
-    text = _sort_sh_in_values(_collapse_truncated_nodes(_clean(message)))
-    return _shorten_node_renderings(text.strip())
+    return _shorten_node_renderings(_clean(message).strip())
 
 
 def _shorten_node_renderings(message: str) -> str:
