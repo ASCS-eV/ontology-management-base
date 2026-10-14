@@ -3,11 +3,13 @@
 Unit tests for omb.utils.print_formatter.
 """
 
+import json
 from io import StringIO
 from pathlib import Path
 
 from rdflib import RDF, Graph, Literal, Namespace
 
+from omb.core.result import Violation
 from omb.utils import print_formatter
 
 
@@ -96,76 +98,273 @@ def test_format_data_conformance_result_with_errors():
     assert "SHACL validation failed" in output
 
 
-def _violation_report(pairs, severity=None):
-    """Builds a report graph as a chain of nested ``sh:detail`` results.
+PREFIXES = """
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <https://example.org/v1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+"""
 
-    ``pairs`` is an ordered list of ``(result_uri, result_path)`` hops; every hop
-    but the last carries only pySHACL's generic "does not conform" message, and
-    the last one carries the constraint that actually failed.
-    """
-    from rdflib import URIRef
-
-    SH = Namespace("http://www.w3.org/ns/shacl#")
-    g = Graph()
-    previous = None
-    for index, (name, path) in enumerate(pairs):
-        node = URIRef(name)
-        g.add((node, RDF.type, SH.ValidationResult))
-        g.add((node, SH.resultPath, URIRef("https://example.org/v1/" + path)))
-        g.add((node, SH.focusNode, URIRef("urn:node%d" % index)))
-        is_leaf = index == len(pairs) - 1
-        message = "value is too small" if is_leaf else "Value does not conform to Shape"
-        g.add((node, SH.resultMessage, Literal(message)))
-        if is_leaf and severity is not None:
-            g.add((node, SH.resultSeverity, severity))
-        if previous is not None:
-            g.add((previous, SH.detail, node))
-        previous = node
-    return g
+#: A road whose lanes must each carry an integer width.
+LANE_SHAPES = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:lane ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ;
+    sh:property [ sh:path ex:width ; sh:datatype xsd:integer ] .
+"""
 
 
-def test_extract_violation_messages_follows_detail_chain_and_builds_path():
-    """Only the leaf is reported, located by every hop traversed to reach it."""
-    g = _violation_report(
-        [("urn:r1", "road_network"), ("urn:r2", "lane"), ("urn:r3", "width")]
+def _report(shapes: str, data: str, data_format: str = "turtle", **options):
+    """Validates ``data`` against ``shapes`` with pySHACL; returns (conforms, report)."""
+    from pyshacl import validate
+
+    shapes_graph = Graph().parse(data=PREFIXES + shapes, format="turtle")
+    if data_format == "turtle":
+        data = PREFIXES + data
+    data_graph = Graph().parse(data=data, format=data_format)
+    conforms, report_graph, _ = validate(
+        data_graph, shacl_graph=shapes_graph, **options
     )
-    assert print_formatter.extract_violation_messages(g) == [
-        "value is too small (at road_network/lane/width)"
-    ]
+    return conforms, report_graph
 
 
-def test_extract_violation_messages_deduplicates_violation_reached_twice():
-    """A nested shape is validated standalone AND through its parent.
-
-    Both routes report the same violation, so it must collapse to a single
-    message, kept at the longest (document-rooted) path.
-    """
-    from rdflib import URIRef
-
-    SH = Namespace("http://www.w3.org/ns/shacl#")
-    g = _violation_report([("urn:r1", "road_network"), ("urn:r2", "width")])
-    standalone = URIRef("urn:r3")
-    g.add((standalone, RDF.type, SH.ValidationResult))
-    g.add((standalone, SH.resultPath, URIRef("https://example.org/v1/width")))
-    g.add((standalone, SH.focusNode, URIRef("urn:node1")))
-    g.add((standalone, SH.resultMessage, Literal("value is too small")))
-
-    assert print_formatter.extract_violation_messages(g) == [
-        "value is too small (at road_network/width)"
-    ]
+def _jsonld(**properties) -> str:
+    """A JSON-LD road document; nested objects become blank nodes."""
+    document = {
+        "@context": {"ex": "https://example.org/v1/"},
+        "@id": "ex:road",
+        "@type": "ex:Road",
+    }
+    document.update({f"ex:{name}": value for name, value in properties.items()})
+    return json.dumps(document)
 
 
-def test_extract_violation_messages_excludes_advisory_results_by_default():
-    """Warnings must not leak into a consumer's error list, but stay reachable."""
-    SH = Namespace("http://www.w3.org/ns/shacl#")
-    g = _violation_report(
-        [("urn:r1", "road_network"), ("urn:r2", "width")], severity=SH.Warning
+def test_extract_violations_locates_nested_violation_from_document_root():
+    """Only the failed constraint is reported, located from the document's subject."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:network ; sh:node ex:NetworkShape ] .
+ex:NetworkShape a sh:NodeShape ;
+    sh:property [ sh:path ex:lane ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ;
+    sh:property [ sh:path ex:width ; sh:datatype xsd:integer ] .
+"""
+    _, report = _report(
+        shapes, 'ex:road a ex:Road ; ex:network [ ex:lane [ ex:width "wide" ] ] .'
     )
-    assert print_formatter.extract_violation_messages(g) == []
-    assert print_formatter.extract_violation_messages(g, advisory=True) == [
-        "value is too small (at road_network/width)"
+
+    violations = print_formatter.extract_violations(
+        report, file_of=lambda node: "road.ttl"
+    )
+
+    assert violations == [
+        Violation(
+            file="road.ttl",
+            path="network/lane/width",
+            message="Value is not Literal with datatype xsd:integer",
+            component="DatatypeConstraintComponent",
+            focus_node="https://example.org/v1/road",
+            value="wide",
+            source_shape="",
+            severity="Violation",
+        )
+    ]
+    assert str(violations[0]) == (
+        "road.ttl: Value is not Literal with datatype xsd:integer "
+        "(at network/lane/width)"
+    )
+
+
+def test_extract_violations_keeps_distinct_blank_nodes_apart():
+    """Two nested objects failing the same way are two violations, not one."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:leftLane ; sh:node ex:LaneShape ] ;
+    sh:property [ sh:path ex:rightLane ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ;
+    sh:property [ sh:path ex:width ; sh:datatype xsd:integer ] .
+"""
+    data = _jsonld(leftLane={"ex:width": "wide"}, rightLane={"ex:width": "wide"})
+    _, report = _report(shapes, data, data_format="json-ld")
+
+    violations = print_formatter.extract_violations(report)
+
+    assert [v.path for v in violations] == ["leftLane/width", "rightLane/width"]
+
+
+def test_extract_violations_counts_identical_blank_nodes_on_one_path():
+    data = _jsonld(lane=[{"ex:width": "wide"}, {"ex:width": "wide"}])
+    _, report = _report(LANE_SHAPES, data, data_format="json-ld")
+
+    violations = print_formatter.extract_violations(report)
+
+    assert [v.path for v in violations] == ["lane/width", "lane/width"]
+
+
+def test_extract_violations_reports_standalone_and_nested_route_once():
+    """A nested shape with its own target is validated twice; that is one violation.
+
+    It is kept at the longer path, the one rooted at the validated document.
+    """
+    shapes = LANE_SHAPES + "ex:LaneShape sh:targetClass ex:Lane ."
+    data = 'ex:road a ex:Road ; ex:lane ex:l1 . ex:l1 a ex:Lane ; ex:width "wide" .'
+    _, report = _report(shapes, data)
+
+    violations = print_formatter.extract_violations(report)
+
+    assert [(v.focus_node, v.path) for v in violations] == [
+        ("https://example.org/v1/road", "lane/width")
     ]
 
 
-def test_extract_violation_messages_empty_graph_returns_no_messages():
-    assert print_formatter.extract_violation_messages(Graph()) == []
+def test_extract_violations_resolves_equally_long_paths_deterministically():
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:beta ; sh:node ex:LaneShape ] ;
+    sh:property [ sh:path ex:alpha ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ;
+    sh:property [ sh:path ex:width ; sh:datatype xsd:integer ] .
+"""
+    data = (
+        'ex:road a ex:Road ; ex:alpha ex:l1 ; ex:beta ex:l1 . ex:l1 ex:width "wide" .'
+    )
+    _, report = _report(shapes, data)
+
+    assert [v.path for v in print_formatter.extract_violations(report)] == [
+        "alpha/width"
+    ]
+
+
+def test_extract_violations_violation_reaching_a_warning_constraint_counts():
+    """Severity comes from the top-level result, which alone decides conformance."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:lane ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ;
+    sh:property [ sh:path ex:width ; sh:minCount 1 ; sh:severity sh:Warning ] .
+"""
+    conforms, report = _report(shapes, 'ex:road a ex:Road ; ex:lane [ ex:id "a" ] .')
+
+    assert conforms is False
+    violations = print_formatter.extract_violations(report)
+    assert [(v.path, v.severity) for v in violations] == [("lane/width", "Violation")]
+    assert print_formatter.extract_violations(report, advisory=True) == []
+
+
+def test_extract_violations_warning_reaching_a_violation_constraint_is_advisory():
+    """The hdmap revision checks: a Warning shape whose nested constraints say Violation."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ; sh:severity sh:Warning ;
+    sh:node ex:RevisionShape .
+ex:RevisionShape a sh:NodeShape ;
+    sh:or ( [ sh:property [ sh:path ex:version ; sh:hasValue "1.5" ] ]
+            [ sh:property [ sh:path ex:type ; sh:in ( "town" ) ] ] ) .
+"""
+    data = 'ex:road a ex:Road ; ex:version "1.4" ; ex:type "townExpressway" .'
+    conforms, report = _report(shapes, data, allow_warnings=True)
+
+    assert conforms is True
+    assert print_formatter.extract_violations(report) == []
+    advisory = print_formatter.extract_violations(report, advisory=True)
+    assert [(v.component, v.severity) for v in advisory] == [
+        ("OrConstraintComponent", "Warning")
+    ]
+
+
+def test_extract_violations_same_message_kept_apart_by_component():
+    """One custom sh:message on two constraints still yields two violations."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:lanes ; sh:datatype xsd:integer ; sh:minInclusive 0 ;
+                  sh:message "lanes must be a non-negative integer" ] .
+"""
+    _, report = _report(shapes, 'ex:road a ex:Road ; ex:lanes "five" .')
+
+    violations = print_formatter.extract_violations(report)
+
+    assert {v.message for v in violations} == {"lanes must be a non-negative integer"}
+    assert [v.component for v in violations] == [
+        "DatatypeConstraintComponent",
+        "MinInclusiveConstraintComponent",
+    ]
+
+
+def test_extract_violations_renders_complex_paths_without_blank_node_ids():
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ( ex:format ex:mimeType ) ; sh:minCount 1 ] ;
+    sh:property [ sh:path [ sh:inversePath ex:owns ] ; sh:minCount 1 ] .
+"""
+    _, report = _report(shapes, "ex:road a ex:Road .")
+
+    assert [v.path for v in print_formatter.extract_violations(report)] == [
+        "^owns",
+        "format/mimeType",
+    ]
+
+
+def test_render_path_shacl_notation():
+    shapes = Graph().parse(
+        data=PREFIXES
+        + """
+ex:a sh:path [ sh:alternativePath ( ex:p [ sh:oneOrMorePath ex:q ] ) ] .
+ex:b sh:path [ sh:inversePath ( ex:p ex:q ) ] .
+ex:c sh:path [ sh:zeroOrMorePath ex:p ] .
+ex:d sh:path [ sh:zeroOrOnePath ex:p ] .
+""",
+        format="turtle",
+    )
+    SH = Namespace("http://www.w3.org/ns/shacl#")
+    EX = Namespace("https://example.org/v1/")
+
+    rendered = [
+        print_formatter._render_path(shapes, shapes.value(EX[name], SH.path))
+        for name in "abcd"
+    ]
+
+    assert rendered == ["(p|q+)", "^(p/q)", "p*", "p?"]
+
+
+def test_extract_violations_shortens_long_node_renderings():
+    """An sh:closed message renders the whole node; the violation keeps it short."""
+    shapes = """
+ex:RoadShape a sh:NodeShape ; sh:targetClass ex:Road ;
+    sh:property [ sh:path ex:lane ; sh:node ex:LaneShape ] .
+ex:LaneShape a sh:NodeShape ; sh:closed true ;
+    sh:property [ sh:path ex:description ] .
+"""
+    data = 'ex:road a ex:Road ; ex:lane [ ex:description "{}" ; ex:extra "boom" ] .'
+    _, report = _report(shapes, data.format("a long description " * 10))
+
+    [violation] = print_formatter.extract_violations(report)
+
+    assert violation.path == "lane/extra"
+    assert violation.message == (
+        'Node [ ... ] is closed. It cannot have value: Literal("boom")'
+    )
+
+
+def test_violation_message_fixes_hash_dependent_parts():
+    """pySHACL lists sh:in values in set order and cuts node renderings off at a
+    hash-dependent point; a violation's message must depend on neither."""
+    one = "Value <urn:x> not in list ['ex:b', 'ex:c', 'ex:a']"
+    other = "Value <urn:x> not in list ['ex:c', 'ex:a', 'ex:b']"
+    assert print_formatter._violation_message(one) == (
+        "Value <urn:x> not in list ['ex:a', 'ex:b', 'ex:c']"
+    )
+    assert print_formatter._violation_message(other) == (
+        print_formatter._violation_message(one)
+    )
+    deep = "<http://recursion.too.deep>"
+    cut = f"Node [ ex:p [ ex:q {deep} ] ] must conform to [ sh:path ex:p ]"
+    assert print_formatter._violation_message(cut) == (
+        "Node [ ... ] must conform to [ sh:path ex:p ]"
+    )
+
+
+def test_shorten_node_renderings_keeps_short_renderings():
+    message = 'Less than 1 values on [ ex:id Literal("a") ]->ex:width'
+    assert print_formatter._shorten_node_renderings(message) == message
+
+
+def test_extract_violations_empty_graph_returns_no_violations():
+    assert print_formatter.extract_violations(Graph()) == []

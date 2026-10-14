@@ -1,3 +1,4 @@
+import ast
 import os
 import re
 import sys
@@ -5,9 +6,13 @@ import textwrap
 import unicodedata
 from io import StringIO
 from pathlib import Path
-from typing import List, Union
+from typing import Callable, List, Optional, Union
 
-from rdflib import RDF, Graph, Namespace
+from rdflib import RDF, BNode, Graph, Namespace
+from rdflib.collection import Collection
+from rdflib.term import Node
+
+from omb.core.result import Violation
 
 
 def ensure_utf8_output() -> None:
@@ -118,6 +123,78 @@ def normalize_path_for_display(path: Union[str, Path], root_dir: Path) -> str:
         return path.name
 
 
+#: pySHACL's generic sh:in message ends with the Python repr of the allowed values.
+_SH_IN_MESSAGE = re.compile(r"(?<=not in list )(\[.*\])$", re.DOTALL)
+
+
+def _sort_sh_in_values(message: str) -> str:
+    """Render the allowed values of an sh:in message in sorted order.
+
+    pySHACL collects them in a set, so their order follows string hashing and
+    changes from one process to the next; a report snapshot must not.
+    A custom ``sh:message`` that merely contains the phrase is left as it is.
+    """
+    match = _SH_IN_MESSAGE.search(message)
+    if not match:
+        return message
+    try:
+        values = ast.literal_eval(match.group(1))
+    except (ValueError, SyntaxError):
+        return message
+    if not isinstance(values, list) or not all(isinstance(v, str) for v in values):
+        return message
+    return message[: match.start(1)] + repr(sorted(values))
+
+
+#: pySHACL renders a blank node in a message to a fixed depth, marks where it stopped
+#: with this IRI, and caches the rendering under the node alone. Which path reaches a
+#: shared node first decides where it is cut off, and that follows string hashing.
+_RECURSION_MARKER = "<http://recursion.too.deep>"
+_TRUNCATED_NODE = "[ ... ]"
+
+
+def _matching_bracket(text: str, start: int) -> int | None:
+    """Index of the ``]`` closing the ``[`` at ``start``, skipping quoted literals."""
+    depth, quoted, i = 0, False, start
+    while i < len(text):
+        char = text[i]
+        if quoted:
+            if char == "\\":
+                i += 1
+            elif char == '"':
+                quoted = False
+        elif char == '"':
+            quoted = True
+        elif char == "[":
+            depth += 1
+        elif char == "]":
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    return None
+
+
+def _collapse_truncated_nodes(message: str) -> str:
+    """Replace each blank-node rendering pySHACL cut off with a fixed placeholder.
+
+    A rendering that was not cut off is complete and sorted, so it is kept.
+    """
+    if _RECURSION_MARKER not in message:
+        return message
+    parts, i = [], 0
+    while i < len(message):
+        end = _matching_bracket(message, i) if message.startswith("[ ", i) else None
+        if end is None:
+            parts.append(message[i])
+            i += 1
+            continue
+        span = message[i : end + 1]
+        parts.append(_TRUNCATED_NODE if _RECURSION_MARKER in span else span)
+        i = end + 1
+    return "".join(parts)
+
+
 def _clean(val) -> str:
     """Helper to apply path and bnode normalization to a single string value."""
     if val is None:
@@ -198,95 +275,190 @@ def _extract_and_sort_errors(report_graph: Graph, advisory: bool = False):
     return error_rows
 
 
+_SH = Namespace("http://www.w3.org/ns/shacl#")
+
+#: Unary SHACL path operators and their notation in :attr:`Violation.path`.
+_UNARY_PATHS = (
+    (_SH.inversePath, "^{}"),
+    (_SH.zeroOrMorePath, "{}*"),
+    (_SH.oneOrMorePath, "{}+"),
+    (_SH.zeroOrOnePath, "{}?"),
+)
+
+#: A node rendering in a violation message longer than this is shortened to
+#: ``[ ... ]``. pySHACL renders a blank node with everything reachable from it, so an
+#: ``sh:or`` or ``sh:closed`` message about a document's nested content runs to tens
+#: of thousands of characters; the violation's other fields locate the node instead.
+_MAX_NODE_RENDERING = 120
+
+
 def _local_name(term) -> str:
     """Final path or fragment segment of an IRI -- the property or component name."""
     return str(term).rsplit("/", 1)[-1].rsplit("#", 1)[-1]
 
 
-def _iter_violation_leaves(report_graph: Graph, node, path: tuple, sh: Namespace):
+def _term_text(term) -> str:
+    """An IRI or literal verbatim, a blank node as ``[BNODE]``, no term as ``""``."""
+    if term is None:
+        return ""
+    if isinstance(term, BNode):
+        return "[BNODE]"
+    return str(term)
+
+
+def _is_sequence_path(report_graph: Graph, path) -> bool:
+    return isinstance(path, BNode) and report_graph.value(path, RDF.first) is not None
+
+
+def _render_path(report_graph: Graph, path) -> str:
+    """A SHACL property path in compact notation, one local name per IRI.
+
+    A sequence reads ``a/b``, an alternative ``(a|b)``, an inverse ``^p`` and the
+    repetitions ``p*``, ``p+`` and ``p?``. A blank node identifier never appears: a
+    path of any other shape renders as ``[ ... ]``.
+    """
+    if not isinstance(path, BNode):
+        return _local_name(path)
+    if _is_sequence_path(report_graph, path):
+        steps = Collection(report_graph, path)
+        return "/".join(_render_path(report_graph, step) for step in steps)
+    alternatives = report_graph.value(path, _SH.alternativePath)
+    if alternatives is not None:
+        steps = Collection(report_graph, alternatives)
+        return "({})".format("|".join(_render_path(report_graph, s) for s in steps))
+    for operator, notation in _UNARY_PATHS:
+        operand = report_graph.value(path, operator)
+        if operand is not None:
+            text = _render_path(report_graph, operand)
+            if _is_sequence_path(report_graph, operand):
+                text = f"({text})"
+            return notation.format(text)
+    return _TRUNCATED_NODE
+
+
+def _violation_message(message) -> str:
+    """A result message in the stable, compact form :attr:`Violation.message` holds.
+
+    Blank node identifiers are scrubbed, pySHACL's hash-dependent message parts
+    (``sh:in`` value order, cut-off node renderings) put in a fixed form, and long
+    node renderings shortened.
+    """
+    text = _sort_sh_in_values(_collapse_truncated_nodes(_clean(message)))
+    return _shorten_node_renderings(text.strip())
+
+
+def _shorten_node_renderings(message: str) -> str:
+    """Replace each node rendering longer than ``_MAX_NODE_RENDERING`` with ``[ ... ]``."""
+    parts, i = [], 0
+    while i < len(message):
+        end = _matching_bracket(message, i) if message.startswith("[ ", i) else None
+        if end is None:
+            parts.append(message[i])
+            i += 1
+            continue
+        span = message[i : end + 1]
+        parts.append(_TRUNCATED_NODE if len(span) > _MAX_NODE_RENDERING else span)
+        i = end + 1
+    return "".join(parts)
+
+
+def _iter_violation_leaves(report_graph: Graph, node, path: tuple):
     """Yields ``(path, result)`` for every leaf result reachable from ``node``.
 
     ``path`` accumulates the ``sh:resultPath`` of each hop traversed, so a leaf
     carries the full location of the value that actually failed.
     """
-    segment = report_graph.value(node, sh.resultPath)
+    segment = report_graph.value(node, _SH.resultPath)
     if segment is not None:
-        path = path + (_local_name(segment),)
-    details = list(report_graph.objects(node, sh.detail))
+        path = path + (_render_path(report_graph, segment),)
+    details = list(report_graph.objects(node, _SH.detail))
     if not details:
         yield path, node
         return
     for detail in details:
-        for item in _iter_violation_leaves(report_graph, detail, path, sh):
-            yield item
+        yield from _iter_violation_leaves(report_graph, detail, path)
 
 
-def extract_violation_messages(
-    report_graph: Graph, advisory: bool = False
-) -> List[str]:
-    """Returns one concise ``message (at path)`` line per distinct violation.
+def extract_violations(
+    report_graph: Graph,
+    advisory: bool = False,
+    file_of: Optional[Callable[[Node], str]] = None,
+) -> List[Violation]:
+    """Returns one :class:`Violation` per distinct constraint violation, sorted.
 
-    pySHACL reports a failure inside a nested shape as a CHAIN of results: every
-    hop carries only a generic "Value does not conform to Shape X. See details
-    for more information.", and the constraint that actually failed hangs off
-    ``sh:detail``. A caller that wants a short, machine-comparable error list has
-    to walk that chain itself, or parse the human-readable ``report_text``.
+    pySHACL reports a failure inside a nested shape as a chain of results: each hop
+    carries only "Value does not conform to Shape X. See details for more
+    information.", and the constraint that actually failed hangs off ``sh:detail``.
+    Only the ends of these chains are returned, each located by the
+    ``sh:resultPath`` of every hop traversed to reach it, so a violation inside a
+    nested object reads ``road_network/overhead_structure/tunnel_phase``.
 
-    This returns only the leaves -- the results carrying a real message -- and
-    rebuilds each one's location from the ``sh:resultPath`` of every hop
-    traversed to reach it. A violation deep inside a nested object therefore
-    reads as ``road_network/overhead_structure/tunnel_phase`` instead of as three
-    separate "does not conform" lines with no path at all.
+    Severity comes from the top-level result, because only top-level results decide
+    conformance; a nested result carries the severity of its own shape. A
+    Warning-severity shape that reaches a constraint through ``sh:node`` is advisory
+    even though the nested result says Violation, and the reverse holds too.
 
-    The same violation surfaces once per shape that reaches it, because pySHACL
-    validates a nested shape standalone as well as through each of its parents.
-    Leaves are de-duplicated on what identifies the violation itself (focus node,
-    offending value, constraint component and message) and reported at the
-    longest path, which is the one rooted at the validated document.
+    The same violation surfaces once per shape that reaches it: pySHACL validates a
+    nested shape that has a target on its own, as well as through each parent. Ends
+    of chains are de-duplicated on the RDF terms identifying the violation (focus
+    node, value, constraint component, source shape and message), so two distinct
+    blank nodes failing the same way remain two violations. Each is reported at its
+    longest path, the one rooted at the validated document; among equally long
+    paths the lowest-sorting violation wins.
 
     Args:
         report_graph: SHACL validation report graph.
-        advisory: If False (default), return only results that make the graph
-            non-conformant. If True, return only ``sh:Warning``/``sh:Info``
-            results. Mirrors :func:`_extract_and_sort_errors` so advisory results
-            stay out of consumers' error lists.
+        advisory: If False (default), return only violations that make the graph
+            non-conformant. If True, return only ``sh:Warning``/``sh:Info`` ones.
+            Mirrors :func:`_extract_and_sort_errors`.
+        file_of: Maps a top-level focus node to the input file holding it, for
+            :attr:`Violation.file`. Without it the file is left empty.
 
     Returns:
-        Sorted, de-duplicated messages. Blank node IDs are scrubbed, so the
-        result is stable across runs and safe to compare in tests.
+        Sorted violations. Blank node identifiers are scrubbed and hash-dependent
+        message parts normalized, so the result is stable across runs.
     """
-    sh = Namespace("http://www.w3.org/ns/shacl#")
-    nested = set(report_graph.objects(None, sh.detail))
-    roots = [
-        result
-        for result in report_graph.subjects(RDF.type, sh.ValidationResult)
-        if result not in nested
-    ]
-
+    nested = set(report_graph.objects(None, _SH.detail))
     best = {}
-    for root in roots:
-        for path, leaf in _iter_violation_leaves(report_graph, root, (), sh):
-            severity = report_graph.value(leaf, sh.resultSeverity)
-            if (_severity_name(severity) in ADVISORY_SEVERITIES) != advisory:
-                continue
-            component = _local_name(
-                report_graph.value(leaf, sh.sourceConstraintComponent)
+    for root in report_graph.subjects(RDF.type, _SH.ValidationResult):
+        if root in nested:
+            continue
+        severity = _severity_name(report_graph.value(root, _SH.resultSeverity))
+        if (severity in ADVISORY_SEVERITIES) != advisory:
+            continue
+        root_focus = report_graph.value(root, _SH.focusNode)
+        file = file_of(root_focus) if file_of and root_focus is not None else ""
+        for path, leaf in _iter_violation_leaves(report_graph, root, ()):
+            identity = tuple(
+                report_graph.value(leaf, predicate)
+                for predicate in (
+                    _SH.focusNode,
+                    _SH.value,
+                    _SH.sourceConstraintComponent,
+                    _SH.sourceShape,
+                    _SH.resultMessage,
+                )
             )
-            message = _clean(report_graph.value(leaf, sh.resultMessage)).strip()
-            signature = (
-                _clean(report_graph.value(leaf, sh.focusNode)),
-                _clean(report_graph.value(leaf, sh.value)),
-                component,
-                message,
+            _, value, component, shape, message = identity
+            component_name = "" if component is None else _local_name(component)
+            text = _violation_message(message)
+            candidate = (
+                -len(path),
+                Violation(
+                    file=file,
+                    path="/".join(path),
+                    message=text or component_name,
+                    component=component_name,
+                    focus_node=_term_text(root_focus),
+                    value=_term_text(value),
+                    source_shape="" if isinstance(shape, BNode) else _term_text(shape),
+                    severity=severity,
+                ),
             )
-            text = message or "{} violated".format(component)
-            location = "/".join(path)
-            rendered = "{} (at {})".format(text, location) if location else text
-            previous = best.get(signature)
-            if previous is None or len(path) > previous[0]:
-                best[signature] = (len(path), rendered)
+            if identity not in best or candidate < best[identity]:
+                best[identity] = candidate
 
-    return sorted(rendered for _, rendered in best.values())
+    return sorted(violation for _, violation in best.values())
 
 
 def format_artifact_coherence_result(

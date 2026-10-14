@@ -141,3 +141,23 @@ ex:a a ex:Thing ; ex:laneType "driving" .
         files_validated=["data.ttl"],
     )
     assert validator.format_advisory(result) == ""
+
+
+def test_violations_leave_out_warnings_that_do_not_fail_validation(tmp_path: Path):
+    validator = _make_validator(tmp_path)
+    _conforms, _text, report = _run(validator, DEPRECATED_AND_UNKNOWN)
+
+    violations = validator._violations(report, [Path("data.ttl")])
+
+    assert [(v.value, v.severity) for v in violations] == [("pavement", "Violation")]
+
+
+def test_violations_include_warnings_when_warnings_fail_validation(tmp_path: Path):
+    """With ``--fail-on-warnings`` a warning decides the verdict, so it is listed."""
+    validator = _make_validator(tmp_path, allow_warnings=False)
+    conforms, _text, report = _run(validator, DEPRECATED_ONLY)
+
+    violations = validator._violations(report, [Path("data.ttl")])
+
+    assert conforms is False
+    assert [(v.value, v.severity) for v in violations] == [("sidewalk", "Warning")]

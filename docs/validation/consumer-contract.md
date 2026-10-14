@@ -60,7 +60,8 @@ This coverage check does **not** mean that every RDF triple or property is const
 The supplied shapes define that policy (for example, `sh:closed` rejects extra
 properties). `shapes_loaded` counts discovered node and property shapes; it is diagnostic
 metadata, not sufficient proof of coverage. In per-resource mode `report_graph` is
-`None`; `report_text`, errors and routing metadata aggregate the individual verdicts.
+`None`; `report_text`, errors, violations and routing metadata aggregate the individual
+verdicts, and each violation names the file it was found in.
 
 ## Defaults, network access and exit codes
 

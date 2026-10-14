@@ -108,6 +108,7 @@ def test_missing_shapes_never_pass(consumer, per_resource, strict):
     )
     assert not result.conforms and result.return_code == 210
     assert result.shapes_loaded == 0
+    assert result.errors and not result.violations  # no verdict was reached
 
 
 @pytest.mark.parametrize("per_resource", [False, True])
@@ -119,6 +120,7 @@ def test_strict_routing_checks_every_input(consumer, per_resource):
     )
     assert not result.conforms and result.return_code == 210
     assert "https://unknown.example/Unmapped" in result.types_unrouted
+    assert any("https://unknown.example/Unmapped" in error for error in result.errors)
 
 
 @pytest.mark.parametrize("per_resource", [False, True])
@@ -152,6 +154,13 @@ def test_supported_shacl_targets_accept_and_reject(consumer, per_resource, shape
         "object": 'w:S sh:targetObjectsOf w:serial; sh:in ("123") .',
         "node": "w:S sh:targetNode <urn:item:item>; sh:property [sh:path w:serial; sh:minCount 1] .",
     }[shape]
+    component = {
+        "property": "MinCountConstraintComponent",
+        "implicit": "MinCountConstraintComponent",
+        "subject": "HasValueConstraintComponent",
+        "object": "InConstraintComponent",
+        "node": "MinCountConstraintComponent",
+    }[shape]
     (consumer / "artifacts/widget/widget.shacl.ttl").write_text(
         f"@prefix sh: <http://www.w3.org/ns/shacl#> . @prefix w: <{NS}> . {body}",
         encoding="utf-8",
@@ -173,9 +182,30 @@ def test_supported_shacl_targets_accept_and_reject(consumer, per_resource, shape
     )
     assert not result.conforms and result.return_code == 210
     assert not result.errors  # a real constraint violation, not a coverage failure
-    assert result.violations  # ...but it IS reported, structured, one line each
+    assert [(v.component, v.severity) for v in result.violations] == [
+        (component, "Violation")
+    ]
+    assert all(Path(v.file).name == data.name for v in result.violations)
     if not per_resource:
         assert result.report_graph is not None
+
+
+@pytest.mark.parametrize("per_resource", [False, True])
+def test_violations_name_the_file_they_were_found_in(consumer, per_resource):
+    first = write_data(consumer, "first", valid=False)
+    second = write_data(consumer, "second", valid=False)
+    result = validate_data(
+        [second, first], artifacts=[consumer / "artifacts"], per_resource=per_resource
+    )
+    assert not result.conforms and not result.errors
+    assert [Path(v.file).name for v in result.violations] == [
+        "first.json",
+        "second.json",
+    ]
+    assert [v.focus_node for v in result.violations] == [
+        "urn:item:first",
+        "urn:item:second",
+    ]
 
 
 @pytest.mark.parametrize("mode", ["none", "rdfs", "owlrl", "both"])
