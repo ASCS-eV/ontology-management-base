@@ -2833,7 +2833,8 @@ openlabel_v2:MotionAccelerate a owl:DatatypeProperty ;
     skos:altLabel "Accelerate"@en ;
     skos:definition "Accelerate; the vehicle's velocity gradient is positive."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"@en .
 
 openlabel_v2:MotionCross a owl:DatatypeProperty ;
     rdfs:label "MotionCross"@en ;
@@ -2841,7 +2842,8 @@ openlabel_v2:MotionCross a owl:DatatypeProperty ;
     skos:altLabel "Cross (non-vehicle)"@en ;
     skos:definition "Cross the road at a demarcated or non-demarcated point (non-vehicle actor)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"@en,
+        "ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing)"@en .
 
 openlabel_v2:MotionCutAcross a owl:DatatypeProperty ;
     rdfs:label "MotionCutAcross"@en ;
@@ -2857,7 +2859,8 @@ openlabel_v2:MotionCutIn a owl:DatatypeProperty ;
     skos:altLabel "Cut-in"@en ;
     skos:definition "Cut-in; the subject vehicle moves in front of another actor by a lane change."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.3"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.3"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"@en .
 
 openlabel_v2:MotionCutOut a owl:DatatypeProperty ;
     rdfs:label "MotionCutOut"@en ;
@@ -2865,7 +2868,8 @@ openlabel_v2:MotionCutOut a owl:DatatypeProperty ;
     skos:altLabel "Cut-out"@en ;
     skos:definition "Cut-out; the subject vehicle changes lane to move away from an actor it is in front of."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.4"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.4"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"@en .
 
 openlabel_v2:MotionLaneChange a owl:DatatypeProperty ;
     rdfs:label "MotionLaneChange"@en ;
@@ -2873,7 +2877,8 @@ openlabel_v2:MotionLaneChange a owl:DatatypeProperty ;
     skos:altLabel "Lane change"@en ;
     skos:definition "Lane change; the vehicle moves from its current lane of travel to an adjacent lane."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"@en .
 
 openlabel_v2:MotionLaneChangeLeft a owl:DatatypeProperty ;
     rdfs:label "MotionLaneChangeLeft"@en ;
@@ -2881,7 +2886,8 @@ openlabel_v2:MotionLaneChangeLeft a owl:DatatypeProperty ;
     skos:definition "Lane change to the left."@en ;
     skos:editorialNote "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, left)"@en .
 
 openlabel_v2:MotionLaneChangeRight a owl:DatatypeProperty ;
     rdfs:label "MotionLaneChangeRight"@en ;
@@ -2889,7 +2895,8 @@ openlabel_v2:MotionLaneChangeRight a owl:DatatypeProperty ;
     skos:definition "Lane change to the right."@en ;
     skos:editorialNote "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, right)"@en .
 
 openlabel_v2:MotionNonVehicleJog a owl:DatatypeProperty ;
     rdfs:label "MotionNonVehicleJog"@en ;
@@ -2929,7 +2936,8 @@ openlabel_v2:MotionOvertake a owl:DatatypeProperty ;
     skos:altLabel "Overtake"@en ;
     skos:definition "Overtake; the subject vehicle moves from behind to in front of another actor in the same lane."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.3.2"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"@en .
 
 openlabel_v2:MotionParkingManoeuvre a owl:DatatypeProperty ;
     rdfs:label "MotionParkingManoeuvre"@en ;
@@ -2953,7 +2961,8 @@ openlabel_v2:MotionReverse a owl:DatatypeProperty ;
     skos:altLabel "Reverse"@en ;
     skos:definition "Reverse; the vehicle moves in the reverse or opposite direction."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — reversing)"@en .
 
 openlabel_v2:MotionRun a owl:DatatypeProperty ;
     rdfs:label "MotionRun"@en ;
@@ -2977,7 +2986,8 @@ openlabel_v2:MotionStop a owl:DatatypeProperty ;
     skos:altLabel "Stop position"@en ;
     skos:definition "Stop position; the vehicle reaches zero velocity and maintains its position."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still)"@en .
 
 openlabel_v2:MotionTurnLeft a owl:DatatypeProperty ;
     rdfs:label "MotionTurnLeft"@en ;
@@ -2985,7 +2995,8 @@ openlabel_v2:MotionTurnLeft a owl:DatatypeProperty ;
     skos:altLabel "Turn left"@en ;
     skos:definition "Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left)"@en .
 
 openlabel_v2:MotionTurnRight a owl:DatatypeProperty ;
     rdfs:label "MotionTurnRight"@en ;
@@ -2993,7 +3004,8 @@ openlabel_v2:MotionTurnRight a owl:DatatypeProperty ;
     skos:altLabel "Turn right"@en ;
     skos:definition "Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right)"@en .
 
 openlabel_v2:MotionUTurn a owl:DatatypeProperty ;
     rdfs:label "MotionUTurn"@en ;
@@ -3001,7 +3013,8 @@ openlabel_v2:MotionUTurn a owl:DatatypeProperty ;
     skos:altLabel "Turnabout"@en ;
     skos:definition "Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"@en,
+        "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn)"@en .
 
 openlabel_v2:MotionWalk a owl:DatatypeProperty ;
     rdfs:label "MotionWalk"@en ;
@@ -3186,7 +3199,8 @@ openlabel_v2:MotionAccelerateEgo a owl:DatatypeProperty ;
     skos:definition "Acceleration of the ego (subject) vehicle."@en ;
     skos:editorialNote "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"@en .
 
 openlabel_v2:MotionAccelerateTrafficAgent a owl:DatatypeProperty ;
     rdfs:label "MotionAccelerateTrafficAgent"@en ;
@@ -3194,7 +3208,8 @@ openlabel_v2:MotionAccelerateTrafficAgent a owl:DatatypeProperty ;
     skos:definition "Acceleration of a traffic agent."@en ;
     skos:editorialNote "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"@en .
 
 openlabel_v2:MotionDecelerate a owl:DatatypeProperty ;
     rdfs:label "MotionDecelerate"@en ;
@@ -3202,7 +3217,8 @@ openlabel_v2:MotionDecelerate a owl:DatatypeProperty ;
     skos:altLabel "Decelerate"@en ;
     skos:definition "Decelerate; the vehicle's velocity gradient is negative."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating)"@en .
 
 openlabel_v2:MotionDrive a owl:DatatypeProperty ;
     rdfs:label "MotionDrive"@en ;
@@ -3210,7 +3226,8 @@ openlabel_v2:MotionDrive a owl:DatatypeProperty ;
     skos:altLabel "Drive in-lane"@en ;
     skos:definition "Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes)."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — driving forward)"@en .
 
 openlabel_v2:SignFeatureEnum a owl:Class ;
     rdfs:label "SignFeatureEnum"@en ;
@@ -3239,7 +3256,8 @@ openlabel_v2:motionAccelerateEgoValue a owl:DatatypeProperty ;
     skos:definition "Rate of acceleration of the ego vehicle (m/s²)."@en ;
     skos:editorialNote "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"@en .
 
 openlabel_v2:motionAccelerateTrafficAgentValue a owl:DatatypeProperty ;
     rdfs:label "motionAccelerateTrafficAgentValue"@en ;
@@ -3248,7 +3266,8 @@ openlabel_v2:motionAccelerateTrafficAgentValue a owl:DatatypeProperty ;
     skos:definition "Rate of acceleration of a traffic agent (m/s²)."@en ;
     skos:editorialNote "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"@en .
 
 openlabel_v2:motionDecelerateValue a owl:DatatypeProperty ;
     rdfs:label "motionDecelerateValue"@en ;
@@ -3257,7 +3276,8 @@ openlabel_v2:motionDecelerateValue a owl:DatatypeProperty ;
     skos:definition "Rate of deceleration (m/s²)."@en ;
     skos:editorialNote "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en,
+        "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating, quantification)"@en .
 
 openlabel_v2:motionDriveValue a owl:DatatypeProperty ;
     rdfs:label "motionDriveValue"@en ;
@@ -3266,7 +3286,8 @@ openlabel_v2:motionDriveValue a owl:DatatypeProperty ;
     skos:definition "Speed (km/h)."@en ;
     skos:editorialNote "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."@en ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en,
+        "ISO 34504:2023, 4.4.4.5 (State or initial state — relative speed)"@en .
 
 openlabel_v2:ConnectivityRTKCorrectionEnum a owl:Class ;
     rdfs:label "ConnectivityRTKCorrectionEnum"@en ;
@@ -4271,12 +4292,13 @@ openlabel_v2:Behaviour a owl:Class,
             owl:onProperty openlabel_v2:motionAccelerateEgoValue ] ;
     skos:definition "Act that changes the state or position of an on-road actor, classified into signalling, positioning and manoeuvre behaviours."@en,
         "Behaviour tag."@en ;
-    skos:editorialNote "Aligned with the internal OpenLABEL ontology, which follows BSI Flex 1891. Previously referenced ISO 34504:2023, 4.4.4."@en,
-        "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."@en,
-        "Internal hierarchy: BehaviourSignalling (5.2); BehaviourPositioning (5.3); BehaviourMotion (manoeuvre, 5.4) with AbsoluteManoeuvre (vehicle tactical, vehicle operational, non-vehicle tactical, non-vehicle operational) and RelativeManoeuvre. Manoeuvres are modelled as boolean flags."@en ;
+    skos:editorialNote "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."@en,
+        "Internal hierarchy: BehaviourSignalling (5.2); BehaviourPositioning (5.3); BehaviourMotion (manoeuvre, 5.4) with AbsoluteManoeuvre (vehicle tactical, vehicle operational, non-vehicle tactical, non-vehicle operational) and RelativeManoeuvre. Manoeuvres are modelled as boolean flags."@en,
+        "Structure aligned with the internal OpenLABEL ontology, which follows BSI Flex 1891. ISO 34504 / ISO 34501 references are kept as the international cross-reference; behaviours introduced by BSI Flex 1891 without a direct ISO 34504 tag carry the Flex reference only."@en ;
     skos:exactMatch openlabel_v2:Behaviour ;
     skos:inScheme <https://w3id.org/ascs-ev/envited-x/openlabel/v2> ;
-    skos:note "BSI Flex 1891 v1.0:2025-01, Clause 5"@en .
+    skos:note "BSI Flex 1891 v1.0:2025-01, Clause 5"@en,
+        "ISO 34504:2023, 4.4.4 (Tags for a dynamic entity — longitudinal, lateral, and mixed actions); ISO 34501:2022, Term 2.15 (action/activity)"@en .
 
 openlabel_v2:BehaviourSignallingEnum a owl:Class ;
     rdfs:label "BehaviourSignallingEnum"@en ;

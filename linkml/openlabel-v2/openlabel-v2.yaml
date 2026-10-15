@@ -61,8 +61,8 @@
 #
 #   BSI Flex 1891 v1.0:2025-01 — Behaviour taxonomy for automated driving
 #   system (ADS) applications — Specification. Clause 5: signalling (5.2),
-#   positioning (5.3) and manoeuvre (5.4) behaviours. Used for Behaviour;
-#   replaces the earlier ISO 34504:2023, 4.4.4 references.
+#   positioning (5.3) and manoeuvre (5.4) behaviours. Used for Behaviour,
+#   next to the ISO 34504:2023, 4.4.4 references (international cross-reference).
 #
 # Structural correspondence:
 #
@@ -189,9 +189,10 @@ classes:
       Act that changes the state or position of an on-road actor, classified
       into signalling, positioning and manoeuvre behaviours.
     comments:
+      - "ISO 34504:2023, 4.4.4 (Tags for a dynamic entity — longitudinal, lateral, and mixed actions); ISO 34501:2022, Term 2.15 (action/activity)"
       - "BSI Flex 1891 v1.0:2025-01, Clause 5"
     notes:
-      - "Aligned with the internal OpenLABEL ontology, which follows BSI Flex 1891. Previously referenced ISO 34504:2023, 4.4.4."
+      - "Structure aligned with the internal OpenLABEL ontology, which follows BSI Flex 1891. ISO 34504 / ISO 34501 references are kept as the international cross-reference; behaviours introduced by BSI Flex 1891 without a direct ISO 34504 tag carry the Flex reference only."
       - "Internal hierarchy: BehaviourSignalling (5.2); BehaviourPositioning (5.3); BehaviourMotion (manoeuvre, 5.4) with AbsoluteManoeuvre (vehicle tactical, vehicle operational, non-vehicle tactical, non-vehicle operational) and RelativeManoeuvre. Manoeuvres are modelled as boolean flags."
       - "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."
     class_uri: openlabel_v2:Behaviour
@@ -1309,6 +1310,7 @@ slots:
   MotionDrive:
     description: Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes).
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — driving forward)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"
     aliases:
       - "Drive in-lane"
@@ -1318,6 +1320,7 @@ slots:
   MotionTurnRight:
     description: Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"
     aliases:
       - "Turn right"
@@ -1327,6 +1330,7 @@ slots:
   MotionTurnLeft:
     description: Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"
     aliases:
       - "Turn left"
@@ -1336,6 +1340,7 @@ slots:
   MotionLaneChange:
     description: Lane change; the vehicle moves from its current lane of travel to an adjacent lane.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"
     aliases:
       - "Lane change"
@@ -1345,6 +1350,7 @@ slots:
   MotionLaneChangeLeft:
     description: Lane change to the left.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, left)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"
     notes:
       - "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."
@@ -1354,6 +1360,7 @@ slots:
   MotionLaneChangeRight:
     description: Lane change to the right.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, right)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"
     notes:
       - "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."
@@ -1363,6 +1370,7 @@ slots:
   MotionReverse:
     description: Reverse; the vehicle moves in the reverse or opposite direction.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — reversing)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"
     aliases:
       - "Reverse"
@@ -1372,6 +1380,7 @@ slots:
   MotionStop:
     description: Stop position; the vehicle reaches zero velocity and maintains its position.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"
     aliases:
       - "Stop position"
@@ -1381,6 +1390,7 @@ slots:
   MotionUTurn:
     description: Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn).
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"
     aliases:
       - "Turnabout"
@@ -1402,6 +1412,7 @@ slots:
   MotionAccelerate:
     description: Accelerate; the vehicle's velocity gradient is positive.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     aliases:
       - "Accelerate"
@@ -1411,6 +1422,7 @@ slots:
   MotionAccelerateEgo:
     description: Acceleration of the ego (subject) vehicle.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     notes:
       - "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."
@@ -1420,6 +1432,7 @@ slots:
   MotionAccelerateTrafficAgent:
     description: Acceleration of a traffic agent.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     notes:
       - "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."
@@ -1429,6 +1442,7 @@ slots:
   MotionDecelerate:
     description: Decelerate; the vehicle's velocity gradient is negative.
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"
     aliases:
       - "Decelerate"
@@ -1459,6 +1473,7 @@ slots:
   MotionCross:
     description: Cross the road at a demarcated or non-demarcated point (non-vehicle actor).
     comments:
+      - "ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"
     aliases:
       - "Cross (non-vehicle)"
@@ -1519,6 +1534,7 @@ slots:
   MotionOvertake:
     description: Overtake; the subject vehicle moves from behind to in front of another actor in the same lane.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.3.2"
     aliases:
       - "Overtake"
@@ -1528,6 +1544,7 @@ slots:
   MotionCutIn:
     description: Cut-in; the subject vehicle moves in front of another actor by a lane change.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.3.3"
     aliases:
       - "Cut-in"
@@ -1537,6 +1554,7 @@ slots:
   MotionCutOut:
     description: Cut-out; the subject vehicle changes lane to move away from an actor it is in front of.
     comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.3.4"
     aliases:
       - "Cut-out"
@@ -1576,6 +1594,7 @@ slots:
   motionAccelerateEgoValue:
     description: Rate of acceleration of the ego vehicle (m/s²).
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     aliases:
       - "Rate of acceleration (ms-2)"
@@ -1589,6 +1608,7 @@ slots:
   motionAccelerateTrafficAgentValue:
     description: Rate of acceleration of a traffic agent (m/s²).
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     aliases:
       - "Rate of acceleration (ms-2)"
@@ -1602,6 +1622,7 @@ slots:
   motionDecelerateValue:
     description: Rate of deceleration (m/s²).
     comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating, quantification)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"
     aliases:
       - "Rate of deceleration (ms-2)"
@@ -1615,6 +1636,7 @@ slots:
   motionDriveValue:
     description: Speed (km/h).
     comments:
+      - "ISO 34504:2023, 4.4.4.5 (State or initial state — relative speed)"
       - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"
     aliases:
       - "Speed (km/h)"

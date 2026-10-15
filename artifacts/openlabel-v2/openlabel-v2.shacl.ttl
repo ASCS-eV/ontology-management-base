@@ -1825,19 +1825,26 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 24 ;
             sh:path openlabel_v2:MotionPass ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn."@en ;
+            sh:description "Lane change to the left."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionTurnLeft (Behaviour): Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"@en ;
+            sh:message "MotionLaneChangeLeft (Behaviour): Lane change to the left. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, left); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 29 ;
-            sh:path openlabel_v2:MotionTurnLeft ],
+            sh:order 16 ;
+            sh:path openlabel_v2:MotionLaneChangeLeft ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Reverse; the vehicle moves in the reverse or opposite direction."@en ;
+            sh:description "Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn)."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionReverse (Behaviour): Reverse; the vehicle moves in the reverse or opposite direction. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"@en ;
+            sh:message "MotionUTurn (Behaviour): Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn). ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 25 ;
-            sh:path openlabel_v2:MotionReverse ],
+            sh:order 31 ;
+            sh:path openlabel_v2:MotionUTurn ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Acceleration of a traffic agent."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionAccelerateTrafficAgent (Behaviour): Acceleration of a traffic agent. ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path openlabel_v2:MotionAccelerateTrafficAgent ],
         [ sh:description "Positioning of the subject vehicle before or after the execution of a manoeuvre."@en ;
             sh:in ( openlabel_v2:PostmanoeuvrePositioning openlabel_v2:PremanoeuvrePositioning ) ;
             sh:message "BehaviourPositioning (Behaviour): Positioning of the subject vehicle before or after the execution of a manoeuvre. BSI Flex 1891 v1.0:2025-01, 5.3"@en ;
@@ -1845,7 +1852,7 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:path openlabel_v2:BehaviourPositioning ],
         [ sh:description "Rate of deceleration (m/s²)."@en ;
             sh:maxCount 1 ;
-            sh:message "motionDecelerateValue (Behaviour): Rate of deceleration (m/s²). BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en ;
+            sh:message "motionDecelerateValue (Behaviour): Rate of deceleration (m/s²). ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating, quantification); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en ;
             sh:or ( [ sh:datatype xsd:decimal ;
                         sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
             sh:order 12 ;
@@ -1858,12 +1865,26 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 26 ;
             sh:path openlabel_v2:MotionRun ],
         [ sh:datatype xsd:boolean ;
+            sh:description "Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes)."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionDrive (Behaviour): Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes). ISO 34504:2023, 4.4.4.2 (Longitudinal action — driving forward); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 13 ;
+            sh:path openlabel_v2:MotionDrive ],
+        [ sh:datatype xsd:boolean ;
             sh:description "Turn right by a non-vehicle actor (e.g. pedestrian, animal)."@en ;
             sh:maxCount 1 ;
             sh:message "MotionNonVehicleTurnRight (Behaviour): Turn right by a non-vehicle actor (e.g. pedestrian, animal). BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 a)"@en ;
             sh:nodeKind sh:Literal ;
             sh:order 20 ;
             sh:path openlabel_v2:MotionNonVehicleTurnRight ],
+        [ sh:description "Rate of acceleration of the ego vehicle (m/s²)."@en ;
+            sh:maxCount 1 ;
+            sh:message "motionAccelerateEgoValue (Behaviour): Rate of acceleration of the ego vehicle (m/s²). ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 4 ;
+            sh:path openlabel_v2:motionAccelerateEgoValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Walk or slow speed (under 4 km/h)."@en ;
             sh:maxCount 1 ;
@@ -1872,19 +1893,47 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 32 ;
             sh:path openlabel_v2:MotionWalk ],
         [ sh:datatype xsd:boolean ;
+            sh:description "Reverse; the vehicle moves in the reverse or opposite direction."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionReverse (Behaviour): Reverse; the vehicle moves in the reverse or opposite direction. ISO 34504:2023, 4.4.4.2 (Longitudinal action — reversing); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 25 ;
+            sh:path openlabel_v2:MotionReverse ],
+        [ sh:datatype xsd:boolean ;
             sh:description "Cross the road at a demarcated or non-demarcated point (non-vehicle actor)."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionCross (Behaviour): Cross the road at a demarcated or non-demarcated point (non-vehicle actor). BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"@en ;
+            sh:message "MotionCross (Behaviour): Cross the road at a demarcated or non-demarcated point (non-vehicle actor). ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing); BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"@en ;
             sh:nodeKind sh:Literal ;
             sh:order 7 ;
             sh:path openlabel_v2:MotionCross ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Acceleration of a traffic agent."@en ;
+            sh:description "Lane change to the right."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionAccelerateTrafficAgent (Behaviour): Acceleration of a traffic agent. BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:message "MotionLaneChangeRight (Behaviour): Lane change to the right. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, right); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 5 ;
-            sh:path openlabel_v2:MotionAccelerateTrafficAgent ],
+            sh:order 17 ;
+            sh:path openlabel_v2:MotionLaneChangeRight ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Acceleration of the ego (subject) vehicle."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionAccelerateEgo (Behaviour): Acceleration of the ego (subject) vehicle. ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path openlabel_v2:MotionAccelerateEgo ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Stop position; the vehicle reaches zero velocity and maintains its position."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionStop (Behaviour): Stop position; the vehicle reaches zero velocity and maintains its position. ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 28 ;
+            sh:path openlabel_v2:MotionStop ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Cut-in; the subject vehicle moves in front of another actor by a lane change."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionCutIn (Behaviour): Cut-in; the subject vehicle moves in front of another actor by a lane change. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane); BSI Flex 1891 v1.0:2025-01, 5.4.3.3"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 9 ;
+            sh:path openlabel_v2:MotionCutIn ],
         [ sh:datatype xsd:boolean ;
             sh:description "Slide; unintentional movement such as tripping, falling or skidding."@en ;
             sh:maxCount 1 ;
@@ -1898,33 +1947,12 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 1 ;
             sh:path openlabel_v2:BehaviourSignalling ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Accelerate; the vehicle's velocity gradient is positive."@en ;
+            sh:description "Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionAccelerate (Behaviour): Accelerate; the vehicle's velocity gradient is positive. BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:message "MotionTurnLeft (Behaviour): Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn. ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 2 ;
-            sh:path openlabel_v2:MotionAccelerate ],
-        [ sh:description "Rate of acceleration of a traffic agent (m/s²)."@en ;
-            sh:maxCount 1 ;
-            sh:message "motionAccelerateTrafficAgentValue (Behaviour): Rate of acceleration of a traffic agent (m/s²). BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
-            sh:or ( [ sh:datatype xsd:decimal ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 6 ;
-            sh:path openlabel_v2:motionAccelerateTrafficAgentValue ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Cut-out; the subject vehicle changes lane to move away from an actor it is in front of."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionCutOut (Behaviour): Cut-out; the subject vehicle changes lane to move away from an actor it is in front of. BSI Flex 1891 v1.0:2025-01, 5.4.3.4"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 10 ;
-            sh:path openlabel_v2:MotionCutOut ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Overtake; the subject vehicle moves from behind to in front of another actor in the same lane."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionOvertake (Behaviour): Overtake; the subject vehicle moves from behind to in front of another actor in the same lane. BSI Flex 1891 v1.0:2025-01, 5.4.3.2"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 22 ;
-            sh:path openlabel_v2:MotionOvertake ],
+            sh:order 29 ;
+            sh:path openlabel_v2:MotionTurnLeft ],
         [ sh:datatype xsd:boolean ;
             sh:description "Wait (non-vehicle actor)."@en ;
             sh:maxCount 1 ;
@@ -1933,12 +1961,12 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 21 ;
             sh:path openlabel_v2:MotionNonVehicleWait ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Cut-in; the subject vehicle moves in front of another actor by a lane change."@en ;
+            sh:description "Decelerate; the vehicle's velocity gradient is negative."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionCutIn (Behaviour): Cut-in; the subject vehicle moves in front of another actor by a lane change. BSI Flex 1891 v1.0:2025-01, 5.4.3.3"@en ;
+            sh:message "MotionDecelerate (Behaviour): Decelerate; the vehicle's velocity gradient is negative. ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 9 ;
-            sh:path openlabel_v2:MotionCutIn ],
+            sh:order 11 ;
+            sh:path openlabel_v2:MotionDecelerate ],
         [ sh:datatype xsd:boolean ;
             sh:description "Jog or moderate speed (over 4 km/h but under 6 km/h)."@en ;
             sh:maxCount 1 ;
@@ -1947,26 +1975,12 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 18 ;
             sh:path openlabel_v2:MotionNonVehicleJog ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Lane change to the right."@en ;
+            sh:description "Lane change; the vehicle moves from its current lane of travel to an adjacent lane."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionLaneChangeRight (Behaviour): Lane change to the right. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en ;
+            sh:message "MotionLaneChange (Behaviour): Lane change; the vehicle moves from its current lane of travel to an adjacent lane. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 17 ;
-            sh:path openlabel_v2:MotionLaneChangeRight ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Acceleration of the ego (subject) vehicle."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionAccelerateEgo (Behaviour): Acceleration of the ego (subject) vehicle. BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 3 ;
-            sh:path openlabel_v2:MotionAccelerateEgo ],
-        [ sh:description "Rate of acceleration of the ego vehicle (m/s²)."@en ;
-            sh:maxCount 1 ;
-            sh:message "motionAccelerateEgoValue (Behaviour): Rate of acceleration of the ego vehicle (m/s²). BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
-            sh:or ( [ sh:datatype xsd:decimal ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 4 ;
-            sh:path openlabel_v2:motionAccelerateEgoValue ],
+            sh:order 15 ;
+            sh:path openlabel_v2:MotionLaneChange ],
         [ sh:datatype xsd:boolean ;
             sh:description "Cut across; the subject vehicle's trajectory is perpendicular to another actor's trajectory."@en ;
             sh:maxCount 1 ;
@@ -1977,45 +1991,17 @@ openlabel_v2:Behaviour a sh:NodeShape ;
         [ sh:datatype xsd:boolean ;
             sh:description "Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionTurnRight (Behaviour): Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"@en ;
+            sh:message "MotionTurnRight (Behaviour): Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn. ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"@en ;
             sh:nodeKind sh:Literal ;
             sh:order 30 ;
             sh:path openlabel_v2:MotionTurnRight ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn)."@en ;
+            sh:description "Cut-out; the subject vehicle changes lane to move away from an actor it is in front of."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionUTurn (Behaviour): Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn). BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"@en ;
+            sh:message "MotionCutOut (Behaviour): Cut-out; the subject vehicle changes lane to move away from an actor it is in front of. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane); BSI Flex 1891 v1.0:2025-01, 5.4.3.4"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 31 ;
-            sh:path openlabel_v2:MotionUTurn ],
-        [ sh:description "Speed (km/h)."@en ;
-            sh:maxCount 1 ;
-            sh:message "motionDriveValue (Behaviour): Speed (km/h). BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en ;
-            sh:or ( [ sh:datatype xsd:decimal ;
-                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
-            sh:order 14 ;
-            sh:path openlabel_v2:motionDriveValue ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Stop position; the vehicle reaches zero velocity and maintains its position."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionStop (Behaviour): Stop position; the vehicle reaches zero velocity and maintains its position. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 28 ;
-            sh:path openlabel_v2:MotionStop ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Lane change to the left."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionLaneChangeLeft (Behaviour): Lane change to the left. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 16 ;
-            sh:path openlabel_v2:MotionLaneChangeLeft ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes)."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionDrive (Behaviour): Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes). BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 13 ;
-            sh:path openlabel_v2:MotionDrive ],
+            sh:order 10 ;
+            sh:path openlabel_v2:MotionCutOut ],
         [ sh:datatype xsd:boolean ;
             sh:description "Parking manoeuvre; the vehicle moves into a demarcated or non-demarcated parking area, ending stopped."@en ;
             sh:maxCount 1 ;
@@ -2024,12 +2010,33 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:order 23 ;
             sh:path openlabel_v2:MotionParkingManoeuvre ],
         [ sh:datatype xsd:boolean ;
-            sh:description "Decelerate; the vehicle's velocity gradient is negative."@en ;
+            sh:description "Accelerate; the vehicle's velocity gradient is positive."@en ;
             sh:maxCount 1 ;
-            sh:message "MotionDecelerate (Behaviour): Decelerate; the vehicle's velocity gradient is negative. BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"@en ;
+            sh:message "MotionAccelerate (Behaviour): Accelerate; the vehicle's velocity gradient is positive. ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
             sh:nodeKind sh:Literal ;
-            sh:order 11 ;
-            sh:path openlabel_v2:MotionDecelerate ],
+            sh:order 2 ;
+            sh:path openlabel_v2:MotionAccelerate ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Overtake; the subject vehicle moves from behind to in front of another actor in the same lane."@en ;
+            sh:maxCount 1 ;
+            sh:message "MotionOvertake (Behaviour): Overtake; the subject vehicle moves from behind to in front of another actor in the same lane. ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane); BSI Flex 1891 v1.0:2025-01, 5.4.3.2"@en ;
+            sh:nodeKind sh:Literal ;
+            sh:order 22 ;
+            sh:path openlabel_v2:MotionOvertake ],
+        [ sh:description "Speed (km/h)."@en ;
+            sh:maxCount 1 ;
+            sh:message "motionDriveValue (Behaviour): Speed (km/h). ISO 34504:2023, 4.4.4.5 (State or initial state — relative speed); BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"@en ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 14 ;
+            sh:path openlabel_v2:motionDriveValue ],
+        [ sh:description "Rate of acceleration of a traffic agent (m/s²)."@en ;
+            sh:maxCount 1 ;
+            sh:message "motionAccelerateTrafficAgentValue (Behaviour): Rate of acceleration of a traffic agent (m/s²). ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification); BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"@en ;
+            sh:or ( [ sh:datatype xsd:decimal ;
+                        sh:nodeKind sh:Literal ] [ sh:class schema:QuantitativeValue ] ) ;
+            sh:order 6 ;
+            sh:path openlabel_v2:motionAccelerateTrafficAgentValue ],
         [ sh:datatype xsd:boolean ;
             sh:description "Yield; the subject vehicle stops and waits in reaction to another actor or road feature."@en ;
             sh:maxCount 1 ;
@@ -2037,13 +2044,6 @@ openlabel_v2:Behaviour a sh:NodeShape ;
             sh:nodeKind sh:Literal ;
             sh:order 33 ;
             sh:path openlabel_v2:MotionYield ],
-        [ sh:datatype xsd:boolean ;
-            sh:description "Lane change; the vehicle moves from its current lane of travel to an adjacent lane."@en ;
-            sh:maxCount 1 ;
-            sh:message "MotionLaneChange (Behaviour): Lane change; the vehicle moves from its current lane of travel to an adjacent lane. BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"@en ;
-            sh:nodeKind sh:Literal ;
-            sh:order 15 ;
-            sh:path openlabel_v2:MotionLaneChange ],
         [ sh:datatype xsd:boolean ;
             sh:description "Turn left by a non-vehicle actor (e.g. pedestrian, animal)."@en ;
             sh:maxCount 1 ;

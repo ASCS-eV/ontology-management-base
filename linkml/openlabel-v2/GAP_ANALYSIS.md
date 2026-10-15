@@ -344,8 +344,11 @@ with a `PAS 1883:2025, 5.x` comment.
 
 ## 9. BSI Flex 1891 behaviour alignment
 
-`Behaviour` now follows BSI Flex 1891 v1.0:2025-01 (previously ISO 34504:2023,
-4.4.4), as in the internal ontology.
+`Behaviour` now follows the BSI Flex 1891 v1.0:2025-01 taxonomy, as in the
+internal ontology. The ISO 34504:2023 / ISO 34501:2022 references are kept next
+to the Flex 1891 clause as the international cross-reference; behaviours that
+are new in Flex 1891 and have no direct ISO 34504 tag carry the Flex reference
+only.
 
 | Flex 1891 | Schema |
 |-----------|--------|
