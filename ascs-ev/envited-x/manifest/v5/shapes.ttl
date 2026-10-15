@@ -1,0 +1,222 @@
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+manifest:ManifestShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:description "Self-reference to the manifest.json providing the structure and list of contents for a domain specific asset."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "manifest reference"@en ;
+            sh:node manifest:ManifestLinkReferenceShape ;
+            sh:order 0 ;
+            sh:path manifest:hasManifestReference ],
+        [ sh:description "Defines the license valid for all content referenced in the manifest. Does not apply to linked data(sets) with explicit license terms."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "license"@en ;
+            sh:node manifest:LicenseLinkReferenceShape ;
+            sh:order 1 ;
+            sh:path manifest:hasLicense ],
+        [ sh:description "Defines the links to all relevant artifacts for a digital asset. This is extended by the domain specific ontology."@en ;
+            sh:minCount 1 ;
+            sh:name "artifact links"@en ;
+            sh:node manifest:LinkShape ;
+            sh:order 2 ;
+            sh:path manifest:hasArtifacts ],
+        [ sh:description "Defines the links to all related referenced artifacts for a digital asset. This is extended by the domain specific ontology."@en ;
+            sh:minCount 0 ;
+            sh:name "external artifact links"@en ;
+            sh:node manifest:LinkShape ;
+            sh:order 3 ;
+            sh:path manifest:hasReferencedArtifacts ] ;
+    sh:targetClass manifest:Manifest .
+
+manifest:shapes a owl:Ontology ;
+    owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v5> .
+
+manifest:DimensionsShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ skos:example "metres" ;
+            sh:description "Specifies the unit of measurement (e.g., metres, inches)."@en ;
+            sh:in ( "metres" "inches" "pixels" ) ;
+            sh:maxCount 1 ;
+            sh:message "Unit must be a valid measurement unit."@en ;
+            sh:minCount 1 ;
+            sh:name "unit" ;
+            sh:order 0 ;
+            sh:path manifest:unit ],
+        [ skos:example "1920.0" ;
+            sh:datatype xsd:float ;
+            sh:description "Specifies the width (x-axis) of the item in appropriate units."@en ;
+            sh:maxCount 1 ;
+            sh:message "Width must be a positive number."@en ;
+            sh:minCount 1 ;
+            sh:minExclusive "0.0"^^xsd:float ;
+            sh:name "width" ;
+            sh:order 1 ;
+            sh:path manifest:width ],
+        [ skos:example "1080.0" ;
+            sh:datatype xsd:float ;
+            sh:description "Specifies the height (y-axis) of the item in appropriate units."@en ;
+            sh:maxCount 1 ;
+            sh:message "Height must be a positive number."@en ;
+            sh:minCount 1 ;
+            sh:minExclusive "0.0"^^xsd:float ;
+            sh:name "height" ;
+            sh:order 2 ;
+            sh:path manifest:height ],
+        [ skos:example "0.0" ;
+            sh:datatype xsd:float ;
+            sh:description "Specifies the depth (z-axis) of the item in appropriate units."@en ;
+            sh:maxCount 1 ;
+            sh:message "Depth must be a positive number."@en ;
+            sh:minCount 0 ;
+            sh:minExclusive "0.0"^^xsd:float ;
+            sh:name "depth" ;
+            sh:order 3 ;
+            sh:path manifest:depth ] ;
+    sh:targetClass manifest:Dimensions .
+
+manifest:FileMetadataShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ skos:example "./metadata/gxMetadata.json" ;
+            sh:datatype xsd:anyURI ;
+            sh:description "A local or remote path/URL from which the file can be retrieved (e.g. './manifest_reference.json', 'ipfs://...', 's3://...', 'https://...')."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of URI failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "file location"@en ;
+            sh:order 1 ;
+            sh:path manifest:filePath ],
+        [ skos:example "application/pdf" ;
+            sh:datatype xsd:string ;
+            sh:description "Defines the MIME type of the file."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of the MIME type failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "mime type"@en ;
+            sh:order 2 ;
+            sh:path manifest:mimeType ;
+            sh:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$"^^xsd:string ],
+        [ skos:example "bafkreic6xmosvgr4a5735itquknu2ljf4fon7wohrzlmabepwkkxtih6um" ;
+            sh:datatype xsd:string ;
+            sh:description "Defines the IPFS CIDv1 identifier of the file."@en ;
+            sh:maxCount 1 ;
+            sh:message "The CIDv1 identifier is not valid or is a CIDv0 identifier."@en ;
+            sh:minCount 0 ;
+            sh:name "content identifier"@en ;
+            sh:order 3 ;
+            sh:path manifest:cid ;
+            sh:pattern "^((?!Qm[1-9A-HJ-NP-Za-km-z]{44,})|b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" ],
+        [ skos:example "1048576" ;
+            sh:datatype xsd:integer ;
+            sh:description "Specifies the file size in bytes."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of file size failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "file size"@en ;
+            sh:order 4 ;
+            sh:path manifest:fileSize ],
+        [ skos:example "example.txt" ;
+            sh:datatype xsd:string ;
+            sh:description "Specifies the file name (excluding the path) along with its extension."@en ;
+            sh:maxCount 1 ;
+            sh:message "Filename validation failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "filename"@en ;
+            sh:order 5 ;
+            sh:path manifest:filename ;
+            sh:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" ],
+        [ skos:example "2022-04-01T00:00:00" ;
+            sh:datatype xsd:dateTime ;
+            sh:description "Represents a date or time associated with the file, such as recording time or creation time."@en ;
+            sh:maxCount 1 ;
+            sh:message "Validation of timestamp failed!"@en ;
+            sh:minCount 0 ;
+            sh:name "timestamp"@en ;
+            sh:order 6 ;
+            sh:path manifest:timestamp ],
+        [ sh:description "Defines the dimensions for images and videos."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:name "file dimensions"@en ;
+            sh:node manifest:DimensionsShape ;
+            sh:order 7 ;
+            sh:path manifest:hasDimensions ] ;
+    sh:targetClass manifest:FileMetadata .
+
+manifest:LicenseLinkReferenceShape a sh:NodeShape ;
+    sh:node manifest:LinkShape ;
+    sh:property [ sh:class manifest:LicenseCategory ;
+            sh:message "A link used in hasLicense must have a category belonging to manifest:LicenseCategory."@en ;
+            sh:path manifest:hasCategory ] .
+
+manifest:ManifestLinkReferenceShape a sh:NodeShape ;
+    sh:node manifest:LinkShape ;
+    sh:property [ sh:class manifest:ManifestCategory ;
+            sh:message "A link used in hasManifestReference must have a category belonging to manifest:ManifestCategory."@en ;
+            sh:path manifest:hasCategory ] .
+
+manifest:LinkShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:or ( [ sh:property [ sh:not [ sh:pattern "^application/ld\\+json$" ] ;
+                        sh:path ( manifest:hasFileMetadata manifest:mimeType ) ] ] [ sh:property [ sh:minCount 1 ;
+                        sh:path ( manifest:hasFileMetadata manifest:mimeType ) ;
+                        sh:pattern "^application/ld\\+json$" ],
+                    [ sh:message "This link is a manifest reference so the extra properties are not required." ;
+                        sh:minCount 1 ;
+                        sh:path [ sh:inversePath manifest:hasManifestReference ] ] ] [ sh:property [ sh:minCount 1 ;
+                        sh:path ( manifest:hasFileMetadata manifest:mimeType ) ;
+                        sh:pattern "^application/ld\\+json$" ],
+                    [ sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, an IRI is required." ;
+                        sh:minCount 1 ;
+                        sh:path manifest:iri ],
+                    [ sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, a skos:note is required." ;
+                        sh:minCount 1 ;
+                        sh:path skos:note ],
+                    [ sh:message "If the MIME type is 'application/ld+json' and not a manifest reference, ontology conformance is required." ;
+                        sh:minCount 1 ;
+                        sh:path sh:conformsTo ] ] ) ;
+    sh:property [ sh:class manifest:AccessRole ;
+            sh:maxCount 1 ;
+            sh:message "Validation of accessRole failed!"@en ;
+            sh:minCount 1 ;
+            sh:name "access role"@en ;
+            sh:path manifest:hasAccessRole ],
+        [ sh:class manifest:Category ;
+            sh:description "Specifies artifact category."@en ;
+            sh:maxCount 1 ;
+            sh:message "Each manifest:Link must have exactly one assigned category."@en ;
+            sh:minCount 1 ;
+            sh:name "category"@en ;
+            sh:path manifest:hasCategory ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "file metadata"@en ;
+            sh:node manifest:FileMetadataShape ;
+            sh:path manifest:hasFileMetadata ],
+        [ sh:description "IRI required if the file is RDF/JSON-LD."@en ;
+            sh:maxCount 1 ;
+            sh:message "IRI link is required if this file is an RDF/JSON-LD resource."@en ;
+            sh:minCount 0 ;
+            sh:name "IRI"@en ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path manifest:iri ],
+        [ sh:datatype xsd:string ;
+            sh:description "Additional information about the manifest reference."@en ;
+            sh:maxCount 1 ;
+            sh:message "A skos:note can provide supplementary information about the manifest reference."@en ;
+            sh:minCount 0 ;
+            sh:path skos:note ],
+        [ sh:description "Specifies ontology conformance."@en ;
+            sh:message "Ontology conformance should be provided for JSON-LD files."@en ;
+            sh:minCount 0 ;
+            sh:nodeKind sh:IRI ;
+            sh:path sh:conformsTo ] ;
+    sh:targetClass manifest:Link .
+
