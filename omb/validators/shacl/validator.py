@@ -34,12 +34,13 @@ import sys
 import time
 from io import StringIO
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 from rdflib import Graph
+from rdflib.term import Node
 
 from omb.core.logging import get_logger
-from omb.core.result import ValidationResult
+from omb.core.result import ValidationResult, Violation
 from omb.utils.graph_loader import (
     FAST_STORE,
     extract_external_iris,
@@ -48,6 +49,7 @@ from omb.utils.graph_loader import (
     load_turtle_files,
 )
 from omb.utils.print_formatter import (
+    extract_violations,
     format_advisory_results,
     format_shacl_validation_result,
     normalize_path_for_display,
@@ -74,6 +76,9 @@ try:
     PYSHACL_AVAILABLE = True
 except ImportError:
     PYSHACL_AVAILABLE = False
+
+#: Reported in ``ValidationResult.errors`` when pyshacl cannot be imported.
+PYSHACL_MISSING = "pyshacl is not installed"
 
 
 class ShaclValidator:
@@ -140,6 +145,7 @@ class ShaclValidator:
         self.allow_warnings = allow_warnings
         self._context_url_map: Optional[Dict[str, "Path"]] = None
         self._input_nodes: dict[Path, set] = {}
+        self._input_subjects: dict[Path, set] = {}
         self._focus_nodes: set = set()
 
         # Build context URL map from resolver's catalog
@@ -181,11 +187,13 @@ class ShaclValidator:
         jsonld_files = self.resolver.get_test_files(domain, test_type=test_type)
 
         if not jsonld_files:
+            message = f"No {test_type} test files found for domain '{domain}'"
             return ValidationResult(
                 conforms=False,
                 return_code=100,
-                report_text=f"No {test_type} test files found for domain '{domain}'",
+                report_text=message,
                 files_validated=[],
+                errors=[message],
             )
 
         # Convert string paths to Path objects
@@ -210,8 +218,9 @@ class ShaclValidator:
             return ValidationResult(
                 conforms=False,
                 return_code=99,
-                report_text="Error: pyshacl is not installed",
+                report_text=f"Error: {PYSHACL_MISSING}",
                 files_validated=[self._rel_path(f) for f in jsonld_files],
+                errors=[PYSHACL_MISSING],
             )
 
         # Step 1: Load data
@@ -221,11 +230,16 @@ class ShaclValidator:
         # Strict mode: fail on unresolved IRIs
         if self.strict and self._unresolved_iris:
             unresolved_msg = ", ".join(self._unresolved_iris[:5])
+            message = (
+                f"Strict mode: {len(self._unresolved_iris)} unresolved IRI(s): "
+                f"{unresolved_msg}"
+            )
             return ValidationResult(
                 conforms=False,
                 return_code=210,
-                report_text=f"Strict mode: {len(self._unresolved_iris)} unresolved IRI(s): {unresolved_msg}",
+                report_text=message,
                 files_validated=[self._rel_path(f) for f in jsonld_files],
+                errors=[message],
             )
 
         # Step 2: Extract types and discover schemas
@@ -243,14 +257,16 @@ class ShaclValidator:
             sorted_types = sorted(self._unresolved_types)
             unresolved_msg = ", ".join(sorted_types[:5])
             warnings = [f"Unresolved @type: {t}" for t in sorted_types]
+            message = (
+                f"Strict mode: {len(self._unresolved_types)} unresolved "
+                f"@type IRI(s): {unresolved_msg}"
+            )
             return ValidationResult(
                 conforms=False,
                 return_code=210,
-                report_text=(
-                    f"Strict mode: {len(self._unresolved_types)} unresolved "
-                    f"@type IRI(s): {unresolved_msg}"
-                ),
+                report_text=message,
                 files_validated=[self._rel_path(f) for f in jsonld_files],
+                errors=[message],
                 warnings=warnings,
                 **routing,
             )
@@ -286,6 +302,7 @@ class ShaclValidator:
             triples_count=len(combined_graph),
             inferred_count=inferred_count,
             duration_seconds=duration,
+            violations=self._violations(report_graph, jsonld_files),
             **routing,
         )
 
@@ -311,8 +328,9 @@ class ShaclValidator:
                 ValidationResult(
                     conforms=False,
                     return_code=99,
-                    report_text="Error: pyshacl is not installed",
+                    report_text=f"Error: {PYSHACL_MISSING}",
                     files_validated=[self._rel_path(f)],
+                    errors=[PYSHACL_MISSING],
                 )
                 for f in jsonld_files
             ]
@@ -368,13 +386,16 @@ class ShaclValidator:
         for f, data_graph in per_file:
             routing = self._routing_metadata(extract_rdf_types(data_graph), shacl_graph)
             if self.strict and routing["types_unrouted"]:
+                message = "Strict mode: unresolved @type IRI(s): " + ", ".join(
+                    routing["types_unrouted"]
+                )
                 results.append(
                     ValidationResult(
                         conforms=False,
                         return_code=210,
-                        report_text="Strict mode: unresolved @type IRI(s): "
-                        + ", ".join(routing["types_unrouted"]),
+                        report_text=message,
                         files_validated=[self._rel_path(f)],
+                        errors=[message],
                         **routing,
                     )
                 )
@@ -400,10 +421,53 @@ class ShaclValidator:
                     report_graph=report_graph,
                     files_validated=[self._rel_path(f)],
                     triples_count=len(combined),
+                    violations=self._violations(report_graph, [f]),
                     **routing,
                 )
             )
         return results
+
+    def _violations(
+        self, report_graph: Optional[Graph], files: List[Path]
+    ) -> List[Violation]:
+        """The violations in ``report_graph``, each attributed to one of ``files``.
+
+        They populate ``ValidationResult.violations``: every result that counts
+        against conformance, which includes warnings when ``allow_warnings`` is
+        off. The printed report and the recorded ``.expected`` snapshots are
+        rendered from ``report_graph`` by ``format_shacl_validation_result``.
+        """
+        if report_graph is None:
+            return []
+        file_of = self._file_locator(files)
+        violations = extract_violations(report_graph, file_of=file_of)
+        if not self.allow_warnings:
+            violations += extract_violations(
+                report_graph, advisory=True, file_of=file_of
+            )
+        return sorted(violations)
+
+    def _file_locator(self, files: List[Path]) -> Callable[[Node], str]:
+        """Maps a focus node to the input file(s) holding it, by display name.
+
+        A single validated file holds every violation of its run. Among several
+        merged files, the ones describing the node (as a subject) hold it; a node
+        no file describes falls back to the files mentioning it at all, and a node
+        none mentions, such as one loaded from a resolved fixture, maps to "".
+        """
+        names = [self._rel_path(f) for f in files]
+        if len(names) == 1:
+            return lambda node: names[0]
+        subjects = [self._input_subjects.get(Path(f), set()) for f in files]
+        mentions = [self._input_nodes.get(Path(f), set()) for f in files]
+
+        def file_of(node: Node) -> str:
+            owners = [n for n, held in zip(names, subjects) if node in held]
+            if not owners:
+                owners = [n for n, held in zip(names, mentions) if node in held]
+            return ", ".join(sorted(owners))
+
+        return file_of
 
     def _abox_inference(self, data_graph: Graph, closed_ontology: Graph) -> Graph:
         """Fast ABox RDFS inference against a pre-closed TBox.
@@ -470,6 +534,7 @@ class ShaclValidator:
             # before merging references or ontology triples. A different document
             # must not provide validation coverage for an empty/untargeted input.
             self._input_nodes[Path(data_path)] = set(document.all_nodes())
+            self._input_subjects[Path(data_path)] = set(document.subjects())
             data_graph += document
             prefixes.update(document_prefixes)
 

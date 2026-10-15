@@ -125,3 +125,20 @@ def test_validate_data_conformance_registers_artifact_dirs(monkeypatch, temp_dir
     assert captured["jsonld_files"] == [data_file]
     assert captured["resolver"] is not None
     assert "ext-domain" in captured["resolver"].get_artifact_domains()
+
+
+def test_validate_without_pyshacl_reports_the_missing_dependency(
+    monkeypatch, tmp_path: Path
+):
+    """No verdict was reached, so the reason belongs in ``errors``."""
+    monkeypatch.setattr(shacl_validator_module, "PYSHACL_AVAILABLE", False)
+    validator = _make_validator(tmp_path)
+    data = tmp_path / "data.json"
+
+    merged = validator.validate([data])
+    [per_resource] = validator.validate_each([data])
+
+    for result in (merged, per_resource):
+        assert result.return_code == 99
+        assert result.errors == ["pyshacl is not installed"]
+        assert result.violations == []

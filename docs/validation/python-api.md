@@ -64,7 +64,37 @@ Useful fields on the returned `ValidationResult`:
 | `shapes_loaded` | number of discovered node/property shapes, including implicit shapes |
 | `types_routed` / `types_unrouted` | which `@type` IRIs found a schema |
 | `per_type_shape_count` | shapes targeting each found type |
+| `violations` | one `Violation` per distinct SHACL constraint violation, sorted |
+| `errors` | why no verdict was reached: no input, no covering shape, strict-mode unresolved IRIs, a missing dependency |
 | `warnings` | advisory notes, including skipped negative fixtures |
+
+A failure states its reason in `violations` when the data broke a constraint, and in
+`errors` when no verdict could be reached. A per-resource result aggregating several
+files can carry both.
+
+Each `Violation` (from `omb.core.result`) locates one failed constraint:
+
+| Field | Meaning |
+|---|---|
+| `file` | the input file the violation was found in, as in `files_validated` |
+| `path` | property path from `focus_node` to the failing value, e.g. `hasDomainSpecification/hasQuantity/numberTrafficObjects` |
+| `message` | the constraint's message, with long node renderings shortened to `[ ... ]` |
+| `component` | the SHACL constraint component, e.g. `MinCountConstraintComponent` |
+| `focus_node` | where `path` starts: normally the document's subject IRI; a blank node reads `[BNODE]` |
+| `value` | the offending value; empty for a missing property |
+| `source_shape` | IRI of the shape declaring the constraint; empty for a blank-node shape |
+| `severity` | `Violation`; `Warning` or `Info` only where warnings are configured to fail validation |
+
+`str(violation)` reads `file: message (at path)`:
+
+```python
+for violation in result.violations:
+    print(violation)
+```
+
+Only results that count against conformance appear. A violation inside a nested
+shape is reported once, at the path rooted at the validated document, and blank node
+identifiers are scrubbed, so the list is stable from run to run.
 
 ## Check data that must fail
 
@@ -125,7 +155,8 @@ logging.getLogger("omb").addHandler(my_handler)      # or route it yourself
 ## Stability
 
 `omb.api` (its functions, `FixtureReport`, `FixtureOutcome`) plus
-`omb.core.result.ValidationResult` and `ReturnCodes` are the supported surface.
+`omb.core.result.ValidationResult`, `Violation` and `ReturnCodes` are the supported
+surface.
 The five documented console commands and `python -m omb` are supported too.
 Resolvers, loaders, validator classes and CLI implementation modules are internal.
 See the [consumer contract](consumer-contract.md) for defaults, failure modes, input

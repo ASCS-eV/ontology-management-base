@@ -6,7 +6,8 @@ FEATURE SET:
 ============
 1. ReturnCodes enum - Standardized exit codes for all validation operations
 2. ValidationResult dataclass - Structured validation outcome with metadata
-3. Helper functions for creating common result types
+3. Violation dataclass - One located SHACL constraint violation
+4. Helper functions for creating common result types
 
 USAGE:
 ======
@@ -84,6 +85,54 @@ class ReturnCodes(IntEnum):
     SKIPPED = 100
 
 
+@dataclass(frozen=True, order=True)
+class Violation:
+    """One distinct SHACL constraint violation, located in the validated data.
+
+    pySHACL reports a failure inside a nested shape as a chain of results joined
+    by ``sh:detail``; a violation is the end of such a chain, the constraint that
+    actually failed. Instances sort by file, then path, then message.
+
+    Attributes:
+        file: The input file the violation was found in, as displayed in
+            ``files_validated``. When several files are validated together it is
+            the one describing ``focus_node``, names joined with ", " when more
+            than one does, and empty for a node none of them holds, such as one
+            loaded from a resolved fixture.
+        path: Property path from ``focus_node`` to the failing value, one local
+            name per step joined with "/", in SHACL path notation for complex
+            steps (``^p`` inverse, ``(a|b)`` alternative, ``p*``, ``p+``,
+            ``p?``). Empty when the constraint applies to ``focus_node`` itself.
+        message: The failed constraint's message, with long node renderings
+            shortened to ``[ ... ]`` and blank node identifiers scrubbed.
+        component: Local name of the SHACL constraint component, such as
+            ``MinCountConstraintComponent``.
+        focus_node: Where ``path`` starts: the focus node of the top-level
+            result, normally the validated document's subject. An IRI verbatim,
+            a blank node as ``[BNODE]``.
+        value: The offending value, or empty when the constraint has none (a
+            missing property). A blank node is ``[BNODE]``.
+        source_shape: IRI of the shape declaring the failed constraint, or empty
+            when that shape is a blank node.
+        severity: Severity of the top-level result, the one that decides
+            conformance: ``Violation``, ``Warning`` or ``Info``.
+    """
+
+    file: str
+    path: str
+    message: str
+    component: str
+    focus_node: str
+    value: str
+    source_shape: str
+    severity: str
+
+    def __str__(self) -> str:
+        """``message (at path)``, prefixed with the file when one is known."""
+        text = f"{self.message} (at {self.path})" if self.path else self.message
+        return f"{self.file}: {text}" if self.file else text
+
+
 @dataclass
 class ValidationResult:
     """
@@ -102,13 +151,20 @@ class ValidationResult:
         triples_count: Total number of RDF triples processed
         inferred_count: Number of triples added by inference
         duration_seconds: Time taken for validation
-        errors: List of specific error messages
+        errors: Why validation could not reach a verdict: no input, no SHACL
+            shape covering an input, an unresolved IRI or ``@type`` in strict
+            mode, a missing dependency. Empty when a verdict was reached. A
+            constraint violation is a verdict (``conforms=False``), reported in
+            ``violations``, never here.
         warnings: List of warning messages
         shapes_loaded: Number of node/property shapes discovered by pySHACL (including implicit shapes)
         target_types: Sorted @type IRIs found in validated data
         types_routed: Target types that resolve to a domain/imported namespace
         types_unrouted: Target types that resolve to neither
         per_type_shape_count: Shapes targeting each found @type IRI
+        violations: One :class:`Violation` per distinct SHACL constraint
+            violation that counts against conformance, sorted. Advisory
+            (``sh:Warning``/``sh:Info``) results are not included.
     """
 
     conforms: bool
@@ -126,6 +182,7 @@ class ValidationResult:
     types_routed: List[str] = field(default_factory=list)
     types_unrouted: List[str] = field(default_factory=list)
     per_type_shape_count: Dict[str, int] = field(default_factory=dict)
+    violations: List[Violation] = field(default_factory=list)
 
     @classmethod
     def success(
