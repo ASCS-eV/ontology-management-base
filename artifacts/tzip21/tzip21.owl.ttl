@@ -1,5 +1,5 @@
 @prefix tzip21: <https://w3id.org/ascs-ev/envited-x/tzip21/v1/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -32,7 +32,7 @@
 
     # Imports strict dependencies
     owl:imports <https://w3id.org/gaia-x/development#> ,
-                <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
+                <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
 
     dcterms:conformsTo <https://w3id.org/ascs-ev/envited-x/tzip21/v1/shapes> ;
 

@@ -1,5 +1,5 @@
 {
-   "@context": "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
+   "@context": "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
    "@id": "did:web:test.georeference.net:Georeference:test_valid_georeference_instance",
    "@type": "georeference:Georeference",
    "georeference:hasProjectLocation": {

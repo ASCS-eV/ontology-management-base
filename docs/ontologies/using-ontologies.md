@@ -26,16 +26,16 @@ W3ID IRIs use [HTTP content negotiation](https://www.w3.org/TR/cooluris/) to ser
 
 ```bash
 # OWL ontology as Turtle
-curl -L -H "Accept: text/turtle" https://w3id.org/ascs-ev/envited-x/manifest/v5/
+curl -L -H "Accept: text/turtle" https://w3id.org/ascs-ev/envited-x/manifest/v6/
 
 # JSON-LD context
-curl -L -H "Accept: application/ld+json" https://w3id.org/ascs-ev/envited-x/manifest/v5/
+curl -L -H "Accept: application/ld+json" https://w3id.org/ascs-ev/envited-x/manifest/v6/
 
 # SHACL shapes
-curl -L -H "Accept: text/turtle" https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes
+curl -L -H "Accept: text/turtle" https://w3id.org/ascs-ev/envited-x/manifest/v6/shapes
 
 # JSON-LD context via direct sub-path (no Accept header needed)
-curl -L https://w3id.org/ascs-ev/envited-x/manifest/v5/context
+curl -L https://w3id.org/ascs-ev/envited-x/manifest/v6/context
 ```
 
 ### Fetching artifacts with Python
@@ -44,7 +44,7 @@ curl -L https://w3id.org/ascs-ev/envited-x/manifest/v5/context
 import requests
 
 response = requests.get(
-    "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+    "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
     headers={"Accept": "text/turtle"},
     allow_redirects=True,
 )

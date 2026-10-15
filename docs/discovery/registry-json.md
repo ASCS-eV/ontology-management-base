@@ -12,7 +12,8 @@ Each domain entry provides:
 - `latest` for the current version
 - `iri` for the W3ID base IRI
 - `versions` mapping to local files
-- `versionInfo` and `versionIri` per version (from ontology metadata)
+- `versionInfo` and `versionIri` per version (from `owl:versionInfo` and
+  `owl:versionIRI`; an ontology without `owl:versionIRI` gets its ontology IRI)
 
 Example snippet:
 

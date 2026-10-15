@@ -1,0 +1,53 @@
+@prefix ontology-header: <https://w3id.org/ascs-ev/envited-x/ontology-header/v1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+dcterms:conformsTo a owl:AnnotationProperty .
+dcterms:contributor a owl:AnnotationProperty .
+dcterms:identifier a owl:AnnotationProperty .
+dcterms:license a owl:AnnotationProperty .
+dcterms:publisher a owl:AnnotationProperty ;
+	rdfs:comment "The organisation that publishes the ontology."@en ;
+	rdfs:label "ontologyPublisher"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ontology-header/v1> .
+dcterms:references a owl:AnnotationProperty ;
+	rdfs:comment "A related ontology or specification the ontology builds on."@en ;
+	rdfs:label "ontologyReferences"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ontology-header/v1> .
+dcterms:source a owl:AnnotationProperty .
+dcterms:title a owl:AnnotationProperty .
+rdfs:comment a owl:AnnotationProperty .
+rdfs:label a owl:AnnotationProperty .
+rdfs:seeAlso a owl:AnnotationProperty .
+owl:priorVersion a owl:AnnotationProperty ;
+	rdfs:comment "The ontology IRI of the version this one replaces. Absent from a first version."@en ;
+	rdfs:label "ontologyPriorVersion"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ontology-header/v1> .
+owl:versionInfo a owl:AnnotationProperty .
+skos:exactMatch a owl:AnnotationProperty .
+skos:inScheme a owl:AnnotationProperty .
+prov:wasDerivedFrom a owl:AnnotationProperty ;
+	rdfs:comment "The release of the repository this version is published from."@en ;
+	rdfs:label "ontologyDerivation"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ontology-header/v1> .
+ontology-header:OntologyHeader a owl:Class ;
+	rdfs:comment "The header of an ENVITED-X ontology. An ontology whose LinkML schema instantiates this class is typed with it, and its header is checked against these constraints."@en ;
+	rdfs:label "OntologyHeader"@en ;
+	skos:exactMatch ontology-header:OntologyHeader ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/ontology-header/v1> .
+<https://w3id.org/ascs-ev/envited-x/ontology-header/v1> dcterms:conformsTo "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/shapes"@en ;
+	dcterms:contributor <https://github.com/jdsika> ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/ontology-header"@en ;
+	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
+	dcterms:publisher <https://www.asc-s.de/> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:title "Ontology definition for ontology-header"@en ;
+	a owl:Ontology , ontology-header:OntologyHeader ;
+	rdfs:comment "The header every ENVITED-X ontology states about itself: the version it replaces, the release it is published from, the resources it references and its publisher, each named by its IRI."@en ;
+	rdfs:label "ontology-header"@en ;
+	rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/linkml/GAPS.md> ;
+	owl:versionInfo "v1"@en ;
+	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .

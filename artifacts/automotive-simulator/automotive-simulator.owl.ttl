@@ -1,6 +1,6 @@
 @prefix automotive-simulator: <https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix org: <http://www.w3.org/ns/org#> .
@@ -46,7 +46,7 @@
     owl:versionInfo "v2" ;
 
     # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
 
     # Reference to SHACL validation rules
     dcterms:conformsTo <https://w3id.org/gaia-x4plcaad/ontologies/automotive-simulator/v2/shapes> ;

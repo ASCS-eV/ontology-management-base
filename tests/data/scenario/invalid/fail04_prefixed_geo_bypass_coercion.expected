@@ -8,62 +8,34 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasBoundingBox                                                             =
-=    Error:            Validation of boundingBox failed!                                                                                             =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/lat                                                                        =
+=    Error:            lat (LatLonCoordinate): Defines a world latitude value (on the y-axis) in degrees.                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasGeodeticReferenceSystem                                                 =
-=    Error:            Value does not conform to Shape georeference:GeodeticReferenceSystemShape. See details for more information.                  =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/lat                                                                        =
+=    Error:            lat (LatLonCoordinate): Defines a world latitude value (on the y-axis) in degrees.                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasOrigin                                                                  =
-=    Error:            Validation of origin failed!                                                                                                  =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/lon                                                                        =
+=    Error:            lon (LatLonCoordinate): Defines a world longitude value (on the x-axis) in degrees.                                           =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasProjectLocation                                                         =
-=    Error:            Value does not conform to Shape georeference:ProjectLocationShape. See details for more information.                          =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/lon                                                                        =
+=    Error:            lon (LatLonCoordinate): Defines a world longitude value (on the x-axis) in degrees.                                           =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/hasViewPoint                                                               =
-=    Error:            Validation of view point failed!                                                                                              =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/xMax                                                                       =
+=    Error:            xMax (BoundingBox): Defines the maximum bounding box value along the x-axis.                                                  =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lat                                                                        =
-=    Error:            Validation of lat failed!                                                                                                     =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/xMin                                                                       =
+=    Error:            xMin (BoundingBox): Defines the minimum bounding box value along the x-axis.                                                  =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lat                                                                        =
-=    Error:            Validation of lat failed!                                                                                                     =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/yMax                                                                       =
+=    Error:            yMax (BoundingBox): Defines the maximum bounding box value along the y-axis.                                                  =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lon                                                                        =
-=    Error:            Validation of lon failed!                                                                                                     =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/lon                                                                        =
-=    Error:            Validation of lon failed!                                                                                                     =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/xMax                                                                       =
-=    Error:            Validation of xMax failed!                                                                                                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/xMin                                                                       =
-=    Error:            Validation of xMin failed!                                                                                                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/yMax                                                                       =
-=    Error:            Validation of yMax failed!                                                                                                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v5/yMin                                                                       =
-=    Error:            Validation of yMin failed!                                                                                                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: did:web:test.scenario.net:Scenario:test_invalid_fail04_prefixed_geo_bypass_coercion                                           =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasDomainSpecification                                                         =
-=    Error:            Each Scenario must have one associated DomainSpecification.                                                                   =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/scenario/v6/hasGeoreference                                                                =
-=    Error:            Value does not conform to Shape georeference:GeoreferenceShape. See details for more information.                             =
+=    Property:         https://w3id.org/ascs-ev/envited-x/georeference/v6/yMin                                                                       =
+=    Error:            yMin (BoundingBox): Defines the minimum bounding box value along the y-axis.                                                  =
 ======================================================================================================================================================

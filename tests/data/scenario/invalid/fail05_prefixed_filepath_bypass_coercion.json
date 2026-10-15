@@ -1,10 +1,10 @@
 {
    "@context": [
       "https://w3id.org/gaia-x/development#",
-      "https://w3id.org/ascs-ev/envited-x/georeference/v5/",
-      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://w3id.org/ascs-ev/envited-x/georeference/v6/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
       "https://openlabel.asam.net/V1-0-0/ontologies/",
-      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
       "https://w3id.org/ascs-ev/envited-x/scenario/v6/",
       {
          "openlabel": "https://openlabel.asam.net/V1-0-0/ontologies/"
@@ -131,10 +131,10 @@
       "skos:note": "Reference to the scenario manifest.",
       "sh:conformsTo": [
          {
-            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+            "@id": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/"
          },
          {
-            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v5/"
+            "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v6/"
          },
          {
             "@id": "https://w3id.org/ascs-ev/envited-x/scenario/v6/"

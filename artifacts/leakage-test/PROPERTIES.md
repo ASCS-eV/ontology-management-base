@@ -46,10 +46,10 @@ class Class_definition_for_ProcessParameter
 
 ## Prefixes
 
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
 - gx: <https://w3id.org/gaia-x/development#>
 - leakage-test: <https://w3id.org/gaia-x4plcaad/ontologies/leakage-test/v3/>
-- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/>
+- manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - sh: <http://www.w3.org/ns/shacl#>
 - skos: <http://www.w3.org/2004/02/skos/core#>

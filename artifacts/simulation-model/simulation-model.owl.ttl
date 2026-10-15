@@ -1,6 +1,6 @@
 @prefix simulation-model: <https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix org: <http://www.w3.org/ns/org#> .
@@ -35,7 +35,7 @@
     owl:priorVersion <https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v2> ;
 
     # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ;
 
     # Reference to SHACL validation rules
     dcterms:conformsTo <https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3/shapes> ;

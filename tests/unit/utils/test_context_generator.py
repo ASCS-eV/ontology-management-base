@@ -48,20 +48,20 @@ class TestNsPrefixLookup:
     def test_lookup_slash_namespace(self):
         """Should find prefix for slash-terminated namespace."""
         g = Graph()
-        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v6/")
         ns_lookup = _build_ns_prefix_lookup(g)
         assert (
-            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v6/")
             == "manifest"
         )
 
     def test_lookup_normalizes_missing_trailing_slash(self):
         """Should find prefix when IRI lacks trailing slash but namespace has it."""
         g = Graph()
-        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v5/")
+        g.bind("manifest", "https://w3id.org/ascs-ev/envited-x/manifest/v6/")
         ns_lookup = _build_ns_prefix_lookup(g)
         assert (
-            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v5")
+            _lookup_prefix(ns_lookup, "https://w3id.org/ascs-ev/envited-x/manifest/v6")
             == "manifest"
         )
 

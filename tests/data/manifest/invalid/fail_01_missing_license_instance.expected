@@ -8,6 +8,7 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance                                              =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasLicense                                                                     =
-=    Error:            Less than 1 values on <did:web:test.manifest.net:Manifest:test_invalid_fail_01_missing_license_instance>->manifest:hasLicense =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasLicense                                                                     =
+=    Error:            hasLicense (Manifest): Associates a Manifest instance with its corresponding license; only applicable within Manifest         =
+=                      instances.                                                                                                                    =
 ======================================================================================================================================================

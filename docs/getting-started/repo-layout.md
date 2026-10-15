@@ -6,6 +6,7 @@ This repository uses a catalog-driven layout for ontologies, imports, and tests.
 
 ```
 artifacts/                 Domain ontologies, shapes, and contexts
+linkml/                    LinkML schemas of the generated domains
 imports/                   Base vocabularies for inference and validation
 tests/                     Test instances and fixtures
   catalog-v001.xml         Unified test catalog

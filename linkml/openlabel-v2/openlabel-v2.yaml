@@ -100,6 +100,7 @@ description: >-
   Ontology for scenario tagging based on the ASAM OpenLABEL standard
   and ISO 34503:2023 Operational Design Domain taxonomy.
 version: "2.0.0"
+
 license: https://www.eclipse.org/legal/epl-2.0/
 
 prefixes:
@@ -482,7 +483,8 @@ classes:
         preconditions:
           slot_conditions:
             DrivableAreaEdge:
-              equals_string: "EdgeNone"
+              has_member:
+                equals_string: "EdgeNone"
         postconditions:
           slot_conditions:
             DrivableAreaEdge:

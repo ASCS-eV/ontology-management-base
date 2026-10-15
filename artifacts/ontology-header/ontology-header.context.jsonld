@@ -1,0 +1,31 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "linkml": "https://w3id.org/linkml/",
+      "ontology-header": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "prov": "http://www.w3.org/ns/prov#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "@vocab": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
+      "ontologyDerivation": {
+         "@type": "shex:nonLiteral",
+         "@id": "prov:wasDerivedFrom"
+      },
+      "ontologyPriorVersion": {
+         "@type": "shex:nonLiteral",
+         "@id": "owl:priorVersion"
+      },
+      "ontologyPublisher": {
+         "@type": "shex:nonLiteral",
+         "@id": "dcterms:publisher"
+      },
+      "ontologyReferences": {
+         "@type": "shex:nonLiteral",
+         "@id": "dcterms:references"
+      },
+      "OntologyHeader": {
+         "@id": "OntologyHeader"
+      }
+   }
+}

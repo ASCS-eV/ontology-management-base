@@ -59,6 +59,37 @@ def test_normalize_text_scrubs_bnode():
     assert "[BNODE]" in normalized or normalized == ""
 
 
+def test_clean_sh_in_message_sorted_values():
+    """pySHACL lists sh:in values in set order; the report must not depend on it."""
+    one = "Value <urn:x> not in list ['ex:b', 'ex:c', 'ex:a']"
+    other = "Value <urn:x> not in list ['ex:c', 'ex:a', 'ex:b']"
+    assert print_formatter._clean(one) == print_formatter._clean(other)
+    assert print_formatter._clean(one).endswith("['ex:a', 'ex:b', 'ex:c']")
+
+
+def test_clean_custom_message_mentioning_list_unchanged():
+    message = "The role is not in list [see the ENVITED-X roles]"
+    assert print_formatter._clean(message) == message
+
+
+def test_clean_truncated_node_rendering_collapsed():
+    """Where pySHACL cuts a rendering off depends on hashing; the report must not."""
+    deep = "<http://recursion.too.deep>"
+    one = (
+        f'Node [ ex:p [ ex:q {deep} ] ; ex:r "a ] b" ] must conform to [ sh:path ex:p ]'
+    )
+    other = f'Node [ ex:p [ ex:q [ ex:s {deep} ] ] ; ex:r "a ] b" ] must conform to [ sh:path ex:p ]'
+    assert print_formatter._clean(one) == print_formatter._clean(other)
+    assert (
+        print_formatter._clean(one) == "Node [ ... ] must conform to [ sh:path ex:p ]"
+    )
+
+
+def test_clean_complete_node_rendering_kept():
+    message = 'Node [ ex:p "x" ; ex:q [ ex:r ex:s ] ] must not conform to ex:Shape'
+    assert print_formatter._clean(message) == message
+
+
 def test_format_artifact_coherence_result_contains_header():
     out = print_formatter.format_artifact_coherence_result(
         "artifacts/demo/demo.owl.ttl",
