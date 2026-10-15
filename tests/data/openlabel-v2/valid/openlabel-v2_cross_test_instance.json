@@ -26,13 +26,17 @@
    },
    "Behaviour": {
       "@type": "Behaviour",
-      "BehaviourCommunication": [
-         "CommunicationSignalLeft",
-         "CommunicationSignalRight",
-         "CommunicationHorn"
+      "BehaviourSignalling": [
+         "ExternalIntentSignalling",
+         "ExternalWarningSignalling"
+      ],
+      "BehaviourPositioning": [
+         "PremanoeuvrePositioning",
+         "PostmanoeuvrePositioning"
       ],
       "MotionAccelerate": true,
-      "motionAccelerateValue": {
+      "MotionAccelerateEgo": true,
+      "motionAccelerateEgoValue": {
          "@type": "schema:QuantitativeValue",
          "minValue": "0.001",
          "maxValue": "9.81"
@@ -41,23 +45,13 @@
       "motionDecelerateValue": "5.5",
       "MotionDrive": true,
       "motionDriveValue": "130.5",
-      "MotionAway": false,
-      "MotionCross": false,
       "MotionCutIn": true,
-      "MotionCutOut": false,
+      "MotionLaneChange": true,
       "MotionLaneChangeLeft": true,
-      "MotionLaneChangeRight": false,
       "MotionOvertake": true,
-      "MotionReverse": false,
-      "MotionRun": false,
-      "MotionSlide": false,
+      "MotionPass": false,
       "MotionStop": true,
-      "MotionTowards": false,
-      "MotionTurn": false,
-      "MotionTurnLeft": true,
-      "MotionTurnRight": false,
-      "MotionUTurn": false,
-      "MotionWalk": false
+      "MotionTurnLeft": true
    },
    "Odd": {
       "@type": "Odd",
@@ -72,7 +66,7 @@
       ],
       "DrivableAreaSurfaceCondition": "SurfaceConditionWet",
       "DrivableAreaSurfaceFeature": "SurfaceFeatureRut",
-      "DrivableAreaSurfaceType": "SurfaceTypeUniform",
+      "DrivableAreaSurfaceType": "SurfaceTypeCementConcrete",
       "DrivableAreaType": "RoadTypeMotorway",
       "EnvironmentParticulates": "ParticulatesDust",
       "GeometryTransverse": "TransverseUndivided",
@@ -82,14 +76,16 @@
       "IlluminationArtificial": "ArtificialStreetLighting",
       "IlluminationCloudiness": true,
       "illuminationCloudinessValue": 5.0,
-      "IlluminationLowLight": "LowLightNight",
+      "IlluminationNatural": "LowLightNight",
       "JunctionIntersection": "IntersectionTJunction",
       "JunctionRoundabout": "RoundaboutNormalSignal",
       "LaneSpecificationDimensions": true,
       "laneSpecificationDimensionsValue": "3.5",
       "LaneSpecificationLaneCount": true,
       "laneSpecificationLaneCountValue": 3,
-      "LaneSpecificationMarking": true,
+      "LaneSpecificationMarking": [
+         "BlurredLaneMarking"
+      ],
       "LaneSpecificationTravelDirection": "TravelDirectionRight",
       "LaneSpecificationType": [
          "LaneTypeTraffic",
@@ -99,7 +95,6 @@
       "LongitudinalLevelPlane": true,
       "LongitudinalUpSlope": false,
       "ParticulatesDust": true,
-      "ParticulatesMarine": false,
       "ParticulatesPollution": true,
       "ParticulatesVolcanic": false,
       "ParticulatesWater": false,
@@ -117,12 +112,9 @@
       "trafficAgentDensityValue": 5,
       "TrafficAgentType": true,
       "trafficAgentTypeValue": [
-         {
-            "@id": "openlabel_v2:VehicleCar"
-         },
-         {
-            "@id": "openlabel_v2:HumanPedestrian"
-         }
+         "VehicleCar",
+         "HumanPedestrian",
+         "HumanCyclist"
       ],
       "TrafficFlowRate": true,
       "trafficFlowRateValue": 500,
@@ -134,12 +126,5 @@
       "WeatherSnow": false,
       "WeatherWind": true,
       "weatherWindValue": 15.0
-   },
-   "RoadUser": {
-      "@type": "RoadUser",
-      "RoadUserAnimal": false,
-      "RoadUserHuman": "HumanPedestrian",
-      "RoadUserVehicle": "VehicleCar",
-      "motionDriveValue": "50.0"
    }
 }

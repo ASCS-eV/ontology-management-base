@@ -52,21 +52,17 @@
 #   ISO/TC 22/SC 33. Geneva: International Organization for Standardization.
 #   URL: https://www.iso.org/standard/78952.html
 #
-# Additional normative references for dynamic elements (Behaviour, RoadUser):
+# Additional normative references:
 #
-#   ISO 34504:2023 — Road vehicles — Test scenarios for automated driving
-#   systems — Scenario categorization.
-#   Section 4.4.4: Tags for a dynamic entity (road user type, longitudinal/
-#   lateral/mixed actions, state).
-#   URL: https://www.iso.org/standard/78953.html
+#   PAS 1883:2025 — Operational design domain — Implementation of
+#   BS ISO 34503:2023 — Guide. Supersedes PAS 1883:2020. Clause 5 extends the
+#   ISO 34503 taxonomy: 5.1 motor vehicle types, 5.2 vulnerable road users,
+#   5.4 attributes associated with the UK National Risk Register.
 #
-#   ISO 34501:2022 — Road vehicles — Test scenarios for automated driving
-#   systems — Vocabulary.
-#   Term 2.15: "action/activity" — single purposeful act or behaviour
-#   executed by any actor in a scenario.
-#   Term 2.16: "actor" — traffic participant with the capability to act
-#   and react in the scenario.
-#   URL: https://www.iso.org/standard/78951.html
+#   BSI Flex 1891 v1.0:2025-01 — Behaviour taxonomy for automated driving
+#   system (ADS) applications — Specification. Clause 5: signalling (5.2),
+#   positioning (5.3) and manoeuvre (5.4) behaviours. Used for Behaviour,
+#   next to the ISO 34504:2023, 4.4.4 references (international cross-reference).
 #
 # Structural correspondence:
 #
@@ -90,6 +86,29 @@
 #   canonical identifier and records the v1 identifier in `aliases`. This
 #   enables forward alignment with the international standard while preserving
 #   discoverability of the legacy name via skos:altLabel.
+#
+# =============================================================================
+# ISO 34503 alignment with the ASCS internal OpenLABEL ontology
+# =============================================================================
+#
+# The ODD (ISO 34503:2023) part of this schema mirrors the internally updated
+# OpenLABEL OWL ontology. Its class hierarchy is flattened as follows:
+#
+#   - a class with sub-classes becomes a slot whose enum lists its leaves and
+#     its meaningful intermediate classes (e.g. FixedZone, RoundaboutCompact);
+#   - pure grouping classes (ZoneType, SignType, TransverseType,
+#     ParticulatesType, SpecialStructuresType, CommunicationType,
+#     CommunicationTechnology, CommunicationDownlink/Uplink) are not modelled;
+#   - a class carrying a datatype property becomes a boolean flag slot plus a
+#     value slot, linked by a conditional rule (e.g. LaneSpecificationSpeedLimit
+#     + SpeedLimit).
+#
+# PAS 1883:2025 extensions are added as values of the ISO 34503 enums they
+# extend (comment "PAS 1883:2025, 5.x"). Behaviour follows the BSI Flex 1891
+# taxonomy of the internal ontology; the former ASAM OpenLABEL
+# BehaviourCommunication slot, MotionAway, MotionTowards, MotionTurn and the
+# ISO 34504 based RoadUser class were removed because the internal ontology
+# does not contain them (road users are covered by trafficAgentTypeValue).
 #
 # =============================================================================
 
@@ -139,7 +158,6 @@ classes:
       - AdminTag
       - Behaviour
       - Odd
-      - RoadUser
 
   # ---------------------------------------------------------------------------
   # AdminTag
@@ -164,53 +182,75 @@ classes:
       - scenarioVisualisationURL
 
   # ---------------------------------------------------------------------------
-  # Behaviour
+  # Behaviour (BSI Flex 1891 v1.0:2025-01)
   # ---------------------------------------------------------------------------
   Behaviour:
-    description: An activity performed by a road user.
+    description: >-
+      Act that changes the state or position of an on-road actor, classified
+      into signalling, positioning and manoeuvre behaviours.
     comments:
       - "ISO 34504:2023, 4.4.4 (Tags for a dynamic entity — longitudinal, lateral, and mixed actions); ISO 34501:2022, Term 2.15 (action/activity)"
+      - "BSI Flex 1891 v1.0:2025-01, Clause 5"
     notes:
-      - "v1 had no normative reference; was attributed solely to ASAM OpenLABEL. ISO 34504 Section 4.4.4 defines the same action taxonomy (accelerating, decelerating, lane change, etc.) as tags for dynamic entities. ISO 34501 Term 2.15 formally defines 'action/activity' as 'single purposeful act or behaviour executed by any actor'."
+      - "Structure aligned with the internal OpenLABEL ontology, which follows BSI Flex 1891. ISO 34504 / ISO 34501 references are kept as the international cross-reference; behaviours introduced by BSI Flex 1891 without a direct ISO 34504 tag carry the Flex reference only."
+      - "Internal hierarchy: BehaviourSignalling (5.2); BehaviourPositioning (5.3); BehaviourMotion (manoeuvre, 5.4) with AbsoluteManoeuvre (vehicle tactical, vehicle operational, non-vehicle tactical, non-vehicle operational) and RelativeManoeuvre. Manoeuvres are modelled as boolean flags."
       - "Conditional rules (boolean+value co-occurrence) are ontology integrity constraints motivated by ISO 34503:2023, 12.4 (conditional attribute dependencies in ODD specifications)."
-    see_also:
-      - https://www.iso.org/standard/78953.html
     class_uri: openlabel_v2:Behaviour
     slots:
-      - BehaviourCommunication
+      - BehaviourPositioning
+      - BehaviourSignalling
       - MotionAccelerate
-      - motionAccelerateValue
-      - MotionAway
+      - MotionAccelerateEgo
+      - motionAccelerateEgoValue
+      - MotionAccelerateTrafficAgent
+      - motionAccelerateTrafficAgentValue
       - MotionCross
+      - MotionCutAcross
       - MotionCutIn
       - MotionCutOut
       - MotionDecelerate
       - motionDecelerateValue
       - MotionDrive
       - motionDriveValue
+      - MotionLaneChange
       - MotionLaneChangeLeft
       - MotionLaneChangeRight
+      - MotionNonVehicleJog
+      - MotionNonVehicleTurnLeft
+      - MotionNonVehicleTurnRight
+      - MotionNonVehicleWait
       - MotionOvertake
+      - MotionParkingManoeuvre
+      - MotionPass
       - MotionReverse
       - MotionRun
       - MotionSlide
       - MotionStop
-      - MotionTowards
-      - MotionTurn
       - MotionTurnLeft
       - MotionTurnRight
       - MotionUTurn
       - MotionWalk
+      - MotionYield
     rules:
       - description: >-
-          If motionAccelerateValue is provided, MotionAccelerate must be true.
+          If motionAccelerateEgoValue is provided, MotionAccelerateEgo must be true.
         preconditions:
           slot_conditions:
-            motionAccelerateValue:
+            motionAccelerateEgoValue:
               value_presence: PRESENT
         postconditions:
           slot_conditions:
-            MotionAccelerate:
+            MotionAccelerateEgo:
+              equals_string: "true"
+      - description: >-
+          If motionAccelerateTrafficAgentValue is provided, MotionAccelerateTrafficAgent must be true.
+        preconditions:
+          slot_conditions:
+            motionAccelerateTrafficAgentValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            MotionAccelerateTrafficAgent:
               equals_string: "true"
       - description: >-
           If motionDecelerateValue is provided, MotionDecelerate must be true.
@@ -251,9 +291,14 @@ classes:
     slots:
       - ConnectivityCommunication
       - ConnectivityPositioning
+      - ConnectivityRTKCorrection
       - DaySunElevation
       - daySunElevationValue
       - DaySunPosition
+      - DimensionHeight
+      - DimensionLength
+      - DimensionShoulderWidth
+      - DimensionWidth
       - DrivableAreaEdge
       - DrivableAreaSurfaceCondition
       - DrivableAreaSurfaceFeature
@@ -267,7 +312,7 @@ classes:
       - IlluminationArtificial
       - IlluminationCloudiness
       - illuminationCloudinessValue
-      - IlluminationLowLight
+      - IlluminationNatural
       - JunctionIntersection
       - JunctionRoundabout
       - LaneSpecificationDimensions
@@ -275,16 +320,22 @@ classes:
       - LaneSpecificationLaneCount
       - laneSpecificationLaneCountValue
       - LaneSpecificationMarking
+      - LaneSpecificationSpeedLimit
       - LaneSpecificationTravelDirection
       - LaneSpecificationType
+      - LaneSpecificationUsage
       - LongitudinalDownSlope
       - longitudinalDownSlopeValue
       - LongitudinalLevelPlane
       - LongitudinalUpSlope
       - longitudinalUpSlopeValue
+      - ParticulatesBlowingDebris
       - ParticulatesDust
-      - ParticulatesMarine
+      - ParticulatesInsectSwarms
+      - ParticulatesIntensity
       - ParticulatesPollution
+      - ParticulatesSand
+      - ParticulatesSize
       - ParticulatesVolcanic
       - ParticulatesWater
       - particulatesWaterValue
@@ -293,9 +344,16 @@ classes:
       - ScenerySpecialStructure
       - SceneryTemporaryStructure
       - SceneryZone
+      - SignFeature
       - SignsInformation
       - SignsRegulatory
       - SignsWarning
+      - SpecialStructuresDimensionHeight
+      - SpecialStructuresDimensionLength
+      - SpecialStructuresDimensionShoulderWidth
+      - SpecialStructuresDimensionWidth
+      - SpecialStructuresUsage
+      - SpeedLimit
       - SubjectVehicleSpeed
       - subjectVehicleSpeedValue
       - TrafficAgentDensity
@@ -305,6 +363,7 @@ classes:
       - TrafficFlowRate
       - trafficFlowRateValue
       - TrafficSpecialVehicle
+      - trafficSpecialVehicleValue
       - TrafficVolume
       - trafficVolumeValue
       - WeatherRain
@@ -475,6 +534,66 @@ classes:
             ParticulatesWater:
               equals_string: "true"
       - description: >-
+          If SpeedLimit is provided, LaneSpecificationSpeedLimit must be true.
+        preconditions:
+          slot_conditions:
+            SpeedLimit:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            LaneSpecificationSpeedLimit:
+              equals_string: "true"
+      - description: >-
+          If DimensionHeight is provided, SpecialStructuresDimensionHeight must be true.
+        preconditions:
+          slot_conditions:
+            DimensionHeight:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            SpecialStructuresDimensionHeight:
+              equals_string: "true"
+      - description: >-
+          If DimensionLength is provided, SpecialStructuresDimensionLength must be true.
+        preconditions:
+          slot_conditions:
+            DimensionLength:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            SpecialStructuresDimensionLength:
+              equals_string: "true"
+      - description: >-
+          If DimensionShoulderWidth is provided, SpecialStructuresDimensionShoulderWidth must be true.
+        preconditions:
+          slot_conditions:
+            DimensionShoulderWidth:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            SpecialStructuresDimensionShoulderWidth:
+              equals_string: "true"
+      - description: >-
+          If DimensionWidth is provided, SpecialStructuresDimensionWidth must be true.
+        preconditions:
+          slot_conditions:
+            DimensionWidth:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            SpecialStructuresDimensionWidth:
+              equals_string: "true"
+      - description: >-
+          If trafficSpecialVehicleValue is provided, TrafficSpecialVehicle must be true.
+        preconditions:
+          slot_conditions:
+            trafficSpecialVehicleValue:
+              value_presence: PRESENT
+        postconditions:
+          slot_conditions:
+            TrafficSpecialVehicle:
+              equals_string: "true"
+      - description: >-
           EdgeNone is mutually exclusive with other drivable area edge types.
           If DrivableAreaEdge includes EdgeNone, no other edge values are allowed.
         comments:
@@ -509,6 +628,9 @@ classes:
       ConnectivityPositioning:
         maximum_cardinality: 0
         multivalued: true
+      ConnectivityRTKCorrection:
+        maximum_cardinality: 0
+        multivalued: true
       DaySunElevation:
         maximum_cardinality: 0
         multivalued: true
@@ -530,16 +652,28 @@ classes:
       illuminationCloudinessValue:
         maximum_cardinality: 0
         multivalued: true
-      IlluminationLowLight:
+      IlluminationNatural:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesBlowingDebris:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesDust:
         maximum_cardinality: 0
         multivalued: true
-      ParticulatesMarine:
+      ParticulatesInsectSwarms:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesIntensity:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesPollution:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesSand:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesSize:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesVolcanic:
@@ -598,6 +732,9 @@ classes:
         maximum_cardinality: 0
         multivalued: true
       TrafficSpecialVehicle:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficSpecialVehicleValue:
         maximum_cardinality: 0
         multivalued: true
       TrafficVolume:
@@ -712,6 +849,45 @@ classes:
       SignsWarning:
         maximum_cardinality: 0
         multivalued: true
+      SignFeature:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationSpeedLimit:
+        maximum_cardinality: 0
+        multivalued: true
+      SpeedLimit:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationUsage:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresUsage:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionHeight:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionHeight:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionLength:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionLength:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionShoulderWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionShoulderWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionWidth:
+        maximum_cardinality: 0
+        multivalued: true
       # --- Restrict DynamicElements slots (ISO 34503 Clause 11) ---
       SubjectVehicleSpeed:
         maximum_cardinality: 0
@@ -738,6 +914,9 @@ classes:
         maximum_cardinality: 0
         multivalued: true
       TrafficSpecialVehicle:
+        maximum_cardinality: 0
+        multivalued: true
+      trafficSpecialVehicleValue:
         maximum_cardinality: 0
         multivalued: true
       TrafficVolume:
@@ -852,11 +1031,53 @@ classes:
       SignsWarning:
         maximum_cardinality: 0
         multivalued: true
+      SignFeature:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationSpeedLimit:
+        maximum_cardinality: 0
+        multivalued: true
+      SpeedLimit:
+        maximum_cardinality: 0
+        multivalued: true
+      LaneSpecificationUsage:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresUsage:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionHeight:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionHeight:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionLength:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionLength:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionShoulderWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionShoulderWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      SpecialStructuresDimensionWidth:
+        maximum_cardinality: 0
+        multivalued: true
+      DimensionWidth:
+        maximum_cardinality: 0
+        multivalued: true
       # --- Restrict Environment slots (ISO 34503 Clause 10) ---
       ConnectivityCommunication:
         maximum_cardinality: 0
         multivalued: true
       ConnectivityPositioning:
+        maximum_cardinality: 0
+        multivalued: true
+      ConnectivityRTKCorrection:
         maximum_cardinality: 0
         multivalued: true
       DaySunElevation:
@@ -880,16 +1101,28 @@ classes:
       illuminationCloudinessValue:
         maximum_cardinality: 0
         multivalued: true
-      IlluminationLowLight:
+      IlluminationNatural:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesBlowingDebris:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesDust:
         maximum_cardinality: 0
         multivalued: true
-      ParticulatesMarine:
+      ParticulatesInsectSwarms:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesIntensity:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesPollution:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesSand:
+        maximum_cardinality: 0
+        multivalued: true
+      ParticulatesSize:
         maximum_cardinality: 0
         multivalued: true
       ParticulatesVolcanic:
@@ -922,25 +1155,6 @@ classes:
       weatherWindValue:
         maximum_cardinality: 0
         multivalued: true
-
-  # ---------------------------------------------------------------------------
-  # RoadUser
-  # ---------------------------------------------------------------------------
-  RoadUser:
-    description: A road user participating in the scenario.
-    comments:
-      - "ISO 34503:2023, 11.1; ISO 34504:2023, 4.4.4.1 (Road user type)"
-    notes:
-      - "ISO 34503 Section 11.1 references dynamic elements including traffic agents. ISO 34504 Section 4.4.4.1 provides the detailed road user type taxonomy (vehicle, pedestrian, cyclist, animal, inanimate obstacle) with sub-tags. ISO 34501 Term 2.16 defines 'actor' as 'traffic participant with the capability to act and react'."
-    see_also:
-      - https://www.iso.org/standard/78952.html
-      - https://www.iso.org/standard/78953.html
-    class_uri: openlabel_v2:RoadUser
-    slots:
-      - RoadUserAnimal
-      - RoadUserHuman
-      - RoadUserVehicle
-      - motionDriveValue
 
   # ---------------------------------------------------------------------------
   # QuantitativeValue (from schema.org, used for range values)
@@ -989,12 +1203,6 @@ slots:
     description: Operational Design Domain tag.
     slot_uri: openlabel_v2:Odd
     range: Odd
-    inlined: true
-
-  RoadUser:
-    description: Road user tag.
-    slot_uri: openlabel_v2:RoadUser
-    range: RoadUser
     inlined: true
 
   # ---------------------------------------------------------------------------
@@ -1072,195 +1280,354 @@ slots:
     range: string
 
   # ---------------------------------------------------------------------------
-  # Behaviour enum slots
+  # Behaviour enum slots (BSI Flex 1891, 5.2 and 5.3)
   # ---------------------------------------------------------------------------
-  BehaviourCommunication:
-    description: Communication type of road user behaviour.
+  BehaviourSignalling:
+    description: Signalling behaviour indicating the current or future intent of an actor.
     comments:
-      - "ASAM OpenLABEL V1.0.0"
+      - "BSI Flex 1891 v1.0:2025-01, 5.2"
+    aliases:
+      - "Signalling"
     notes:
-      - "Communication signals (horn, headlight flash, indicators) are not explicitly covered by ISO 34504 action tags. Retained from ASAM OpenLABEL as scenario-relevant communication modality."
-    slot_uri: openlabel_v2:BehaviourCommunication
-    range: BehaviourCommunicationEnum
+      - "Replaces the ASAM OpenLABEL BehaviourCommunication slot."
+    slot_uri: openlabel_v2:BehaviourSignalling
+    range: BehaviourSignallingEnum
+    multivalued: true
+
+  BehaviourPositioning:
+    description: Positioning of the subject vehicle before or after the execution of a manoeuvre.
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.3"
+    aliases:
+      - "Positioning"
+    slot_uri: openlabel_v2:BehaviourPositioning
+    range: BehaviourPositioningEnum
     multivalued: true
 
   # ---------------------------------------------------------------------------
-  # Behaviour boolean slots (motion flags)
+  # Manoeuvre flags — vehicle absolute tactical manoeuvres (BSI Flex 1891, 5.4.2.2)
   # ---------------------------------------------------------------------------
-  MotionAccelerate:
-    description: An activity where the road user increases their velocity.
-    comments:
-      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
-    slot_uri: openlabel_v2:MotionAccelerate
-    range: boolean
-
-  MotionAway:
-    description: An activity where the road user is further away from the object by the end.
-    comments:
-      - "ASAM OpenLABEL V1.0.0"
-    notes:
-      - "ISO 34504, 4.4.4.5 defines static longitudinal position tags (in front, beside, behind) and relative speed tags (faster, slower, similar). 'Moving away' is an ASAM OpenLABEL extension describing dynamic position change — derivable from combining ISO 34504 position + speed tags but not directly defined."
-    slot_uri: openlabel_v2:MotionAway
-    range: boolean
-
-  MotionCross:
-    description: An activity where the trajectory of the road user crosses the trajectory of the object.
-    comments:
-      - "ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing)"
-    notes:
-      - "ISO 34504 models 'crossing' as a direction state tag (4.4.4.5), not as a lateral action. ASAM OpenLABEL treats it as an activity for scenario tagging. The semantic intent aligns with ISO 34504's 'crossing' direction tag."
-    slot_uri: openlabel_v2:MotionCross
-    range: boolean
-
-  MotionCutIn:
-    description: An activity where the subject vehicle ends up directly in front of the object vehicle.
-    comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
-    slot_uri: openlabel_v2:MotionCutIn
-    range: boolean
-
-  MotionCutOut:
-    description: An activity where the object vehicle suddenly moves out of the lane.
-    comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
-    slot_uri: openlabel_v2:MotionCutOut
-    range: boolean
-
-  MotionDecelerate:
-    description: An activity where the road user decreases their velocity.
-    comments:
-      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating)"
-    slot_uri: openlabel_v2:MotionDecelerate
-    range: boolean
-
   MotionDrive:
-    description: An activity where the subject vehicle is moving in the direction it is facing.
+    description: Drive in-lane; the vehicle remains in its lane (physically demarcated or virtual lanes).
     comments:
       - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — driving forward)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"
+    aliases:
+      - "Drive in-lane"
     slot_uri: openlabel_v2:MotionDrive
     range: boolean
 
+  MotionTurnRight:
+    description: Turn right; the vehicle's trajectory changes its forward direction toward the right where the road layout allows a turn.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.3"
+    aliases:
+      - "Turn right"
+    slot_uri: openlabel_v2:MotionTurnRight
+    range: boolean
+
+  MotionTurnLeft:
+    description: Turn left; the vehicle's trajectory changes its forward direction toward the left where the road layout allows a turn.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.4"
+    aliases:
+      - "Turn left"
+    slot_uri: openlabel_v2:MotionTurnLeft
+    range: boolean
+
+  MotionLaneChange:
+    description: Lane change; the vehicle moves from its current lane of travel to an adjacent lane.
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5"
+    aliases:
+      - "Lane change"
+    slot_uri: openlabel_v2:MotionLaneChange
+    range: boolean
+
   MotionLaneChangeLeft:
-    description: An activity where the subject vehicle is in a lane left of the original.
+    description: Lane change to the left.
     comments:
       - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, left)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"
+    notes:
+      - "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."
     slot_uri: openlabel_v2:MotionLaneChangeLeft
     range: boolean
 
   MotionLaneChangeRight:
-    description: An activity where the subject vehicle is in a lane right of the original.
+    description: Lane change to the right.
     comments:
       - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane, right)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.5 NOTE 2"
+    notes:
+      - "Not in the internal ontology; kept because BSI Flex 1891, 5.4.2.2.5 NOTE 2 allows lane change to be further classified into left and right."
     slot_uri: openlabel_v2:MotionLaneChangeRight
     range: boolean
 
-  MotionOvertake:
-    description: An activity where the subject starts behind and ends up in front by changing lanes.
-    comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
-    notes:
-      - "Overtake is a composite action combining longitudinal and lateral motion. ISO 34504 models this as a combination of 'changing lane' tags."
-    slot_uri: openlabel_v2:MotionOvertake
-    range: boolean
-
   MotionReverse:
-    description: An activity where the subject vehicle is moving in the opposite direction to which it is facing.
+    description: Reverse; the vehicle moves in the reverse or opposite direction.
     comments:
       - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — reversing)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.6"
+    aliases:
+      - "Reverse"
     slot_uri: openlabel_v2:MotionReverse
     range: boolean
 
-  MotionRun:
-    description: Locomotion mode where at a specific point no foot touches the ground.
+  MotionStop:
+    description: Stop position; the vehicle reaches zero velocity and maintains its position.
     comments:
-      - "ASAM OpenLABEL V1.0.0"
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.7"
+    aliases:
+      - "Stop position"
+    slot_uri: openlabel_v2:MotionStop
+    range: boolean
+
+  MotionUTurn:
+    description: Turnabout; the vehicle changes its direction of travel by 180 degrees (e.g. U-turn, three-point turn).
+    comments:
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.8"
+    aliases:
+      - "Turnabout"
+    slot_uri: openlabel_v2:MotionUTurn
+    range: boolean
+
+  MotionParkingManoeuvre:
+    description: Parking manoeuvre; the vehicle moves into a demarcated or non-demarcated parking area, ending stopped.
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.9"
+    aliases:
+      - "Parking manoeuvre"
+    slot_uri: openlabel_v2:MotionParkingManoeuvre
+    range: boolean
+
+  # ---------------------------------------------------------------------------
+  # Manoeuvre flags — vehicle absolute operational manoeuvres (BSI Flex 1891, 5.4.2.3)
+  # ---------------------------------------------------------------------------
+  MotionAccelerate:
+    description: Accelerate; the vehicle's velocity gradient is positive.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
+    aliases:
+      - "Accelerate"
+    slot_uri: openlabel_v2:MotionAccelerate
+    range: boolean
+
+  MotionAccelerateEgo:
+    description: Acceleration of the ego (subject) vehicle.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
     notes:
-      - "Pedestrian locomotion mode not explicitly tagged in ISO 34504; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
+      - "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."
+    slot_uri: openlabel_v2:MotionAccelerateEgo
+    range: boolean
+
+  MotionAccelerateTrafficAgent:
+    description: Acceleration of a traffic agent.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
+    notes:
+      - "Internal ontology extension: acceleration is distinguished for the ego vehicle and for traffic agents."
+    slot_uri: openlabel_v2:MotionAccelerateTrafficAgent
+    range: boolean
+
+  MotionDecelerate:
+    description: Decelerate; the vehicle's velocity gradient is negative.
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"
+    aliases:
+      - "Decelerate"
+    slot_uri: openlabel_v2:MotionDecelerate
+    range: boolean
+
+  # ---------------------------------------------------------------------------
+  # Manoeuvre flags — non-vehicle absolute tactical manoeuvres (BSI Flex 1891, 5.4.2.4.2)
+  # ---------------------------------------------------------------------------
+  MotionNonVehicleTurnRight:
+    description: Turn right by a non-vehicle actor (e.g. pedestrian, animal).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 a)"
+    aliases:
+      - "Turn right (non-vehicle)"
+    slot_uri: openlabel_v2:MotionNonVehicleTurnRight
+    range: boolean
+
+  MotionNonVehicleTurnLeft:
+    description: Turn left by a non-vehicle actor (e.g. pedestrian, animal).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 b)"
+    aliases:
+      - "Turn left (non-vehicle)"
+    slot_uri: openlabel_v2:MotionNonVehicleTurnLeft
+    range: boolean
+
+  MotionCross:
+    description: Cross the road at a demarcated or non-demarcated point (non-vehicle actor).
+    comments:
+      - "ISO 34504:2023, 4.4.4.5 (State or initial state — direction: crossing)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 c)"
+    aliases:
+      - "Cross (non-vehicle)"
+    slot_uri: openlabel_v2:MotionCross
+    range: boolean
+
+  MotionNonVehicleWait:
+    description: Wait (non-vehicle actor).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.2 d)"
+    aliases:
+      - "Wait"
+    slot_uri: openlabel_v2:MotionNonVehicleWait
+    range: boolean
+
+  # ---------------------------------------------------------------------------
+  # Manoeuvre flags — non-vehicle absolute operational manoeuvres (BSI Flex 1891, 5.4.2.4.3)
+  # ---------------------------------------------------------------------------
+  MotionWalk:
+    description: Walk or slow speed (under 4 km/h).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.3 a)"
+    aliases:
+      - "Walk"
+    slot_uri: openlabel_v2:MotionWalk
+    range: boolean
+
+  MotionNonVehicleJog:
+    description: Jog or moderate speed (over 4 km/h but under 6 km/h).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.3 b)"
+    aliases:
+      - "Jog"
+    slot_uri: openlabel_v2:MotionNonVehicleJog
+    range: boolean
+
+  MotionRun:
+    description: Run or fast speed (over 6 km/h).
+    comments:
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.3 c)"
+    aliases:
+      - "Run"
     slot_uri: openlabel_v2:MotionRun
     range: boolean
 
   MotionSlide:
-    description: An activity where a pedestrian is slipping/sliding on the road.
+    description: Slide; unintentional movement such as tripping, falling or skidding.
     comments:
-      - "ASAM OpenLABEL V1.0.0"
-    notes:
-      - "Not covered by ISO 34504 action tags; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.4.3 d)"
+    aliases:
+      - "Slide"
     slot_uri: openlabel_v2:MotionSlide
     range: boolean
 
-  MotionStop:
-    description: An activity where the road user is stationary.
+  # ---------------------------------------------------------------------------
+  # Manoeuvre flags — relative manoeuvres (BSI Flex 1891, 5.4.3)
+  # ---------------------------------------------------------------------------
+  MotionOvertake:
+    description: Overtake; the subject vehicle moves from behind to in front of another actor in the same lane.
     comments:
-      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — standing still)"
-    slot_uri: openlabel_v2:MotionStop
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.2"
+    aliases:
+      - "Overtake"
+    slot_uri: openlabel_v2:MotionOvertake
     range: boolean
 
-  MotionTowards:
-    description: An activity where the road user is closer to the object by the end.
+  MotionCutIn:
+    description: Cut-in; the subject vehicle moves in front of another actor by a lane change.
     comments:
-      - "ASAM OpenLABEL V1.0.0"
-    notes:
-      - "ISO 34504, 4.4.4.5 defines static longitudinal position tags (in front, beside, behind) and relative speed tags (faster, slower, similar). 'Moving towards' is an ASAM OpenLABEL extension describing dynamic position change — derivable from combining ISO 34504 position + speed tags but not directly defined."
-    slot_uri: openlabel_v2:MotionTowards
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.3"
+    aliases:
+      - "Cut-in"
+    slot_uri: openlabel_v2:MotionCutIn
     range: boolean
 
-  MotionTurn:
-    description: An activity where the road user changes their heading.
+  MotionCutOut:
+    description: Cut-out; the subject vehicle changes lane to move away from an actor it is in front of.
     comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning)"
-    slot_uri: openlabel_v2:MotionTurn
+      - "ISO 34504:2023, 4.4.4.3 (Lateral action — changing lane)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.4"
+    aliases:
+      - "Cut-out"
+    slot_uri: openlabel_v2:MotionCutOut
     range: boolean
 
-  MotionTurnLeft:
-    description: Subject exits the intersection on a road to the left of the original.
+  MotionCutAcross:
+    description: Cut across; the subject vehicle's trajectory is perpendicular to another actor's trajectory.
     comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left)"
-    slot_uri: openlabel_v2:MotionTurnLeft
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.5"
+    aliases:
+      - "Cut across"
+    slot_uri: openlabel_v2:MotionCutAcross
     range: boolean
 
-  MotionTurnRight:
-    description: Subject exits the intersection on a road to the right of the original.
+  MotionYield:
+    description: Yield; the subject vehicle stops and waits in reaction to another actor or road feature.
     comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, right)"
-    slot_uri: openlabel_v2:MotionTurnRight
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.6"
+    aliases:
+      - "Yield"
+    slot_uri: openlabel_v2:MotionYield
     range: boolean
 
-  MotionUTurn:
-    description: Subject performs a turn resulting in heading in the opposite direction.
+  MotionPass:
+    description: Pass; the subject vehicle moves in front of another actor in an adjacent lane.
     comments:
-      - "ISO 34504:2023, 4.4.4.3 (Lateral action — turning, left U-turn / right U-turn)"
-    slot_uri: openlabel_v2:MotionUTurn
-    range: boolean
-
-  MotionWalk:
-    description: Locomotion mode where at least one foot is always on the ground.
-    comments:
-      - "ASAM OpenLABEL V1.0.0"
-    notes:
-      - "Pedestrian locomotion mode not explicitly tagged in ISO 34504; retained from ASAM OpenLABEL for pedestrian scenario fidelity."
-    slot_uri: openlabel_v2:MotionWalk
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.3.7"
+    aliases:
+      - "Pass"
+    slot_uri: openlabel_v2:MotionPass
     range: boolean
 
   # ---------------------------------------------------------------------------
   # Behaviour value slots (decimal measurements)
   # ---------------------------------------------------------------------------
-  motionAccelerateValue:
-    description: Rate of acceleration (ms⁻²).
+  motionAccelerateEgoValue:
+    description: Rate of acceleration of the ego vehicle (m/s²).
     comments:
       - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
+    aliases:
+      - "Rate of acceleration (ms-2)"
     notes:
-      - "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. acceleration rate)."
-    slot_uri: openlabel_v2:motionAccelerateValue
+      - "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."
+    slot_uri: openlabel_v2:motionAccelerateEgoValue
+    any_of:
+      - range: decimal
+      - range: QuantitativeValue
+
+  motionAccelerateTrafficAgentValue:
+    description: Rate of acceleration of a traffic agent (m/s²).
+    comments:
+      - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — accelerating, quantification)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.2"
+    aliases:
+      - "Rate of acceleration (ms-2)"
+    notes:
+      - "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."
+    slot_uri: openlabel_v2:motionAccelerateTrafficAgentValue
     any_of:
       - range: decimal
       - range: QuantitativeValue
 
   motionDecelerateValue:
-    description: Rate of deceleration (ms⁻²).
+    description: Rate of deceleration (m/s²).
     comments:
       - "ISO 34504:2023, 4.4.4.2 (Longitudinal action — decelerating, quantification)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.3.3"
+    aliases:
+      - "Rate of deceleration (ms-2)"
     notes:
-      - "ISO 34504 Note 2 to Section 4.4.2 acknowledges that stakeholders can specify quantification of tags (e.g. deceleration rate)."
+      - "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."
     slot_uri: openlabel_v2:motionDecelerateValue
     any_of:
       - range: decimal
@@ -1270,8 +1637,11 @@ slots:
     description: Speed (km/h).
     comments:
       - "ISO 34504:2023, 4.4.4.5 (State or initial state — relative speed)"
+      - "BSI Flex 1891 v1.0:2025-01, 5.4.2.2.2"
+    aliases:
+      - "Speed (km/h)"
     notes:
-      - "ISO 34504 Section 4.4.4.5 lists 'relative speed' as a state tag for dynamic entities."
+      - "Quantification of the manoeuvre is an extension of the internal ontology; BSI Flex 1891 defines the manoeuvre only."
     slot_uri: openlabel_v2:motionDriveValue
     any_of:
       - range: decimal
@@ -1281,17 +1651,21 @@ slots:
   # ODD enum slots
   # ---------------------------------------------------------------------------
   ConnectivityCommunication:
-    description: Type of communication connectivity.
+    description: >-
+      Communication connectivity attributes: communication type, technology,
+      and downlink/uplink characteristics.
     comments:
       - "ISO 34503:2023, 10.5 a)"
     aliases:
       - "Communication"
     notes:
       - "v1 label: \"Communication\" (PAS 1883:2020, Section 5.3.4.a)."
+      - "Multivalued so that type, technology and link attributes can be combined (e.g. CommunicationV2v + CommunicationTechnologyCellular)."
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ConnectivityCommunication
     range: ConnectivityCommunicationEnum
+    multivalued: true
   ConnectivityPositioning:
     description: Type of positioning system.
     comments:
@@ -1304,6 +1678,18 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ConnectivityPositioning
     range: ConnectivityPositioningEnum
+    multivalued: true
+  ConnectivityRTKCorrection:
+    description: Type of real-time kinematic (RTK) correction service.
+    comments:
+      - "ISO 34503:2023, 10.5 c)"
+    aliases:
+      - "RTK correction"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:ConnectivityRTKCorrection
+    range: ConnectivityRTKCorrectionEnum
+    multivalued: true
   DrivableAreaEdge:
     description: Type of drivable area edge.
     comments:
@@ -1401,18 +1787,19 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:IlluminationArtificial
     range: IlluminationArtificialEnum
-  IlluminationLowLight:
-    description: Type of low-light condition.
+  IlluminationNatural:
+    description: Type of natural illumination (daytime, night time or low-ambient lighting).
     comments:
-      - "ISO 34503:2023, 10.4 a) 2)"
+      - "ISO 34503:2023, 10.4 a)"
     aliases:
-      - "Night or lowAmbient lighting condition"
+      - "Natural illumination"
     notes:
-      - "v1 label: \"Night or lowAmbient lighting condition\" (PAS 1883:2020, Section 5.3.3.b)."
+      - "Replaces the former IlluminationLowLight slot. IlluminationLowLight is now a value of this slot, alongside IlluminationDay and LowLightNight."
+      - "v1 label of the former slot: \"Night or lowAmbient lighting condition\" (PAS 1883:2020, Section 5.3.3.b)."
     see_also:
       - https://www.iso.org/standard/78952.html
-    slot_uri: openlabel_v2:IlluminationLowLight
-    range: IlluminationLowLightEnum
+    slot_uri: openlabel_v2:IlluminationNatural
+    range: IlluminationNaturalEnum
   JunctionIntersection:
     description: Type of intersection.
     comments:
@@ -1498,6 +1885,97 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ScenerySpecialStructure
     range: ScenerySpecialStructureEnum
+  SpecialStructuresUsage:
+    description: How the special structure is used by the vehicle (driving on or under it).
+    comments:
+      - "ISO 34503:2023, 9.6 c)"
+    aliases:
+      - "Usage"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpecialStructuresUsage
+    range: SpecialStructuresUsageEnum
+    multivalued: true
+  SpecialStructuresDimensionHeight:
+    description: Presence of a specified special structure height.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Height"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpecialStructuresDimensionHeight
+    range: boolean
+  SpecialStructuresDimensionLength:
+    description: Presence of a specified special structure length.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Length"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpecialStructuresDimensionLength
+    range: boolean
+  SpecialStructuresDimensionShoulderWidth:
+    description: Presence of a specified special structure shoulder width.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Shoulder width"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpecialStructuresDimensionShoulderWidth
+    range: boolean
+  SpecialStructuresDimensionWidth:
+    description: Presence of a specified special structure width.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Width"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpecialStructuresDimensionWidth
+    range: boolean
+  DimensionHeight:
+    description: Special structure height in metres.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Dimension height (m)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:DimensionHeight
+    range: decimal
+  DimensionLength:
+    description: Special structure length in metres.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Dimension length (m)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:DimensionLength
+    range: decimal
+  DimensionShoulderWidth:
+    description: Special structure shoulder width in metres.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Dimension shoulder width (m)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:DimensionShoulderWidth
+    range: decimal
+  DimensionWidth:
+    description: Special structure width in metres.
+    comments:
+      - "ISO 34503:2023, 9.6 b)"
+    aliases:
+      - "Dimension width (m)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:DimensionWidth
+    range: decimal
   SceneryTemporaryStructure:
     description: Type of temporary drivable area structure present in the scenery.
     comments:
@@ -1558,6 +2036,17 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:SignsWarning
     range: SignsWarningEnum
+  SignFeature:
+    description: Sign feature (fixed or movable).
+    comments:
+      - "ISO 34503:2023, 9.3.5 b)"
+    aliases:
+      - "Sign feature"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SignFeature
+    range: SignFeatureEnum
+    multivalued: true
   DaySunElevation:
     description: Presence of a specified sun elevation above the horizon.
     comments:
@@ -1643,16 +2132,48 @@ slots:
     slot_uri: openlabel_v2:LaneSpecificationLaneCount
     range: boolean
   LaneSpecificationMarking:
-    description: Presence of lane markings.
+    description: Type of lane marking.
     comments:
-      - "ISO 34503:2023, 9.3.4"
+      - "ISO 34503:2023, 9.3.4 b)"
     aliases:
       - "Lane marking"
     notes:
       - "v1 label: \"Lane marking\" (PAS 1883:2020, Section 5.2.3.4.b)."
+      - "Changed from a boolean flag to an enum slot to carry the ISO 34503 lane marking values (clear, blurred, no lane marking, temporary)."
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:LaneSpecificationMarking
+    range: LaneSpecificationMarkingEnum
+    multivalued: true
+  LaneSpecificationSpeedLimit:
+    description: Presence of a specified lane speed limit.
+    comments:
+      - "ISO 34503:2023, 9.3.4 e)"
+    aliases:
+      - "Speed limit"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:LaneSpecificationSpeedLimit
+    range: boolean
+  SpeedLimit:
+    description: Lane speed limit in kilometres per hour.
+    comments:
+      - "ISO 34503:2023, 9.3.4 e)"
+    aliases:
+      - "Speed Limit (km/h)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:SpeedLimit
+    range: decimal
+  LaneSpecificationUsage:
+    description: Presence of a specified lane usage.
+    comments:
+      - "ISO 34503:2023, 9.3.4 f)"
+    aliases:
+      - "Lane usage"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:LaneSpecificationUsage
     range: boolean
   LongitudinalDownSlope:
     description: Presence of a downhill gradient.
@@ -1700,30 +2221,73 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:longitudinalUpSlopeValue
     range: decimal
-  ParticulatesDust:
-    description: Presence of sand or dust particulates.
+  ParticulatesBlowingDebris:
+    description: Presence of blowing debris particulates.
     comments:
-      - "ISO 34503:2023, 10.3"
+      - "ISO 34503:2023, 10.3 a)"
     aliases:
+      - "Blowing debris"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:ParticulatesBlowingDebris
+    range: boolean
+  ParticulatesDust:
+    description: Presence of dust particulates.
+    comments:
+      - "ISO 34503:2023, 10.3 a)"
+    aliases:
+      - "Dust"
       - "Sand and dust"
     notes:
-      - "v1 label: \"Sand and dust\" (PAS 1883:2020, Section 5.3.2.c)."
+      - "v1 label: \"Sand and dust\" (PAS 1883:2020, Section 5.3.2.c). ISO 34503:2023 lists sand and dust separately; sand is ParticulatesSand."
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:ParticulatesDust
     range: boolean
-  ParticulatesMarine:
-    description: Presence of marine spray in coastal areas.
+  ParticulatesInsectSwarms:
+    description: Presence of insect swarms.
     comments:
-      - "ISO 34503:2023, 10.3"
+      - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 10.3)"
     aliases:
-      - "Marine (coastal areas only)"
-    notes:
-      - "v1 label: \"Marine (coastal areas only)\" (PAS 1883:2020, Section 5.3.2.a). PAS 1883:2020 legacy value; ISO 34503:2023 uses \"water spray\" instead."
+      - "Insect swarms"
     see_also:
       - https://www.iso.org/standard/78952.html
-    slot_uri: openlabel_v2:ParticulatesMarine
+    slot_uri: openlabel_v2:ParticulatesInsectSwarms
     range: boolean
+  ParticulatesIntensity:
+    description: Particulates intensity (mm/h).
+    comments:
+      - "ISO 34503:2023, 10.3 b)"
+    aliases:
+      - "Particulates intensity (mm/h)"
+    notes:
+      - "In the internal ontology ParticulatesIntensity is both a class and a decimal datatype property; modelled here as a single decimal slot."
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:ParticulatesIntensity
+    range: decimal
+  ParticulatesSand:
+    description: Presence of sand particulates.
+    comments:
+      - "ISO 34503:2023, 10.3 a)"
+    aliases:
+      - "Sand"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:ParticulatesSand
+    range: boolean
+  ParticulatesSize:
+    description: Particulates size.
+    comments:
+      - "ISO 34503:2023, 10.3 c)"
+    aliases:
+      - "Size"
+    notes:
+      - "In the internal ontology ParticulatesSize is both a class and a decimal datatype property; modelled here as a single decimal slot."
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:ParticulatesSize
+    range: decimal
   ParticulatesPollution:
     description: Presence of smoke or pollution particulates.
     comments:
@@ -1821,7 +2385,7 @@ slots:
   TrafficSpecialVehicle:
     description: Presence of special vehicles.
     comments:
-      - "ISO 34503:2023, 11.1"
+      - "ISO 34503:2023, 11.1 b)"
     aliases:
       - "Presence of special vehicles (e.g. ambulances or police vehicles)."
     notes:
@@ -1973,15 +2537,23 @@ slots:
   trafficAgentTypeValue:
     description: Types of traffic agents present.
     comments:
-      - "ISO 34503:2023, 11.1"
+      - "ISO 34503:2023, 11.1 a)"
     notes:
       - "v1 description: \"Agent type\" (PAS 1883:2020, Section 5.4.a.4)."
+      - "Range changed from the ISO 34504 road user enums (RoadUserHumanEnum, RoadUserVehicleEnum) to TrafficAgentTypeEnum, which follows the ISO 34503 agent type list."
     see_also:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:trafficAgentTypeValue
-    any_of:
-      - range: RoadUserHumanEnum
-      - range: RoadUserVehicleEnum
+    range: TrafficAgentTypeEnum
+    multivalued: true
+  trafficSpecialVehicleValue:
+    description: Types of special vehicles present.
+    comments:
+      - "ISO 34503:2023, 11.1 b)"
+    see_also:
+      - https://www.iso.org/standard/78952.html
+    slot_uri: openlabel_v2:trafficSpecialVehicleValue
+    range: TrafficSpecialVehicleEnum
     multivalued: true
   trafficFlowRateValue:
     description: Traffic flow rate in vehicles per hour.
@@ -2035,26 +2607,6 @@ slots:
       - https://www.iso.org/standard/78952.html
     slot_uri: openlabel_v2:weatherWindValue
     range: decimal
-  RoadUserAnimal:
-    description: Animal road user flag.
-    comments:
-      - "ISO 34504:2023, 4.4.4.1 (Road user type — animal)"
-    slot_uri: openlabel_v2:RoadUserAnimal
-    range: boolean
-
-  RoadUserHuman:
-    description: Human road user type.
-    comments:
-      - "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian, cyclist)"
-    slot_uri: openlabel_v2:RoadUserHuman
-    range: RoadUserHumanEnum
-
-  RoadUserVehicle:
-    description: Vehicle type.
-    comments:
-      - "ISO 34504:2023, 4.4.4.1 (Road user type — vehicle)"
-    slot_uri: openlabel_v2:RoadUserVehicle
-    range: RoadUserVehicleEnum
 
   # ---------------------------------------------------------------------------
   # QuantitativeValue slots (schema.org)
@@ -2094,115 +2646,74 @@ slots:
 enums:
 
   # ---------------------------------------------------------------------------
-  # Behaviour Communication
+  # Behaviour Signalling (BSI Flex 1891, 5.2)
   # ---------------------------------------------------------------------------
-  BehaviourCommunicationEnum:
-    description: Types of communication behaviours by road users.
+  BehaviourSignallingEnum:
+    description: Types of signalling behaviour.
     comments:
-      - "ASAM OpenLABEL V1.0.0"
+      - "BSI Flex 1891 v1.0:2025-01, 5.2"
     notes:
-      - "Communication signals are not covered by ISO 34504 action tags. These are ASAM OpenLABEL-specific extensions for scenario description fidelity."
+      - "Replaces BehaviourCommunicationEnum. Former values map as: CommunicationHorn, CommunicationHeadlightFlash, CommunicationSignalHazard → ExternalWarningSignalling; CommunicationSignalLeft, CommunicationSignalRight, CommunicationSignalSlowing, CommunicationWave → ExternalIntentSignalling; CommunicationSignalEmergency → ExternalEmergencySignalling."
     permissible_values:
-      CommunicationHeadlightFlash:
-        description: Flash headlight.
-        meaning: openlabel_v2:CommunicationHeadlightFlash
-      CommunicationHorn:
-        description: Sound horn.
-        meaning: openlabel_v2:CommunicationHorn
-      CommunicationSignalEmergency:
-        description: Signal emergency.
-        meaning: openlabel_v2:CommunicationSignalEmergency
-      CommunicationSignalHazard:
-        description: Signal hazard.
-        meaning: openlabel_v2:CommunicationSignalHazard
-      CommunicationSignalLeft:
-        description: Signal left.
-        meaning: openlabel_v2:CommunicationSignalLeft
-      CommunicationSignalRight:
-        description: Signal right.
-        meaning: openlabel_v2:CommunicationSignalRight
-      CommunicationSignalSlowing:
-        description: Signal slowing.
-        meaning: openlabel_v2:CommunicationSignalSlowing
-      CommunicationWave:
-        description: Wave.
-        meaning: openlabel_v2:CommunicationWave
+      ExternalSignalling:
+        description: External signalling; indicates the actor's state or intent to other actors in its vicinity.
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.2"
+        meaning: openlabel_v2:ExternalSignalling
+      ExternalWarningSignalling:
+        description: External warning signalling (e.g. hazard lights, horn).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.2 a)"
+        meaning: openlabel_v2:ExternalWarningSignalling
+      ExternalIntentSignalling:
+        description: External intent signalling (e.g. turning indicators, turn-hand gestures).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.2 b)"
+        meaning: openlabel_v2:ExternalIntentSignalling
+      ExternalEmergencySignalling:
+        description: External emergency signalling (e.g. police or ambulance sirens, police officer's gestures).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.2 c)"
+        meaning: openlabel_v2:ExternalEmergencySignalling
+      InternalSignalling:
+        description: Internal signalling; indicates the vehicle's state or intent to its occupants.
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.3"
+        meaning: openlabel_v2:InternalSignalling
+      InternalWarningSignalling:
+        description: Internal warning signalling (e.g. low tyre pressure, engine warning light).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.3 a)"
+        meaning: openlabel_v2:InternalWarningSignalling
+      InternalIntentSignalling:
+        description: Internal intent signalling (e.g. turning indicators, HMI message for no-user-in-charge vehicles).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.3 b)"
+        meaning: openlabel_v2:InternalIntentSignalling
+      InternalEmergencySignalling:
+        description: Internal emergency signalling (e.g. forward collision warning, handover request).
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.2.3 c)"
+        meaning: openlabel_v2:InternalEmergencySignalling
 
   # ---------------------------------------------------------------------------
-  # Road User Vehicle
+  # Behaviour Positioning (BSI Flex 1891, 5.3)
   # ---------------------------------------------------------------------------
-  RoadUserVehicleEnum:
-    description: Types of vehicles.
+  BehaviourPositioningEnum:
+    description: Types of positioning behaviour.
     comments:
-      - "ISO 34504:2023, 4.4.4.1 (Road user type — vehicle sub-tags)"
-    notes:
-      - "ISO 34504 lists: passenger car, bus, school bus, truck, tram, goods vehicle, dangerous goods vehicle, long/large vehicle, agricultural vehicle, fire truck, ambulance, police vehicle, rescue vehicle, crane/NRMM, disabled vehicle, etc. ASAM OpenLABEL uses a simplified aggregation."
+      - "BSI Flex 1891 v1.0:2025-01, 5.3"
     permissible_values:
-      VehicleAgricultural:
-        description: Agricultural vehicle.
-        meaning: openlabel_v2:VehicleAgricultural
-      VehicleBus:
-        description: Bus.
-        meaning: openlabel_v2:VehicleBus
-      VehicleCar:
-        description: Car.
-        meaning: openlabel_v2:VehicleCar
-      VehicleConstruction:
-        description: Construction vehicle.
-        meaning: openlabel_v2:VehicleConstruction
-      VehicleCycle:
-        description: Cycle.
-        meaning: openlabel_v2:VehicleCycle
-      VehicleEmergency:
-        description: Emergency vehicle.
-        meaning: openlabel_v2:VehicleEmergency
-      VehicleMotorcycle:
-        description: Motorcycle.
-        meaning: openlabel_v2:VehicleMotorcycle
-      VehicleTrailer:
-        description: Trailer.
-        meaning: openlabel_v2:VehicleTrailer
-      VehicleTruck:
-        description: Truck.
-        meaning: openlabel_v2:VehicleTruck
-      VehicleVan:
-        description: Van.
-        meaning: openlabel_v2:VehicleVan
-      VehicleWheelchair:
-        description: Wheelchair.
-        meaning: openlabel_v2:VehicleWheelchair
-
-  # ---------------------------------------------------------------------------
-  # Road User Human
-  # ---------------------------------------------------------------------------
-  RoadUserHumanEnum:
-    description: Types of human road users.
-    comments:
-      - "ISO 34504:2023, 4.4.4.1 (Road user type — pedestrian/cyclist sub-tags)"
-    notes:
-      - "ISO 34504 lists pedestrian sub-tags: child, adult, person with disabilities, hearing-impaired, visually-impaired, road-works crew, person pushing stroller, person in wheelchair, etc. Cyclist sub-tags: bicyclist, e-Bike user, skater, motorcycle, moped/scooter. ASAM OpenLABEL uses role-based categories."
-    permissible_values:
-      HumanAnimalRider:
-        description: Animal rider (e.g. horse rider).
-        meaning: openlabel_v2:HumanAnimalRider
-      HumanCyclist:
-        description: Cyclist.
-        meaning: openlabel_v2:HumanCyclist
-      HumanDriver:
-        description: Driver.
-        meaning: openlabel_v2:HumanDriver
-      HumanMotorcyclist:
-        description: Motorcyclist.
-        meaning: openlabel_v2:HumanMotorcyclist
-      HumanPassenger:
-        description: Passenger.
-        meaning: openlabel_v2:HumanPassenger
-      HumanPedestrian:
-        description: Pedestrian.
-        meaning: openlabel_v2:HumanPedestrian
-      HumanWheelchairUser:
-        description: Wheelchair user.
-        meaning: openlabel_v2:HumanWheelchairUser
+      PremanoeuvrePositioning:
+        description: Pre-manoeuvre positioning of the subject vehicle before the execution of a manoeuvre.
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.3 a)"
+        meaning: openlabel_v2:PremanoeuvrePositioning
+      PostmanoeuvrePositioning:
+        description: Post-manoeuvre positioning of the subject vehicle after the execution of a manoeuvre.
+        comments:
+          - "BSI Flex 1891 v1.0:2025-01, 5.3 b)"
+        meaning: openlabel_v2:PostmanoeuvrePositioning
 
   # ---------------------------------------------------------------------------
   # Drivable Area Edge
@@ -2216,24 +2727,45 @@ enums:
     notes:
       - "v1 label: \"Drivable area edge\" (PAS 1883:2020, Section 5.2.3.1.e)."
     permissible_values:
+      EdgeBurningMaterials:
+        description: Burning materials at the roadside.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.6)"
+        meaning: openlabel_v2:EdgeBurningMaterials
       EdgeLineMarkers:
         description: Line markers.
         meaning: openlabel_v2:EdgeLineMarkers
       EdgeNone:
         description: None.
         meaning: openlabel_v2:EdgeNone
+      EdgeSheerDrop:
+        description: Sheer drop.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.6)"
+        meaning: openlabel_v2:EdgeSheerDrop
+      EdgeShoulder:
+        description: Shoulder.
+        meaning: openlabel_v2:EdgeShoulder
       EdgeShoulderGrass:
         description: Shoulder (grass).
         meaning: openlabel_v2:EdgeShoulderGrass
       EdgeShoulderPavedOrGravel:
         description: Shoulder (paved or gravel).
         meaning: openlabel_v2:EdgeShoulderPavedOrGravel
+      EdgeSnowbanks:
+        description: Snowbanks.
+        meaning: openlabel_v2:EdgeSnowbanks
       EdgeSolidBarriers:
         description: Solid barriers (e.g. grating, rails, curb, cones).
         meaning: openlabel_v2:EdgeSolidBarriers
       EdgeTemporaryLineMarkers:
         description: Temporary line markers.
         meaning: openlabel_v2:EdgeTemporaryLineMarkers
+      EdgeWaterOnRoadside:
+        description: Water on the roadside.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.6)"
+        meaning: openlabel_v2:EdgeWaterOnRoadside
 
   # ---------------------------------------------------------------------------
   # Geometry Transverse
@@ -2259,9 +2791,35 @@ enums:
       TransversePavements:
         description: Pavements.
         meaning: openlabel_v2:TransversePavements
+      TransverseSuperelevationBanking:
+        description: Superelevation / banking.
+        meaning: openlabel_v2:TransverseSuperelevationBanking
       TransverseUndivided:
         description: Undivided.
         meaning: openlabel_v2:TransverseUndivided
+
+  # ---------------------------------------------------------------------------
+  # Lane Specification Marking
+  # ---------------------------------------------------------------------------
+  LaneSpecificationMarkingEnum:
+    description: Types of lane marking.
+    comments:
+      - "ISO 34503:2023, 9.3.4 b)"
+    aliases:
+      - "Lane marking"
+    permissible_values:
+      BlurredLaneMarking:
+        description: Blurred lane marking.
+        meaning: openlabel_v2:BlurredLaneMarking
+      ClearLaneMarking:
+        description: Clear lane marking.
+        meaning: openlabel_v2:ClearLaneMarking
+      LaneMarkingNoLine:
+        description: No lane marking.
+        meaning: openlabel_v2:LaneMarkingNoLine
+      TemporaryLaneMarking:
+        description: Temporary lane marking.
+        meaning: openlabel_v2:TemporaryLaneMarking
 
   # ---------------------------------------------------------------------------
   # Lane Specification Travel Direction
@@ -2325,12 +2883,18 @@ enums:
     notes:
       - "v1 label: \"Information signs\" (PAS 1883:2020, Section 5.2.3.5.a)."
     permissible_values:
+      InformationSignsUniform:
+        description: Uniform messaging.
+        meaning: openlabel_v2:InformationSignsUniform
       InformationSignsUniformFullTime:
         description: Uniform full-time.
         meaning: openlabel_v2:InformationSignsUniformFullTime
       InformationSignsUniformTemporary:
         description: Uniform temporary.
         meaning: openlabel_v2:InformationSignsUniformTemporary
+      InformationSignsVariable:
+        description: Variable messaging.
+        meaning: openlabel_v2:InformationSignsVariable
       InformationSignsVariableFullTime:
         description: Variable full-time.
         meaning: openlabel_v2:InformationSignsVariableFullTime
@@ -2350,12 +2914,18 @@ enums:
     notes:
       - "v1 label: \"Regulatory signs\" (PAS 1883:2020, Section 5.2.3.5.b)."
     permissible_values:
+      RegulatorySignsUniform:
+        description: Uniform messaging.
+        meaning: openlabel_v2:RegulatorySignsUniform
       RegulatorySignsUniformFullTime:
         description: Uniform full-time.
         meaning: openlabel_v2:RegulatorySignsUniformFullTime
       RegulatorySignsUniformTemporary:
         description: Uniform temporary.
         meaning: openlabel_v2:RegulatorySignsUniformTemporary
+      RegulatorySignsVariable:
+        description: Variable messaging.
+        meaning: openlabel_v2:RegulatorySignsVariable
       RegulatorySignsVariableFullTime:
         description: Variable full-time.
         meaning: openlabel_v2:RegulatorySignsVariableFullTime
@@ -2376,7 +2946,7 @@ enums:
       - "v1 label: \"Warning signs\" (PAS 1883:2020, Section 5.2.3.5.c)."
     permissible_values:
       WarningSignsUniform:
-        description: Uniform.
+        description: Uniform messaging.
         meaning: openlabel_v2:WarningSignsUniform
       WarningSignsUniformFullTime:
         description: Uniform full-time.
@@ -2384,12 +2954,32 @@ enums:
       WarningSignsUniformTemporary:
         description: Uniform temporary.
         meaning: openlabel_v2:WarningSignsUniformTemporary
+      WarningSignsVariable:
+        description: Variable messaging.
+        meaning: openlabel_v2:WarningSignsVariable
       WarningSignsVariableFullTime:
         description: Variable full-time.
         meaning: openlabel_v2:WarningSignsVariableFullTime
       WarningSignsVariableTemporary:
         description: Variable temporary.
         meaning: openlabel_v2:WarningSignsVariableTemporary
+
+  # ---------------------------------------------------------------------------
+  # Sign Feature
+  # ---------------------------------------------------------------------------
+  SignFeatureEnum:
+    description: Sign features.
+    comments:
+      - "ISO 34503:2023, 9.3.5 b)"
+    aliases:
+      - "Sign feature"
+    permissible_values:
+      FixedSigns:
+        description: Fixed signs.
+        meaning: openlabel_v2:FixedSigns
+      MovableSigns:
+        description: Movable signs.
+        meaning: openlabel_v2:MovableSigns
 
   # ---------------------------------------------------------------------------
   # Drivable Area Surface Condition
@@ -2406,12 +2996,42 @@ enums:
       SurfaceConditionContamination:
         description: Surface contamination.
         meaning: openlabel_v2:SurfaceConditionContamination
+      ContaminationLava:
+        description: Lava/burning liquid.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 surface contamination)"
+        meaning: openlabel_v2:ContaminationLava
+      ContaminationSandSilt:
+        description: Sand/silt.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 surface contamination)"
+        meaning: openlabel_v2:ContaminationSandSilt
+      ContaminationSettledAsh:
+        description: Settled ash.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 surface contamination)"
+        meaning: openlabel_v2:ContaminationSettledAsh
       SurfaceConditionFlooded:
         description: Flooded roadways.
         meaning: openlabel_v2:SurfaceConditionFlooded
+      FloodedFlowingWater:
+        description: Flowing water.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 flooded)"
+        meaning: openlabel_v2:FloodedFlowingWater
       SurfaceConditionIcy:
         description: Icy.
         meaning: openlabel_v2:SurfaceConditionIcy
+      SurfaceConditionIcyBlack:
+        description: Black ice.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 icy)"
+        meaning: openlabel_v2:SurfaceConditionIcyBlack
+      SurfaceConditionIcyPacked:
+        description: Packed snow/ice.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 icy)"
+        meaning: openlabel_v2:SurfaceConditionIcyPacked
       SurfaceConditionMirage:
         description: Mirage effect on the drivable area surface.
         notes:
@@ -2423,6 +3043,11 @@ enums:
       SurfaceConditionStandingWater:
         description: Standing water.
         meaning: openlabel_v2:SurfaceConditionStandingWater
+      StandingWaterStill:
+        description: Still water.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7 standing water)"
+        meaning: openlabel_v2:StandingWaterStill
       SurfaceConditionWet:
         description: Wet road.
         meaning: openlabel_v2:SurfaceConditionWet
@@ -2442,6 +3067,26 @@ enums:
       SurfaceFeatureCrack:
         description: Cracks.
         meaning: openlabel_v2:SurfaceFeatureCrack
+      SurfaceFeatureCut:
+        description: Cut road surface.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7)"
+        meaning: openlabel_v2:SurfaceFeatureCut
+      SurfaceFeatureEarthquake:
+        description: Earthquake induced road dislocation.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7)"
+        meaning: openlabel_v2:SurfaceFeatureEarthquake
+      SurfaceFeatureEarthquakeHorizontal:
+        description: Earthquake induced horizontal road dislocation.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7)"
+        meaning: openlabel_v2:SurfaceFeatureEarthquakeHorizontal
+      SurfaceFeatureEarthquakeVertical:
+        description: Earthquake induced vertical road dislocation.
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 9.3.7)"
+        meaning: openlabel_v2:SurfaceFeatureEarthquakeVertical
       SurfaceFeaturePothole:
         description: Potholes.
         meaning: openlabel_v2:SurfaceFeaturePothole
@@ -2458,21 +3103,31 @@ enums:
   DrivableAreaSurfaceTypeEnum:
     description: Types of drivable area surfaces.
     comments:
-      - "ISO 34503:2023, 9.3.7"
+      - "ISO 34503:2023, 9.3.7 a)"
     aliases:
       - "Road surface type"
     notes:
       - "v1 label: \"Road surface type\" (PAS 1883:2020, Section 5.2.3.7.a). ISO 34503:2023 uses the term \"drivable area surface type\"."
+      - "The PAS 1883:2020 values SurfaceTypeLoose, SurfaceTypeSegmented and SurfaceTypeUniform were removed; ISO 34503:2023 lists the surface materials below instead."
     permissible_values:
-      SurfaceTypeLoose:
-        description: Loose (e.g. gravel, earth, sand).
-        meaning: openlabel_v2:SurfaceTypeLoose
-      SurfaceTypeSegmented:
-        description: Segmented (e.g. concrete slabs, granite setts, cobblestones).
-        meaning: openlabel_v2:SurfaceTypeSegmented
-      SurfaceTypeUniform:
-        description: Uniform (e.g. asphalt).
-        meaning: openlabel_v2:SurfaceTypeUniform
+      SurfaceTypeAsphalt:
+        description: Asphalt.
+        meaning: openlabel_v2:SurfaceTypeAsphalt
+      SurfaceTypeCementConcrete:
+        description: Cement concrete.
+        meaning: openlabel_v2:SurfaceTypeCementConcrete
+      SurfaceTypeCobblestone:
+        description: Cobblestone.
+        meaning: openlabel_v2:SurfaceTypeCobblestone
+      SurfaceTypeGraniteSetts:
+        description: Granite setts.
+        meaning: openlabel_v2:SurfaceTypeGraniteSetts
+      SurfaceTypeGravel:
+        description: Gravel.
+        meaning: openlabel_v2:SurfaceTypeGravel
+      SurfaceTypePavers:
+        description: Pavers.
+        meaning: openlabel_v2:SurfaceTypePavers
 
   # ---------------------------------------------------------------------------
   # Drivable Area Type (Road Types)
@@ -2485,34 +3140,80 @@ enums:
       - "Drivable area type"
     notes:
       - "v1 label: \"Drivable area type\" (PAS 1883:2020, Section 5.2.3.2)."
+      - "Each drivable area type is further classified with / without active traffic management (ISO 34503:2023, 9.3.2 1) and 2))."
     permissible_values:
       RoadTypeDistributor:
         description: Distributor roads.
         meaning: openlabel_v2:RoadTypeDistributor
+      DistributorRoadsManaged:
+        description: Distributor roads with active traffic management.
+        meaning: openlabel_v2:DistributorRoadsManaged
+      DistributorRoadsUnmanaged:
+        description: Distributor roads without active traffic management.
+        meaning: openlabel_v2:DistributorRoadsUnmanaged
       RoadTypeMinor:
-        description: Minor roads.
+        description: Minor or local roads.
         meaning: openlabel_v2:RoadTypeMinor
+      MinorRoadsManaged:
+        description: Minor or local roads with active traffic management.
+        meaning: openlabel_v2:MinorRoadsManaged
+      MinorRoadsUnmanaged:
+        description: Minor or local roads without active traffic management.
+        meaning: openlabel_v2:MinorRoadsUnmanaged
       RoadTypeMotorway:
         description: Motorways.
         meaning: openlabel_v2:RoadTypeMotorway
       MotorwayManaged:
-        description: Managed motorways.
+        description: Motorways with active traffic management (smart motorways).
         meaning: openlabel_v2:MotorwayManaged
       MotorwayUnmanaged:
-        description: Unmanaged motorways.
+        description: Motorways without active traffic management.
         meaning: openlabel_v2:MotorwayUnmanaged
       RoadTypeParking:
-        description: Parking.
+        description: Parking space.
         meaning: openlabel_v2:RoadTypeParking
+      ParkingManaged:
+        description: Parking space with active traffic management.
+        meaning: openlabel_v2:ParkingManaged
+      ParkingUnmanaged:
+        description: Parking space without active traffic management.
+        meaning: openlabel_v2:ParkingUnmanaged
+      RoadTypePrimary:
+        description: Primary roads.
+        meaning: openlabel_v2:RoadTypePrimary
+      PrimaryRoadsManaged:
+        description: Primary roads with active traffic management.
+        meaning: openlabel_v2:PrimaryRoadsManaged
+      PrimaryRoadsUnmanaged:
+        description: Primary roads without active traffic management.
+        meaning: openlabel_v2:PrimaryRoadsUnmanaged
       RoadTypeRadial:
         description: Radial roads.
         meaning: openlabel_v2:RoadTypeRadial
+      RadialRoadsManaged:
+        description: Radial roads with active traffic management.
+        meaning: openlabel_v2:RadialRoadsManaged
+      RadialRoadsUnmanaged:
+        description: Radial roads without active traffic management.
+        meaning: openlabel_v2:RadialRoadsUnmanaged
       RoadTypeShared:
         description: Shared space.
         meaning: openlabel_v2:RoadTypeShared
+      SharedSpaceManaged:
+        description: Shared space with active traffic management.
+        meaning: openlabel_v2:SharedSpaceManaged
+      SharedSpaceUnmanaged:
+        description: Shared space without active traffic management.
+        meaning: openlabel_v2:SharedSpaceUnmanaged
       RoadTypeSlip:
         description: Slip roads.
         meaning: openlabel_v2:RoadTypeSlip
+      SlipRoadsManaged:
+        description: Slip roads with active traffic management.
+        meaning: openlabel_v2:SlipRoadsManaged
+      SlipRoadsUnmanaged:
+        description: Slip roads without active traffic management.
+        meaning: openlabel_v2:SlipRoadsUnmanaged
 
   # ---------------------------------------------------------------------------
   # Scenery Fixed Structure
@@ -2550,10 +3251,17 @@ enums:
       - "Intersection"
     notes:
       - "v1 label: \"Intersection\" (PAS 1883:2020, Section 5.2.4)."
+      - "Each intersection type is further classified into signalised or non-signalised (ISO 34503:2023, 9.4.3)."
     permissible_values:
       IntersectionCrossroad:
         description: Crossroads.
         meaning: openlabel_v2:IntersectionCrossroad
+      CrossroadSignalised:
+        description: Signalised crossroads.
+        meaning: openlabel_v2:CrossroadSignalised
+      CrossroadNonSignalised:
+        description: Non-signalised crossroads.
+        meaning: openlabel_v2:CrossroadNonSignalised
       IntersectionGradeSeperated:
         description: Grade separated.
         aliases:
@@ -2561,15 +3269,39 @@ enums:
         notes:
           - "IRI preserves v1 misspelling 'Seperated' (correct: 'Separated') to maintain backward compatibility. Alias provides correct spelling for discoverability."
         meaning: openlabel_v2:IntersectionGradeSeperated
+      GradeSignalised:
+        description: Signalised grade separated junction.
+        meaning: openlabel_v2:GradeSignalised
+      GradeNonSignalised:
+        description: Non-signalised grade separated junction.
+        meaning: openlabel_v2:GradeNonSignalised
       IntersectionStaggered:
         description: Staggered.
         meaning: openlabel_v2:IntersectionStaggered
+      StaggeredSignalised:
+        description: Signalised staggered junction.
+        meaning: openlabel_v2:StaggeredSignalised
+      StaggeredNonSignalised:
+        description: Non-signalised staggered junction.
+        meaning: openlabel_v2:StaggeredNonSignalised
       IntersectionTJunction:
         description: T-Junctions.
         meaning: openlabel_v2:IntersectionTJunction
+      TJunctionSignalised:
+        description: Signalised T-junction.
+        meaning: openlabel_v2:TJunctionSignalised
+      TTJunctionsNonSignalised:
+        description: Non-signalised T-junction.
+        meaning: openlabel_v2:TTJunctionsNonSignalised
       IntersectionYJunction:
         description: Y-Junction.
         meaning: openlabel_v2:IntersectionYJunction
+      YJunctionSignalised:
+        description: Signalised Y-junction.
+        meaning: openlabel_v2:YJunctionSignalised
+      YJunctionNonSignalised:
+        description: Non-signalised Y-junction.
+        meaning: openlabel_v2:YJunctionNonSignalised
 
   # ---------------------------------------------------------------------------
   # Junction Roundabout
@@ -2582,31 +3314,56 @@ enums:
       - "Roundabout"
     notes:
       - "v1 label: \"Roundabout\" (PAS 1883:2020, Section 5.2.4)."
+      - "Each roundabout size is further classified into signalised or non-signalised (ISO 34503:2023, 9.4.2 1) and 2))."
     permissible_values:
+      RoundaboutCompact:
+        description: Compact roundabout.
+        meaning: openlabel_v2:RoundaboutCompact
       RoundaboutCompactNosignal:
         description: Compact non-signalised.
         meaning: openlabel_v2:RoundaboutCompactNosignal
       RoundaboutCompactSignal:
         description: Compact signalised.
         meaning: openlabel_v2:RoundaboutCompactSignal
+      RoundaboutDouble:
+        description: Double roundabout.
+        meaning: openlabel_v2:RoundaboutDouble
       RoundaboutDoubleNosignal:
         description: Double non-signalised.
         meaning: openlabel_v2:RoundaboutDoubleNosignal
       RoundaboutDoubleSignal:
         description: Double signalised.
         meaning: openlabel_v2:RoundaboutDoubleSignal
+      RoundaboutLarge:
+        description: Large roundabout.
+        meaning: openlabel_v2:RoundaboutLarge
       RoundaboutLargeNosignal:
         description: Large non-signalised.
         meaning: openlabel_v2:RoundaboutLargeNosignal
       RoundaboutLargeSignal:
         description: Large signalised.
         meaning: openlabel_v2:RoundaboutLargeSignal
+      RoundaboutMini:
+        description: Mini roundabout.
+        meaning: openlabel_v2:RoundaboutMini
       RoundaboutMiniNosignal:
         description: Mini non-signalised.
         meaning: openlabel_v2:RoundaboutMiniNosignal
       RoundaboutMiniSignal:
         description: Mini signalised.
         meaning: openlabel_v2:RoundaboutMiniSignal
+      RoundaboutMultiple:
+        description: Multiple roundabout complex.
+        meaning: openlabel_v2:RoundaboutMultiple
+      MultipleSignalised:
+        description: Multiple signalised.
+        meaning: openlabel_v2:MultipleSignalised
+      MultipleNonSignalised:
+        description: Multiple non-signalised.
+        meaning: openlabel_v2:MultipleNonSignalised
+      RoundaboutNormal:
+        description: Normal roundabout.
+        meaning: openlabel_v2:RoundaboutNormal
       RoundaboutNormalNosignal:
         description: Normal non-signalised.
         meaning: openlabel_v2:RoundaboutNormalNosignal
@@ -2646,6 +3403,23 @@ enums:
         meaning: openlabel_v2:SpecialStructureTunnel
 
   # ---------------------------------------------------------------------------
+  # Special Structures Usage
+  # ---------------------------------------------------------------------------
+  SpecialStructuresUsageEnum:
+    description: Ways a special structure is used.
+    comments:
+      - "ISO 34503:2023, 9.6 c)"
+    aliases:
+      - "Usage"
+    permissible_values:
+      SpecialStructuresUsageDrivingOn:
+        description: Driving on.
+        meaning: openlabel_v2:SpecialStructuresUsageDrivingOn
+      SpecialStructuresUsageDrivingUnder:
+        description: Driving under.
+        meaning: openlabel_v2:SpecialStructuresUsageDrivingUnder
+
+  # ---------------------------------------------------------------------------
   # Scenery Temporary Structure
   # ---------------------------------------------------------------------------
   SceneryTemporaryStructureEnum:
@@ -2681,59 +3455,122 @@ enums:
       - "Zones"
     notes:
       - "v1 label: \"Zones\" (PAS 1883:2020, Section 5.2.1.a)."
+      - "Internal hierarchy: FixedZone (ZoneSchool, EnviromentalZone, IndustrialZone, ParkingLot, FreightDistributionCentre); DynamicZone (ZoneTrafficManagement, ZoneMobileWork, ZonePort); ZoneInterference (ZoneUrbanCanyon, ZoneOverheadWires, ZoneDenseFoliage)."
     permissible_values:
       ZoneGeoFenced:
         description: GeoFenced areas.
         meaning: openlabel_v2:ZoneGeoFenced
-      ZoneInterference:
-        description: Interference zones.
-        meaning: openlabel_v2:ZoneInterference
       ZoneRegion:
         description: Regions or states.
         meaning: openlabel_v2:ZoneRegion
+      FixedZone:
+        description: Fixed zone.
+        meaning: openlabel_v2:FixedZone
       ZoneSchool:
         description: School zones.
         meaning: openlabel_v2:ZoneSchool
+      EnviromentalZone:
+        description: Environmental zone.
+        meaning: openlabel_v2:EnviromentalZone
+      IndustrialZone:
+        description: Industrial zone.
+        meaning: openlabel_v2:IndustrialZone
+      ParkingLot:
+        description: Parking lot.
+        meaning: openlabel_v2:ParkingLot
+      FreightDistributionCentre:
+        description: Freight distribution centre.
+        meaning: openlabel_v2:FreightDistributionCentre
+      DynamicZone:
+        description: Dynamic zone.
+        meaning: openlabel_v2:DynamicZone
       ZoneTrafficManagement:
         description: Traffic management zones.
         meaning: openlabel_v2:ZoneTrafficManagement
+      ZoneMobileWork:
+        description: Mobile work zone.
+        meaning: openlabel_v2:ZoneMobileWork
+      ZonePort:
+        description: Port zone.
+        meaning: openlabel_v2:ZonePort
+      ZoneInterference:
+        description: Interference zones.
+        meaning: openlabel_v2:ZoneInterference
+      ZoneUrbanCanyon:
+        description: Urban canyon.
+        meaning: openlabel_v2:ZoneUrbanCanyon
+      ZoneOverheadWires:
+        description: Overhead wires.
+        meaning: openlabel_v2:ZoneOverheadWires
+      ZoneDenseFoliage:
+        description: Dense foliage.
+        meaning: openlabel_v2:ZoneDenseFoliage
 
   # ---------------------------------------------------------------------------
   # Connectivity Communication
   # ---------------------------------------------------------------------------
   ConnectivityCommunicationEnum:
-    description: Types of communication connectivity.
+    description: Communication connectivity attributes.
     comments:
       - "ISO 34503:2023, 10.5 a)"
     aliases:
       - "Communication"
     notes:
       - "v1 label: \"Communication\" (PAS 1883:2020, Section 5.3.4.a)."
+      - "Internal hierarchy: CommunicationType (CommunicationTypeFleetManagement, CommunicationTypeTrafficManagement, CommunicationTypeV2X (CommunicationV2i, CommunicationV2v, CommunicationV2N, CommunicationV2P)); CommunicationTechnology (Cellular, DSRC, ITS-G5, Satellite, Sidelink PC5, WLAN); CommunicationDownlink and CommunicationUplink (Latency, Throughput)."
+      - "The former combined values V2iCellular, V2iSatellite, V2iWifi, V2vCellular, V2vSatellite and V2vWifi were removed; combine a type value with a technology value instead."
     permissible_values:
+      CommunicationTypeFleetManagement:
+        description: Fleet management.
+        meaning: openlabel_v2:CommunicationTypeFleetManagement
+      CommunicationTypeTrafficManagement:
+        description: Traffic management.
+        meaning: openlabel_v2:CommunicationTypeTrafficManagement
+      CommunicationTypeV2X:
+        description: Vehicle to everything communication (V2X).
+        meaning: openlabel_v2:CommunicationTypeV2X
       CommunicationV2i:
         description: Vehicle to infrastructure communication (V2I).
         meaning: openlabel_v2:CommunicationV2i
-      V2iCellular:
-        description: V2I via cellular network.
-        meaning: openlabel_v2:V2iCellular
-      V2iSatellite:
-        description: V2I via satellite.
-        meaning: openlabel_v2:V2iSatellite
-      V2iWifi:
-        description: V2I via WiFi.
-        meaning: openlabel_v2:V2iWifi
       CommunicationV2v:
         description: Vehicle to vehicle communication (V2V).
         meaning: openlabel_v2:CommunicationV2v
-      V2vCellular:
-        description: V2V via cellular network.
-        meaning: openlabel_v2:V2vCellular
-      V2vSatellite:
-        description: V2V via satellite.
-        meaning: openlabel_v2:V2vSatellite
-      V2vWifi:
-        description: V2V via WiFi.
-        meaning: openlabel_v2:V2vWifi
+      CommunicationV2N:
+        description: Vehicle to network communication (V2N).
+        meaning: openlabel_v2:CommunicationV2N
+      CommunicationV2P:
+        description: Vehicle to pedestrian communication (V2P).
+        meaning: openlabel_v2:CommunicationV2P
+      CommunicationTechnologyCellular:
+        description: Cellular (e.g. 2G, 2.5G, 3G, 4G, 5G).
+        meaning: openlabel_v2:CommunicationTechnologyCellular
+      CommunicationTechnologyDSRC:
+        description: Dedicated short-range communications (DSRC).
+        meaning: openlabel_v2:CommunicationTechnologyDSRC
+      CommunicationTechnologyITSG5:
+        description: Intelligent transport systems (ITS-G5).
+        meaning: openlabel_v2:CommunicationTechnologyITSG5
+      CommunicationTechnologySatellite:
+        description: Satellite.
+        meaning: openlabel_v2:CommunicationTechnologySatellite
+      CommunicationTechnologySidelinkPC5:
+        description: Sidelink PC5.
+        meaning: openlabel_v2:CommunicationTechnologySidelinkPC5
+      CommunicationTechnologyWLAN:
+        description: WLAN.
+        meaning: openlabel_v2:CommunicationTechnologyWLAN
+      CommunicationDownlinkLatency:
+        description: Downlink latency.
+        meaning: openlabel_v2:CommunicationDownlinkLatency
+      CommunicationDownlinkThroughput:
+        description: Downlink throughput.
+        meaning: openlabel_v2:CommunicationDownlinkThroughput
+      CommunicationUplinkLatency:
+        description: Uplink latency.
+        meaning: openlabel_v2:CommunicationUplinkLatency
+      CommunicationUplinkThroughput:
+        description: Uplink throughput.
+        meaning: openlabel_v2:CommunicationUplinkThroughput
 
   # ---------------------------------------------------------------------------
   # Connectivity Positioning
@@ -2746,7 +3583,11 @@ enums:
       - "Positioning"
     notes:
       - "v1 label: \"Positioning\" (PAS 1883:2020, Section 5.3.4.b)."
+      - "Internal hierarchy: PositioningSatellite (Galileo, GLONASS, GPS, RTK, BeiDou); PositioningLocal (NavIC, QZSS, IRNSS)."
     permissible_values:
+      PositioningSatellite:
+        description: Satellite based global positioning.
+        meaning: openlabel_v2:PositioningSatellite
       PositioningGalileo:
         description: Galileo.
         meaning: openlabel_v2:PositioningGalileo
@@ -2756,6 +3597,44 @@ enums:
       PositioningGps:
         description: Global Positioning System (GPS).
         meaning: openlabel_v2:PositioningGps
+      PositioningSatelliteRTK:
+        description: Real-time kinematic positioning (RTK).
+        meaning: openlabel_v2:PositioningSatelliteRTK
+      PositioningSatelliteBeiDou:
+        description: BeiDou.
+        meaning: openlabel_v2:PositioningSatelliteBeiDou
+      PositioningLocal:
+        description: Local positioning.
+        meaning: openlabel_v2:PositioningLocal
+      PositioningLocalNavIC:
+        description: NavIC.
+        meaning: openlabel_v2:PositioningLocalNavIC
+      PositioningLocalQZSS:
+        description: Quasi-Zenith Satellite System (QZSS).
+        meaning: openlabel_v2:PositioningLocalQZSS
+      PositioningLocalIRINSS:
+        description: Indian Regional Navigation Satellite System (IRNSS).
+        meaning: openlabel_v2:PositioningLocalIRINSS
+
+  # ---------------------------------------------------------------------------
+  # Connectivity RTK Correction
+  # ---------------------------------------------------------------------------
+  ConnectivityRTKCorrectionEnum:
+    description: Types of RTK correction services.
+    comments:
+      - "ISO 34503:2023, 10.5 c)"
+    aliases:
+      - "RTK correction"
+    permissible_values:
+      ConnectivityRTKCorrectionCountrySpecific:
+        description: Country specific.
+        meaning: openlabel_v2:ConnectivityRTKCorrectionCountrySpecific
+      ConnectivityRTKCorrectionGlobalSpecific:
+        description: Global specific (NovAtel satellite).
+        meaning: openlabel_v2:ConnectivityRTKCorrectionGlobalSpecific
+      ConnectivityRTKCorrectionSiteSpecific:
+        description: Site specific.
+        meaning: openlabel_v2:ConnectivityRTKCorrectionSiteSpecific
 
   # ---------------------------------------------------------------------------
   # Day Sun Position
@@ -2800,25 +3679,31 @@ enums:
       ArtificialVehicleLighting:
         description: Oncoming vehicle lights.
         meaning: openlabel_v2:ArtificialVehicleLighting
+      ArtificialVehicleIndorLights:
+        description: Indoor lights (e.g. parking facilities).
+        meaning: openlabel_v2:ArtificialVehicleIndorLights
 
   # ---------------------------------------------------------------------------
-  # Illumination Low Light
+  # Illumination Natural
   # ---------------------------------------------------------------------------
-  IlluminationLowLightEnum:
-    description: Types of low-light conditions.
+  IlluminationNaturalEnum:
+    description: Types of natural illumination.
     comments:
-      - "ISO 34503:2023, 10.4 a) 2)"
+      - "ISO 34503:2023, 10.4 a)"
     aliases:
-      - "Night or lowAmbient lighting condition"
+      - "Natural illumination"
     notes:
-      - "v1 label: \"Night or lowAmbient lighting condition\" (PAS 1883:2020, Section 5.3.3.b)."
+      - "Replaces IlluminationLowLightEnum. The former value LowLightAmbient is covered by IlluminationLowLight."
     permissible_values:
-      LowLightAmbient:
-        description: Low ambient lighting.
-        meaning: openlabel_v2:LowLightAmbient
+      IlluminationDay:
+        description: Daytime (ambient illuminance greater than 2 000 lx).
+        meaning: openlabel_v2:IlluminationDay
       LowLightNight:
-        description: Night.
+        description: Night time (ambient illuminance less than 1 lx).
         meaning: openlabel_v2:LowLightNight
+      IlluminationLowLight:
+        description: Low-ambient lighting condition (between daytime and night time).
+        meaning: openlabel_v2:IlluminationLowLight
 
   # ---------------------------------------------------------------------------
   # Rain Type
@@ -2853,21 +3738,157 @@ enums:
       - "Particulates (obscuration by nonPrecipitating water droplets and other particulates)"
     notes:
       - "v1 label: \"Particulates (obscuration by nonPrecipitating water droplets and other particulates)\" (PAS 1883:2020, Section 5.3.2)."
+      - "The PAS 1883:2020 value ParticulatesMarine was removed (not in ISO 34503:2023)."
     permissible_values:
+      ParticulatesBlowingDebris:
+        description: Blowing debris.
+        meaning: openlabel_v2:ParticulatesBlowingDebris
       ParticulatesDust:
-        description: Sand and dust.
+        description: Dust.
         meaning: openlabel_v2:ParticulatesDust
-      ParticulatesMarine:
-        description: Marine spray in coastal areas.
-        notes:
-          - "PAS 1883:2020 legacy value; ISO 34503:2023 uses \"water spray\" instead."
-        meaning: openlabel_v2:ParticulatesMarine
+      ParticulatesInsectSwarms:
+        description: Insect swarms (e.g. periodic emergence of locusts).
+        comments:
+          - "PAS 1883:2025, 5.4 (extends ISO 34503:2023, 10.3)"
+        meaning: openlabel_v2:ParticulatesInsectSwarms
       ParticulatesPollution:
         description: Smoke and pollution.
         meaning: openlabel_v2:ParticulatesPollution
+      ParticulatesSand:
+        description: Sand.
+        meaning: openlabel_v2:ParticulatesSand
       ParticulatesVolcanic:
         description: Volcanic ash.
         meaning: openlabel_v2:ParticulatesVolcanic
       ParticulatesWater:
         description: Non-precipitating water droplets or ice crystals (i.e. mist/fog).
         meaning: openlabel_v2:ParticulatesWater
+
+  # ---------------------------------------------------------------------------
+  # Traffic Agent Type
+  # ---------------------------------------------------------------------------
+  TrafficAgentTypeEnum:
+    description: Types of traffic agents.
+    comments:
+      - "ISO 34503:2023, 11.1 a)"
+    aliases:
+      - "Agent type"
+    notes:
+      - "Motor vehicle and vulnerable road user sub-types are PAS 1883:2025 extensions (5.1 and 5.2). Internal hierarchy: TrafficAgentTypeVehicle (VehicleAgricultural, VehicleBus, VehicleCar, VehicleConstruction, VehicleEmergency, VehicleTram, VehicleTruck, VehicleVan); TrafficAgentTypeHuman (HumanCyclist, HumanMotorcycle, HumanTransporter, HumanStroller, VehicleWheelchair, HumanPedestrian, HumanEscooter)."
+    permissible_values:
+      TrafficAgentTypeVehicle:
+        description: Motor vehicle.
+        meaning: openlabel_v2:TrafficAgentTypeVehicle
+      VehicleAgricultural:
+        description: Agricultural vehicle.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleAgricultural
+      VehicleBus:
+        description: Bus.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleBus
+      VehicleCar:
+        description: Car.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleCar
+      VehicleConstruction:
+        description: Construction vehicle.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleConstruction
+      VehicleEmergency:
+        description: Emergency vehicle.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleEmergency
+      VehicleTram:
+        description: Tram train.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleTram
+      VehicleTruck:
+        description: Truck.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleTruck
+      VehicleVan:
+        description: Van.
+        comments:
+          - "PAS 1883:2025, 5.1"
+        meaning: openlabel_v2:VehicleVan
+      TrafficAgentTypeNonMotor:
+        description: Non-motor vehicle.
+        meaning: openlabel_v2:TrafficAgentTypeNonMotor
+      TrafficAgentTypeHuman:
+        description: Vulnerable road users.
+        meaning: openlabel_v2:TrafficAgentTypeHuman
+      HumanCyclist:
+        description: Bicycle (equipment and its rider).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanCyclist
+      HumanMotorcycle:
+        description: Motorcycle (equipment and its rider).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanMotorcycle
+      HumanTransporter:
+        description: Personal transporter (equipment and its rider).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanTransporter
+      HumanStroller:
+        description: Stroller (equipment and the person pushing it).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanStroller
+      VehicleWheelchair:
+        description: Wheelchair (equipment and its user).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:VehicleWheelchair
+      HumanPedestrian:
+        description: Pedestrian.
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanPedestrian
+      HumanEscooter:
+        description: E-scooter (equipment and its rider).
+        comments:
+          - "PAS 1883:2025, 5.2"
+        meaning: openlabel_v2:HumanEscooter
+      TrafficAgentTypeAnimal:
+        description: Animals.
+        meaning: openlabel_v2:TrafficAgentTypeAnimal
+      HumanAnimalRider:
+        description: Horse riders.
+        meaning: openlabel_v2:HumanAnimalRider
+
+  # ---------------------------------------------------------------------------
+  # Traffic Special Vehicle
+  # ---------------------------------------------------------------------------
+  TrafficSpecialVehicleEnum:
+    description: Types of special vehicles.
+    comments:
+      - "ISO 34503:2023, 11.1 b)"
+    aliases:
+      - "Presence of special vehicles"
+    permissible_values:
+      TrafficSpecialVehicleAmbulance:
+        description: Ambulance.
+        meaning: openlabel_v2:TrafficSpecialVehicleAmbulance
+      TrafficSpecialVehiclePolice:
+        description: Police vehicle.
+        meaning: openlabel_v2:TrafficSpecialVehiclePolice
+      TrafficSpecialVehicleWork:
+        description: Work vehicle.
+        meaning: openlabel_v2:TrafficSpecialVehicleWork
+      TrafficSpecialVehicleTrafficManagement:
+        description: Traffic management vehicle.
+        meaning: openlabel_v2:TrafficSpecialVehicleTrafficManagement
+      TrafficSpecialVehicleFireEngine:
+        description: Fire engine/appliance vehicle.
+        meaning: openlabel_v2:TrafficSpecialVehicleFireEngine

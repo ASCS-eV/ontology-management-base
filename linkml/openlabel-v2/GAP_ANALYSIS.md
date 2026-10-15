@@ -284,3 +284,89 @@ These are deliberate improvements or generator-default behaviors:
 | 🟢 Low | L3: `any_of` OWL warnings | Cosmetic; SHACL `sh:or` works correctly |
 | ⚪ Info | L4: No intermediate category classes | Intentional; 29 grouping + 39 leaf→property = all 68 "missing" classes accounted for |
 | ⚪ Info | L7: `rdfs:Class` vs `owl:Class` | v2 uses proper OWL vocabulary — more correct than v1 |
+
+---
+
+## 7. ISO 34503 alignment with the internal OpenLABEL ontology
+
+The ODD part of the schema was aligned with the ASCS internal OpenLABEL OWL
+ontology (ISO 34503:2023 tags). Counts in sections 1–6 predate this change.
+The class hierarchy of the internal ontology is flattened as described in the
+header of `openlabel-v2.yaml`.
+
+### Added
+
+| Area (ISO 34503:2023) | Change |
+|------|--------|
+| Zones (9.2) | 11 values: FixedZone, DynamicZone, EnviromentalZone, IndustrialZone, ParkingLot, FreightDistributionCentre, ZoneMobileWork, ZonePort, ZoneUrbanCanyon, ZoneOverheadWires, ZoneDenseFoliage |
+| Drivable area type (9.3.2) | RoadTypePrimary + managed/unmanaged variants for all road types |
+| Transverse geometry (9.3.3) | TransverseSuperelevationBanking |
+| Lane specification (9.3.4) | LaneSpecificationMarking is now an enum (clear, blurred, no line, temporary); LaneSpecificationSpeedLimit + SpeedLimit; LaneSpecificationUsage |
+| Signs (9.3.5) | SignFeature slot (fixed, movable); Uniform/Variable parent values |
+| Drivable area edge (9.3.6) | EdgeShoulder, EdgeSnowbanks |
+| Surface type (9.3.7) | Asphalt, cement concrete, pavers, cobblestone, granite setts, gravel |
+| Roundabout (9.4.2) | Size parents, RoundaboutMultiple with signalised / non-signalised |
+| Intersection (9.4.3) | Signalised / non-signalised for every intersection type |
+| Special structures (9.6) | SpecialStructuresUsage slot; 4 dimension flag + value pairs |
+| Particulates (10.3) | Sand, blowing debris; ParticulatesIntensity, ParticulatesSize |
+| Illumination (10.4) | IlluminationNatural slot (day, night, low-ambient); indoor lights |
+| Connectivity (10.5) | Communication type/technology/downlink/uplink values; BeiDou, RTK, local positioning; ConnectivityRTKCorrection slot |
+| Traffic agents (11.1) | TrafficAgentTypeEnum (ISO agent types); trafficSpecialVehicleValue |
+| Rules | 6 new flag↔value rules (SpeedLimit, 4 dimensions, special vehicles) |
+
+### Removed or replaced
+
+| Removed | Replacement |
+|---------|-------------|
+| V2iCellular, V2iSatellite, V2iWifi, V2vCellular, V2vSatellite, V2vWifi | Combine a communication type value with a technology value |
+| SurfaceTypeLoose, SurfaceTypeSegmented, SurfaceTypeUniform (PAS 1883:2020) | ISO 34503 surface materials |
+| ParticulatesMarine (PAS 1883:2020) | — |
+| IlluminationLowLight slot, IlluminationLowLightEnum, LowLightAmbient | IlluminationNatural slot; value IlluminationLowLight |
+| LaneSpecificationMarking as boolean | LaneSpecificationMarking enum |
+| trafficAgentTypeValue range RoadUserHumanEnum / RoadUserVehicleEnum | TrafficAgentTypeEnum |
+
+ConnectivityCommunication and ConnectivityPositioning are now multivalued.
+
+## 8. PAS 1883:2025 extensions
+
+PAS 1883:2025 (which supersedes PAS 1883:2020) extends the ISO 34503
+taxonomy. Its attributes are added as values of the enums they extend, each
+with a `PAS 1883:2025, 5.x` comment.
+
+| PAS 1883:2025 | Extends (ISO 34503:2023) | Values |
+|---------------|--------------------------|--------|
+| 5.1 Motor vehicle type | 11.1 agent type (motor vehicle) | VehicleAgricultural, VehicleBus, VehicleCar, VehicleConstruction, VehicleEmergency, VehicleTram, VehicleTruck, VehicleVan |
+| 5.2 Vulnerable road users | 11.1 agent type (VRU) | HumanCyclist, HumanMotorcycle, HumanTransporter, HumanStroller, VehicleWheelchair, HumanPedestrian, HumanEscooter |
+| 5.4 UK National Risk Register | 9.3.7 surface condition | ContaminationLava, ContaminationSandSilt, ContaminationSettledAsh, FloodedFlowingWater, StandingWaterStill, SurfaceConditionIcyBlack, SurfaceConditionIcyPacked |
+| 5.4 | 9.3.7 surface features | SurfaceFeatureCut, SurfaceFeatureEarthquake (+ Horizontal, Vertical) |
+| 5.4 | 9.3.6 drivable area edge | EdgeBurningMaterials, EdgeSheerDrop, EdgeWaterOnRoadside |
+| 5.4 | 10.3 particulates | ParticulatesInsectSwarms (enum value and flag) |
+
+## 9. BSI Flex 1891 behaviour alignment
+
+`Behaviour` now follows the BSI Flex 1891 v1.0:2025-01 taxonomy, as in the
+internal ontology. The ISO 34504:2023 / ISO 34501:2022 references are kept next
+to the Flex 1891 clause as the international cross-reference; behaviours that
+are new in Flex 1891 and have no direct ISO 34504 tag carry the Flex reference
+only.
+
+| Flex 1891 | Schema |
+|-----------|--------|
+| 5.2 Signalling | `BehaviourSignalling` → BehaviourSignallingEnum (external/internal × warning, intent, emergency) |
+| 5.3 Positioning | `BehaviourPositioning` → BehaviourPositioningEnum (pre-/post-manoeuvre) |
+| 5.4.2.2 Vehicle absolute tactical | MotionDrive, MotionTurnRight, MotionTurnLeft, MotionLaneChange (+ Left/Right), MotionReverse, MotionStop, MotionUTurn, MotionParkingManoeuvre |
+| 5.4.2.3 Vehicle absolute operational | MotionAccelerate (+ MotionAccelerateEgo, MotionAccelerateTrafficAgent with values), MotionDecelerate |
+| 5.4.2.4.2 Non-vehicle absolute tactical | MotionNonVehicleTurnRight, MotionNonVehicleTurnLeft, MotionCross, MotionNonVehicleWait |
+| 5.4.2.4.3 Non-vehicle absolute operational | MotionWalk, MotionNonVehicleJog, MotionRun, MotionSlide |
+| 5.4.3 Relative | MotionOvertake, MotionCutIn, MotionCutOut, MotionCutAcross, MotionYield, MotionPass |
+
+Removed (not in the internal ontology): `BehaviourCommunication` and
+BehaviourCommunicationEnum (mapping to Flex signalling values is recorded in
+the enum notes), MotionAway, MotionTowards, MotionTurn, motionAccelerateValue
+(split into ego / traffic agent), and the ISO 34504 based `RoadUser` class with
+RoadUserAnimal, RoadUserHuman, RoadUserVehicle and their enums — road users are
+covered by `trafficAgentTypeValue`.
+
+Not modelled (also absent from the internal ontology): Flex 5.4.2.4.3 e)
+"jump", and the signalised / non-signalised / unprotected sub-classification
+of turn right and turn left (5.4.2.2.3, 5.4.2.2.4).

@@ -8,6 +8,7 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourCommunication                                                        =
-=    Error:            BehaviourCommunication (Behaviour): Communication type of road user behaviour. ASAM OpenLABEL V1.0.0                          =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/BehaviourSignalling                                                           =
+=    Error:            BehaviourSignalling (Behaviour): Signalling behaviour indicating the current or future intent of an actor. BSI Flex 1891      =
+=                      v1.0:2025-01, 5.2                                                                                                             =
 ======================================================================================================================================================
