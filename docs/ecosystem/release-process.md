@@ -7,7 +7,8 @@ This guide describes how maintainers create a new release of the ontology reposi
 Before creating a release, ensure:
 
 - [ ] All PRs for the release are merged into `main`
-- [ ] `pyproject.toml` version is updated (e.g., `version = "0.2.0"`)
+- [ ] The version-bump PR is merged into `main`: `pyproject.toml`, `uv.lock` and the
+      regenerated registry name the new version (see [Bumping the version](#bumping-the-version))
 - [ ] Validation passes: `just test`
 - [ ] Pre-commit hooks pass: `just lint`
 
@@ -57,7 +58,7 @@ flowchart LR
 | Step | Detail |
 |------|--------|
 | **Update registry** | Runs `registry_updater` with `--release-tag` to update `docs/registry.json` |
-| **Commit to main** | Pushes the registry update back to `main` (skips CI) |
+| **Commit to main** | Tries to push the registry update to `main`; the branch rules of `main` decline the push and the workflow continues. The version-bump PR has committed the registry already. |
 | **Generate changelog** | Uses [git-cliff](https://git-cliff.org/) with `cliff.toml` to produce release notes from conventional commits |
 | **Create GitHub Release** | Publishes the release on GitHub with the generated notes |
 | **Build docs + W3ID** | Triggers `cd-docs.yml` to build documentation and versioned W3ID artifacts from the immutable tag |
@@ -78,26 +79,46 @@ configured PyPI trusted publisher authorize the upload.
 
 ## Versioning
 
-The repository uses [Semantic Versioning](https://semver.org/):
+The repository uses [Semantic Versioning](https://semver.org/). While the version is
+below `1.0.0`, the minor version takes the place of the major version, as is usual for
+`0.y.z` releases: a release that breaks existing users raises the minor version, and
+every other release raises the patch version. A dependency range such as
+`>=0.5.1,<0.6` therefore receives fixes and additions but no breaking change, and a
+breaking change in review can plan for the next minor version: releases made in the
+meantime only raise the patch version.
 
-| Change | Bump | Example |
-|--------|------|---------|
-| Bug fix or non-breaking ontology correction | Patch | `v0.1.3` → `v0.1.4` |
-| New domain or backward-compatible additions | Minor | `v0.1.4` → `v0.2.0` |
-| Breaking change (existing Self-Descriptions become invalid) | Major | `v0.2.0` → `v1.0.0` |
+The pull request template classifies each change; the release takes the largest bump
+among its changes:
 
-Update the version in `pyproject.toml` before tagging — this is the **single source
-of truth** for the package version:
+| Change (pull request classification) | Bump below `1.0.0` | Example | Bump from `1.0.0` |
+|--------------------------------------|--------------------|---------|-------------------|
+| Bug fix or non-breaking ontology correction (**Patch**) | Patch | `v0.5.0` → `v0.5.1` | Patch |
+| Backward-compatible addition: a new domain or type, a new API or CLI feature (**Minor**) | Patch | `v0.5.0` → `v0.5.1` | Minor |
+| Breaking change: existing Self-Descriptions become invalid, or a documented API or CLI changes incompatibly (**Major**) | Minor | `v0.5.1` → `v0.6.0` | Major |
+
+### Bumping the version
+
+The version-bump PR changes the version in `pyproject.toml`, the **single source of
+truth** for the package version:
 
 ```toml
 [project]
-version = "0.3.0"
+version = "0.5.1"
 ```
 
-Everything else derives from it and must **not** be edited by hand:
+and commits what derives from it:
 
-- `omb/__init__.py` reads `__version__` from the installed package metadata.
-- `config/ontoenv.toml` is regenerated from `pyproject.toml` by `registry_updater`.
+- `uv.lock` records the project's own version, and every `just` recipe runs
+  `uv run --frozen`, which refuses a lock that disagrees with `pyproject.toml`. Change
+  the `version` of the `ontology-management-base` package entry and check it with
+  `uv lock --check`; `uv lock` would also re-resolve the git-pinned dependencies.
+- `just registry-update` regenerates `docs/registry.json` (`latestRelease` and each
+  ontology version's `releaseTag`) and `config/ontoenv.toml` for the new version. The
+  documentation and the W3ID artifacts of a release are built from the registry at its
+  tag, so the registry names the release before the tag is created.
+
+`omb/__init__.py` reads `__version__` from the installed package metadata and needs no
+change.
 
 The release tag must match: for `version = "0.3.0"`, tag `v0.3.0`. The PyPI publish
 workflow fails fast if the tag and `pyproject.toml` version disagree.
