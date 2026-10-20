@@ -96,6 +96,70 @@ Only results that count against conformance appear. A violation inside a nested
 shape is reported once, at the path rooted at the validated document, and blank node
 identifiers are scrubbed, so the list is stable from run to run.
 
+## Validating many documents one at a time
+
+`validate_data` is stateless: every call builds a resolver, discovers the schemas and
+parses the shapes graph. That is right for a single validation, but a caller that
+validates documents **individually** — an API server, or a suite that needs to attribute
+each violation to its own document — pays that setup on every call.
+
+`ValidationSession` keeps the parsed schemas alive between calls:
+
+```python
+from omb.api import ValidationSession
+
+session = ValidationSession(artifacts=["artifacts"])
+
+for document in documents:
+    result = session.validate([document])
+    print(document, result.conforms)
+```
+
+The constructor takes everything that decides *which* schemas load (`artifacts`,
+`inference_mode`, `strict`, `allow_online`, `enable_http`, `root_dir`); only the data —
+and `per_resource` — varies per call. `session.validate(...)` returns exactly what the
+equivalent `validate_data(...)` returns, including the vacuity guard.
+
+`artifacts` and `root_dir` are resolved to absolute paths when the session is built, so a
+relative path keeps meaning what it meant at construction even if the process later
+changes its working directory.
+
+Call `session.clear_cache()` if any schema source changes on disk mid-session; otherwise
+the session keeps validating against the shapes as they were first read.
+
+### Memory
+
+Each distinct schema footprint the session sees retains fully parsed graphs. A service
+validating untrusted documents meets a new footprint for every unrecognised `@type`, so
+the cache is bounded — `max_cached_schemas` (default 8), oldest entry dropped first:
+
+```python
+session = ValidationSession(artifacts=["artifacts"], max_cached_schemas=32)
+```
+
+Raise it when you legitimately validate many different vocabularies and want them all
+resident; lower it when memory matters more than reuse.
+
+### What it does and does not speed up
+
+It caches **schema loading only**. Each call still builds a fresh resolver — so fixture
+mappings registered while validating one document can never resolve an IRI in the next —
+and still runs inference and SHACL over that document.
+
+On a large ontology, schema loading is the minority of a call: RDFS inference dominates,
+because the merged path derives the closure over data **plus** ontology every time. Expect
+a useful but modest improvement, not an order of magnitude.
+
+If your documents do not need individual verdicts, prefer passing them to a **single**
+call — `validate_data` accepts a sequence, and one call means one inference pass:
+
+```python
+result = validate_data(documents, artifacts=["artifacts"])   # one pass, not len(documents)
+```
+
+!!! note "Thread safety"
+    A session is not thread-safe. Use one per thread, or guard calls with a lock.
+
 ## Check data that must fail
 
 ```python
