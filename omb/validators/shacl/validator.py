@@ -854,7 +854,10 @@ class ShaclValidator:
         if self.inference_mode == "rdfs":
             combined, inferred = apply_rdfs_inference(data_graph, ontology_graph)
             self._log(f"  Inferred {inferred} new triples")
-            self._log(f"  Total triples: {len(combined)}")
+            if self.verbose:
+                # len() is a full scan on the Oxigraph store; only pay for it
+                # when the number is actually going to be shown.
+                self._log(f"  Total triples: {len(combined)}")
             return combined, inferred
         elif self.inference_mode in ("owlrl", "both"):
             # Use pyshacl's built-in inference

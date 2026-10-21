@@ -129,6 +129,21 @@ just validate --domain hdmap --inference-mode owlrl
 
 Options: `rdfs` (default), `owlrl`, `none`, `both`
 
+`rdfs` applies a deliberate subset of the RDFS entailment patterns of
+[RDF 1.1 Semantics §9.2.1](https://www.w3.org/TR/rdf11-mt/#rdfs-entailment):
+`rdfs2` and `rdfs3` (`rdfs:domain`/`rdfs:range`), and `rdfs7` and `rdfs9`
+(`rdfs:subPropertyOf`/`rdfs:subClassOf`) iterated to a fixpoint. That is
+everything SHACL reads when it evaluates `sh:targetClass`, `sh:class` and
+`sh:closed`: iterating `rdfs9` types an instance against every superclass in a
+chain, which is what `rdfs11` would have given, without materialising the
+transitive schema triples themselves.
+
+It does **not** apply the axiomatic and container rules (`rdfs1`, `rdfs4a/b`,
+`rdfs6`, `rdfs8`, `rdfs10`, `rdfs12`, `rdfs13`); those mainly assert that every
+node is an `rdfs:Resource` and change no SHACL verdict. Use `owlrl` (or `both`)
+when you need a complete entailment regime — inference is then handed to
+pySHACL/OWL-RL.
+
 ## Check Types
 
 - `check-syntax` — JSON/Turtle well-formedness
