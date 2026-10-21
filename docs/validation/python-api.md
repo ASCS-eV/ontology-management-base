@@ -124,14 +124,31 @@ equivalent `validate_data(...)` returns, including the vacuity guard.
 relative path keeps meaning what it meant at construction even if the process later
 changes its working directory.
 
-Call `session.clear_cache()` if any schema source changes on disk mid-session; otherwise
-the session keeps validating against the shapes as they were first read.
+### What is cached, and when it is reused
+
+Every call rediscovers which schema files the document needs. Only **parsing** those
+files is cached, under a key built from the resolved file list — each file's path, size
+and modification time — plus the inference mode.
+
+Two consequences follow, and both are the point:
+
+- Documents that need the same schemas **share one entry**, even when they differ in
+  which optional properties they use. A domain's documents are parsed once between them,
+  not once per distinct shape of document.
+- A schema edited on disk is **reparsed on the next call**, because its size or
+  modification time moved. The session cannot answer from a stale graph.
+
+Modification time and size are a change detector, not a content hash: an edit that
+preserves both — restoring a file from a backup that keeps its timestamp, say — is not
+noticed. Call `session.clear_cache()` to force a reload in that case, or to release the
+memory early.
 
 ### Memory
 
-Each distinct schema footprint the session sees retains fully parsed graphs. A service
-validating untrusted documents meets a new footprint for every unrecognised `@type`, so
-the cache is bounded — `max_cached_schemas` (default 8), oldest entry dropped first:
+Each distinct set of schema files the session sees retains fully parsed graphs. A service
+validating untrusted documents meets a new set for every unrecognised vocabulary, so the
+cache is bounded — `max_cached_schemas` (default 8), least recently used entry dropped
+first:
 
 ```python
 session = ValidationSession(artifacts=["artifacts"], max_cached_schemas=32)
@@ -142,9 +159,9 @@ resident; lower it when memory matters more than reuse.
 
 ### What it does and does not speed up
 
-It caches **schema loading only**. Each call still builds a fresh resolver — so fixture
-mappings registered while validating one document can never resolve an IRI in the next —
-and still runs inference and SHACL over that document.
+It caches **schema parsing only**. Each call still discovers the required schemas, builds
+a fresh resolver — so fixture mappings registered while validating one document can never
+resolve an IRI in the next — and still runs inference and SHACL over that document.
 
 On a large ontology, schema loading is the minority of a call: RDFS inference dominates,
 because the merged path derives the closure over data **plus** ontology every time. Expect

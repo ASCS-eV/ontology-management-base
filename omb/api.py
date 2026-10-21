@@ -62,7 +62,7 @@ from omb.core.result import ReturnCodes, ValidationResult
 from omb.utils.file_collector import discover_data_hierarchy
 from omb.utils.print_formatter import normalize_text
 from omb.utils.registry_resolver import RegistryResolver
-from omb.validators.shacl.validator import ShaclValidator
+from omb.validators.shacl.validator import SchemaCache, ShaclValidator
 from omb.validators.validation_suite import ROOT_DIR
 
 __all__ = [
@@ -306,21 +306,25 @@ class ValidationSession:
     one-off setup for batch validators, API servers and test suites.
 
     Correctness is preserved by sharing exactly one thing — the parsed schema
-    cache — and nothing else:
+    graphs — and nothing else:
 
     * A FRESH resolver is built per call, so fixture mappings registered while
       validating one payload can never resolve an IRI in the next one. Building
       it is cheap; parsing the shapes is not.
+    * Schema DISCOVERY also runs per call, against that fresh resolver. Only the
+      parse of the files it resolved is reused, so which shapes apply to a
+      payload is decided by the payload, never by a previous one.
+    * Entries are keyed by the resolved schema FILES — path, size and
+      modification time — plus ``inference_mode``. Payloads needing different
+      vocabularies therefore get different entries, payloads needing the same
+      ones share a single entry whatever properties they happen to use, and a
+      schema edited on disk is reloaded instead of served stale.
     * Cached graphs are treated as read-only, and the single in-place write that
       pyshacl performs on a shapes graph is fixed and idempotent, so it settles
       on first use instead of accumulating.
-    * The cache is keyed by the schema footprint of the data plus ``root_dir``
-      and ``inference_mode``, so payloads needing different vocabularies — or a
-      different closure — get different entries instead of sharing the wrong
-      shapes.
     * ``artifacts`` and ``root_dir`` are resolved to absolute paths in the
-      constructor, so the cache cannot be invalidated by the process changing
-      its working directory mid-session.
+      constructor, so a relative path cannot be re-resolved against a changed
+      working directory mid-session.
 
     The session is therefore equivalent to calling :func:`validate_data`
     repeatedly, and ``tests/test_api.py`` asserts exactly that, including for
@@ -335,11 +339,11 @@ class ValidationSession:
             print(result.conforms)
     """
 
-    #: Default ceiling on cached schema footprints. Each entry holds fully
-    #: parsed graphs, and a server validating attacker-supplied documents sees a
-    #: new footprint for every unknown type, so the cache needs a bound rather
+    #: Default ceiling on distinct cached schema sets. Each entry holds fully
+    #: parsed graphs, and a service validating untrusted documents can meet a new
+    #: set for every unrecognised vocabulary, so the cache needs a bound rather
     #: than only a manual :meth:`clear_cache`.
-    DEFAULT_MAX_CACHED_SCHEMAS = 8
+    DEFAULT_MAX_CACHED_SCHEMAS = SchemaCache.DEFAULT_MAX_ENTRIES
 
     def __init__(
         self,
@@ -355,19 +359,19 @@ class ValidationSession:
         """Configure the session. See :func:`validate_data` for the arguments.
 
         Everything that influences WHICH schemas are loaded is fixed here rather
-        than per call, because the cache is only sound while it stays constant.
-        Only the data — and ``per_resource``, which changes how the data is
-        partitioned, not which shapes apply — varies per :meth:`validate` call.
+        than per call, so that one session means one configuration. Only the
+        data — and ``per_resource``, which changes how the data is partitioned,
+        not which shapes apply — varies per :meth:`validate` call.
 
         Paths are resolved immediately so that the configuration really is
         fixed: a relative ``artifacts`` entry would otherwise be re-resolved
-        against the current working directory on every call, and a session whose
-        process chdir'd would serve shapes loaded from the old location.
+        against the current working directory on every call, so a session whose
+        process chdir'd would start validating against a different directory.
 
         Args:
-            max_cached_schemas: Maximum number of distinct schema footprints to
-                keep. The least recently used entry is dropped beyond this.
-                Must be at least 1.
+            max_cached_schemas: Maximum number of distinct schema sets to keep
+                parsed. The least recently used is dropped beyond this. Must be
+                at least 1.
         """
         if max_cached_schemas < 1:
             raise ValueError(
@@ -383,8 +387,7 @@ class ValidationSession:
         self._allow_online = allow_online
         self._enable_http = enable_http
         self._root_dir = Path(root_dir).resolve() if root_dir is not None else None
-        self._max_cached_schemas = max_cached_schemas
-        self._schema_cache: dict = {}
+        self._schema_cache = SchemaCache(max_entries=max_cached_schemas)
 
     def validate(
         self,
@@ -403,7 +406,7 @@ class ValidationSession:
             ValidationResult: Identical to the equivalent
             :func:`validate_data` call.
         """
-        result = _validate_data_impl(
+        return _validate_data_impl(
             data_paths,
             artifacts=self._artifacts,
             inference_mode=self._inference_mode,
@@ -414,27 +417,14 @@ class ValidationSession:
             root_dir=self._root_dir,
             schema_cache=self._schema_cache,
         )
-        self._evict_over_limit()
-        return result
-
-    def _evict_over_limit(self) -> None:
-        """Drop the oldest entries until the cache is within its bound.
-
-        dicts preserve insertion order, so the first key is the oldest. Entries
-        are not re-inserted on a hit, which keeps this insertion-ordered rather
-        than strictly LRU — adequate for bounding memory, and it avoids making
-        every cache read a write.
-        """
-        while len(self._schema_cache) > self._max_cached_schemas:
-            self._schema_cache.pop(next(iter(self._schema_cache)))
 
     def clear_cache(self) -> None:
-        """Drop the parsed schemas, forcing the next call to reload them.
+        """Release the parsed schemas, so the next call reloads what it needs.
 
-        Needed when any schema source changes on disk mid-session — artifact
-        directories, but equally the root, import or registry catalogs —
-        otherwise the session keeps validating against the shapes as they were
-        when first read.
+        Not required to pick up edited artifacts: entries are keyed by the size
+        and modification time of the files they were parsed from, so a changed
+        schema is reloaded on its own. Use this to free the memory, or to force
+        a reload after a change too subtle for that key to see.
         """
         self._schema_cache.clear()
 

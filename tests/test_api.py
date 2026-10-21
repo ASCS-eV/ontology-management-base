@@ -4,6 +4,7 @@
 import contextlib
 import io
 import json
+import shutil
 import subprocess
 import sys
 import textwrap
@@ -13,6 +14,8 @@ import pytest
 
 from omb.api import ValidationSession, check_negative_fixtures, validate_data
 from omb.core.result import ReturnCodes, ValidationResult
+from omb.utils.registry_resolver import RegistryResolver
+from omb.validators.shacl.validator import SchemaCache, ShaclValidator
 
 GX_VALID_DIR = Path("tests/data/gx/valid")
 OPENLABEL_INVALID_DIR = Path("tests/data/openlabel-v2/invalid")
@@ -318,7 +321,7 @@ def test_validation_session_cached_graphs_stay_stable(widget_repo):
     for _ in range(4):
         session.validate([target])
         entry = next(iter(session._schema_cache.values()))
-        sizes.append((len(entry["shacl"]), len(entry["ontology"])))
+        sizes.append((len(entry.shacl), len(entry.ontology)))
 
     assert len(set(sizes)) == 1, f"cached graphs grew across calls: {sizes}"
 
@@ -345,7 +348,7 @@ def test_validation_session_resolves_relative_artifacts_at_construction(
 
 
 def test_validation_session_separates_cache_entries_by_inference_mode(widget_repo):
-    """Two sessions sharing a footprint but not a mode must not share a closure.
+    """Two sessions over the same schemas but not the same mode must not collide.
 
     The cached ontology closure is a real RDFS closure under ``rdfs`` and the raw
     graph otherwise, so the mode belongs in the key.
@@ -353,7 +356,7 @@ def test_validation_session_separates_cache_entries_by_inference_mode(widget_rep
     artifacts = [widget_repo / "artifacts"]
     target = widget_repo / "data" / "valid" / "widget_ok.json"
 
-    shared: dict = {}
+    shared = SchemaCache()
     for mode in ("rdfs", "none"):
         session = ValidationSession(artifacts=artifacts, inference_mode=mode)
         session._schema_cache = shared
@@ -362,11 +365,145 @@ def test_validation_session_separates_cache_entries_by_inference_mode(widget_rep
     assert len(shared) == 2, "inference_mode must not collide in the schema cache"
 
 
+def test_validation_session_separates_cache_entries_by_artifacts(widget_repo, tmp_path):
+    """Two sessions over DIFFERENT artifacts must not answer from each other.
+
+    The artifact directories a session registers decide which files schema
+    discovery resolves, and they are not visible as a configuration value inside
+    the validator. Keying on the resolved files rather than on the IRIs in the
+    data is what makes sharing a cache safe here: a second session pointed at a
+    copy of the artifacts whose shapes demand something else must see its own
+    shapes, not the first session's.
+    """
+    stricter = tmp_path / "stricter"
+    shutil.copytree(widget_repo / "artifacts", stricter)
+    shacl = stricter / "widget" / "widget.shacl.ttl"
+    shacl.write_text(
+        shacl.read_text(encoding="utf-8").replace(
+            'sh:message "Widget requires a serialNumber"',
+            'sh:pattern "^NOPE-" ; sh:message "Widget requires a serialNumber"',
+        ),
+        encoding="utf-8",
+    )
+
+    target = widget_repo / "data" / "valid" / "widget_ok.json"
+    shared = SchemaCache()
+
+    lenient = ValidationSession(artifacts=[widget_repo / "artifacts"])
+    lenient._schema_cache = shared
+    strict = ValidationSession(artifacts=[stricter])
+    strict._schema_cache = shared
+
+    assert lenient.validate([target]).conforms is True
+    assert strict.validate([target]).conforms is False
+    assert lenient.validate([target]).conforms is True
+
+
+def test_validation_session_reloads_a_schema_edited_on_disk(widget_repo):
+    """An edited artifact must be picked up without an explicit clear_cache().
+
+    A long-lived session next to a repository that regenerates its artifacts
+    would otherwise keep reporting verdicts from the shapes as they were when it
+    first read them, with nothing in the result to say so.
+    """
+    artifacts = [widget_repo / "artifacts"]
+    target = widget_repo / "data" / "valid" / "widget_ok.json"
+
+    session = ValidationSession(artifacts=artifacts)
+    assert session.validate([target]).conforms is True
+
+    shacl = widget_repo / "artifacts" / "widget" / "widget.shacl.ttl"
+    shacl.write_text(
+        shacl.read_text(encoding="utf-8").replace(
+            'sh:message "Widget requires a serialNumber"',
+            'sh:pattern "^NOPE-" ; sh:message "Widget requires a serialNumber"',
+        ),
+        encoding="utf-8",
+    )
+
+    assert session.validate([target]).conforms is False
+
+
+def test_validation_session_shares_one_entry_across_differing_documents(widget_repo):
+    """Documents resolving the same schemas must share a single parsed copy.
+
+    Keying on the IRIs a document happens to use splits the cache by optional
+    property: two widgets that differ only in whether they carry a label would
+    each parse and retain the whole vocabulary. The files they need are the same,
+    so the entry must be too.
+    """
+    artifacts = [widget_repo / "artifacts"]
+    directory = widget_repo / "data" / "variants"
+    directory.mkdir(parents=True)
+    for index, extra in enumerate(({}, {"label": "a"}, {"label": "b", "note": "c"})):
+        (directory / f"widget{index}.json").write_text(
+            json.dumps(
+                {
+                    "@context": {"@vocab": "https://example.org/widget/v1/"},
+                    "@id": f"https://example.org/data/widget-{index}",
+                    "@type": "Widget",
+                    "serialNumber": f"SN-{index}",
+                    **extra,
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    session = ValidationSession(artifacts=artifacts)
+    for document in sorted(directory.glob("*.json")):
+        session.validate([document])
+
+    assert len(session._schema_cache) == 1
+
+
+def test_schema_cache_bounds_a_bare_validator(widget_repo):
+    """The bound belongs to the cache, so a direct ShaclValidator gets it too.
+
+    ``ValidationSession`` is not the only way to hand a validator a shared cache,
+    and a bound enforced only by the session would leave every other caller with
+    an unbounded one.
+    """
+    resolver = RegistryResolver(widget_repo)
+    resolver.register_artifact_directory(widget_repo / "artifacts")
+    cache = SchemaCache(max_entries=1)
+    validator = ShaclValidator(
+        widget_repo, verbose=False, resolver=resolver, schema_cache=cache
+    )
+
+    for vocabulary in ("https://example.org/widget/v1/", "https://example.org/other/"):
+        validator._load_schemas({f"{vocabulary}Widget"}, set(), set())
+
+    assert len(cache) == 1
+
+
+def test_schema_cache_rejects_an_unusable_bound():
+    """A bound below 1 would cache nothing and silently defeat the cache."""
+    with pytest.raises(ValueError, match="max_entries"):
+        SchemaCache(max_entries=0)
+
+
+def test_schema_cache_evicts_least_recently_used(widget_repo):
+    """A schema set that keeps being used must not be evicted by one-off ones.
+
+    Insertion order alone would drop the entry a caller relies on every call as
+    soon as two unfamiliar documents arrived after it.
+    """
+    cache = SchemaCache(max_entries=2)
+    cache["a"] = 1
+    cache["b"] = 2
+    assert cache.get("a") == 1
+
+    cache["c"] = 3
+
+    assert sorted(cache) == ["a", "c"], "reads must count as use"
+
+
 def test_validation_session_bounds_its_cache(widget_repo):
     """The cache must be bounded, not grow once per distinct document type.
 
-    A server validating untrusted documents sees a new schema footprint for every
-    unrecognised @type, so an unbounded cache is a memory leak driven by input.
+    A server validating untrusted documents sees a new schema set for every
+    unrecognised vocabulary, so an unbounded cache is a memory leak driven by
+    input.
     """
     session = ValidationSession(
         artifacts=[widget_repo / "artifacts"], max_cached_schemas=2
@@ -379,7 +516,7 @@ def test_validation_session_bounds_its_cache(widget_repo):
         document.write_text(
             json.dumps(
                 {
-                    "@context": {"@vocab": "https://example.org/widget/v1/"},
+                    "@context": {"@vocab": f"https://example.org/unknown{index}/v1/"},
                     "@id": f"https://example.org/data/widget-{index}",
                     "@type": f"Unknown{index}",
                 }
