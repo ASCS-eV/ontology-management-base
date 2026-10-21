@@ -32,6 +32,8 @@ For command-line usage, see: omb.validators.validation_suite
 
 import sys
 import time
+from collections import OrderedDict
+from dataclasses import dataclass
 from io import StringIO
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Set, Tuple
@@ -81,6 +83,53 @@ except ImportError:
 PYSHACL_MISSING = "pyshacl is not installed"
 
 
+@dataclass
+class _LoadedSchemas:
+    """Parsed schema graphs for one resolved set of ontology and SHACL files."""
+
+    ontology: Graph
+    shacl: Graph
+    #: RDFS closure of ``ontology``; filled lazily, only the per-resource path needs it.
+    closed_ontology: Optional[Graph] = None
+
+
+class SchemaCache(OrderedDict):
+    """Bounded least-recently-used store for parsed schemas.
+
+    Parsed ontology and shapes graphs are large, and the number of distinct
+    schema sets a long-lived validator meets is not under its control, so an
+    unbounded dict would turn input diversity into memory growth. Reads count as
+    use, so a schema set that keeps being needed is not displaced by a burst of
+    one-off ones.
+
+    Not thread-safe: reads reorder entries. Do not share one instance between
+    threads without a lock.
+    """
+
+    DEFAULT_MAX_ENTRIES = 8
+
+    def __init__(self, max_entries: int = DEFAULT_MAX_ENTRIES) -> None:
+        if max_entries < 1:
+            raise ValueError(f"max_entries must be >= 1, got {max_entries}")
+        super().__init__()
+        self.max_entries = max_entries
+
+    def get(self, key, default=None):
+        """Return the entry for ``key`` and mark it most recently used."""
+        try:
+            value = self[key]
+        except KeyError:
+            return default
+        self.move_to_end(key)
+        return value
+
+    def __setitem__(self, key, value) -> None:
+        super().__setitem__(key, value)
+        self.move_to_end(key)
+        while len(self) > self.max_entries:
+            self.popitem(last=False)
+
+
 class ShaclValidator:
     """
     SHACL validation orchestrator using registry-based discovery.
@@ -105,6 +154,7 @@ class ShaclValidator:
         allow_online: bool = True,
         enable_http: bool = False,
         allow_warnings: bool = True,
+        schema_cache: Optional[Dict] = None,
     ):
         """
         Initialize the SHACL validator.
@@ -126,6 +176,28 @@ class ShaclValidator:
                 ``conforms=False`` — which makes ``sh:severity sh:Warning``
                 unusable for "accepted but discouraged" constraints such as
                 deprecated enumeration values. Set False to fail on them.
+            schema_cache: Optional caller-owned mapping (see :class:`SchemaCache`)
+                memoising parsed ontology and shapes graphs. Supplying one lets a
+                long-lived caller — see :class:`omb.api.ValidationSession` — pay
+                the parse and ontology-closure cost once instead of once per
+                validator. Omitted means an instance-private
+                :class:`SchemaCache` with the default bound.
+
+                Entries are keyed by the ontology and SHACL files that schema
+                discovery resolved for the data — their absolute paths, sizes
+                and modification times — plus ``inference_mode``. Discovery runs
+                on every call against this validator's own resolver, so
+                artifact directories and catalog changes are reflected in the
+                key rather than needing to match between validators, and a file
+                edited on disk is reloaded instead of served stale.
+
+                Cached graphs are treated as read-only by OMB: inference copies
+                them into a new graph and pyshacl receives a private copy of the
+                data graph. pyshacl's ``ShapesGraph`` does add a small, fixed set
+                of system triples to the shapes graph it is handed, so the cached
+                shapes graph is normalised on first use and stable thereafter —
+                ``test_validation_session_cached_graphs_stay_stable`` asserts
+                exactly that. No validation can therefore influence a later one.
         """
         self.root_dir = Path(root_dir).resolve()
         if resolver and enable_http:
@@ -147,6 +219,13 @@ class ShaclValidator:
         self._input_nodes: dict[Path, set] = {}
         self._input_subjects: dict[Path, set] = {}
         self._focus_nodes: set = set()
+        self._schema_cache: Dict = (
+            schema_cache if schema_cache is not None else SchemaCache()
+        )
+        # Initialised here (not only in validate()) because the schema loader sets
+        # them and a validator may start with either validate() or validate_each().
+        self._unresolved_iris: List[str] = []
+        self._unresolved_types: Set[str] = set()
 
         # Build context URL map from resolver's catalog
         self._build_context_url_map()
@@ -247,9 +326,8 @@ class ShaclValidator:
         rdf_types = extract_rdf_types(data_graph)
         predicates = extract_predicates(data_graph)
         datatypes = extract_datatype_iris(data_graph)
-        ontology_graph, shacl_graph = self._load_schemas(
-            rdf_types, predicates, datatypes
-        )
+        schemas = self._load_schemas(rdf_types, predicates, datatypes)
+        ontology_graph, shacl_graph = schemas.ontology, schemas.shacl
         routing = self._routing_metadata(rdf_types, shacl_graph)
 
         # Strict mode: fail on unresolved @type IRIs
@@ -351,34 +429,14 @@ class ShaclValidator:
 
         # Step 2 + 3: Load the union of required schemas and pre-compute the
         # ontology's RDFS closure ONCE, then reuse across files. Both are
-        # data-independent, so they are also memoised on the validator instance
-        # keyed by the discovered IRI sets — a session-scoped validator running
-        # many validate_each() calls (e.g. a parametrised test suite) pays the
-        # parse + inference cost only once per distinct schema footprint.
-        cache_key = (
-            frozenset(union_types),
-            frozenset(union_predicates),
-            frozenset(union_datatypes),
-        )
-        cache = getattr(self, "_per_resource_schema_cache", None)
-        if cache is None:
-            cache = self._per_resource_schema_cache = {}
-        if cache_key in cache:
-            self._log("Step 2+3: Reusing cached shapes + ontology closure")
-            shacl_graph, closed_ontology = cache[cache_key]
-        else:
-            self._log("Step 2: Discovering + loading required schemas (once)...")
-            ontology_graph, shacl_graph = self._load_schemas(
-                union_types, union_predicates, union_datatypes
-            )
-            if self.inference_mode == "rdfs":
-                self._log("Step 3: Pre-computing ontology RDFS closure (once)...")
-                closed_ontology, _ = apply_rdfs_inference(
-                    Graph(store=FAST_STORE), ontology_graph
-                )
-            else:
-                closed_ontology = ontology_graph
-            cache[cache_key] = (shacl_graph, closed_ontology)
+        # data-independent, so they are memoised by the schema files they were
+        # built from, in a cache that may be owned by the caller — a
+        # session-scoped validator running many validate_each() calls (e.g. a
+        # parametrised test suite, or omb.api.ValidationSession) pays the parse +
+        # inference cost only once per distinct set of schema files.
+        schemas = self._load_schemas(union_types, union_predicates, union_datatypes)
+        shacl_graph = schemas.shacl
+        closed_ontology = self._closed_ontology(schemas)
 
         # Step 4: Validate each file's data graph in isolation.
         self._log(f"Step 4: Validating {len(per_file)} resource(s) individually...")
@@ -576,16 +634,56 @@ class ShaclValidator:
 
         return data_graph, prefixes
 
+    @staticmethod
+    def _file_signature(path: Path) -> Tuple[str, int, int]:
+        """Identify ``path`` and the version of it currently on disk."""
+        try:
+            stat = path.stat()
+        except OSError:
+            # Left to the loader, which raises the descriptive error.
+            return (str(path), -1, -1)
+        return (str(path), stat.st_mtime_ns, stat.st_size)
+
     def _load_schemas(
         self,
         rdf_types: Set[str],
         predicates: Set[str],
         datatypes: Set[str],
-    ) -> Tuple[Graph, Graph]:
-        """Load ontology and SHACL schemas based on discovered IRIs."""
+    ) -> _LoadedSchemas:
+        """Discover the schemas the data needs and load them, reusing parsed graphs.
+
+        Discovery only consults the catalogs, so it runs on EVERY call against
+        this validator's own resolver. That is what keeps unresolved-type
+        reporting, artifact directories and catalog changes correct without any
+        of them having to be cached. Only the expensive part — parsing the
+        resolved files — is memoised, keyed by those files.
+
+        The key is deliberately the files and not the IRIs found in the data.
+        Documents that use different optional properties, or none at all, still
+        resolve to the same ontologies and shapes, and must share one entry
+        instead of each parsing and retaining its own copy. It holds:
+
+        * each file's absolute path, size and modification time, so a schema
+          edited on disk is reloaded rather than served stale, and validators
+          registered with different artifact directories can never collide;
+        * ``inference_mode``, which decides whether the cached closure is a real
+          RDFS closure or the raw ontology (see :meth:`_closed_ontology`).
+
+        Not keyed, because it cannot change what is parsed: ``strict`` and
+        ``allow_online`` only affect how unresolved data is reported or fetched,
+        and ``root_dir`` is only used to display paths.
+
+        Returned graphs are shared, not copied. OMB's own consumers treat them as
+        read-only — inference builds a new graph and pyshacl is handed a private
+        copy of the data graph — and the one in-place write that does occur
+        (pyshacl's ``ShapesGraph`` adding its system triples to the shapes graph)
+        is fixed and idempotent, so it settles on first use rather than
+        accumulating. Reuse therefore cannot leak state between validations.
+        """
         self._log(f"  Types found: {len(rdf_types)}")
-        for rdf_type in sorted(rdf_types):
-            self._log(f"    {rdf_type}")
+        if self.verbose:
+            for rdf_type in sorted(rdf_types):
+                self._log(f"    {rdf_type}")
 
         used_iris = set(rdf_types) | set(predicates) | set(datatypes)
 
@@ -604,26 +702,60 @@ class ShaclValidator:
         base_paths = get_base_ontology_paths(self.root_dir, used_iris=used_iris)
         all_ontology_paths = sorted(set(ontology_paths + base_paths))
 
-        # Load ontologies
-        self._log(f"\n  Loading {len(all_ontology_paths)} ontology files:")
         ontology_files = [self.resolver.to_absolute(p) for p in all_ontology_paths]
-        ontology_graph = load_turtle_files(ontology_files, self.root_dir)
-
-        for path in ontology_files:
-            self._log(f"    {self._rel_path(path)}")
-
-        # Load SHACL shapes
-        self._log(f"\n  Loading {len(shacl_paths)} SHACL files:")
         shacl_files = [self.resolver.to_absolute(p) for p in shacl_paths]
-        shacl_graph = load_turtle_files(shacl_files, self.root_dir)
 
-        for path in shacl_files:
-            self._log(f"    {self._rel_path(path)}")
+        key = (
+            self.inference_mode,
+            tuple(self._file_signature(path) for path in ontology_files),
+            tuple(self._file_signature(path) for path in shacl_files),
+        )
+        schemas = self._schema_cache.get(key)
 
-        self._log(f"\n  Ontology triples: {len(ontology_graph)}")
-        self._log(f"  SHACL triples: {len(shacl_graph)}")
+        # Guarded rather than left to _log: f-strings are built before _log can
+        # discard them, and len() on a six-figure oxigraph graph is not free. On
+        # a cache hit that accounting would otherwise cost more than everything
+        # this method just did.
+        if self.verbose:
+            verb = "Reusing cached" if schemas is not None else "Loading"
+            self._log(f"\n  {verb} {len(ontology_files)} ontology files:")
+            for path in ontology_files:
+                self._log(f"    {self._rel_path(path)}")
+            self._log(f"\n  {verb} {len(shacl_files)} SHACL files:")
+            for path in shacl_files:
+                self._log(f"    {self._rel_path(path)}")
 
-        return ontology_graph, shacl_graph
+        if schemas is None:
+            schemas = _LoadedSchemas(
+                ontology=load_turtle_files(ontology_files, self.root_dir),
+                shacl=load_turtle_files(shacl_files, self.root_dir),
+            )
+            self._schema_cache[key] = schemas
+
+        if self.verbose:
+            self._log(f"\n  Ontology triples: {len(schemas.ontology)}")
+            self._log(f"  SHACL triples: {len(schemas.shacl)}")
+
+        return schemas
+
+    def _closed_ontology(self, schemas: _LoadedSchemas) -> Graph:
+        """RDFS closure of the ontology, computed once per cached schema entry.
+
+        Kept on the entry rather than in a second cache so one eviction drops
+        both, and computed lazily because only the per-resource path
+        (:meth:`validate_each`) needs a pre-closed TBox. Under any other
+        inference mode the raw ontology is what that path uses.
+        """
+        if schemas.closed_ontology is None:
+            if self.inference_mode == "rdfs":
+                self._log("Step 3: Pre-computing ontology RDFS closure (once)...")
+                schemas.closed_ontology, _ = apply_rdfs_inference(
+                    Graph(store=FAST_STORE), schemas.ontology
+                )
+            else:
+                schemas.closed_ontology = schemas.ontology
+
+        return schemas.closed_ontology
 
     def _routing_metadata(self, rdf_types, shacl_graph):
         """Compute shape/type-routing metadata for the report model.

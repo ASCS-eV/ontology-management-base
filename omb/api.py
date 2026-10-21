@@ -4,8 +4,9 @@
 FEATURE SET:
 ============
 1. validate_data - Validate JSON-LD data paths and return a ValidationResult
-2. check_negative_fixtures - Verify data that must fail against its .expected snapshot
-3. FixtureOutcome / FixtureReport - Result types for the negative-fixture flow
+2. ValidationSession - Reuse parsed schemas across many validate() calls
+3. check_negative_fixtures - Verify data that must fail against its .expected snapshot
+4. FixtureOutcome / FixtureReport - Result types for the negative-fixture flow
 
 USAGE:
 ======
@@ -17,6 +18,12 @@ USAGE:
 
     report = check_negative_fixtures(["tests/data/gx/invalid"], artifacts=["./artifacts"])
     assert report.ok, [f.message for f in report.failures]
+
+    # Validating many payloads against the same artifacts: parse the shapes once.
+    from omb.api import ValidationSession
+
+    session = ValidationSession(artifacts=["./artifacts"])
+    results = [session.validate([payload]) for payload in payloads]
 
 DEPENDENCIES:
 =============
@@ -34,6 +41,9 @@ NOTES:
   A file paired with a `.expected` snapshot belongs to the second — see
   :mod:`omb.core.negative_fixtures` — and `validate_data` refuses to quietly
   return success for a set that contains only those.
+- `validate_data` and `ValidationSession.validate` share one implementation, so
+  the session cannot drift from the one-shot call: the only difference is that
+  the session hands down a schema cache that outlives a single call.
 """
 
 from __future__ import annotations
@@ -52,11 +62,12 @@ from omb.core.result import ReturnCodes, ValidationResult
 from omb.utils.file_collector import discover_data_hierarchy
 from omb.utils.print_formatter import normalize_text
 from omb.utils.registry_resolver import RegistryResolver
-from omb.validators.shacl.validator import ShaclValidator
+from omb.validators.shacl.validator import SchemaCache, ShaclValidator
 from omb.validators.validation_suite import ROOT_DIR
 
 __all__ = [
     "validate_data",
+    "ValidationSession",
     "check_negative_fixtures",
     "FixtureOutcome",
     "FixtureReport",
@@ -120,7 +131,7 @@ class FixtureReport:
         return ReturnCodes.SUCCESS if self.ok else ReturnCodes.CONFORMANCE_ERROR
 
 
-def validate_data(
+def _validate_data_impl(
     data_paths: Sequence[str | Path],
     *,
     artifacts: Optional[Sequence[str | Path]] = None,
@@ -130,6 +141,7 @@ def validate_data(
     allow_online: bool = False,
     enable_http: bool = False,
     root_dir: Optional[Path] = None,
+    schema_cache: Optional[dict] = None,
 ) -> ValidationResult:
     """Validate JSON-LD/TTL data paths and return a ValidationResult.
 
@@ -215,6 +227,7 @@ def validate_data(
         resolver=resolver,
         strict=strict,
         allow_online=allow_online,
+        schema_cache=schema_cache,
     )
 
     try:
@@ -231,6 +244,189 @@ def validate_data(
 
     result.warnings.extend(duplicate_warnings + fixture_warnings)
     return result
+
+
+def validate_data(
+    data_paths: Sequence[str | Path],
+    *,
+    artifacts: Optional[Sequence[str | Path]] = None,
+    inference_mode: str = "rdfs",
+    strict: bool = True,
+    per_resource: bool = False,
+    allow_online: bool = False,
+    enable_http: bool = False,
+    root_dir: Optional[Path] = None,
+) -> ValidationResult:
+    """Validate JSON-LD/TTL data paths and return a ValidationResult.
+
+    One-shot entry point: every call builds a fresh resolver, registers the
+    artifacts and parses the shapes. That is the right trade-off for a single
+    validation, but it makes repeated calls pay the same multi-second schema
+    setup over and over. Callers validating many payloads against the SAME
+    artifacts should use :class:`ValidationSession` instead, which keeps the
+    parsed shapes alive between calls.
+
+    Args:
+        data_paths: Files or directories containing JSON-LD/TTL to validate.
+            Non-existent paths are skipped; an empty effective set is an error.
+        artifacts: Extra artifact directories to register, so shapes and
+            ontologies outside this repository can be resolved.
+        inference_mode: ``rdfs`` (default), ``owlrl``, ``both`` or ``none``.
+        strict: If True (default), unresolved IRIs or types fail validation
+            instead of only warning.
+        per_resource: Validate each file against its own shape subset rather
+            than merging everything into one graph. Slower, but pinpoints which
+            file a violation came from.
+        allow_online: Permit HTTP resolution of IRIs missing from the catalogs.
+        enable_http: Bootstrap the catalogs over HTTP when none are local.
+        root_dir: Repository root; defaults to the installed OMB root.
+
+    Returns:
+        ValidationResult: Conformance flag plus violations, errors and warnings.
+    """
+    return _validate_data_impl(
+        data_paths,
+        artifacts=artifacts,
+        inference_mode=inference_mode,
+        strict=strict,
+        per_resource=per_resource,
+        allow_online=allow_online,
+        enable_http=enable_http,
+        root_dir=root_dir,
+    )
+
+
+class ValidationSession:
+    """Reusable validation context that parses the shapes only once.
+
+    :func:`validate_data` is stateless, so a caller validating N payloads pays
+    the schema discovery, parsing and RDFS-inference cost N times even though
+    that work depends only on the artifacts — not on the data. A session hoists
+    that cost out of the loop, which is the difference between a per-call and a
+    one-off setup for batch validators, API servers and test suites.
+
+    Correctness is preserved by sharing exactly one thing — the parsed schema
+    graphs — and nothing else:
+
+    * A FRESH resolver is built per call, so fixture mappings registered while
+      validating one payload can never resolve an IRI in the next one. Building
+      it is cheap; parsing the shapes is not.
+    * Schema DISCOVERY also runs per call, against that fresh resolver. Only the
+      parse of the files it resolved is reused, so which shapes apply to a
+      payload is decided by the payload, never by a previous one.
+    * Entries are keyed by the resolved schema FILES — path, size and
+      modification time — plus ``inference_mode``. Payloads needing different
+      vocabularies therefore get different entries, payloads needing the same
+      ones share a single entry whatever properties they happen to use, and a
+      schema edited on disk is reloaded instead of served stale.
+    * Cached graphs are treated as read-only, and the single in-place write that
+      pyshacl performs on a shapes graph is fixed and idempotent, so it settles
+      on first use instead of accumulating.
+    * ``artifacts`` and ``root_dir`` are resolved to absolute paths in the
+      constructor, so a relative path cannot be re-resolved against a changed
+      working directory mid-session.
+
+    The session is therefore equivalent to calling :func:`validate_data`
+    repeatedly, and ``tests/test_api.py`` asserts exactly that, including for
+    alternating valid/invalid input.
+
+    Not thread-safe: use one session per thread, or guard calls with a lock.
+
+    Usage:
+        session = ValidationSession(artifacts=["./artifacts"])
+        for payload in payloads:
+            result = session.validate([payload])
+            print(result.conforms)
+    """
+
+    #: Default ceiling on distinct cached schema sets. Each entry holds fully
+    #: parsed graphs, and a service validating untrusted documents can meet a new
+    #: set for every unrecognised vocabulary, so the cache needs a bound rather
+    #: than only a manual :meth:`clear_cache`.
+    DEFAULT_MAX_CACHED_SCHEMAS = SchemaCache.DEFAULT_MAX_ENTRIES
+
+    def __init__(
+        self,
+        *,
+        artifacts: Optional[Sequence[str | Path]] = None,
+        inference_mode: str = "rdfs",
+        strict: bool = True,
+        allow_online: bool = False,
+        enable_http: bool = False,
+        root_dir: Optional[Path] = None,
+        max_cached_schemas: int = DEFAULT_MAX_CACHED_SCHEMAS,
+    ) -> None:
+        """Configure the session. See :func:`validate_data` for the arguments.
+
+        Everything that influences WHICH schemas are loaded is fixed here rather
+        than per call, so that one session means one configuration. Only the
+        data — and ``per_resource``, which changes how the data is partitioned,
+        not which shapes apply — varies per :meth:`validate` call.
+
+        Paths are resolved immediately so that the configuration really is
+        fixed: a relative ``artifacts`` entry would otherwise be re-resolved
+        against the current working directory on every call, so a session whose
+        process chdir'd would start validating against a different directory.
+
+        Args:
+            max_cached_schemas: Maximum number of distinct schema sets to keep
+                parsed. The least recently used is dropped beyond this. Must be
+                at least 1.
+        """
+        if max_cached_schemas < 1:
+            raise ValueError(
+                f"max_cached_schemas must be >= 1, got {max_cached_schemas}"
+            )
+        self._artifacts = (
+            [Path(artifact).resolve() for artifact in artifacts]
+            if artifacts is not None
+            else None
+        )
+        self._inference_mode = inference_mode
+        self._strict = strict
+        self._allow_online = allow_online
+        self._enable_http = enable_http
+        self._root_dir = Path(root_dir).resolve() if root_dir is not None else None
+        self._schema_cache = SchemaCache(max_entries=max_cached_schemas)
+
+    def validate(
+        self,
+        data_paths: Sequence[str | Path],
+        *,
+        per_resource: bool = False,
+    ) -> ValidationResult:
+        """Validate ``data_paths`` reusing any schemas already parsed.
+
+        Args:
+            data_paths: Files or directories to validate, as in
+                :func:`validate_data`.
+            per_resource: Validate each file separately instead of merging.
+
+        Returns:
+            ValidationResult: Identical to the equivalent
+            :func:`validate_data` call.
+        """
+        return _validate_data_impl(
+            data_paths,
+            artifacts=self._artifacts,
+            inference_mode=self._inference_mode,
+            strict=self._strict,
+            per_resource=per_resource,
+            allow_online=self._allow_online,
+            enable_http=self._enable_http,
+            root_dir=self._root_dir,
+            schema_cache=self._schema_cache,
+        )
+
+    def clear_cache(self) -> None:
+        """Release the parsed schemas, so the next call reloads what it needs.
+
+        Not required to pick up edited artifacts: entries are keyed by the size
+        and modification time of the files they were parsed from, so a changed
+        schema is reloaded on its own. Use this to free the memory, or to force
+        a reload after a change too subtle for that key to see.
+        """
+        self._schema_cache.clear()
 
 
 def check_negative_fixtures(
