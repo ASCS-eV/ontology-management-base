@@ -51,7 +51,9 @@ support documents must not receive their own validation verdict.
 
 By default, positive inputs are merged into one RDF graph, including resolved reference
 documents. Use `per_resource=True` / `--per-resource` to validate each requested file in
-isolation without merging referenced documents. Both modes require each input file to
+its own graph. Isolation is between input documents: each file still resolves its own
+external references and sees the ontology's declared individuals, so a single file gets
+the same verdict either way. Both modes require each input file to
 contribute at least one RDF term targeted by an active shape. Empty documents and files
 with no applicable target fail with 210. Targets and inferred classes follow pySHACL;
 property shapes and implicitly declared node shapes are supported.
@@ -67,8 +69,8 @@ verdicts, and each violation names the file it was found in.
 
 - Python `validate_data` defaults to `strict=True`; the CLI defaults to `False`.
   Add `--strict` when translating that Python call. Strict mode rejects unresolved
-  type IRIs in both merged and per-resource validation. Merged validation also rejects
-  unresolved external instance references; per-resource validation does not load them.
+  type IRIs and unresolved external instance references in both merged and
+  per-resource validation.
 - Inference defaults to `rdfs`; `none`, `owlrl` and `both` are also supported.
 - CLI warnings/info are advisory unless `--fail-on-warnings` is set. The negative
   fixture API exposes `allow_warnings`; positive API validation uses advisory warnings.
