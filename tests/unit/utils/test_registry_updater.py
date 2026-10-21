@@ -3,6 +3,7 @@
 Unit tests for omb.utils.registry_updater.
 """
 
+import json
 from pathlib import Path
 
 import rdflib
@@ -177,3 +178,63 @@ def test_generate_imports_catalog_falls_back_to_owl_context(temp_dir: Path):
         bundles, temp_dir / "catalog-v001.xml"
     )
     assert "https://www.w3.org/ns/credentials/v2" in xml
+
+
+def _seed_registry(path: Path, release_tag: str, generated: str) -> None:
+    """Write a registry whose content matches what update_registry() builds."""
+    path.write_text(
+        json.dumps(
+            {
+                "version": registry_updater.REGISTRY_VERSION,
+                "latestRelease": release_tag,
+                "ontologies": {},
+                "generated": generated,
+            },
+            indent=3,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def test_update_registry_carries_generated_forward_when_content_unchanged(
+    temp_dir: Path, monkeypatch
+):
+    """An unchanged registry keeps its timestamp instead of dropping it."""
+    registry_path = temp_dir / "registry.json"
+    stamp = "2020-01-01T00:00:00+00:00"
+    _seed_registry(registry_path, "v1.0.0", stamp)
+    monkeypatch.setattr(registry_updater, "REGISTRY_PATH", registry_path)
+
+    registry = registry_updater.update_registry("v1.0.0", {})
+
+    assert registry["generated"] == stamp
+
+
+def test_update_registry_refreshes_generated_when_content_changes(
+    temp_dir: Path, monkeypatch
+):
+    """A changed release tag refreshes the timestamp."""
+    registry_path = temp_dir / "registry.json"
+    stamp = "2020-01-01T00:00:00+00:00"
+    _seed_registry(registry_path, "v1.0.0", stamp)
+    monkeypatch.setattr(registry_updater, "REGISTRY_PATH", registry_path)
+
+    registry = registry_updater.update_registry("v2.0.0", {})
+
+    assert registry["latestRelease"] == "v2.0.0"
+    assert registry["generated"] != stamp
+
+
+def test_update_registry_is_idempotent_across_runs(temp_dir: Path, monkeypatch):
+    """Regenerating an up-to-date registry rewrites nothing."""
+    registry_path = temp_dir / "registry.json"
+    monkeypatch.setattr(registry_updater, "REGISTRY_PATH", registry_path)
+
+    registry_updater.write_registry(registry_updater.update_registry("v1.0.0", {}))
+    first = registry_path.read_text(encoding="utf-8")
+    assert "generated" in json.loads(first)
+
+    registry_updater.write_registry(registry_updater.update_registry("v1.0.0", {}))
+
+    assert registry_path.read_text(encoding="utf-8") == first
