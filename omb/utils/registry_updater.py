@@ -330,6 +330,16 @@ def to_posix_relative(file_path: Path, base_path: Path) -> str:
 
 
 def update_registry(release_tag: str, ontologies: Dict[str, dict]) -> dict:
+    """
+    Build the registry for a release tag.
+
+    ``generated`` records when the registry content last changed, so it is
+    refreshed only when something other than itself differs from the registry
+    on disk. When the content is unchanged the existing timestamp is carried
+    forward, which keeps the function idempotent: regenerating an up-to-date
+    registry reproduces it byte-for-byte instead of dropping the timestamp and
+    reporting a spurious change.
+    """
     existing = load_existing_registry()
     old_registry_content = {k: v for k, v in existing.items() if k != "generated"}
 
@@ -389,6 +399,8 @@ def update_registry(release_tag: str, ontologies: Dict[str, dict]) -> dict:
     new_registry_content = {k: v for k, v in registry.items() if k != "generated"}
     if new_registry_content != old_registry_content:
         registry["generated"] = datetime.now(timezone.utc).isoformat()
+    elif "generated" in existing:
+        registry["generated"] = existing["generated"]
 
     return registry
 
