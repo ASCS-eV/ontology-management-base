@@ -394,6 +394,16 @@ class ShaclValidator:
         files — merging them into one graph conflates distinct resources and
         produces spurious closed-shape / maxCount violations.
 
+        Isolation is between *input documents*. Each document still resolves its
+        own external references exactly as :meth:`validate` does, so
+        ``validate_each([f])`` and ``validate([f])`` reach the same verdict for
+        any single file; per-resource mode changes how several inputs relate to
+        each other, never how one document is resolved. Resolution cannot
+        conflate anything, because a fixture is merged only for an IRI the
+        document references without describing (``load_fixtures_for_iris``
+        skips IRIs that are already subjects), so a document's own subjects
+        never acquire a referenced resource's properties.
+
         The data-INDEPENDENT work — parsing the shapes graph and computing the
         ontology's RDFS closure — is done ONCE and reused across all files, so
         this is dramatically faster than calling ``validate()`` per file (which
@@ -413,16 +423,22 @@ class ShaclValidator:
                 for f in jsonld_files
             ]
 
-        # Step 1: Load each file's data in isolation (NO fixture merging) and
-        # collect the union of types/predicates/datatypes for schema discovery.
+        # Step 1: Load each file's data in isolation (no other INPUT document is
+        # merged in, but each file's own external references are resolved, as on
+        # the merged path) and collect the union of types/predicates/datatypes
+        # for schema discovery.
         self._log("Step 1: Loading JSON-LD data files (per-resource)...")
-        per_file: List[Tuple[Path, Graph]] = []
+        self._unresolved_types = set()
+        per_file: List[Tuple[Path, Graph, List[str]]] = []
         union_types: Set[str] = set()
         union_predicates: Set[str] = set()
         union_datatypes: Set[str] = set()
         for f in jsonld_files:
-            data_graph, _ = self._load_data([f], load_fixtures=False)
-            per_file.append((f, data_graph))
+            # Attribute unresolved references to the file that made them, rather
+            # than carrying one file's unresolved IRIs into the next.
+            self._unresolved_iris = []
+            data_graph, _ = self._load_data([f])
+            per_file.append((f, data_graph, self._unresolved_iris))
             union_types |= extract_rdf_types(data_graph)
             union_predicates |= extract_predicates(data_graph)
             union_datatypes |= extract_datatype_iris(data_graph)
@@ -441,8 +457,24 @@ class ShaclValidator:
         # Step 4: Validate each file's data graph in isolation.
         self._log(f"Step 4: Validating {len(per_file)} resource(s) individually...")
         results: List[ValidationResult] = []
-        for f, data_graph in per_file:
+        for f, data_graph, unresolved in per_file:
             routing = self._routing_metadata(extract_rdf_types(data_graph), shacl_graph)
+            if self.strict and unresolved:
+                message = (
+                    f"Strict mode: {len(unresolved)} unresolved IRI(s): "
+                    + ", ".join(unresolved[:5])
+                )
+                results.append(
+                    ValidationResult(
+                        conforms=False,
+                        return_code=210,
+                        report_text=message,
+                        files_validated=[self._rel_path(f)],
+                        errors=[message],
+                        **routing,
+                    )
+                )
+                continue
             if self.strict and routing["types_unrouted"]:
                 message = "Strict mode: unresolved @type IRI(s): " + ", ".join(
                     routing["types_unrouted"]
@@ -527,6 +559,34 @@ class ShaclValidator:
 
         return file_of
 
+    def _referenced_individuals(self, data_graph: Graph, closed_ontology: Graph):
+        """The ontology's statements about the individuals ``data_graph`` refers to.
+
+        Ontologies declare named individuals — ``manifest:isLicense`` and the
+        other category values — that data points at but never describes. SHACL
+        evaluates ``sh:class manifest:LicenseCategory`` against the data graph,
+        so without these statements a correct reference to an ontology
+        individual looks untyped and the constraint fires. The merged path
+        never sees this, because it merges the whole ontology; the per-resource
+        path has to ask for the same facts explicitly, or the two paths
+        disagree about the same document.
+
+        Only referenced nodes are looked up, through the ontology's indexes, so
+        this stays proportional to the data rather than to the ontology.
+        Classes and predicates are left out: their axioms are TBox, which the
+        per-resource path deliberately keeps out of the data graph, and what
+        SHACL needs from them is already materialized onto the data by the
+        inference around this call.
+        """
+        from rdflib import RDF, URIRef
+
+        tbox_terms = set(data_graph.predicates()) | set(
+            data_graph.objects(None, RDF.type)
+        )
+        for node in set(data_graph.all_nodes()):
+            if isinstance(node, URIRef) and node not in tbox_terms:
+                yield from closed_ontology.triples((node, None, None))
+
     def _abox_inference(self, data_graph: Graph, closed_ontology: Graph) -> Graph:
         """Fast ABox RDFS inference against a pre-closed TBox.
 
@@ -539,14 +599,18 @@ class ShaclValidator:
         without re-scanning the full ontology graph for every resource — which
         is what makes per-resource validation fast.
 
-        Returns the data plus inferred instance triples only; the ontology is
-        NOT merged in, since fully-materialized ``rdf:type`` triples are
-        sufficient for SHACL ``sh:class`` / ``sh:closed`` evaluation.
+        Returns the data plus inferred instance triples, together with the
+        ontology's description of the individuals the data refers to (see
+        :meth:`_referenced_individuals`). The ontology's TBox is NOT merged in,
+        since fully-materialized ``rdf:type`` triples are sufficient for SHACL
+        ``sh:class`` / ``sh:closed`` evaluation.
         """
         from rdflib import RDF, RDFS, URIRef
 
         work = Graph(store=FAST_STORE)
         work += data_graph
+        for triple in self._referenced_individuals(work, closed_ontology):
+            work.add(triple)
         for _ in range(10):  # TBox already closed -> converges in 1-2 passes
             new = []
             for s, p, o in list(work):
@@ -570,17 +634,16 @@ class ShaclValidator:
                 work.add(triple)
         return work
 
-    def _load_data(
-        self, jsonld_files: List[Path], load_fixtures: bool = True
-    ) -> Tuple[Graph, Dict[str, str]]:
-        """Load JSON-LD files and (optionally) resolve fixture references.
+    def _load_data(self, jsonld_files: List[Path]) -> Tuple[Graph, Dict[str, str]]:
+        """Load JSON-LD files and resolve their external references.
 
-        When ``load_fixtures`` is False, external references (e.g. issuer/subject
-        DIDs) are NOT resolved and merged into the data graph. This is required
-        for per-resource validation, where each document must be validated in
-        isolation against its own shapes — merging a referenced DID document onto
-        a shared subject IRI would conflate two distinct resources and trigger
-        spurious closed-shape violations.
+        References (e.g. issuer/subject DIDs) are resolved from the catalogs,
+        falling back online when allowed, and merged into the data graph. Only
+        IRIs the documents reference *without* describing are resolved, so a
+        resolved fixture never adds properties to a subject the input itself
+        describes. Both validation paths load data this way: per-resource
+        isolation (:meth:`validate_each`) separates input documents from one
+        another, not a document from the resources it points at.
         """
         data_graph = Graph(store=FAST_STORE)
         prefixes = {}
@@ -603,11 +666,7 @@ class ShaclValidator:
         self._log(f"  Prefixes discovered: {len(prefixes)}")
 
         # Load fixtures for external references (catalog-first, online fallback)
-        external_iris = (
-            extract_external_iris(data_graph, resolver=self.resolver)
-            if load_fixtures
-            else []
-        )
+        external_iris = extract_external_iris(data_graph, resolver=self.resolver)
         if external_iris:
             self._log(f"\n  Resolving {len(external_iris)} external references...")
             fixtures_loaded, unresolved = load_fixtures_for_iris(
