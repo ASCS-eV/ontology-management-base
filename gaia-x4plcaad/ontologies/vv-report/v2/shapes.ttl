@@ -1,0 +1,217 @@
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vv-report: <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+vv-report:VvReportShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "Each VvReport must have exactly one associated CodeArtifactBase (either inline or a valid manifest:Link)."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:node envited-x:CodeArtifactBaseShape ] [ sh:and ( manifest:LinkShape envited-x:ExtendedLinkShape ) ] ) ;
+            sh:path vv-report:hasCodeArtifact ],
+        [ sh:maxCount 1 ;
+            sh:message "Each VvReport must have one associated DomainSpecification with content."@en ;
+            sh:minCount 1 ;
+            sh:node vv-report:DomainSpecificationShape ;
+            sh:path vv-report:hasDomainSpecification ],
+        [ sh:maxCount 1 ;
+            sh:message "Each VvReport must have exactly one manifest."@en ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:and ( manifest:ManifestShape envited-x:ManifestShape ) ] [ sh:node envited-x:ManifestLinkReferenceShape ] ) ;
+            sh:path vv-report:hasManifest ] ;
+    sh:targetClass vv-report:VvReport .
+
+vv-report:shapes a owl:Ontology ;
+    owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/vv-report/v2> .
+
+vv-report:ContentShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ skos:example "did:op:bffa3d7670fc3ac3a49a257de0d4b44fdfbc12d9bd7aa329647cf73018f529f4" ;
+            sh:datatype xsd:anyURI ;
+            sh:description "Uniform Resource Identifier (URI) to identify the tested artifact, like a simulation, model by location, name, or both."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "system under test"@en ;
+            sh:order 0 ;
+            sh:path vv-report:systemUnderTest ],
+        [ sh:description "A list of all measures carried out on the subject under test."@en ;
+            sh:minCount 1 ;
+            sh:node vv-report:EvaluationShape ;
+            sh:order 1 ;
+            sh:path vv-report:evaluations ] .
+
+vv-report:DomainSpecificationShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ sh:maxCount 1 ;
+            sh:message "Each DomainSpecification must have one Content facet."@en ;
+            sh:minCount 1 ;
+            sh:node vv-report:ContentShape ;
+            sh:path vv-report:hasContent ],
+        [ sh:maxCount 1 ;
+            sh:message "Each DomainSpecification must have one Format facet."@en ;
+            sh:minCount 1 ;
+            sh:node vv-report:FormatShape ;
+            sh:path vv-report:hasFormat ] .
+
+vv-report:EvaluationShape a sh:NodeShape ;
+    sh:property [ sh:description "The definition of the quality metric that has been used in this evaluation item."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node vv-report:MetricShape ;
+            sh:order 0 ;
+            sh:path vv-report:metric ],
+        [ sh:description "The definition of a dataset that has been used as input to the quality metric."@en ;
+            sh:minCount 1 ;
+            sh:node vv-report:InputDataShape ;
+            sh:order 1 ;
+            sh:path vv-report:inputData ],
+        [ sh:description "A list of parameters that have been used to configure the quality metric and/or quality criterion."@en ;
+            sh:minCount 0 ;
+            sh:node vv-report:ParameterShape ;
+            sh:path vv-report:parameters ],
+        [ sh:description "The summary of the result of this evaluation item."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:node vv-report:ResultShape ;
+            sh:path vv-report:result ],
+        [ sh:description "Additional arbitrary V&V-concept specific data, to further describe the evaluation."@en ;
+            sh:minCount 0 ;
+            sh:path vv-report:conceptSpecificData ] ;
+    sh:targetClass vv-report:Evaluation .
+
+vv-report:FormatShape a sh:NodeShape ;
+    sh:closed false ;
+    sh:property [ skos:example "JSON-LD" ;
+            sh:datatype xsd:string ;
+            sh:description "The format or standard used for the V&V report."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "report format"@en ;
+            sh:order 0 ;
+            sh:path vv-report:reportFormat ] .
+
+vv-report:InputDataShape a sh:NodeShape ;
+    sh:property [ skos:example "The OSI SensorView message"@en ;
+            sh:datatype xsd:string ;
+            sh:description "A short description for interpreting this input data element"@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "data description"@en ;
+            sh:order 0 ;
+            sh:path vv-report:inputDescription ],
+        [ skos:example "https://github.com/OpenSimulationInterface/osi-validation/raw/refs/heads/master/data/20240221T141700Z_sv_300_2112_10_one_moving_object.osi" ;
+            sh:datatype xsd:anyURI ;
+            sh:description "Uniform Resource Identifier (URI) to identify the utilized input data element by location, name, or both."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "data reference"@en ;
+            sh:order 1 ;
+            sh:path vv-report:inputReference ] ;
+    sh:targetClass vv-report:InputData .
+
+vv-report:MetricShape a sh:NodeShape ;
+    sh:property [ skos:example "Model output OSI validation"@en ;
+            sh:datatype xsd:string ;
+            sh:description "A meaningful name of this metric."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "metric title"@en ;
+            sh:order 0 ;
+            sh:path vv-report:metricTitle ],
+        [ skos:example "Running the model open-loop with a defined OSI SensorView input and checking the compliance of the OSI SensorData output with predefined rules."@en ;
+            sh:datatype xsd:string ;
+            sh:description "A short description of what is tested within this quality metric."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "metric description"@en ;
+            sh:order 1 ;
+            sh:path vv-report:metricDescription ],
+        [ skos:example "did:op:bffa3d7670fc3ac3a49a257de0d4b44fdfbc12d9bd7aa329647cf73018f529f4" ;
+            sh:datatype xsd:anyURI ;
+            sh:description "Uniform Resource Identifier (URI) to identify the metric by location, name, or both."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "metric reference"@en ;
+            sh:order 2 ;
+            sh:path vv-report:metricReference ] ;
+    sh:targetClass vv-report:Metric .
+
+vv-report:ParameterShape a sh:NodeShape ;
+    sh:property [ skos:example "max_allowed_deviation"@en ;
+            sh:datatype xsd:string ;
+            sh:description "The formal name of the parameter, as it appears in the validation system"@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "parameter name"@en ;
+            sh:order 0 ;
+            sh:path vv-report:parameterName ],
+        [ skos:example "Maximum allowed position deviation in meters, to pass the test."@en ;
+            sh:datatype xsd:string ;
+            sh:description "A short description of the parameter in order to unambigously interpret it."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "parameter description"@en ;
+            sh:order 1 ;
+            sh:path vv-report:parameterDescription ],
+        [ skos:example "0.19" ;
+            sh:description "The value of the parameter."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "parameter value"@en ;
+            sh:or ( [ sh:datatype xsd:string ] [ sh:datatype xsd:boolean ] [ sh:datatype xsd:integer ] [ sh:datatype xsd:decimal ] [ sh:datatype xsd:float ] [ sh:datatype xsd:double ] ) ;
+            sh:order 2 ;
+            sh:path vv-report:parameterValue ] ;
+    sh:targetClass vv-report:Parameter .
+
+vv-report:ResultShape a sh:NodeShape ;
+    sh:property [ skos:example "false" ;
+            sh:datatype xsd:boolean ;
+            sh:description "Statement if the test has been passed or not."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "test passed"@en ;
+            sh:order 0 ;
+            sh:path vv-report:resultTestPassed ],
+        [ skos:example "The attribute 'timestamp' is missing in the SensorData output."@en ;
+            sh:datatype xsd:string ;
+            sh:description "Additional information about the test result, e.g., why it has failed."@en ;
+            sh:minCount 0 ;
+            sh:name "log"@en ;
+            sh:path vv-report:resultLog ],
+        [ skos:example "true" ;
+            sh:datatype xsd:boolean ;
+            sh:description "Information if the result can be verified by a third party."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "verifiable"@en ;
+            sh:path vv-report:resultVerifiable ],
+        [ sh:description "The necessary attributes to carry out verification of the result by a third party."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;
+            sh:node vv-report:ResultVerificationShape ;
+            sh:path vv-report:resultVerification ] ;
+    sh:targetClass vv-report:Result .
+
+vv-report:ResultVerificationShape a sh:NodeShape ;
+    sh:property [ skos:example "Result can be verified via the OVAL ecosystem (based on the OCEAN protocol) as compute job."@en ;
+            sh:datatype xsd:string ;
+            sh:description "A short description of how the result can be verified with the given reference."@en ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:name "verification method description"@en ;
+            sh:order 0 ;
+            sh:path vv-report:resultVerificationDescription ],
+        [ skos:example "https://gaiax4plcaad.dlr.de/history/4HGk8794tHFJDG3kiuvdf2fdGD4q6" ;
+            sh:datatype xsd:anyURI ;
+            sh:description "Uniform Resource Identifier (URI) to identify the reference used to verify the result of this evalation by location, name, or both."@en ;
+            sh:minCount 1 ;
+            sh:name "verification reference"@en ;
+            sh:order 1 ;
+            sh:path vv-report:resultVerificationReference ] ;
+    sh:targetClass vv-report:ResultVerification .
+
