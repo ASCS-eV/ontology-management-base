@@ -383,6 +383,49 @@ def test_check_failing_tests_all_is_path_independent(
     assert "failed as expected" in captured.out
 
 
+def test_check_failing_tests_all_records_snapshots_with_lf_line_endings(
+    tmp_path: Path,
+):
+    """A recorded snapshot is a committed artifact, so its bytes must not vary by OS.
+
+    `Path.write_text` translates to `os.linesep` by default, so a snapshot recorded on
+    Windows would be byte-different from the same snapshot recorded on Linux/macOS even
+    though `normalize_text` compares them as equal.
+    """
+    real_fixture = (
+        validation_suite.ROOT_DIR
+        / "tests"
+        / "data"
+        / "manifest"
+        / "invalid"
+        / "fail_01_missing_license_instance.json"
+    )
+    assert real_fixture.is_file(), (
+        "fixture moved or renamed; update this test's paths to match"
+    )
+
+    recording_dir = tmp_path / "recording"
+    recording_dir.mkdir(parents=True)
+    fixture = recording_dir / real_fixture.name
+    fixture.write_text(real_fixture.read_text(encoding="utf-8"), encoding="utf-8")
+    snapshot = expected_snapshot_path(fixture)
+    # The pairing rule classifies a data file as a negative fixture when a snapshot
+    # sits beside it; an empty one makes this run re-record that snapshot.
+    snapshot.write_text("", encoding="utf-8")
+
+    resolver = RegistryResolver(validation_suite.ROOT_DIR)
+    domain = resolver.create_temporary_domain([fixture])
+
+    result = validation_suite.check_failing_tests_all(
+        [domain], resolver=resolver, update_expected=True
+    )
+
+    assert result == 0
+    raw = snapshot.read_bytes()
+    assert b"\n" in raw
+    assert b"\r" not in raw
+
+
 # =============================================================================
 # Tests: RegistryResolver integration
 # =============================================================================
