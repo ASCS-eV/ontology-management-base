@@ -43,6 +43,11 @@ Use the GitHub Actions UI when you need to re-run a release or the tag already e
     If the tag does not yet exist as a git tag, the workflow creates a lightweight
     tag at the current `main` HEAD. Prefer Option A to get a signed, annotated tag.
 
+!!! note "PyPI is not published by this path"
+    `cd-pypi.yml` triggers on the **tag push**, not on this dispatch. If you reach a
+    release through Option B without ever pushing the tag, dispatch `cd-pypi.yml`
+    separately against that tag — see [Publishing to PyPI](#publishing-to-pypi).
+
 ## What the Workflow Does
 
 The [`cd-release.yml`](https://github.com/ASCS-eV/ontology-management-base/blob/main/.github/workflows/cd-release.yml) workflow runs these steps in order:
@@ -67,15 +72,33 @@ flowchart LR
 
 Publishing the package to [PyPI](https://pypi.org/p/ontology-management-base) is handled
 by a separate workflow, [`cd-pypi.yml`](https://github.com/ASCS-eV/ontology-management-base/blob/main/.github/workflows/cd-pypi.yml),
-which triggers when a GitHub Release is **published** (so it runs after `cd-release.yml`
-creates the release). It builds the sdist and wheel, verifies the `pyproject.toml`
-version matches the release tag, and uploads to PyPI using
+which triggers on the **release tag push** — the same `v*.*.*` push that starts
+`cd-release.yml`, so the two run in parallel. It builds the sdist and wheel, verifies the
+`pyproject.toml` version matches the release tag, and uploads to PyPI using
 [trusted publishing](https://docs.pypi.org/trusted-publishers/) (OIDC — no API tokens).
+
+!!! note "Why not trigger on `release: published`?"
+
+    It cannot work. `cd-release.yml` creates the GitHub Release with `GITHUB_TOKEN`, and
+    GitHub does not start new workflow runs from events created by `GITHUB_TOKEN` (a
+    deliberate recursion guard). The workflow used that trigger up to v0.5.2 and it never
+    fired once — every publish through v0.5.2 had to be dispatched by hand.
+
+If a tag push does not reach the workflow, run `cd-pypi.yml` manually. Dispatch it
+**against the release tag**, or supply the `tag` input; the workflow refuses to publish
+when it cannot resolve a tag to verify against.
 
 The publish step runs in the repository's `pypi` GitHub Actions environment, which must
 exist in **Settings → Environments** (restricting it to release tags / protected refs is
 recommended). No secrets are required; the `id-token: write` permission plus the
 configured PyPI trusted publisher authorize the upload.
+
+!!! warning "Trusted publishing and reusable workflows"
+
+    The publish job must stay in `cd-pypi.yml`. PyPI matches the trusted publisher on the
+    workflow *filename*, and publishing from a `workflow_call` reusable workflow is not
+    supported — moving this job into `cd-release.yml` as a reusable call would break the
+    upload.
 
 ## Versioning
 
