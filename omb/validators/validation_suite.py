@@ -540,7 +540,14 @@ def check_failing_tests_all(
                     )
                     return ReturnCodes.CONFORMANCE_ERROR
                 if update_expected:
-                    expected_output_path.write_text(output, encoding="utf-8")
+                    # `newline="\n"` keeps snapshots byte-identical across platforms:
+                    # `write_text` would otherwise translate to `os.linesep`, so a
+                    # fixture re-recorded on Windows would differ from the same
+                    # fixture recorded on Linux/macOS even though `normalize_text`
+                    # compares them as equal.
+                    expected_output_path.write_text(
+                        output, encoding="utf-8", newline="\n"
+                    )
                     print(
                         "📝 Recorded expected snapshot: "
                         f"{normalize_path_for_display(expected_output_path, root_dir)}",

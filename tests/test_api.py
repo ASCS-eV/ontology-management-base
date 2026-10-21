@@ -599,6 +599,26 @@ def test_check_negative_fixtures_records_a_first_snapshot(widget_repo):
     assert verify.ok, "\n".join(o.message for o in verify.failures)
 
 
+def test_check_negative_fixtures_records_snapshots_with_lf_line_endings(widget_repo):
+    """Snapshots are committed artifacts, so their bytes must not depend on the OS.
+
+    `Path.write_text` translates to `os.linesep` by default, which would make a
+    snapshot recorded on Windows byte-different from the same snapshot recorded on
+    Linux/macOS even though the comparison path normalises both to LF.
+    """
+    data_path = widget_repo / "data" / "invalid" / "fail01_missing_serial.json"
+    snapshot = data_path.with_suffix(".expected")
+
+    report = check_negative_fixtures(
+        [data_path], artifacts=[widget_repo / "artifacts"], update=True
+    )
+
+    assert report.ok, report.errors
+    raw = snapshot.read_bytes()
+    assert b"\n" in raw
+    assert b"\r" not in raw
+
+
 def test_check_negative_fixtures_refuses_to_record_a_vacuous_failure(widget_repo):
     """Without shapes a fixture "fails" for the wrong reason; recording that is worse.
 

@@ -587,7 +587,11 @@ def _check_one_fixture(
                 ),
                 report_text=report_text,
             )
-        snapshot_path.write_text(report_text, encoding="utf-8")
+        # `newline="\n"` keeps snapshots byte-identical across platforms: `write_text`
+        # would otherwise translate to `os.linesep`, so a fixture re-recorded on Windows
+        # would differ from the same fixture recorded on Linux/macOS even though
+        # `normalize_text` compares them as equal.
+        snapshot_path.write_text(report_text, encoding="utf-8", newline="\n")
         return FixtureOutcome(
             data_path=data_path,
             snapshot_path=snapshot_path,

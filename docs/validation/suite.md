@@ -75,7 +75,8 @@ just validate --run check-failing-tests --data-paths ./my/case.json --update-exp
 In a recording run every named file is a candidate fixture: those that fail get a
 snapshot written, those that pass are reported as "not a negative fixture" and left as
 ordinary data. A recording run producing no negative snapshots fails. Review the
-recorded snapshot before committing it.
+recorded snapshot before committing it. Snapshots are always written with LF line
+endings so that the committed bytes do not depend on the platform that recorded them.
 
 An explicit `--run check-failing-tests` over `--data-paths` that finds no negative
 fixture at all exits non-zero and says so, rather than reporting success for a run that
