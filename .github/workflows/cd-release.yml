@@ -59,10 +59,23 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git stash
+          # The version-bump PR already commits the registry for the release,
+          # so the regeneration above is normally a no-op and there is nothing
+          # to stash. Only pop a stash that was actually created: an
+          # unconditional `git stash pop` fails under `bash -e` and aborts the
+          # release before it is created.
+          STASHED=0
+          if ! git diff --quiet -- docs/registry.json; then
+            git stash push -- docs/registry.json
+            STASHED=1
+          fi
+
           git checkout main
           git pull origin main
-          git stash pop
+
+          if [ "$STASHED" = "1" ]; then
+            git stash pop
+          fi
 
           git add docs/registry.json
           git commit -s -m "chore: update registry for ${{ steps.tag.outputs.tag }} [skip ci]" || echo "No changes to commit"
