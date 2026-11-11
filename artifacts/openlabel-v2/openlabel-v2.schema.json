@@ -73,7 +73,7 @@
          "type": "string"
       },
       "Metadata": {
-         "additionalProperties": false,
+         "additionalProperties": true,
          "description": "Metadata about the annotation file. The schema_version is mandatory.",
          "properties": {
             "annotator": {
@@ -347,7 +347,7 @@
          "type": "object"
       },
       "TagEntry": {
-         "additionalProperties": false,
+         "additionalProperties": true,
          "description": "A single tag in an ASAM OpenLABEL file. References a tag type from an ontology and optionally includes tag_data with values.",
          "properties": {
             "ontology_uid": {
@@ -402,7 +402,7 @@
          "type": "object"
       },
       "TagEntry__identifier_optional": {
-         "additionalProperties": false,
+         "additionalProperties": true,
          "description": "A single tag in an ASAM OpenLABEL file. References a tag type from an ontology and optionally includes tag_data with values.",
          "properties": {
             "ontology_uid": {
@@ -805,7 +805,7 @@
    "$schema": "https://json-schema.org/draft/2019-09/schema",
    "additionalProperties": false,
    "description": "Root of an ASAM OpenLABEL JSON file. Contains a single \"openlabel\" key.",
-   "metamodel_version": "1.11.0",
+   "metamodel_version": "1.12.0",
    "properties": {
       "openlabel": {
          "$ref": "#/$defs/OpenLabel",

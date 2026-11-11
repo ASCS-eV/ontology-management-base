@@ -93,6 +93,13 @@ classes:
   Metadata:
     description: >-
       Metadata about the annotation file. The schema_version is mandatory.
+    # ASAM declares metadata with "additionalProperties": true (spec 9, metadata
+    # definition): it is the file format's designated extension point, and real
+    # producers put toolchain metadata (ScenarioId, OpenXAvailability, Entities,
+    # ...) next to the ASAM-defined keys. Closing it would reject ASAM-conformant
+    # files, which no refinement of the format may do.
+    extra_slots:
+      allowed: true
     attributes:
       schema_version:
         range: string
@@ -158,6 +165,12 @@ classes:
     description: >-
       A single tag in an ASAM OpenLABEL file. References a tag type from an
       ontology and optionally includes tag_data with values.
+    # ASAM declares tag with "additionalProperties": true (spec 8.2.1), so a tag
+    # may carry producer-specific keys alongside type/ontology_uid/resource_uid/
+    # tag_data. Real files use that to put the tagged value next to the type
+    # (e.g. "motionDriveValue": 60), so closing this rejects conformant files.
+    extra_slots:
+      allowed: true
     attributes:
       uid:
         identifier: true

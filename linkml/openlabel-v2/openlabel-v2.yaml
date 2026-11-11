@@ -482,7 +482,8 @@ classes:
         preconditions:
           slot_conditions:
             DrivableAreaEdge:
-              equals_string: "EdgeNone"
+              has_member:
+                equals_string: "EdgeNone"
         postconditions:
           slot_conditions:
             DrivableAreaEdge:
