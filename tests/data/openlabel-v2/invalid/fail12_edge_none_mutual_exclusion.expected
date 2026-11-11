@@ -8,6 +8,7 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v2/DrivableAreaEdge                                                              =
 =    Error:            EdgeNone is mutually exclusive with other drivable area edge types. If DrivableAreaEdge includes EdgeNone, no other edge      =
 =                      values are allowed.                                                                                                           =
 ======================================================================================================================================================
