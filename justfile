@@ -65,12 +65,28 @@ format:
 generate:
     #!/usr/bin/env bash
     set -euo pipefail
+    # Never discard generator stderr: a fatal error there (e.g. a renamed flag) still
+    # leaves a truncated artifact behind, and `WARNING:linkml.generators.*` lines report
+    # semantic compile decisions such as a rule being skipped. Only the generators'
+    # DeprecationWarning noise is filtered out.
+    gen() {
+        local out="$1"; shift
+        local err; err="$(mktemp)"
+        if ! {{run}} "$@" 2>"$err" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "$out"; then
+            echo "ERROR: $1 failed while generating $out" >&2
+            cat "$err" >&2
+            rm -f "$err"
+            return 1
+        fi
+        grep -E '^(WARNING|ERROR|CRITICAL):linkml\.generators' "$err" >&2 || true
+        rm -f "$err"
+    }
     for domain in {{LINKML_DOMAINS}}; do
         echo "  Processing $domain..."
         mkdir -p "artifacts/$domain"
-        {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
-        {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
-        {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+        gen "artifacts/$domain/$domain.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml"
+        gen "artifacts/$domain/$domain.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml"
+        gen "artifacts/$domain/$domain.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml"
         # A domain that also carries a structural schema ($domain-schema.yaml) generates a
         # JSON Schema from it. The semantic model above describes the RDF vocabulary; the
         # structural one describes the JSON document format, and only the latter can say
@@ -83,7 +99,7 @@ generate:
                 opts="$(cat "linkml/$domain/jsonschema.genopts")"
             fi
             # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
-            {{run}} gen-json-schema --deterministic --indent 3 $opts "linkml/$domain/$domain-schema.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.schema.json"
+            gen "artifacts/$domain/$domain.schema.json" gen-json-schema --indent 3 $opts "linkml/$domain/$domain-schema.yaml"
         fi
     done
     echo "[OK] Artifacts generated"
@@ -92,10 +108,22 @@ generate:
 generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
+    gen() {
+        local out="$1"; shift
+        local err; err="$(mktemp)"
+        if ! {{run}} "$@" 2>"$err" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "$out"; then
+            echo "ERROR: $1 failed while generating $out" >&2
+            cat "$err" >&2
+            rm -f "$err"
+            return 1
+        fi
+        grep -E '^(WARNING|ERROR|CRITICAL):linkml\.generators' "$err" >&2 || true
+        rm -f "$err"
+    }
     mkdir -p "artifacts/{{domain}}"
-    {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
-    {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.shacl.ttl"
-    {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.context.jsonld"
+    gen "artifacts/{{domain}}/{{domain}}.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml"
+    gen "artifacts/{{domain}}/{{domain}}.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml"
+    gen "artifacts/{{domain}}/{{domain}}.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml"
     echo "[OK] Artifacts generated for {{domain}}"
 
 # Rebuild and sync Gaia-X artifacts from the service-characteristics submodule.
