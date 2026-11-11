@@ -266,17 +266,20 @@ class TestSchemaGeneration:
         assert len(ont_defs) > 0
         ont_def = generated_schema["$defs"][ont_defs[0]]
         bm = ont_def["properties"]["boundary_mode"]
-        # Should have enum constraint (may be in anyOf or directly)
-        if "enum" in bm:
-            assert "include" in bm["enum"]
-            assert "exclude" in bm["enum"]
-        elif "anyOf" in bm:
-            enum_found = False
-            for opt in bm["anyOf"]:
-                if "enum" in opt:
-                    assert "include" in opt["enum"]
-                    enum_found = True
-            assert enum_found
+
+        def resolve(node: dict) -> dict:
+            """Follow a local ``$ref`` into ``$defs`` (linkml emits enums by reference)."""
+            ref = node.get("$ref")
+            if ref and ref.startswith("#/$defs/"):
+                return generated_schema["$defs"][ref.split("/")[-1]]
+            return node
+
+        candidates = [resolve(opt) for opt in bm.get("anyOf", [])] or [resolve(bm)]
+        enums = [opt["enum"] for opt in candidates if "enum" in opt]
+        assert enums, f"boundary_mode has no enum constraint: {bm}"
+        for values in enums:
+            assert "include" in values
+            assert "exclude" in values
 
 
 # =============================================================================
