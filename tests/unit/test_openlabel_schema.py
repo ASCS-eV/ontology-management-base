@@ -9,6 +9,7 @@ Tests cover:
 """
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -16,6 +17,8 @@ from pathlib import Path
 
 import jsonschema
 import pytest
+
+from omb.core.constants import ASAM_SUBMODULE_HINT
 
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
 SCHEMA_YAML = ROOT_DIR / "linkml" / "openlabel-v2" / "openlabel-v2-schema.yaml"
@@ -44,10 +47,36 @@ ASAM_ONTOLOGY_TTL = (
 )
 
 
+def _require_pinned_sources(path: Path, what: str) -> Path:
+    """Return *path*, or skip locally / fail where the sources are guaranteed.
+
+    The authoritative ASAM OpenLABEL schema and tagging ontology live in a ~260 MB
+    submodule that the cheap test matrix deliberately does not check out, so skipping
+    is right there. In the ``Pinned Standards Drift`` job, which initialises the
+    submodule and sets ``OMB_REQUIRE_PINNED_SOURCES=1``, a missing file must fail
+    instead: a conformance gate that quietly stops running is worse than no gate.
+    """
+    if path.exists():
+        return path
+    if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
+        raise AssertionError(
+            f"{what} is missing while OMB_REQUIRE_PINNED_SOURCES is set. "
+            f"{ASAM_SUBMODULE_HINT}"
+        )
+    pytest.skip(f"{what} not checked out. {ASAM_SUBMODULE_HINT}")
+
+
+def _asam_ontology_ttl() -> str:
+    """Text of the pinned ASAM scenario tagging ontology, or skip/fail per the rule."""
+    path = _require_pinned_sources(
+        ASAM_ONTOLOGY_TTL, "the pinned ASAM OpenLABEL tagging ontology"
+    )
+    return path.read_text(encoding="utf-8")
+
+
 def _asam_tag_classes() -> set[str]:
     """Local names of every rdfs:Class in the ASAM scenario tagging ontology."""
-    ttl = ASAM_ONTOLOGY_TTL.read_text(encoding="utf-8")
-    return set(re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:Class", ttl))
+    return set(re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:Class", _asam_ontology_ttl()))
 
 
 def _tag_type_enum(schema: dict) -> list[str]:
@@ -76,7 +105,10 @@ def generated_schema() -> dict:
 @pytest.fixture(scope="module")
 def asam_schema() -> dict:
     """Load the authoritative ASAM OpenLABEL v1.0.0 JSON Schema."""
-    return json.loads(ASAM_SCHEMA.read_text(encoding="utf-8"))
+    path = _require_pinned_sources(
+        ASAM_SCHEMA, "the pinned ASAM OpenLABEL v1.0.0 JSON Schema"
+    )
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 # =============================================================================
@@ -381,7 +413,7 @@ class TestVocabularyFaithfulness:
 
     def test_no_fabricated_enum_values(self, generated_schema: dict) -> None:
         """Every enum value must be a real ASAM ontology name (class or property)."""
-        ttl = ASAM_ONTOLOGY_TTL.read_text(encoding="utf-8")
+        ttl = _asam_ontology_ttl()
         asam_names = set(
             re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:(?:Class|Property)", ttl)
         )
