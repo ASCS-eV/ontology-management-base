@@ -966,10 +966,14 @@ class ShaclValidator:
             Formatted string output
         """
         output_buffer = StringIO()
+        # A failing result whose violations live in ``report_graph`` renders from
+        # that graph, and passing ``report_text`` too would duplicate it inside the
+        # byte-compared ``.expected`` snapshots. A failure without a graph (a
+        # coverage or routing error) has no other diagnostic, so pass it through.
         format_shacl_validation_result(
             result.conforms,
             result.files_validated,
-            "" if not result.conforms else result.report_text,
+            "" if result.report_graph is not None else result.report_text,
             result.report_graph,
             exit_code=None,
             file=output_buffer,

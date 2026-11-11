@@ -517,6 +517,17 @@ def format_data_conformance_result(
             _extract_and_sort_errors(report_graph), width, inner_width, file
         )
         print(border, file=file)
+    elif not success and v_text:
+        # A failure without a report graph (such as a coverage or routing error)
+        # carries its only diagnostic in v_text. Rendering it keeps the report
+        # actionable instead of printing a verdict with no reason.
+        _print_boxed_line(" ", width, file=file)
+        _print_boxed_line("Validation Error:".center(inner_width), width, file=file)
+        _print_boxed_line("-" * inner_width, width, file=file)
+        for paragraph in v_text.splitlines():
+            for line in textwrap.wrap(paragraph, width=inner_width - 1) or [""]:
+                _print_boxed_line(line, width, file=file)
+        print(border, file=file)
     if exit_code is not None:
         sys.exit(exit_code)
 
