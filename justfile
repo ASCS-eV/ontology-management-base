@@ -241,6 +241,13 @@ asam-imports-check:
 test-asam-imports:
     {{run}} python -m pytest tests/integration/test_asam_imports.py -q
 
+# Conformance tests for the OpenLABEL structural schema against the pinned ASAM
+# OpenLABEL v1.0.0 JSON Schema and tagging ontology. Skips without the submodule, so
+# CI runs this in the job that already pays for the checkout and sets
+# OMB_REQUIRE_PINNED_SOURCES=1 to turn those skips into failures.
+test-asam-openlabel:
+    {{run}} python -m pytest tests/unit/test_openlabel_schema.py -q
+
 # ===== Cleaning =====
 
 # Remove build artifacts and caches.
