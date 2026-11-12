@@ -112,6 +112,9 @@ ignore = [
 "__init__.py" = ["F401"]
 
 [tool.pytest.ini_options]
+markers = [
+    "slow: minutes-scale suites (property-based corpora); deselect with -m 'not slow'",
+]
 pythonpath = ["."]
 testpaths = ["tests"]
 python_files = ["test_*.py"]

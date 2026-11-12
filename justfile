@@ -257,7 +257,7 @@ test-asam-imports:
 # CI runs this in the job that already pays for the checkout and sets
 # OMB_REQUIRE_PINNED_SOURCES=1 to turn those skips into failures.
 test-asam-openlabel:
-    {{run}} python -m pytest tests/unit/test_openlabel_schema.py -q
+    {{run}} python -m pytest tests/unit/test_openlabel_schema.py tests/unit/test_schema_refinement.py -q
 
 # ===== Cleaning =====
 

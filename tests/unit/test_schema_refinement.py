@@ -13,10 +13,13 @@ reachability, walks both schemas for a structural gap table, and runs a
 differential oracle over a mutation + property-based corpus.
 """
 
+import os
 import sys
 from pathlib import Path
 
 import pytest
+
+from omb.core.constants import ASAM_SUBMODULE_HINT
 
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(ROOT_DIR / "scripts"))
@@ -32,10 +35,31 @@ pytestmark = pytest.mark.slow
 PROOF_SPECS = sorted((ROOT_DIR / "linkml").glob("*/proof_spec.yaml"))
 
 
+def _prove(spec_path: Path) -> prover.ProofReport:
+    """Run the prover for *spec_path*, or skip/fail when the reference is absent.
+
+    The normative reference schema lives in a ~260 MB submodule that the cheap
+    test matrix deliberately does not check out, so skipping is right there. The
+    ``Pinned Standards Drift`` job fetches the submodule and sets
+    ``OMB_REQUIRE_PINNED_SOURCES=1``; there a missing file must fail instead,
+    because a refinement gate that quietly stops running is precisely the
+    vacuity this suite exists to rule out.
+    """
+    spec = yaml.safe_load(spec_path.read_text(encoding="utf-8"))
+    reference = ROOT_DIR / spec["reference_schema"]
+    if not reference.exists():
+        if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
+            raise AssertionError(
+                f"{reference} is missing while OMB_REQUIRE_PINNED_SOURCES is set. "
+                f"{ASAM_SUBMODULE_HINT}"
+            )
+        pytest.skip(f"{reference} not checked out. {ASAM_SUBMODULE_HINT}")
+    return prover.prove(spec, ROOT_DIR)
+
+
 @pytest.fixture(scope="module", params=PROOF_SPECS, ids=lambda p: p.parent.name)
 def report(request) -> prover.ProofReport:
-    spec = yaml.safe_load(request.param.read_text(encoding="utf-8"))
-    return prover.prove(spec, ROOT_DIR)
+    return _prove(request.param)
 
 
 def test_specs_exist() -> None:
@@ -126,10 +150,9 @@ class TestOpenLabelScopeProjection:
     """Pin the OpenLABEL scenario-tagging scope so accidental scope drift is caught."""
 
     @pytest.fixture(scope="class")
-    def ol(self) -> prover.ProofReport:
-        spec_path = ROOT_DIR / "linkml" / "openlabel-tagging" / "proof_spec.yaml"
-        spec = yaml.safe_load(spec_path.read_text(encoding="utf-8"))
-        return prover.prove(spec, ROOT_DIR)
+    @classmethod
+    def ol(cls) -> prover.ProofReport:
+        return _prove(ROOT_DIR / "linkml" / "openlabel-tagging" / "proof_spec.yaml")
 
     def test_in_scope_defs(self, ol: prover.ProofReport) -> None:
         assert set(ol.in_scope) == {
