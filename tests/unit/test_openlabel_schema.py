@@ -21,8 +21,10 @@ import pytest
 from omb.core.constants import ASAM_SUBMODULE_HINT
 
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
-SCHEMA_YAML = ROOT_DIR / "linkml" / "openlabel-v2" / "openlabel-v2-schema.yaml"
-ONTOLOGY_YAML = ROOT_DIR / "linkml" / "openlabel-v2" / "openlabel-v2.yaml"
+SCHEMA_YAML = (
+    ROOT_DIR / "linkml" / "openlabel-tagging" / "openlabel-tagging-schema.yaml"
+)
+ONTOLOGY_YAML = ROOT_DIR / "linkml" / "openlabel-tagging" / "openlabel-tagging.yaml"
 SYNC_SCRIPT = ROOT_DIR / "scripts" / "sync_tag_type_enum.py"
 CONVERT_SCRIPT = ROOT_DIR / "scripts" / "convert_openlabel_v1_to_v2.py"
 # Authoritative ASAM OpenLABEL v1.0.0 JSON Schema (the format we claim parity with).
@@ -604,6 +606,203 @@ class TestFunctionalEquivalence:
 
 
 # =============================================================================
+# Profile scope (tagging vs labelling)
+# =============================================================================
+
+
+# The exact set of OpenLABEL sections this profile accepts without validating.
+# Pinned deliberately: widening it silently would enlarge the share of a file
+# that can be reported valid while never having been checked.
+PASSTHROUGH_SECTIONS = {
+    "actions",
+    "contexts",
+    "coordinate_systems",
+    "events",
+    "frame_intervals",
+    "frames",
+    "objects",
+    "relations",
+    "resources",
+    "streams",
+}
+
+# The sections this profile does validate.
+VALIDATED_SECTIONS = {"metadata", "ontologies", "tags"}
+
+
+def _refs_in(spec: dict) -> set:
+    """Collect the $refs reachable from a property schema.
+
+    Covers the shapes the generator emits for a slot: a direct ``$ref``, an
+    ``items.$ref`` for a multivalued slot, and the ``anyOf`` null-wrapping the
+    generator adds unless ``--no-include-null`` is passed. The shipped artifact
+    uses the unwrapped form; a consumer generating the schema themselves gets
+    the wrapped one, so detection must accept both.
+    """
+    found = set()
+    for branch in [spec, *spec.get("anyOf", []), *spec.get("oneOf", [])]:
+        if not isinstance(branch, dict):
+            continue
+        if branch.get("$ref"):
+            found.add(branch["$ref"])
+        items = branch.get("items")
+        if isinstance(items, dict) and items.get("$ref"):
+            found.add(items["$ref"])
+        # An inlined dict puts the value schema under additionalProperties,
+        # itself possibly null-wrapped in an anyOf. This is the shape emitted
+        # for a key-constrained passthrough section (propertyNames + value).
+        addl = branch.get("additionalProperties")
+        if isinstance(addl, dict):
+            found |= _refs_in(addl)
+    return found
+
+
+# A section is passthrough when any $ref in its property schema points into the
+# "Unchecked*" family: UncheckedSection (open object), or the key-constrained
+# UncheckedUidEntry / UncheckedFrameEntry used where ASAM pins the dict keys.
+PASSTHROUGH_MARKER = "#/$defs/Unchecked"
+
+
+def _is_passthrough(subschema: dict) -> bool:
+    """True when the subschema defers validation to the Unchecked* family."""
+    return any(r.startswith(PASSTHROUGH_MARKER) for r in _refs_in(subschema))
+
+
+def unvalidated_sections(document: dict, schema: dict) -> set:
+    """Report which sections of ``document`` the schema accepts without checking.
+
+    A section is passthrough when its property schema resolves to the
+    unconstrained ``UncheckedSection`` definition. This is the contract an external
+    consumer can rely on to tell "valid" apart from "fully checked": a ``$ref``
+    to ``#/$defs/UncheckedSection`` means accepted but not validated.
+    """
+    props = schema["$defs"]["OpenLabel"]["properties"]
+    return {
+        name
+        for name in document.get("openlabel", {})
+        if _is_passthrough(props.get(name, {}))
+    }
+
+
+class TestProfileScope:
+    """The profile validates tagging and passes labelling through unvalidated.
+
+    ASAM declares ``openlabel`` with ``additionalProperties: false``, so a
+    profile that omits the labelling sections rejects conformant files. Spec
+    8.1.1 allows a labelling instance to be used as the raw data for tagging,
+    so tags and labelling data legitimately co-occur.
+    """
+
+    def test_all_thirteen_asam_properties_declared(
+        self, generated_schema: dict, asam_schema: dict
+    ) -> None:
+        """Our OpenLabel must declare exactly the properties ASAM declares."""
+        ours = set(generated_schema["$defs"]["OpenLabel"]["properties"])
+        theirs = set(asam_schema["definitions"]["openlabel"]["properties"])
+        assert ours == theirs, f"missing={theirs - ours} extra={ours - theirs}"
+
+    def test_container_stays_closed(self, generated_schema: dict) -> None:
+        """Enumerating the sections must not reopen the container."""
+        assert generated_schema["$defs"]["OpenLabel"]["additionalProperties"] is False
+
+    def test_passthrough_set_is_exactly_as_pinned(self, generated_schema: dict) -> None:
+        """Widening the unvalidated surface must be a deliberate, visible change."""
+        props = generated_schema["$defs"]["OpenLabel"]["properties"]
+        actual = {n for n, s in props.items() if _is_passthrough(s)}
+        assert actual == PASSTHROUGH_SECTIONS
+
+    def test_validated_sections_are_not_passthrough(
+        self, generated_schema: dict
+    ) -> None:
+        """metadata/ontologies/tags must keep their real constraints."""
+        props = generated_schema["$defs"]["OpenLabel"]["properties"]
+        for name in VALIDATED_SECTIONS:
+            assert not _is_passthrough(props[name]), f"{name} became passthrough"
+
+    def test_anyvalue_is_detectably_unconstrained(self, generated_schema: dict) -> None:
+        """Consumers detect skipped content via this $def, so keep it unconstrained."""
+        any_value = generated_schema["$defs"]["UncheckedSection"]
+        assert any_value.get("additionalProperties") is True
+        assert not any_value.get("properties")
+        assert not any_value.get("required")
+
+    def test_frame_intervals_accepts_an_array(self, generated_schema: dict) -> None:
+        """linkml:Any omits "array" from its type list, so this needs multivalued."""
+        doc = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "frame_intervals": [{"frame_start": 0, "frame_end": 9}],
+            }
+        }
+        jsonschema.validate(doc, generated_schema)
+
+    def test_mixed_tagging_and_labelling_accepted(
+        self, generated_schema: dict, asam_schema: dict
+    ) -> None:
+        """Spec 8.1.1: a labelling instance may itself be tagged."""
+        doc = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
+                "objects": {"0": {"name": "car1", "type": "car"}},
+            }
+        }
+        jsonschema.validate(doc, asam_schema)
+        jsonschema.validate(doc, generated_schema)
+
+    def test_unvalidated_sections_are_reported(self, generated_schema: dict) -> None:
+        """A caller must be able to tell "valid" from "fully checked"."""
+        doc = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
+                "objects": {"0": {"name": "car1", "type": "car"}},
+                "frames": {},
+            }
+        }
+        jsonschema.validate(doc, generated_schema)
+        assert unvalidated_sections(doc, generated_schema) == {"objects", "frames"}
+
+    def test_pure_tagging_file_reports_nothing_skipped(
+        self, generated_schema: dict
+    ) -> None:
+        """The common case must not raise a false alarm."""
+        assert unvalidated_sections(VALID_MINIMAL, generated_schema) == set()
+
+    def test_shipped_artifact_carries_the_same_contract(self) -> None:
+        """Consumers get the committed artifact, not a schema they generate.
+
+        The artifact is generated with ``jsonschema.genopts``
+        (``--no-include-null``), so its properties carry a bare ``$ref`` where
+        the fixture carries an ``anyOf`` null-wrapping. Detection must hold on
+        the file we actually publish.
+        """
+        shipped = json.loads(
+            (
+                ROOT_DIR
+                / "artifacts"
+                / "openlabel-tagging"
+                / "openlabel-tagging.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        props = shipped["$defs"]["OpenLabel"]["properties"]
+        actual = {n for n, s in props.items() if _is_passthrough(s)}
+        assert actual == PASSTHROUGH_SECTIONS
+        assert set(props) == PASSTHROUGH_SECTIONS | VALIDATED_SECTIONS
+        assert shipped["$defs"]["OpenLabel"]["additionalProperties"] is False
+
+        doc = {
+            "openlabel": {
+                "metadata": {"schema_version": "1.0.0"},
+                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
+                "objects": {"0": {"name": "car1", "type": "car"}},
+            }
+        }
+        jsonschema.validate(doc, shipped)
+        assert unvalidated_sections(doc, shipped) == {"objects"}
+
+
+# =============================================================================
 # v1→v2 Converter Tests
 # =============================================================================
 
@@ -773,7 +972,7 @@ class TestV1ToV2Converter:
         """Converter output must pass SHACL validation (the PR's stated purpose).
 
         Proves the v1→v2 conversion produces JSON-LD that conforms to the
-        openlabel-v2 SHACL shapes, not merely well-formed @context/@type.
+        openlabel-tagging SHACL shapes, not merely well-formed @context/@type.
         """
         v1_data = {
             "openlabel": {

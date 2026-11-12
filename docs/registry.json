@@ -253,23 +253,23 @@
             }
          }
       },
-      "openlabel-v2": {
+      "openlabel-tagging": {
          "namespace": "ascs-ev",
-         "iri": "https://w3id.org/ascs-ev/envited-x/openlabel/v2",
-         "latest": "v2.0.0",
+         "iri": "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha",
+         "latest": "v1.1.0-alpha",
          "versions": {
-            "v2.0.0": {
+            "v1.1.0-alpha": {
                "releaseTag": "v0.5.2",
-               "versionInfo": "v2.0.0",
-               "versionIri": "https://w3id.org/ascs-ev/envited-x/openlabel/v2",
+               "versionInfo": "v1.1.0-alpha",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha",
                "files": {
-                  "ontology": "artifacts/openlabel-v2/openlabel-v2.owl.ttl",
+                  "ontology": "artifacts/openlabel-tagging/openlabel-tagging.owl.ttl",
                   "shacl": [
-                     "artifacts/openlabel-v2/openlabel-v2.shacl.ttl"
+                     "artifacts/openlabel-tagging/openlabel-tagging.shacl.ttl"
                   ],
-                  "jsonld": "artifacts/openlabel-v2/openlabel-v2.context.jsonld",
-                  "properties": "artifacts/openlabel-v2/PROPERTIES.md",
-                  "instance": "tests/data/openlabel-v2/valid/openlabel-v2_instance.json"
+                  "jsonld": "artifacts/openlabel-tagging/openlabel-tagging.context.jsonld",
+                  "properties": "artifacts/openlabel-tagging/PROPERTIES.md",
+                  "instance": "tests/data/openlabel-tagging/valid/openlabel-tagging_instance.json"
                }
             }
          }
@@ -465,5 +465,5 @@
          }
       }
    },
-   "generated": "2026-10-21T08:17:54.234264+00:00"
+   "generated": "2026-11-12T14:36:07.941033+00:00"
 }

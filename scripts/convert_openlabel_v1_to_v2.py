@@ -4,7 +4,7 @@
 Module purpose:
     Transforms plain ASAM OpenLABEL scenario tagging JSON files (v1 format with
     generic tag.type + tag_data containers) into JSON-LD documents that use the
-    openlabel-v2 ontology context for type coercion and SHACL validation.
+    openlabel-tagging ontology context for type coercion and SHACL validation.
 
 Dependencies:
     core: (none — standalone script)
@@ -25,8 +25,8 @@ from pathlib import Path
 
 import yaml
 
-DEFAULT_CONTEXT_URI = "https://w3id.org/ascs-ev/envited-x/openlabel/v2/"
-DEFAULT_ONTOLOGY = Path("linkml/openlabel-v2/openlabel-v2.yaml")
+DEFAULT_CONTEXT_URI = "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/"
+DEFAULT_ONTOLOGY = Path("linkml/openlabel-tagging/openlabel-tagging.yaml")
 
 # Maps v1 tag.type → v2 class + slot
 # Built from the ontology model at runtime

@@ -139,7 +139,7 @@ ENVITED-X Ontology Stack
 └────────┘ └────────┘ └────────┘ └────────┘ └────────┘
 
     ┌──────────────────────────────────────────────┐
-    │       openlabel-v2 (cross-cutting)           │  ODD/Labeling
+    │       openlabel-tagging (cross-cutting)           │  ODD/Labeling
     │  ISO 34503 taxonomy, weather, road users     │  (shared by
     │  OpenODD modules, OpenLABEL types            │   multiple)
     └──────────────────────────────────────────────┘

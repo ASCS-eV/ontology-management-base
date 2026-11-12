@@ -18,7 +18,7 @@ from omb.utils.registry_resolver import RegistryResolver
 from omb.validators.shacl.validator import SchemaCache, ShaclValidator
 
 GX_VALID_DIR = Path("tests/data/gx/valid")
-OPENLABEL_INVALID_DIR = Path("tests/data/openlabel-v2/invalid")
+OPENLABEL_INVALID_DIR = Path("tests/data/openlabel-tagging/invalid")
 
 
 def test_validate_data_valid_fixture_dir_returns_success():
