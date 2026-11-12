@@ -939,10 +939,31 @@ class ShaclValidator:
         if not uncovered:
             return None
         if routing["shapes_loaded"] == 0:
-            message = (
-                "No SHACL shapes were loaded. Register the artifacts that define "
-                "the supplied types (--artifacts <dir>, or artifacts=[...]). "
-            )
+            types = routing.get("target_types") or []
+            if types:
+                shown = ", ".join(types[:3]) + (" ..." if len(types) > 3 else "")
+                message = (
+                    "No SHACL shapes were loaded, so nothing could be validated "
+                    f"(unresolved @type IRI(s): {shown}). Register the artifacts "
+                    "that define these types (--artifacts <dir>, or artifacts=[...]). "
+                )
+            else:
+                # No shapes AND no types: the input contributed no RDF at all, so
+                # there is nothing for --artifacts to route. Saying "register the
+                # artifacts that define the supplied types" here sent users after a
+                # fix that cannot work. The usual cause is a document that is not
+                # JSON-LD -- it declares no @context/@type -- such as a raw ASAM
+                # OpenLABEL file, whose format is described by a JSON Schema rather
+                # than by SHACL.
+                message = (
+                    "No RDF type was found in the input and no SHACL shapes were "
+                    "loaded, so nothing could be validated. This happens when a "
+                    "document is not JSON-LD: it declares no @context and no @type, "
+                    "so it contributes no RDF terms for SHACL to target. Registering "
+                    "artifacts (--artifacts) cannot help, because there are no types "
+                    "to route. Supply JSON-LD data, or validate this file against the "
+                    "structural JSON Schema for its format instead. "
+                )
         else:
             message = "No active SHACL target covered these input documents. "
         message += "Unvalidated files: " + ", ".join(uncovered)
