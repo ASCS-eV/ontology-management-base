@@ -2,8 +2,8 @@
 """Synchronize TagTypeEnum in the structural schema from the ontology model.
 
 Module purpose:
-    Reads the openlabel-v2 semantic model (openlabel-v2.yaml) and regenerates
-    the TagTypeEnum section in the structural model (openlabel-v2-schema.yaml).
+    Reads the openlabel-tagging semantic model (openlabel-tagging.yaml) and regenerates
+    the TagTypeEnum section in the structural model (openlabel-tagging-schema.yaml).
     This keeps the JSON Schema vocabulary in sync with the OWL/SHACL ontology.
 
 Dependencies:
@@ -25,8 +25,8 @@ from pathlib import Path
 import yaml
 
 # Default paths relative to repository root
-DEFAULT_ONTOLOGY = Path("linkml/openlabel-v2/openlabel-v2.yaml")
-DEFAULT_SCHEMA = Path("linkml/openlabel-v2/openlabel-v2-schema.yaml")
+DEFAULT_ONTOLOGY = Path("linkml/openlabel-tagging/openlabel-tagging.yaml")
+DEFAULT_SCHEMA = Path("linkml/openlabel-tagging/openlabel-tagging-schema.yaml")
 
 
 def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
@@ -43,13 +43,13 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
     slots = model.get("slots", {})
     classes = model.get("classes", {})
 
-    # Tag classes: every class minted in the openlabel-v2 namespace forms the
+    # Tag classes: every class minted in the openlabel-tagging namespace forms the
     # ASAM v1 tag hierarchy (structural roots + category nodes). Helper classes
     # outside that namespace (e.g. sdo:QuantitativeValue) are excluded.
     tag_classes = sorted(
         cname
         for cname, cdef in classes.items()
-        if str(cdef.get("class_uri", "")).startswith("openlabel_v2:")
+        if str(cdef.get("class_uri", "")).startswith("openlabel_tagging:")
     )
 
     # Admin slots
@@ -99,7 +99,7 @@ def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
         "      All valid values for the tag.type field in ASAM OpenLABEL v1 format"
     )
     lines.append(
-        "      files. Derived from the openlabel-v2 ontology vocabulary (classes,"
+        "      files. Derived from the openlabel-tagging ontology vocabulary (classes,"
     )
     lines.append("      enums, slots). AUTO-GENERATED — do not edit manually.")
     lines.append("    permissible_values:")

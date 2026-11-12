@@ -47,10 +47,10 @@ same way wherever it lives. `check-data-conformance` leaves negative fixtures al
 ```
 ⏭️  Nothing to conformance-check in 'custom-path-6a6de4eb': all 1 file(s) are negative
     fixtures, verified by check-failing-tests against their snapshots.
-      tests/data/openlabel-v2/invalid/fail05_wrong_enum_value.json  ←→  fail05_wrong_enum_value.expected
+      tests/data/openlabel-tagging/invalid/fail05_wrong_enum_value.json  ←→  fail05_wrong_enum_value.expected
 
-🔍 Negative fixture: tests/data/openlabel-v2/invalid/fail05_wrong_enum_value.json
-   Paired snapshot: tests/data/openlabel-v2/invalid/fail05_wrong_enum_value.expected
+🔍 Negative fixture: tests/data/openlabel-tagging/invalid/fail05_wrong_enum_value.json
+   Paired snapshot: tests/data/openlabel-tagging/invalid/fail05_wrong_enum_value.expected
    Validation returned 210 (conformance error), as recorded
 ✅ … failed as expected: its report matches …fail05_wrong_enum_value.expected, so the
    failure is accepted.

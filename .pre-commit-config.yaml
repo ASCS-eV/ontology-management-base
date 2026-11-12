@@ -24,7 +24,7 @@ repos:
         entry: python scripts/sync_tag_type_enum.py
         language: system
         pass_filenames: false
-        files: ^linkml/openlabel-v2/openlabel-v2\.yaml$
+        files: ^linkml/openlabel-tagging/openlabel-tagging\.yaml$
         stages: [pre-commit]
 
       - id: generate-linkml

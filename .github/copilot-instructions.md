@@ -140,12 +140,12 @@ On Windows, LinkML generators produce CRLF and trailing newlines that differ.
 
 ```bash
 # Generate, then normalize before staging
-just generate-domain openlabel-v2
+just generate-domain openlabel-tagging
 
 # Fix CRLF → LF in generated files
 python -c "
 import glob
-for f in glob.glob('artifacts/openlabel-v2/*'):
+for f in glob.glob('artifacts/openlabel-tagging/*'):
     with open(f, 'rb') as fh: c = fh.read()
     c = c.replace(b'\r\n', b'\n')
     with open(f, 'wb') as fh: fh.write(c)
@@ -153,7 +153,7 @@ for f in glob.glob('artifacts/openlabel-v2/*'):
 
 # Remove trailing empty line from .context.jsonld (pretty-format-json removes it)
 python -c "
-f = 'artifacts/openlabel-v2/openlabel-v2.context.jsonld'
+f = 'artifacts/openlabel-tagging/openlabel-tagging.context.jsonld'
 with open(f, 'rb') as fh: c = fh.read()
 c = c.rstrip() + b'\n'
 with open(f, 'wb') as fh: fh.write(c)

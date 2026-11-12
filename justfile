@@ -21,7 +21,7 @@ export PYTHONUTF8 := "1"
 export PYTHONIOENCODING := "utf-8"
 
 # LinkML domains that `just generate` builds (space-separated; add new domains here).
-LINKML_DOMAINS := "openlabel-v2"
+LINKML_DOMAINS := "openlabel-tagging"
 
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"
@@ -104,7 +104,7 @@ generate:
     done
     echo "[OK] Artifacts generated"
 
-# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-v2`.
+# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-tagging`.
 generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -124,6 +124,17 @@ generate-domain domain:
     gen "artifacts/{{domain}}/{{domain}}.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml"
     gen "artifacts/{{domain}}/{{domain}}.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml"
     gen "artifacts/{{domain}}/{{domain}}.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml"
+    # Keep in step with the `generate` recipe: a domain that also carries a structural
+    # schema generates a JSON Schema from it. Skipping it here would let
+    # `just generate-domain X` report success while leaving X.schema.json stale.
+    if [ -f "linkml/{{domain}}/{{domain}}-schema.yaml" ]; then
+        opts=""
+        if [ -f "linkml/{{domain}}/jsonschema.genopts" ]; then
+            opts="$(cat "linkml/{{domain}}/jsonschema.genopts")"
+        fi
+        # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
+        gen "artifacts/{{domain}}/{{domain}}.schema.json" gen-json-schema --indent 3 $opts "linkml/{{domain}}/{{domain}}-schema.yaml"
+    fi
     echo "[OK] Artifacts generated for {{domain}}"
 
 # Rebuild and sync Gaia-X artifacts from the service-characteristics submodule.
