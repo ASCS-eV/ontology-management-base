@@ -242,11 +242,12 @@ jobs:
         run: just asam-imports-check
       - name: Run the ASAM imports integration tests
         run: just test-asam-imports
-      # The OpenLABEL conformance assertions compare the generated JSON Schema against
-      # the pinned ASAM schema and tagging ontology, so they skip in the cheap matrix.
-      # This is the job that already has the submodule, and OMB_REQUIRE_PINNED_SOURCES
-      # makes a missing checkout fail here instead of silently skipping.
-      - name: Run the ASAM OpenLABEL conformance tests
+      # The OpenLABEL conformance assertions and the refinement proof both compare the
+      # generated JSON Schema against the pinned ASAM schema and tagging ontology, so
+      # they skip in the cheap matrix. This is the job that already has the submodule,
+      # and OMB_REQUIRE_PINNED_SOURCES makes a missing checkout fail here instead of
+      # silently skipping -- a proof gate that stops running must not look like a pass.
+      - name: Run the ASAM OpenLABEL conformance and refinement tests
         run: just test-asam-openlabel
 
   # --- JOB 5: Regression Tests ---
