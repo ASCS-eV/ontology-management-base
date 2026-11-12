@@ -1,4 +1,4 @@
-# Refinement-proof spec for the OpenLABEL v2 structural migration.
+# Refinement-proof spec for the OpenLABEL scenario-tagging profile.
 #
 # Consumed by scripts/schema_refinement_prover.py to prove that the
 # LinkML-generated JSON Schema is a sound refinement of the normative ASAM
@@ -57,8 +57,8 @@ generation_prune:
 # CLOSED (intentionally NOT listed, so the gate guards against regression):
 #   - key_pattern : closed by `pattern` on the uid identifier slots -> propertyNames
 #                   (jsonschemagen) plus `--closed` (root additionalProperties:false).
-#   - null_optional: closed by `--no-include-null` (jsonschema.genopts).
-# The single remaining relaxation is a LinkML expressivity limit (see below).
+# The remaining two relaxations are a LinkML expressivity limit and a LinkML
+# generator defect respectively; both are justified below.
 allow_looseness:
   - simple_dict_object_form
   - null_optional
@@ -76,3 +76,4 @@ justifications:
   type.enum: "A leaves tag.type/num.type/vec.type as unconstrained strings; L pins them to the ASAM vocabulary (TagTypeEnum = 256 ontology classes) and spec value sets. Pure strengthening."
   schema_version: "A: enum[\"1.0.0\"]; L: const \"1.0.0\" — semantically identical single-value pin."
   simple_dict_object_form: "DISCLOSED, bounded LinkML expressivity limit: tag.resource_uid is ASAM's id->string map (patternProperties value is a bare string). LinkML models it as an inlined simple-dict (ResourceUid: uid + identifier_in_resource), which ALWAYS also accepts the object form {identifier_in_resource: ...} for the value, not just the bare string. A accepts only the string. Affects the optional resource_uid value form only; keys and the string form are validated identically. Not expressible away in LinkML's structural model (an inlined simple-dict cannot be restricted to scalar-only values)."
+  null_optional: "DISCLOSED, bounded LinkML GENERATOR DEFECT (not a model error): jsonschemagen appends {\"type\": \"null\"} on the inlined-dict additionalProperties path (~L1147, when the range has no required slots — always true for the __identifier_optional variants) and in _ref() for optional slots (~L325). Neither site consults self.include_null, so --no-include-null in jsonschema.genopts is silently ignored and L accepts explicit null where A forbids it. Tracked as ASCS-eV/ontology-management-base#128; fix belongs in the ASCS-eV/linkml fork. Remove this entry (and the two xfail markers in tests/unit/test_schema_refinement.py) once the fork is patched."

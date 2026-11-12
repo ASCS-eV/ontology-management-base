@@ -1,19 +1,44 @@
 #!/usr/bin/env python3
-"""Convert ASAM OpenLABEL v1 JSON files to JSON-LD with v2 context.
+"""Re-model ASAM OpenLABEL tagging JSON into the ontology's flat JSON-LD shape.
+
+.. deprecated::
+    This script implements the SUPERSEDED modelling approach and is scheduled
+    for removal. See issue #129.
+
+    Despite the name it does **not** perform a version conversion — input and
+    output are both ASAM OpenLABEL v1.0.0 content. Nor is it a JSON-LD *lift*:
+    it discards the ASAM document structure and rebuilds a bespoke flat shape
+    that matches ``openlabel-tagging.yaml`` (the ontology model), because that
+    model currently has no structural spine of its own.
+
+    It is **lossy**. The following are dropped:
+
+    - the ``openlabel`` root wrapper
+    - every tag UID (the ``tags`` dict keys)
+    - ``ontology_uid`` and ``resource_uid``
+    - all of ``metadata`` except ``tagged_file``
+    - any tag whose type is unmapped (reported under ``_unmapped_tags``)
+
+    Consequently the fixtures it produces match the ontology *by construction*,
+    which is why the SHACL layer has never validated a real ASAM file (#129).
+
+    Once the ontology model accepts the ASAM shape, lifting becomes trivial —
+    add ``@context`` and ``@type`` to the file and nothing else — and this
+    script should be deleted along with the tests that shell out to it.
 
 Module purpose:
-    Transforms plain ASAM OpenLABEL scenario tagging JSON files (v1 format with
-    generic tag.type + tag_data containers) into JSON-LD documents that use the
-    openlabel-tagging ontology context for type coercion and SHACL validation.
+    Transforms plain ASAM OpenLABEL scenario tagging JSON files (generic
+    tag.type + tag_data containers) into JSON-LD documents using the
+    openlabel-tagging ontology context, for SHACL validation.
 
 Dependencies:
     core: (none — standalone script)
     third-party: pyyaml
 
 Usage:
-    python scripts/convert_openlabel_v1_to_v2.py input.json
-    python scripts/convert_openlabel_v1_to_v2.py input.json -o output.jsonld
-    python scripts/convert_openlabel_v1_to_v2.py input.json --context-uri https://...
+    python scripts/lift_openlabel_to_jsonld.py input.json
+    python scripts/lift_openlabel_to_jsonld.py input.json -o output.jsonld
+    python scripts/lift_openlabel_to_jsonld.py input.json --context-uri https://...
 """
 
 from __future__ import annotations
@@ -28,14 +53,14 @@ import yaml
 DEFAULT_CONTEXT_URI = "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/"
 DEFAULT_ONTOLOGY = Path("linkml/openlabel-tagging/openlabel-tagging.yaml")
 
-# Maps v1 tag.type → v2 class + slot
+# Maps ASAM tag.type -> ontology class + slot
 # Built from the ontology model at runtime
 
 
 def load_tag_mapping(
     ontology_path: Path,
 ) -> dict[str, dict[str, str]]:
-    """Load the mapping from v1 tag.type values to v2 typed slots.
+    """Load the mapping from ASAM tag.type values to ontology typed slots.
 
     Returns:
         Dict mapping tag.type string to {class, slot, range} info.
@@ -155,7 +180,7 @@ def _assign_slot(
     """Assign ``value`` to ``slot``, accumulating into a list on repeats.
 
     Multiple v1 tags can map to the same class+slot (e.g. several values of one
-    enum category, which the v2 model represents as an array). Promote to a list
+    enum category, which the ontology model represents as an array). Promote to a list
     instead of silently overwriting so no tag value is lost.
     """
     if slot not in target:
@@ -169,26 +194,28 @@ def _assign_slot(
         target[slot] = [existing, value]
 
 
-def convert_v1_to_v2(
-    v1_data: dict,
+def remodel_to_ontology_shape(
+    asam_data: dict,
     tag_mapping: dict[str, dict[str, str]],
     context_uri: str = DEFAULT_CONTEXT_URI,
 ) -> dict:
-    """Convert a v1 OpenLABEL JSON to v2 JSON-LD format.
+    """Re-model an ASAM OpenLABEL JSON into the ontology's flat JSON-LD shape.
+
+    Lossy by construction — see the module docstring and issue #129.
 
     Args:
-        v1_data: The parsed v1 JSON content.
-        tag_mapping: Mapping from tag.type to v2 slot info.
+        asam_data: The parsed ASAM OpenLABEL JSON content.
+        tag_mapping: Mapping from tag.type to ontology slot info.
         context_uri: The JSON-LD @context URI to inject.
 
     Returns:
-        A v2 JSON-LD document with typed slots.
+        A JSON-LD document with typed slots, matching the ontology model.
     """
-    openlabel = v1_data.get("openlabel", v1_data)
+    openlabel = asam_data.get("openlabel", asam_data)
     tags = openlabel.get("tags", {})
     metadata = openlabel.get("metadata", {})
 
-    # Group tags by their v2 class
+    # Group tags by their ontology class
     class_slots: dict[str, dict[str, str | bool | float | list | None]] = {}
     unmapped: list[dict] = []
 
@@ -207,7 +234,7 @@ def convert_v1_to_v2(
         class_slots.setdefault(cls, {})
         _assign_slot(class_slots[cls], slot, value)
 
-    # Build the v2 JSON-LD document
+    # Build the flat JSON-LD document
     result: dict = {
         "@context": context_uri,
         "@type": "Tag",
@@ -237,14 +264,14 @@ def convert_v1_to_v2(
 def main() -> int:
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description="Convert ASAM OpenLABEL v1 JSON to v2 JSON-LD format."
+        description="Re-model ASAM OpenLABEL tagging JSON into the ontology's flat JSON-LD shape. DEPRECATED - see issue #129."
     )
-    parser.add_argument("input", type=Path, help="Input v1 JSON file")
+    parser.add_argument("input", type=Path, help="Input ASAM OpenLABEL JSON file")
     parser.add_argument(
         "-o",
         "--output",
         type=Path,
-        help="Output v2 JSON-LD file (default: stdout)",
+        help="Output JSON-LD file (default: stdout)",
     )
     parser.add_argument(
         "--context-uri",
@@ -274,32 +301,32 @@ def main() -> int:
 
     # Load input
     with open(args.input, encoding="utf-8") as f:
-        v1_data = json.load(f)
+        asam_data = json.load(f)
 
     # Load mapping
     tag_mapping = load_tag_mapping(args.ontology)
 
-    # Convert
-    v2_data = convert_v1_to_v2(v1_data, tag_mapping, args.context_uri)
+    # Re-model
+    out_data = remodel_to_ontology_shape(asam_data, tag_mapping, args.context_uri)
 
     # Output
     indent = 2 if args.pretty else None
-    output_json = json.dumps(v2_data, indent=indent, ensure_ascii=False)
+    output_json = json.dumps(out_data, indent=indent, ensure_ascii=False)
 
     if args.output:
         args.output.write_text(output_json + "\n", encoding="utf-8")
-        print(f"Converted {args.input} → {args.output}")
+        print(f"Wrote {args.input} -> {args.output}")
     else:
         print(output_json)
 
     # Report unmapped tags
-    if "_unmapped_tags" in v2_data:
-        count = len(v2_data["_unmapped_tags"])
+    if "_unmapped_tags" in out_data:
+        count = len(out_data["_unmapped_tags"])
         print(
-            f"\nWARNING: {count} tag(s) could not be mapped to v2 slots:",
+            f"\nWARNING: {count} tag(s) could not be mapped to ontology slots:",
             file=sys.stderr,
         )
-        for t in v2_data["_unmapped_tags"]:
+        for t in out_data["_unmapped_tags"]:
             print(f"  - {t['type']} (uid: {t['uid']})", file=sys.stderr)
 
     return 0

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the OpenLABEL v2 structural schema and related scripts.
+"""Tests for the OpenLABEL scenario-tagging structural schema and related scripts.
 
 Tests cover:
     1. JSON Schema generation from LinkML structural model
@@ -26,7 +26,7 @@ SCHEMA_YAML = (
 )
 ONTOLOGY_YAML = ROOT_DIR / "linkml" / "openlabel-tagging" / "openlabel-tagging.yaml"
 SYNC_SCRIPT = ROOT_DIR / "scripts" / "sync_tag_type_enum.py"
-CONVERT_SCRIPT = ROOT_DIR / "scripts" / "convert_openlabel_v1_to_v2.py"
+CONVERT_SCRIPT = ROOT_DIR / "scripts" / "lift_openlabel_to_jsonld.py"
 # Authoritative ASAM OpenLABEL v1.0.0 JSON Schema (the format we claim parity with).
 ASAM_SCHEMA = (
     ROOT_DIR
