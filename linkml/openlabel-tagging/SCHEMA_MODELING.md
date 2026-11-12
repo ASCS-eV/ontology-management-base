@@ -1,4 +1,4 @@
-# OpenLABEL v2 — Unified LinkML Modeling Strategy
+# OpenLABEL Scenario Tagging — Unified LinkML Modeling Strategy
 
 ## Overview
 

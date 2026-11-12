@@ -1,4 +1,4 @@
-# OpenLabel v2 — Gap Analysis
+# OpenLABEL Scenario Tagging — Gap Analysis
 
 Comprehensive comparison between the handcrafted v1 ontology
 (`artifacts/openlabel/`) and the LinkML-generated v2 ontology

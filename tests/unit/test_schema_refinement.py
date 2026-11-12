@@ -39,7 +39,7 @@ def report(request) -> prover.ProofReport:
 
 
 def test_specs_exist() -> None:
-    """At least the OpenLABEL v2 migration must declare a proof spec."""
+    """At least the OpenLABEL scenario-tagging profile must declare a proof spec."""
     assert PROOF_SPECS, "no */proof_spec.yaml found under linkml/"
     assert any(p.parent.name == "openlabel-tagging" for p in PROOF_SPECS)
 
@@ -123,7 +123,7 @@ class TestRefinementProof:
 
 
 class TestOpenLabelScopeProjection:
-    """Pin the OpenLABEL v2 scope so accidental scope drift is caught."""
+    """Pin the OpenLABEL scenario-tagging scope so accidental scope drift is caught."""
 
     @pytest.fixture(scope="class")
     def ol(self) -> prover.ProofReport:
