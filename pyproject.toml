@@ -62,6 +62,10 @@ dev = [
     "mkdocstrings[python]>=0.24.0",
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
+    # Property-based instance generation for the schema refinement prover
+    # (scripts/schema_refinement_prover.py, pillar 3). Without it only the
+    # mutation corpus runs and the report says so explicitly.
+    "hypothesis-jsonschema>=0.23.1",
 ]
 
 [project.urls]
