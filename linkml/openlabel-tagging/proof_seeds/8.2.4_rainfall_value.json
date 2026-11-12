@@ -1,0 +1,26 @@
+{
+   "openlabel": {
+      "metadata": {
+         "schema_version": "1.0.0"
+      },
+      "ontologies": {
+         "0": {
+            "uri": "https://openlabel.asam.net/o.ttl"
+         }
+      },
+      "tags": {
+         "0": {
+            "type": "WeatherRain",
+            "ontology_uid": "0",
+            "tag_data": {
+               "num": [
+                  {
+                     "type": "value",
+                     "val": 3.1
+                  }
+               ]
+            }
+         }
+      }
+   }
+}
