@@ -1,4 +1,4 @@
-# ASAM OpenLABEL Scenario Tagging Ontology v2
+# ASAM OpenLABEL Scenario Tagging Ontology (openlabel-tagging)
 # Modeled in LinkML as single source of truth.
 # Generates: OWL ontology, SHACL shapes, JSON-LD context.
 #
@@ -26,10 +26,10 @@
 #   see_also      Resolvable URL(s) for the referenced standard's catalog page.
 #                 Generates rdfs:seeAlso in OWL output.
 #
-#   aliases       Previous formal identifiers or labels for this element
-#                 (e.g. the v1 OWL IRI local-name when an element was renamed).
-#                 Generates skos:altLabel. Only actual names that existed in
-#                 code/data — never paraphrased natural-language descriptions.
+#   aliases       Earlier display labels of this element: the ASAM OpenLABEL
+#                 v1.0.0 rdfs:label or the PAS 1883:2020 term, where it differs
+#                 from the ISO 34503 wording. Generates skos:altLabel. Only
+#                 labels that actually existed — never paraphrases.
 #
 #   notes         Migration provenance and editorial context for maintainers.
 #                 Documents what changed between versions and why.
@@ -85,11 +85,11 @@
 #   "road type"                    →  "drivable area type" (Sec. 9.3.2)
 #   "road geometry"                →  "drivable area geometry" (Sec. 9.3.3)
 #
-# Identifier renaming policy (v1 → v2):
-#   Where ISO 34503 introduced new terminology, v2 adopts the ISO term as the
-#   canonical identifier and records the v1 identifier in `aliases`. This
-#   enables forward alignment with the international standard while preserving
-#   discoverability of the legacy name via skos:altLabel.
+# Identifiers and labels:
+#   Every class, slot and enum value keeps the local name it has in ASAM
+#   OpenLABEL v1.0.0; no identifier is renamed. Where ISO 34503 introduced new
+#   terminology, descriptions follow ISO, and the earlier display label stays
+#   discoverable through `aliases` (skos:altLabel).
 #
 # =============================================================================
 

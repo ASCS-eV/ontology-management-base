@@ -212,7 +212,7 @@
       },
       "OpenLabel": {
          "additionalProperties": false,
-         "description": "The OpenLABEL root JSON object. This profile fully validates the scenario tagging sections (metadata, ontologies, tags); tags themselves carry no spatiotemporal or geometric constructs (spec 8.1). The labelling sections are accepted as unvalidated passthrough because spec 8.1.1 allows a labelling instance to be used as the raw data for tagging, so a conformant file may legitimately carry both.",
+         "description": "The OpenLABEL root JSON object. This profile fully validates the scenario tagging sections (metadata, ontologies, tags, resources); tags themselves carry no spatiotemporal or geometric constructs (spec 8.1). The labelling sections are accepted as unvalidated passthrough because spec 8.1.1 allows a labelling instance to be used as the raw data for tagging, so a conformant file may legitimately carry both.",
          "properties": {
             "actions": {
                "additionalProperties": {
@@ -354,14 +354,15 @@
                "additionalProperties": {
                   "anyOf": [
                      {
-                        "$ref": "#/$defs/UncheckedUidEntry__identifier_optional"
+                        "$ref": "#/$defs/ResourceEntry__identifier_optional"
                      },
                      {
-                        "type": "null"
+                        "description": "The external resource, e.g. a file name or URL.",
+                        "type": "string"
                      }
                   ]
                },
-               "description": "Labelling section, outside this profile's scope.",
+               "description": "External resources keyed by UID, each a string such as a file name or URL. A tag's resource_uid refers to elements of these resources.",
                "propertyNames": {
                   "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
                },
@@ -401,6 +402,47 @@
             "openlabel"
          ],
          "title": "OpenLabelFile",
+         "type": "object"
+      },
+      "ResourceEntry": {
+         "additionalProperties": false,
+         "description": "An external resource used by this annotation (ASAM resources): a map keyed by a numeric/UUID id whose value is a string that names the resource, such as a file name or URL.",
+         "properties": {
+            "resource": {
+               "description": "The external resource, e.g. a file name or URL.",
+               "type": "string"
+            },
+            "uid": {
+               "description": "Resource key (numeric UID or UUID).",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "uid",
+            "resource"
+         ],
+         "title": "ResourceEntry",
+         "type": "object"
+      },
+      "ResourceEntry__identifier_optional": {
+         "additionalProperties": false,
+         "description": "An external resource used by this annotation (ASAM resources): a map keyed by a numeric/UUID id whose value is a string that names the resource, such as a file name or URL.",
+         "properties": {
+            "resource": {
+               "description": "The external resource, e.g. a file name or URL.",
+               "type": "string"
+            },
+            "uid": {
+               "description": "Resource key (numeric UID or UUID).",
+               "pattern": "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$",
+               "type": "string"
+            }
+         },
+         "required": [
+            "resource"
+         ],
+         "title": "ResourceEntry",
          "type": "object"
       },
       "ResourceUid": {
@@ -590,7 +632,7 @@
          "type": "object"
       },
       "TagTypeEnum": {
-         "description": "All valid values for the tag.type field in ASAM OpenLABEL v1 format files. Derived from the openlabel-tagging ontology vocabulary (classes, enums, slots). AUTO-GENERATED \u2014 do not edit manually.",
+         "description": "All valid values of tag.type in ASAM OpenLABEL v1.0.0 scenario-tagging files: the tag classes, the administration tag properties, the flags and category slots, and the enum values of the openlabel-tagging ontology.",
          "enum": [
             "AdminTag",
             "Behaviour",
@@ -629,13 +671,30 @@
             "scenarioUniqueReference",
             "scenarioVersion",
             "scenarioVisualisationURL",
+            "BehaviourCommunication",
+            "ConnectivityCommunication",
+            "ConnectivityPositioning",
             "DaySunElevation",
+            "DaySunPosition",
+            "DrivableAreaEdge",
+            "DrivableAreaSurfaceCondition",
+            "DrivableAreaSurfaceFeature",
+            "DrivableAreaSurfaceType",
+            "DrivableAreaType",
+            "EnvironmentParticulates",
+            "GeometryTransverse",
             "HorizontalCurves",
             "HorizontalStraights",
+            "IlluminationArtificial",
             "IlluminationCloudiness",
+            "IlluminationLowLight",
+            "JunctionIntersection",
+            "JunctionRoundabout",
             "LaneSpecificationDimensions",
             "LaneSpecificationLaneCount",
             "LaneSpecificationMarking",
+            "LaneSpecificationTravelDirection",
+            "LaneSpecificationType",
             "LongitudinalDownSlope",
             "LongitudinalLevelPlane",
             "LongitudinalUpSlope",
@@ -659,34 +718,8 @@
             "MotionTurnRight",
             "MotionUTurn",
             "MotionWalk",
-            "RoadUserAnimal",
-            "SubjectVehicleSpeed",
-            "TrafficAgentDensity",
-            "TrafficAgentType",
-            "TrafficFlowRate",
-            "TrafficSpecialVehicle",
-            "TrafficVolume",
-            "WeatherRain",
-            "WeatherSnow",
-            "WeatherWind",
-            "BehaviourCommunication",
-            "ConnectivityCommunication",
-            "ConnectivityPositioning",
-            "DaySunPosition",
-            "DrivableAreaEdge",
-            "DrivableAreaSurfaceCondition",
-            "DrivableAreaSurfaceFeature",
-            "DrivableAreaSurfaceType",
-            "DrivableAreaType",
-            "EnvironmentParticulates",
-            "GeometryTransverse",
-            "IlluminationArtificial",
-            "IlluminationLowLight",
-            "JunctionIntersection",
-            "JunctionRoundabout",
-            "LaneSpecificationTravelDirection",
-            "LaneSpecificationType",
             "RainType",
+            "RoadUserAnimal",
             "RoadUserHuman",
             "RoadUserVehicle",
             "SceneryFixedStructure",
@@ -696,7 +729,15 @@
             "SignsInformation",
             "SignsRegulatory",
             "SignsWarning",
-            "trafficAgentTypeValue",
+            "SubjectVehicleSpeed",
+            "TrafficAgentDensity",
+            "TrafficAgentType",
+            "TrafficFlowRate",
+            "TrafficSpecialVehicle",
+            "TrafficVolume",
+            "WeatherRain",
+            "WeatherSnow",
+            "WeatherWind",
             "CommunicationHeadlightFlash",
             "CommunicationHorn",
             "CommunicationSignalEmergency",
@@ -912,13 +953,13 @@
       },
       "UncheckedSection": {
          "additionalProperties": true,
-         "description": "An OpenLABEL section that this profile accepts but deliberately does not validate. Used for the sections outside the tagging scope: they are accepted so that tagging data embedded in a labelling file validates (spec 8.1.1), but their contents are not checked here.\nModelled as an OPEN OBJECT -- `{\"type\": \"object\", \"additionalProperties\": true}` -- not as an unconstrained JSON value. ASAM types every one of these sections as an object, so accepting a scalar (`true`, `null`, `\"\"`) would make this profile accept documents ASAM rejects, breaking the refinement relation. `extra_slots.allowed` keeps the object open without widening its type; `class_uri: linkml:Any` would emit the 5-type union `[\"null\",\"boolean\",\"object\",\"number\",\"string\"]` and is therefore unsound here. See REFINEMENT_PROOF.md.\nA reference to this definition is the marker that distinguishes \"accepted\" from \"validated\": a consumer that reports a document valid should also report which of its sections resolved to UncheckedSection, so that \"valid\" is never read as \"fully checked\".",
+         "description": "An OpenLABEL section that this profile accepts but deliberately does not validate. Used for the sections outside the tagging scope: they are accepted so that tagging data embedded in a labelling file validates (spec 8.1.1), but their contents are not checked here.\nModelled as an OPEN OBJECT -- `{\"type\": \"object\", \"additionalProperties\": true}` -- not as an unconstrained JSON value. ASAM types every one of these sections as an object, so accepting a scalar (`true`, `null`, `\"\"`) would make this profile accept documents ASAM rejects, breaking the refinement relation. `extra_slots.allowed` keeps the object open without widening its type; `class_uri: linkml:Any` would emit the 5-type union `[\"null\",\"boolean\",\"object\",\"number\",\"string\"]` and is therefore unsound here. See REFINEMENT_PROOF.md.\nA reference to this definition, or to UncheckedUidEntry or UncheckedFrameEntry, is the marker that distinguishes \"accepted\" from \"validated\": a consumer that reports a document valid should also report which of its sections resolved to the Unchecked family, so that \"valid\" is never read as \"fully checked\".",
          "title": "UncheckedSection",
          "type": "object"
       },
       "UncheckedUidEntry": {
          "additionalProperties": true,
-         "description": "A passthrough entry in a UID-keyed OpenLABEL section (objects, contexts, actions, events, relations, resources). The VALUE is deliberately not validated here, but the KEY is: ASAM constrains these dict keys to a numeric UID or a UUID and closes the object, so accepting an arbitrary key would make this profile accept documents ASAM rejects.",
+         "description": "A passthrough entry in a UID-keyed OpenLABEL section (objects, contexts, actions, events, relations). The VALUE is deliberately not validated here, but the KEY is: ASAM constrains these dict keys to a numeric UID or a UUID and closes the object, so accepting an arbitrary key would make this profile accept documents ASAM rejects.",
          "properties": {
             "uid": {
                "description": "Numeric UID or UUID. Constrains the dict keys of the enclosing section, rendered as JSON Schema propertyNames.",
@@ -934,7 +975,7 @@
       },
       "UncheckedUidEntry__identifier_optional": {
          "additionalProperties": true,
-         "description": "A passthrough entry in a UID-keyed OpenLABEL section (objects, contexts, actions, events, relations, resources). The VALUE is deliberately not validated here, but the KEY is: ASAM constrains these dict keys to a numeric UID or a UUID and closes the object, so accepting an arbitrary key would make this profile accept documents ASAM rejects.",
+         "description": "A passthrough entry in a UID-keyed OpenLABEL section (objects, contexts, actions, events, relations). The VALUE is deliberately not validated here, but the KEY is: ASAM constrains these dict keys to a numeric UID or a UUID and closes the object, so accepting an arbitrary key would make this profile accept documents ASAM rejects.",
          "properties": {
             "uid": {
                "description": "Numeric UID or UUID. Constrains the dict keys of the enclosing section, rendered as JSON Schema propertyNames.",

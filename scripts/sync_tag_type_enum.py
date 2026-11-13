@@ -1,19 +1,34 @@
 #!/usr/bin/env python3
-"""Synchronize TagTypeEnum in the structural schema from the ontology model.
+"""Generate the OpenLABEL TagTypeEnum from the openlabel-tagging semantic model.
 
 Module purpose:
-    Reads the openlabel-tagging semantic model (openlabel-tagging.yaml) and regenerates
-    the TagTypeEnum section in the structural model (openlabel-tagging-schema.yaml).
-    This keeps the JSON Schema vocabulary in sync with the OWL/SHACL ontology.
+    The structural schema (openlabel-tagging-schema.yaml) constrains tag.type to
+    the ASAM scenario-tagging vocabulary, and that vocabulary is defined by the
+    semantic model (openlabel-tagging.yaml). This script derives the enum from
+    the semantic model and writes it, whole, to a generated LinkML schema
+    (tag-types.yaml) that the structural schema imports. Nothing is spliced into
+    a hand-written file.
+
+    LinkML has no construct for this derivation: an enum cannot take its values
+    from the class and slot names of another schema, and gen-json-schema does not
+    materialise enum expressions (include / inherits / reachable_from) anyway.
+
+    A tag type is, as in ASAM OpenLABEL v1.0.0:
+      - every class in the model's own namespace (the tag hierarchy),
+      - every slot of the administration tag class,
+      - every boolean flag and enum-valued category slot,
+      - every enum value,
+    and never a value property. The model marks value properties itself: they are
+    the slots whose presence a rule ties to their flag ("if xValue is provided,
+    X must be true").
 
 Dependencies:
-    core: (none — standalone script)
-    third-party: pyyaml
+    core: (none -- standalone script)
+    third-party: pyyaml, linkml-runtime (SchemaView)
 
 Usage:
-    python scripts/sync_tag_type_enum.py                       # default paths
-    python scripts/sync_tag_type_enum.py --check               # dry-run, exit 1 if out of sync
-    python scripts/sync_tag_type_enum.py --ontology X --schema Y  # custom paths
+    python scripts/sync_tag_type_enum.py            # (re)write tag-types.yaml
+    python scripts/sync_tag_type_enum.py --check    # exit 1 if it is out of date
 """
 
 from __future__ import annotations
@@ -23,247 +38,131 @@ import sys
 from pathlib import Path
 
 import yaml
+from linkml_runtime.utils.schemaview import SchemaView
 
-# Default paths relative to repository root
-DEFAULT_ONTOLOGY = Path("linkml/openlabel-tagging/openlabel-tagging.yaml")
-DEFAULT_SCHEMA = Path("linkml/openlabel-tagging/openlabel-tagging-schema.yaml")
+DOMAIN_DIR = Path("linkml/openlabel-tagging")
+DEFAULT_ONTOLOGY = DOMAIN_DIR / "openlabel-tagging.yaml"
+DEFAULT_SCHEMA = DOMAIN_DIR / "openlabel-tagging-schema.yaml"
+DEFAULT_OUTPUT = DOMAIN_DIR / "tag-types.yaml"
 
+# ASAM OpenLABEL's administration tags are the properties of this class.
+ADMIN_CLASS = "AdminTag"
 
-def extract_tag_types(ontology_path: Path) -> tuple[list[str], dict[str, str]]:
-    """Extract all valid tag.type values from the ontology model.
-
-    Returns:
-        Tuple of (yaml_lines, stats) where yaml_lines is the TagTypeEnum YAML
-        fragment and stats is a dict of category counts.
-    """
-    with open(ontology_path, encoding="utf-8") as f:
-        model = yaml.safe_load(f)
-
-    enums = model.get("enums", {})
-    slots = model.get("slots", {})
-    classes = model.get("classes", {})
-
-    # Tag classes: every class minted in the openlabel-tagging namespace forms the
-    # ASAM v1 tag hierarchy (structural roots + category nodes). Helper classes
-    # outside that namespace (e.g. sdo:QuantitativeValue) are excluded.
-    tag_classes = sorted(
-        cname
-        for cname, cdef in classes.items()
-        if str(cdef.get("class_uri", "")).startswith("openlabel_tagging:")
-    )
-
-    # Admin slots
-    admin_slots = model["classes"].get("AdminTag", {}).get("slots", [])
-
-    # All enum permissible values (to detect overlaps with boolean flags)
-    all_enum_values: set[str] = set()
-    for edef in enums.values():
-        all_enum_values.update(edef.get("permissible_values", {}).keys())
-
-    # Enum-typed slots (slot names that take enum values — valid tag types in v1)
-    enum_names = set(enums.keys())
-    enum_slots = [
-        sname for sname, sdef in slots.items() if sdef.get("range") in enum_names
-    ]
-
-    # Boolean flags — exclude those already in enum values to avoid duplicate keys
-    bool_flags = [
-        sname
-        for sname, sdef in slots.items()
-        if sdef.get("range") == "boolean"
-        and sname not in all_enum_values
-        and sname not in set(enum_slots)
-    ]
-
-    # Build YAML lines.
-    #
-    # TagTypeEnum is a *set* of unique tag-type names: the same permissible value
-    # may legitimately appear in several enum families (e.g. a road-user term
-    # listed in both RoadUserHumanEnum and a combined TrafficAgentTypeEnum). It
-    # must be emitted only once, or gen-json-schema fails with a duplicate-key
-    # error. `seen` tracks every key already written so later duplicates (from any
-    # section) are skipped, keeping the first occurrence.
-    lines: list[str] = []
-    seen: set[str] = set()
-
-    def add_value(key: str, description_line: str) -> None:
-        if key in seen:
-            return
-        seen.add(key)
-        lines.append(f"      {key}:")
-        lines.append(description_line)
-
-    lines.append("  TagTypeEnum:")
-    lines.append("    description: >-")
-    lines.append(
-        "      All valid values for the tag.type field in ASAM OpenLABEL v1 format"
-    )
-    lines.append(
-        "      files. Derived from the openlabel-tagging ontology vocabulary (classes,"
-    )
-    lines.append("      enums, slots). AUTO-GENERATED — do not edit manually.")
-    lines.append("    permissible_values:")
-
-    # Tag classes (structural roots + hierarchy category nodes)
-    lines.append("      # --- Tag classes (hierarchy nodes) ---")
-    for c in tag_classes:
-        add_value(c, "        description: Tag class (hierarchy node)")
-
-    # Admin properties
-    lines.append("      # --- Administration tag properties ---")
-    for s in sorted(admin_slots):
-        add_value(s, "        description: Administration tag property")
-
-    # Boolean flags
-    lines.append("      # --- Boolean flag tags (ODD/Behaviour) ---")
-    for s in sorted(bool_flags):
-        add_value(s, "        description: Boolean ODD/Behaviour flag")
-
-    # Enum-typed slot names
-    lines.append("      # --- Enum category tags (slot names with enum ranges) ---")
-    for s in sorted(enum_slots):
-        slot_range = slots[s].get("range", "")
-        add_value(
-            s,
-            f"        description: Enum category tag (takes values from {slot_range})",
-        )
-
-    # Enum values by family (values shared across families are emitted once)
-    for ename in sorted(enums.keys()):
-        pvs = enums[ename].get("permissible_values", {})
-        lines.append(f"      # --- {ename} ---")
-        for pv in sorted(pvs.keys()):
-            desc = pvs[pv].get("description", "")
-            if desc:
-                desc_clean = desc.replace('"', '\\"')
-                add_value(pv, f'        description: "{desc_clean}"')
-            else:
-                add_value(pv, "        description: Enum value")
-
-    # Stats
-    all_types: set[str] = set()
-    all_types.update(tag_classes)
-    all_types.update(admin_slots)
-    all_types.update(bool_flags)
-    all_types.update(enum_slots)
-    for edef in enums.values():
-        all_types.update(edef.get("permissible_values", {}).keys())
-
-    stats = {
-        "total": str(len(all_types)),
-        "structural_classes": str(len(tag_classes)),
-        "admin_properties": str(len(admin_slots)),
-        "boolean_flags": str(len(bool_flags)),
-        "enum_category_slots": str(len(enum_slots)),
-        "enum_leaf_values": str(
-            sum(len(e.get("permissible_values", {})) for e in enums.values())
-        ),
-    }
-
-    return lines, stats
+HEADER = """\
+# GENERATED by scripts/sync_tag_type_enum.py from openlabel-tagging.yaml.
+# Do not edit: regenerate instead (the pre-commit hook does this).
+"""
 
 
-def update_schema(schema_path: Path, enum_lines: list[str]) -> bool:
-    """Replace the TagTypeEnum section in the schema YAML.
+def _value_slots(sv: SchemaView) -> set[str]:
+    """Slots the model declares as the value of a flag via a presence rule."""
+    found: set[str] = set()
+    for cls in sv.all_classes().values():
+        for rule in cls.rules or []:
+            conditions = (
+                rule.preconditions.slot_conditions if rule.preconditions else {}
+            )
+            for name, condition in (conditions or {}).items():
+                if str(condition.value_presence) == "PRESENT":
+                    found.add(name)
+    return found
 
-    Returns:
-        True if the file was changed, False if already up to date.
-    """
-    content = schema_path.read_text(encoding="utf-8")
-    lines = content.split("\n")
 
-    # Locate the TagTypeEnum block. The block body is indented >= 4 spaces (its
-    # `description:`/`permissible_values:` keys) or 6 spaces (value comments);
-    # the block ends at the first subsequent non-blank line indented <= 2 spaces
-    # (a sibling enum at indent 2, or a top-level key at indent 0). This is
-    # position-independent — TagTypeEnum need not be the last enum in the file.
-    marker = "  TagTypeEnum:"
-    try:
-        start = next(i for i, ln in enumerate(lines) if ln.rstrip() == marker)
-    except StopIteration as exc:
-        raise ValueError(f"Could not find '{marker}' in {schema_path}") from exc
+def tag_types(sv: SchemaView) -> dict[str, str]:
+    """Every valid tag.type value mapped to its description, in output order."""
+    if ADMIN_CLASS not in sv.all_classes():
+        raise ValueError(f"the model defines no {ADMIN_CLASS} class")
+    enums = sv.all_enums()
+    own_prefix = f"{sv.schema.default_prefix}:"
+    value_slots = _value_slots(sv)
+    enum_values = {pv for e in enums.values() for pv in e.permissible_values}
 
-    end = len(lines)
-    for i in range(start + 1, len(lines)):
-        line = lines[i]
-        if not line.strip():
+    out: dict[str, str] = {}
+
+    def add(name: str, description: str) -> None:
+        # A value may occur in several enum families; the enum is a set.
+        out.setdefault(name, description)
+
+    for name in sorted(sv.all_classes()):
+        if str(sv.get_uri(name, expand=False)).startswith(own_prefix):
+            add(name, "Tag class (hierarchy node)")
+    for name in sorted(sv.get_class(ADMIN_CLASS).slots):
+        add(name, "Administration tag property")
+    for name, slot in sorted(sv.all_slots().items()):
+        if name in value_slots or name in enum_values:
             continue
-        indent = len(line) - len(line.lstrip(" "))
-        if indent <= 2:
-            end = i
-            break
-
-    new_lines = lines[:start] + enum_lines + lines[end:]
-    new_content = "\n".join(new_lines)
-    # Preserve the file's trailing newline when TagTypeEnum is the final block.
-    if not new_content.endswith("\n"):
-        new_content += "\n"
-
-    if new_content == content:
-        return False
-
-    schema_path.write_text(new_content, encoding="utf-8")
-    return True
+        if slot.range == "boolean":
+            add(name, "Boolean ODD/Behaviour flag")
+        elif slot.range in enums:
+            add(name, f"Enum category tag (takes values from {slot.range})")
+    for ename in sorted(enums):
+        for pv, pdef in sorted(enums[ename].permissible_values.items()):
+            add(pv, pdef.description or "Enum value")
+    return out
 
 
-def main() -> int:
+def render(sv: SchemaView, schema: dict) -> str:
+    """The complete generated LinkML schema holding TagTypeEnum."""
+    prefix = schema["default_prefix"]
+    doc = {
+        "id": f"{schema['id']}/tag-types",
+        "name": f"{schema['name']}-tag-types",
+        "description": (
+            "Every valid tag.type value of an ASAM OpenLABEL scenario-tagging file, "
+            "derived from the openlabel-tagging semantic model."
+        ),
+        "prefixes": {
+            "linkml": "https://w3id.org/linkml/",
+            prefix: schema["prefixes"][prefix],
+        },
+        "default_prefix": prefix,
+        "enums": {
+            "TagTypeEnum": {
+                "description": (
+                    "All valid values of tag.type in ASAM OpenLABEL v1.0.0 "
+                    "scenario-tagging files: the tag classes, the administration "
+                    "tag properties, the flags and category slots, and the enum "
+                    "values of the openlabel-tagging ontology."
+                ),
+                "permissible_values": {
+                    name: {"description": description}
+                    for name, description in tag_types(sv).items()
+                },
+            }
+        },
+    }
+    body = yaml.safe_dump(doc, sort_keys=False, allow_unicode=True, width=88)
+    return HEADER + body
+
+
+def main(argv: list[str] | None = None) -> int:
     """CLI entry point."""
-    parser = argparse.ArgumentParser(
-        description="Sync TagTypeEnum from ontology model to structural schema."
-    )
-    parser.add_argument(
-        "--ontology",
-        type=Path,
-        default=DEFAULT_ONTOLOGY,
-        help=f"Path to ontology model YAML (default: {DEFAULT_ONTOLOGY})",
-    )
-    parser.add_argument(
-        "--schema",
-        type=Path,
-        default=DEFAULT_SCHEMA,
-        help=f"Path to structural schema YAML (default: {DEFAULT_SCHEMA})",
-    )
+    parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    parser.add_argument("--ontology", type=Path, default=DEFAULT_ONTOLOGY)
+    parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
         "--check",
         action="store_true",
-        help="Dry run: exit 1 if enum is out of sync, 0 if up to date.",
+        help="Exit 1 if the generated file is out of date; write nothing.",
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
-    if not args.ontology.exists():
-        print(f"ERROR: Ontology model not found: {args.ontology}", file=sys.stderr)
-        return 1
-    if not args.schema.exists():
-        print(f"ERROR: Schema model not found: {args.schema}", file=sys.stderr)
-        return 1
-
-    enum_lines, stats = extract_tag_types(args.ontology)
-    print(
-        f"TagTypeEnum: {stats['total']} values "
-        f"({stats['structural_classes']} classes, "
-        f"{stats['admin_properties']} admin, "
-        f"{stats['boolean_flags']} boolean, "
-        f"{stats['enum_category_slots']} enum slots, "
-        f"{stats['enum_leaf_values']} enum values)"
-    )
+    sv = SchemaView(str(args.ontology))
+    schema = yaml.safe_load(args.schema.read_text(encoding="utf-8"))
+    content = render(sv, schema)
+    current = args.output.read_text(encoding="utf-8") if args.output.exists() else None
+    count = len(tag_types(sv))
 
     if args.check:
-        # Read current content and compare
-        content = args.schema.read_text(encoding="utf-8")
-        expected_block = "\n".join(enum_lines)
-        if expected_block in content:
-            print("TagTypeEnum is up to date.")
+        if current == content:
+            print(f"{args.output} is up to date ({count} tag types).")
             return 0
-        else:
-            print("TagTypeEnum is OUT OF SYNC — run without --check to update.")
-            return 1
-
-    changed = update_schema(args.schema, enum_lines)
-    if changed:
-        print(f"Updated TagTypeEnum in {args.schema}")
-    else:
-        print("TagTypeEnum already up to date — no changes needed.")
-
+        print(f"{args.output} is OUT OF DATE -- run {Path(__file__).name}.")
+        return 1
+    if current != content:
+        args.output.write_text(content, encoding="utf-8")
+        print(f"Wrote {args.output} ({count} tag types).")
     return 0
 
 

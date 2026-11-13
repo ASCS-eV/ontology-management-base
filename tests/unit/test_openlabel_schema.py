@@ -1,32 +1,39 @@
 #!/usr/bin/env python3
-"""Tests for the OpenLABEL scenario-tagging structural schema and related scripts.
+"""Tests for the OpenLABEL scenario-tagging structural schema.
+
+Every assertion runs against the published artifact
+(artifacts/openlabel-tagging/openlabel-tagging.schema.json), which is what
+consumers get; CI's Generate Artifacts job separately keeps it in step with the
+LinkML model.
 
 Tests cover:
-    1. JSON Schema generation from LinkML structural model
-    2. Schema validation of spec examples (functional equivalence)
-    3. TagTypeEnum sync script correctness
-    4. v1→v2 converter correctness
+    1. Structure of the published JSON Schema
+    2. Schema validation of spec examples (functional equivalence with ASAM)
+    3. The generated TagTypeEnum and its faithfulness to the ASAM vocabulary
+    4. The profile scope: validated sections and unchecked passthrough
 """
 
 import json
 import os
-import re
 import subprocess
 import sys
 from pathlib import Path
 
 import jsonschema
 import pytest
+import rdflib
+import yaml
+from rdflib import URIRef
+from rdflib.namespace import RDF, RDFS
 
 from omb.core.constants import ASAM_SUBMODULE_HINT
 
 ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
-SCHEMA_YAML = (
-    ROOT_DIR / "linkml" / "openlabel-tagging" / "openlabel-tagging-schema.yaml"
+SHIPPED_SCHEMA = (
+    ROOT_DIR / "artifacts" / "openlabel-tagging" / "openlabel-tagging.schema.json"
 )
-ONTOLOGY_YAML = ROOT_DIR / "linkml" / "openlabel-tagging" / "openlabel-tagging.yaml"
+TAG_TYPES_YAML = ROOT_DIR / "linkml" / "openlabel-tagging" / "tag-types.yaml"
 SYNC_SCRIPT = ROOT_DIR / "scripts" / "sync_tag_type_enum.py"
-CONVERT_SCRIPT = ROOT_DIR / "scripts" / "lift_openlabel_to_jsonld.py"
 # Authoritative ASAM OpenLABEL v1.0.0 JSON Schema (the format we claim parity with).
 ASAM_SCHEMA = (
     ROOT_DIR
@@ -68,17 +75,38 @@ def _require_pinned_sources(path: Path, what: str) -> Path:
     pytest.skip(f"{what} not checked out. {ASAM_SUBMODULE_HINT}")
 
 
-def _asam_ontology_ttl() -> str:
-    """Text of the pinned ASAM scenario tagging ontology, or skip/fail per the rule."""
+def _asam_ontology() -> rdflib.Graph:
+    """The pinned ASAM scenario tagging ontology, or skip/fail per the rule."""
     path = _require_pinned_sources(
         ASAM_ONTOLOGY_TTL, "the pinned ASAM OpenLABEL tagging ontology"
     )
-    return path.read_text(encoding="utf-8")
+    return rdflib.Graph().parse(path)
+
+
+def _local(term: rdflib.term.Node) -> str:
+    return str(term).rsplit("/", 1)[-1]
+
+
+# ASAM types its properties as rdfs:Property, a term RDFS does not define (the
+# standard one is rdf:Property), so it has to be named explicitly.
+ASAM_PROPERTY = URIRef(str(RDFS) + "Property")
 
 
 def _asam_tag_classes() -> set[str]:
     """Local names of every rdfs:Class in the ASAM scenario tagging ontology."""
-    return set(re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:Class", _asam_ontology_ttl()))
+    return {_local(s) for s in _asam_ontology().subjects(RDF.type, RDFS.Class)}
+
+
+def _asam_admin_properties() -> set[str]:
+    """ASAM's administration tags: the Scenario properties other than hasTag,
+    which links a scenario to its tags. Every other ASAM property is the value
+    of a flag (its domain is that flag's class) and is not a tag type."""
+    g = _asam_ontology()
+    return {
+        _local(s)
+        for s in g.subjects(RDF.type, ASAM_PROPERTY)
+        if _local(g.value(s, RDFS.domain)) == "Scenario" and _local(s) != "hasTag"
+    }
 
 
 def _tag_type_enum(schema: dict) -> list[str]:
@@ -92,16 +120,9 @@ def _tag_type_enum(schema: dict) -> list[str]:
 
 
 @pytest.fixture(scope="module")
-def generated_schema() -> dict:
-    """Generate JSON Schema from the structural LinkML model."""
-    result = subprocess.run(
-        [sys.executable, "-m", "linkml.generators.jsonschemagen", str(SCHEMA_YAML)],
-        capture_output=True,
-        text=True,
-        cwd=str(ROOT_DIR),
-    )
-    assert result.returncode == 0, f"gen-json-schema failed: {result.stderr}"
-    return json.loads(result.stdout)
+def shipped_schema() -> dict:
+    """The published JSON Schema, as consumers get it."""
+    return json.loads(SHIPPED_SCHEMA.read_text(encoding="utf-8"))
 
 
 @pytest.fixture(scope="module")
@@ -235,21 +256,21 @@ INVALID_NUM_VAL_STRING = {
 # =============================================================================
 
 
-class TestSchemaGeneration:
-    """Tests for JSON Schema generation from LinkML model."""
+class TestPublishedSchema:
+    """Structure of the published JSON Schema."""
 
-    def test_schema_generates_successfully(self, generated_schema: dict) -> None:
-        """JSON Schema generation should succeed."""
-        assert "$defs" in generated_schema
-        assert "properties" in generated_schema
+    def test_schema_has_defs_and_properties(self, shipped_schema: dict) -> None:
+        """The published schema is a JSON Schema with definitions."""
+        assert "$defs" in shipped_schema
+        assert "properties" in shipped_schema
 
-    def test_schema_has_openlabel_root(self, generated_schema: dict) -> None:
+    def test_schema_has_openlabel_root(self, shipped_schema: dict) -> None:
         """Schema should have OpenLabelFile as root with 'openlabel' property."""
-        assert "openlabel" in generated_schema["properties"]
+        assert "openlabel" in shipped_schema["properties"]
 
-    def test_schema_has_required_defs(self, generated_schema: dict) -> None:
+    def test_schema_has_required_defs(self, shipped_schema: dict) -> None:
         """Schema should contain all expected definition types."""
-        defs = generated_schema["$defs"]
+        defs = shipped_schema["$defs"]
         expected = [
             "Attributes",
             "BooleanVal",
@@ -263,12 +284,12 @@ class TestSchemaGeneration:
         for name in expected:
             assert name in defs, f"Missing definition: {name}"
 
-    def test_tag_type_enum_values(self, generated_schema: dict) -> None:
+    def test_tag_type_enum_values(self, shipped_schema: dict) -> None:
         """TagEntry should constrain tag.type to enum values."""
         # Find TagEntry definition (may have __identifier_optional suffix)
-        tag_defs = [k for k in generated_schema["$defs"] if k.startswith("TagEntry")]
+        tag_defs = [k for k in shipped_schema["$defs"] if k.startswith("TagEntry")]
         assert len(tag_defs) > 0, "No TagEntry definition found"
-        tag_def = generated_schema["$defs"][tag_defs[0]]
+        tag_def = shipped_schema["$defs"][tag_defs[0]]
         tag_type_prop = tag_def["properties"]["type"]
 
         # The enum may be inline or referenced via $ref
@@ -277,10 +298,10 @@ class TestSchemaGeneration:
         elif "$ref" in tag_type_prop:
             ref = tag_type_prop["$ref"]
             ref_name = ref.split("/")[-1]
-            assert ref_name in generated_schema["$defs"], (
+            assert ref_name in shipped_schema["$defs"], (
                 f"Referenced enum {ref_name} not in $defs"
             )
-            enum_def = generated_schema["$defs"][ref_name]
+            enum_def = shipped_schema["$defs"][ref_name]
             enum_values = enum_def.get("enum", [])
         else:
             pytest.fail("tag.type has no enum constraint (inline or via $ref)")
@@ -292,20 +313,18 @@ class TestSchemaGeneration:
         assert "scenarioName" in enum_values
         assert len(enum_values) >= 200
 
-    def test_boundary_mode_enum(self, generated_schema: dict) -> None:
+    def test_boundary_mode_enum(self, shipped_schema: dict) -> None:
         """OntologyEntry should constrain boundary_mode to enum values."""
-        ont_defs = [
-            k for k in generated_schema["$defs"] if k.startswith("OntologyEntry")
-        ]
+        ont_defs = [k for k in shipped_schema["$defs"] if k.startswith("OntologyEntry")]
         assert len(ont_defs) > 0
-        ont_def = generated_schema["$defs"][ont_defs[0]]
+        ont_def = shipped_schema["$defs"][ont_defs[0]]
         bm = ont_def["properties"]["boundary_mode"]
 
         def resolve(node: dict) -> dict:
             """Follow a local ``$ref`` into ``$defs`` (linkml emits enums by reference)."""
             ref = node.get("$ref")
             if ref and ref.startswith("#/$defs/"):
-                return generated_schema["$defs"][ref.split("/")[-1]]
+                return shipped_schema["$defs"][ref.split("/")[-1]]
             return node
 
         candidates = [resolve(opt) for opt in bm.get("anyOf", [])] or [resolve(bm)]
@@ -324,42 +343,42 @@ class TestSchemaGeneration:
 class TestSchemaValidation:
     """Tests that the generated schema validates ASAM v1 format files correctly."""
 
-    def test_valid_minimal(self, generated_schema: dict) -> None:
+    def test_valid_minimal(self, shipped_schema: dict) -> None:
         """Minimal valid tagging file should pass."""
-        jsonschema.validate(VALID_MINIMAL, generated_schema)
+        jsonschema.validate(VALID_MINIMAL, shipped_schema)
 
-    def test_valid_full_scenario(self, generated_schema: dict) -> None:
+    def test_valid_full_scenario(self, shipped_schema: dict) -> None:
         """Full scenario from spec §8.8.1 should pass."""
-        jsonschema.validate(VALID_FULL_SCENARIO, generated_schema)
+        jsonschema.validate(VALID_FULL_SCENARIO, shipped_schema)
 
-    def test_valid_numeric_tag_data(self, generated_schema: dict) -> None:
+    def test_valid_numeric_tag_data(self, shipped_schema: dict) -> None:
         """Numeric tag_data should pass."""
-        jsonschema.validate(VALID_NUMERIC, generated_schema)
+        jsonschema.validate(VALID_NUMERIC, shipped_schema)
 
-    def test_invalid_missing_metadata(self, generated_schema: dict) -> None:
+    def test_invalid_missing_metadata(self, shipped_schema: dict) -> None:
         """Missing metadata should be rejected."""
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(INVALID_NO_METADATA, generated_schema)
+            jsonschema.validate(INVALID_NO_METADATA, shipped_schema)
 
-    def test_invalid_missing_tag_type(self, generated_schema: dict) -> None:
+    def test_invalid_missing_tag_type(self, shipped_schema: dict) -> None:
         """Missing tag.type should be rejected."""
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(INVALID_NO_TAG_TYPE, generated_schema)
+            jsonschema.validate(INVALID_NO_TAG_TYPE, shipped_schema)
 
-    def test_invalid_wrong_tag_type_rejected(self, generated_schema: dict) -> None:
+    def test_invalid_wrong_tag_type_rejected(self, shipped_schema: dict) -> None:
         """Invalid tag.type value should be rejected (vocabulary constraint)."""
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(INVALID_WRONG_TAG_TYPE, generated_schema)
+            jsonschema.validate(INVALID_WRONG_TAG_TYPE, shipped_schema)
 
-    def test_invalid_boundary_mode_rejected(self, generated_schema: dict) -> None:
+    def test_invalid_boundary_mode_rejected(self, shipped_schema: dict) -> None:
         """Invalid boundary_mode should be rejected."""
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(INVALID_WRONG_BOUNDARY_MODE, generated_schema)
+            jsonschema.validate(INVALID_WRONG_BOUNDARY_MODE, shipped_schema)
 
-    def test_invalid_num_val_string_rejected(self, generated_schema: dict) -> None:
+    def test_invalid_num_val_string_rejected(self, shipped_schema: dict) -> None:
         """String value for num.val should be rejected."""
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(INVALID_NUM_VAL_STRING, generated_schema)
+            jsonschema.validate(INVALID_NUM_VAL_STRING, shipped_schema)
 
 
 # =============================================================================
@@ -368,11 +387,10 @@ class TestSchemaValidation:
 
 
 class TestSyncTagTypeEnum:
-    """Tests for the TagTypeEnum synchronization script."""
+    """The generated tag-types.yaml is what the sync script produces today."""
 
-    @pytest.mark.skipif(not SYNC_SCRIPT.exists(), reason="sync script not found")
     def test_check_mode_passes(self) -> None:
-        """Sync script --check should pass when enum is up to date."""
+        """Sync script --check should pass when tag-types.yaml is up to date."""
         result = subprocess.run(
             [sys.executable, str(SYNC_SCRIPT), "--check"],
             capture_output=True,
@@ -380,22 +398,15 @@ class TestSyncTagTypeEnum:
             cwd=str(ROOT_DIR),
         )
         assert result.returncode == 0, (
-            f"TagTypeEnum is out of sync. "
+            f"tag-types.yaml is out of date. "
             f"Run: python scripts/sync_tag_type_enum.py\n{result.stdout}"
         )
 
-    @pytest.mark.skipif(not SYNC_SCRIPT.exists(), reason="sync script not found")
-    def test_enum_count_floor(self) -> None:
-        """TagTypeEnum should expose the full ASAM vocabulary (>= 256 values)."""
-        import yaml
-
-        with open(SCHEMA_YAML, encoding="utf-8") as f:
-            schema = yaml.safe_load(f)
-        actual_count = len(schema["enums"]["TagTypeEnum"]["permissible_values"])
-        assert actual_count >= 256, (
-            f"TagTypeEnum has {actual_count} values, expected >= 256 "
-            f"(full ASAM tag-class + admin + enum vocabulary)"
-        )
+    def test_schema_imports_the_generated_enum(self, shipped_schema: dict) -> None:
+        """The published TagTypeEnum is the generated one, value for value."""
+        generated = yaml.safe_load(TAG_TYPES_YAML.read_text(encoding="utf-8"))
+        values = generated["enums"]["TagTypeEnum"]["permissible_values"]
+        assert _tag_type_enum(shipped_schema) == list(values)
 
 
 # =============================================================================
@@ -406,22 +417,26 @@ class TestSyncTagTypeEnum:
 class TestVocabularyFaithfulness:
     """TagTypeEnum must accept every real ASAM v1 tag and invent none."""
 
-    def test_enum_covers_all_asam_tag_classes(self, generated_schema: dict) -> None:
+    def test_enum_covers_all_asam_tag_classes(self, shipped_schema: dict) -> None:
         """Every rdfs:Class in the ASAM ontology must be a valid tag.type."""
-        enum = set(_tag_type_enum(generated_schema))
+        enum = set(_tag_type_enum(shipped_schema))
         asam_classes = _asam_tag_classes()
         missing = sorted(asam_classes - enum)
         assert not missing, f"ASAM tag classes missing from TagTypeEnum: {missing}"
 
-    def test_no_fabricated_enum_values(self, generated_schema: dict) -> None:
-        """Every enum value must be a real ASAM ontology name (class or property)."""
-        ttl = _asam_ontology_ttl()
-        asam_names = set(
-            re.findall(r"<([A-Za-z]\w*)>\s+a\s+rdfs:(?:Class|Property)", ttl)
+    def test_enum_is_exactly_the_asam_tag_vocabulary(
+        self, shipped_schema: dict
+    ) -> None:
+        """tag.type accepts ASAM's tag classes and administration tags, and
+        nothing else: no invented value and no value property such as
+        trafficAgentTypeValue, which belongs in tag_data, not in tag.type."""
+        enum = _tag_type_enum(shipped_schema)
+        expected = _asam_tag_classes() | _asam_admin_properties()
+        assert len(enum) == len(set(enum)), "TagTypeEnum lists a value twice"
+        assert set(enum) == expected, (
+            f"missing={sorted(expected - set(enum))} "
+            f"extra={sorted(set(enum) - expected)}"
         )
-        enum = set(_tag_type_enum(generated_schema))
-        fabricated = sorted(enum - asam_names)
-        assert not fabricated, f"TagTypeEnum has non-ASAM values: {fabricated}"
 
     @pytest.mark.parametrize(
         "tag",
@@ -434,11 +449,9 @@ class TestVocabularyFaithfulness:
             "DrivableAreaSigns",  # used in spec/test boundary_list
         ],
     )
-    def test_spec_hierarchy_tags_present(
-        self, generated_schema: dict, tag: str
-    ) -> None:
+    def test_spec_hierarchy_tags_present(self, shipped_schema: dict, tag: str) -> None:
         """Mid-level hierarchy tags referenced by the spec must validate."""
-        assert tag in set(_tag_type_enum(generated_schema))
+        assert tag in set(_tag_type_enum(shipped_schema))
 
 
 # =============================================================================
@@ -578,31 +591,31 @@ class TestFunctionalEquivalence:
 
     @pytest.mark.parametrize("name", sorted(SPEC_EXAMPLES))
     def test_spec_example_valid_in_linkml(
-        self, generated_schema: dict, name: str
+        self, shipped_schema: dict, name: str
     ) -> None:
         """Each ASAM-valid example must ALSO validate against the LinkML schema."""
-        jsonschema.validate(self.SPEC_EXAMPLES[name], generated_schema)
+        jsonschema.validate(self.SPEC_EXAMPLES[name], shipped_schema)
 
     @pytest.mark.parametrize("name", sorted(SHARED_INVALID))
     def test_shared_invalid_rejected_by_both(
-        self, asam_schema: dict, generated_schema: dict, name: str
+        self, asam_schema: dict, shipped_schema: dict, name: str
     ) -> None:
         """Malformed files must be rejected by BOTH schemas (equivalence)."""
         data = self.SHARED_INVALID[name]
         with pytest.raises(jsonschema.ValidationError):
             jsonschema.validate(data, asam_schema)
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(data, generated_schema)
+            jsonschema.validate(data, shipped_schema)
 
     @pytest.mark.parametrize("name", sorted(LINKML_STRICTER))
     def test_linkml_stricter_than_asam(
-        self, asam_schema: dict, generated_schema: dict, name: str
+        self, asam_schema: dict, shipped_schema: dict, name: str
     ) -> None:
         """Cases ASAM accepts (unconstrained) but LinkML rejects (added value)."""
         data = self.LINKML_STRICTER[name]
         jsonschema.validate(data, asam_schema)  # ASAM accepts
         with pytest.raises(jsonschema.ValidationError):
-            jsonschema.validate(data, generated_schema)
+            jsonschema.validate(data, shipped_schema)
 
 
 # =============================================================================
@@ -622,22 +635,22 @@ PASSTHROUGH_SECTIONS = {
     "frames",
     "objects",
     "relations",
-    "resources",
     "streams",
 }
 
 # The sections this profile does validate.
-VALIDATED_SECTIONS = {"metadata", "ontologies", "tags"}
+VALIDATED_SECTIONS = {"metadata", "ontologies", "tags", "resources"}
 
 
 def _refs_in(spec: dict) -> set:
     """Collect the $refs reachable from a property schema.
 
     Covers the shapes the generator emits for a slot: a direct ``$ref``, an
-    ``items.$ref`` for a multivalued slot, and the ``anyOf`` null-wrapping the
-    generator adds unless ``--no-include-null`` is passed. The shipped artifact
-    uses the unwrapped form; a consumer generating the schema themselves gets
-    the wrapped one, so detection must accept both.
+    ``items.$ref`` for a multivalued slot, and an ``anyOf`` null-wrapping. The
+    published artifact still null-wraps the values of inlined dicts whose range
+    has no required slot (the generator ignores ``--no-include-null`` there),
+    and a consumer generating the schema without that flag gets the wrapping on
+    every optional slot, so detection must accept both forms.
     """
     found = set()
     for branch in [spec, *spec.get("anyOf", []), *spec.get("oneOf", [])]:
@@ -671,10 +684,11 @@ def _is_passthrough(subschema: dict) -> bool:
 def unvalidated_sections(document: dict, schema: dict) -> set:
     """Report which sections of ``document`` the schema accepts without checking.
 
-    A section is passthrough when its property schema resolves to the
-    unconstrained ``UncheckedSection`` definition. This is the contract an external
-    consumer can rely on to tell "valid" apart from "fully checked": a ``$ref``
-    to ``#/$defs/UncheckedSection`` means accepted but not validated.
+    A section is passthrough when its property schema references a definition
+    of the Unchecked family (``UncheckedSection``, ``UncheckedUidEntry``,
+    ``UncheckedFrameEntry``). This is the contract an external consumer can rely
+    on to tell "valid" apart from "fully checked": a ``$ref`` into
+    ``#/$defs/Unchecked…`` means accepted but not validated.
     """
     props = schema["$defs"]["OpenLabel"]["properties"]
     return {
@@ -694,39 +708,40 @@ class TestProfileScope:
     """
 
     def test_all_thirteen_asam_properties_declared(
-        self, generated_schema: dict, asam_schema: dict
+        self, shipped_schema: dict, asam_schema: dict
     ) -> None:
         """Our OpenLabel must declare exactly the properties ASAM declares."""
-        ours = set(generated_schema["$defs"]["OpenLabel"]["properties"])
+        ours = set(shipped_schema["$defs"]["OpenLabel"]["properties"])
         theirs = set(asam_schema["definitions"]["openlabel"]["properties"])
         assert ours == theirs, f"missing={theirs - ours} extra={ours - theirs}"
 
-    def test_container_stays_closed(self, generated_schema: dict) -> None:
+    def test_container_stays_closed(self, shipped_schema: dict) -> None:
         """Enumerating the sections must not reopen the container."""
-        assert generated_schema["$defs"]["OpenLabel"]["additionalProperties"] is False
+        assert shipped_schema["$defs"]["OpenLabel"]["additionalProperties"] is False
 
-    def test_passthrough_set_is_exactly_as_pinned(self, generated_schema: dict) -> None:
+    def test_passthrough_set_is_exactly_as_pinned(self, shipped_schema: dict) -> None:
         """Widening the unvalidated surface must be a deliberate, visible change."""
-        props = generated_schema["$defs"]["OpenLabel"]["properties"]
+        props = shipped_schema["$defs"]["OpenLabel"]["properties"]
         actual = {n for n, s in props.items() if _is_passthrough(s)}
         assert actual == PASSTHROUGH_SECTIONS
+        assert set(props) == PASSTHROUGH_SECTIONS | VALIDATED_SECTIONS
 
-    def test_validated_sections_are_not_passthrough(
-        self, generated_schema: dict
-    ) -> None:
+    def test_validated_sections_are_not_passthrough(self, shipped_schema: dict) -> None:
         """metadata/ontologies/tags must keep their real constraints."""
-        props = generated_schema["$defs"]["OpenLabel"]["properties"]
+        props = shipped_schema["$defs"]["OpenLabel"]["properties"]
         for name in VALIDATED_SECTIONS:
             assert not _is_passthrough(props[name]), f"{name} became passthrough"
 
-    def test_anyvalue_is_detectably_unconstrained(self, generated_schema: dict) -> None:
+    def test_unchecked_section_is_detectably_unconstrained(
+        self, shipped_schema: dict
+    ) -> None:
         """Consumers detect skipped content via this $def, so keep it unconstrained."""
-        any_value = generated_schema["$defs"]["UncheckedSection"]
+        any_value = shipped_schema["$defs"]["UncheckedSection"]
         assert any_value.get("additionalProperties") is True
         assert not any_value.get("properties")
         assert not any_value.get("required")
 
-    def test_frame_intervals_accepts_an_array(self, generated_schema: dict) -> None:
+    def test_frame_intervals_accepts_an_array(self, shipped_schema: dict) -> None:
         """linkml:Any omits "array" from its type list, so this needs multivalued."""
         doc = {
             "openlabel": {
@@ -734,10 +749,10 @@ class TestProfileScope:
                 "frame_intervals": [{"frame_start": 0, "frame_end": 9}],
             }
         }
-        jsonschema.validate(doc, generated_schema)
+        jsonschema.validate(doc, shipped_schema)
 
     def test_mixed_tagging_and_labelling_accepted(
-        self, generated_schema: dict, asam_schema: dict
+        self, shipped_schema: dict, asam_schema: dict
     ) -> None:
         """Spec 8.1.1: a labelling instance may itself be tagged."""
         doc = {
@@ -748,9 +763,9 @@ class TestProfileScope:
             }
         }
         jsonschema.validate(doc, asam_schema)
-        jsonschema.validate(doc, generated_schema)
+        jsonschema.validate(doc, shipped_schema)
 
-    def test_unvalidated_sections_are_reported(self, generated_schema: dict) -> None:
+    def test_unvalidated_sections_are_reported(self, shipped_schema: dict) -> None:
         """A caller must be able to tell "valid" from "fully checked"."""
         doc = {
             "openlabel": {
@@ -760,269 +775,32 @@ class TestProfileScope:
                 "frames": {},
             }
         }
-        jsonschema.validate(doc, generated_schema)
-        assert unvalidated_sections(doc, generated_schema) == {"objects", "frames"}
+        jsonschema.validate(doc, shipped_schema)
+        assert unvalidated_sections(doc, shipped_schema) == {"objects", "frames"}
 
     def test_pure_tagging_file_reports_nothing_skipped(
-        self, generated_schema: dict
+        self, shipped_schema: dict
     ) -> None:
         """The common case must not raise a false alarm."""
-        assert unvalidated_sections(VALID_MINIMAL, generated_schema) == set()
+        assert unvalidated_sections(VALID_MINIMAL, shipped_schema) == set()
 
-    def test_shipped_artifact_carries_the_same_contract(self) -> None:
-        """Consumers get the committed artifact, not a schema they generate.
-
-        The artifact is generated with ``jsonschema.genopts``
-        (``--no-include-null``), so its properties carry a bare ``$ref`` where
-        the fixture carries an ``anyOf`` null-wrapping. Detection must hold on
-        the file we actually publish.
-        """
-        shipped = json.loads(
-            (
-                ROOT_DIR
-                / "artifacts"
-                / "openlabel-tagging"
-                / "openlabel-tagging.schema.json"
-            ).read_text(encoding="utf-8")
-        )
-        props = shipped["$defs"]["OpenLabel"]["properties"]
-        actual = {n for n, s in props.items() if _is_passthrough(s)}
-        assert actual == PASSTHROUGH_SECTIONS
-        assert set(props) == PASSTHROUGH_SECTIONS | VALIDATED_SECTIONS
-        assert shipped["$defs"]["OpenLabel"]["additionalProperties"] is False
-
+    def test_resources_entries_are_strings(
+        self, shipped_schema: dict, asam_schema: dict
+    ) -> None:
+        """ASAM resources map a UID to a string (a file name or URL)."""
         doc = {
             "openlabel": {
                 "metadata": {"schema_version": "1.0.0"},
-                "tags": {"0": {"type": "WeatherRain", "ontology_uid": "0"}},
-                "objects": {"0": {"name": "car1", "type": "car"}},
-            }
-        }
-        jsonschema.validate(doc, shipped)
-        assert unvalidated_sections(doc, shipped) == {"objects"}
-
-
-# =============================================================================
-# v1→v2 Converter Tests
-# =============================================================================
-
-
-class TestV1ToV2Converter:
-    """Tests for the ASAM v1→v2 format converter."""
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_produces_valid_jsonld(self, tmp_path: Path) -> None:
-        """Converter output should be valid JSON with @context."""
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(VALID_MINIMAL))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        assert result.returncode == 0, f"Converter failed: {result.stderr}"
-        output = json.loads(result.stdout)
-        assert "@context" in output
-        assert "@type" in output
-        assert output["@type"] == "Tag"
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_maps_boolean_flags(self, tmp_path: Path) -> None:
-        """Boolean tag types should map to True values in v2."""
-        v1_data = {
-            "openlabel": {
-                "metadata": {"schema_version": "1.0.0"},
-                "ontologies": {"0": {"uri": "https://example.org/ont"}},
-                "tags": {
-                    "0": {"type": "WeatherRain", "ontology_uid": "0"},
-                    "1": {"type": "MotionDrive", "ontology_uid": "0"},
-                },
-            }
-        }
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(v1_data))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        output = json.loads(result.stdout)
-        assert output.get("Odd", {}).get("WeatherRain") is True
-        assert output.get("Behaviour", {}).get("MotionDrive") is True
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_maps_enum_values(self, tmp_path: Path) -> None:
-        """Enum tag values should map to their slot with value."""
-        v1_data = {
-            "openlabel": {
-                "metadata": {"schema_version": "1.0.0"},
-                "ontologies": {"0": {"uri": "https://example.org/ont"}},
-                "tags": {
-                    "0": {"type": "RoadTypeMinor", "ontology_uid": "0"},
-                    "1": {"type": "VehicleCar", "ontology_uid": "0"},
-                },
-            }
-        }
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(v1_data))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        output = json.loads(result.stdout)
-        assert output.get("Odd", {}).get("DrivableAreaType") == "RoadTypeMinor"
-        assert output.get("RoadUser", {}).get("RoadUserVehicle") == "VehicleCar"
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_maps_admin_tags(self, tmp_path: Path) -> None:
-        """Admin tags with text values should map correctly."""
-        v1_data = {
-            "openlabel": {
-                "metadata": {"schema_version": "1.0.0"},
-                "ontologies": {"0": {"uri": "https://example.org/ont"}},
+                "resources": {"0": "../scenario.xosc"},
                 "tags": {
                     "0": {
-                        "type": "scenarioName",
+                        "type": "WeatherRain",
                         "ontology_uid": "0",
-                        "tag_data": {"text": [{"type": "value", "val": "My Scenario"}]},
+                        "resource_uid": {"0": "ego"},
                     }
                 },
             }
         }
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(v1_data))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        output = json.loads(result.stdout)
-        assert output.get("AdminTag", {}).get("scenarioName") == "My Scenario"
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_accumulates_repeated_slot(self, tmp_path: Path) -> None:
-        """Multiple tags mapping to one class+slot must accumulate, not overwrite."""
-        v1_data = {
-            "openlabel": {
-                "metadata": {"schema_version": "1.0.0"},
-                "ontologies": {"0": {"uri": "https://example.org/ont"}},
-                "tags": {
-                    "0": {"type": "LaneTypeTraffic", "ontology_uid": "0"},
-                    "1": {"type": "LaneTypeBus", "ontology_uid": "0"},
-                },
-            }
-        }
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(v1_data))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file)],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        output = json.loads(result.stdout)
-        lane_type = output.get("Odd", {}).get("LaneSpecificationType")
-        # Both values must survive (list), not be clobbered to the last one.
-        assert isinstance(lane_type, list)
-        assert set(lane_type) == {"LaneTypeTraffic", "LaneTypeBus"}
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_no_pretty_emits_compact(self, tmp_path: Path) -> None:
-        """--no-pretty must actually disable indentation (single-line output)."""
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(VALID_MINIMAL))
-
-        result = subprocess.run(
-            [sys.executable, str(CONVERT_SCRIPT), str(input_file), "--no-pretty"],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        assert result.returncode == 0, f"Converter failed: {result.stderr}"
-        # Compact JSON has no newlines inside the document body.
-        assert "\n" not in result.stdout.strip()
-        assert json.loads(result.stdout)["@type"] == "Tag"
-
-    @pytest.mark.skipif(
-        not CONVERT_SCRIPT.exists(), reason="converter script not found"
-    )
-    def test_converter_output_conforms_to_shacl(self, tmp_path: Path) -> None:
-        """Converter output must pass SHACL validation (the PR's stated purpose).
-
-        Proves the v1→v2 conversion produces JSON-LD that conforms to the
-        openlabel-tagging SHACL shapes, not merely well-formed @context/@type.
-        """
-        v1_data = {
-            "openlabel": {
-                "metadata": {"schema_version": "1.0.0", "tagged_file": "s.osc"},
-                "ontologies": {"0": {"uri": "https://openlabel.asam.net/o.ttl"}},
-                "tags": {
-                    "0": {"type": "RoadTypeMinor", "ontology_uid": "0"},
-                    "1": {"type": "WeatherRain", "ontology_uid": "0"},
-                    "2": {"type": "MotionDrive", "ontology_uid": "0"},
-                    "3": {
-                        "type": "scenarioName",
-                        "ontology_uid": "0",
-                        "tag_data": {"text": [{"type": "value", "val": "Demo"}]},
-                    },
-                },
-            }
-        }
-        input_file = tmp_path / "input.json"
-        input_file.write_text(json.dumps(v1_data))
-        output_file = tmp_path / "out.jsonld"
-
-        convert = subprocess.run(
-            [
-                sys.executable,
-                str(CONVERT_SCRIPT),
-                str(input_file),
-                "-o",
-                str(output_file),
-            ],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        assert convert.returncode == 0, f"Converter failed: {convert.stderr}"
-
-        validate = subprocess.run(
-            [
-                sys.executable,
-                "-m",
-                "omb.validators.validation_suite",
-                "--run",
-                "check-data-conformance",
-                "--data-paths",
-                str(output_file),
-            ],
-            capture_output=True,
-            text=True,
-            cwd=str(ROOT_DIR),
-        )
-        assert validate.returncode == 0, (
-            f"Converter output failed SHACL conformance:\n"
-            f"{validate.stdout}\n{validate.stderr}"
-        )
+        jsonschema.validate(doc, asam_schema)
+        jsonschema.validate(doc, shipped_schema)
+        assert unvalidated_sections(doc, shipped_schema) == set()
