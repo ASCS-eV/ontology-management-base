@@ -226,6 +226,13 @@ asam-imports-check:
 test-asam-imports:
     {{run}} python -m pytest tests/integration/test_asam_imports.py -q
 
+# Regenerate linkml/openlabel-tagging/REFINEMENT_PROOF.md. Its property-based corpus
+# depends on the Python and Hypothesis versions, so it is generated with the Python
+# CI checks it with (Pinned Standards Drift), in an isolated environment that leaves
+# .venv alone.
+refinement-proof:
+    UV_PYTHON=3.12 uv run --isolated --frozen --group dev python scripts/schema_refinement_prover.py --spec linkml/openlabel-tagging/proof_spec.yaml --out linkml/openlabel-tagging/REFINEMENT_PROOF.md
+
 # Conformance tests for the OpenLABEL structural schema against the pinned ASAM
 # OpenLABEL v1.0.0 JSON Schema and tagging ontology. Skips without the submodule, so
 # CI runs this in the job that already pays for the checkout and sets
