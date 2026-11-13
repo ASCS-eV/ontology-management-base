@@ -59,55 +59,26 @@ format:
 
 # ===== Generate artifacts (OWL / SHACL / JSON-LD context) =====
 
-# Generate artifacts for every OMB LinkML domain. MUST stay byte-identical to the
-# committed artifacts/ (CI fails on any diff) — the flags + `tr`/`sed` cleanup below
-# are load-bearing; change them only alongside a reviewed artifact re-record.
+# Generate artifacts for every OMB LinkML domain (see `generate-domain`).
 generate:
     #!/usr/bin/env bash
     set -euo pipefail
-    # Never discard generator stderr: a fatal error there (e.g. a renamed flag) still
-    # leaves a truncated artifact behind, and `WARNING:linkml.generators.*` lines report
-    # semantic compile decisions such as a rule being skipped. Only the generators'
-    # DeprecationWarning noise is filtered out.
-    gen() {
-        local out="$1"; shift
-        local err; err="$(mktemp)"
-        if ! {{run}} "$@" 2>"$err" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "$out"; then
-            echo "ERROR: $1 failed while generating $out" >&2
-            cat "$err" >&2
-            rm -f "$err"
-            return 1
-        fi
-        grep -E '^(WARNING|ERROR|CRITICAL):linkml\.generators' "$err" >&2 || true
-        rm -f "$err"
-    }
     for domain in {{LINKML_DOMAINS}}; do
         echo "  Processing $domain..."
-        mkdir -p "artifacts/$domain"
-        gen "artifacts/$domain/$domain.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml"
-        gen "artifacts/$domain/$domain.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml"
-        gen "artifacts/$domain/$domain.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml"
-        # A domain that also carries a structural schema ($domain-schema.yaml) generates a
-        # JSON Schema from it. The semantic model above describes the RDF vocabulary; the
-        # structural one describes the JSON document format, and only the latter can say
-        # what a conforming file looks like before it is interpreted as RDF. Per-domain
-        # generator flags live in jsonschema.genopts so this recipe stays domain-neutral.
-        if [ -f "linkml/$domain/$domain-schema.yaml" ]; then
-            echo "    Generating JSON Schema for $domain..."
-            opts=""
-            if [ -f "linkml/$domain/jsonschema.genopts" ]; then
-                opts="$(cat "linkml/$domain/jsonschema.genopts")"
-            fi
-            # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
-            gen "artifacts/$domain/$domain.schema.json" gen-json-schema --indent 3 $opts "linkml/$domain/$domain-schema.yaml"
-        fi
+        "{{just_executable()}}" --justfile "{{justfile()}}" generate-domain "$domain"
     done
     echo "[OK] Artifacts generated"
 
 # Generate artifacts for a single domain, e.g. `just generate-domain openlabel-tagging`.
+# The output MUST stay byte-identical to the committed artifacts/ (CI fails on any
+# diff): the flags and the `tr`/`sed` cleanup below are load-bearing; change them only
+# alongside a reviewed artifact re-record.
 generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
+    # Never discard generator stderr: a fatal error there (e.g. a renamed flag) still
+    # leaves a truncated artifact behind, and `WARNING:linkml.generators.*` lines report
+    # semantic compile decisions such as a rule being skipped.
     gen() {
         local out="$1"; shift
         local err; err="$(mktemp)"
@@ -124,10 +95,13 @@ generate-domain domain:
     gen "artifacts/{{domain}}/{{domain}}.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml"
     gen "artifacts/{{domain}}/{{domain}}.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml"
     gen "artifacts/{{domain}}/{{domain}}.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml"
-    # Keep in step with the `generate` recipe: a domain that also carries a structural
-    # schema generates a JSON Schema from it. Skipping it here would let
-    # `just generate-domain X` report success while leaving X.schema.json stale.
+    # A domain that also carries a structural schema ({{domain}}-schema.yaml) generates
+    # a JSON Schema from it. The semantic model above describes the RDF vocabulary; the
+    # structural one describes the JSON document format, and only the latter can say
+    # what a conforming file looks like before it is interpreted as RDF. Per-domain
+    # generator flags live in jsonschema.genopts so this recipe stays domain-neutral.
     if [ -f "linkml/{{domain}}/{{domain}}-schema.yaml" ]; then
+        echo "    Generating JSON Schema for {{domain}}..."
         opts=""
         if [ -f "linkml/{{domain}}/jsonschema.genopts" ]; then
             opts="$(cat "linkml/{{domain}}/jsonschema.genopts")"
