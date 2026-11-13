@@ -62,10 +62,16 @@ dev = [
     "mkdocstrings[python]>=0.24.0",
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
-    # Property-based instance generation for the schema refinement prover
-    # (scripts/schema_refinement_prover.py, pillar 3). Without it only the
-    # mutation corpus runs and the report says so explicitly.
+    # The schema refinement prover (scripts/schema_refinement_prover.py) and the
+    # OpenLABEL schema tests validate instances and resolve $refs directly, and
+    # generate the property-based corpus; the prover fails rather than run
+    # without any of them.
+    "jsonschema>=4.26.0",
+    "referencing>=0.37.0",
+    "hypothesis>=6.170.15",
     "hypothesis-jsonschema>=0.23.1",
+    # Deterministic Turtle serialisation for artifacts/gx/update-from-submodule.sh.
+    "diffable-rdf>=0.4.0",
 ]
 
 [project.urls]
