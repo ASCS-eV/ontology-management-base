@@ -98,6 +98,31 @@ def test_format_data_conformance_result_with_errors():
     assert "SHACL validation failed" in output
 
 
+def test_format_data_conformance_result_without_graph_prints_the_reason():
+    """A failure without a report graph (a coverage or routing error) carries
+    its only diagnosis in v_text; the box must show it, not just the verdict."""
+    buffer = StringIO()
+    print_formatter.format_data_conformance_result(
+        False,
+        onto_files=["file.json"],
+        v_text="No RDF type was found.\nUnvalidated files: file.json",
+        report_graph=None,
+        file=buffer,
+    )
+    output = buffer.getvalue()
+    assert "Validation Error:" in output
+    assert "No RDF type was found." in output
+    assert "Unvalidated files: file.json" in output
+
+
+def test_format_data_conformance_result_success_prints_no_error_box():
+    buffer = StringIO()
+    print_formatter.format_data_conformance_result(
+        True, onto_files=["file.json"], v_text="ignored", file=buffer
+    )
+    assert "Validation Error:" not in buffer.getvalue()
+
+
 PREFIXES = """
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix ex: <https://example.org/v1/> .

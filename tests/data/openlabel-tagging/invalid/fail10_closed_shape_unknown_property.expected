@@ -1,0 +1,41 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                                   ['fail10_closed_shape_unknown_property.json']                                                    =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/inventedProperty                                                    =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/inventedProperty> Literal("should not be allowed",          =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/licenseURI>                                 =
+=                      Literal("https://creativecommons.org/licenses/by/4.0/", datatype=xsd:string) ; <https://w3id.org/ascs-                        =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/ownerEmail> Literal("contact@bmw.de", datatype=xsd:string) ; <https://w3id.org/ascs-      =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/ownerName> Literal("BMW AG", datatype=xsd:string) ; <https://w3id.org/ascs-               =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/ownerURL> Literal("https://www.bmw.com", datatype=xsd:string) ; <https://w3id.org/ascs-   =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/scenarioCreatedDate> Literal("2024-01-15T10:00:00" = 2024-01-15 10:00:00,                 =
+=                      datatype=xsd:dateTime) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/scenarioDefinition> Literal("Scenario     =
+=                      Definition Content", datatype=xsd:string) ; <https://w3id.org/ascs-                                                           =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/scenarioDefinitionLanguageURI>                                                            =
+=                      Literal("https://www.asam.net/standards/detail/openscenario/", datatype=xsd:string) ; <https://w3id.org/ascs-                 =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/scenarioDescription> Literal("Invalid: unknown properties on closed shapes",              =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/scenarioName>                               =
+=                      Literal("Invalid_Closed_Shape", datatype=xsd:string) ; <https://w3id.org/ascs-                                                =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/scenarioParentReference> Literal("UUID-PARENT-1234", datatype=xsd:string) ;               =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/scenarioUniqueReference> Literal("UUID-UNIQUE-5678",               =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/scenarioVersion> Literal("2.0.0",           =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/scenarioVisualisationURL>                   =
+=                      Literal("https://example.com/visualization.png", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                      =
+=                      ev/envited-x/openlabel/v1.1.0-alpha/AdminTag> ] is closed. It cannot have value: Literal("should not be allowed",             =
+=                      datatype=xsd:string)                                                                                                          =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/unknownOddProperty                                                  =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/WeatherWind> Literal("true" = True, datatype=xsd:boolean) ; =
+=                      <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/unknownOddProperty> Literal("this should fail on closed shape",    =
+=                      datatype=xsd:string) ; <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/weatherWindValue> Literal("5",              =
+=                      datatype=xsd:decimal) ; rdf:type <https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/Odd> ] is closed. It cannot have  =
+=                      value: Literal("this should fail on closed shape", datatype=xsd:string)                                                       =
+======================================================================================================================================================

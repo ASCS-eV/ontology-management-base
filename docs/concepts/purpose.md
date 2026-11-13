@@ -64,8 +64,8 @@ A critical design principle: **these ontologies describe metadata ABOUT simulati
 ┌────────────────────────────────────────────────────┐
 │  METADATA ANNOTATION (~2KB JSON-LD)                │
 │                                                    │
-│  "This file is an ASAM OpenDRIVE v1.8 map.        │
-│   It covers 45km of motorway with 12 junctions.   │
+│  "This file is an ASAM OpenDRIVE v1.8 map.         │
+│   It covers 45km of motorway with 12 junctions.    │
 │   Right-hand traffic. Lane types: driving,         │
 │   shoulder. Accuracy: ±0.1m 2D."                   │
 │                                                    │
@@ -116,33 +116,33 @@ When considering adding a new ontology property, apply this test:
 
 ```
 ENVITED-X Ontology Stack
-═══════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════
 
-    ┌─────────────────────────────────────────────┐
-    │          Gaia-X Trust Framework              │  Governance
-    │  (gx:ServiceOffering, Compliance, Trust)     │  & Identity
-    └──────────────────────┬──────────────────────┘
-                           │
-    ┌──────────────────────▼──────────────────────┐
-    │         envited-x (base layer)              │  Shared Types
-    │  SimulationAsset, Manifest, ResourceDesc    │  & Wrappers
-    └──────────────────────┬──────────────────────┘
-                           │
-    ┌──────────┬───────────┼───────────┬──────────┐
-    │          │           │           │          │
-    ▼          ▼           ▼           ▼          ▼
-┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
-│ hdmap  │ │scenario│ │osi-    │ │environ-│ │surface-│  Domain
-│        │ │        │ │trace   │ │ment-   │ │model   │  Specific
-│OpenDRIVE│ │OpenSCE-│ │OSI     │ │model   │ │OpenCRG │
-│Lanelet │ │NARIO   │ │        │ │OpenMAT │ │        │
-└────────┘ └────────┘ └────────┘ └────────┘ └────────┘
+┌─────────────────────────────────────────────────────────┐
+│          Gaia-X Trust Framework                         │  Governance
+│  (gx:ServiceOffering, Compliance, Trust)                │  & Identity
+└────────────────────────────┬────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────┐
+│         envited-x (base layer)                          │  Shared Types
+│  SimulationAsset, Manifest, ResourceDesc                │  & Wrappers
+└────────────────────────────┬────────────────────────────┘
+                             │
+     ┌───────────┬───────────┬───────────┬───────────┐
+     │           │           │           │           │
+     ▼           ▼           ▼           ▼           ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐
+│hdmap    │ │scenario │ │osi-     │ │environ- │ │surface- │
+│         │ │         │ │trace    │ │ment-    │ │model    │  Domain
+│OpenDRIVE│ │OpenSCE- │ │OSI      │ │model    │ │OpenCRG  │  Specific
+│Lanelet  │ │NARIO    │ │         │ │OpenMAT  │ │         │
+└─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘
 
-    ┌──────────────────────────────────────────────┐
-    │       openlabel-v2 (cross-cutting)           │  ODD/Labeling
-    │  ISO 34503 taxonomy, weather, road users     │  (shared by
-    │  OpenODD modules, OpenLABEL types            │   multiple)
-    └──────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│       openlabel-tagging (cross-cutting)                 │  ODD/Labeling
+│  ISO 34503 taxonomy, weather, road users                │  (shared by
+│  OpenODD modules, OpenLABEL types                       │   multiple)
+└─────────────────────────────────────────────────────────┘
 ```
 
 Each domain ontology:

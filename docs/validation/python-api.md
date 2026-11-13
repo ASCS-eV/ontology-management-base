@@ -54,6 +54,19 @@ No SHACL shapes were loaded, so nothing could be validated (unresolved @type IRI
 https://example.org/widget/v1/Widget). Register the artifacts that define these types …
 ```
 
+A document that declares no `@context` and no `@type` contributes no RDF terms at
+all, so there is nothing for `artifacts` to route and registering more of them
+cannot help. That case is reported separately:
+
+```
+No RDF type was found in the input and no SHACL shapes were loaded, so nothing could
+be validated. This happens when a document is not JSON-LD … Supply JSON-LD data, or
+validate this file against the structural JSON Schema for its format instead.
+```
+
+A raw ASAM OpenLABEL file (`{"openlabel": …}`) is the common example: its format is
+described by `artifacts/openlabel-tagging/openlabel-tagging.schema.json`, not by SHACL.
+
 Useful fields on the returned `ValidationResult`:
 
 | Field | Meaning |

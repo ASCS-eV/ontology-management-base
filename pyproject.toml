@@ -54,7 +54,7 @@ dev = [
     # linkml: dev-only tooling for artifact generation. In a dependency group (not a
     # published extra) so its git-URL reference never lands in the wheel's
     # Requires-Dist — PyPI forbids direct-URL deps in uploaded metadata.
-    "linkml @ git+https://github.com/ASCS-eV/linkml.git@feat/envited-x-pipeline#subdirectory=packages/linkml",
+    "linkml @ git+https://github.com/ASCS-eV/linkml.git@envited-x/2026.10.23#subdirectory=packages/linkml",
     "pre-commit==4.5.1",
     "mkdocs-material>=9.5.0",
     "mkdocs-awesome-pages-plugin>=2.9.3",
@@ -62,6 +62,16 @@ dev = [
     "mkdocstrings[python]>=0.24.0",
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
+    # The schema refinement prover (scripts/schema_refinement_prover.py) and the
+    # OpenLABEL schema tests validate instances and resolve $refs directly, and
+    # generate the property-based corpus; the prover fails rather than run
+    # without any of them.
+    "jsonschema>=4.26.0",
+    "referencing>=0.37.0",
+    "hypothesis>=6.170.15",
+    "hypothesis-jsonschema>=0.23.1",
+    # Deterministic Turtle serialisation for artifacts/gx/update-from-submodule.sh.
+    "diffable-rdf>=0.4.0",
 ]
 
 [project.urls]
@@ -108,6 +118,9 @@ ignore = [
 "__init__.py" = ["F401"]
 
 [tool.pytest.ini_options]
+markers = [
+    "slow: minutes-scale suites (property-based corpora); deselect with -m 'not slow'",
+]
 pythonpath = ["."]
 testpaths = ["tests"]
 python_files = ["test_*.py"]

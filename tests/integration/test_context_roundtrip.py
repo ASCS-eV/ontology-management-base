@@ -160,7 +160,7 @@ class TestContextRoundtripGeneric:
 
         # Should have standard prefixes
         assert "xsd" in ctx, "Context should define xsd prefix"
-        # LinkML uses underscores in prefix names (e.g., openlabel_v2)
+        # LinkML uses underscores in prefix names (e.g., openlabel_tagging)
         domain_key = domain.replace("-", "_")
         assert (
             domain in ctx

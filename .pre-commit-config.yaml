@@ -16,6 +16,17 @@ repos:
         types: [python]
         pass_filenames: true
 
+      # Must run before generate-linkml: it derives tag-types.yaml (TagTypeEnum) from
+      # the semantic model, and the structural schema that generation reads imports
+      # it. Reversing the order would generate artifacts from a stale enum.
+      - id: sync-tag-type-enum
+        name: Generate the OpenLABEL TagTypeEnum
+        entry: python scripts/sync_tag_type_enum.py
+        language: system
+        pass_filenames: false
+        files: ^linkml/openlabel-tagging/(openlabel-tagging|openlabel-tagging-schema|tag-types)\.yaml$
+        stages: [pre-commit]
+
       - id: generate-linkml
         name: Generate LinkML Artifacts
         entry: just generate
