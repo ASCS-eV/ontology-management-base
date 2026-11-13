@@ -142,6 +142,38 @@ def test_validate_data_without_artifacts_does_not_pass_vacuously(widget_repo):
     assert result.types_unrouted == ["https://example.org/widget/v1/Widget"]
 
 
+def test_unrouted_type_is_named_in_the_diagnosis(widget_repo):
+    """With types found but no shapes loaded, the coverage guard names the types
+    and points at the fix: registering the artifacts that define them. (Strict
+    routing, the API default, reports the unresolved types before this guard.)"""
+    result = validate_data(
+        [widget_repo / "data" / "valid" / "widget_ok.json"], strict=False
+    )
+
+    assert "unresolved @type IRI(s): https://example.org/widget/v1/Widget" in (
+        result.report_text
+    )
+    assert "--artifacts" in result.report_text
+
+
+def test_document_without_rdf_types_is_diagnosed_as_not_json_ld(tmp_path):
+    """A plain JSON document contributes no RDF terms, so there is nothing for
+    artifacts to route; the report must say that instead of asking for them."""
+    doc = tmp_path / "plain.json"
+    doc.write_text(
+        json.dumps({"openlabel": {"metadata": {"schema_version": "1.0.0"}}}),
+        encoding="utf-8",
+    )
+    result = validate_data([doc])
+
+    assert result.conforms is False
+    assert result.return_code == ReturnCodes.CONFORMANCE_ERROR
+    assert result.target_types == []
+    assert "No RDF type was found" in result.report_text
+    assert "Register the artifacts" not in result.report_text
+    assert "plain.json" in result.report_text
+
+
 def test_empty_shapes_graph_fails_even_without_strict(widget_repo):
     """Zero shapes loaded is a failure in its own right, not a strictness preference.
 

@@ -161,3 +161,32 @@ def test_violations_include_warnings_when_warnings_fail_validation(tmp_path: Pat
 
     assert conforms is False
     assert [(v.value, v.severity) for v in violations] == [("sidewalk", "Warning")]
+
+
+def test_format_result_shows_why_a_graphless_failure_failed(tmp_path: Path) -> None:
+    """A coverage or routing failure has no report graph; its reason lives in
+    report_text and must reach the printed report. A failure with a graph keeps
+    rendering from the graph alone, so recorded .expected snapshots stay as they
+    are."""
+    from omb.core.result import ValidationResult
+
+    validator = _make_validator(tmp_path)
+    reason = "No active SHACL target covered these input documents."
+    graphless = ValidationResult(
+        conforms=False,
+        return_code=210,
+        report_text=reason,
+        report_graph=None,
+        files_validated=["data.json"],
+    )
+    assert reason in validator.format_result(graphless)
+
+    conforms, text, report = _run(validator, DEPRECATED_AND_UNKNOWN)
+    with_graph = ValidationResult(
+        conforms=conforms,
+        return_code=210,
+        report_text="RAW PYSHACL TEXT",
+        report_graph=report,
+        files_validated=["data.ttl"],
+    )
+    assert "RAW PYSHACL TEXT" not in validator.format_result(with_graph)
