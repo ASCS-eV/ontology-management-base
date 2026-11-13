@@ -9,13 +9,14 @@
 # Architecture:
 #   openlabel-tagging.yaml         -> Semantic model (OWL, SHACL, JSON-LD context)
 #   openlabel-tagging-schema.yaml  -> Structural model (JSON Schema for v1 format)
+#   tag-types.yaml                 -> TagTypeEnum, generated from the semantic model
 #
-# The TagTypeEnum bridges both: it lists all valid tag.type values from the
-# ontology vocabulary. Changes to the ontology automatically flow into the
-# JSON Schema when this enum is regenerated.
+# TagTypeEnum bridges both: scripts/sync_tag_type_enum.py derives every valid
+# tag.type value from the semantic model into tag-types.yaml, which this schema
+# imports (the pre-commit hook regenerates it before the artifacts).
 #
-# Usage:
-#   gen-json-schema linkml/openlabel-tagging/openlabel-tagging-schema.yaml
+# Usage (with the flags in jsonschema.genopts):
+#   just generate-domain openlabel-tagging
 #
 # =============================================================================
 
@@ -25,14 +26,15 @@ title: ASAM OpenLABEL Scenario Tagging File Format Schema
 description: >-
   Structural schema for the scenario tagging profile of ASAM OpenLABEL v1.0.0
   (spec section 8). Fully models the tagging sections (openlabel root, metadata,
-  ontologies, tags, tag_data) and constrains tag.type values to the openlabel-tagging
-  ontology vocabulary. The labelling sections (objects, frames, actions, ...) are
-  accepted but deliberately left unvalidated, so that a file combining tags with
-  labelling data still validates (spec 8.1.1). A valid result from this schema
-  therefore does not mean the whole document was checked: every section it
-  accepts without checking is typed as UncheckedSection, so a consumer can list the
-  skipped sections by collecting the properties of openlabel whose schema
-  references "#/$defs/UncheckedSection".
+  ontologies, tags, tag_data, resources) and constrains tag.type values to the
+  openlabel-tagging ontology vocabulary. The labelling sections (objects, frames,
+  actions, ...) are accepted but deliberately left unvalidated, so that a file
+  combining tags with labelling data still validates (spec 8.1.1). A valid result
+  from this schema therefore does not mean the whole document was checked: every
+  section it accepts without checking is typed by a definition of the Unchecked
+  family (UncheckedSection, UncheckedUidEntry, UncheckedFrameEntry), so a consumer
+  can list the skipped sections by collecting the properties of openlabel whose
+  schema references a "#/$defs/Unchecked..." definition.
 version: "1.1.0-alpha"
 license: https://www.eclipse.org/legal/epl-2.0/
 
@@ -44,6 +46,7 @@ default_prefix: openlabel_schema
 
 imports:
   - linkml:types
+  - tag-types
 
 # =============================================================================
 # Classes
@@ -69,7 +72,7 @@ classes:
   OpenLabel:
     description: >-
       The OpenLABEL root JSON object. This profile fully validates the scenario
-      tagging sections (metadata, ontologies, tags); tags themselves carry no
+      tagging sections (metadata, ontologies, tags, resources); tags themselves carry no
       spatiotemporal or geometric constructs (spec 8.1). The labelling sections
       are accepted as unvalidated passthrough because spec 8.1.1 allows a
       labelling instance to be used as the raw data for tagging, so a conformant
@@ -96,14 +99,22 @@ classes:
         description: >-
           Tags keyed by UID. Each entry specifies the tag type (from an
           ontology) and optional tag_data with values.
+      resources:
+        range: ResourceEntry
+        multivalued: true
+        inlined: true
+        inlined_as_list: false
+        description: >-
+          External resources keyed by UID, each a string such as a file name or
+          URL. A tag's resource_uid refers to elements of these resources.
 
       # -- Labelling sections: accepted, deliberately not validated here -------
-      # These are the remaining 10 properties of ASAM's "openlabel" object.
+      # These are the remaining 9 properties of ASAM's "openlabel" object.
       # ASAM declares openlabel with "additionalProperties": false, so this
       # profile must enumerate them to stay a refinement rather than a
       # restriction: omitting them would reject a conformant file that carries
-      # tags alongside labelling data (spec 8.1.1). They are ranged on UncheckedSection
-      # because validating them is the job of a full labelling profile, not of
+      # tags alongside labelling data (spec 8.1.1). They are ranged on the Unchecked
+      # family because validating them is the job of a full labelling profile, not of
       # a tagging profile. A validator SHOULD report their presence so that
       # "valid" is never mistaken for "fully checked".
       objects:
@@ -150,12 +161,6 @@ classes:
         range: UncheckedSection
         inlined: true
         description: Labelling section, outside this profile's scope.
-      resources:
-        range: UncheckedUidEntry
-        multivalued: true
-        inlined: true
-        inlined_as_list: false
-        description: Labelling section, outside this profile's scope.
       frame_intervals:
         range: UncheckedSection
         # Must be multivalued: ASAM types frame_intervals as an array, and
@@ -186,15 +191,16 @@ classes:
       `["null","boolean","object","number","string"]` and is therefore unsound
       here. See REFINEMENT_PROOF.md.
 
-      A reference to this definition is the marker that distinguishes
-      "accepted" from "validated": a consumer that reports a document valid
-      should also report which of its sections resolved to UncheckedSection, so
-      that "valid" is never read as "fully checked".
+      A reference to this definition, or to UncheckedUidEntry or
+      UncheckedFrameEntry, is the marker that distinguishes "accepted" from
+      "validated": a consumer that reports a document valid should also report
+      which of its sections resolved to the Unchecked family, so that "valid" is
+      never read as "fully checked".
 
   UncheckedUidEntry:
     description: >-
       A passthrough entry in a UID-keyed OpenLABEL section (objects, contexts,
-      actions, events, relations, resources). The VALUE is deliberately not
+      actions, events, relations). The VALUE is deliberately not
       validated here, but the KEY is: ASAM constrains these dict keys to a
       numeric UID or a UUID and closes the object, so accepting an arbitrary
       key would make this profile accept documents ASAM rejects.
@@ -234,11 +240,11 @@ classes:
   Metadata:
     description: >-
       Metadata about the annotation file. The schema_version is mandatory.
-    # ASAM declares metadata with "additionalProperties": true (spec 9, metadata
-    # definition): it is the file format's designated extension point, and real
-    # producers put toolchain metadata (ScenarioId, OpenXAvailability, Entities,
-    # ...) next to the ASAM-defined keys. Closing it would reject ASAM-conformant
-    # files, which no refinement of the format may do.
+    # ASAM's JSON Schema declares metadata with "additionalProperties": true: it
+    # is the file format's designated extension point, and real producers put
+    # toolchain metadata (ScenarioId, OpenXAvailability, Entities, ...) next to
+    # the ASAM-defined keys. Closing it would reject those producers' files, so
+    # unlike the data entries (num, vec, text, boolean), metadata stays open.
     extra_slots:
       allowed: true
     attributes:
@@ -503,6 +509,22 @@ classes:
   # ---------------------------------------------------------------------------
   # ResourceUid - external resource references
   # ---------------------------------------------------------------------------
+  ResourceEntry:
+    description: >-
+      An external resource used by this annotation (ASAM resources): a map keyed
+      by a numeric/UUID id whose value is a string that names the resource, such
+      as a file name or URL.
+    attributes:
+      uid:
+        identifier: true
+        range: string
+        pattern: "^(-?[0-9]+|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$"
+        description: Resource key (numeric UID or UUID).
+      resource:
+        range: string
+        required: true
+        description: The external resource, e.g. a file name or URL.
+
   ResourceUid:
     description: >-
       A reference to an element in an external resource (ASAM resource_uid): a map
@@ -562,556 +584,3 @@ enums:
       value:
         description: The entry represents a single value.
 
-
-  TagTypeEnum:
-    description: >-
-      All valid values for the tag.type field in ASAM OpenLABEL v1 format
-      files. Derived from the openlabel-tagging ontology vocabulary (classes,
-      enums, slots). AUTO-GENERATED — do not edit manually.
-    permissible_values:
-      # --- Tag classes (hierarchy nodes) ---
-      AdminTag:
-        description: Tag class (hierarchy node)
-      Behaviour:
-        description: Tag class (hierarchy node)
-      BehaviourMotion:
-        description: Tag class (hierarchy node)
-      DrivableAreaGeometry:
-        description: Tag class (hierarchy node)
-      DrivableAreaLaneSpecification:
-        description: Tag class (hierarchy node)
-      DrivableAreaSigns:
-        description: Tag class (hierarchy node)
-      DrivableAreaSurface:
-        description: Tag class (hierarchy node)
-      DynamicElementsSubjectVehicle:
-        description: Tag class (hierarchy node)
-      DynamicElementsTraffic:
-        description: Tag class (hierarchy node)
-      EnvironmentConnectivity:
-        description: Tag class (hierarchy node)
-      EnvironmentIllumination:
-        description: Tag class (hierarchy node)
-      EnvironmentWeather:
-        description: Tag class (hierarchy node)
-      GeometryHorizontal:
-        description: Tag class (hierarchy node)
-      GeometryLongitudinal:
-        description: Tag class (hierarchy node)
-      IlluminationDay:
-        description: Tag class (hierarchy node)
-      Odd:
-        description: Tag class (hierarchy node)
-      OddDynamicElements:
-        description: Tag class (hierarchy node)
-      OddEnvironment:
-        description: Tag class (hierarchy node)
-      OddScenery:
-        description: Tag class (hierarchy node)
-      RoadUser:
-        description: Tag class (hierarchy node)
-      Scenario:
-        description: Tag class (hierarchy node)
-      SceneryDrivableArea:
-        description: Tag class (hierarchy node)
-      SceneryJunction:
-        description: Tag class (hierarchy node)
-      Tag:
-        description: Tag class (hierarchy node)
-      # --- Administration tag properties ---
-      licenseURI:
-        description: Administration tag property
-      ownerEmail:
-        description: Administration tag property
-      ownerName:
-        description: Administration tag property
-      ownerURL:
-        description: Administration tag property
-      scenarioCreatedDate:
-        description: Administration tag property
-      scenarioDefinition:
-        description: Administration tag property
-      scenarioDefinitionLanguageURI:
-        description: Administration tag property
-      scenarioDescription:
-        description: Administration tag property
-      scenarioName:
-        description: Administration tag property
-      scenarioParentReference:
-        description: Administration tag property
-      scenarioUniqueReference:
-        description: Administration tag property
-      scenarioVersion:
-        description: Administration tag property
-      scenarioVisualisationURL:
-        description: Administration tag property
-      # --- Boolean flag tags (ODD/Behaviour) ---
-      DaySunElevation:
-        description: Boolean ODD/Behaviour flag
-      HorizontalCurves:
-        description: Boolean ODD/Behaviour flag
-      HorizontalStraights:
-        description: Boolean ODD/Behaviour flag
-      IlluminationCloudiness:
-        description: Boolean ODD/Behaviour flag
-      LaneSpecificationDimensions:
-        description: Boolean ODD/Behaviour flag
-      LaneSpecificationLaneCount:
-        description: Boolean ODD/Behaviour flag
-      LaneSpecificationMarking:
-        description: Boolean ODD/Behaviour flag
-      LongitudinalDownSlope:
-        description: Boolean ODD/Behaviour flag
-      LongitudinalLevelPlane:
-        description: Boolean ODD/Behaviour flag
-      LongitudinalUpSlope:
-        description: Boolean ODD/Behaviour flag
-      MotionAccelerate:
-        description: Boolean ODD/Behaviour flag
-      MotionAway:
-        description: Boolean ODD/Behaviour flag
-      MotionCross:
-        description: Boolean ODD/Behaviour flag
-      MotionCutIn:
-        description: Boolean ODD/Behaviour flag
-      MotionCutOut:
-        description: Boolean ODD/Behaviour flag
-      MotionDecelerate:
-        description: Boolean ODD/Behaviour flag
-      MotionDrive:
-        description: Boolean ODD/Behaviour flag
-      MotionLaneChangeLeft:
-        description: Boolean ODD/Behaviour flag
-      MotionLaneChangeRight:
-        description: Boolean ODD/Behaviour flag
-      MotionOvertake:
-        description: Boolean ODD/Behaviour flag
-      MotionReverse:
-        description: Boolean ODD/Behaviour flag
-      MotionRun:
-        description: Boolean ODD/Behaviour flag
-      MotionSlide:
-        description: Boolean ODD/Behaviour flag
-      MotionStop:
-        description: Boolean ODD/Behaviour flag
-      MotionTowards:
-        description: Boolean ODD/Behaviour flag
-      MotionTurn:
-        description: Boolean ODD/Behaviour flag
-      MotionTurnLeft:
-        description: Boolean ODD/Behaviour flag
-      MotionTurnRight:
-        description: Boolean ODD/Behaviour flag
-      MotionUTurn:
-        description: Boolean ODD/Behaviour flag
-      MotionWalk:
-        description: Boolean ODD/Behaviour flag
-      RoadUserAnimal:
-        description: Boolean ODD/Behaviour flag
-      SubjectVehicleSpeed:
-        description: Boolean ODD/Behaviour flag
-      TrafficAgentDensity:
-        description: Boolean ODD/Behaviour flag
-      TrafficAgentType:
-        description: Boolean ODD/Behaviour flag
-      TrafficFlowRate:
-        description: Boolean ODD/Behaviour flag
-      TrafficSpecialVehicle:
-        description: Boolean ODD/Behaviour flag
-      TrafficVolume:
-        description: Boolean ODD/Behaviour flag
-      WeatherRain:
-        description: Boolean ODD/Behaviour flag
-      WeatherSnow:
-        description: Boolean ODD/Behaviour flag
-      WeatherWind:
-        description: Boolean ODD/Behaviour flag
-      # --- Enum category tags (slot names with enum ranges) ---
-      BehaviourCommunication:
-        description: Enum category tag (takes values from BehaviourCommunicationEnum)
-      ConnectivityCommunication:
-        description: Enum category tag (takes values from ConnectivityCommunicationEnum)
-      ConnectivityPositioning:
-        description: Enum category tag (takes values from ConnectivityPositioningEnum)
-      DaySunPosition:
-        description: Enum category tag (takes values from DaySunPositionEnum)
-      DrivableAreaEdge:
-        description: Enum category tag (takes values from DrivableAreaEdgeEnum)
-      DrivableAreaSurfaceCondition:
-        description: Enum category tag (takes values from DrivableAreaSurfaceConditionEnum)
-      DrivableAreaSurfaceFeature:
-        description: Enum category tag (takes values from DrivableAreaSurfaceFeatureEnum)
-      DrivableAreaSurfaceType:
-        description: Enum category tag (takes values from DrivableAreaSurfaceTypeEnum)
-      DrivableAreaType:
-        description: Enum category tag (takes values from DrivableAreaTypeEnum)
-      EnvironmentParticulates:
-        description: Enum category tag (takes values from EnvironmentParticulatesEnum)
-      GeometryTransverse:
-        description: Enum category tag (takes values from GeometryTransverseEnum)
-      IlluminationArtificial:
-        description: Enum category tag (takes values from IlluminationArtificialEnum)
-      IlluminationLowLight:
-        description: Enum category tag (takes values from IlluminationLowLightEnum)
-      JunctionIntersection:
-        description: Enum category tag (takes values from JunctionIntersectionEnum)
-      JunctionRoundabout:
-        description: Enum category tag (takes values from JunctionRoundaboutEnum)
-      LaneSpecificationTravelDirection:
-        description: Enum category tag (takes values from LaneSpecificationTravelDirectionEnum)
-      LaneSpecificationType:
-        description: Enum category tag (takes values from LaneSpecificationTypeEnum)
-      RainType:
-        description: Enum category tag (takes values from RainTypeEnum)
-      RoadUserHuman:
-        description: Enum category tag (takes values from RoadUserHumanEnum)
-      RoadUserVehicle:
-        description: Enum category tag (takes values from RoadUserVehicleEnum)
-      SceneryFixedStructure:
-        description: Enum category tag (takes values from SceneryFixedStructureEnum)
-      ScenerySpecialStructure:
-        description: Enum category tag (takes values from ScenerySpecialStructureEnum)
-      SceneryTemporaryStructure:
-        description: Enum category tag (takes values from SceneryTemporaryStructureEnum)
-      SceneryZone:
-        description: Enum category tag (takes values from SceneryZoneEnum)
-      SignsInformation:
-        description: Enum category tag (takes values from SignsInformationEnum)
-      SignsRegulatory:
-        description: Enum category tag (takes values from SignsRegulatoryEnum)
-      SignsWarning:
-        description: Enum category tag (takes values from SignsWarningEnum)
-      trafficAgentTypeValue:
-        description: Enum category tag (takes values from TrafficAgentTypeEnum)
-      # --- BehaviourCommunicationEnum ---
-      CommunicationHeadlightFlash:
-        description: "Flash headlight."
-      CommunicationHorn:
-        description: "Sound horn."
-      CommunicationSignalEmergency:
-        description: "Signal emergency."
-      CommunicationSignalHazard:
-        description: "Signal hazard."
-      CommunicationSignalLeft:
-        description: "Signal left."
-      CommunicationSignalRight:
-        description: "Signal right."
-      CommunicationSignalSlowing:
-        description: "Signal slowing."
-      CommunicationWave:
-        description: "Wave."
-      # --- ConnectivityCommunicationEnum ---
-      CommunicationV2i:
-        description: "Vehicle to infrastructure communication (V2I)."
-      CommunicationV2v:
-        description: "Vehicle to vehicle communication (V2V)."
-      V2iCellular:
-        description: "V2I via cellular network."
-      V2iSatellite:
-        description: "V2I via satellite."
-      V2iWifi:
-        description: "V2I via WiFi."
-      V2vCellular:
-        description: "V2V via cellular network."
-      V2vSatellite:
-        description: "V2V via satellite."
-      V2vWifi:
-        description: "V2V via WiFi."
-      # --- ConnectivityPositioningEnum ---
-      PositioningGalileo:
-        description: "Galileo."
-      PositioningGlonass:
-        description: "GLObal NAvigation Satellite System (GLONASS)."
-      PositioningGps:
-        description: "Global Positioning System (GPS)."
-      # --- DaySunPositionEnum ---
-      SunPositionBehind:
-        description: "Sun behind."
-      SunPositionFront:
-        description: "Sun in front."
-      SunPositionLeft:
-        description: "Sun on the left."
-      SunPositionRight:
-        description: "Sun on the right."
-      # --- DrivableAreaEdgeEnum ---
-      EdgeLineMarkers:
-        description: "Line markers."
-      EdgeNone:
-        description: "None."
-      EdgeShoulderGrass:
-        description: "Shoulder (grass)."
-      EdgeShoulderPavedOrGravel:
-        description: "Shoulder (paved or gravel)."
-      EdgeSolidBarriers:
-        description: "Solid barriers (e.g. grating, rails, curb, cones)."
-      EdgeTemporaryLineMarkers:
-        description: "Temporary line markers."
-      # --- DrivableAreaSurfaceConditionEnum ---
-      SurfaceConditionContamination:
-        description: "Surface contamination."
-      SurfaceConditionFlooded:
-        description: "Flooded roadways."
-      SurfaceConditionIcy:
-        description: "Icy."
-      SurfaceConditionMirage:
-        description: "Mirage effect on the drivable area surface."
-      SurfaceConditionSnow:
-        description: "Snow on drivable area."
-      SurfaceConditionStandingWater:
-        description: "Standing water."
-      SurfaceConditionWet:
-        description: "Wet road."
-      # --- DrivableAreaSurfaceFeatureEnum ---
-      SurfaceFeatureCrack:
-        description: "Cracks."
-      SurfaceFeaturePothole:
-        description: "Potholes."
-      SurfaceFeatureRut:
-        description: "Ruts."
-      SurfaceFeatureSwell:
-        description: "Swells."
-      # --- DrivableAreaSurfaceTypeEnum ---
-      SurfaceTypeLoose:
-        description: "Loose (e.g. gravel, earth, sand)."
-      SurfaceTypeSegmented:
-        description: "Segmented (e.g. concrete slabs, granite setts, cobblestones)."
-      SurfaceTypeUniform:
-        description: "Uniform (e.g. asphalt)."
-      # --- DrivableAreaTypeEnum ---
-      MotorwayManaged:
-        description: "Managed motorways."
-      MotorwayUnmanaged:
-        description: "Unmanaged motorways."
-      RoadTypeDistributor:
-        description: "Distributor roads."
-      RoadTypeMinor:
-        description: "Minor roads."
-      RoadTypeMotorway:
-        description: "Motorways."
-      RoadTypeParking:
-        description: "Parking."
-      RoadTypeRadial:
-        description: "Radial roads."
-      RoadTypeShared:
-        description: "Shared space."
-      RoadTypeSlip:
-        description: "Slip roads."
-      # --- EnvironmentParticulatesEnum ---
-      ParticulatesDust:
-        description: "Sand and dust."
-      ParticulatesMarine:
-        description: "Marine spray in coastal areas."
-      ParticulatesPollution:
-        description: "Smoke and pollution."
-      ParticulatesVolcanic:
-        description: "Volcanic ash."
-      ParticulatesWater:
-        description: "Non-precipitating water droplets or ice crystals (i.e. mist/fog)."
-      # --- GeometryTransverseEnum ---
-      TransverseBarriers:
-        description: "Barriers on edges."
-      TransverseDivided:
-        description: "Divided."
-      TransverseLanesTogether:
-        description: "Types of lanes together."
-      TransversePavements:
-        description: "Pavements."
-      TransverseUndivided:
-        description: "Undivided."
-      # --- IlluminationArtificialEnum ---
-      ArtificialStreetLighting:
-        description: "Streetlights."
-      ArtificialVehicleLighting:
-        description: "Oncoming vehicle lights."
-      # --- IlluminationLowLightEnum ---
-      LowLightAmbient:
-        description: "Low ambient lighting."
-      LowLightNight:
-        description: "Night."
-      # --- JunctionIntersectionEnum ---
-      IntersectionCrossroad:
-        description: "Crossroads."
-      IntersectionGradeSeperated:
-        description: "Grade separated."
-      IntersectionStaggered:
-        description: "Staggered."
-      IntersectionTJunction:
-        description: "T-Junctions."
-      IntersectionYJunction:
-        description: "Y-Junction."
-      # --- JunctionRoundaboutEnum ---
-      RoundaboutCompact:
-        description: "Compact (signalisation unspecified)."
-      RoundaboutCompactNosignal:
-        description: "Compact non-signalised."
-      RoundaboutCompactSignal:
-        description: "Compact signalised."
-      RoundaboutDouble:
-        description: "Double (signalisation unspecified)."
-      RoundaboutDoubleNosignal:
-        description: "Double non-signalised."
-      RoundaboutDoubleSignal:
-        description: "Double signalised."
-      RoundaboutLarge:
-        description: "Large (signalisation unspecified)."
-      RoundaboutLargeNosignal:
-        description: "Large non-signalised."
-      RoundaboutLargeSignal:
-        description: "Large signalised."
-      RoundaboutMini:
-        description: "Mini (signalisation unspecified)."
-      RoundaboutMiniNosignal:
-        description: "Mini non-signalised."
-      RoundaboutMiniSignal:
-        description: "Mini signalised."
-      RoundaboutNormal:
-        description: "Normal (signalisation unspecified)."
-      RoundaboutNormalNosignal:
-        description: "Normal non-signalised."
-      RoundaboutNormalSignal:
-        description: "Normal signalised."
-      # --- LaneSpecificationTravelDirectionEnum ---
-      TravelDirectionLeft:
-        description: "Left."
-      TravelDirectionRight:
-        description: "Right."
-      # --- LaneSpecificationTypeEnum ---
-      LaneTypeBus:
-        description: "Bus lane."
-      LaneTypeCycle:
-        description: "Cycle lane."
-      LaneTypeEmergency:
-        description: "Emergency lane."
-      LaneTypeSpecial:
-        description: "Special purpose lane."
-      LaneTypeTraffic:
-        description: "Traffic lane."
-      LaneTypeTram:
-        description: "Tram lane."
-      # --- RainTypeEnum ---
-      RainTypeConvective:
-        description: "Convective."
-      RainTypeDynamic:
-        description: "Dynamic."
-      RainTypeOrographic:
-        description: "Orographic."
-      # --- RoadUserHumanEnum ---
-      HumanAnimalRider:
-        description: "Animal rider (e.g. horse rider)."
-      HumanCyclist:
-        description: "Cyclist."
-      HumanDriver:
-        description: "Driver."
-      HumanMotorcyclist:
-        description: "Motorcyclist."
-      HumanPassenger:
-        description: "Passenger."
-      HumanPedestrian:
-        description: "Pedestrian."
-      HumanWheelchairUser:
-        description: "Wheelchair user."
-      # --- RoadUserVehicleEnum ---
-      VehicleAgricultural:
-        description: "Agricultural vehicle."
-      VehicleBus:
-        description: "Bus."
-      VehicleCar:
-        description: "Car."
-      VehicleConstruction:
-        description: "Construction vehicle."
-      VehicleCycle:
-        description: "Cycle."
-      VehicleEmergency:
-        description: "Emergency vehicle."
-      VehicleMotorcycle:
-        description: "Motorcycle."
-      VehicleTrailer:
-        description: "Trailer."
-      VehicleTruck:
-        description: "Truck."
-      VehicleVan:
-        description: "Van."
-      VehicleWheelchair:
-        description: "Wheelchair."
-      # --- SceneryFixedStructureEnum ---
-      FixedStructureBuilding:
-        description: "Buildings."
-      FixedStructureStreetFurniture:
-        description: "Street furniture (e.g. bollards)."
-      FixedStructureStreetlight:
-        description: "Street lights."
-      FixedStructureVegetation:
-        description: "Vegetation."
-      # --- ScenerySpecialStructureEnum ---
-      SpecialStructureAutoAccess:
-        description: "Automatic access control."
-      SpecialStructureBridge:
-        description: "Bridges."
-      SpecialStructurePedestrianCrossing:
-        description: "Pedestrian crossings."
-      SpecialStructureRailCrossing:
-        description: "Rail crossings."
-      SpecialStructureTollPlaza:
-        description: "Toll plaza."
-      SpecialStructureTunnel:
-        description: "Tunnels."
-      # --- SceneryTemporaryStructureEnum ---
-      TemporaryStructureConstructionDetour:
-        description: "Construction site detours."
-      TemporaryStructureRefuseCollection:
-        description: "Refuse collection."
-      TemporaryStructureRoadSignage:
-        description: "Road signage."
-      TemporaryStructureRoadWorks:
-        description: "Road works."
-      # --- SceneryZoneEnum ---
-      ZoneGeoFenced:
-        description: "GeoFenced areas."
-      ZoneInterference:
-        description: "Interference zones."
-      ZoneRegion:
-        description: "Regions or states."
-      ZoneSchool:
-        description: "School zones."
-      ZoneTrafficManagement:
-        description: "Traffic management zones."
-      # --- SignsInformationEnum ---
-      InformationSignsUniform:
-        description: "Uniform (full-time/temporary unspecified)."
-      InformationSignsUniformFullTime:
-        description: "Uniform full-time."
-      InformationSignsUniformTemporary:
-        description: "Uniform temporary."
-      InformationSignsVariable:
-        description: "Variable (full-time/temporary unspecified)."
-      InformationSignsVariableFullTime:
-        description: "Variable full-time."
-      InformationSignsVariableTemporary:
-        description: "Variable temporary."
-      # --- SignsRegulatoryEnum ---
-      RegulatorySignsUniform:
-        description: "Uniform (full-time/temporary unspecified)."
-      RegulatorySignsUniformFullTime:
-        description: "Uniform full-time."
-      RegulatorySignsUniformTemporary:
-        description: "Uniform temporary."
-      RegulatorySignsVariable:
-        description: "Variable (full-time/temporary unspecified)."
-      RegulatorySignsVariableFullTime:
-        description: "Variable full-time."
-      RegulatorySignsVariableTemporary:
-        description: "Variable temporary."
-      # --- SignsWarningEnum ---
-      WarningSignsUniform:
-        description: "Uniform."
-      WarningSignsUniformFullTime:
-        description: "Uniform full-time."
-      WarningSignsUniformTemporary:
-        description: "Uniform temporary."
-      WarningSignsVariable:
-        description: "Variable (full-time/temporary unspecified)."
-      WarningSignsVariableFullTime:
-        description: "Variable full-time."
-      WarningSignsVariableTemporary:
-        description: "Variable temporary."
-      # --- TrafficAgentTypeEnum ---

@@ -1,6 +1,6 @@
 {
    "@context": "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/",
-   "@id": "did:web:test.openlabel.net:Tag:test_comprehensive_cross_v1_to_v2",
+   "@id": "did:web:test.openlabel-tagging.net:Tag:test_comprehensive_cross_asam_v1",
    "@type": "Tag",
    "AdminTag": {
       "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -8,9 +8,9 @@
       "ownerName": "Comprehensive Test Organization GmbH",
       "ownerURL": "https://www.example.org/comprehensive-test",
       "scenarioCreatedDate": "2025-12-31T23:59:59",
-      "scenarioDefinition": "Cross-test: v1 content structure validated against v2 SHACL shapes",
+      "scenarioDefinition": "Cross-test: ASAM OpenLABEL v1.0.0 content validated against the openlabel-tagging SHACL shapes",
       "scenarioDefinitionLanguageURI": "https://www.asam.net/standards/detail/openscenario-v2/",
-      "scenarioDescription": "Tests that v1 data patterns (QuantitativeValue ranges, enum values, boolean flags) remain valid under the v2 LinkML-derived SHACL shapes.",
+      "scenarioDescription": "Tests that v1 data patterns (QuantitativeValue ranges, enum values, boolean flags) remain valid under the LinkML-derived openlabel-tagging SHACL shapes.",
       "scenarioName": "CrossTest_v1content_v2shapes",
       "scenarioParentReference": "550e8400-e29b-41d4-a716-446655440000",
       "scenarioUniqueReference": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",

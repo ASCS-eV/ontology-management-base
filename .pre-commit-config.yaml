@@ -16,15 +16,15 @@ repos:
         types: [python]
         pass_filenames: true
 
-      # Must run before generate-linkml: it writes the structural schema's TagTypeEnum
-      # from the semantic model, and generation then reads that schema. Reversing the
-      # order would generate artifacts from a stale enum.
+      # Must run before generate-linkml: it derives tag-types.yaml (TagTypeEnum) from
+      # the semantic model, and the structural schema that generation reads imports
+      # it. Reversing the order would generate artifacts from a stale enum.
       - id: sync-tag-type-enum
-        name: Sync TagTypeEnum to structural schema
+        name: Generate the OpenLABEL TagTypeEnum
         entry: python scripts/sync_tag_type_enum.py
         language: system
         pass_filenames: false
-        files: ^linkml/openlabel-tagging/openlabel-tagging\.yaml$
+        files: ^linkml/openlabel-tagging/(openlabel-tagging|openlabel-tagging-schema|tag-types)\.yaml$
         stages: [pre-commit]
 
       - id: generate-linkml
@@ -62,7 +62,7 @@ repos:
         entry: python -m omb.utils.registry_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
         stages: [pre-commit]
 
       - id: update-properties
@@ -70,7 +70,7 @@ repos:
         entry: python -m omb.utils.properties_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
         stages: [pre-commit]
 
       - id: update-readme
@@ -78,7 +78,7 @@ repos:
         entry: python -m omb.utils.readme_updater
         language: system
         pass_filenames: false
-        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld|schema\.json)$
+        files: ^artifacts/.*\.(owl\.ttl|shacl\.ttl|context\.jsonld)$
         stages: [pre-commit]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
