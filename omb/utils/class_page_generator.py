@@ -49,6 +49,7 @@ from urllib.parse import quote
 import rdflib
 from rdflib import OWL, RDF, RDFS, Namespace, URIRef
 
+from omb.core.iri_utils import VERSION_SEGMENT
 from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
 
@@ -212,7 +213,7 @@ def _extract_version_info(owl_graph: rdflib.Graph) -> str:
         version_iri_str = str(ontology)
 
     if version_iri_str:
-        matches = re.findall(r"/(v\\d+(?:\\.\\d+)*)/?", version_iri_str)
+        matches = re.findall(rf"/({VERSION_SEGMENT})(?=/|#|$)", version_iri_str)
         if matches:
             return _normalize_version_info(matches[-1])
 
@@ -221,8 +222,8 @@ def _extract_version_info(owl_graph: rdflib.Graph) -> str:
 
 def extract_domain_from_iri(iri: str) -> Optional[str]:
     """Extract domain name from IRI."""
-    # Match patterns like /manifest/v5/ or /scenario/v5/
-    match = re.search(r"/([a-z-]+)/v\d+/?", iri, re.IGNORECASE)
+    # Match patterns like /manifest/v5/ or /openlabel/v1.1.0-alpha/
+    match = re.search(rf"/([a-z-]+)/{VERSION_SEGMENT}(?=/|#|$)", iri, re.IGNORECASE)
     if match:
         return match.group(1)
 
