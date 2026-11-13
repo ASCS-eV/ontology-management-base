@@ -53,6 +53,11 @@ import sys
 from typing import Dict, Optional
 from urllib.parse import unquote
 
+#: Regular expression for the version segment of an ontology IRI: ``v6`` or the
+#: SemVer form ``v1.1.0-alpha`` (major[.minor[.patch]][-pre-release]). Resolving an
+#: IRI with a SemVer segment also needs w3id redirect rules that accept it.
+VERSION_SEGMENT = r"v\d+(?:\.\d+){0,2}(?:-[0-9A-Za-z.-]+)?"
+
 
 def get_local_name(uri: str, lowercase: bool = False) -> str:
     """
@@ -305,9 +310,9 @@ def iri_to_domain_hint(iri: str) -> Optional[str]:
     # Remove trailing slash/hash for parsing
     clean = iri.rstrip("/#")
 
-    # Pattern: .../domain/vN/ or .../domain/
+    # Pattern: .../domain/<version>/ or .../domain/
     # Match version pattern
-    version_match = re.search(r"/([^/]+)/v\d+/?$", iri)
+    version_match = re.search(rf"/([^/]+)/{VERSION_SEGMENT}/?$", iri)
     if version_match:
         return version_match.group(1)
 
@@ -316,7 +321,7 @@ def iri_to_domain_hint(iri: str) -> Optional[str]:
     if parts:
         last = parts[-1]
         # Skip version numbers
-        if not re.match(r"^v\d+$", last):
+        if not re.fullmatch(VERSION_SEGMENT, last):
             return last
 
     return None
