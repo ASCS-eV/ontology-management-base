@@ -949,9 +949,9 @@ class ShaclValidator:
                 )
             else:
                 # No shapes AND no types: the input contributed no RDF at all, so
-                # there is nothing for --artifacts to route. Saying "register the
-                # artifacts that define the supplied types" here sent users after a
-                # fix that cannot work. The usual cause is a document that is not
+                # there is nothing for --artifacts to route, and asking for the
+                # artifacts that define the supplied types would point at a fix
+                # that cannot work. The usual cause is a document that is not
                 # JSON-LD -- it declares no @context/@type -- such as a raw ASAM
                 # OpenLABEL file, whose format is described by a JSON Schema rather
                 # than by SHACL.
