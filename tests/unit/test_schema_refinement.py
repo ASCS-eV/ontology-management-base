@@ -3,21 +3,27 @@
 
 Asserts, for every `proof_spec.yaml` under linkml/, that the LinkML-generated
 JSON Schema is a *sound refinement* of its normative reference JSON Schema:
-everything the LinkML schema accepts, the reference schema also accepts —
-except for the bounded, declared relaxations (Λ) named in the spec.
+everything the LinkML schema accepts, the reference schema also accepts --
+except for the bounded, declared relaxations (Λ) named in the spec, each bound
+to the locations it may occur at.
 
-This is the machine-checked, ontology-independent counterpart to the curated
-examples in tests/unit/test_openlabel_schema.py::TestFunctionalEquivalence.
-The prover (scripts/schema_refinement_prover.py) derives scope by $ref
-reachability, walks both schemas for a structural gap table, and runs a
-differential oracle over a mutation + property-based corpus.
+This is the machine-checked counterpart to the curated examples in
+tests/unit/test_openlabel_schema.py::TestFunctionalEquivalence. The prover
+(scripts/schema_refinement_prover.py) derives scope by $ref reachability, walks
+both schemas for a structural gap table, and runs a differential oracle over a
+mutation + property-based corpus. Its own mechanics are unit-tested in
+tests/unit/test_schema_refinement_prover.py.
 """
 
+import copy
+import json
 import os
 import sys
+from functools import cache
 from pathlib import Path
 
 import pytest
+import yaml
 
 from omb.core.constants import ASAM_SUBMODULE_HINT
 
@@ -25,7 +31,6 @@ ROOT_DIR = Path(__file__).parent.parent.parent.resolve()
 sys.path.insert(0, str(ROOT_DIR / "scripts"))
 
 import schema_refinement_prover as prover  # noqa: E402
-import yaml  # noqa: E402
 
 # The property-based corpus makes this suite minutes-scale; mark it slow so a
 # fast lane (`pytest -m 'not slow'`) can skip it without weakening the gate.
@@ -33,10 +38,11 @@ pytestmark = pytest.mark.slow
 
 # Every migration proof spec in the repository is gated.
 PROOF_SPECS = sorted((ROOT_DIR / "linkml").glob("*/proof_spec.yaml"))
+OPENLABEL_SPEC = ROOT_DIR / "linkml" / "openlabel-tagging" / "proof_spec.yaml"
 
 
-def _prove(spec_path: Path) -> prover.ProofReport:
-    """Run the prover for *spec_path*, or skip/fail when the reference is absent.
+def _spec(spec_path: Path) -> dict:
+    """Load *spec_path*, or skip/fail when its reference schema is absent.
 
     The normative reference schema lives in a ~260 MB submodule that the cheap
     test matrix deliberately does not check out, so skipping is right there. The
@@ -54,41 +60,38 @@ def _prove(spec_path: Path) -> prover.ProofReport:
                 f"{ASAM_SUBMODULE_HINT}"
             )
         pytest.skip(f"{reference} not checked out. {ASAM_SUBMODULE_HINT}")
-    return prover.prove(spec, ROOT_DIR)
+    return spec
 
 
-@pytest.fixture(scope="module", params=PROOF_SPECS, ids=lambda p: p.parent.name)
-def report(request) -> prover.ProofReport:
-    return _prove(request.param)
+@cache
+def _report(spec_path: Path) -> prover.ProofReport:
+    """The proof for *spec_path*, computed once per test session (~1 min)."""
+    return prover.prove(_spec(spec_path), ROOT_DIR)
+
+
+@pytest.fixture(params=PROOF_SPECS, ids=lambda p: p.parent.name)
+def spec_path(request) -> Path:
+    return request.param
+
+
+@pytest.fixture
+def report(spec_path: Path) -> prover.ProofReport:
+    return _report(spec_path)
 
 
 def test_specs_exist() -> None:
     """At least the OpenLABEL scenario-tagging profile must declare a proof spec."""
     assert PROOF_SPECS, "no */proof_spec.yaml found under linkml/"
-    assert any(p.parent.name == "openlabel-tagging" for p in PROOF_SPECS)
+    assert OPENLABEL_SPEC in PROOF_SPECS
 
 
 class TestRefinementProof:
     """The core scientific claim: L is a sound refinement of A within scope."""
 
-    # Known-failing gate, tracked rather than hidden. The property-based corpus
-    # (hypothesis-jsonschema) finds ~30 instances LinkML accepts and ASAM rejects.
-    # Root cause is in the generator, not this model: jsonschemagen appends
-    # {"type": "null"} on the inlined-dict additionalProperties path
-    # (jsonschemagen.py ~L1147) and in _ref() when a slot is optional (~L325),
-    # both WITHOUT consulting self.include_null -- so `--no-include-null`, which
-    # this domain already sets in jsonschema.genopts, is silently ignored there.
-    # Two of the three original causes are fixed in the model (open-object
-    # passthrough, enforced key patterns); this one needs a fork fix.
-    # non-strict: it must start passing silently once the generator is fixed.
-    @pytest.mark.xfail(
-        reason="LinkML jsonschemagen ignores include_null on the inlined-dict "
-        "and optional-$ref paths; see linkml/openlabel-tagging/REFINEMENT_PROOF.md",
-        strict=False,
-    )
     def test_soundness_no_undisclosed_looser(self, report: prover.ProofReport) -> None:
         """Soundness corpus (L-grammar + mutations): nothing L accepts may be
-        rejected by A for an undeclared reason. One counterexample refutes it."""
+        rejected by A for an undeclared reason or at an undeclared location.
+        One counterexample refutes it."""
         offenders = report.soundness.linkml_looser
         assert not offenders, (
             f"{report.name}: {len(offenders)} instance(s) accepted by LinkML but "
@@ -109,50 +112,62 @@ class TestRefinementProof:
             f"{report.name}: in-scope defs with no LinkML counterpart: {report.unmapped}"
         )
 
-    def test_all_structural_looseness_is_declared(
-        self, report: prover.ProofReport
-    ) -> None:
-        """Every LOOSER row in the structural gap table must belong to a declared
-        looseness category (Λ); an undeclared one is a soundness gap."""
-        undisclosed = report.undisclosed_structural_looser
-        assert not undisclosed, (
-            f"{report.name}: undisclosed structural looseness: "
-            f"{[(g.ref_def, g.aspect) for g in undisclosed]}"
+    def test_no_structural_looser_rows(self, report: prover.ProofReport) -> None:
+        """No gap row may say L is looser than A. A row describes a whole
+        definition, so no location-bound declaration can cover it."""
+        rows = report.structural_looser
+        assert not rows, (
+            f"{report.name}: structural looseness: {[(g.ref_def, g.aspect) for g in rows]}"
         )
 
-    # Known-failing gate, tracked rather than hidden. The property-based corpus
-    # (hypothesis-jsonschema) finds ~30 instances LinkML accepts and ASAM rejects.
-    # Root cause is in the generator, not this model: jsonschemagen appends
-    # {"type": "null"} on the inlined-dict additionalProperties path
-    # (jsonschemagen.py ~L1147) and in _ref() when a slot is optional (~L325),
-    # both WITHOUT consulting self.include_null -- so `--no-include-null`, which
-    # this domain already sets in jsonschema.genopts, is silently ignored there.
-    # Two of the three original causes are fixed in the model (open-object
-    # passthrough, enforced key patterns); this one needs a fork fix.
-    # non-strict: it must start passing silently once the generator is fixed.
-    @pytest.mark.xfail(
-        reason="LinkML jsonschemagen ignores include_null on the inlined-dict "
-        "and optional-$ref paths; see linkml/openlabel-tagging/REFINEMENT_PROOF.md",
-        strict=False,
-    )
-    def test_verdict_proven(self, report: prover.ProofReport) -> None:
-        """End-to-end: the migration is a proven sound refinement."""
-        assert report.sound, f"{report.name}: verdict = {report.verdict()}"
+    def test_every_declared_relaxation_is_needed(
+        self, report: prover.ProofReport
+    ) -> None:
+        """A declaration nothing needs still widens what the gate accepts. When
+        its cause is fixed (e.g. the generator stops emitting the null branch),
+        this fails until the declaration is removed."""
+        assert not report.unobserved_relaxations
 
-    def test_corpus_actually_ran(self, report: prover.ProofReport) -> None:
-        """Guard against a vacuous proof: the differential corpus must be non-trivial
-        and must contain agreement (both-accept) evidence."""
-        assert report.soundness.total >= 50
+    def test_verdict_proven(self, report: prover.ProofReport) -> None:
+        """End-to-end: a proven sound refinement whose declared relaxations are
+        all needed."""
+        assert report.passes, f"{report.name}: verdict = {report.verdict()}"
+
+    def test_corpus_is_complete(
+        self, spec_path: Path, report: prover.ProofReport
+    ) -> None:
+        """Guard against a vacuous or quietly shrunken proof: every requested
+        property-based instance was generated and the seeds were mutated."""
+        budget = _spec(spec_path).get("hypothesis", {})
+        sizes = report.corpus_sizes
+        assert sizes["seeds"] > 0
+        assert sizes["mutations"] > sizes["seeds"]
+        assert sizes["hypothesis_soundness"] == budget.get("soundness", 0)
+        assert sizes["hypothesis_completeness"] == budget.get("completeness", 0)
         assert report.soundness.agree_accept > 0
 
+    def test_committed_report_is_current(
+        self, spec_path: Path, report: prover.ProofReport
+    ) -> None:
+        """REFINEMENT_PROOF.md is what the prover produces today."""
+        committed = spec_path.parent / "REFINEMENT_PROOF.md"
+        spec = _spec(spec_path)
+        allowed = prover.parse_relaxations(spec.get("allow_looseness"))
+        expected = prover.report_markdown(
+            report, allowed, spec.get("justifications", {})
+        )
+        assert committed.read_text(encoding="utf-8") == expected, (
+            f"{committed} is stale. Regenerate: python "
+            f"scripts/schema_refinement_prover.py --spec {spec_path} --out {committed}"
+        )
 
-class TestOpenLabelScopeProjection:
-    """Pin the OpenLABEL scenario-tagging scope so accidental scope drift is caught."""
 
-    @pytest.fixture(scope="class")
-    @classmethod
-    def ol(cls) -> prover.ProofReport:
-        return _prove(ROOT_DIR / "linkml" / "openlabel-tagging" / "proof_spec.yaml")
+class TestOpenLabelProof:
+    """Pin the OpenLABEL scenario-tagging proof so scope drift is caught."""
+
+    @pytest.fixture
+    def ol(self) -> prover.ProofReport:
+        return _report(OPENLABEL_SPEC)
 
     def test_in_scope_defs(self, ol: prover.ProofReport) -> None:
         assert set(ol.in_scope) == {
@@ -162,6 +177,7 @@ class TestOpenLabelScopeProjection:
             "num",
             "ontologies",
             "resource_uid",
+            "resources",
             "tag",
             "tag_data",
             "text",
@@ -174,24 +190,25 @@ class TestOpenLabelScopeProjection:
         for d in ("object", "frame", "stream", "bbox", "cuboid", "poly2d", "transform"):
             assert d in out, f"{d} should be out of tagging scope"
 
-    def test_disclosed_looseness_is_bounded(self, ol: prover.ProofReport) -> None:
-        """Looseness is limited to known, declared LinkML relaxations.
+    def test_key_patterns_are_enforced(self) -> None:
+        """key_pattern is never declared: every UID-keyed section enforces ASAM's
+        key patterns, so an instance accepted on a bad key refutes the proof."""
+        spec = _spec(OPENLABEL_SPEC)
+        assert prover.KEY_PATTERN not in spec["allow_looseness"]
 
-        key_pattern IS closed for this domain: the passthrough sections are
-        modelled as key-constrained inlined dicts (UncheckedUidEntry /
-        UncheckedFrameEntry), so the generator emits ASAM's propertyNames
-        patterns instead of accepting any key.
-
-        null_optional is NOT closed, despite jsonschema.genopts passing
-        --no-include-null: jsonschemagen appends {"type": "null"} on the
-        inlined-dict and optional-$ref paths without consulting include_null.
-        It is therefore declared in the spec's allow_looseness and bounded
-        here, not silently ignored. Remove it once the generator is fixed."""
-        breakdown = ol.soundness.looseness_breakdown()
-        assert set(breakdown) <= {
-            prover.NULL_OPTIONAL,
-            prover.SIMPLE_DICT_OBJECT_FORM,
-        }
-        # key_pattern is closed for openlabel-tagging: ASAM's dict-key patterns
-        # are enforced, so no instance may be accepted on a bad key.
-        assert prover.KEY_PATTERN not in breakdown
+    def test_gate_refutes_a_dropped_key_pattern(self, tmp_path: Path) -> None:
+        """The gate has teeth on the real schemas: drop the tag key pattern from
+        the published schema and the mutation corpus alone refutes the proof."""
+        spec = _spec(OPENLABEL_SPEC)
+        loose = json.loads((ROOT_DIR / spec["linkml_schema"]).read_text("utf-8"))
+        del loose["$defs"]["OpenLabel"]["properties"]["tags"]["propertyNames"]
+        (tmp_path / "loose.json").write_text(json.dumps(loose), encoding="utf-8")
+        spec = copy.deepcopy(spec)
+        spec["linkml_schema"] = str(tmp_path / "loose.json")
+        spec["hypothesis"] = {"soundness": 0, "completeness": 0}
+        report = prover.prove(spec, ROOT_DIR)
+        assert not report.sound
+        assert any(
+            ":rekey:" in c["case"] and "['tags']" in c["case"]
+            for c in report.soundness.linkml_looser
+        )
