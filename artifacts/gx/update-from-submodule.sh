@@ -63,7 +63,7 @@ python -c "
 import glob, json, sys
 from pathlib import Path
 from rdflib import Graph
-from linkml.utils.generator import deterministic_turtle
+from diffable_rdf import deterministic_turtle
 
 def generate_and_merge(gen_cmd, hand_written_glob, output_path):
     \"\"\"Run a LinkML generator, merge with hand-written Turtle, serialize deterministically.\"\"\"
@@ -178,7 +178,7 @@ import sys
 from pathlib import Path
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import OWL, RDFS, RDF
-from linkml.utils.generator import deterministic_turtle
+from diffable_rdf import deterministic_turtle
 
 owl_path = Path(sys.argv[1])
 version = sys.argv[2]
