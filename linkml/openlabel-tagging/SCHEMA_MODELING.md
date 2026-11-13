@@ -134,16 +134,22 @@ Every relaxation in `Λ` is bound to where it may occur:
 key patterns (`pattern` on the identifier slot, emitted as `propertyNames`, plus
 `--closed` on the root), so an instance accepted on a bad key fails the gate.
 
-Regenerate after any change to the schemas or the submodule:
+Regenerate after any change to the schemas, the submodule, or the Python or
+Hypothesis version CI uses:
 
 ```bash
-python scripts/schema_refinement_prover.py --spec linkml/openlabel-tagging/proof_spec.yaml \
-    --out linkml/openlabel-tagging/REFINEMENT_PROOF.md
+just refinement-proof
 ```
+
+The property-based corpus is reproducible only under the Python and Hypothesis
+versions the report names, so the recipe generates it with the Python CI checks it with
+(3.12), in an isolated environment.
 
 The gate needs the ASAM submodule. It skips without it, and fails instead where
 `OMB_REQUIRE_PINNED_SOURCES` is set (CI's Pinned Standards Drift job, via
-`just test-asam-openlabel`). It also checks that `REFINEMENT_PROOF.md` is current. The
+`just test-asam-openlabel`). It also checks that `REFINEMENT_PROOF.md` is current; under
+other Python or Hypothesis versions that comparison is skipped, except where the pinned
+sources are required. The
 prover's own mechanics are unit-tested on synthetic schemas in
 `tests/unit/test_schema_refinement_prover.py`, which runs everywhere.
 

@@ -149,16 +149,30 @@ class TestRefinementProof:
     def test_committed_report_is_current(
         self, spec_path: Path, report: prover.ProofReport
     ) -> None:
-        """REFINEMENT_PROOF.md is what the prover produces today."""
+        """REFINEMENT_PROOF.md is what the prover produces today.
+
+        The property-based corpus is reproducible only under the Python and
+        Hypothesis versions the report names (CI's Pinned Standards Drift job,
+        and `just refinement-proof`). Under other versions the comparison would
+        measure the environment, so it is skipped -- unless the pinned sources
+        are required, where a mismatch means the report needs regenerating."""
         committed = spec_path.parent / "REFINEMENT_PROOF.md"
+        recorded = committed.read_text(encoding="utf-8")
+        if f"generated with {report.environment};" not in recorded:
+            message = (
+                f"{committed.name} was not generated with {report.environment}. "
+                "Regenerate it with `just refinement-proof`."
+            )
+            if os.environ.get("OMB_REQUIRE_PINNED_SOURCES"):
+                raise AssertionError(message)
+            pytest.skip(message)
         spec = _spec(spec_path)
         allowed = prover.parse_relaxations(spec.get("allow_looseness"))
         expected = prover.report_markdown(
             report, allowed, spec.get("justifications", {})
         )
-        assert committed.read_text(encoding="utf-8") == expected, (
-            f"{committed} is stale. Regenerate: python "
-            f"scripts/schema_refinement_prover.py --spec {spec_path} --out {committed}"
+        assert recorded == expected, (
+            f"{committed} is stale. Regenerate it with `just refinement-proof`."
         )
 
 

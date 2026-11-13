@@ -43,12 +43,14 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import platform
 import re
 import subprocess
 import sys
 from dataclasses import dataclass, field
 from fnmatch import fnmatchcase
 from pathlib import Path
+from importlib.metadata import version
 from typing import Any, Iterable
 
 import jsonschema
@@ -137,6 +139,7 @@ class ProofReport:
     unmapped: list[str]
     declared: list[str] = field(default_factory=list)
     spine: list[str] = field(default_factory=list)
+    environment: str = ""
 
     @property
     def observed_relaxations(self) -> set[str]:
@@ -1081,6 +1084,19 @@ json.dump(out, sys.stdout)
 _WORKER_TIMEOUT_SECONDS = 900
 
 
+def generation_environment() -> str:
+    """What the property-based corpus depends on besides the schemas.
+
+    Hypothesis reproduces a derandomized run only under the same Python and
+    Hypothesis versions, so a report is reproducible under the versions it
+    names, and only there."""
+    major, minor, _ = platform.python_version_tuple()
+    return (
+        f"Python {major}.{minor}, hypothesis {version('hypothesis')}, "
+        f"hypothesis-jsonschema {version('hypothesis-jsonschema')}"
+    )
+
+
 def hypothesis_corpus(schema: dict, n: int) -> list[Any]:
     """Property-based instance generation from a (projected) schema.
 
@@ -1236,6 +1252,7 @@ def prove(spec: dict, root: Path) -> ProofReport:
         gaps=gaps,
         soundness=soundness,
         completeness=completeness,
+        environment=generation_environment(),
         corpus_sizes={
             "seeds": len(seeds),
             "mutations": len(mutations) - len(seeds),
@@ -1264,6 +1281,10 @@ def report_markdown(
         "LinkML-generated JSON Schema (L) is a **sound refinement** of the normative "
         "reference JSON Schema (A) within the declared scope. Regenerate after any "
         "schema or submodule change.\n"
+    )
+    L.append(
+        f"Property-based corpus generated with {r.environment}; other versions "
+        "generate different instances.\n"
     )
     L.append(f"**Verdict: {r.verdict()}**\n")
 
