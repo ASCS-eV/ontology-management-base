@@ -9,6 +9,15 @@
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix pav: <http://purl.org/pav/> .
 @prefix schema: <https://schema.org/> .
+dcterms:license a owl:AnnotationProperty .
+dcterms:title a owl:AnnotationProperty .
+pav:version a owl:AnnotationProperty .
+skos:altLabel a owl:AnnotationProperty .
+skos:definition a owl:AnnotationProperty .
+skos:editorialNote a owl:AnnotationProperty .
+skos:exactMatch a owl:AnnotationProperty .
+skos:inScheme a owl:AnnotationProperty .
+skos:note a owl:AnnotationProperty .
 schema:QuantitativeValue a owl:Class ;
 	rdfs:label "QuantitativeValue"@en ;
 	rdfs:subClassOf _:b02a47caf96a4 , _:b10689d800306 , _:b132f35292908 , _:b2905363ce769 , _:b3d9f5d37c80e , _:b3e337baece83 , _:b4746f1ef70c7 , _:b80cb5f4d4cd6 , _:bd3e91755fec8 , _:bd75585bd5c07 , _:bef2387df78a0 , _:bfb1552c30131 ;
@@ -1892,6 +1901,7 @@ openlabel_tagging:weatherWindValue a owl:DatatypeProperty ;
 	a owl:Ontology ;
 	rdfs:label "openlabel-tagging"@en ;
 	skos:definition "Ontology for scenario tagging based on the ASAM OpenLABEL standard and ISO 34503:2023 Operational Design Domain taxonomy."@en .
+linkml:permissible_values a owl:AnnotationProperty .
 cmns-q:hasLowerBound a owl:DatatypeProperty ;
 	rdfs:label "hasLowerBound"@en ;
 	rdfs:range xsd:decimal ;
