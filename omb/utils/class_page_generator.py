@@ -52,6 +52,7 @@ from rdflib import OWL, RDF, RDFS, Namespace, URIRef
 from omb.core.iri_utils import VERSION_SEGMENT
 from omb.core.logging import configure_cli_logging, get_logger
 from omb.core.paths import builtin_data_root
+from omb.utils.properties_updater import described_classes
 
 PAV = Namespace("http://purl.org/pav/")
 logger = get_logger(__name__)
@@ -271,14 +272,8 @@ def extract_classes(owl_graph: rdflib.Graph, domain: str) -> Dict[str, ClassInfo
     """
     classes: Dict[str, ClassInfo] = {}
 
-    # Find all owl:Class and rdfs:Class
-    class_iris: Set[URIRef] = set()
-    for class_type in [OWL.Class, RDFS.Class]:
-        for s in owl_graph.subjects(RDF.type, class_type):
-            if isinstance(s, URIRef):
-                class_iris.add(s)
-
-    for class_iri in class_iris:
+    # A class the ontology only declares belongs to the ontology that defines it.
+    for class_iri in described_classes(owl_graph):
         iri_str = str(class_iri)
 
         # Get label
