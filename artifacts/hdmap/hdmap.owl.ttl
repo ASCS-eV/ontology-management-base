@@ -1,7 +1,7 @@
 @prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -45,8 +45,8 @@
     owl:priorVersion <https://w3id.org/ascs-ev/envited-x/hdmap/v5> ;
 
     # Imports strict dependencies
-    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ,
-                <https://w3id.org/ascs-ev/envited-x/georeference/v5> ,
+    owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> ,
+                <https://w3id.org/ascs-ev/envited-x/georeference/v6> ,
                 <https://openlabel.asam.net/V1-0-0/ontologies> ;
 
     # Reference to SHACL validation rules

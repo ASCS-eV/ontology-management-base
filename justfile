@@ -23,7 +23,7 @@ export PYTHONIOENCODING := "utf-8"
 # LinkML domains that `just generate` builds, in import order: a domain after the
 # domains it imports (space-separated; add new domains here). Their artifacts/
 # directories are generated, never hand-edited.
-LINKML_DOMAINS := "openlabel-tagging ontology-header"
+LINKML_DOMAINS := "openlabel-tagging ontology-header manifest georeference envited-x ositrace"
 
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"

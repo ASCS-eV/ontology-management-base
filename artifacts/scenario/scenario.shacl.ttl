@@ -1,9 +1,9 @@
 @prefix scenario: <https://w3id.org/ascs-ev/envited-x/scenario/v6/> .
 @prefix environment-model: <https://w3id.org/ascs-ev/envited-x/environment-model/v5/> .
 @prefix hdmap: <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> .
-@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/> .
-@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v5/> .
-@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v5/> .
+@prefix envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/> .
+@prefix manifest: <https://w3id.org/ascs-ev/envited-x/manifest/v6/> .
+@prefix georeference: <https://w3id.org/ascs-ev/envited-x/georeference/v6/> .
 @prefix openlabel: <https://openlabel.asam.net/V1-0-0/ontologies/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -55,7 +55,7 @@ scenario:ScenarioShape a sh:NodeShape ;
             # Case 2: Inline manifest node
             [ sh:and (
                 [ sh:node manifest:ManifestShape ]
-                [ sh:node envited-x:ManifestShape ]
+                [ sh:node envited-x:SimulationManifestShape ]
                 [ sh:node scenario:ScenarioManifestConstraints ] 
             )]
         ) ;

@@ -6,6 +6,11 @@ Unit tests for omb.validators.shacl.inference.
 import pytest
 from rdflib import RDF, RDFS, BNode, Graph, Literal, Namespace
 
+from omb.utils.context_resolver import (
+    build_context_url_map,
+    load_jsonld_with_local_contexts,
+)
+from omb.utils.registry_resolver import RegistryResolver
 from omb.validators.shacl.inference import (
     apply_rdfs_inference,
     apply_rdfs_inference_sparql,
@@ -174,10 +179,15 @@ def test_indexed_engine_matches_the_sparql_rules_on_repository_artifacts(root_di
     ont = Graph()
     for artifact in sorted((root_dir / "artifacts" / "manifest").glob("*.ttl")):
         ont.parse(artifact, format="turtle")
+    # The contexts come from the repository, not from the web: a version that is
+    # not published yet resolves as well.
+    instance = (
+        root_dir / "tests" / "data" / "manifest" / "valid" / "manifest_instance.json"
+    )
+    contexts = build_context_url_map(RegistryResolver(root_dir), root_dir)
     data = Graph()
     data.parse(
-        root_dir / "tests" / "data" / "manifest" / "valid" / "manifest_instance.json",
-        format="json-ld",
+        data=load_jsonld_with_local_contexts(instance, contexts), format="json-ld"
     )
     assert len(ont) > 0 and len(data) > 0
 

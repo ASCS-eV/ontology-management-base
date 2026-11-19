@@ -28,7 +28,7 @@ Each domain previously declared its main class as `rdfs:subClassOf gx:VirtualRes
 !!! info "Domains not migrated"
     **simulated-sensor** remains as `rdfs:subClassOf gx:VirtualResource`. It is nested within automotive-simulator instances as a component — making it a SoftwareAsset would force every nested sensor node to carry `hasSoftwareResource` and `hasManifest`, breaking the composition pattern.
 
-    **tzip21** remains as `rdfs:subClassOf gx:VirtualResource`. It uses the unique TZIP-21 NFT metadata standard with its own structure and already imports envited-x/v3. Since `gx:VirtualResource` is open (`sh:closed false`), no migration is needed for GX compliance.
+    **tzip21** remains as `rdfs:subClassOf gx:VirtualResource`. It uses the unique TZIP-21 NFT metadata standard with its own structure and already imports envited-x/v4. Since `gx:VirtualResource` is open (`sh:closed false`), no migration is needed for GX compliance.
 
 !!! note "Survey dual-wrapper"
     The survey domain uses **two different wrappers**: `SurveyServiceOffering` extends `ServiceAsset` (with `hasServiceOffering` linking to `ServiceOfferingBase`), while `SurveyResultDataOffering` extends `SimulationAsset` (with `hasResourceDescription` linking to `ResourceDescription`). This reflects the semantic difference between a survey invitation (service) and survey results (data resource).
@@ -42,7 +42,7 @@ The `general` ontology (`artifacts/general/general.owl.ttl`) is marked as `owl:d
 - `general:recordingTime` → `manifest:timestamp` (xsd:dateTime, in manifest FileMetadata)
 - `general:General` / `general:Data` / `general:Description` → no longer needed; the wrapper pattern handles metadata structuring
 
-Domain ontologies that previously imported `general/v3` now import `envited-x/v3` instead.
+Domain ontologies that previously imported `general/v3` now import `envited-x/v4` instead.
 
 ## File Changes Per Domain
 
@@ -50,7 +50,7 @@ For each migrated domain, the following files were changed:
 
 ### 1. OWL definition (`artifacts/<domain>/<domain>.owl.ttl`)
 
-- Changed `owl:imports` from `general/v3` to `envited-x/v3`
+- Changed `owl:imports` from `general/v3` to `envited-x/v4`
 - Changed `rdfs:subClassOf gx:VirtualResource` to `rdfs:subClassOf envited-x:<WrapperClass>`
 - Added `DomainSpecification`, `Content`, and optionally `Format` subclasses
 - Added linking properties (`has<Resource>`, `hasDomainSpecification`, `hasManifest`, `hasContent`)
@@ -112,7 +112,7 @@ For each domain, properties are reorganized into three layers:
 owl:imports <https://w3id.org/gaia-x4plcaad/ontologies/general/v3> .
 
 # After
-owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v3> .
+owl:imports <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 ```
 
 ## Naming Changes (Part 2)

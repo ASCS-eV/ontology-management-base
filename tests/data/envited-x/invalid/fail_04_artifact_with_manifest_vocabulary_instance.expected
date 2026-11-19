@@ -1,0 +1,25 @@
+======================================================================================================================================================
+=                                                           ❌ SHACL validation failed for:                                                          =
+=                                                                                                                                                    =
+=                                            ['fail_04_artifact_with_manifest_vocabulary_instance.json']                                             =
+=                                                                                                                                                    =
+======================================================================================================================================================
+=                                                                                                                                                    =
+=                                                           Structured Validation Errors:                                                            =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasAccessRole                                                                  =
+=    Error:            Value <https://w3id.org/ascs-ev/envited-x/manifest/v6/isPublic> not in list ['envited-x:isOwner', 'envited-x:isPublic',       =
+=                      'envited-x:isRegistered']                                                                                                     =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: did:web:registry.envited-x.net:Manifest:v9R2nTpW8mXq4YkL7bJz5AfG3dH6eS1c                                                      =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasArtifacts                                                                   =
+=    Error:            hasArtifacts (EnvitedXManifest): Associates a Manifest instance with its artifacts, represented as Link instances; only       =
+=                      applicable within Manifest instances.                                                                                         =
+= -------------------------------------------------------------------------------------------------------------------------------------------------- =
+= 🔹 [Violation] Node: [BNODE]                                                                                                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasCategory                                                                    =
+=    Error:            Value <https://w3id.org/ascs-ev/envited-x/manifest/v6/isMiscellaneous> not in list ['envited-x:isDocumentation',              =
+=                      'envited-x:isLicense', 'envited-x:isManifest', 'envited-x:isMedia', 'envited-x:isMetadata', 'envited-x:isMiscellaneous',      =
+=                      'envited-x:isSimulationData', 'envited-x:isValidationReport']                                                                 =
+======================================================================================================================================================

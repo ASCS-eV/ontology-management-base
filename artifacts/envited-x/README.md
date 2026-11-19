@@ -45,8 +45,8 @@ A typical instance includes:
 ```json
 {
   "@context": {
-    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+    "envited-x": "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+    "manifest": "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@type": "envited-x:DataResource",
