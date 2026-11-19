@@ -1,0 +1,19 @@
+{
+   "@context": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
+   "@id": "did:web:test.ontology-header.net:Ontology:test_invalid_fail_01_literal_publisher_instance",
+   "@type": [
+      "owl:Ontology",
+      "ontology-header:OntologyHeader"
+   ],
+   "owl:versionInfo": "v2",
+   "owl:priorVersion": {
+      "@id": "https://w3id.org/ascs-ev/envited-x/example-domain/v1"
+   },
+   "prov:wasDerivedFrom": {
+      "@id": "https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0"
+   },
+   "dcterms:references": {
+      "@id": "https://w3id.org/ascs-ev/envited-x/manifest/v6"
+   },
+   "dcterms:publisher": "https://www.asc-s.de/"
+}

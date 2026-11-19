@@ -19,6 +19,9 @@
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5" uri="manifest/manifest.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5/context" uri="manifest/manifest.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/manifest/v5/shapes" uri="manifest/manifest.shacl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ontology-header/v1" uri="ontology-header/ontology-header.owl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ontology-header/v1/context" uri="ontology-header/ontology-header.context.jsonld"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/ontology-header/v1/shapes" uri="ontology-header/ontology-header.shacl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha" uri="openlabel-tagging/openlabel-tagging.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/context" uri="openlabel-tagging/openlabel-tagging.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/shapes" uri="openlabel-tagging/openlabel-tagging.shacl.ttl"/>
