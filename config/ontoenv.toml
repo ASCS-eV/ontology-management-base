@@ -13,6 +13,11 @@ local = "imports/cred/cred.owl.ttl"
 uri = "https://www.w3.org/ns/credentials/status#"
 local = "imports/cs/cs.owl.ttl"
 
+[dependencies.dcat]
+uri = "http://www.w3.org/ns/dcat"
+local = "imports/dcat/dcat.owl.ttl"
+description = "The data catalog vocabulary"
+
 [dependencies.dcterms]
 uri = "http://purl.org/dc/terms/"
 local = "imports/dcterms/dcterms.owl.ttl"
@@ -78,6 +83,11 @@ description = "W3C Shapes Constraint Language (SHACL) Vocabulary"
 [dependencies.skos]
 uri = "http://www.w3.org/2004/02/skos/core"
 local = "imports/skos/skos.owl.ttl"
+
+[dependencies.spdx]
+uri = "http://spdx.org/rdf/terms"
+local = "imports/spdx/spdx.owl.ttl"
+description = "SPDX 2.3"
 
 [dependencies.xsd]
 uri = "http://www.w3.org/2001/XMLSchema#"

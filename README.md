@@ -210,6 +210,9 @@ Hook flow (via `hooks/copy_artifacts.py`):
 | `https://w3id.org/ascs-ev/envited-x/scenario/v6` | [scenario/scenario.owl.ttl](artifacts/scenario/scenario.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v6/context` | [scenario/scenario.context.jsonld](artifacts/scenario/scenario.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/scenario/v6/shapes` | [scenario/scenario.shacl.ttl](artifacts/scenario/scenario.shacl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/simulation-asset/v1` | [simulation-asset/simulation-asset.owl.ttl](artifacts/simulation-asset/simulation-asset.owl.ttl) |
+| `https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/context` | [simulation-asset/simulation-asset.context.jsonld](artifacts/simulation-asset/simulation-asset.context.jsonld) |
+| `https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/shapes` | [simulation-asset/simulation-asset.shacl.ttl](artifacts/simulation-asset/simulation-asset.shacl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/surface-model/v6` | [surface-model/surface-model.owl.ttl](artifacts/surface-model/surface-model.owl.ttl) |
 | `https://w3id.org/ascs-ev/envited-x/surface-model/v6/context` | [surface-model/surface-model.context.jsonld](artifacts/surface-model/surface-model.context.jsonld) |
 | `https://w3id.org/ascs-ev/envited-x/surface-model/v6/shapes` | [surface-model/surface-model.shacl.ttl](artifacts/surface-model/surface-model.shacl.ttl) |

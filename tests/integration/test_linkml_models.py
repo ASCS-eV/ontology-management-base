@@ -83,7 +83,15 @@ def test_ontology_header_references_are_nodes(domain):
 
 
 @pytest.mark.parametrize(
-    "domain", ["ontology-header", "manifest", "georeference", "envited-x", "ositrace"]
+    "domain",
+    [
+        "ontology-header",
+        "manifest",
+        "georeference",
+        "envited-x",
+        "ositrace",
+        "simulation-asset",
+    ],
 )
 def test_ontology_header_conforms_to_the_profile(domain):
     """Each header follows the shared profile, which a domain imports and does not redefine."""
@@ -116,6 +124,7 @@ IMPORT_CLOSURE = {
         "gx",
     ],
     "openlabel-tagging": ["openlabel-tagging"],
+    "simulation-asset": ["simulation-asset", "ontology-header"],
 }
 
 
@@ -139,6 +148,35 @@ def test_restrictions_are_on_declared_properties(domain):
     assert restricted or domain == "ontology-header"
     missing = restricted - declared
     assert not missing, sorted(missing)
+
+
+# OWL 2 DL declares no IRI as two kinds of property (§5.8.1). Header annotations
+# and data properties share DCMI Terms (GAPS G26); the clashes are pinned, so a
+# fix or a new clash shows.
+GX = Namespace("https://w3id.org/gaia-x/development#")
+HEADER_DCMI_TERMS = {
+    DCTERMS.conformsTo,
+    DCTERMS.identifier,
+    DCTERMS.license,
+    DCTERMS.title,
+}
+PROPERTY_KIND_CLASHES = {
+    "envited-x": HEADER_DCMI_TERMS | {GX.location},
+    "ositrace": HEADER_DCMI_TERMS | {GX.location},
+    "simulation-asset": HEADER_DCMI_TERMS,
+}
+
+
+@pytest.mark.parametrize("domain", sorted(IMPORT_CLOSURE))
+def test_property_kind_clashes_remain_the_documented_gap(domain):
+    kinds = {}
+    for name in IMPORT_CLOSURE[domain]:
+        graph = Graph().parse(ROOT / f"artifacts/{name}/{name}.owl.ttl")
+        for kind in (OWL.ObjectProperty, OWL.DatatypeProperty, OWL.AnnotationProperty):
+            for prop in graph.subjects(RDF.type, kind):
+                kinds.setdefault(prop, set()).add(kind)
+    clashes = {prop for prop, found in kinds.items() if len(found) > 1}
+    assert clashes == PROPERTY_KIND_CLASHES.get(domain, set())
 
 
 @pytest.mark.parametrize("domain", ["envited-x", "openlabel-tagging"])

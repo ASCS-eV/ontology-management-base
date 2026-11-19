@@ -1,0 +1,619 @@
+@prefix access-right: <http://publications.europa.eu/resource/authority/access-right/> .
+@prefix simulation-asset: <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+spdx:ChecksumShape a sh:NodeShape ;
+	rdfs:comment "The result of applying a hash algorithm to a file (SPDX 2.3), as DCAT 3 recommends for distributions."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bea434c257cef ;
+	sh:property _:b4a36a3d5e074 , _:beeb0e8b4d76e ;
+	sh:targetClass spdx:Checksum .
+dcat:CatalogShape a sh:NodeShape ;
+	rdfs:comment "A curated collection of dataset descriptions (W3C DCAT 3), e.g. every simulation asset of one source-repository revision. As in DCAT 3, a catalog is itself a dataset."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b0ce22c0935b2 ;
+	sh:property _:b0b383dad25aa , _:b371f9e97a28a , _:b3ef16e5d1069 , _:b534fd43a78db , _:b5c602b9fb350 , _:b5d6893a12fe9 , _:b632c1499253f , _:b7807d35a6ef2 , _:b8fab8fe06776 , _:b975fe9cbc9f2 , _:ba39789dfdb06 , _:bb2265723fd41 , _:bb2c524088b02 , _:bbf7ca5b5454b , _:bc9b0468683a7 , _:bcf2aa769b5f5 , _:be9ec2669526a , _:bf3d4de2373c9 ;
+	sh:targetClass dcat:Catalog .
+dcat:DatasetShape a sh:NodeShape ;
+	rdfs:comment "A collection of data published or curated by a single agent (W3C DCAT 3). Every resource a simulation needs or produces is one: a scenario, a road network, a 3D model, an OSI trace."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b89d17db8b2b8 ;
+	sh:property _:b1613f325543e , _:b350a289a09e5 , _:b3f40ca378d82 , _:b507e6df0c6d4 , _:b5affbdbd0911 , _:b61470a19f1c2 , _:b687e43f3c33b , _:b76b76f2056d8 , _:b862c4969dfa4 , _:b8b36bc6bad56 , _:b8d099fdbf424 , _:b9710c3f61b13 , _:bb8504d7b3616 , _:bc7b5bce7bca4 , _:bcfffbb41816e , _:befd09517883e ;
+	sh:targetClass dcat:Dataset .
+dcat:DistributionShape a sh:NodeShape ;
+	rdfs:comment "A specific representation of a dataset (W3C DCAT 3), typically a file, identified by its checksum and reachable through an access or download URL."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b5318aac842a2 ;
+	sh:property _:b461f3bf774c5 , _:b7da446ca9c9e , _:b8f0701eb1986 , _:b96b63b193138 , _:b9a6e640386e2 , _:bda14a62364a8 , _:be0b51520ca21 ;
+	sh:targetClass dcat:Distribution .
+prov:ActivityShape a sh:NodeShape ;
+	rdfs:comment "Something that occurs over a period of time and acts upon or with entities (W3C PROV-O), e.g. a build, a conversion or a simulation run."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b397ec91d7ac8 ;
+	sh:property _:b1b27fce98801 , _:b1de6a136424e , _:b5b55638db39f , _:b5f1911cd1ba1 , _:bba37c05f6a14 , _:be12f2d0f3ab2 ;
+	sh:targetClass prov:Activity .
+prov:SoftwareAgentShape a sh:NodeShape ;
+	rdfs:comment "Running software that bears responsibility for an activity (W3C PROV-O), e.g. a simulator or a converter in a given version."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:bfcef6231a8b7 ;
+	sh:property _:b9c845ff592c0 , _:befb7bdfa1dae ;
+	sh:targetClass prov:SoftwareAgent .
+simulation-asset:SimulationAssetShape a sh:NodeShape ;
+	rdfs:comment "A self-contained set of data that lets a simulator execute one simulation: a scenario together with the datasets it needs (road network, 3D models, simulator resources), listed as its parts. It is the unit a build system or data platform manages internally and the unit a marketplace offers externally. Its content is described by reference (about), not by subclassing."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b5dc44a1f74b1 ;
+	sh:property _:b27456562c964 , _:b380e377498e0 , _:b41e2b031867a , _:b4e723dd9af37 , _:b613d134658ed , _:b75d01358befc , _:b772268f31190 , _:b7ad375f1504d , _:b90e8cb07e255 , _:b98581c7e1283 , _:ba587c2686d0e , _:bad96de6d7f88 , _:bbbc9c31d4849 , _:bd97478fd59bb , _:be6d9884a0ea3 , _:bf3ee66fbba0d ;
+	sh:targetClass simulation-asset:SimulationAsset .
+simulation-asset:SimulationRunShape a sh:NodeShape ;
+	rdfs:comment "One execution of a simulator. It used a simulation asset (and possibly further configuration datasets) and was carried out by a simulator; the results it produced point back to it with prov:wasGeneratedBy."@en ;
+	sh:closed false ;
+	sh:ignoredProperties _:b309966a992f1 ;
+	sh:property _:b40466ae0e164 , _:b8297674d2d90 , _:bb06f4c961fb3 , _:bb90b1029131a , _:bb9d700811897 , _:be27547a49674 ;
+	sh:targetClass simulation-asset:SimulationRun .
+_:b0b383dad25aa sh:class dcat:Dataset ;
+	sh:description "A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:message "requires (Catalog): A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 14 ;
+	sh:path dcterms:requires .
+_:b0ce22c0935b2 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b1613f325543e sh:class dcat:Dataset ;
+	sh:description "A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:message "wasDerivedFrom (Dataset): A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 14 ;
+	sh:path prov:wasDerivedFrom .
+_:b1b27fce98801 sh:class prov:SoftwareAgent ;
+	sh:description "The software that carried out the activity."@en ;
+	sh:message "wasAssociatedWith (Activity): The software that carried out the activity."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path prov:wasAssociatedWith .
+_:b1c565130075a rdf:first spdx:checksumAlgorithm_sha256 ;
+	rdf:rest _:bc7250f86dee6 .
+_:b1d0c0cf2100b rdf:first simulation-asset:scenarioDescription ;
+	rdf:rest _:b6abc31832a56 .
+_:b1de6a136424e sh:datatype xsd:string ;
+	sh:description "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:maxCount 1 ;
+	sh:message "identifier (Activity): Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:identifier .
+_:b27456562c964 sh:description "The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:message "about (SimulationAsset): The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 13 ;
+	sh:path schema:about .
+_:b309966a992f1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b350a289a09e5 sh:description "A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:maxCount 1 ;
+	sh:message "license (Dataset): A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 8 ;
+	sh:path dcterms:license .
+_:b371f9e97a28a sh:datatype xsd:string ;
+	sh:description "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:maxCount 1 ;
+	sh:message "identifier (Catalog): Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path dcterms:identifier .
+_:b380e377498e0 sh:datatype xsd:string ;
+	sh:description "The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:maxCount 1 ;
+	sh:message "version (SimulationAsset): The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 6 ;
+	sh:path dcat:version .
+_:b397ec91d7ac8 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b3ef16e5d1069 sh:description "A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:maxCount 1 ;
+	sh:message "license (Catalog): A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 10 ;
+	sh:path dcterms:license .
+_:b3f40ca378d82 sh:datatype xsd:string ;
+	sh:description "The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:maxCount 1 ;
+	sh:message "version (Dataset): The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 6 ;
+	sh:path dcat:version .
+_:b40466ae0e164 sh:datatype xsd:dateTime ;
+	sh:description "When the activity started."@en ;
+	sh:maxCount 1 ;
+	sh:message "startedAtTime (SimulationRun): When the activity started."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path prov:startedAtTime .
+_:b41e2b031867a sh:description "The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:maxCount 1 ;
+	sh:message "isVersionOf (SimulationAsset): The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 7 ;
+	sh:path dcterms:isVersionOf .
+_:b4606b207ba77 rdf:first simulation-asset:simulationTrace ;
+	rdf:rest rdf:nil .
+_:b4606b207ba77_1 rdf:first simulation-asset:simulationTrace ;
+	rdf:rest rdf:nil .
+_:b4606b207ba77_2 rdf:first simulation-asset:simulationTrace ;
+	rdf:rest rdf:nil .
+_:b461f3bf774c5 sh:description "A URL of a resource that gives access to the file, e.g. a repository browser page."@en ;
+	sh:maxCount 1 ;
+	sh:message "accessURL (Distribution): A URL of a resource that gives access to the file, e.g. a repository browser page."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 1 ;
+	sh:path dcat:accessURL .
+_:b4a36a3d5e074 sh:datatype xsd:hexBinary ;
+	sh:description "The checksum value, in lower-case hexadecimal as SPDX 2.3 requires."@en ;
+	sh:maxCount 1 ;
+	sh:message "checksumValue (Checksum): The checksum value, in lower-case hexadecimal as SPDX 2.3 requires."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path spdx:checksumValue .
+_:b4e723dd9af37 sh:class dcat:Distribution ;
+	sh:description "An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:message "distribution (SimulationAsset): An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 10 ;
+	sh:path dcat:distribution .
+_:b4e91e30a761a rdf:first simulation-asset:simulatorResource ;
+	rdf:rest _:b4606b207ba77 .
+_:b4e91e30a761a_1 rdf:first simulation-asset:simulatorResource ;
+	rdf:rest _:b4606b207ba77_1 .
+_:b4e91e30a761a_2 rdf:first simulation-asset:simulatorResource ;
+	rdf:rest _:b4606b207ba77_2 .
+_:b507e6df0c6d4 sh:class prov:Activity ;
+	sh:description "The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:maxCount 1 ;
+	sh:message "wasGeneratedBy (Dataset): The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 15 ;
+	sh:path prov:wasGeneratedBy .
+_:b50a48396da0d rdf:first simulation-asset:scenarioDescription ;
+	rdf:rest _:b6abc31832a56_2 .
+_:b5318aac842a2 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b534fd43a78db sh:datatype xsd:string ;
+	sh:description "The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:maxCount 1 ;
+	sh:message "version (Catalog): The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 8 ;
+	sh:path dcat:version .
+_:b55b3cd70b706 rdf:first rdf:type ;
+	rdf:rest _:b56c73e027dc9 .
+_:b56c73e027dc9 rdf:first dcat:dataset ;
+	rdf:rest rdf:nil .
+_:b5affbdbd0911 sh:description "The role the dataset plays in a simulation."@en ;
+	sh:in _:b1d0c0cf2100b ;
+	sh:maxCount 1 ;
+	sh:message "type (Dataset): The role the dataset plays in a simulation."@en ;
+	sh:order 4 ;
+	sh:path dcterms:type .
+_:b5b55638db39f sh:datatype xsd:dateTime ;
+	sh:description "When the activity started."@en ;
+	sh:maxCount 1 ;
+	sh:message "startedAtTime (Activity): When the activity started."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path prov:startedAtTime .
+_:b5c09dc2c5ec2 rdf:first access-right:PUBLIC ;
+	rdf:rest _:bfea141060e68_2 .
+_:b5c602b9fb350 sh:datatype xsd:dateTime ;
+	sh:description "Date and time of formal issuance (publication) of the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "issued (Catalog): Date and time of formal issuance (publication) of the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:issued .
+_:b5d6893a12fe9 sh:description "The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:message "about (Catalog): The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 15 ;
+	sh:path schema:about .
+_:b5dc44a1f74b1 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:b5f1911cd1ba1 sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (Activity): A name given to the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path dcterms:title .
+_:b613d134658ed sh:class prov:Activity ;
+	sh:description "The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:maxCount 1 ;
+	sh:message "wasGeneratedBy (SimulationAsset): The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 15 ;
+	sh:path prov:wasGeneratedBy .
+_:b61470a19f1c2 sh:description "Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:in _:b5c09dc2c5ec2 ;
+	sh:maxCount 1 ;
+	sh:message "accessRights (Dataset): Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:order 9 ;
+	sh:path dcterms:accessRights .
+_:b632c1499253f sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (Catalog): A name given to the resource."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path dcterms:title .
+_:b66d23a7ed333 rdf:first access-right:PUBLIC ;
+	rdf:rest _:bfea141060e68_1 .
+_:b687e43f3c33b sh:class dcat:Distribution ;
+	sh:description "An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:message "distribution (Dataset): An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 10 ;
+	sh:path dcat:distribution .
+_:b6abc31832a56 rdf:first simulation-asset:roadNetwork ;
+	rdf:rest _:bba8989c478bd .
+_:b6abc31832a56_1 rdf:first simulation-asset:roadNetwork ;
+	rdf:rest _:bba8989c478bd_1 .
+_:b6abc31832a56_2 rdf:first simulation-asset:roadNetwork ;
+	rdf:rest _:bba8989c478bd_2 .
+_:b75d01358befc sh:class dcat:Dataset ;
+	sh:description "A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:message "hasPart (SimulationAsset): A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 11 ;
+	sh:path dcterms:hasPart .
+_:b7665f6344bb3 rdf:first spdx:checksumAlgorithm_sha512 ;
+	rdf:rest rdf:nil .
+_:b76b76f2056d8 sh:class dcat:Dataset ;
+	sh:description "A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:message "requires (Dataset): A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 12 ;
+	sh:path dcterms:requires .
+_:b772268f31190 sh:class dcat:Dataset ;
+	sh:description "A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:message "requires (SimulationAsset): A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 12 ;
+	sh:path dcterms:requires .
+_:b7807d35a6ef2 sh:datatype xsd:string ;
+	sh:description "A keyword or tag describing the resource."@en ;
+	sh:message "keyword (Catalog): A keyword or tag describing the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path dcat:keyword .
+_:b7ad375f1504d sh:class dcat:Dataset ;
+	sh:description "A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:message "wasDerivedFrom (SimulationAsset): A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 14 ;
+	sh:path prov:wasDerivedFrom .
+_:b7da446ca9c9e sh:datatype xsd:integer ;
+	sh:description "The size of the file in bytes."@en ;
+	sh:maxCount 1 ;
+	sh:message "byteSize (Distribution): The size of the file in bytes."@en ;
+	sh:minInclusive 0 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path dcat:byteSize .
+_:b8297674d2d90 sh:datatype xsd:string ;
+	sh:description "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:maxCount 1 ;
+	sh:message "identifier (SimulationRun): Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:identifier .
+_:b862c4969dfa4 sh:datatype xsd:string ;
+	sh:description "A free-text account of the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "description (Dataset): A free-text account of the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path dcterms:description .
+_:b867e62af7d75 rdf:first access-right:NON_PUBLIC ;
+	rdf:rest rdf:nil .
+_:b867e62af7d75_1 rdf:first access-right:NON_PUBLIC ;
+	rdf:rest rdf:nil .
+_:b867e62af7d75_2 rdf:first access-right:NON_PUBLIC ;
+	rdf:rest rdf:nil .
+_:b89d17db8b2b8 rdf:first dcterms:issued ;
+	rdf:rest _:b55b3cd70b706 .
+_:b8b36bc6bad56 sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (Dataset): A name given to the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path dcterms:title .
+_:b8d099fdbf424 sh:class dcat:Dataset ;
+	sh:description "A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:message "hasPart (Dataset): A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 11 ;
+	sh:path dcterms:hasPart .
+_:b8e6604b7dda8 rdf:first simulation-asset:scenarioDescription ;
+	rdf:rest _:b6abc31832a56_1 .
+_:b8f0701eb1986 sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (Distribution): A name given to the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:title .
+_:b8fab8fe06776 sh:datatype xsd:string ;
+	sh:description "A free-text account of the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "description (Catalog): A free-text account of the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path dcterms:description .
+_:b90e8cb07e255 sh:datatype xsd:string ;
+	sh:description "A free-text account of the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "description (SimulationAsset): A free-text account of the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 2 ;
+	sh:path dcterms:description .
+_:b96b63b193138 sh:description "The media type of the file, as an IANA media-type IRI (https://www.iana.org/assignments/media-types/<type>/<subtype>)."@en ;
+	sh:maxCount 1 ;
+	sh:message "mediaType (Distribution): The media type of the file, as an IANA media-type IRI (https://www.iana.org/assignments/media-types/<type>/<subtype>)."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 3 ;
+	sh:path dcat:mediaType .
+_:b9710c3f61b13 sh:datatype xsd:dateTime ;
+	sh:description "Date and time of creation of the resource as stated by its author."@en ;
+	sh:maxCount 1 ;
+	sh:message "created (Dataset): Date and time of creation of the resource as stated by its author."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path dcterms:created .
+_:b975fe9cbc9f2 sh:description "The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:maxCount 1 ;
+	sh:message "isVersionOf (Catalog): The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 9 ;
+	sh:path dcterms:isVersionOf .
+_:b98581c7e1283 sh:description "Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:in _:bffa5cdee9b62 ;
+	sh:maxCount 1 ;
+	sh:message "accessRights (SimulationAsset): Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:order 9 ;
+	sh:path dcterms:accessRights .
+_:b9a6e640386e2 sh:description "An established standard the file conforms to, e.g. ASAM OpenSCENARIO XML."@en ;
+	sh:message "conformsTo (Distribution): An established standard the file conforms to, e.g. ASAM OpenSCENARIO XML."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 5 ;
+	sh:path dcterms:conformsTo .
+_:b9c845ff592c0 sh:datatype xsd:string ;
+	sh:description "The version of the software."@en ;
+	sh:maxCount 1 ;
+	sh:message "softwareVersion (SoftwareAgent): The version of the software."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path schema:softwareVersion .
+_:ba39789dfdb06 sh:description "Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:in _:b66d23a7ed333 ;
+	sh:maxCount 1 ;
+	sh:message "accessRights (Catalog): Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	sh:order 11 ;
+	sh:path dcterms:accessRights .
+_:ba587c2686d0e sh:datatype xsd:dateTime ;
+	sh:description "Date and time of creation of the resource as stated by its author."@en ;
+	sh:maxCount 1 ;
+	sh:message "created (SimulationAsset): Date and time of creation of the resource as stated by its author."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path dcterms:created .
+_:bad96de6d7f88 sh:description "The role the dataset plays in a simulation."@en ;
+	sh:in _:b8e6604b7dda8 ;
+	sh:maxCount 1 ;
+	sh:message "type (SimulationAsset): The role the dataset plays in a simulation."@en ;
+	sh:order 4 ;
+	sh:path dcterms:type .
+_:bb06f4c961fb3 sh:class prov:SoftwareAgent ;
+	sh:description "The software that carried out the activity."@en ;
+	sh:message "wasAssociatedWith (SimulationRun): The software that carried out the activity."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 3 ;
+	sh:path prov:wasAssociatedWith .
+_:bb2265723fd41 sh:class dcat:Dataset ;
+	sh:description "A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:message "hasPart (Catalog): A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 13 ;
+	sh:path dcterms:hasPart .
+_:bb2c524088b02 sh:class dcat:Dataset ;
+	sh:description "A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:message "wasDerivedFrom (Catalog): A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 16 ;
+	sh:path prov:wasDerivedFrom .
+_:bb8504d7b3616 sh:datatype xsd:string ;
+	sh:description "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:maxCount 1 ;
+	sh:message "identifier (Dataset): Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:identifier .
+_:bb90b1029131a sh:class dcat:Dataset ;
+	sh:description "A dataset the activity used, e.g. the simulation asset a run executed."@en ;
+	sh:message "used (SimulationRun): A dataset the activity used, e.g. the simulation asset a run executed."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path prov:used .
+_:bb9d700811897 sh:datatype xsd:dateTime ;
+	sh:description "When the activity ended."@en ;
+	sh:maxCount 1 ;
+	sh:message "endedAtTime (SimulationRun): When the activity ended."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path prov:endedAtTime .
+_:bba37c05f6a14 sh:class dcat:Dataset ;
+	sh:description "A dataset the activity used, e.g. the simulation asset a run executed."@en ;
+	sh:message "used (Activity): A dataset the activity used, e.g. the simulation asset a run executed."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 2 ;
+	sh:path prov:used .
+_:bba8989c478bd rdf:first simulation-asset:objectModel ;
+	rdf:rest _:bf113a4451913 .
+_:bba8989c478bd_1 rdf:first simulation-asset:objectModel ;
+	rdf:rest _:bf113a4451913_1 .
+_:bba8989c478bd_2 rdf:first simulation-asset:objectModel ;
+	rdf:rest _:bf113a4451913_2 .
+_:bbbc9c31d4849 sh:datatype xsd:string ;
+	sh:description "A keyword or tag describing the resource."@en ;
+	sh:message "keyword (SimulationAsset): A keyword or tag describing the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path dcat:keyword .
+_:bbf7ca5b5454b sh:datatype xsd:dateTime ;
+	sh:description "Date and time of creation of the resource as stated by its author."@en ;
+	sh:maxCount 1 ;
+	sh:message "created (Catalog): Date and time of creation of the resource as stated by its author."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 7 ;
+	sh:path dcterms:created .
+_:bc7250f86dee6 rdf:first spdx:checksumAlgorithm_sha384 ;
+	rdf:rest _:b7665f6344bb3 .
+_:bc7b5bce7bca4 sh:description "The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:maxCount 1 ;
+	sh:message "isVersionOf (Dataset): The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 7 ;
+	sh:path dcterms:isVersionOf .
+_:bc9b0468683a7 sh:class dcat:Dataset ;
+	sh:description "A dataset listed in the catalog."@en ;
+	sh:message "dataset (Catalog): A dataset listed in the catalog."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 1 ;
+	sh:path dcat:dataset .
+_:bcf2aa769b5f5 sh:class dcat:Distribution ;
+	sh:description "An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:message "distribution (Catalog): An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 12 ;
+	sh:path dcat:distribution .
+_:bcfffbb41816e sh:description "The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:message "about (Dataset): The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 13 ;
+	sh:path schema:about .
+_:bd97478fd59bb sh:datatype xsd:string ;
+	sh:description "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:maxCount 1 ;
+	sh:message "identifier (SimulationAsset): Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path dcterms:identifier .
+_:bda14a62364a8 sh:class spdx:Checksum ;
+	sh:description "A checksum of the file."@en ;
+	sh:message "checksum (Distribution): A checksum of the file."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 6 ;
+	sh:path spdx:checksum .
+_:be0b51520ca21 sh:description "The URL of the downloadable file."@en ;
+	sh:maxCount 1 ;
+	sh:message "downloadURL (Distribution): The URL of the downloadable file."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 2 ;
+	sh:path dcat:downloadURL .
+_:be12f2d0f3ab2 sh:datatype xsd:dateTime ;
+	sh:description "When the activity ended."@en ;
+	sh:maxCount 1 ;
+	sh:message "endedAtTime (Activity): When the activity ended."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 5 ;
+	sh:path prov:endedAtTime .
+_:be27547a49674 sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (SimulationRun): A name given to the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path dcterms:title .
+_:be6d9884a0ea3 sh:datatype xsd:string ;
+	sh:description "A name given to the resource."@en ;
+	sh:maxCount 1 ;
+	sh:message "title (SimulationAsset): A name given to the resource."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path dcterms:title .
+_:be9ec2669526a sh:class prov:Activity ;
+	sh:description "The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:maxCount 1 ;
+	sh:message "wasGeneratedBy (Catalog): The activity that produced the dataset, e.g. a simulation run."@en ;
+	sh:nodeKind sh:BlankNodeOrIRI ;
+	sh:order 17 ;
+	sh:path prov:wasGeneratedBy .
+_:bea434c257cef rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:beeb0e8b4d76e sh:description "The hash algorithm used to compute the checksum."@en ;
+	sh:in _:b1c565130075a ;
+	sh:maxCount 1 ;
+	sh:message "algorithm (Checksum): The hash algorithm used to compute the checksum."@en ;
+	sh:minCount 1 ;
+	sh:order 0 ;
+	sh:path spdx:algorithm .
+_:befb7bdfa1dae sh:datatype xsd:string ;
+	sh:description "The name of the agent."@en ;
+	sh:maxCount 1 ;
+	sh:message "name (SoftwareAgent): The name of the agent."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 0 ;
+	sh:path foaf:name .
+_:befd09517883e sh:datatype xsd:string ;
+	sh:description "A keyword or tag describing the resource."@en ;
+	sh:message "keyword (Dataset): A keyword or tag describing the resource."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 3 ;
+	sh:path dcat:keyword .
+_:bf113a4451913 rdf:first simulation-asset:sceneryModel ;
+	rdf:rest _:b4e91e30a761a .
+_:bf113a4451913_1 rdf:first simulation-asset:sceneryModel ;
+	rdf:rest _:b4e91e30a761a_1 .
+_:bf113a4451913_2 rdf:first simulation-asset:sceneryModel ;
+	rdf:rest _:b4e91e30a761a_2 .
+_:bf3d4de2373c9 sh:description "The role the dataset plays in a simulation."@en ;
+	sh:in _:b50a48396da0d ;
+	sh:maxCount 1 ;
+	sh:message "type (Catalog): The role the dataset plays in a simulation."@en ;
+	sh:order 6 ;
+	sh:path dcterms:type .
+_:bf3ee66fbba0d sh:description "A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:maxCount 1 ;
+	sh:message "license (SimulationAsset): A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	sh:nodeKind sh:IRI ;
+	sh:order 8 ;
+	sh:path dcterms:license .
+_:bfcef6231a8b7 rdf:first rdf:type ;
+	rdf:rest rdf:nil .
+_:bfea141060e68 rdf:first access-right:RESTRICTED ;
+	rdf:rest _:b867e62af7d75 .
+_:bfea141060e68_1 rdf:first access-right:RESTRICTED ;
+	rdf:rest _:b867e62af7d75_1 .
+_:bfea141060e68_2 rdf:first access-right:RESTRICTED ;
+	rdf:rest _:b867e62af7d75_2 .
+_:bffa5cdee9b62 rdf:first access-right:PUBLIC ;
+	rdf:rest _:bfea141060e68 .

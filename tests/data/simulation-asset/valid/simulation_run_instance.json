@@ -1,0 +1,248 @@
+{
+   "@context": [
+      "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/",
+      {
+         "@vocab": null
+      }
+   ],
+   "@graph": [
+      {
+         "@id": "tag:example.org,2026:sim/run:cut_in_rain:2026-05-22T10:15:00Z",
+         "@type": "simulation-asset:SimulationRun",
+         "identifier": "cut_in_rain-2026-05-22T10:15:00Z",
+         "used": [
+            "tag:example.org,2026:sim//scenarios:cut_in_rain@sha256:5a5341d3650e8c87"
+         ],
+         "wasAssociatedWith": [
+            "tag:example.org,2026:sim/software:esmini@2.45.2"
+         ],
+         "startedAtTime": "2026-05-22T10:15:00Z",
+         "endedAtTime": "2026-05-22T10:15:42Z"
+      },
+      {
+         "@id": "tag:example.org,2026:sim/software:esmini@2.45.2",
+         "@type": "prov:SoftwareAgent",
+         "name": "esmini",
+         "softwareVersion": "2.45.2"
+      },
+      {
+         "@id": "tag:example.org,2026:sim/trace:cut_in_rain@sha256:daf1afdb1a88c8b9",
+         "@type": "dcat:Dataset",
+         "identifier": "cut_in_rain.mcap",
+         "title": "OSI ground-truth trace of cut_in_rain",
+         "type": "simulation-asset:simulationTrace",
+         "wasGeneratedBy": "tag:example.org,2026:sim/run:cut_in_rain:2026-05-22T10:15:00Z",
+         "wasDerivedFrom": [
+            "tag:example.org,2026:sim//scenarios:cut_in_rain@sha256:5a5341d3650e8c87"
+         ],
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;2vGv2xqIyLksLslbL-iZ2xP6eK1olRmS0QY91QLceGU",
+               "@type": "dcat:Distribution",
+               "title": "cut_in_rain.mcap",
+               "byteSize": 21,
+               "conformsTo": [
+                  "https://www.asam.net/standards/detail/osi/",
+                  "https://mcap.dev/spec"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "daf1afdb1a88c8b92c2ec95b2fe899db13fa78ad68951992d1063dd502dc7865"
+                  }
+               ],
+               "downloadURL": "https://data.example.org/traces/cut_in_rain.mcap"
+            }
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//scenarios:cut_in@sha256:a23df4a012f9fe7b",
+         "@type": "simulation-asset:SimulationAsset",
+         "identifier": "//scenarios:cut_in",
+         "title": "Cut-in on a two-lane highway",
+         "description": "A vehicle cuts in in front of the ego vehicle.",
+         "version": "sha256:a23df4a012f9fe7b",
+         "isVersionOf": "tag:example.org,2026:sim//scenarios:cut_in",
+         "license": "http://spdx.org/licenses/CC-BY-4.0",
+         "accessRights": "access-right:PUBLIC",
+         "about": [
+            "tag:example.org,2026:sim/content:cut_in"
+         ],
+         "hasPart": [
+            "tag:example.org,2026:sim//scenarios:cut_in.xosc@sha256:0832aa3ce9dcc5c0",
+            "tag:example.org,2026:sim//maps:two_lane_highway@sha256:063b546122731ef1",
+            "tag:example.org,2026:sim//models:sedan_blue@sha256:48974e5d71686095",
+            "tag:example.org,2026:sim//models:highway_scenery@sha256:eab8861fa3e4ef00"
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//scenarios:cut_in_rain@sha256:5a5341d3650e8c87",
+         "@type": "simulation-asset:SimulationAsset",
+         "identifier": "//scenarios:cut_in_rain",
+         "title": "Cut-in on a two-lane highway, rain",
+         "description": "Weather variant of the cut-in scenario.",
+         "version": "sha256:5a5341d3650e8c87",
+         "isVersionOf": "tag:example.org,2026:sim//scenarios:cut_in_rain",
+         "license": "http://spdx.org/licenses/CC-BY-4.0",
+         "accessRights": "access-right:PUBLIC",
+         "about": [
+            "tag:example.org,2026:sim/content:cut_in_rain"
+         ],
+         "hasPart": [
+            "tag:example.org,2026:sim//scenarios:cut_in_rain.xosc@sha256:1f540ff186f26462",
+            "tag:example.org,2026:sim//maps:two_lane_highway@sha256:063b546122731ef1",
+            "tag:example.org,2026:sim//models:sedan_blue@sha256:48974e5d71686095",
+            "tag:example.org,2026:sim//models:highway_scenery@sha256:eab8861fa3e4ef00"
+         ],
+         "wasDerivedFrom": [
+            "tag:example.org,2026:sim//scenarios:cut_in@sha256:a23df4a012f9fe7b"
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//scenarios:cut_in.xosc@sha256:0832aa3ce9dcc5c0",
+         "@type": "dcat:Dataset",
+         "identifier": "//scenarios:cut_in.xosc",
+         "title": "cut_in.xosc",
+         "type": "simulation-asset:scenarioDescription",
+         "version": "sha256:0832aa3ce9dcc5c0",
+         "isVersionOf": "tag:example.org,2026:sim//scenarios:cut_in.xosc",
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;CDKqPOncxcA345PDY0XZZaBE4ixgerOV4pTqCaSfH_M",
+               "@type": "dcat:Distribution",
+               "title": "cut_in.xosc",
+               "byteSize": 35,
+               "conformsTo": [
+                  "https://www.asam.net/standards/detail/openscenario-xml/"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "0832aa3ce9dcc5c037e393c36345d965a044e22c607ab395e294ea09a49f1ff3"
+                  }
+               ],
+               "mediaType": "https://www.iana.org/assignments/media-types/application/xml",
+               "accessURL": "https://git.example.org/sim/blob/4b825dc642cb6eb9a060e54bf8d69288fbee4904/scenarios/cut_in.xosc"
+            }
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//scenarios:cut_in_rain.xosc@sha256:1f540ff186f26462",
+         "@type": "dcat:Dataset",
+         "identifier": "//scenarios:cut_in_rain.xosc",
+         "title": "cut_in_rain.xosc",
+         "type": "simulation-asset:scenarioDescription",
+         "version": "sha256:1f540ff186f26462",
+         "isVersionOf": "tag:example.org,2026:sim//scenarios:cut_in_rain.xosc",
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;H1QP8YbyZGJaWfB-O43FBwOPWpT9Q2Fb4SgWIzlveuc",
+               "@type": "dcat:Distribution",
+               "title": "cut_in_rain.xosc",
+               "byteSize": 41,
+               "conformsTo": [
+                  "https://www.asam.net/standards/detail/openscenario-xml/"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "1f540ff186f264625a59f07e3b8dc507038f5a94fd43615be1281623396f7ae7"
+                  }
+               ],
+               "mediaType": "https://www.iana.org/assignments/media-types/application/xml",
+               "accessURL": "https://git.example.org/sim/blob/4b825dc642cb6eb9a060e54bf8d69288fbee4904/scenarios/cut_in_rain.xosc"
+            }
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//maps:two_lane_highway@sha256:063b546122731ef1",
+         "@type": "dcat:Dataset",
+         "identifier": "//maps:two_lane_highway",
+         "title": "Two-lane highway",
+         "type": "simulation-asset:roadNetwork",
+         "version": "sha256:063b546122731ef1",
+         "isVersionOf": "tag:example.org,2026:sim//maps:two_lane_highway",
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;BjtUYSJzHvF9WcP5AC3x6UPzJxMdRRSCk-mtcJzSW44",
+               "@type": "dcat:Distribution",
+               "title": "two_lane_highway.xodr",
+               "byteSize": 39,
+               "conformsTo": [
+                  "https://www.asam.net/standards/detail/opendrive/"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "063b546122731ef17d59c3f9002df1e943f327131d45148293e9ad709cd25b8e"
+                  }
+               ],
+               "mediaType": "https://www.iana.org/assignments/media-types/application/xml",
+               "downloadURL": "https://data.example.org/maps/two_lane_highway.xodr"
+            }
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//models:sedan_blue@sha256:48974e5d71686095",
+         "@type": "dcat:Dataset",
+         "identifier": "//models:sedan_blue",
+         "title": "Sedan, blue",
+         "type": "simulation-asset:objectModel",
+         "version": "sha256:48974e5d71686095",
+         "isVersionOf": "tag:example.org,2026:sim//models:sedan_blue",
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;SJdOXXFoYJWY1WXDzqKhTLSEjNjNBxnPsWpIvkDGe00",
+               "@type": "dcat:Distribution",
+               "title": "sedan_blue.glb",
+               "byteSize": 15,
+               "conformsTo": [
+                  "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "48974e5d7168609598d565c3cea2a14cb4848cd8cd0719cfb16a48be40c67b4d"
+                  }
+               ],
+               "mediaType": "https://www.iana.org/assignments/media-types/model/gltf-binary",
+               "downloadURL": "https://data.example.org/models/sedan_blue.glb"
+            }
+         ]
+      },
+      {
+         "@id": "tag:example.org,2026:sim//models:highway_scenery@sha256:eab8861fa3e4ef00",
+         "@type": "dcat:Dataset",
+         "identifier": "//models:highway_scenery",
+         "title": "Highway scenery",
+         "type": "simulation-asset:sceneryModel",
+         "version": "sha256:eab8861fa3e4ef00",
+         "isVersionOf": "tag:example.org,2026:sim//models:highway_scenery",
+         "distribution": [
+            {
+               "@id": "ni:///sha-256;6riGH6Pk7wDlt5oZgu7ALKa-RCyvpVRZ29DOMID9JGg",
+               "@type": "dcat:Distribution",
+               "title": "highway_scenery.glb",
+               "byteSize": 20,
+               "conformsTo": [
+                  "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html"
+               ],
+               "checksum": [
+                  {
+                     "@type": "spdx:Checksum",
+                     "algorithm": "spdx:checksumAlgorithm_sha256",
+                     "checksumValue": "eab8861fa3e4ef00e5b79a1982eec02ca6be442cafa55459dbd0ce3080fd2468"
+                  }
+               ],
+               "mediaType": "https://www.iana.org/assignments/media-types/model/gltf-binary",
+               "downloadURL": "https://data.example.org/models/highway_scenery.glb"
+            }
+         ]
+      }
+   ]
+}

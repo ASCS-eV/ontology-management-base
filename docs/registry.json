@@ -379,6 +379,27 @@
             }
          }
       },
+      "simulation-asset": {
+         "namespace": "ascs-ev",
+         "iri": "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1",
+         "latest": "v1",
+         "versions": {
+            "v1": {
+               "releaseTag": "v0.5.2",
+               "versionInfo": "v1",
+               "versionIri": "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1",
+               "files": {
+                  "ontology": "artifacts/simulation-asset/simulation-asset.owl.ttl",
+                  "shacl": [
+                     "artifacts/simulation-asset/simulation-asset.shacl.ttl"
+                  ],
+                  "jsonld": "artifacts/simulation-asset/simulation-asset.context.jsonld",
+                  "properties": "artifacts/simulation-asset/PROPERTIES.md",
+                  "instance": "tests/data/simulation-asset/valid/simulation_asset_instance.json"
+               }
+            }
+         }
+      },
       "simulation-model": {
          "namespace": "gaia-x4plcaad",
          "iri": "https://w3id.org/gaia-x4plcaad/ontologies/simulation-model/v3",
@@ -486,5 +507,5 @@
          }
       }
    },
-   "generated": "2026-11-19T09:15:02.821634+00:00"
+   "generated": "2026-11-19T16:47:27.476303+00:00"
 }

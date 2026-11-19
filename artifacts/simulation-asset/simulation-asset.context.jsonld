@@ -1,0 +1,181 @@
+{
+   "@context": {
+      "@version": 1.1,
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "access-right": "http://publications.europa.eu/resource/authority/access-right/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      "linkml": "https://w3id.org/linkml/",
+      "ontology-header": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
+      "ontologyheader_ontology": "https://w3id.org/ascs-ev/envited-x/ontology-header/",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "prov": "http://www.w3.org/ns/prov#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "schema": "https://schema.org/",
+      "sdo": "https://schema.org/",
+      "sh": "http://www.w3.org/ns/shacl#",
+      "simulation-asset": "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "spdx": "http://spdx.org/rdf/terms#",
+      "@vocab": "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/",
+      "about": {
+         "@type": "@id",
+         "@id": "schema:about"
+      },
+      "accessRights": {
+         "@type": "@id",
+         "@id": "dcterms:accessRights"
+      },
+      "accessURL": {
+         "@type": "@id",
+         "@id": "dcat:accessURL"
+      },
+      "algorithm": {
+         "@type": "@id",
+         "@id": "spdx:algorithm"
+      },
+      "byteSize": {
+         "@type": "xsd:integer",
+         "@id": "dcat:byteSize"
+      },
+      "checksum": {
+         "@type": "@id",
+         "@id": "spdx:checksum"
+      },
+      "checksumValue": {
+         "@type": "xsd:hexBinary",
+         "@id": "spdx:checksumValue"
+      },
+      "conformsTo": {
+         "@type": "@id",
+         "@id": "dcterms:conformsTo"
+      },
+      "created": {
+         "@type": "xsd:dateTime",
+         "@id": "dcterms:created"
+      },
+      "dataset": {
+         "@type": "@id",
+         "@id": "dcat:dataset"
+      },
+      "description": {
+         "@id": "dcterms:description"
+      },
+      "distribution": {
+         "@type": "@id",
+         "@id": "dcat:distribution"
+      },
+      "downloadURL": {
+         "@type": "@id",
+         "@id": "dcat:downloadURL"
+      },
+      "endedAtTime": {
+         "@type": "xsd:dateTime",
+         "@id": "prov:endedAtTime"
+      },
+      "hasPart": {
+         "@type": "@id",
+         "@id": "dcterms:hasPart"
+      },
+      "identifier": {
+         "@id": "dcterms:identifier"
+      },
+      "issued": {
+         "@type": "xsd:dateTime",
+         "@id": "dcterms:issued"
+      },
+      "isVersionOf": {
+         "@type": "@id",
+         "@id": "dcterms:isVersionOf"
+      },
+      "keyword": {
+         "@id": "dcat:keyword"
+      },
+      "license": {
+         "@type": "@id",
+         "@id": "dcterms:license"
+      },
+      "mediaType": {
+         "@type": "@id",
+         "@id": "dcat:mediaType"
+      },
+      "name": {
+         "@id": "foaf:name"
+      },
+      "requires": {
+         "@type": "@id",
+         "@id": "dcterms:requires"
+      },
+      "softwareVersion": {
+         "@id": "schema:softwareVersion"
+      },
+      "startedAtTime": {
+         "@type": "xsd:dateTime",
+         "@id": "prov:startedAtTime"
+      },
+      "title": {
+         "@id": "dcterms:title"
+      },
+      "type": {
+         "@type": "@id",
+         "@id": "dcterms:type"
+      },
+      "used": {
+         "@type": "@id",
+         "@id": "prov:used"
+      },
+      "version": {
+         "@id": "dcat:version"
+      },
+      "wasAssociatedWith": {
+         "@type": "@id",
+         "@id": "prov:wasAssociatedWith"
+      },
+      "wasDerivedFrom": {
+         "@type": "@id",
+         "@id": "prov:wasDerivedFrom"
+      },
+      "wasGeneratedBy": {
+         "@type": "@id",
+         "@id": "prov:wasGeneratedBy"
+      },
+      "Activity": {
+         "@id": "prov:Activity"
+      },
+      "Catalog": {
+         "@id": "dcat:Catalog"
+      },
+      "Checksum": {
+         "@id": "spdx:Checksum",
+         "@context": {
+            "algorithm": {
+               "@id": "spdx:algorithm"
+            }
+         }
+      },
+      "Dataset": {
+         "@id": "dcat:Dataset",
+         "@context": {
+            "type": {
+               "@id": "dcterms:type"
+            },
+            "accessRights": {
+               "@id": "dcterms:accessRights"
+            }
+         }
+      },
+      "Distribution": {
+         "@id": "dcat:Distribution"
+      },
+      "SimulationAsset": {
+         "@id": "SimulationAsset"
+      },
+      "SimulationRun": {
+         "@id": "SimulationRun"
+      },
+      "SoftwareAgent": {
+         "@id": "prov:SoftwareAgent"
+      }
+   }
+}
