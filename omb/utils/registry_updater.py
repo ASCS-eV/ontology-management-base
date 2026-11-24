@@ -638,13 +638,20 @@ def write_file(content: str, path: Path) -> None:
 
 
 def discover_test_data() -> Dict[str, dict]:
+    """Map the IRI of every node a test-data file describes to that file.
+
+    Several files may describe the same node, as a self-contained file repeats the
+    nodes it references. Such an IRI maps to the file whose path sorts first, which
+    is what an XML catalog resolves a name with several entries to, so the catalog
+    does not depend on the order in which the file system lists the files.
+    """
     test_data = {}
     if not TESTS_DATA_DIR.exists():
         return test_data
     files = collect_jsonld_files(
         [TESTS_DATA_DIR], return_pathlib=True, warn_on_invalid=False
     )
-    for test_file in files:
+    for test_file in sorted(files, key=lambda p: p.as_posix()):
         try:
             with test_file.open("r", encoding="utf-8") as f:
                 data = json.load(f)
@@ -663,6 +670,16 @@ def discover_test_data() -> Dict[str, dict]:
             rel_path_str = str(rel_path).replace("\\", "/")
 
             def add_entry(tid, cat="test-data"):
+                kept = test_data.get(tid)
+                if kept is not None:
+                    if kept["path"] != rel_path_str:
+                        logger.warning(
+                            "Duplicate test-data IRI %s (keeping %s), skipping %s",
+                            tid,
+                            kept["path"],
+                            rel_path_str,
+                        )
+                    return
                 test_data[tid] = {
                     "path": rel_path_str,
                     "domain": domain,
@@ -684,15 +701,28 @@ def discover_test_data() -> Dict[str, dict]:
 
 
 def discover_fixtures() -> Dict[str, str]:
-    """Discover fixture files and extract IRI → filename mappings."""
+    """Discover fixture files and extract IRI → filename mappings.
+
+    An IRI that several fixtures claim maps to the one whose path sorts first, as
+    in :func:`discover_test_data`.
+    """
     if not FIXTURES_DIR.exists():
         return {}
     files = collect_jsonld_files([FIXTURES_DIR], return_pathlib=True)
     mappings = {}
-    for f in files:
+    for f in sorted(files, key=lambda p: p.as_posix()):
         iri, _ = extract_jsonld_iris(f)
-        if iri:
-            mappings[iri] = f.name
+        if not iri:
+            continue
+        if iri in mappings:
+            logger.warning(
+                "Duplicate fixture IRI %s (keeping %s), skipping %s",
+                iri,
+                mappings[iri],
+                f.name,
+            )
+            continue
+        mappings[iri] = f.name
     return mappings
 
 

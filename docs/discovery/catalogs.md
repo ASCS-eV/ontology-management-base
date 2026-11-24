@@ -8,6 +8,10 @@ Validation tools resolve ontologies and shapes through XML catalogs.
 - `imports/catalog-v001.xml` maps base vocabularies used for inference
 - `tests/catalog-v001.xml` maps test data and fixtures
 
+## Shared IRIs
+
+Each catalog maps an IRI to one file. Several test-data files may describe the same node, since a self-contained file repeats the nodes it references; `tests/catalog-v001.xml` then maps the IRI to the file whose path sorts first and the generator logs the others. Fixtures follow the same rule, so the catalogs do not depend on the order in which the file system lists files.
+
 ## Resolver Behavior
 
 `RegistryResolver` loads these catalogs and provides:
