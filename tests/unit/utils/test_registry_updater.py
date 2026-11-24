@@ -4,8 +4,10 @@ Unit tests for omb.utils.registry_updater.
 """
 
 import json
+import logging
 from pathlib import Path
 
+import pytest
 import rdflib
 
 from omb.utils import registry_updater
@@ -238,3 +240,56 @@ def test_update_registry_is_idempotent_across_runs(temp_dir: Path, monkeypatch):
     registry_updater.write_registry(registry_updater.update_registry("v1.0.0", {}))
 
     assert registry_path.read_text(encoding="utf-8") == first
+
+
+def _write_json(path: Path, document: dict) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(document), encoding="utf-8")
+    return path
+
+
+@pytest.mark.parametrize("reverse", [False, True], ids=["listed-in-order", "reversed"])
+def test_discover_test_data_maps_a_shared_iri_to_the_first_path(
+    temp_dir: Path, monkeypatch, caplog, reverse: bool
+):
+    """An IRI two files describe maps to the same file whatever the walk order."""
+    data_dir = temp_dir / "tests" / "data" / "demo" / "valid"
+    first = _write_json(
+        data_dir / "a_catalog.json",
+        {"@graph": [{"@id": "urn:example:asset"}, {"@id": "urn:example:catalog"}]},
+    )
+    second = _write_json(
+        data_dir / "b_run.json",
+        {"@graph": [{"@id": "urn:example:run"}, {"@id": "urn:example:asset"}]},
+    )
+    walk = [second, first] if reverse else [first, second]
+    monkeypatch.setattr(registry_updater, "ROOT_DIR", temp_dir)
+    monkeypatch.setattr(registry_updater, "TESTS_DATA_DIR", temp_dir / "tests" / "data")
+    monkeypatch.setattr(registry_updater, "collect_jsonld_files", lambda *a, **k: walk)
+    caplog.set_level(logging.WARNING)
+
+    test_data = registry_updater.discover_test_data()
+
+    assert {iri: entry["path"] for iri, entry in test_data.items()} == {
+        "urn:example:asset": "tests/data/demo/valid/a_catalog.json",
+        "urn:example:catalog": "tests/data/demo/valid/a_catalog.json",
+        "urn:example:run": "tests/data/demo/valid/b_run.json",
+    }
+    assert "Duplicate test-data IRI urn:example:asset" in caplog.text
+
+
+@pytest.mark.parametrize("reverse", [False, True], ids=["listed-in-order", "reversed"])
+def test_discover_fixtures_maps_a_shared_iri_to_the_first_path(
+    temp_dir: Path, monkeypatch, caplog, reverse: bool
+):
+    """An IRI two fixtures claim maps to the same fixture whatever the walk order."""
+    fixtures_dir = temp_dir / "tests" / "fixtures"
+    first = _write_json(fixtures_dir / "a-did.json", {"@id": "did:web:example.org"})
+    second = _write_json(fixtures_dir / "b-did.json", {"@id": "did:web:example.org"})
+    walk = [second, first] if reverse else [first, second]
+    monkeypatch.setattr(registry_updater, "FIXTURES_DIR", fixtures_dir)
+    monkeypatch.setattr(registry_updater, "collect_jsonld_files", lambda *a, **k: walk)
+    caplog.set_level(logging.WARNING)
+
+    assert registry_updater.discover_fixtures() == {"did:web:example.org": "a-did.json"}
+    assert "Duplicate fixture IRI did:web:example.org" in caplog.text
