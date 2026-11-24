@@ -199,14 +199,14 @@ envited-x LinkML class is renamed and keeps its `class_uri` (M4).
   The SHACL shapes are the normative contract. Do not combine the OWL with
   other DCAT profiles for OWL reasoning. `--skip-vacuous-*` keeps the vacuous
   axioms out.
-- **G26.** The OWL is not OWL 2 DL. The header annotates the ontology with
-  `dcterms:title`, `dcterms:license`, `dcterms:conformsTo` and
-  `dcterms:identifier`, as every generated domain does, and the profile uses
-  the same four terms for data, so each is declared both an annotation
-  property and an object or data property. The header names its release with
-  `dcterms:source`, so `prov:wasDerivedFrom` is only the lineage of the data.
-  Validate with the SHACL shapes; reason with the standard vocabularies rather
-  than with this OWL.
+- **G26.** The header annotates the ontology with `dcterms:title`,
+  `dcterms:license`, `dcterms:conformsTo` and `dcterms:identifier`, as every
+  generated domain does, and the profile uses the same four terms for data.
+  In OWL 2 DL no IRI is declared as more than one kind of property, and an
+  ontology annotation needs an annotation property, so the profile declares
+  the four annotation properties: the OWL states no cardinality for them, the
+  SHACL shapes do. The header names its release with `dcterms:source`, so
+  `prov:wasDerivedFrom` is only the lineage of the data.
 - **G23.** `spdx:checksumValue` is checked as `xsd:hexBinary`. Its length and
   lower case are not checked, because gen-owl would state a pattern on
   `xsd:string` and leave the range empty.

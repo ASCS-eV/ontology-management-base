@@ -150,9 +150,11 @@ def test_restrictions_are_on_declared_properties(domain):
     assert not missing, sorted(missing)
 
 
-# OWL 2 DL declares no IRI as two kinds of property (§5.8.1). Header annotations
-# and data properties share DCMI Terms (GAPS G26); the clashes are pinned, so a
-# fix or a new clash shows.
+# In OWL 2 DL no IRI is declared as more than one kind of property (§5.8.1).
+# Every header annotates its ontology with these DCMI terms, so they are
+# annotation properties; simulation-asset declares them so for its data too,
+# and Gaia-X declares them data properties (GAPS G26). The clashes are pinned,
+# so a fix or a new clash shows.
 GX = Namespace("https://w3id.org/gaia-x/development#")
 HEADER_DCMI_TERMS = {
     DCTERMS.conformsTo,
@@ -163,7 +165,6 @@ HEADER_DCMI_TERMS = {
 PROPERTY_KIND_CLASHES = {
     "envited-x": HEADER_DCMI_TERMS | {GX.location},
     "ositrace": HEADER_DCMI_TERMS | {GX.location},
-    "simulation-asset": HEADER_DCMI_TERMS,
 }
 
 

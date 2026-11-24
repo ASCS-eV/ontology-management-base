@@ -69,10 +69,11 @@ instantiates: [ontology-header:OntologyHeader]
 # The header names the release with dcterms:source, as every generated domain
 # does, so prov:wasDerivedFrom is only the lineage of the data. The header and
 # the data share dcterms:title, dcterms:license, dcterms:conformsTo and
-# dcterms:identifier, so the import closure declares each both an annotation
-# and an object or data property, which OWL 2 DL forbids (GAPS G26); the SHACL
-# shapes are the contract. The design is derived from manifest v6;
-# docs/concepts/simulation-asset-core.md maps it.
+# dcterms:identifier; an ontology annotation needs an annotation property, and
+# in OWL 2 DL no IRI is declared as more than one kind of property (§5.8.1), so
+# these four slots implement owl:AnnotationProperty and only the SHACL shapes,
+# the contract, constrain them (GAPS G26). The design is derived from manifest
+# v6; docs/concepts/simulation-asset-core.md maps it.
 annotations:
   owl:versionInfo: v1
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/simulation-asset
@@ -251,10 +252,12 @@ slots:
     description: >-
       Identifier of the resource in the system that manages it, e.g. a build
       target label. Stable across versions.
+    implements: [owl:AnnotationProperty]
 
   title:
     slot_uri: dcterms:title
     description: A name given to the resource.
+    implements: [owl:AnnotationProperty]
 
   description:
     slot_uri: dcterms:description
@@ -300,6 +303,7 @@ slots:
     slot_uri: dcterms:license
     description: A legal document giving permission to use the resource, e.g. an SPDX license IRI.
     range: uriorcurie
+    implements: [owl:AnnotationProperty]
 
   accessRights:
     slot_uri: dcterms:accessRights
@@ -386,6 +390,7 @@ slots:
     description: An established standard the file conforms to, e.g. ASAM OpenSCENARIO XML.
     range: uriorcurie
     multivalued: true
+    implements: [owl:AnnotationProperty]
 
   checksum:
     slot_uri: spdx:checksum
