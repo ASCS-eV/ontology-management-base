@@ -44,7 +44,10 @@ python scripts/verify_wheel_install.py --wheel 'dist/*.whl' --minimum
 
 Every JSON-LD document inside a requested directory is input, including documents
 with `did:` identifiers. Explicit files select only those files. Their siblings are
-available for reference resolution but are not additional validation inputs. Missing
+available for reference resolution but are not additional validation inputs. A
+document can be referenced by its root `@id` (or `id`) only when that value is a
+string, as JSON-LD requires; other JSON beside the data, such as a file with a
+numeric `id`, is never a reference target and does not stop discovery. Missing
 requested paths fail. Negative fixtures are excluded only from positive validation;
 the full suite checks their snapshots. Use separate directories when reference-only
 support documents must not receive their own validation verdict.

@@ -445,7 +445,9 @@ def extract_jsonld_iris(file_path: Path) -> tuple:
 
     Returns:
         Tuple of (root_id, referenced_iris) where:
-        - root_id: The @id value of the document, or None
+        - root_id: The document's @id (or id) value when it is a string,
+          otherwise None. A JSON-LD node identifier is always a string, so a
+          number, list or object found there cannot name the document.
         - referenced_iris: Set of IRIs referenced in nested objects
     """
     import json as _json
@@ -459,7 +461,8 @@ def extract_jsonld_iris(file_path: Path) -> tuple:
     if not isinstance(doc, dict):
         return None, set()
 
-    root_id = doc.get("@id") or doc.get("id")
+    candidate = doc.get("@id") or doc.get("id")
+    root_id = candidate if isinstance(candidate, str) else None
     referenced: Set[str] = set()
 
     def extract_from_value(value, depth: int = 0):
