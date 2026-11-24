@@ -31,7 +31,7 @@ title: Ontology definition for envited-x
 description: >-
   ENVITED-X Data Space ontology with common classes for defining a digital
   asset in the simulation domain.
-source: https://github.com/ASCS-eV/ontology-management-base
+source: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
 contributors:
   - https://github.com/jdsika
   - https://github.com/MircoNierenz
@@ -75,7 +75,6 @@ instantiates: [ontology-header:OntologyHeader]
 annotations:
   owl:versionInfo: v4
   owl:priorVersion: https://w3id.org/ascs-ev/envited-x/envited-x/v3
-  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/envited-x
   dcterms:references: https://w3id.org/gaia-x/development#
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team

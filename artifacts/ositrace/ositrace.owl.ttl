@@ -11,7 +11,6 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 dcterms:conformsTo a owl:AnnotationProperty .
@@ -26,7 +25,6 @@ dcterms:title a owl:AnnotationProperty .
 skos:exactMatch a owl:AnnotationProperty .
 skos:inScheme a owl:AnnotationProperty .
 skos:prefLabel a owl:AnnotationProperty .
-prov:wasDerivedFrom a owl:AnnotationProperty .
 ontology-header:OntologyHeader a owl:Class .
 ositrace:Channel a owl:Class ;
 	rdfs:comment "Represents a single channel in an MCAP container file. Each channel carries messages of one OSI top-level type at a specific OSI schema version. Linked from ositrace:Format via ositrace:hasChannel."@en ;
@@ -729,7 +727,7 @@ ositrace:zeroTime a owl:DatatypeProperty ;
 	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
 	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references <https://github.com/OpenSimulationInterface> ;
-	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> ;
 	dcterms:title "Ontology definition for ositrace"@en ;
 	a owl:Ontology , ontology-header:OntologyHeader ;
 	rdfs:comment "An ontology with common classes to describe ASAM OSI trace files, including single-channel .osi and multi-channel .mcap formats."@en ;
@@ -737,8 +735,7 @@ ositrace:zeroTime a owl:DatatypeProperty ;
 	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
 	owl:imports envitedx_ontology:v4 , georeference_ontology:v6 , ontologyheader_ontology:v1 ;
 	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/ositrace/v6> ;
-	owl:versionInfo "v7"@en ;
-	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+	owl:versionInfo "v7"@en .
 linkml:permissible_values a owl:AnnotationProperty .
 _:b009bd9c3255b rdf:first manifest:Link ;
 	rdf:rest rdf:nil .

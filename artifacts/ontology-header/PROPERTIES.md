@@ -22,7 +22,6 @@ class OntologyHeader
 - dcterms: <http://purl.org/dc/terms/>
 - ontology-header: <https://w3id.org/ascs-ev/envited-x/ontology-header/v1/>
 - owl: <http://www.w3.org/2002/07/owl#>
-- prov: <http://www.w3.org/ns/prov#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 - sh: <http://www.w3.org/ns/shacl#>
@@ -32,12 +31,12 @@ class OntologyHeader
 
 #### dcterms:publisher {: #prop-http---purl-org-dc-terms-publisher .property-anchor }
 #### dcterms:references {: #prop-http---purl-org-dc-terms-references .property-anchor }
+#### dcterms:source {: #prop-http---purl-org-dc-terms-source .property-anchor }
 #### owl:priorVersion {: #prop-http---www-w3-org-2002-07-owl-priorversion .property-anchor }
-#### prov:wasDerivedFrom {: #prop-http---www-w3-org-ns-prov-wasderivedfrom .property-anchor }
 
 |Shape|Property prefix|Property|MinCount|MaxCount|Description|Datatype/NodeKind|Filename|
 |---|---|---|---|---|---|---|---|
 |OntologyHeaderShape|dcterms|<a id="prop-http---purl-org-dc-terms-publisher"></a>publisher|1|1|The organisation that publishes the ontology.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|ontology-header.shacl.ttl|
 |OntologyHeaderShape|dcterms|<a id="prop-http---purl-org-dc-terms-references"></a>references||1|A related ontology or specification the ontology builds on.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|ontology-header.shacl.ttl|
-|OntologyHeaderShape|prov|<a id="prop-http---www-w3-org-ns-prov-wasderivedfrom"></a>wasDerivedFrom|1|1|The release of the repository this version is published from.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|ontology-header.shacl.ttl|
 |OntologyHeaderShape|owl|<a id="prop-http---www-w3-org-2002-07-owl-priorversion"></a>priorVersion||1|The ontology IRI of the version this one replaces. Absent from a first version.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|ontology-header.shacl.ttl|
+|OntologyHeaderShape|dcterms|<a id="prop-http---purl-org-dc-terms-source"></a>source|1|1|The release of the repository this version is published from.|<http://www.w3.org/ns/shacl#BlankNodeOrIRI>|ontology-header.shacl.ttl|

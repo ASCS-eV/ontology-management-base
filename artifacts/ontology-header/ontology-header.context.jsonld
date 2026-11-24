@@ -8,10 +8,6 @@
       "prov": "http://www.w3.org/ns/prov#",
       "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
       "@vocab": "https://w3id.org/ascs-ev/envited-x/ontology-header/v1/",
-      "ontologyDerivation": {
-         "@type": "@id",
-         "@id": "prov:wasDerivedFrom"
-      },
       "ontologyPriorVersion": {
          "@type": "@id",
          "@id": "owl:priorVersion"
@@ -23,6 +19,10 @@
       "ontologyReferences": {
          "@type": "@id",
          "@id": "dcterms:references"
+      },
+      "ontologySource": {
+         "@type": "@id",
+         "@id": "dcterms:source"
       },
       "OntologyHeader": {
          "@id": "OntologyHeader"

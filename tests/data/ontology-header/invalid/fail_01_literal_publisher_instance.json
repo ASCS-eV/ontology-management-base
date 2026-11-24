@@ -9,7 +9,7 @@
    "owl:priorVersion": {
       "@id": "https://w3id.org/ascs-ev/envited-x/example-domain/v1"
    },
-   "prov:wasDerivedFrom": {
+   "dcterms:source": {
       "@id": "https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0"
    },
    "dcterms:references": {

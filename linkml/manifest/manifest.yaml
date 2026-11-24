@@ -18,7 +18,7 @@ description: >-
     An ontology with common classes to describe the structure as list of
     contents of a domain specific asset using a manifest.json e.g. in an
     archive.
-source: https://github.com/ASCS-eV/ontology-management-base
+source: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
 contributors:
   - https://github.com/jtdemer
   - https://github.com/jdsika
@@ -55,7 +55,6 @@ instantiates: [ontology-header:OntologyHeader]
 annotations:
   owl:versionInfo: v6
   owl:priorVersion: https://w3id.org/ascs-ev/envited-x/manifest/v5
-  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/manifest
   dcterms:references: https://w3id.org/ascs-ev/envited-x/envited-x/
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team

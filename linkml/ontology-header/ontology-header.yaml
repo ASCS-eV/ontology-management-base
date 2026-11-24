@@ -20,7 +20,7 @@ description: >-
     The header every ENVITED-X ontology states about itself: the version it
     replaces, the release it is published from, the resources it references and
     its publisher, each named by its IRI.
-source: https://github.com/ASCS-eV/ontology-management-base
+source: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
 contributors:
   - https://github.com/jdsika
 see_also:
@@ -44,7 +44,6 @@ default_range: string
 instantiates: [ontology-header:OntologyHeader]
 annotations:
   owl:versionInfo: v1
-  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/ontology-header
   dcterms:publisher: https://www.asc-s.de/
 
@@ -53,13 +52,16 @@ imports:
 
 classes:
 
-  # Only the annotations whose values are resources are declared: an undeclared
+  # Only the header terms whose values are resources are declared: an undeclared
   # annotation is already a literal (owl:versionInfo, dcterms:identifier,
-  # dcterms:creator). Each predicate is an OWL annotation property, so the
-  # ontologies state no logical axioms about it, and nodeidentifier makes its
-  # value an IRI whatever generator flags a domain uses. The domains match an
-  # annotation by its predicate; the attribute names are prefixed because LinkML
-  # names are global across an import closure, and Gaia-X has a `publisher` slot.
+  # dcterms:creator). The release is the schema's `source`, which gen-owl writes
+  # as dcterms:source; PROV-O declares prov:wasDerivedFrom an object property, so
+  # it is left to data (linkml/GAPS.md M8). Each predicate is an OWL annotation
+  # property, so the ontologies state no logical axioms about it, and
+  # nodeidentifier makes its value an IRI whatever generator flags a domain uses.
+  # The domains match a header term by its predicate; the attribute names are
+  # prefixed because LinkML names are global across an import closure, and
+  # Gaia-X has a `publisher` slot.
   OntologyHeader:
     class_uri: ontology-header:OntologyHeader
     description: >-
@@ -74,8 +76,8 @@ classes:
           first version.
         range: nodeidentifier
         implements: [owl:AnnotationProperty]
-      ontologyDerivation:
-        slot_uri: prov:wasDerivedFrom
+      ontologySource:
+        slot_uri: dcterms:source
         description: The release of the repository this version is published from.
         range: nodeidentifier
         required: true

@@ -7,7 +7,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 dcterms:conformsTo a owl:AnnotationProperty .
@@ -29,7 +28,6 @@ skos:note a owl:DatatypeProperty ;
 	rdfs:range xsd:string ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/manifest/v6> .
 skos:prefLabel a owl:AnnotationProperty .
-prov:wasDerivedFrom a owl:AnnotationProperty .
 sh:conformsTo a owl:ObjectProperty ;
 	rdfs:comment "Specifies ontology conformance."@en ;
 	rdfs:label "shapesConformsTo"@en ;
@@ -260,7 +258,7 @@ manifest:width a owl:DatatypeProperty ;
 	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
 	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references <https://w3id.org/ascs-ev/envited-x/envited-x/> ;
-	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> ;
 	dcterms:title "Ontology definition for manifest"@en ;
 	a owl:Ontology , ontology-header:OntologyHeader ;
 	rdfs:comment "An ontology with common classes to describe the structure as list of contents of a domain specific asset using a manifest.json e.g. in an archive."@en ;
@@ -268,8 +266,7 @@ manifest:width a owl:DatatypeProperty ;
 	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
 	owl:imports ontologyheader_ontology:v1 ;
 	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/manifest/v5> ;
-	owl:versionInfo "v6"@en ;
-	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+	owl:versionInfo "v6"@en .
 ontology-header:OntologyHeader a owl:Class .
 linkml:permissible_values a owl:AnnotationProperty .
 _:b09a084d9ce06 rdf:first _:bc86e82c5ebe8 ;

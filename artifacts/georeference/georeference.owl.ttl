@@ -6,7 +6,6 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 dcterms:conformsTo a owl:AnnotationProperty .
@@ -21,7 +20,6 @@ dcterms:title a owl:AnnotationProperty .
 skos:exactMatch a owl:AnnotationProperty .
 skos:inScheme a owl:AnnotationProperty .
 skos:prefLabel a owl:AnnotationProperty .
-prov:wasDerivedFrom a owl:AnnotationProperty .
 georeference:BoundingBox a owl:Class ;
 	rdfs:comment "Bounding box of the asset in world coordinates."@en ;
 	rdfs:label "BoundingBox"@en ;
@@ -166,7 +164,7 @@ georeference:yMin a owl:DatatypeProperty ;
 	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
 	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references <https://w3id.org/ascs-ev/envited-x/hdmap/v6/> ;
-	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> ;
 	dcterms:title "Ontology definition for Georeferencing"@en ;
 	a owl:Ontology , ontology-header:OntologyHeader ;
 	rdfs:comment "Georeferencing ontology with common classes for location, coordinate reference systems, and spatial properties."@en ;
@@ -174,8 +172,7 @@ georeference:yMin a owl:DatatypeProperty ;
 	rdfs:seeAlso <https://github.com/ASCS-eV/ontology-management-base/blob/main/README.md> ;
 	owl:imports ontologyheader_ontology:v1 ;
 	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/georeference/v5> ;
-	owl:versionInfo "v6"@en ;
-	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+	owl:versionInfo "v6"@en .
 ontology-header:OntologyHeader a owl:Class .
 linkml:permissible_values a owl:AnnotationProperty .
 _:b050c9a6e2126 a owl:Restriction ;

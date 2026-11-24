@@ -68,7 +68,7 @@ def test_ontology_header_references_are_nodes(domain):
             DCTERMS.publisher,
             DCTERMS.references,
             OWL.priorVersion,
-            URIRef("http://www.w3.org/ns/prov#wasDerivedFrom"),
+            DCTERMS.source,
         ]
         assert isinstance(graph.value(ontology, DCTERMS.creator), Literal)
         assert isinstance(graph.value(ontology, DCTERMS.conformsTo), Literal)

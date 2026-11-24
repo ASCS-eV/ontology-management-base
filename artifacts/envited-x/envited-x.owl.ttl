@@ -9,7 +9,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix gaiax_ontology: <https://w3id.org/gaia-x/> .
 @prefix linkml: <https://w3id.org/linkml/> .
@@ -25,7 +24,6 @@ dcterms:source a owl:AnnotationProperty .
 dcterms:title a owl:AnnotationProperty .
 skos:exactMatch a owl:AnnotationProperty .
 skos:inScheme a owl:AnnotationProperty .
-prov:wasDerivedFrom a owl:AnnotationProperty .
 envited-x:CodeArtifactBase a owl:Class ;
 	rdfs:comment "Base class coupling ENVITED-X code assets to gx:CodeArtifact."@en ;
 	rdfs:label "CodeArtifactBase"@en ;
@@ -279,7 +277,7 @@ envited-x:isValidationReport dcterms:title "Validation Report Category"@en ;
 	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
 	dcterms:publisher <https://www.asc-s.de/> ;
 	dcterms:references gx: ;
-	dcterms:source <https://github.com/ASCS-eV/ontology-management-base> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> ;
 	dcterms:title "Ontology definition for envited-x"@en ;
 	a owl:Ontology , ontology-header:OntologyHeader ;
 	rdfs:comment "ENVITED-X Data Space ontology with common classes for defining a digital asset in the simulation domain."@en ;
@@ -287,8 +285,7 @@ envited-x:isValidationReport dcterms:title "Validation Report Category"@en ;
 	rdfs:seeAlso <https://ascs-ev.github.io/EVES/> ;
 	owl:imports <https://w3id.org/ascs-ev/envited-x/manifest/v6> , ontologyheader_ontology:v1 , gx: ;
 	owl:priorVersion <https://w3id.org/ascs-ev/envited-x/envited-x/v3> ;
-	owl:versionInfo "v4"@en ;
-	prov:wasDerivedFrom <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> .
+	owl:versionInfo "v4"@en .
 manifest:AccessRole a owl:Class .
 manifest:Category a owl:Class .
 manifest:LicenseCategory a owl:Class .

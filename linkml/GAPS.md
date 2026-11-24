@@ -103,18 +103,26 @@ ontology-header structure, not an annotation, so it is not stated (G22).
 `see_also`, `source`, `license` and `conforms_to` give `rdfs:seeAlso`,
 `dcterms:source`, `dcterms:license` and `dcterms:conformsTo`, and
 `contributors` gives one `dcterms:contributor` IRI per contributor: their
-GitHub account. `annotations` give the rest: `owl:versionInfo`,
-`dcterms:creator` and `dcterms:identifier` as literals, and `owl:priorVersion`,
-`prov:wasDerivedFrom`, `dcterms:references` and `dcterms:publisher` (ASCS e.V.,
+GitHub account. `source` names the release of this repository that the
+version is published from (`…/releases/tag/v0.6.0`); the metamodel defines it
+as "A related resource from which the element is derived.", with
+`prov:wasDerivedFrom` as a close mapping. The hand-written ontologies name the
+repository with `dcterms:source` and the release with `prov:wasDerivedFrom`.
+PROV-O declares `prov:wasDerivedFrom` an object property, and in OWL 2 DL no
+IRI is declared as more than one kind of property (§5.8.1), so a header
+annotation with it would clash with PROV-O lineage in the same import closure.
+`annotations` give the rest: `owl:versionInfo`, `dcterms:creator` and
+`dcterms:identifier` as literals, and `owl:priorVersion`,
+`dcterms:references` and `dcterms:publisher` (ASCS e.V.,
 `https://www.asc-s.de/`) as IRIs.
 
-The latter four are declared by the **ontology-header profile**
+These three and `dcterms:source` are declared by the **ontology-header profile**
 (`linkml/ontology-header/`), a schema profile in LinkML's sense: its metaclass
-`OntologyHeader` has one attribute per annotation, with the predicate as
+`OntologyHeader` has one attribute per predicate, with the predicate as
 `slot_uri`, range `nodeidentifier` and `implements: [owl:AnnotationProperty]`,
 and marks the release and the publisher required. A domain imports the profile
-and states `instantiates: [ontology-header:OntologyHeader]`; its annotations
-then become IRIs on declared annotation properties, about which the OWL states
+and states `instantiates: [ontology-header:OntologyHeader]`; its header then
+states IRIs on declared annotation properties, about which the OWL states
 no logical axioms. The domains generate with `--no-mergeimports` and
 `--exclude-imports`, so the metaclass stays in the profile: a domain's OWL has
 `owl:imports` of the profile and types the ontology `ontology-header:OntologyHeader`,

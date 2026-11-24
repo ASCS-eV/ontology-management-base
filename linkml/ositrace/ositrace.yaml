@@ -27,7 +27,7 @@ title: Ontology definition for ositrace
 description: >-
     An ontology with common classes to describe ASAM OSI trace files,
     including single-channel .osi and multi-channel .mcap formats.
-source: https://github.com/ASCS-eV/ontology-management-base
+source: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
 contributors:
   - https://github.com/pmai
   - https://github.com/jdsika
@@ -69,7 +69,6 @@ instantiates: [ontology-header:OntologyHeader]
 annotations:
   owl:versionInfo: v7
   owl:priorVersion: https://w3id.org/ascs-ev/envited-x/ositrace/v6
-  prov:wasDerivedFrom: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
   dcterms:identifier: https://w3id.org/ascs-ev/envited-x/ositrace
   dcterms:references: https://github.com/OpenSimulationInterface
   dcterms:creator: The GAIA-X 4 PLC AAD Project Team
