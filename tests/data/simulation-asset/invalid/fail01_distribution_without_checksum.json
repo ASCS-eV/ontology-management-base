@@ -38,7 +38,6 @@
             {
                "@id": "ni:///sha-256;CDKqPOncxcA345PDY0XZZaBE4ixgerOV4pTqCaSfH_M",
                "@type": "dcat:Distribution",
-               "title": "cut_in.xosc",
                "byteSize": 35,
                "conformsTo": [
                   "https://www.asam.net/standards/detail/openscenario-xml/"
@@ -59,7 +58,8 @@
          "@id": "tag:example.org,2026:test-fail01_distribution_without_checksum//maps:two_lane_highway@sha256:063b546122731ef1",
          "@type": "dcat:Dataset",
          "identifier": "//maps:two_lane_highway",
-         "title": "Two-lane highway",
+         "title": "two_lane_highway.xodr",
+         "description": "Two-lane highway",
          "type": "simulation-asset:roadNetwork",
          "version": "sha256:063b546122731ef1",
          "isVersionOf": "tag:example.org,2026:test-fail01_distribution_without_checksum//maps:two_lane_highway",
@@ -67,7 +67,6 @@
             {
                "@id": "ni:///sha-256;BjtUYSJzHvF9WcP5AC3x6UPzJxMdRRSCk-mtcJzSW44",
                "@type": "dcat:Distribution",
-               "title": "two_lane_highway.xodr",
                "byteSize": 39,
                "conformsTo": [
                   "https://www.asam.net/standards/detail/opendrive/"
@@ -88,7 +87,8 @@
          "@id": "tag:example.org,2026:test-fail01_distribution_without_checksum//models:sedan_blue@sha256:48974e5d71686095",
          "@type": "dcat:Dataset",
          "identifier": "//models:sedan_blue",
-         "title": "Sedan, blue",
+         "title": "sedan_blue.glb",
+         "description": "Sedan, blue",
          "type": "simulation-asset:objectModel",
          "version": "sha256:48974e5d71686095",
          "isVersionOf": "tag:example.org,2026:test-fail01_distribution_without_checksum//models:sedan_blue",
@@ -96,7 +96,6 @@
             {
                "@id": "ni:///sha-256;SJdOXXFoYJWY1WXDzqKhTLSEjNjNBxnPsWpIvkDGe00",
                "@type": "dcat:Distribution",
-               "title": "sedan_blue.glb",
                "byteSize": 15,
                "conformsTo": [
                   "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html"
@@ -110,7 +109,8 @@
          "@id": "tag:example.org,2026:test-fail01_distribution_without_checksum//models:highway_scenery@sha256:eab8861fa3e4ef00",
          "@type": "dcat:Dataset",
          "identifier": "//models:highway_scenery",
-         "title": "Highway scenery",
+         "title": "highway_scenery.glb",
+         "description": "Highway scenery",
          "type": "simulation-asset:sceneryModel",
          "version": "sha256:eab8861fa3e4ef00",
          "isVersionOf": "tag:example.org,2026:test-fail01_distribution_without_checksum//models:highway_scenery",
@@ -118,7 +118,6 @@
             {
                "@id": "ni:///sha-256;6riGH6Pk7wDlt5oZgu7ALKa-RCyvpVRZ29DOMID9JGg",
                "@type": "dcat:Distribution",
-               "title": "highway_scenery.glb",
                "byteSize": 20,
                "conformsTo": [
                   "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html"

@@ -114,7 +114,10 @@ identity, which changes whenever any byte of any part changes.
   `dcat:hasVersion` there.
 - Naming files by content (`ni:`) makes identical files one node across
   assets. The SPDX checksum states the same digest in the form DCAT
-  consumers read.
+  consumers read. The node therefore holds only what the bytes determine
+  (checksum, size, media type, standard). A file's name depends on where it
+  is used, so it is the `dcterms:title` of the dataset that uses the file;
+  on the shared node, the copies' names would collide (`sh:maxCount 1`).
 - **Why not CIDs.** An IPFS CID depends on how the file was chunked. It equals
   the file's SHA-256 only for a file stored as a single raw block (at most
   256 KiB with the default chunker). A CID is therefore computed when the file
