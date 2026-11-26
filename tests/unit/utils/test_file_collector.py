@@ -14,7 +14,7 @@ Tests file collection utilities including:
 
 from pathlib import Path
 
-import pytest  # noqa: F401
+import pytest
 
 from omb.utils.file_collector import (
     collect_files_by_extension,
@@ -353,6 +353,24 @@ class TestExtractJsonldIris:
         assert root_id is None
         assert len(refs) == 0
 
+    @pytest.mark.parametrize(
+        "document",
+        [
+            '{"id": 42}',
+            '{"@id": 3.5}',
+            '{"@id": true}',
+            '{"@id": ["urn:example:a"]}',
+            '{"id": {"@id": "urn:example:a"}}',
+            '{"@id": 42, "id": "urn:example:a"}',
+        ],
+    )
+    def test_returns_none_for_non_string_root_id(self, temp_dir, document):
+        """A root identifier that is not a string cannot name the document."""
+        file = temp_dir / "test.json"
+        file.write_text(document)
+        root_id, _ = extract_jsonld_iris(file)
+        assert root_id is None
+
     def test_extracts_nested_ids(self, temp_dir):
         """Test extracting nested @id references."""
         file = temp_dir / "test.json"
@@ -562,6 +580,20 @@ class TestDiscoverDataHierarchy:
         assert "urn:uuid:credential" in iri_map
         assert "urn:uuid:decoded" in iri_map
         assert "did:web:test:issuer" in iri_map
+
+    def test_sibling_with_non_string_id_is_skipped(self, temp_dir):
+        """Unrelated JSON beside an explicit file must not stop discovery."""
+        credential_file = temp_dir / "credential.json"
+        credential_file.write_text('{"@id": "urn:uuid:credential"}')
+        (temp_dir / "records.json").write_text('{"id": 42}')
+        (temp_dir / "nested").mkdir()
+        (temp_dir / "nested" / "list.json").write_text('{"@id": ["urn:uuid:a"]}')
+
+        top_level, iri_map, metadata = discover_data_hierarchy([credential_file])
+
+        assert top_level == [credential_file]
+        assert list(iri_map) == ["urn:uuid:credential"]
+        assert metadata["fixture_count"] == 0
 
     def test_multiple_dirs(self, temp_dir):
         """Test with multiple directories."""
