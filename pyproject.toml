@@ -72,7 +72,9 @@ dev = [
     "hypothesis>=6.170.15",
     "hypothesis-jsonschema>=0.23.1",
     # Deterministic Turtle serialisation for artifacts/gx/update-from-submodule.sh.
-    "diffable-rdf>=0.4.0",
+    # 0.4.1 is the first release that works under rdflib 8, which the rdflib
+    # override below installs.
+    "diffable-rdf>=0.4.1",
 ]
 
 [project.urls]
@@ -98,6 +100,18 @@ packages = ["omb"]
 
 [tool.hatch.build.targets.sdist]
 include = ["omb", "artifacts", "imports", "docs/registry.json", "pyproject.toml", "README.md", "LICENSE"]
+
+[tool.uv]
+# rdflib: the ENVITED-X snapshot of the ASCS-eV fork, i.e. upstream main plus our open
+# upstream PRs, until a PyPI release carries the JSON-LD fixes. An override, not a
+# source: the fork is the 8.0 pre-release line, and pyshacl and oxrdflib cap rdflib
+# below 8.0, which excludes 8.0 pre-releases. The override bypasses those caps, so
+# move the tag only after `just test` and `just test-unit` pass on it. uv applies
+# overrides when it resolves this project; the published metadata keeps
+# "rdflib>=7.6.0".
+override-dependencies = [
+    "rdflib[html] @ git+https://github.com/ASCS-eV/rdflib.git@envited-x/2026.11.25",
+]
 
 [tool.ruff]
 line-length = 88

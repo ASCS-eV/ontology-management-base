@@ -2,6 +2,9 @@ version = 1
 revision = 3
 requires-python = ">=3.12"
 
+[manifest]
+overrides = [{ name = "rdflib", extras = ["html"], git = "https://github.com/ASCS-eV/rdflib.git?rev=envited-x%2F2026.11.25" }]
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -264,7 +267,7 @@ version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyoxigraph" },
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/92/4c9777d177eda273c1742129e24c43e0f8f911032501ce8056adc14ec370/diffable_rdf-0.4.1.tar.gz", hash = "sha256:be41ab9a3e174705ae23f3da93745af88809654346c7732188e6ed2ec09027d0", size = 845662, upload-time = "2026-11-26T10:46:09.599Z" }
 wheels = [
@@ -673,7 +676,7 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "python-dateutil" },
     { name = "pyyaml" },
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
     { name = "requests" },
     { name = "shexjsg" },
     { name = "sqlalchemy" },
@@ -702,7 +705,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pyoxigraph" },
     { name = "pyyaml" },
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
     { name = "requests" },
 ]
 
@@ -975,7 +978,7 @@ source = { editable = "." }
 dependencies = [
     { name = "oxrdflib" },
     { name = "pyshacl" },
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
 ]
 
 [package.optional-dependencies]
@@ -1024,7 +1027,7 @@ provides-extras = ["publish", "docs"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "diffable-rdf", specifier = ">=0.4.0" },
+    { name = "diffable-rdf", specifier = ">=0.4.1" },
     { name = "hypothesis", specifier = ">=6.170.15" },
     { name = "hypothesis-jsonschema", specifier = ">=0.23.1" },
     { name = "jsonschema", specifier = ">=4.26.0" },
@@ -1091,7 +1094,7 @@ name = "owlrl"
 version = "7.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/08/50dd7fd0c64775d3d6309f35c0cc9a9d635f392f94ee2c4f9122404f7f86/owlrl-7.6.2.tar.gz", hash = "sha256:c743f35c2d908396e77823852bb1ebbce88340cd49961493983bec42c93283a8", size = 48564, upload-time = "2026-07-08T08:38:26.462Z" }
 wheels = [
@@ -1104,7 +1107,7 @@ version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pyoxigraph" },
-    { name = "rdflib" },
+    { name = "rdflib", extra = ["html"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ec/97/589f244d9a12e033f5216595ef17e7975aabe7f906f709a3a8d1cde37288/oxrdflib-0.5.0.tar.gz", hash = "sha256:f83148e2c6d443f7718c6e8936c6b89e36ebb4f1002da69e8f0656e8fb5a0df2", size = 7708, upload-time = "2025-09-13T19:11:32.584Z" }
 wheels = [
@@ -1611,14 +1614,10 @@ wheels = [
 
 [[package]]
 name = "rdflib"
-version = "7.6.0"
-source = { registry = "https://pypi.org/simple" }
+version = "8.0.0a0"
+source = { git = "https://github.com/ASCS-eV/rdflib.git?rev=envited-x%2F2026.11.25#f37f344d505f829ac00b65debd77232260d3b40d" }
 dependencies = [
     { name = "pyparsing" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/98/f5/18bb77b7af9526add0c727a3b2048959847dc5fb030913e2918bf384fec3/rdflib-7.6.0.tar.gz", hash = "sha256:6c831288d5e4a5a7ece85d0ccde9877d512a3d0f02d7c06455d00d6d0ea379df", size = 4943826, upload-time = "2026-02-13T07:15:55.938Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/10/c2/6604a71269e0c1bd75656d5a001432d16f2cc5b8c057140ec797155c295e/rdflib-7.6.0-py3-none-any.whl", hash = "sha256:30c0a3ebf4c0e09215f066be7246794b6492e054e782d7ac2a34c9f70a15e0dd", size = 615416, upload-time = "2026-02-13T07:15:46.487Z" },
 ]
 
 [package.optional-dependencies]
