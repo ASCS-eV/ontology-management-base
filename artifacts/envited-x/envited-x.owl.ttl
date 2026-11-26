@@ -13,21 +13,17 @@
 @prefix gaiax_ontology: <https://w3id.org/gaia-x/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix schema: <https://schema.org/> .
-dcterms:conformsTo a owl:AnnotationProperty .
 dcterms:contributor a owl:AnnotationProperty .
 dcterms:creator a owl:AnnotationProperty .
-dcterms:identifier a owl:AnnotationProperty .
-dcterms:license a owl:AnnotationProperty .
 dcterms:publisher a owl:AnnotationProperty .
 dcterms:references a owl:AnnotationProperty .
 dcterms:source a owl:AnnotationProperty .
-dcterms:title a owl:AnnotationProperty .
 skos:exactMatch a owl:AnnotationProperty .
 skos:inScheme a owl:AnnotationProperty .
 envited-x:CodeArtifactBase a owl:Class ;
 	rdfs:comment "Base class coupling ENVITED-X code assets to gx:CodeArtifact."@en ;
 	rdfs:label "CodeArtifactBase"@en ;
-	rdfs:subClassOf gx:CodeArtifact , _:b04e3db3b29a5 , _:b0baebe70df60 , _:b0fa2ef1b0d1f , _:b10d97f052f7e , _:b14f311180904 , _:b1536eac4f7d9 , _:b7b3fda3fba87 , _:b93310cb0d9f3 , _:ba248fdb58033 , _:bc5750221e694 , _:bdf4b7a9ef085 , _:bf456b25b0d1a ;
+	rdfs:subClassOf gx:CodeArtifact , _:b04e3db3b29a5 , _:b0baebe70df60 , _:b0fa2ef1b0d1f , _:b10d97f052f7e , _:b14f311180904 , _:b7b3fda3fba87 , _:b93310cb0d9f3 , _:ba248fdb58033 , _:bc5750221e694 , _:bf456b25b0d1a ;
 	skos:exactMatch envited-x:CodeArtifactBase ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:CodeAsset a owl:Class ;
@@ -129,7 +125,7 @@ envited-x:Quantity a owl:Class ;
 envited-x:ResourceDescription a owl:Class ;
 	rdfs:comment "A base class for ENVITED-X resource descriptions, containing common metadata such as name and description of the simulation asset."@en ;
 	rdfs:label "ResourceDescription"@en ;
-	rdfs:subClassOf gx:VirtualResource , _:b1af79d072993 , _:b31443fe5dd31 , _:b3b28a38d72e5 , _:b71e7fcfdc4d7 , _:b8ea2a08cf77c , _:bc3153d08ae75 , _:bf99f73e0c312 , _:bfcc6415dd42c ;
+	rdfs:subClassOf gx:VirtualResource , _:b1af79d072993 , _:b31443fe5dd31 , _:b71e7fcfdc4d7 , _:b8ea2a08cf77c , _:bc3153d08ae75 , _:bf99f73e0c312 , _:bfcc6415dd42c ;
 	skos:exactMatch envited-x:ResourceDescription ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
 envited-x:ServiceAsset a owl:Class ;
@@ -165,10 +161,10 @@ envited-x:SoftwareAsset a owl:Class ;
 envited-x:SoftwareResourceBase a owl:Class ;
 	rdfs:comment "Base class coupling ENVITED-X software assets to gx:SoftwareResource."@en ;
 	rdfs:label "SoftwareResourceBase"@en ;
-	rdfs:subClassOf gx:SoftwareResource , _:b1628655121ff , _:b32269d1d086e , _:b3d8bca7a1c12 , _:b87945318a2cd , _:b978b90988f58 , _:ba452f31b5874 , _:bce7d9d8f46be , _:bd2a12c233322 , _:be7cd1f35c937 , _:bef4cc163832c , _:bf5204a8de90e , _:bff5bdf792211 ;
+	rdfs:subClassOf gx:SoftwareResource , _:b1628655121ff , _:b32269d1d086e , _:b3d8bca7a1c12 , _:b87945318a2cd , _:b978b90988f58 , _:ba452f31b5874 , _:bd2a12c233322 , _:be7cd1f35c937 , _:bef4cc163832c , _:bf5204a8de90e ;
 	skos:exactMatch envited-x:SoftwareResourceBase ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
-envited-x:hasCodeArtifact a owl:DatatypeProperty ;
+envited-x:hasCodeArtifact a owl:ObjectProperty ;
 	rdfs:comment "Links a CodeAsset to its GX-compliant CodeArtifactBase."@en ;
 	rdfs:label "hasCodeArtifact"@en ;
 	rdfs:range _:b943fe6ec5047 ;
@@ -194,7 +190,7 @@ envited-x:hasFormat a owl:ObjectProperty ;
 	rdfs:label "hasFormat"@en ;
 	rdfs:range envited-x:Format ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
-envited-x:hasManifest a owl:DatatypeProperty ;
+envited-x:hasManifest a owl:ObjectProperty ;
 	rdfs:comment "Links an asset to its manifest: an inline envited-x:Manifest, or a link that names an external manifest by its IRI, typically a DID."@en ;
 	rdfs:label "hasManifest"@en ;
 	rdfs:range _:b5a697043fc5b ;
@@ -209,18 +205,18 @@ envited-x:hasQuantity a owl:ObjectProperty ;
 	rdfs:label "hasQuantity"@en ;
 	rdfs:range envited-x:Quantity ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
-envited-x:hasResourceDescription a owl:DatatypeProperty ;
+envited-x:hasResourceDescription a owl:ObjectProperty ;
 	rdfs:comment "Links an asset or its subclass to its associated ResourceDescription, which provides essential metadata such as name and description, inline or as a link."@en ;
 	rdfs:label "hasResourceDescription"@en ;
 	rdfs:range _:b37aec43e75dd ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
-envited-x:hasServiceOffering a owl:DatatypeProperty ;
+envited-x:hasServiceOffering a owl:ObjectProperty ;
 	rdfs:comment "Links a ServiceAsset to its GX-compliant ServiceOfferingBase."@en ;
 	rdfs:label "hasServiceOffering"@en ;
 	rdfs:range _:b078ae6cab0fb ;
 	rdfs:subPropertyOf envited-x:hasResourceDescription ;
 	skos:inScheme <https://w3id.org/ascs-ev/envited-x/envited-x/v4> .
-envited-x:hasSoftwareResource a owl:DatatypeProperty ;
+envited-x:hasSoftwareResource a owl:ObjectProperty ;
 	rdfs:comment "Links a SoftwareAsset to its GX-compliant SoftwareResourceBase."@en ;
 	rdfs:label "hasSoftwareResource"@en ;
 	rdfs:range _:b1a53a0889a82 ;
@@ -299,42 +295,6 @@ _:b000cb0306dca a owl:Restriction ;
 _:b005641fe34be rdf:first _:bb993ab02f7c3 ;
 	rdf:rest rdf:nil .
 _:b007764b10ff3 owl:unionOf _:b66247017ef99 .
-_:b00dc0446f152 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_1 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_1 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_10 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_10 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_11 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_11 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_2 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_2 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_3 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_3 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_4 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_4 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_5 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_5 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_6 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_6 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_7 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_7 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_8 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_8 ;
-	owl:onProperty manifest:mimeType .
-_:b00dc0446f152_9 a owl:Restriction ;
-	owl:allValuesFrom _:b6a6455e10a11_9 ;
-	owl:onProperty manifest:mimeType .
 _:b0140abe4c005 owl:unionOf _:b06bed952360e .
 _:b015dfd3709ce rdf:first _:b0ddc8084e33d ;
 	rdf:rest _:b88f2872bcbdf .
@@ -346,9 +306,8 @@ _:b022a4d96a73a rdf:first _:b05c187b8945a ;
 _:b02a89172d6d4 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty envited-x:hasDomainSpecification .
-_:b03a743da3b29 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b374f04bbc8b6 .
+_:b049f2a4d0b97 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
 _:b04dc38d1c4e7 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasSoftwareResource .
@@ -365,18 +324,6 @@ _:b05a15c1ffaa0 a owl:Restriction ;
 _:b05c187b8945a a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty manifest:hasArtifacts .
-_:b066bbb82086c owl:complementOf _:b42d68072b45b .
-_:b066bbb82086c_1 owl:complementOf _:b42d68072b45b_1 .
-_:b066bbb82086c_10 owl:complementOf _:b42d68072b45b_10 .
-_:b066bbb82086c_11 owl:complementOf _:b42d68072b45b_11 .
-_:b066bbb82086c_2 owl:complementOf _:b42d68072b45b_2 .
-_:b066bbb82086c_3 owl:complementOf _:b42d68072b45b_3 .
-_:b066bbb82086c_4 owl:complementOf _:b42d68072b45b_4 .
-_:b066bbb82086c_5 owl:complementOf _:b42d68072b45b_5 .
-_:b066bbb82086c_6 owl:complementOf _:b42d68072b45b_6 .
-_:b066bbb82086c_7 owl:complementOf _:b42d68072b45b_7 .
-_:b066bbb82086c_8 owl:complementOf _:b42d68072b45b_8 .
-_:b066bbb82086c_9 owl:complementOf _:b42d68072b45b_9 .
 _:b06bed952360e rdf:first envited-x:Manifest ;
 	rdf:rest _:bb38b45869038 .
 _:b078ae6cab0fb owl:unionOf _:bde58e8dbbb29 .
@@ -392,31 +339,21 @@ _:b084333a604f6_6 owl:intersectionOf _:b7832866b78d8_6 .
 _:b084333a604f6_7 owl:intersectionOf _:b7832866b78d8_7 .
 _:b084333a604f6_8 owl:intersectionOf _:b7832866b78d8_8 .
 _:b084333a604f6_9 owl:intersectionOf _:b7832866b78d8_9 .
-_:b08650d8faa83 rdf:first _:b9eb6294b75ad_1 ;
-	rdf:rest _:b630b1092441f_1 .
-_:b09d8dddafd6e a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b .
-_:b09d8dddafd6e_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_1 .
-_:b09d8dddafd6e_2 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_2 .
 _:b0b98314559a1 rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:b0baebe70df60 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty schema:name .
-_:b0d79754dcc52 rdf:first _:bc7660e01232b ;
-	rdf:rest _:bb0d39890dae1 .
+_:b0c7c9a1c1204 a owl:Restriction ;
+	owl:allValuesFrom _:bb6c07eeeefb2 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:b0d79754dcc52 rdf:first _:bc7660e01232b_1 ;
+	rdf:rest _:bb0d39890dae1_1 .
 _:b0d79754dcc52_1 rdf:first _:bc7660e01232b_4 ;
-	rdf:rest _:bb0d39890dae1_7 .
+	rdf:rest _:bb0d39890dae1_6 .
 _:b0d91d8904afd a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXManifestCategoryEnum ;
 	owl:onProperty manifest:hasCategory .
-_:b0dc38160e717 rdf:first _:b32a394f9c89b ;
-	rdf:rest _:b440d70e8428c .
 _:b0ddc8084e33d owl:intersectionOf _:b2a2a53bdef13 .
 _:b0ddc8084e33d_1 owl:intersectionOf _:b2a2a53bdef13_1 .
 _:b0ddc8084e33d_2 owl:intersectionOf _:b2a2a53bdef13_2 .
@@ -441,8 +378,6 @@ _:b0f1bc9108823_2 rdf:first _:bcb84c204650b_2 ;
 _:b0fa2ef1b0d1f a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty schema:description .
-_:b0fba7eb50202 a rdfs:Datatype ;
-	owl:intersectionOf _:b0dc38160e717 .
 _:b100bf5ff5494 owl:unionOf _:b3a3bf93f49f2 .
 _:b10d97f052f7e a owl:Restriction ;
 	owl:minCardinality 1 ;
@@ -461,9 +396,6 @@ _:b12c0674d76ac a owl:Restriction ;
 _:b14f311180904 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty gx:resourcePolicy .
-_:b1536eac4f7d9 a owl:Restriction ;
-	owl:allValuesFrom _:b4a2a3eecfafc ;
-	owl:onProperty gx:license .
 _:b153c22f4cbdb a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty envited-x:hasDomainSpecification .
@@ -477,47 +409,14 @@ _:b16fe8279854e rdf:first _:b9e366afd8d27 ;
 	rdf:rest _:bdcf10b944524 .
 _:b177665bcaa42 rdf:first envited-x:Manifest ;
 	rdf:rest _:bdd1d04aae107 .
-_:b17bca3d602c4 rdf:first _:bb104317fa922 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_1 rdf:first _:bb104317fa922_1 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_10 rdf:first _:bb104317fa922_10 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_11 rdf:first _:bb104317fa922_11 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_2 rdf:first _:bb104317fa922_2 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_3 rdf:first _:bb104317fa922_3 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_4 rdf:first _:bb104317fa922_4 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_5 rdf:first _:bb104317fa922_5 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_6 rdf:first _:bb104317fa922_6 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_7 rdf:first _:bb104317fa922_7 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_8 rdf:first _:bb104317fa922_8 ;
-	rdf:rest rdf:nil .
-_:b17bca3d602c4_9 rdf:first _:bb104317fa922_9 ;
-	rdf:rest rdf:nil .
 _:b1886e1c6ad90 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
 _:b18aea31ad42a owl:intersectionOf _:b0d79754dcc52_1 .
-_:b1a20f30cf40e a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_1 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_1 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_2 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_2 ;
-	owl:onProperty manifest:hasFileMetadata .
 _:b1a53a0889a82 owl:unionOf _:b4ef839e1819b .
-_:b1aa02655c5da owl:complementOf _:b1a20f30cf40e .
-_:b1aa02655c5da_1 owl:complementOf _:b1a20f30cf40e_1 .
-_:b1aa02655c5da_2 owl:complementOf _:b1a20f30cf40e_2 .
+_:b1aa02655c5da owl:complementOf _:be97428dae4e4 .
+_:b1aa02655c5da_1 owl:complementOf _:be97428dae4e4_1 .
+_:b1aa02655c5da_2 owl:complementOf _:be97428dae4e4_2 .
 _:b1acb463c2f11 rdf:first _:b5d2e7131f792 ;
 	rdf:rest _:be4131cac93c8 .
 _:b1acb463c2f11_1 rdf:first _:b5d2e7131f792_1 ;
@@ -553,11 +452,29 @@ _:b1c8e549da1d3 a owl:Restriction ;
 _:b1cfcd7a0fad6 a owl:Restriction ;
 	owl:allValuesFrom envited-x:Content ;
 	owl:onProperty envited-x:hasContent .
-_:b1dc4ae38b0e2 rdf:first _:b2e3368bb1d25 ;
+_:b1d4eed9d7bc6 rdf:first "application/ld+json" ;
 	rdf:rest rdf:nil .
-_:b1dc4ae38b0e2_1 rdf:first _:b2e3368bb1d25_1 ;
+_:b1d4eed9d7bc6_1 rdf:first "application/ld+json" ;
 	rdf:rest rdf:nil .
-_:b1dc4ae38b0e2_2 rdf:first _:b2e3368bb1d25_2 ;
+_:b1d4eed9d7bc6_10 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_11 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_2 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_3 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_4 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_5 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_6 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_7 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_8 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b1d4eed9d7bc6_9 rdf:first "application/ld+json" ;
 	rdf:rest rdf:nil .
 _:b1e50c1f2682d a owl:Restriction ;
 	owl:minCardinality 0 ;
@@ -578,10 +495,10 @@ _:b1e92a7fa05ec rdf:first envited-x:CodeArtifactBase ;
 	rdf:rest _:b82effdab2f3f .
 _:b20562d45fbce rdf:first envited-x:isSimulationData ;
 	rdf:rest _:baa3a40775550 .
-_:b20cac2a27c1a rdf:first _:bc7660e01232b_1 ;
-	rdf:rest _:bb0d39890dae1_2 .
-_:b20cac2a27c1a_1 rdf:first _:bc7660e01232b_2 ;
-	rdf:rest _:bb0d39890dae1_4 .
+_:b20cac2a27c1a rdf:first _:bc7660e01232b_6 ;
+	rdf:rest _:bb0d39890dae1_8 .
+_:b20cac2a27c1a_1 rdf:first _:bc7660e01232b_7 ;
+	rdf:rest _:bb0d39890dae1_9 .
 _:b20fc724bde52 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty envited-x:hasQuality .
@@ -611,6 +528,30 @@ _:b2772ecde5462_2 a owl:Restriction ;
 _:b280803f2d172 a owl:Restriction ;
 	owl:allValuesFrom envited-x:Quantity ;
 	owl:onProperty envited-x:hasQuantity .
+_:b28f2b2b5c093 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6 .
+_:b28f2b2b5c093_1 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_1 .
+_:b28f2b2b5c093_10 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_10 .
+_:b28f2b2b5c093_11 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_11 .
+_:b28f2b2b5c093_2 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_2 .
+_:b28f2b2b5c093_3 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_3 .
+_:b28f2b2b5c093_4 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_4 .
+_:b28f2b2b5c093_5 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_5 .
+_:b28f2b2b5c093_6 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_6 .
+_:b28f2b2b5c093_7 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_7 .
+_:b28f2b2b5c093_8 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_8 .
+_:b28f2b2b5c093_9 a rdfs:Datatype ;
+	owl:oneOf _:b1d4eed9d7bc6_9 .
 _:b292edb890cc7 a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty manifest:hasArtifacts .
@@ -670,15 +611,6 @@ _:b2cf485270c11 a owl:Restriction ;
 	owl:onProperty manifest:hasCategory .
 _:b2d8c8a5cdc1d rdf:first _:b0ddc8084e33d_2 ;
 	rdf:rest _:b88f2872bcbdf_2 .
-_:b2e3368bb1d25 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bfaa391e11443 .
-_:b2e3368bb1d25_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bfaa391e11443_1 .
-_:b2e3368bb1d25_2 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bfaa391e11443_2 .
 _:b308438de00d7 a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXLicenseCategoryEnum ;
 	owl:onProperty manifest:hasCategory .
@@ -698,12 +630,6 @@ _:b318ff89e26e9 a owl:Restriction ;
 _:b32269d1d086e a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty schema:description .
-_:b32a394f9c89b a rdfs:Datatype ;
-	owl:unionOf _:b3dbcd31a386c .
-_:b32a394f9c89b_1 a rdfs:Datatype ;
-	owl:unionOf _:b3dbcd31a386c_1 .
-_:b32a394f9c89b_2 a rdfs:Datatype ;
-	owl:unionOf _:b3dbcd31a386c_2 .
 _:b32c4e616d9e5 owl:unionOf _:b503159e989b4 .
 _:b32c4e616d9e5_1 owl:unionOf _:b503159e989b4_1 .
 _:b32c4e616d9e5_2 owl:unionOf _:b503159e989b4_2 .
@@ -749,16 +675,10 @@ _:b341654d721df a owl:Restriction ;
 _:b348689b73130 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasManifest .
-_:b36acb4a7deed a owl:Restriction ;
-	owl:allValuesFrom _:b4c9cf674c7ba ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b3735c8bfde4c owl:unionOf _:ba9c5ae210904_1 .
+_:b3735c8bfde4c owl:unionOf _:ba9c5ae210904_2 .
 _:b3735c8bfde4c_1 owl:unionOf _:ba9c5ae210904_3 .
-_:b3735c8bfde4c_2 owl:unionOf _:ba9c5ae210904_6 .
+_:b3735c8bfde4c_2 owl:unionOf _:ba9c5ae210904_10 .
 _:b3735c8bfde4c_3 owl:unionOf _:ba9c5ae210904_11 .
-_:b374f04bbc8b6 rdf:first _:b3755a75a3508 ;
-	rdf:rest rdf:nil .
-_:b3755a75a3508 xsd:pattern "application/ld+json" .
 _:b37aec43e75dd owl:unionOf _:b9f526ea97707 .
 _:b3883f9918569 rdf:first _:b644460f79753 ;
 	rdf:rest _:b25e1f46a6d00 .
@@ -767,22 +687,11 @@ _:b39e85c3c1f30 a owl:Restriction ;
 	owl:onProperty envited-x:hasDomainSpecification .
 _:b3a3bf93f49f2 rdf:first envited-x:CodeArtifactBase ;
 	rdf:rest _:b59d8eca7091b .
-_:b3a4be3c848e3 a rdfs:Datatype ;
-	owl:intersectionOf _:b7b26dd91b955 .
-_:b3b28a38d72e5 a owl:Restriction ;
-	owl:allValuesFrom _:b0fba7eb50202 ;
-	owl:onProperty gx:license .
 _:b3d8bca7a1c12 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty schema:name .
 _:b3d9a4e568af4 rdf:first envited-x:Manifest ;
 	rdf:rest _:bddc0f99757e5 .
-_:b3dbcd31a386c rdf:first envited-x:SPDX ;
-	rdf:rest _:b1dc4ae38b0e2 .
-_:b3dbcd31a386c_1 rdf:first envited-x:SPDX ;
-	rdf:rest _:b1dc4ae38b0e2_1 .
-_:b3dbcd31a386c_2 rdf:first envited-x:SPDX ;
-	rdf:rest _:b1dc4ae38b0e2_2 .
 _:b3f8d4fee9e48 rdf:first envited-x:isOwner ;
 	rdf:rest _:b634f3f942f40 .
 _:b413a16bb5224 a owl:Restriction ;
@@ -793,48 +702,6 @@ _:b41c3b9253350 a owl:Restriction ;
 	owl:onProperty manifest:hasArtifacts .
 _:b4269ac7b9683 rdf:first envited-x:ServiceOfferingBase ;
 	rdf:rest _:b29db18d2340e .
-_:b42d68072b45b a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_1 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_1 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_10 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_10 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_11 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_11 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_2 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_2 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_3 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_3 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_4 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_4 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_5 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_5 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_6 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_6 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_7 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_7 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_8 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_8 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b42d68072b45b_9 a owl:Restriction ;
-	owl:allValuesFrom _:b00dc0446f152_9 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b440d70e8428c rdf:first xsd:string ;
-	rdf:rest rdf:nil .
-_:b440d70e8428c_1 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
-_:b440d70e8428c_2 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b447644076095 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasArtifacts .
@@ -845,17 +712,10 @@ _:b48c846354fb2 owl:intersectionOf _:be785670e24f5 .
 _:b492832bd8dcf a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty skos:note .
-_:b4a2a3eecfafc a rdfs:Datatype ;
-	owl:intersectionOf _:b4d3f15b3a5a7 .
 _:b4b1734851e95 rdf:first _:b704f054218fb ;
 	rdf:rest rdf:nil .
-_:b4c9cf674c7ba a owl:Restriction ;
-	owl:allValuesFrom _:b03a743da3b29 ;
-	owl:onProperty manifest:mimeType .
 _:b4cd26629634f rdf:first _:b933873bda211 ;
 	rdf:rest rdf:nil .
-_:b4d3f15b3a5a7 rdf:first _:b32a394f9c89b_2 ;
-	rdf:rest _:b440d70e8428c_2 .
 _:b4e27a26d7b57 rdf:first _:b492832bd8dcf ;
 	rdf:rest _:b16cbf116c8b6 .
 _:b4e6b0ff523a2 a owl:Restriction ;
@@ -869,6 +729,7 @@ _:b503159e989b4_1 rdf:first _:b1aa02655c5da_1 ;
 	rdf:rest _:bc8e5dcd8243b_1 .
 _:b503159e989b4_2 rdf:first _:b1aa02655c5da_2 ;
 	rdf:rest _:bc8e5dcd8243b_2 .
+_:b5126252667a6 owl:complementOf _:b0c7c9a1c1204 .
 _:b539eb17e9d4a a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasDataSource .
@@ -899,12 +760,16 @@ _:b58fc1399544e_7 rdf:first _:b870af93dbf9f_7 ;
 	rdf:rest rdf:nil .
 _:b5974b60f6cc2 rdf:first envited-x:ServiceOfferingBase ;
 	rdf:rest _:bf676940fc296 .
+_:b59a8fa836c83 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_1 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_2 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
 _:b59d8eca7091b rdf:first _:bbd8997b29c30 ;
 	rdf:rest rdf:nil .
 _:b5a39bd3e76c9 rdf:first envited-x:isLicense ;
 	rdf:rest _:bd37dfa0b8c93 .
-_:b5a60a2b06a6d rdf:first _:b9eb6294b75ad ;
-	rdf:rest _:b630b1092441f .
 _:b5a697043fc5b owl:unionOf _:b3d9a4e568af4 .
 _:b5b131e840a98 a owl:Restriction ;
 	owl:maxCardinality 1 ;
@@ -922,17 +787,19 @@ _:b5d136b11d698 rdf:first _:b2772ecde5462_1 ;
 _:b5d136b11d698_1 rdf:first _:b2772ecde5462_2 ;
 	rdf:rest _:b6a2b577aad55_1 .
 _:b5d2e7131f792 owl:unionOf _:ba9c5ae210904 .
-_:b5d2e7131f792_1 owl:unionOf _:ba9c5ae210904_2 .
+_:b5d2e7131f792_1 owl:unionOf _:ba9c5ae210904_1 .
 _:b5d2e7131f792_2 owl:unionOf _:ba9c5ae210904_4 .
 _:b5d2e7131f792_3 owl:unionOf _:ba9c5ae210904_5 .
-_:b5d2e7131f792_4 owl:unionOf _:ba9c5ae210904_7 .
-_:b5d2e7131f792_5 owl:unionOf _:ba9c5ae210904_8 .
-_:b5d2e7131f792_6 owl:unionOf _:ba9c5ae210904_9 .
-_:b5d2e7131f792_7 owl:unionOf _:ba9c5ae210904_10 .
+_:b5d2e7131f792_4 owl:unionOf _:ba9c5ae210904_6 .
+_:b5d2e7131f792_5 owl:unionOf _:ba9c5ae210904_7 .
+_:b5d2e7131f792_6 owl:unionOf _:ba9c5ae210904_8 .
+_:b5d2e7131f792_7 owl:unionOf _:ba9c5ae210904_9 .
 _:b5d710e843c31 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty envited-x:hasManifest .
-_:b5e3f34e2629c owl:intersectionOf _:baf39210417e1_1 .
+_:b5e1bd9dae63d a rdfs:Datatype ;
+	owl:oneOf _:b049f2a4d0b97 .
+_:b5e3f34e2629c owl:intersectionOf _:baf39210417e1_2 .
 _:b605fc30d80e5 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty envited-x:hasManifest .
@@ -946,13 +813,9 @@ _:b618bc6c52049_3 rdf:first _:b3735c8bfde4c_3 ;
 	rdf:rest _:b9f39948e8078_3 .
 _:b628d6d047ff5 rdf:first gx:LegalPerson ;
 	rdf:rest _:b5c0eb75f657a .
-_:b630b1092441f rdf:first xsd:string ;
-	rdf:rest rdf:nil .
-_:b630b1092441f_1 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:b634f3f942f40 rdf:first envited-x:isRegistered ;
 	rdf:rest rdf:nil .
-_:b636f236b2ad6 owl:intersectionOf _:b78e9dc55363d_1 .
+_:b636f236b2ad6 owl:intersectionOf _:b78e9dc55363d .
 _:b638948135fe0 rdf:first _:ba0ad2654aafd ;
 	rdf:rest _:b0b98314559a1 .
 _:b63d9b6c3f78b owl:intersectionOf _:b015dfd3709ce .
@@ -973,55 +836,10 @@ _:b66247017ef99 rdf:first envited-x:Manifest ;
 _:b66c2df880c78 a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXManifestCategoryEnum ;
 	owl:onProperty manifest:hasCategory .
-_:b692a029d8f5f a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_1 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_1 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_2 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_2 ;
-	owl:onProperty manifest:mimeType .
 _:b6a2b577aad55 rdf:first _:b12b824f739b8 ;
 	rdf:rest rdf:nil .
 _:b6a2b577aad55_1 rdf:first _:b12b824f739b8_1 ;
 	rdf:rest rdf:nil .
-_:b6a6455e10a11 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4 .
-_:b6a6455e10a11_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_1 .
-_:b6a6455e10a11_10 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_10 .
-_:b6a6455e10a11_11 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_11 .
-_:b6a6455e10a11_2 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_2 .
-_:b6a6455e10a11_3 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_3 .
-_:b6a6455e10a11_4 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_4 .
-_:b6a6455e10a11_5 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_5 .
-_:b6a6455e10a11_6 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_6 .
-_:b6a6455e10a11_7 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_7 .
-_:b6a6455e10a11_8 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_8 .
-_:b6a6455e10a11_9 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b17bca3d602c4_9 .
 _:b6b471795c24b a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty manifest:iri .
@@ -1037,13 +855,55 @@ _:b6b471795c24b_3 a owl:Restriction ;
 _:b6b5b26efbb61 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty envited-x:hasSoftwareResource .
+_:b6d44310dab74 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_1 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_1 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_10 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_10 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_11 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_11 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_2 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_2 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_3 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_3 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_4 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_4 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_5 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_5 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_6 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_6 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_7 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_7 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_8 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_8 ;
+	owl:onProperty manifest:mimeType .
+_:b6d44310dab74_9 a owl:Restriction ;
+	owl:allValuesFrom _:b28f2b2b5c093_9 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_1 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_1 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_2 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_2 ;
+	owl:onProperty manifest:mimeType .
 _:b6f9b9258e9ec owl:intersectionOf _:b3140c8ce1c66 .
 _:b704f054218fb owl:intersectionOf _:b0d79754dcc52 .
 _:b70caa7aacc02 rdf:first _:be25845d84dc5 ;
 	rdf:rest _:b9082ba8440b6 .
-_:b7163d19b38ee xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
-_:b7163d19b38ee_1 xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
-_:b7163d19b38ee_2 xsd:pattern "^LicenseRef-[a-zA-Z0-9\\-\\.]+$" .
 _:b71e7fcfdc4d7 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty schema:description .
@@ -1098,19 +958,17 @@ _:b7832866b78d8_8 rdf:first _:b2a670d19c6f5_8 ;
 	rdf:rest _:bcc34e5d1eb37_8 .
 _:b7832866b78d8_9 rdf:first _:b2a670d19c6f5_9 ;
 	rdf:rest _:bcc34e5d1eb37_9 .
-_:b78e9dc55363d rdf:first _:bc7660e01232b_3 ;
+_:b78e9dc55363d rdf:first _:bc7660e01232b ;
+	rdf:rest _:bb0d39890dae1 .
+_:b78e9dc55363d_1 rdf:first _:bc7660e01232b_2 ;
+	rdf:rest _:bb0d39890dae1_4 .
+_:b78e9dc55363d_2 rdf:first _:bc7660e01232b_3 ;
 	rdf:rest _:bb0d39890dae1_5 .
-_:b78e9dc55363d_1 rdf:first _:bc7660e01232b_5 ;
-	rdf:rest _:bb0d39890dae1_8 .
-_:b78e9dc55363d_2 rdf:first _:bc7660e01232b_6 ;
-	rdf:rest _:bb0d39890dae1_9 .
 _:b7a9eb2c784fe a owl:Restriction ;
 	owl:allValuesFrom gx:TermsAndConditions ;
 	owl:onProperty gx:serviceOfferingTermsAndConditions .
 _:b7af6b1a108f9 rdf:first _:b0d91d8904afd ;
 	rdf:rest rdf:nil .
-_:b7b26dd91b955 rdf:first _:b32a394f9c89b_1 ;
-	rdf:rest _:b440d70e8428c_1 .
 _:b7b3fda3fba87 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:copyrightOwnedBy .
@@ -1138,9 +996,6 @@ _:b7d691d0ce124_6 a owl:Restriction ;
 _:b7d691d0ce124_7 a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXAccessRoleEnum ;
 	owl:onProperty manifest:hasAccessRole .
-_:b7e158ee78f51 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_1 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_2 xsd:pattern "application/ld+json" .
 _:b8020e5fec251 a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty manifest:hasArtifacts .
@@ -1230,10 +1085,21 @@ _:b93310cb0d9f3 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:license .
 _:b933873bda211 owl:intersectionOf _:baf39210417e1 .
-_:b933873bda211_1 owl:intersectionOf _:baf39210417e1_2 .
+_:b933873bda211_1 owl:intersectionOf _:baf39210417e1_1 .
 _:b933873bda211_2 owl:intersectionOf _:baf39210417e1_3 .
 _:b943fe6ec5047 owl:unionOf _:b1e92a7fa05ec .
-_:b9787d7c3ba83 owl:complementOf _:b36acb4a7deed .
+_:b957c1ae9f464 owl:complementOf _:be0ecd608fed5 .
+_:b957c1ae9f464_1 owl:complementOf _:be0ecd608fed5_1 .
+_:b957c1ae9f464_10 owl:complementOf _:be0ecd608fed5_10 .
+_:b957c1ae9f464_11 owl:complementOf _:be0ecd608fed5_11 .
+_:b957c1ae9f464_2 owl:complementOf _:be0ecd608fed5_2 .
+_:b957c1ae9f464_3 owl:complementOf _:be0ecd608fed5_3 .
+_:b957c1ae9f464_4 owl:complementOf _:be0ecd608fed5_4 .
+_:b957c1ae9f464_5 owl:complementOf _:be0ecd608fed5_5 .
+_:b957c1ae9f464_6 owl:complementOf _:be0ecd608fed5_6 .
+_:b957c1ae9f464_7 owl:complementOf _:be0ecd608fed5_7 .
+_:b957c1ae9f464_8 owl:complementOf _:be0ecd608fed5_8 .
+_:b957c1ae9f464_9 owl:complementOf _:be0ecd608fed5_9 .
 _:b978b90988f58 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty schema:description .
@@ -1244,8 +1110,6 @@ _:b984d74f64a79 rdf:first _:b0ddc8084e33d_1 ;
 _:b98b5542dbbfd a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasManifest .
-_:b9befc773464b rdf:first _:b9787d7c3ba83 ;
-	rdf:rest _:b77718bff1ff4 .
 _:b9bf90d765af2 a owl:Restriction ;
 	owl:allValuesFrom _:bf69a632b3b62 ;
 	owl:onProperty envited-x:hasSoftwareResource .
@@ -1282,9 +1146,7 @@ _:b9d7322a3aacc_9 rdf:first _:bef703b6638b0_9 ;
 _:b9dae98589376 rdf:first _:ba913e4af7d7d ;
 	rdf:rest _:b86d5954db900 .
 _:b9e366afd8d27 owl:unionOf _:b628d6d047ff5 .
-_:b9e6a87d334cf owl:intersectionOf _:b78e9dc55363d_2 .
-_:b9eb6294b75ad owl:unionOf _:bf157d73da166 .
-_:b9eb6294b75ad_1 owl:unionOf _:bf157d73da166_1 .
+_:b9e6a87d334cf owl:intersectionOf _:b78e9dc55363d_1 .
 _:b9f39948e8078 rdf:first _:b1e54cf8b8c77 ;
 	rdf:rest _:b73955dace765 .
 _:b9f39948e8078_1 rdf:first _:b1e54cf8b8c77_1 ;
@@ -1298,8 +1160,6 @@ _:b9f526ea97707 rdf:first envited-x:ResourceDescription ;
 _:b9ffb8b66e3c7 a owl:Restriction ;
 	owl:allValuesFrom envited-x:DomainSpecification ;
 	owl:onProperty envited-x:hasDomainSpecification .
-_:ba066f4c5c841 a rdfs:Datatype ;
-	owl:intersectionOf _:b08650d8faa83 .
 _:ba0ad2654aafd owl:intersectionOf _:be8bbac3a9726 .
 _:ba18003019cd3 a owl:Restriction ;
 	owl:allValuesFrom envited-x:DomainSpecification ;
@@ -1310,6 +1170,8 @@ _:ba194b2983038 a owl:Restriction ;
 _:ba248fdb58033 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty schema:description .
+_:ba2ba71b1654d rdf:first _:b5126252667a6 ;
+	rdf:rest _:b77718bff1ff4 .
 _:ba452f31b5874 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty schema:name .
@@ -1328,33 +1190,31 @@ _:ba84efe797bad_2 owl:intersectionOf _:b0f1bc9108823_2 .
 _:ba913e4af7d7d a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXAccessRoleEnum ;
 	owl:onProperty manifest:hasAccessRole .
-_:ba97f3fab8fd2 a rdfs:Datatype ;
-	owl:intersectionOf _:b5a60a2b06a6d .
 _:ba9b59cdaea06 rdf:first _:b48c846354fb2 ;
 	rdf:rest rdf:nil .
-_:ba9c5ae210904 rdf:first _:b066bbb82086c ;
+_:ba9c5ae210904 rdf:first _:b957c1ae9f464 ;
 	rdf:rest _:bb16e4832ab1a .
-_:ba9c5ae210904_1 rdf:first _:b066bbb82086c_1 ;
+_:ba9c5ae210904_1 rdf:first _:b957c1ae9f464_1 ;
 	rdf:rest _:bb16e4832ab1a_1 .
-_:ba9c5ae210904_10 rdf:first _:b066bbb82086c_10 ;
+_:ba9c5ae210904_10 rdf:first _:b957c1ae9f464_10 ;
 	rdf:rest _:bb16e4832ab1a_10 .
-_:ba9c5ae210904_11 rdf:first _:b066bbb82086c_11 ;
+_:ba9c5ae210904_11 rdf:first _:b957c1ae9f464_11 ;
 	rdf:rest _:bb16e4832ab1a_11 .
-_:ba9c5ae210904_2 rdf:first _:b066bbb82086c_2 ;
+_:ba9c5ae210904_2 rdf:first _:b957c1ae9f464_2 ;
 	rdf:rest _:bb16e4832ab1a_2 .
-_:ba9c5ae210904_3 rdf:first _:b066bbb82086c_3 ;
+_:ba9c5ae210904_3 rdf:first _:b957c1ae9f464_3 ;
 	rdf:rest _:bb16e4832ab1a_3 .
-_:ba9c5ae210904_4 rdf:first _:b066bbb82086c_4 ;
+_:ba9c5ae210904_4 rdf:first _:b957c1ae9f464_4 ;
 	rdf:rest _:bb16e4832ab1a_4 .
-_:ba9c5ae210904_5 rdf:first _:b066bbb82086c_5 ;
+_:ba9c5ae210904_5 rdf:first _:b957c1ae9f464_5 ;
 	rdf:rest _:bb16e4832ab1a_5 .
-_:ba9c5ae210904_6 rdf:first _:b066bbb82086c_6 ;
+_:ba9c5ae210904_6 rdf:first _:b957c1ae9f464_6 ;
 	rdf:rest _:bb16e4832ab1a_6 .
-_:ba9c5ae210904_7 rdf:first _:b066bbb82086c_7 ;
+_:ba9c5ae210904_7 rdf:first _:b957c1ae9f464_7 ;
 	rdf:rest _:bb16e4832ab1a_7 .
-_:ba9c5ae210904_8 rdf:first _:b066bbb82086c_8 ;
+_:ba9c5ae210904_8 rdf:first _:b957c1ae9f464_8 ;
 	rdf:rest _:bb16e4832ab1a_8 .
-_:ba9c5ae210904_9 rdf:first _:b066bbb82086c_9 ;
+_:ba9c5ae210904_9 rdf:first _:b957c1ae9f464_9 ;
 	rdf:rest _:bb16e4832ab1a_9 .
 _:ba9cc68e5c45e a owl:Restriction ;
 	owl:allValuesFrom _:b007764b10ff3 ;
@@ -1369,11 +1229,11 @@ _:bac70b3758e8f a owl:Restriction ;
 	owl:onProperty sh:conformsTo .
 _:bac9ec5941ed3 owl:intersectionOf _:b16fe8279854e .
 _:baf39210417e1 rdf:first _:bd9ff6f335968 ;
-	rdf:rest _:bb0d39890dae1_1 .
+	rdf:rest _:bb0d39890dae1_2 .
 _:baf39210417e1_1 rdf:first _:bd9ff6f335968_1 ;
 	rdf:rest _:bb0d39890dae1_3 .
 _:baf39210417e1_2 rdf:first _:bd9ff6f335968_2 ;
-	rdf:rest _:bb0d39890dae1_6 .
+	rdf:rest _:bb0d39890dae1_10 .
 _:baf39210417e1_3 rdf:first _:bd9ff6f335968_3 ;
 	rdf:rest _:bb0d39890dae1_11 .
 _:baf5e16f82266 rdf:first envited-x:isPublic ;
@@ -1405,18 +1265,6 @@ _:bb0d39890dae1_8 rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:bb0d39890dae1_9 rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
-_:bb104317fa922 xsd:pattern "application/ld+json" .
-_:bb104317fa922_1 xsd:pattern "application/ld+json" .
-_:bb104317fa922_10 xsd:pattern "application/ld+json" .
-_:bb104317fa922_11 xsd:pattern "application/ld+json" .
-_:bb104317fa922_2 xsd:pattern "application/ld+json" .
-_:bb104317fa922_3 xsd:pattern "application/ld+json" .
-_:bb104317fa922_4 xsd:pattern "application/ld+json" .
-_:bb104317fa922_5 xsd:pattern "application/ld+json" .
-_:bb104317fa922_6 xsd:pattern "application/ld+json" .
-_:bb104317fa922_7 xsd:pattern "application/ld+json" .
-_:bb104317fa922_8 xsd:pattern "application/ld+json" .
-_:bb104317fa922_9 xsd:pattern "application/ld+json" .
 _:bb121edf60108 rdf:first envited-x:SoftwareResourceBase ;
 	rdf:rest _:b85115ac7fcf3 .
 _:bb16e4832ab1a rdf:first _:b084333a604f6 ;
@@ -1446,11 +1294,14 @@ _:bb16e4832ab1a_9 rdf:first _:b084333a604f6_9 ;
 _:bb31f8e648339 a owl:Restriction ;
 	owl:allValuesFrom _:bf504a4f9df28 ;
 	owl:onProperty manifest:hasManifestReference .
-_:bb38b45869038 rdf:first _:b933873bda211_1 ;
+_:bb38b45869038 rdf:first _:b933873bda211_2 ;
 	rdf:rest rdf:nil .
 _:bb4d9af98fd24 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:providedBy .
+_:bb6c07eeeefb2 a owl:Restriction ;
+	owl:allValuesFrom _:b5e1bd9dae63d ;
+	owl:onProperty manifest:mimeType .
 _:bb7dc5053041a a owl:Restriction ;
 	owl:allValuesFrom _:b2732d39f4044 ;
 	owl:onProperty envited-x:hasManifest .
@@ -1461,21 +1312,11 @@ _:bb85201fd510b_1 rdf:first _:b92724ef1a900_1 ;
 _:bb85201fd510b_2 rdf:first _:b92724ef1a900_2 ;
 	rdf:rest rdf:nil .
 _:bb8aebd8cf191 owl:intersectionOf _:b2d8c8a5cdc1d .
-_:bb979130b86e1 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
-_:bb979130b86e1_1 rdf:first xsd:string ;
-	rdf:rest rdf:nil .
 _:bb993ab02f7c3 owl:intersectionOf _:b20cac2a27c1a_1 .
-_:bba013a40090b rdf:first _:b7e158ee78f51 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_1 rdf:first _:b7e158ee78f51_1 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_2 rdf:first _:b7e158ee78f51_2 ;
-	rdf:rest rdf:nil .
 _:bbca9b5ffc15e a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasReferencedArtifacts .
-_:bbd8997b29c30 owl:intersectionOf _:b78e9dc55363d .
+_:bbd8997b29c30 owl:intersectionOf _:b78e9dc55363d_2 .
 _:bbdc96be89168 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasAccessRole .
@@ -1554,9 +1395,6 @@ _:bccd43b287ba3 a owl:Restriction ;
 _:bcce7e407df3e a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty envited-x:hasContent .
-_:bce7d9d8f46be a owl:Restriction ;
-	owl:allValuesFrom _:ba97f3fab8fd2 ;
-	owl:onProperty gx:copyrightOwnedBy .
 _:bd2a12c233322 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:resourcePolicy .
@@ -1567,28 +1405,67 @@ _:bd4cb42b7cd6a rdf:first envited-x:ResourceDescription ;
 _:bd68b0bf4e710 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:hasCategory .
-_:bd70b3872acb0 owl:unionOf _:b9befc773464b .
+_:bd70b3872acb0 owl:unionOf _:ba2ba71b1654d .
 _:bd9ff6f335968 owl:intersectionOf _:b618bc6c52049 .
 _:bd9ff6f335968_1 owl:intersectionOf _:b618bc6c52049_1 .
 _:bd9ff6f335968_2 owl:intersectionOf _:b618bc6c52049_2 .
 _:bd9ff6f335968_3 owl:intersectionOf _:b618bc6c52049_3 .
 _:bdcf10b944524 rdf:first gx:Participant ;
 	rdf:rest rdf:nil .
-_:bdd1d04aae107 rdf:first _:b933873bda211_2 ;
+_:bdd1d04aae107 rdf:first _:b933873bda211_1 ;
 	rdf:rest rdf:nil .
 _:bddc0f99757e5 rdf:first _:b5e3f34e2629c ;
 	rdf:rest rdf:nil .
 _:bde58e8dbbb29 rdf:first envited-x:ServiceOfferingBase ;
 	rdf:rest _:b005641fe34be .
-_:bdf4b7a9ef085 a owl:Restriction ;
-	owl:allValuesFrom _:ba066f4c5c841 ;
-	owl:onProperty gx:copyrightOwnedBy .
 _:be01c8ce410b3 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasQuality .
 _:be0eb0513d201 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:hasReferencedArtifacts .
+_:be0ecd608fed5 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_1 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_1 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_10 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_10 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_11 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_11 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_2 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_2 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_3 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_3 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_4 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_4 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_5 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_5 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_6 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_6 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_7 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_7 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_8 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_8 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be0ecd608fed5_9 a owl:Restriction ;
+	owl:allValuesFrom _:b6d44310dab74_9 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be219a801a1de a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83 .
+_:be219a801a1de_1 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_1 .
+_:be219a801a1de_2 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_2 .
 _:be25845d84dc5 owl:intersectionOf _:b3883f9918569 .
 _:be38fafc2cdfb rdf:first _:b292edb890cc7 ;
 	rdf:rest _:b9794b78e3a81 .
@@ -1608,8 +1485,8 @@ _:be4131cac93c8_6 rdf:first _:b7d691d0ce124_6 ;
 	rdf:rest _:b58fc1399544e_6 .
 _:be4131cac93c8_7 rdf:first _:b7d691d0ce124_7 ;
 	rdf:rest _:b58fc1399544e_7 .
-_:be785670e24f5 rdf:first _:bc7660e01232b_7 ;
-	rdf:rest _:bb0d39890dae1_10 .
+_:be785670e24f5 rdf:first _:bc7660e01232b_5 ;
+	rdf:rest _:bb0d39890dae1_7 .
 _:be7c0e4451ee6 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty envited-x:hasManifest .
@@ -1618,6 +1495,15 @@ _:be7cd1f35c937 a owl:Restriction ;
 	owl:onProperty gx:resourcePolicy .
 _:be8bbac3a9726 rdf:first _:bd70b3872acb0 ;
 	rdf:rest _:b9dae98589376 .
+_:be97428dae4e4 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_1 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_1 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_2 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_2 ;
+	owl:onProperty manifest:hasFileMetadata .
 _:be975f11b69e4 owl:intersectionOf _:b638948135fe0 .
 _:bea0e7ba6003c a owl:Restriction ;
 	owl:minCardinality 0 ;
@@ -1680,10 +1566,6 @@ _:bef703b6638b0_9 a owl:Restriction ;
 _:bf10606980694 a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXAccessRoleEnum ;
 	owl:onProperty manifest:hasAccessRole .
-_:bf157d73da166 rdf:first gx:LegalPerson ;
-	rdf:rest _:bb979130b86e1 .
-_:bf157d73da166_1 rdf:first gx:LegalPerson ;
-	rdf:rest _:bb979130b86e1_1 .
 _:bf1e1a4aeb8b5 a owl:Restriction ;
 	owl:allValuesFrom envited-x:EnvitedXManifestCategoryEnum ;
 	owl:onProperty manifest:hasCategory .
@@ -1715,12 +1597,6 @@ _:bf69a632b3b62 owl:unionOf _:bb121edf60108 .
 _:bf99f73e0c312 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty gx:license .
-_:bfaa391e11443 rdf:first _:b7163d19b38ee ;
-	rdf:rest rdf:nil .
-_:bfaa391e11443_1 rdf:first _:b7163d19b38ee_1 ;
-	rdf:rest rdf:nil .
-_:bfaa391e11443_2 rdf:first _:b7163d19b38ee_2 ;
-	rdf:rest rdf:nil .
 _:bfafa90b0a380 rdf:first _:b5cd2aeaee6c6 ;
 	rdf:rest rdf:nil .
 _:bfc4c13eb44fe a owl:Restriction ;
@@ -1738,6 +1614,3 @@ _:bfd11631e7c1c_1 a owl:Restriction ;
 _:bfd11631e7c1c_2 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty skos:note .
-_:bff5bdf792211 a owl:Restriction ;
-	owl:allValuesFrom _:b3a4be3c848e3 ;
-	owl:onProperty gx:license .

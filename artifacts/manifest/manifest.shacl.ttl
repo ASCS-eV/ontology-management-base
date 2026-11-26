@@ -33,7 +33,7 @@ manifest:FileMetadataShape a sh:NodeShape ;
 	rdfs:comment "Represents the properties of a data file referenced within a Link instance."@en ;
 	sh:closed false ;
 	sh:ignoredProperties _:bd8c61f41c8f2 ;
-	sh:property _:b4e4ef07ba03e , _:b552b271e6c79 , _:b76d1d2b898a9 , _:b9824406cc335 , _:ba3b55228ce8f , _:bc03e0ce73259 , _:bea5acc110a61 ;
+	sh:property _:b03d98da25e90 , _:b4e4ef07ba03e , _:b552b271e6c79 , _:b76d1d2b898a9 , _:b9131556ff476 , _:b9824406cc335 , _:bc03e0ce73259 ;
 	sh:targetClass manifest:FileMetadata .
 manifest:LicenseCategoryShape a sh:NodeShape ;
 	sh:closed false ;
@@ -80,6 +80,15 @@ _:b00de15d53298_1 sh:property _:b06dce5535150_1 , _:b1956a151a8c8_1 , _:bc79a44d
 _:b00de15d53298_2 sh:property _:b06dce5535150_2 , _:b1956a151a8c8_2 , _:bc79a44d9b731_2 .
 _:b036cea6d566b rdf:first rdf:type ;
 	rdf:rest rdf:nil .
+_:b03d98da25e90 sh:datatype xsd:string ;
+	sh:description "Defines the MIME type of the file."@en ;
+	sh:maxCount 1 ;
+	sh:message "mimeType (FileMetadata): Defines the MIME type of the file."@en ;
+	sh:minCount 1 ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path manifest:mimeType ;
+	sh:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&\\^_.+\\-]+$|^x-[a-zA-Z0-9!#$&\\^_.+\\-]+/[a-zA-Z0-9!#$&\\^_.+\\-]+$" .
 _:b068ca8f756a7 sh:property _:b14bc4291ba12 .
 _:b068ca8f756a7_1 sh:property _:b14bc4291ba12_1 .
 _:b068ca8f756a7_2 sh:property _:b14bc4291ba12_2 .
@@ -196,8 +205,8 @@ _:b1ef93801069a sh:class manifest:AccessRole ;
 	sh:path manifest:hasAccessRole .
 _:b26d1879d5ec1 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:b280724d3de0d rdf:first _:b16673827dd64 ;
-	rdf:rest _:be307a32b01d6 .
+_:b280724d3de0d rdf:first _:b16673827dd64_1 ;
+	rdf:rest _:be307a32b01d6_1 .
 _:b29fd1fd84066 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
 _:b2e4e3eac7d87 sh:class manifest:Category ;
@@ -208,7 +217,7 @@ _:b2e4e3eac7d87 sh:class manifest:Category ;
 	sh:nodeKind sh:IRI ;
 	sh:order 4 ;
 	sh:path manifest:hasCategory .
-_:b33060e5a3e0e sh:property _:b7873f894504f_2 , _:b9b88442229ac_2 .
+_:b33060e5a3e0e sh:property _:b7873f894504f , _:b9b88442229ac .
 _:b38b66393a9c7 sh:description "The IRI of a named individual."@en ;
 	sh:maxCount 1 ;
 	sh:message "id (Category): The IRI of a named individual."@en ;
@@ -277,7 +286,7 @@ _:b5680ca11d49c sh:datatype xsd:float ;
 	sh:path manifest:height .
 _:b5b31114b11b1 rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:b5b3def0e73fb sh:property _:bde7578b31340_1 .
+_:b5b3def0e73fb sh:property _:bde7578b31340_4 .
 _:b5d2324419ca9 rdf:first _:b16673827dd64_2 ;
 	rdf:rest _:be307a32b01d6_2 .
 _:b5e6ff4e306f3 rdf:first _:ba4f696121126 ;
@@ -316,8 +325,8 @@ _:b7873f894504f_2 sh:minCount 1 ;
 _:b7873f894504f_3 sh:minCount 1 ;
 	sh:path manifest:mimeType .
 _:b79d25ad31c48 sh:property _:bde7578b31340 .
-_:b79d25ad31c48_1 sh:property _:bde7578b31340_3 .
-_:b79d25ad31c48_2 sh:property _:bde7578b31340_4 .
+_:b79d25ad31c48_1 sh:property _:bde7578b31340_1 .
+_:b79d25ad31c48_2 sh:property _:bde7578b31340_3 .
 _:b7be35e24e470 rdf:first "inches" ;
 	rdf:rest _:bef412037cb71 .
 _:b7ccf1788e60c rdf:first _:bfc4c9f9168aa ;
@@ -331,6 +340,14 @@ _:b8637adb60ca1 sh:description "The IRI of a named individual."@en ;
 	sh:path manifest:id .
 _:b89c49a21c704 sh:minCount 1 ;
 	sh:path manifest:unit .
+_:b9131556ff476 sh:datatype xsd:string ;
+	sh:description "Specifies the file name (excluding the path) along with its extension."@en ;
+	sh:maxCount 1 ;
+	sh:message "filename (FileMetadata): Specifies the file name (excluding the path) along with its extension."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 4 ;
+	sh:path manifest:filename ;
+	sh:pattern "^([\\w,\\s   -  -   　\\-]+(\\.[\\w,\\s   -  -   　\\-]+)*)\\.([A-Za-z0-9]+)$" .
 _:b916a4a303957 sh:class manifest:LicenseCategory ;
 	sh:minCount 1 ;
 	sh:nodeKind sh:IRI ;
@@ -366,14 +383,6 @@ _:b9eb0eb385f6b sh:description "The IRI of a named individual."@en ;
 	sh:nodeKind sh:IRI ;
 	sh:order 0 ;
 	sh:path manifest:id .
-_:ba3b55228ce8f sh:datatype xsd:string ;
-	sh:description "Specifies the file name (excluding the path) along with its extension."@en ;
-	sh:maxCount 1 ;
-	sh:message "filename (FileMetadata): Specifies the file name (excluding the path) along with its extension."@en ;
-	sh:nodeKind sh:Literal ;
-	sh:order 4 ;
-	sh:path manifest:filename ;
-	sh:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
 _:ba4f696121126 sh:property _:b06dce5535150_4 , _:b1956a151a8c8_4 , _:bc79a44d9b731_4 .
 _:ba7fb0dab929b sh:class manifest:Category ;
 	sh:description "General property to indicate the category of an artifact."@en ;
@@ -383,7 +392,7 @@ _:ba7fb0dab929b sh:class manifest:Category ;
 	sh:nodeKind sh:IRI ;
 	sh:order 4 ;
 	sh:path manifest:hasCategory .
-_:bac47c1415a3a sh:property _:b7873f894504f , _:b9b88442229ac .
+_:bac47c1415a3a sh:property _:b7873f894504f_2 , _:b9b88442229ac_2 .
 _:baf3941d5ec2c sh:description "IRI required if the file is RDF/JSON-LD."@en ;
 	sh:maxCount 1 ;
 	sh:message "iri (ArtifactLink): IRI required if the file is RDF/JSON-LD."@en ;
@@ -520,15 +529,6 @@ _:be53f5e78d60b sh:datatype xsd:float ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path manifest:width .
-_:bea5acc110a61 sh:datatype xsd:string ;
-	sh:description "Defines the MIME type of the file."@en ;
-	sh:maxCount 1 ;
-	sh:message "mimeType (FileMetadata): Defines the MIME type of the file."@en ;
-	sh:minCount 1 ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path manifest:mimeType ;
-	sh:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
 _:beaed71ba61f7 sh:description "The IRI of a named individual."@en ;
 	sh:maxCount 1 ;
 	sh:message "id (ManifestCategory): The IRI of a named individual."@en ;
@@ -537,8 +537,8 @@ _:beaed71ba61f7 sh:description "The IRI of a named individual."@en ;
 	sh:path manifest:id .
 _:bef412037cb71 rdf:first "pixels" ;
 	rdf:rest rdf:nil .
-_:bf4a88e3cfade rdf:first _:b16673827dd64_1 ;
-	rdf:rest _:be307a32b01d6_1 .
+_:bf4a88e3cfade rdf:first _:b16673827dd64 ;
+	rdf:rest _:be307a32b01d6 .
 _:bf4f44bc40200 sh:description "IRI required if the file is RDF/JSON-LD."@en ;
 	sh:maxCount 1 ;
 	sh:message "iri (ManifestLink): IRI required if the file is RDF/JSON-LD."@en ;

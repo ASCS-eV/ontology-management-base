@@ -269,42 +269,37 @@ manifest:width a owl:DatatypeProperty ;
 	owl:versionInfo "v6"@en .
 ontology-header:OntologyHeader a owl:Class .
 linkml:permissible_values a owl:AnnotationProperty .
+_:b0226582591a1 a owl:Restriction ;
+	owl:allValuesFrom xsd:anyURI ;
+	owl:onProperty manifest:filePath .
+_:b0226582591a1_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:anyURI ;
+	owl:onProperty manifest:filePath .
 _:b09a084d9ce06 rdf:first _:bc86e82c5ebe8 ;
 	rdf:rest _:b595946a1709c .
 _:b09a084d9ce06_1 rdf:first _:bc86e82c5ebe8_1 ;
 	rdf:rest _:b595946a1709c_1 .
-_:b09d8dddafd6e a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b .
-_:b09d8dddafd6e_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_1 .
-_:b09d8dddafd6e_2 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_2 .
-_:b09d8dddafd6e_3 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_3 .
-_:b09d8dddafd6e_4 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_4 .
-_:b09d8dddafd6e_5 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_5 .
-_:b09d8dddafd6e_6 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bba013a40090b_6 .
 _:b0b2724ad608b a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty manifest:height .
 _:b0b77e73ad61c a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:hasAccessRole .
-_:b0ba8caeff02e rdf:first _:b41efb08e8a04_1 ;
+_:b0ba8caeff02e rdf:first _:bb7ff8b5614a7_1 ;
+	rdf:rest rdf:nil .
+_:b0caeb303c783 rdf:first _:b478f7bd7b428 ;
+	rdf:rest rdf:nil .
+_:b0caeb303c783_1 rdf:first _:b478f7bd7b428_1 ;
 	rdf:rest rdf:nil .
 _:b0d23e1a24d5f a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
+_:b0d888096a9be a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:height .
+_:b0d888096a9be_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:height .
 _:b0db731d2a909 a owl:Restriction ;
 	owl:allValuesFrom _:be5aad544e77b ;
 	owl:onProperty manifest:hasManifestReference .
@@ -342,33 +337,12 @@ _:b19b443055e4e a owl:Restriction ;
 _:b19cd7dd2e7c0 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
-_:b1a20f30cf40e a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_1 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_1 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_2 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_2 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_3 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_3 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_4 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_4 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_5 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_5 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1a20f30cf40e_6 a owl:Restriction ;
-	owl:allValuesFrom _:b692a029d8f5f_6 ;
-	owl:onProperty manifest:hasFileMetadata .
-_:b1aa02655c5da owl:complementOf _:b1a20f30cf40e .
-_:b1aa02655c5da_1 owl:complementOf _:b1a20f30cf40e_1 .
-_:b1aa02655c5da_2 owl:complementOf _:b1a20f30cf40e_2 .
-_:b1aa02655c5da_3 owl:complementOf _:b1a20f30cf40e_3 .
-_:b1aa02655c5da_4 owl:complementOf _:b1a20f30cf40e_4 .
-_:b1aa02655c5da_5 owl:complementOf _:b1a20f30cf40e_6 .
+_:b1aa02655c5da owl:complementOf _:be97428dae4e4 .
+_:b1aa02655c5da_1 owl:complementOf _:be97428dae4e4_1 .
+_:b1aa02655c5da_2 owl:complementOf _:be97428dae4e4_2 .
+_:b1aa02655c5da_3 owl:complementOf _:be97428dae4e4_3 .
+_:b1aa02655c5da_4 owl:complementOf _:be97428dae4e4_4 .
+_:b1aa02655c5da_5 owl:complementOf _:be97428dae4e4_5 .
 _:b1b1b45407273 rdf:first manifest:Dimensions ;
 	rdf:rest rdf:nil .
 _:b1c6f48f2aaf6 a rdfs:Datatype ;
@@ -376,13 +350,7 @@ _:b1c6f48f2aaf6 a rdfs:Datatype ;
 _:b204d3bf9aeff rdf:first _:b2730645f1d5f ;
 	rdf:rest _:bb84eac57d777 .
 _:b21f6786ebff7 rdf:first xsd:string ;
-	rdf:rest _:bc51b6e4ebc93 .
-_:b21fed92c25d9 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:height .
-_:b21fed92c25d9_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:height .
+	rdf:rest _:bc51b6e4ebc93_1 .
 _:b2213b5dada92 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:id .
@@ -390,18 +358,30 @@ _:b229a910509ae a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
 _:b23326f09051d owl:intersectionOf _:b0f03577abde6 .
+_:b245b16213e64 rdf:first _:b5869087ba548 ;
+	rdf:rest rdf:nil .
+_:b245b16213e64_1 rdf:first _:b5869087ba548_1 ;
+	rdf:rest rdf:nil .
 _:b2610a93df32d rdf:first manifest:UnitEnum\#pixels ;
 	rdf:rest rdf:nil .
 _:b2730645f1d5f a owl:Restriction ;
 	owl:allValuesFrom manifest:ManifestCategory ;
 	owl:onProperty manifest:hasCategory .
+_:b28bcd8f41fcd a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b8d3d6467dc84 .
+_:b28bcd8f41fcd_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b8d3d6467dc84_1 .
 _:b2e68d5711114 owl:unionOf _:b503159e989b4_5 .
 _:b2f8c93a11b83 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasDimensions .
-_:b3193e04af64c xsd:pattern "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" .
-_:b3193e04af64c_1 xsd:pattern "^(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})$" .
 _:b32261548f7fc owl:intersectionOf _:bac21a7013661 .
+_:b34d4fd89d59f rdf:first _:b6dd2bd682c8b ;
+	rdf:rest rdf:nil .
+_:b34d4fd89d59f_1 rdf:first _:b6dd2bd682c8b_1 ;
+	rdf:rest rdf:nil .
 _:b36e5bde7ad4a a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty skos:note .
@@ -409,42 +389,32 @@ _:b371e4c455744 rdf:first manifest:UnitEnum\#metres ;
 	rdf:rest _:b99d81d05b505 .
 _:b37abb4c452fa rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
-_:b383abef1ca3e rdf:first _:b63156f668c86 ;
-	rdf:rest _:b43cff573e0cd .
-_:b383abef1ca3e_1 rdf:first _:b63156f668c86_1 ;
-	rdf:rest _:b43cff573e0cd_1 .
 _:b38cc64fd151c owl:intersectionOf _:bc56b1da365c8 .
 _:b38fe4fd5e202 a owl:Restriction ;
 	owl:allValuesFrom manifest:ManifestCategory ;
 	owl:onProperty manifest:hasCategory .
-_:b3a4aed7cb923 xsd:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
-_:b3a4aed7cb923_1 xsd:pattern "^([\\w,\\s-]+(?:\\.[\\w,\\s-]+)*)\\.([A-Za-z0-9]+)$" .
+_:b3a961d155b21 a owl:Restriction ;
+	owl:allValuesFrom manifest:UnitEnum ;
+	owl:onProperty manifest:unit .
+_:b3a961d155b21_1 a owl:Restriction ;
+	owl:allValuesFrom manifest:UnitEnum ;
+	owl:onProperty manifest:unit .
 _:b3ccc8c7cad3e a owl:Restriction ;
 	owl:allValuesFrom _:bf4ef25b82967 ;
 	owl:onProperty manifest:cid .
+_:b3dd2f1ce5298 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b245b16213e64 .
+_:b3dd2f1ce5298_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b245b16213e64_1 .
 _:b3dee065e56fc owl:intersectionOf _:ba5aee2c19f7a .
 _:b408e64c13f47 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty sh:conformsTo .
-_:b40a5ff57fc4f a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b7e354790d6e1 .
-_:b40a5ff57fc4f_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b7e354790d6e1_1 .
 _:b41d89f087cae a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:fileSize .
-_:b41efb08e8a04 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b6af16f471c61 .
-_:b41efb08e8a04_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b6af16f471c61_1 .
-_:b43cff573e0cd rdf:first _:bc81cab84b595 ;
-	rdf:rest rdf:nil .
-_:b43cff573e0cd_1 rdf:first _:bc81cab84b595_1 ;
-	rdf:rest rdf:nil .
 _:b4436ac0177b3 owl:intersectionOf _:b80dbc88c329e .
 _:b452091249466 a owl:Restriction ;
 	owl:allValuesFrom manifest:LicenseCategory ;
@@ -462,21 +432,23 @@ _:b45f11b0706d8 owl:intersectionOf _:ba5ddb476c908 .
 _:b4676770ac2e6 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:fileSize .
+_:b46fe5e2f0921 owl:intersectionOf _:b908ffca3e9e9_1 .
 _:b474820ecf552 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:hasArtifacts .
-_:b4ca6c1aef684 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:width .
-_:b4ca6c1aef684_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:width .
+_:b478f7bd7b428 xsd:pattern "([\\p{L}\\p{N}_,\\s\\p{Z}\\-]+(\\.[\\p{L}\\p{N}_,\\s\\p{Z}\\-]+)*)\\.([A-Za-z0-9]+)\\n?" .
+_:b478f7bd7b428_1 xsd:pattern "([\\p{L}\\p{N}_,\\s\\p{Z}\\-]+(\\.[\\p{L}\\p{N}_,\\s\\p{Z}\\-]+)*)\\.([A-Za-z0-9]+)\\n?" .
+_:b48d8f84dc7f6 rdf:first _:b0226582591a1 ;
+	rdf:rest _:b6304ab895193 .
+_:b48d8f84dc7f6_1 rdf:first _:b0226582591a1_1 ;
+	rdf:rest _:b6304ab895193_1 .
 _:b4d3492acb958 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:hasDimensions .
 _:b4e8f95f2453f a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:filePath .
+_:b4f12e68aedf5 owl:intersectionOf _:b48d8f84dc7f6_1 .
 _:b503159e989b4 rdf:first _:b1aa02655c5da ;
 	rdf:rest _:bc8e5dcd8243b .
 _:b503159e989b4_1 rdf:first _:b1aa02655c5da_1 ;
@@ -490,17 +462,31 @@ _:b503159e989b4_4 rdf:first _:b1aa02655c5da_4 ;
 _:b503159e989b4_5 rdf:first _:b1aa02655c5da_5 ;
 	rdf:rest _:bc8e5dcd8243b_5 .
 _:b563527c8b3b9 owl:intersectionOf _:b6be8cc26a29d .
-_:b57338f467338 xsd:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
-_:b57338f467338_1 xsd:pattern "^(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&^_.+-]+$|^x-[a-zA-Z0-9!#$&^_.+-]+/[a-zA-Z0-9!#$&^_.+-]+$" .
 _:b5754f376a394 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:cid .
 _:b579426a4fd30 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:filename .
+_:b5869087ba548 xsd:pattern "(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})\\n?" .
+_:b5869087ba548_1 xsd:pattern "(b[A-Za-z2-7]{58,}|B[A-Z2-7]{58,}|z[1-9A-HJ-NP-Za-km-z]{48,}|F[0-9A-F]{50,})\\n?" .
 _:b595946a1709c rdf:first _:b452091249466 ;
 	rdf:rest rdf:nil .
 _:b595946a1709c_1 rdf:first _:b452091249466_1 ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_1 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_2 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_3 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_4 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_5 rdf:first "application/ld+json" ;
+	rdf:rest rdf:nil .
+_:b59a8fa836c83_6 rdf:first "application/ld+json" ;
 	rdf:rest rdf:nil .
 _:b5c73e0f8601c a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
@@ -522,12 +508,10 @@ _:b609e3110d0d3 a owl:Restriction ;
 _:b61d1a3a46e4d a owl:Restriction ;
 	owl:allValuesFrom xsd:integer ;
 	owl:onProperty manifest:fileSize .
-_:b63156f668c86 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:filePath .
-_:b63156f668c86_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:filePath .
+_:b6304ab895193 rdf:first _:bc81cab84b595 ;
+	rdf:rest rdf:nil .
+_:b6304ab895193_1 rdf:first _:bc81cab84b595_1 ;
+	rdf:rest rdf:nil .
 _:b641304b770aa rdf:first _:bfd11631e7c1c ;
 	rdf:rest _:bb85201fd510b .
 _:b641304b770aa_1 rdf:first _:bfd11631e7c1c_1 ;
@@ -542,42 +526,40 @@ _:b641304b770aa_5 rdf:first _:bfd11631e7c1c_5 ;
 	rdf:rest _:bb85201fd510b_5 .
 _:b641304b770aa_6 rdf:first _:bfd11631e7c1c_6 ;
 	rdf:rest _:bb85201fd510b_6 .
-_:b68ccc37898ae rdf:first _:b4ca6c1aef684 ;
-	rdf:rest rdf:nil .
-_:b68ccc37898ae_1 rdf:first _:b4ca6c1aef684_1 ;
-	rdf:rest rdf:nil .
-_:b692a029d8f5f a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_1 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_1 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_2 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_2 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_3 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_3 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_4 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_4 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_5 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_5 ;
-	owl:onProperty manifest:mimeType .
-_:b692a029d8f5f_6 a owl:Restriction ;
-	owl:allValuesFrom _:b09d8dddafd6e_6 ;
-	owl:onProperty manifest:mimeType .
-_:b6af16f471c61 rdf:first _:b3a4aed7cb923 ;
-	rdf:rest rdf:nil .
-_:b6af16f471c61_1 rdf:first _:b3a4aed7cb923_1 ;
-	rdf:rest rdf:nil .
 _:b6b7ad6fe6f60 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:depth .
-_:b6be8cc26a29d rdf:first _:bf64fde121b28 ;
+_:b6be8cc26a29d rdf:first _:be94be438ce79 ;
 	rdf:rest _:b1b1b45407273 .
 _:b6ca6b8aba362 a rdfs:Datatype ;
 	owl:intersectionOf _:b8daa0b6ef228 .
+_:b6dd2bd682c8b a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:width .
+_:b6dd2bd682c8b_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty manifest:width .
+_:b6f65842f9b81 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_1 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_1 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_2 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_2 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_3 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_3 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_4 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_4 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_5 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_5 ;
+	owl:onProperty manifest:mimeType .
+_:b6f65842f9b81_6 a owl:Restriction ;
+	owl:allValuesFrom _:be219a801a1de_6 ;
+	owl:onProperty manifest:mimeType .
 _:b6f8dfdd9618f rdf:first manifest:isMiscellaneous ;
 	rdf:rest rdf:nil .
 _:b702029a62ce8 a owl:Restriction ;
@@ -594,7 +576,8 @@ _:b72d747d55f84 a owl:Restriction ;
 	owl:onProperty sh:conformsTo .
 _:b73b99fc9c5e1 rdf:first xsd:string ;
 	rdf:rest _:b9375387d24e3 .
-_:b76d3788d088d rdf:first _:ba84efe797bad_5 ;
+_:b76737c5f11d7 owl:intersectionOf _:b48d8f84dc7f6 .
+_:b76d3788d088d rdf:first _:ba84efe797bad_6 ;
 	rdf:rest rdf:nil .
 _:b76dc0961b043 a owl:Restriction ;
 	owl:minCardinality 0 ;
@@ -606,24 +589,9 @@ _:b7bb9bac2af6f a owl:Restriction ;
 	owl:allValuesFrom _:b14a12de751d3 ;
 	owl:onProperty manifest:hasFileMetadata .
 _:b7c09e13e3c0e owl:intersectionOf _:b5ce1045fe15f .
-_:b7e158ee78f51 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_1 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_2 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_3 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_4 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_5 xsd:pattern "application/ld+json" .
-_:b7e158ee78f51_6 xsd:pattern "application/ld+json" .
-_:b7e354790d6e1 rdf:first _:b3193e04af64c ;
-	rdf:rest rdf:nil .
-_:b7e354790d6e1_1 rdf:first _:b3193e04af64c_1 ;
-	rdf:rest rdf:nil .
 _:b7f41b42364d3 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:mimeType .
-_:b7fc8665f9a94 rdf:first _:b57338f467338 ;
-	rdf:rest rdf:nil .
-_:b7fc8665f9a94_1 rdf:first _:b57338f467338_1 ;
-	rdf:rest rdf:nil .
 _:b801f8b008119 a owl:Restriction ;
 	owl:allValuesFrom _:b563527c8b3b9 ;
 	owl:onProperty manifest:hasDimensions .
@@ -638,10 +606,8 @@ _:b853a39ca0c59 a owl:Restriction ;
 _:b85a15e94d313 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:filename .
-_:b8663afbf8c80 rdf:first _:bd9915491c2d5 ;
-	rdf:rest _:b68ccc37898ae .
-_:b8663afbf8c80_1 rdf:first _:bd9915491c2d5_1 ;
-	rdf:rest _:b68ccc37898ae_1 .
+_:b880e671c5d2c xsd:pattern "(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&\\^_.+\\-]+\\n?|x-[a-zA-Z0-9!#$&\\^_.+\\-]+/[a-zA-Z0-9!#$&\\^_.+\\-]+\\n?" .
+_:b880e671c5d2c_1 xsd:pattern "(application|audio|font|example|image|message|model|multipart|text|video)/[a-zA-Z0-9!#$&\\^_.+\\-]+\\n?|x-[a-zA-Z0-9!#$&\\^_.+\\-]+/[a-zA-Z0-9!#$&\\^_.+\\-]+\\n?" .
 _:b88f2872bcbdf rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:b88f2872bcbdf_1 rdf:first manifest:Link ;
@@ -651,13 +617,25 @@ _:b88f2872bcbdf_2 rdf:first manifest:Link ;
 _:b89a63a3ba50b a owl:Restriction ;
 	owl:allValuesFrom manifest:LicenseCategory ;
 	owl:onProperty manifest:hasCategory .
-_:b8c8f5dfa75b6 rdf:first _:bebfa3259cdd8 ;
+_:b8c8f5dfa75b6 rdf:first _:b46fe5e2f0921 ;
 	rdf:rest _:be4e83ae14936 .
+_:b8d3d6467dc84 rdf:first _:b880e671c5d2c ;
+	rdf:rest rdf:nil .
+_:b8d3d6467dc84_1 rdf:first _:b880e671c5d2c_1 ;
+	rdf:rest rdf:nil .
+_:b8d8da36cf30a rdf:first _:b3a961d155b21 ;
+	rdf:rest _:b34d4fd89d59f .
+_:b8d8da36cf30a_1 rdf:first _:b3a961d155b21_1 ;
+	rdf:rest _:b34d4fd89d59f_1 .
 _:b8daa0b6ef228 rdf:first xsd:string ;
-	rdf:rest _:bc51b6e4ebc93_2 .
+	rdf:rest _:bc51b6e4ebc93 .
 _:b8fb3a30d9835 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:width .
+_:b908ffca3e9e9 rdf:first _:b0d888096a9be ;
+	rdf:rest _:b8d8da36cf30a .
+_:b908ffca3e9e9_1 rdf:first _:b0d888096a9be_1 ;
+	rdf:rest _:b8d8da36cf30a_1 .
 _:b9109e9b378c2 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:iri .
@@ -684,9 +662,9 @@ _:b92724ef1a900_5 a owl:Restriction ;
 _:b92724ef1a900_6 a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty sh:conformsTo .
-_:b92a00e9cd4b0 rdf:first _:b40a5ff57fc4f_1 ;
+_:b92a00e9cd4b0 rdf:first _:b3dd2f1ce5298_1 ;
 	rdf:rest rdf:nil .
-_:b9375387d24e3 rdf:first _:bc1f99bbd9088_1 ;
+_:b9375387d24e3 rdf:first _:b28bcd8f41fcd ;
 	rdf:rest rdf:nil .
 _:b954d28b7b9f3 a owl:Restriction ;
 	owl:minCardinality 0 ;
@@ -706,11 +684,11 @@ _:b99d81d05b505 rdf:first manifest:UnitEnum\#inches ;
 _:b99e595774c92 a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty manifest:width .
-_:b9c6f0e4cabf6 owl:unionOf _:b503159e989b4_2 .
-_:ba49875d3ea1a owl:complementOf _:b1a20f30cf40e_5 .
+_:b9c6f0e4cabf6 owl:unionOf _:b503159e989b4_3 .
+_:ba49875d3ea1a owl:complementOf _:be97428dae4e4_6 .
 _:ba5aee2c19f7a rdf:first _:bd446ef6bfe9e ;
 	rdf:rest _:b37abb4c452fa .
-_:ba5ddb476c908 rdf:first _:bdff71ac51b2f ;
+_:ba5ddb476c908 rdf:first _:b4f12e68aedf5 ;
 	rdf:rest _:bde22cd7bac3b .
 _:ba84efe797bad owl:intersectionOf _:b0f1bc9108823 .
 _:ba84efe797bad_1 owl:intersectionOf _:b0f1bc9108823_1 .
@@ -737,10 +715,12 @@ _:bb1f4a07dec0f a owl:Restriction ;
 _:bb39538bf248a a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:timestamp .
-_:bb3b21a51b421 rdf:first _:b21fed92c25d9 ;
-	rdf:rest _:b8663afbf8c80 .
-_:bb3b21a51b421_1 rdf:first _:b21fed92c25d9_1 ;
-	rdf:rest _:b8663afbf8c80_1 .
+_:bb7ff8b5614a7 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b0caeb303c783 .
+_:bb7ff8b5614a7_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:b0caeb303c783_1 .
 _:bb84eac57d777 rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:bb85201fd510b rdf:first _:b92724ef1a900 ;
@@ -760,26 +740,12 @@ _:bb85201fd510b_6 rdf:first _:b92724ef1a900_6 ;
 _:bb96cef1bd8b0 a owl:Restriction ;
 	owl:allValuesFrom _:b96fb7b0e9da0 ;
 	owl:onProperty manifest:hasArtifacts .
-_:bba013a40090b rdf:first _:b7e158ee78f51 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_1 rdf:first _:b7e158ee78f51_1 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_2 rdf:first _:b7e158ee78f51_2 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_3 rdf:first _:b7e158ee78f51_3 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_4 rdf:first _:b7e158ee78f51_4 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_5 rdf:first _:b7e158ee78f51_5 ;
-	rdf:rest rdf:nil .
-_:bba013a40090b_6 rdf:first _:b7e158ee78f51_6 ;
-	rdf:rest rdf:nil .
 _:bba14feb9b90b a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
 _:bba21c56cb750 rdf:first manifest:isManifest ;
 	rdf:rest _:b6f8dfdd9618f .
-_:bbaa4b7bbe106 owl:unionOf _:b503159e989b4_3 .
+_:bbaa4b7bbe106 owl:unionOf _:b503159e989b4_2 .
 _:bbaa4b7bbe106_1 owl:unionOf _:b503159e989b4_4 .
 _:bbba00972f0bf a owl:Restriction ;
 	owl:allValuesFrom manifest:ManifestCategory ;
@@ -789,20 +755,14 @@ _:bbc211196a2b4 a rdfs:Datatype ;
 _:bc0954adb3bbe a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty manifest:iri .
-_:bc1f99bbd9088 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b7fc8665f9a94 .
-_:bc1f99bbd9088_1 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b7fc8665f9a94_1 .
-_:bc51b6e4ebc93 rdf:first _:bc1f99bbd9088 ;
+_:bc51b6e4ebc93 rdf:first _:bb7ff8b5614a7 ;
 	rdf:rest rdf:nil .
-_:bc51b6e4ebc93_1 rdf:first _:b40a5ff57fc4f ;
+_:bc51b6e4ebc93_1 rdf:first _:b28bcd8f41fcd_1 ;
 	rdf:rest rdf:nil .
-_:bc51b6e4ebc93_2 rdf:first _:b41efb08e8a04 ;
+_:bc51b6e4ebc93_2 rdf:first _:b3dd2f1ce5298 ;
 	rdf:rest rdf:nil .
-_:bc56b1da365c8 rdf:first _:bbaa4b7bbe106_1 ;
-	rdf:rest _:b88f2872bcbdf_2 .
+_:bc56b1da365c8 rdf:first _:bbaa4b7bbe106 ;
+	rdf:rest _:b88f2872bcbdf_1 .
 _:bc580df912bef rdf:first xsd:string ;
 	rdf:rest _:b0ba8caeff02e .
 _:bc81cab84b595 a owl:Restriction ;
@@ -829,7 +789,7 @@ _:bc8e5dcd8243b_3 rdf:first _:ba84efe797bad_3 ;
 	rdf:rest rdf:nil .
 _:bc8e5dcd8243b_4 rdf:first _:ba84efe797bad_4 ;
 	rdf:rest rdf:nil .
-_:bc8e5dcd8243b_5 rdf:first _:ba84efe797bad_6 ;
+_:bc8e5dcd8243b_5 rdf:first _:ba84efe797bad_5 ;
 	rdf:rest rdf:nil .
 _:bcb84c204650b a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
@@ -860,18 +820,11 @@ _:bcd2b56692c34 rdf:first manifest:Link ;
 _:bcd6e3dbe42cd a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty manifest:hasAccessRole .
-_:bd1e1eaab9fa2 owl:intersectionOf _:b383abef1ca3e .
 _:bd446ef6bfe9e owl:intersectionOf _:b09a084d9ce06_1 .
 _:bd7d0285220c1 owl:intersectionOf _:b8c8f5dfa75b6 .
 _:bd834346486f8 a owl:Restriction ;
 	owl:allValuesFrom xsd:anyURI ;
 	owl:onProperty manifest:filePath .
-_:bd9915491c2d5 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:unit .
-_:bd9915491c2d5_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty manifest:unit .
 _:bd9957536569d a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty manifest:depth .
@@ -879,10 +832,23 @@ _:bd9d452cc50fa rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:bde22cd7bac3b rdf:first manifest:FileMetadata ;
 	rdf:rest rdf:nil .
-_:bdff71ac51b2f owl:intersectionOf _:b383abef1ca3e_1 .
 _:be03033ab99db a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty manifest:iri .
+_:be219a801a1de a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83 .
+_:be219a801a1de_1 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_1 .
+_:be219a801a1de_2 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_2 .
+_:be219a801a1de_3 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_3 .
+_:be219a801a1de_4 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_4 .
+_:be219a801a1de_5 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_5 .
+_:be219a801a1de_6 a rdfs:Datatype ;
+	owl:oneOf _:b59a8fa836c83_6 .
 _:be32e101423ff a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:id .
@@ -893,20 +859,41 @@ _:be4e83ae14936 rdf:first manifest:Dimensions ;
 _:be560109d0489 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:hasCategory .
-_:be57f325d22ca rdf:first _:bbaa4b7bbe106 ;
-	rdf:rest _:b88f2872bcbdf_1 .
+_:be57f325d22ca rdf:first _:bbaa4b7bbe106_1 ;
+	rdf:rest _:b88f2872bcbdf_2 .
 _:be5aad544e77b owl:intersectionOf _:b204d3bf9aeff .
 _:be662ebaa44f8 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty manifest:unit .
+_:be94be438ce79 owl:intersectionOf _:b908ffca3e9e9 .
+_:be97428dae4e4 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_1 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_1 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_2 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_2 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_3 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_3 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_4 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_4 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_5 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_5 ;
+	owl:onProperty manifest:hasFileMetadata .
+_:be97428dae4e4_6 a owl:Restriction ;
+	owl:allValuesFrom _:b6f65842f9b81_6 ;
+	owl:onProperty manifest:hasFileMetadata .
 _:be9ac2ec96c18 a owl:Restriction ;
 	owl:allValuesFrom _:b6ca6b8aba362 ;
 	owl:onProperty manifest:filename .
 _:bea3e9ade291e rdf:first xsd:string ;
-	rdf:rest _:bc51b6e4ebc93_1 .
+	rdf:rest _:bc51b6e4ebc93_2 .
 _:bea6423767c00 rdf:first manifest:isLicense ;
 	rdf:rest _:bba21c56cb750 .
-_:bebfa3259cdd8 owl:intersectionOf _:bb3b21a51b421_1 .
 _:bec7ca0dbcc36 rdf:first _:ba49875d3ea1a ;
 	rdf:rest _:b76d3788d088d .
 _:bee06b2a528eb rdf:first manifest:FileMetadata ;
@@ -916,7 +903,6 @@ _:bf1c00e5806f5 a owl:Restriction ;
 	owl:onProperty manifest:id .
 _:bf4ef25b82967 a rdfs:Datatype ;
 	owl:intersectionOf _:bea3e9ade291e .
-_:bf64fde121b28 owl:intersectionOf _:bb3b21a51b421 .
 _:bf71138b22188 rdf:first manifest:Link ;
 	rdf:rest rdf:nil .
 _:bf7249b0f1bb8 a owl:Restriction ;
@@ -943,5 +929,5 @@ _:bfd11631e7c1c_5 a owl:Restriction ;
 _:bfd11631e7c1c_6 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty skos:note .
-_:bfe2178e0b805 rdf:first _:bd1e1eaab9fa2 ;
+_:bfe2178e0b805 rdf:first _:b76737c5f11d7 ;
 	rdf:rest _:bee06b2a528eb .

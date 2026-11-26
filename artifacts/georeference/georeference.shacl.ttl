@@ -32,13 +32,21 @@ georeference:ProjectLocationShape a sh:NodeShape ;
 	rdfs:comment "Describes where the asset is located."@en ;
 	sh:closed false ;
 	sh:ignoredProperties _:b4a3dbeed4ea7 ;
-	sh:property _:b0b6cbbf72fab , _:b5ae183708957 , _:b6fad22a7e46e , _:b8d25c622f7a3 , _:bedae19e99de7 , _:bf402cfa52639 ;
+	sh:property _:b0874a1f0f557 , _:b0b6cbbf72fab , _:b5ae183708957 , _:b6fad22a7e46e , _:b8d25c622f7a3 , _:bf402cfa52639 ;
 	sh:targetClass georeference:ProjectLocation .
 _:b01cdda4132fd rdf:first rdf:type ;
 	rdf:rest rdf:nil .
 _:b025fb0c436ed sh:property _:b47a654a6bdd6 .
 _:b028bfc4e99e0 sh:minCount 1 ;
 	sh:path georeference:hasOrigin .
+_:b0874a1f0f557 sh:datatype xsd:string ;
+	sh:description "Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
+	sh:maxCount 1 ;
+	sh:message "state (ProjectLocation): Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
+	sh:nodeKind sh:Literal ;
+	sh:order 1 ;
+	sh:path georeference:state ;
+	sh:pattern "^[a-zA-Z]{2}-([a-zA-Z]{1,3}|[0-9]{1,3})$" .
 _:b08a3d105f8f7 sh:minCount 1 ;
 	sh:path georeference:yMax .
 _:b0aee2f33a8b3 sh:datatype xsd:integer ;
@@ -86,13 +94,13 @@ _:b1fa0ae627370 sh:datatype xsd:float ;
 	sh:nodeKind sh:Literal ;
 	sh:order 1 ;
 	sh:path georeference:yMin .
-_:b210b2b28edfb sh:property _:b8b0040c31cb8_1 , _:bce6ae224f53e_1 .
+_:b210b2b28edfb sh:property _:b8b0040c31cb8 , _:bce6ae224f53e .
 _:b292f83141bfa sh:minCount 1 ;
 	sh:path georeference:codeEPSG .
 _:b3c51d3cd4a69 rdf:first "Ellipsoidal height" ;
 	rdf:rest _:be752bfcc6be2 .
-_:b448ad192f929 sh:property _:ba3652e071b35 .
-_:b45f03b5d13b1 sh:property _:ba3652e071b35_1 .
+_:b448ad192f929 sh:property _:ba3652e071b35_1 .
+_:b45f03b5d13b1 sh:property _:ba3652e071b35 .
 _:b47a654a6bdd6 sh:minCount 1 ;
 	sh:path georeference:hasBoundingBox .
 _:b4a3dbeed4ea7 rdf:first rdf:type ;
@@ -210,15 +218,7 @@ _:be752bfcc6be2 rdf:first "Orthometric height" ;
 	rdf:rest _:b4ad2e5c6857a .
 _:becef859f66eb rdf:first rdf:type ;
 	rdf:rest rdf:nil .
-_:bedae19e99de7 sh:datatype xsd:string ;
-	sh:description "Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
-	sh:maxCount 1 ;
-	sh:message "state (ProjectLocation): Defines an ISO 3166-2 code for the state or province in which the asset centre is located."@en ;
-	sh:nodeKind sh:Literal ;
-	sh:order 1 ;
-	sh:path georeference:state ;
-	sh:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
-_:bf154cb376f24 sh:property _:b8b0040c31cb8 , _:bce6ae224f53e .
+_:bf154cb376f24 sh:property _:b8b0040c31cb8_1 , _:bce6ae224f53e_1 .
 _:bf169ae208d75 sh:datatype xsd:string ;
 	sh:description "Describes the coordinate system name of the asset as an alternative to the EPSG code."@en ;
 	sh:maxCount 1 ;

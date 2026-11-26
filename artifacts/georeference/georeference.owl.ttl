@@ -178,38 +178,49 @@ linkml:permissible_values a owl:AnnotationProperty .
 _:b050c9a6e2126 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:lat .
+_:b0af9f003b028 owl:unionOf _:b7c547d336f80 .
+_:b0af9f003b028_1 owl:unionOf _:b7c547d336f80_1 .
 _:b0e12c609b0e7 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:codeEPSG .
 _:b0ec2b018f387 owl:intersectionOf _:b9d20f6214f7d .
+_:b131fa44a3eca a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty georeference:codeEPSG .
 _:b1418b62bca56 owl:intersectionOf _:b9a098e160821 .
 _:b149db98057f7 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:xMin .
-_:b15307cf288ba a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:xMax .
-_:b15307cf288ba_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:xMax .
+_:b14c91b7c4939 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lon .
+_:b14c91b7c4939_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lon .
+_:b14c91b7c4939_2 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lon .
+_:b14c91b7c4939_3 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lon .
 _:b16309eeb509b a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:hasGeodeticReferenceSystem .
 _:b1716d3df37b8 owl:intersectionOf _:b91cf0170d356 .
+_:b1a2c1c107b66 rdf:first _:b6e8347002002_1 ;
+	rdf:rest rdf:nil .
 _:b1bcd4f018c0c rdf:first georeference:LatLonCoordinate ;
 	rdf:rest rdf:nil .
-_:b1d4a51a1ab61 xsd:pattern "^[a-zA-Z]{2}$" .
-_:b1d4a51a1ab61_1 xsd:pattern "^[a-zA-Z]{2}$" .
 _:b1df934a90468 rdf:first georeference:LatLonCoordinate ;
 	rdf:rest rdf:nil .
 _:b1df934a90468_1 rdf:first georeference:LatLonCoordinate ;
-	rdf:rest rdf:nil .
-_:b1f2835ed2e7c rdf:first _:ba4f22af68f4e ;
 	rdf:rest rdf:nil .
 _:b1f955a10df64 rdf:first _:b8eeebbcd5cf9 ;
 	rdf:rest _:bb4872153672f .
 _:b204f556f132b rdf:first georeference:LatLonCoordinate ;
 	rdf:rest rdf:nil .
+_:b21adcba76862 rdf:first _:b131fa44a3eca ;
+	rdf:rest _:b9147a5be4fa7 .
 _:b23af1d4525bd a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:hasViewPoint .
@@ -228,72 +239,51 @@ _:b2d037a8e3e7a a owl:Restriction ;
 _:b2dc96810a18a a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:coordinateSystemName .
-_:b312cd2ebbfb8 rdf:first _:be5e64bf157f5 ;
-	rdf:rest _:b9bff21d42283 .
-_:b312cd2ebbfb8_1 rdf:first _:be5e64bf157f5_1 ;
-	rdf:rest _:b9bff21d42283_1 .
 _:b32a53edcaca7 rdf:first georeference:BoundingBox ;
 	rdf:rest rdf:nil .
+_:b3304e16c3300 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMin .
+_:b3304e16c3300_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMin .
 _:b342fd412a877 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:relationOrArea .
-_:b3708849928ed owl:unionOf _:b90b98426ae1e .
+_:b3708849928ed owl:unionOf _:b21adcba76862 .
 _:b38bb51fe1692 rdf:first _:b48b77a9fddf9 ;
 	rdf:rest _:bbbedfe1b6089 .
 _:b3b98bb110f7e a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:yMax .
 _:b3d46e8a4717c owl:intersectionOf _:bb67295206fe8 .
-_:b3e8be9ab7e74 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:yMax .
-_:b3e8be9ab7e74_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:yMax .
-_:b3e95a44a1c01 rdf:first _:b9e4a3f70feef ;
-	rdf:rest rdf:nil .
-_:b3e95a44a1c01_1 rdf:first _:b9e4a3f70feef_1 ;
-	rdf:rest rdf:nil .
-_:b3e95a44a1c01_2 rdf:first _:b9e4a3f70feef_2 ;
-	rdf:rest rdf:nil .
-_:b3e95a44a1c01_3 rdf:first _:b9e4a3f70feef_3 ;
-	rdf:rest rdf:nil .
 _:b3ecb830ad2d9 a owl:Restriction ;
 	owl:allValuesFrom _:b3d46e8a4717c ;
 	owl:onProperty georeference:hasGeodeticReferenceSystem .
-_:b3f280e5b5678 owl:intersectionOf _:b801051577c87 .
-_:b3f280e5b5678_1 owl:intersectionOf _:b801051577c87_1 .
 _:b40480c37b123 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:lon .
-_:b449f38c4fedb rdf:first _:bbe022640cc6f ;
+_:b416bdf9a829d owl:intersectionOf _:bcdf73317e5f9_1 .
+_:b421e56232425 rdf:first _:b6e8347002002 ;
+	rdf:rest rdf:nil .
+_:b449f38c4fedb rdf:first _:b0af9f003b028 ;
 	rdf:rest _:be19b8db22f40 .
-_:b449f38c4fedb_1 rdf:first _:bbe022640cc6f_1 ;
+_:b449f38c4fedb_1 rdf:first _:b0af9f003b028_1 ;
 	rdf:rest _:be19b8db22f40_1 .
 _:b455545e73ea8 a owl:Restriction ;
 	owl:allValuesFrom _:b0ec2b018f387 ;
 	owl:onProperty georeference:hasViewPoint .
-_:b46dfe33b4246 rdf:first _:b94507dad6c9e ;
-	rdf:rest rdf:nil .
-_:b46dfe33b4246_1 rdf:first _:b94507dad6c9e_1 ;
-	rdf:rest rdf:nil .
-_:b486223982f8a owl:intersectionOf _:b449f38c4fedb .
-_:b487620784912 owl:intersectionOf _:b449f38c4fedb_1 .
+_:b486223982f8a owl:intersectionOf _:b449f38c4fedb_1 .
+_:b487620784912 owl:intersectionOf _:b449f38c4fedb .
 _:b48b77a9fddf9 a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty georeference:hasBoundingBox .
-_:b4bdccd3c3f32 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lat .
-_:b4bdccd3c3f32_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lat .
-_:b4bdccd3c3f32_2 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lat .
-_:b4bdccd3c3f32_3 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lat .
+_:b4d9a8cf6f98b a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMax .
+_:b4d9a8cf6f98b_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMax .
 _:b4eabee38d395 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:xMax .
@@ -303,7 +293,7 @@ _:b5089d6824f2b a owl:Restriction ;
 _:b5190e3796ca1 owl:intersectionOf _:be495988716c7 .
 _:b52f68ac32313 a rdfs:Datatype ;
 	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bfa17d56aeda6 .
+	owl:withRestrictions _:b81c58a3ecded .
 _:b547c92d63500 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:xMax .
@@ -311,6 +301,8 @@ _:b58d6a7031ab4 owl:intersectionOf _:b1f955a10df64 .
 _:b5d6ec46a4c31 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:hasOrigin .
+_:b5fe59c1257e9 owl:intersectionOf _:bce64f09081a0_1 .
+_:b5fe59c1257e9_1 owl:intersectionOf _:bce64f09081a0_3 .
 _:b6132495d1ad0 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:region .
@@ -320,7 +312,15 @@ _:b6300f8e50750 a owl:Restriction ;
 _:b6534a694469e a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty georeference:xMax .
-_:b6607893dbba2 rdf:first _:b6f80759e29b0 ;
+_:b659ebd54f9c6 rdf:first _:b14c91b7c4939 ;
+	rdf:rest rdf:nil .
+_:b659ebd54f9c6_1 rdf:first _:b14c91b7c4939_1 ;
+	rdf:rest rdf:nil .
+_:b659ebd54f9c6_2 rdf:first _:b14c91b7c4939_2 ;
+	rdf:rest rdf:nil .
+_:b659ebd54f9c6_3 rdf:first _:b14c91b7c4939_3 ;
+	rdf:rest rdf:nil .
+_:b6607893dbba2 rdf:first _:b964540099b20 ;
 	rdf:rest _:b32a53edcaca7 .
 _:b67dd569d935f a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
@@ -332,19 +332,23 @@ _:b696296fa3daa a owl:Restriction ;
 _:b6b3037f398f8 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:coordinateSystemName .
-_:b6f80759e29b0 owl:intersectionOf _:b9967bc832628 .
+_:b6e8347002002 xsd:pattern "[a-zA-Z]{2}-([a-zA-Z]{1,3}|[0-9]{1,3})\\n?" .
+_:b6e8347002002_1 xsd:pattern "[a-zA-Z]{2}-([a-zA-Z]{1,3}|[0-9]{1,3})\\n?" .
+_:b6fa06a4f6f74 owl:intersectionOf _:bce64f09081a0_2 .
 _:b738163a3987b a owl:Restriction ;
 	owl:allValuesFrom _:bc4d847414eae ;
 	owl:onProperty georeference:state .
-_:b74349646e997 rdf:first _:b78815248f078 ;
+_:b73aca99f71b9 owl:intersectionOf _:bce64f09081a0 .
+_:b74349646e997 rdf:first _:b6fa06a4f6f74 ;
 	rdf:rest _:b1bcd4f018c0c .
-_:b756a61a33e2f rdf:first _:bad983a1ac726 ;
-	rdf:rest rdf:nil .
-_:b756a61a33e2f_1 rdf:first _:bad983a1ac726_1 ;
-	rdf:rest rdf:nil .
+_:b7547b65e909d a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMin .
+_:b7547b65e909d_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:xMin .
 _:b772fcebdc803 rdf:first georeference:GeodeticReferenceSystem ;
 	rdf:rest rdf:nil .
-_:b78815248f078 owl:intersectionOf _:b801051577c87_3 .
 _:b78f4b8fc8aca rdf:first georeference:BoundingBox ;
 	rdf:rest rdf:nil .
 _:b7b6bf7be9809 a owl:Restriction ;
@@ -353,28 +357,33 @@ _:b7b6bf7be9809 a owl:Restriction ;
 _:b7beb5694e77e a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:xMin .
-_:b7c37304b6e94 owl:intersectionOf _:b801051577c87_2 .
+_:b7c547d336f80 rdf:first _:bc51cdeff6d65 ;
+	rdf:rest _:bed9594297885 .
+_:b7c547d336f80_1 rdf:first _:bc51cdeff6d65_1 ;
+	rdf:rest _:bed9594297885_1 .
 _:b7d7735374f0b a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:hasOrigin .
-_:b801051577c87 rdf:first _:b4bdccd3c3f32 ;
-	rdf:rest _:b3e95a44a1c01 .
-_:b801051577c87_1 rdf:first _:b4bdccd3c3f32_1 ;
-	rdf:rest _:b3e95a44a1c01_1 .
-_:b801051577c87_2 rdf:first _:b4bdccd3c3f32_2 ;
-	rdf:rest _:b3e95a44a1c01_2 .
-_:b801051577c87_3 rdf:first _:b4bdccd3c3f32_3 ;
-	rdf:rest _:b3e95a44a1c01_3 .
+_:b7f397322d089 xsd:pattern "[a-zA-Z]{2}\\n?" .
+_:b7f397322d089_1 xsd:pattern "[a-zA-Z]{2}\\n?" .
 _:b8160c2325ed5 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty georeference:relationOrArea .
+_:b81c58a3ecded rdf:first _:b7f397322d089_1 ;
+	rdf:rest rdf:nil .
 _:b824c04b5c587 rdf:first georeference:HeightSystemEnum\#Local\%20height ;
+	rdf:rest rdf:nil .
+_:b835d21abaf57 rdf:first _:b3304e16c3300 ;
+	rdf:rest rdf:nil .
+_:b835d21abaf57_1 rdf:first _:b3304e16c3300_1 ;
 	rdf:rest rdf:nil .
 _:b84cf16c6e5dd rdf:first georeference:HeightSystemEnum\#Orthometric\%20height ;
 	rdf:rest _:b824c04b5c587 .
 _:b85d300bfad42 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:hasViewPoint .
+_:b87aafc3c52b0 rdf:first _:b7f397322d089 ;
+	rdf:rest rdf:nil .
 _:b88b21cdd09a7 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:lon .
@@ -386,67 +395,37 @@ _:b8eeebbcd5cf9 a owl:Restriction ;
 _:b8f0a38791768 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:region .
-_:b90b98426ae1e rdf:first _:ba23fe18dc6cb ;
-	rdf:rest _:b9147a5be4fa7 .
 _:b913f4082779d owl:intersectionOf _:bca69520891bf .
 _:b9147a5be4fa7 rdf:first _:bb3f21611124d ;
 	rdf:rest rdf:nil .
-_:b91cf0170d356 rdf:first _:b3f280e5b5678 ;
-	rdf:rest _:b1df934a90468 .
-_:b9252cb6aeee3 rdf:first _:ba4f22af68f4e_1 ;
-	rdf:rest rdf:nil .
-_:b94507dad6c9e a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:yMin .
-_:b94507dad6c9e_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:yMin .
+_:b91cf0170d356 rdf:first _:b5fe59c1257e9_1 ;
+	rdf:rest _:b1df934a90468_1 .
 _:b95915be88ba3 a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty georeference:lon .
-_:b9967bc832628 rdf:first _:b15307cf288ba ;
-	rdf:rest _:b312cd2ebbfb8 .
-_:b9967bc832628_1 rdf:first _:b15307cf288ba_1 ;
-	rdf:rest _:b312cd2ebbfb8_1 .
-_:b9a098e160821 rdf:first _:b7c37304b6e94 ;
+_:b964540099b20 owl:intersectionOf _:bcdf73317e5f9 .
+_:b9a098e160821 rdf:first _:b73aca99f71b9 ;
 	rdf:rest _:b204f556f132b .
 _:b9ae74ab3aad9 a rdfs:Datatype ;
 	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b9252cb6aeee3 .
-_:b9bff21d42283 rdf:first _:b3e8be9ab7e74 ;
-	rdf:rest _:b46dfe33b4246 .
-_:b9bff21d42283_1 rdf:first _:b3e8be9ab7e74_1 ;
-	rdf:rest _:b46dfe33b4246_1 .
+	owl:withRestrictions _:b1a2c1c107b66 .
 _:b9cc889a21016 rdf:first georeference:GeodeticReferenceSystem ;
 	rdf:rest rdf:nil .
-_:b9d20f6214f7d rdf:first _:b3f280e5b5678_1 ;
-	rdf:rest _:b1df934a90468_1 .
-_:b9e4a3f70feef a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lon .
-_:b9e4a3f70feef_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lon .
-_:b9e4a3f70feef_2 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lon .
-_:b9e4a3f70feef_3 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:lon .
+_:b9d20f6214f7d rdf:first _:b5fe59c1257e9 ;
+	rdf:rest _:b1df934a90468 .
 _:ba1fc777284e7 a owl:Restriction ;
 	owl:allValuesFrom xsd:integer ;
-	owl:onProperty georeference:codeEPSG .
-_:ba23fe18dc6cb a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
 	owl:onProperty georeference:codeEPSG .
 _:ba2ab10152014 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:country .
-_:ba4f22af68f4e xsd:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
-_:ba4f22af68f4e_1 xsd:pattern "^[a-zA-Z]{2}-(?:[a-zA-Z]{1,3}|[0-9]{1,3})$" .
 _:ba82e975b8f05 a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty georeference:lat .
+_:bac928661ceea rdf:first _:bfee5006b8d96 ;
+	rdf:rest _:b835d21abaf57 .
+_:bac928661ceea_1 rdf:first _:bfee5006b8d96_1 ;
+	rdf:rest _:b835d21abaf57_1 .
 _:bad11325292be a owl:Restriction ;
 	owl:allValuesFrom _:b1716d3df37b8 ;
 	owl:onProperty georeference:hasOrigin .
@@ -465,10 +444,6 @@ _:bb1086e591c7f a owl:Restriction ;
 _:bb3f21611124d a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty georeference:coordinateSystemName .
-_:bb45d1f25f26a rdf:first _:bbc839d5a3053 ;
-	rdf:rest _:b756a61a33e2f .
-_:bb45d1f25f26a_1 rdf:first _:bbc839d5a3053_1 ;
-	rdf:rest _:b756a61a33e2f_1 .
 _:bb4872153672f rdf:first georeference:ProjectLocation ;
 	rdf:rest rdf:nil .
 _:bb4f7202cd387 a owl:Restriction ;
@@ -484,34 +459,41 @@ _:bbb5785f75b7d a owl:Restriction ;
 	owl:onProperty georeference:relationOrArea .
 _:bbbedfe1b6089 rdf:first georeference:ProjectLocation ;
 	rdf:rest rdf:nil .
-_:bbc839d5a3053 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:codeEPSG .
-_:bbc839d5a3053_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:codeEPSG .
-_:bbe022640cc6f owl:unionOf _:bb45d1f25f26a .
-_:bbe022640cc6f_1 owl:unionOf _:bb45d1f25f26a_1 .
 _:bc480c3b179e8 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:hasProjectLocation .
 _:bc4d847414eae a rdfs:Datatype ;
 	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:b1f2835ed2e7c .
+	owl:withRestrictions _:b421e56232425 .
+_:bc51cdeff6d65 a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty georeference:codeEPSG .
+_:bc51cdeff6d65_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:integer ;
+	owl:onProperty georeference:codeEPSG .
 _:bc90bf223e871 a owl:Restriction ;
 	owl:allValuesFrom _:b685227787b82 ;
 	owl:onProperty georeference:hasProjectLocation .
 _:bc9ad426074d3 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:city .
-_:bca69520891bf rdf:first _:bcc9df9f911c0 ;
+_:bca69520891bf rdf:first _:b416bdf9a829d ;
 	rdf:rest _:b78f4b8fc8aca .
 _:bcb2a4a3c878d a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:codeEPSG .
-_:bcc9df9f911c0 owl:intersectionOf _:b9967bc832628_1 .
-_:bccc1985289bb rdf:first _:b1d4a51a1ab61_1 ;
-	rdf:rest rdf:nil .
+_:bcdf73317e5f9 rdf:first _:b4d9a8cf6f98b ;
+	rdf:rest _:be614ade5a3bb .
+_:bcdf73317e5f9_1 rdf:first _:b4d9a8cf6f98b_1 ;
+	rdf:rest _:be614ade5a3bb_1 .
+_:bce64f09081a0 rdf:first _:bea35ea992399 ;
+	rdf:rest _:b659ebd54f9c6 .
+_:bce64f09081a0_1 rdf:first _:bea35ea992399_1 ;
+	rdf:rest _:b659ebd54f9c6_1 .
+_:bce64f09081a0_2 rdf:first _:bea35ea992399_2 ;
+	rdf:rest _:b659ebd54f9c6_2 .
+_:bce64f09081a0_3 rdf:first _:bea35ea992399_3 ;
+	rdf:rest _:b659ebd54f9c6_3 .
 _:bd38bf2a6789d a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty georeference:heightSystem .
@@ -530,12 +512,10 @@ _:be410751c3be1 a owl:Restriction ;
 	owl:onProperty georeference:hasBoundingBox .
 _:be495988716c7 rdf:first _:b486223982f8a ;
 	rdf:rest _:b9cc889a21016 .
-_:be5e64bf157f5 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:xMin .
-_:be5e64bf157f5_1 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty georeference:xMin .
+_:be614ade5a3bb rdf:first _:b7547b65e909d ;
+	rdf:rest _:bac928661ceea .
+_:be614ade5a3bb_1 rdf:first _:b7547b65e909d_1 ;
+	rdf:rest _:bac928661ceea_1 .
 _:be6a86ffb5469 a owl:Restriction ;
 	owl:allValuesFrom owl:Thing ;
 	owl:onProperty georeference:hasOrigin .
@@ -545,15 +525,31 @@ _:be6a86ffb5469_1 a owl:Restriction ;
 _:be7deb8ad17b2 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:yMax .
+_:bea35ea992399 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lat .
+_:bea35ea992399_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lat .
+_:bea35ea992399_2 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lat .
+_:bea35ea992399_3 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:lat .
 _:beba1b3bf1c9d a rdfs:Datatype ;
 	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:bccc1985289bb .
+	owl:withRestrictions _:b87aafc3c52b0 .
 _:beba645842b1c a owl:Restriction ;
 	owl:allValuesFrom xsd:float ;
 	owl:onProperty georeference:xMin .
 _:bec00aa24fd60 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty georeference:state .
+_:bed9594297885 rdf:first _:bad983a1ac726 ;
+	rdf:rest rdf:nil .
+_:bed9594297885_1 rdf:first _:bad983a1ac726_1 ;
+	rdf:rest rdf:nil .
 _:bee55ead258c2 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty georeference:hasProjectLocation .
@@ -565,5 +561,9 @@ _:bf0d025a616e5 a owl:Restriction ;
 _:bf9b41c8198d1 a owl:Restriction ;
 	owl:allValuesFrom georeference:HeightSystemEnum ;
 	owl:onProperty georeference:heightSystem .
-_:bfa17d56aeda6 rdf:first _:b1d4a51a1ab61 ;
-	rdf:rest rdf:nil .
+_:bfee5006b8d96 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMax .
+_:bfee5006b8d96_1 a owl:Restriction ;
+	owl:allValuesFrom xsd:float ;
+	owl:onProperty georeference:yMax .
