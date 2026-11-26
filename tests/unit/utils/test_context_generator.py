@@ -614,7 +614,7 @@ class TestExternalLinkMLDomainExclusion:
 
         monkeypatch.setattr(context_generator, "generate_context", _spy)
 
-        for exclude in (None, [], ["openlabel-v2"], ["something-else"]):
+        for exclude in (None, [], ["openlabel-tagging"], ["something-else"]):
             called.clear()
             results = generate_all_contexts(exclude=exclude, dry_run=True)
             assert "gx" not in called, f"gx generated with exclude={exclude!r}"

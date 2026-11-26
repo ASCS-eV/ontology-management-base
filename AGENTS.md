@@ -69,12 +69,12 @@ sometimes trailing newlines that differ from Linux output.
 
 ```bash
 # 1. Generate artifacts
-just generate-domain openlabel-v2
+just generate-domain openlabel-tagging
 
 # 2. Normalize line endings manually (Python one-liner)
 python -c "
 import glob
-for f in glob.glob('artifacts/openlabel-v2/*'):
+for f in glob.glob('artifacts/openlabel-tagging/*'):
     with open(f, 'rb') as fh: c = fh.read()
     c = c.replace(b'\r\n', b'\n')
     with open(f, 'wb') as fh: fh.write(c)
@@ -83,7 +83,7 @@ for f in glob.glob('artifacts/openlabel-v2/*'):
 # 3. For .context.jsonld specifically: ensure no trailing empty line
 #    (gen-jsonld-context adds one; pretty-format-json removes it)
 python -c "
-f = 'artifacts/openlabel-v2/openlabel-v2.context.jsonld'
+f = 'artifacts/openlabel-tagging/openlabel-tagging.context.jsonld'
 with open(f, 'rb') as fh: c = fh.read()
 c = c.rstrip() + b'\n'
 with open(f, 'wb') as fh: fh.write(c)

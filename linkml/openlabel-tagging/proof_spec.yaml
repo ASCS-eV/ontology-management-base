@@ -1,0 +1,96 @@
+# Refinement-proof spec for the OpenLABEL scenario-tagging profile.
+#
+# Consumed by scripts/schema_refinement_prover.py to prove that the
+# LinkML-generated JSON Schema is a sound refinement of the normative ASAM
+# OpenLABEL v1.0.0 JSON Schema, within the scenario-tagging scope.
+#
+# This file is the ONLY ontology-specific input; the prover itself is generic.
+# To verify another migration, write a sibling proof_spec.yaml.
+
+name: openlabel-tagging
+
+# A — the authoritative normative reference schema.
+reference_schema: submodules/asam-openx-standards/standards/asam-openlabel/schema/openlabel_json_schema-v1.0.0.json
+
+# L — the LinkML-generated structural schema, as published (committed artifact).
+linkml_schema: artifacts/openlabel-tagging/openlabel-tagging.schema.json
+
+# Scope (τ): property paths retained. The in-scope definition set is the $ref
+# reachability closure of these; everything else is OUT_OF_SCOPE by construction.
+scope_keep:
+  - openlabel.metadata
+  - openlabel.ontologies
+  - openlabel.tags
+  - openlabel.resources
+
+# Optional explicit reference-def -> LinkML-def map (overrides the heuristic).
+# A UID-keyed map maps to the definition L uses for its values: the
+# __identifier_optional variant, whose identifier is the dict key.
+def_map:
+  metadata: Metadata
+  tag: TagEntry__identifier_optional
+  tag_data: TagData
+  num: NumVal
+  vec: VecVal
+  text: TextVal
+  boolean: BooleanVal
+  attributes: Attributes
+  resource_uid: ResourceUid__identifier_optional
+  resources: ResourceEntry__identifier_optional
+  ontologies: OntologyEntry__identifier_optional
+
+# Property-based generation budget (requires hypothesis-jsonschema).
+hypothesis:
+  soundness: 150       # instances from L's grammar -> must all be A-valid
+  completeness: 150    # instances from A|τ -> measure how much stricter L is
+
+# Optional properties forbidden for property-based GENERATION only (to break
+# recursive $ref cycles hypothesis-jsonschema cannot expand). 'attributes' is
+# optional and self-referential (attributes -> *Val -> attributes), so
+# forbidding it yields a strict subset of valid instances. The mutation corpus
+# and seeds still cover the attributes subtree.
+generation_prune:
+  - attributes
+
+# Declared, bounded relaxations (Λ) where L is knowingly LOOSER than A. Each is
+# bound to where it may occur; the same kind of error anywhere else is an
+# undisclosed soundness violation and fails the gate. A declaration no instance
+# needs fails the gate too, so a relaxation cannot outlive its cause.
+#
+# Not declared, so the gate guards against it: key_pattern. Every UID-keyed
+# section enforces ASAM's key patterns through `pattern` on its identifier slot
+# (emitted as propertyNames) plus `--closed` on the root. The reason for each
+# declared relaxation is its entry under `justifications` below.
+allow_looseness:
+  unchecked_section:
+    marker: "#/$defs/Unchecked"
+  simple_dict_object_form:
+    paths:
+      - openlabel.tags.*.resource_uid.*
+      - openlabel.resources.*
+  null_optional:
+    paths:
+      - openlabel.actions.*
+      - openlabel.contexts.*
+      - openlabel.events.*
+      - openlabel.frames.*
+      - openlabel.objects.*
+      - openlabel.relations.*
+
+# Seed instances, valid against both schemas: the spec's chapter-8 examples, and
+# a tagging file that also carries every labelling section (spec 8.1.1), so the
+# mutations reach every section's keys and every declared location without
+# relying on property-based generation. Mutated to build the deterministic
+# edge-case corpus; also fed straight through both validators.
+seeds:
+  - linkml/openlabel-tagging/proof_seeds/*.json
+
+# Justifications. A key justifies a gap row whose "{ref_def}.{aspect}" contains
+# it as whole dotted segments or whose classification it names, and a declared
+# relaxation of the same name (shown in the report's relaxation table).
+justifications:
+  unchecked_section: "By design, not a defect: the labelling sections are accepted without being validated, because spec 8.1.1 lets tagging and labelling data share a file and ASAM closes the openlabel object. L types them with the Unchecked* definitions, and content below that point is not something L claims to check. Not covered here, because L still checks them: the keys wherever ASAM constrains them (the UID-keyed sections and frames; ASAM leaves streams and coordinate_systems keys open), and the object type of each entry of the UID-keyed sections and frames (apart from the null branch declared as null_optional). The entries of streams and coordinate_systems are content of their UncheckedSection, so they are not type-checked."
+  tag.required: "Spec §8.5, Table 26 marks ontology_uid as required (ASAM's JSON Schema does not), and every spec example includes it. Disclosed stricter case."
+  type.enum: "A leaves tag.type an unconstrained string; L pins it to the ASAM scenario-tagging vocabulary (TagTypeEnum: the 243 tag classes and the 13 administration tag properties). Pure strengthening."
+  simple_dict_object_form: "DISCLOSED, bounded LinkML expressivity limit: tag.resource_uid and resources are ASAM id->string maps (the patternProperties value is a bare string). LinkML models each as an inlined simple-dict (an identifier plus one required value slot), which ALWAYS also accepts the object form of the value, not just the bare string. Keys and the string form are validated identically. An inlined simple-dict cannot be restricted to scalar-only values."
+  null_optional: "DISCLOSED, bounded LinkML GENERATOR DEFECT (not a model error): gen-json-schema adds a {\"type\": \"null\"} alternative to inlined-dict values whose range has no required slot, without consulting --no-include-null, which jsonschema.genopts passes. Only the labelling passthrough entries have such a range. The fix belongs in the generator; once it is fixed this declaration is no longer needed, and the gate then fails until it is removed."

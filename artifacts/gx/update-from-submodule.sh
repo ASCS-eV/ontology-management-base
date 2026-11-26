@@ -63,12 +63,12 @@ python -c "
 import glob, json, sys
 from pathlib import Path
 from rdflib import Graph
-from linkml.utils.generator import deterministic_turtle
+from diffable_rdf import deterministic_turtle
 
 def generate_and_merge(gen_cmd, hand_written_glob, output_path):
     \"\"\"Run a LinkML generator, merge with hand-written Turtle, serialize deterministically.\"\"\"
     import subprocess
-    # Generate from LinkML with --deterministic
+    # Generate from LinkML with --diff-stable
     result = subprocess.run(gen_cmd, capture_output=True, text=True)
     if result.returncode != 0:
         print(result.stderr, file=sys.stderr)
@@ -84,7 +84,7 @@ def generate_and_merge(gen_cmd, hand_written_glob, output_path):
 
 # SHACL: gen-shacl + hand-written linkml/*.shacl.ttl
 generate_and_merge(
-    ['gen-shacl', '--deterministic', '--normalize-prefixes', '--no-mergeimports', '--closed', '--suffix', 'Shape',
+    ['gen-shacl', '--diff-stable', '--normalize-prefixes', '--no-mergeimports', '--closed', '--suffix', 'Shape',
      'linkml/gaia-x.yaml'],
     'linkml/*.shacl.ttl',
     Path('shapes.shacl.ttl'),
@@ -93,7 +93,7 @@ print('    SHACL done')
 
 # OWL: gen-owl + hand-written linkml/*.owl.ttl
 generate_and_merge(
-    ['gen-owl', '--deterministic', '--normalize-prefixes', '--no-use-native-uris', '--assert-equivalent-classes',
+    ['gen-owl', '--diff-stable', '--normalize-prefixes', '--no-use-native-uris', '--assert-equivalent-classes',
      '--skip-abstract-class-as-unionof-subclasses', '--xsd-anyuri-as-iri',
      '--enum-iri-separator', '/', 'linkml/gaia-x.yaml'],
     'linkml/*.owl.ttl',
@@ -101,12 +101,13 @@ generate_and_merge(
 )
 print('    OWL done')
 
-# JSON-LD context: --deterministic preserves JSON-LD structure (prefixes grouped at top).
+# JSON-LD context: gen-jsonld-context emits a stable JSON-LD structure (prefixes grouped
+# at top) and exposes no --diff-stable flag.
 # --no-metadata omits the 'comments' block (generation_date is a live timestamp that
 # would otherwise make this artifact non-reproducible across runs).
 import subprocess
 result = subprocess.run(
-    ['gen-jsonld-context', '--deterministic', '--normalize-prefixes', '--no-metadata', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
+    ['gen-jsonld-context', '--normalize-prefixes', '--no-metadata', '--no-mergeimports', '--exclude-external-imports', '--xsd-anyuri-as-iri', 'linkml/gaia-x.yaml'],
     capture_output=True, text=True,
 )
 if result.returncode != 0:
@@ -177,7 +178,7 @@ import sys
 from pathlib import Path
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import OWL, RDFS, RDF
-from linkml.utils.generator import deterministic_turtle
+from diffable_rdf import deterministic_turtle
 
 owl_path = Path(sys.argv[1])
 version = sys.argv[2]

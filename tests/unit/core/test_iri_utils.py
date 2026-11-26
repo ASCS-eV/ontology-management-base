@@ -3,7 +3,12 @@
 Unit tests for omb.core.iri_utils module.
 """
 
+import re
+
+import pytest
+
 from omb.core.iri_utils import (
+    VERSION_SEGMENT,
     did_web_to_url,
     extract_prefix_from_context,
     get_local_name,
@@ -252,6 +257,30 @@ class TestIriToDomainHint:
         """Should skip version number and get previous segment."""
         result = iri_to_domain_hint("https://example.org/domain/v5")
         assert result == "domain"
+
+    @pytest.mark.parametrize(
+        "iri",
+        [
+            "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha",
+            "https://w3id.org/ascs-ev/envited-x/openlabel/v1.1.0-alpha/",
+            "https://w3id.org/ascs-ev/envited-x/openlabel/v2.0",
+        ],
+    )
+    def test_handles_semver_version_segment(self, iri):
+        """A SemVer version segment is a version, not a domain name."""
+        assert iri_to_domain_hint(iri) == "openlabel"
+
+
+class TestVersionSegment:
+    """The version segment accepted in ontology IRIs."""
+
+    @pytest.mark.parametrize("token", ["v1", "v12", "v1.1", "v1.1.0", "v1.1.0-alpha"])
+    def test_accepts(self, token):
+        assert re.fullmatch(VERSION_SEGMENT, token)
+
+    @pytest.mark.parametrize("token", ["v", "1.1.0", "va", "v1.1.0.0", "latest"])
+    def test_rejects(self, token):
+        assert not re.fullmatch(VERSION_SEGMENT, token)
 
 
 class TestMatchesNamespace:

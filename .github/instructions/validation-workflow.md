@@ -53,7 +53,7 @@ When `--data-paths` is used, the system builds a temporary catalog:
 │  registry_updater.create_temporary_catalog(paths)        │
 │                                                          │
 │  Uses file_collector.py to find:                         │
-│  • *.json, *.jsonld files                               │
+│  • *.json, *.jsonld files                                │
 └──────────────────────────────────────────────────────────┘
                           │
                           ▼
@@ -71,7 +71,7 @@ When `--data-paths` is used, the system builds a temporary catalog:
 │  Step 3: Build Temporary Catalog                         │
 │                                                          │
 │  Create in-memory catalog entries:                       │
-│  • Test data files (from --data-paths)                         │
+│  • Test data files (from --data-paths)                   │
 │  • Required ontologies (from artifacts/catalog)          │
 │  • Required SHACL shapes (from artifacts/catalog)        │
 │  • Required fixtures (from tests/catalog)                │

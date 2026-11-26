@@ -21,7 +21,7 @@ export PYTHONUTF8 := "1"
 export PYTHONIOENCODING := "utf-8"
 
 # LinkML domains that `just generate` builds (space-separated; add new domains here).
-LINKML_DOMAINS := "openlabel-v2"
+LINKML_DOMAINS := "openlabel-tagging"
 
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"
@@ -59,29 +59,56 @@ format:
 
 # ===== Generate artifacts (OWL / SHACL / JSON-LD context) =====
 
-# Generate artifacts for every OMB LinkML domain. MUST stay byte-identical to the
-# committed artifacts/ (CI fails on any diff) — the flags + `tr`/`sed` cleanup below
-# are load-bearing; change them only alongside a reviewed artifact re-record.
+# Generate artifacts for every OMB LinkML domain (see `generate-domain`).
 generate:
     #!/usr/bin/env bash
     set -euo pipefail
     for domain in {{LINKML_DOMAINS}}; do
         echo "  Processing $domain..."
-        mkdir -p "artifacts/$domain"
-        {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.owl.ttl"
-        {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.shacl.ttl"
-        {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/$domain/$domain.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/$domain/$domain.context.jsonld"
+        "{{just_executable()}}" --justfile "{{justfile()}}" generate-domain "$domain"
     done
     echo "[OK] Artifacts generated"
 
-# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-v2`.
+# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-tagging`.
+# The output MUST stay byte-identical to the committed artifacts/ (CI fails on any
+# diff): the flags and the `tr`/`sed` cleanup below are load-bearing; change them only
+# alongside a reviewed artifact re-record.
 generate-domain domain:
     #!/usr/bin/env bash
     set -euo pipefail
+    # Never discard generator stderr: a fatal error there (e.g. a renamed flag) still
+    # leaves a truncated artifact behind, and `WARNING:linkml.generators.*` lines report
+    # semantic compile decisions such as a rule being skipped.
+    gen() {
+        local out="$1"; shift
+        local err; err="$(mktemp)"
+        if ! {{run}} "$@" 2>"$err" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "$out"; then
+            echo "ERROR: $1 failed while generating $out" >&2
+            cat "$err" >&2
+            rm -f "$err"
+            return 1
+        fi
+        grep -E '^(WARNING|ERROR|CRITICAL):linkml\.generators' "$err" >&2 || true
+        rm -f "$err"
+    }
     mkdir -p "artifacts/{{domain}}"
-    {{run}} gen-owl --deterministic --normalize-prefixes --xsd-anyuri-as-iri --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.owl.ttl"
-    {{run}} gen-shacl --deterministic --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.shacl.ttl"
-    {{run}} gen-jsonld-context --deterministic --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml" 2>/dev/null | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "artifacts/{{domain}}/{{domain}}.context.jsonld"
+    gen "artifacts/{{domain}}/{{domain}}.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml"
+    gen "artifacts/{{domain}}/{{domain}}.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml"
+    gen "artifacts/{{domain}}/{{domain}}.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml"
+    # A domain that also carries a structural schema ({{domain}}-schema.yaml) generates
+    # a JSON Schema from it. The semantic model above describes the RDF vocabulary; the
+    # structural one describes the JSON document format, and only the latter can say
+    # what a conforming file looks like before it is interpreted as RDF. Per-domain
+    # generator flags live in jsonschema.genopts so this recipe stays domain-neutral.
+    if [ -f "linkml/{{domain}}/{{domain}}-schema.yaml" ]; then
+        echo "    Generating JSON Schema for {{domain}}..."
+        opts=""
+        if [ -f "linkml/{{domain}}/jsonschema.genopts" ]; then
+            opts="$(cat "linkml/{{domain}}/jsonschema.genopts")"
+        fi
+        # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
+        gen "artifacts/{{domain}}/{{domain}}.schema.json" gen-json-schema --indent 3 $opts "linkml/{{domain}}/{{domain}}-schema.yaml"
+    fi
     echo "[OK] Artifacts generated for {{domain}}"
 
 # Rebuild and sync Gaia-X artifacts from the service-characteristics submodule.
@@ -198,6 +225,20 @@ asam-imports-check:
 # Integration tests for the derived ASAM vocabularies (drift, catalog wiring, coherence).
 test-asam-imports:
     {{run}} python -m pytest tests/integration/test_asam_imports.py -q
+
+# Regenerate linkml/openlabel-tagging/REFINEMENT_PROOF.md. Its property-based corpus
+# depends on the Python and Hypothesis versions, so it is generated with the Python
+# CI checks it with (Pinned Standards Drift), in an isolated environment that leaves
+# .venv alone.
+refinement-proof:
+    UV_PYTHON=3.12 uv run --isolated --frozen --group dev python scripts/schema_refinement_prover.py --spec linkml/openlabel-tagging/proof_spec.yaml --out linkml/openlabel-tagging/REFINEMENT_PROOF.md
+
+# Conformance tests for the OpenLABEL structural schema against the pinned ASAM
+# OpenLABEL v1.0.0 JSON Schema and tagging ontology. Skips without the submodule, so
+# CI runs this in the job that already pays for the checkout and sets
+# OMB_REQUIRE_PINNED_SOURCES=1 to turn those skips into failures.
+test-asam-openlabel:
+    {{run}} python -m pytest tests/unit/test_openlabel_schema.py tests/unit/test_schema_refinement.py -q
 
 # ===== Cleaning =====
 
