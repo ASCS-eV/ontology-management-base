@@ -20,8 +20,10 @@ run := "uv run --frozen --group dev"
 export PYTHONUTF8 := "1"
 export PYTHONIOENCODING := "utf-8"
 
-# LinkML domains that `just generate` builds (space-separated; add new domains here).
-LINKML_DOMAINS := "openlabel-tagging"
+# LinkML domains that `just generate` builds, in import order: a domain after the
+# domains it imports (space-separated; add new domains here). Their artifacts/
+# directories are generated, never hand-edited.
+LINKML_DOMAINS := "openlabel-tagging ontology-header manifest georeference envited-x ositrace"
 
 # Gaia-X artifact update script (see `just generate-gx`).
 GX_UPDATE_SCRIPT := "artifacts/gx/update-from-submodule.sh"
@@ -69,47 +71,34 @@ generate:
     done
     echo "[OK] Artifacts generated"
 
-# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-tagging`.
 # The output MUST stay byte-identical to the committed artifacts/ (CI fails on any
-# diff): the flags and the `tr`/`sed` cleanup below are load-bearing; change them only
-# alongside a reviewed artifact re-record.
+# diff). Only the LinkML generators run, in scripts/build_linkml_domain.sh, with the
+# per-domain flags of linkml/<domain>/gen-flags.env; the script fails if gen-shacl
+# skips a constraint, and it forwards the generators' warnings. Change the flags
+# only alongside a reviewed artifact re-record.
+# Generate artifacts for a single domain, e.g. `just generate-domain openlabel-tagging`.
 generate-domain domain:
+    {{run}} bash scripts/build_linkml_domain.sh "{{domain}}" "artifacts/{{domain}}"
+
+# Build a LinkML domain into a scratch directory, leaving artifacts/ untouched.
+build-linkml domain outdir:
+    {{run}} bash scripts/build_linkml_domain.sh "{{domain}}" "{{outdir}}"
+
+# Covers the ontology header, vocabulary, JSON-LD context, SHACL verdicts and
+# mutation probes derived from the committed shapes. Declared deviations live in
+# linkml/<domain>/equivalence-exceptions.yaml; anything else fails the run.
+# Check a candidate artifact set against the committed one for equivalence.
+compare-linkml domain outdir:
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate {{outdir}}
+
+# Build a LinkML domain and immediately check it for equivalence.
+verify-linkml domain:
     #!/usr/bin/env bash
     set -euo pipefail
-    # Never discard generator stderr: a fatal error there (e.g. a renamed flag) still
-    # leaves a truncated artifact behind, and `WARNING:linkml.generators.*` lines report
-    # semantic compile decisions such as a rule being skipped.
-    gen() {
-        local out="$1"; shift
-        local err; err="$(mktemp)"
-        if ! {{run}} "$@" 2>"$err" | tr -d '\r' | sed -e '${' -e '/^$/d' -e '}' > "$out"; then
-            echo "ERROR: $1 failed while generating $out" >&2
-            cat "$err" >&2
-            rm -f "$err"
-            return 1
-        fi
-        grep -E '^(WARNING|ERROR|CRITICAL):linkml\.generators' "$err" >&2 || true
-        rm -f "$err"
-    }
-    mkdir -p "artifacts/{{domain}}"
-    gen "artifacts/{{domain}}/{{domain}}.owl.ttl" gen-owl --diff-stable --normalize-prefixes --xsd-anyuri-as-iri --no-use-native-uris --no-metadata --default-language en --ontology-uri-suffix "" "linkml/{{domain}}/{{domain}}.yaml"
-    gen "artifacts/{{domain}}/{{domain}}.shacl.ttl" gen-shacl --diff-stable --normalize-prefixes --no-metadata --default-language en --message-template "{name} ({class}): {description} {comments}" "linkml/{{domain}}/{{domain}}.yaml"
-    gen "artifacts/{{domain}}/{{domain}}.context.jsonld" gen-jsonld-context --normalize-prefixes --no-metadata --exclude-external-imports --xsd-anyuri-as-iri "linkml/{{domain}}/{{domain}}.yaml"
-    # A domain that also carries a structural schema ({{domain}}-schema.yaml) generates
-    # a JSON Schema from it. The semantic model above describes the RDF vocabulary; the
-    # structural one describes the JSON document format, and only the latter can say
-    # what a conforming file looks like before it is interpreted as RDF. Per-domain
-    # generator flags live in jsonschema.genopts so this recipe stays domain-neutral.
-    if [ -f "linkml/{{domain}}/{{domain}}-schema.yaml" ]; then
-        echo "    Generating JSON Schema for {{domain}}..."
-        opts=""
-        if [ -f "linkml/{{domain}}/jsonschema.genopts" ]; then
-            opts="$(cat "linkml/{{domain}}/jsonschema.genopts")"
-        fi
-        # shellcheck disable=SC2086  # opts is a deliberate word-split flag list
-        gen "artifacts/{{domain}}/{{domain}}.schema.json" gen-json-schema --indent 3 $opts "linkml/{{domain}}/{{domain}}-schema.yaml"
-    fi
-    echo "[OK] Artifacts generated for {{domain}}"
+    out="$(mktemp -d)"
+    trap 'rm -rf "${out}"' EXIT
+    {{run}} bash scripts/build_linkml_domain.sh "{{domain}}" "${out}/{{domain}}"
+    {{run}} python scripts/compare_artifacts.py --domain {{domain}} --candidate "${out}/{{domain}}"
 
 # Rebuild and sync Gaia-X artifacts from the service-characteristics submodule.
 # Optional ref, e.g. `just generate-gx 25.12`.

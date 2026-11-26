@@ -11,36 +11,36 @@
 =    Error:            If 'laneSpecificationDimensions' is not true, 'laneSpecificationDimensionsValue' must not be present.                         =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasContent> [                                                         =
+=    Error:            Node [ <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasContent> [                                                         =
 =                      <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions> Literal("false" = False, datatype=xsd:boolean) ;   =
 =                      <https://openlabel.asam.net/V1-0-0/ontologies/laneSpecificationDimensionsValue> Literal("3.5", datatype=xsd:decimal) ;        =
 =                      rdf:type <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>,                                          =
 =                      <https://openlabel.asam.net/V1-0-0/ontologies/Odd>, <https://openlabel.asam.net/V1-0-0/ontologies/OddScenery>,                =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content>,                =
+=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Content>,                =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Class, rdfs:Resource ], [ <https://w3id.org/ascs-     =
 =                      ev/envited-x/hdmap/v6/laneTypes> Literal("driving", datatype=xsd:string), Literal("walking", datatype=xsd:string) ;           =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/levelOfDetail> Literal("crosswalk", datatype=xsd:string) ;                       =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/roadTypes> Literal("town", datatype=xsd:string) ; <https://w3id.org/ascs-        =
 =                      ev/envited-x/hdmap/v6/trafficDirection> Literal("right-hand", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-         =
-=                      ev/envited-x/envited-x/v3/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
-=                      ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasDataSource> =
+=                      ev/envited-x/envited-x/v4/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
+=                      ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasDataSource> =
 =                      [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/measurementSystem> Literal("3DMS system", datatype=xsd:string) ;               =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/usedDataSources> Literal("scanner", datatype=xsd:string) ; rdf:type              =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
-=                      rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasFormat> [ <https://w3id.org/ascs-                       =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
+=                      rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasFormat> [ <https://w3id.org/ascs-                       =
 =                      ev/envited-x/hdmap/v6/formatType> Literal("ASAM OpenDRIVE", datatype=xsd:string) ; <https://w3id.org/ascs-                    =
 =                      ev/envited-x/hdmap/v6/version> Literal("1.6", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                         =
-=                      ev/envited-x/envited-x/v3/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasQuality> [ <https://w3id.org/ascs-                                        =
+=                      ev/envited-x/envited-x/v4/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasQuality> [ <https://w3id.org/ascs-                                        =
 =                      ev/envited-x/hdmap/v6/accuracyLaneModel2d> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-                       =
 =                      ev/envited-x/hdmap/v6/accuracyLaneModelHeight> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-                   =
 =                      ev/envited-x/hdmap/v6/accuracyObjects> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-                           =
 =                      ev/envited-x/hdmap/v6/accuracySignals> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-                           =
 =                      ev/envited-x/hdmap/v6/precision> Literal("0.01", datatype=xsd:float) ; rdf:type <https://w3id.org/ascs-                       =
-=                      ev/envited-x/envited-x/v3/Quality>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quality>, [ owl:onProperty                   =
+=                      ev/envited-x/envited-x/v4/Quality>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quality>, [ owl:onProperty                   =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasRange2D> ; owl:someValuesFrom <https://w3id.org/ascs-                         =
 =                      ev/envited-x/hdmap/v6/Range2D> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] ;                     =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasQuantity> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/elevationRange>  =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasQuantity> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/elevationRange>  =
 =                      Literal("2.22", datatype=xsd:float) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/length> Literal("1.46",                    =
 =                      datatype=xsd:float) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/numberIntersections> Literal("5", datatype=xsd:integer) ;  =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/numberObjects> Literal("200", datatype=xsd:integer) ; <https://w3id.org/ascs-    =
@@ -50,28 +50,28 @@
 =                      ev/envited-x/hdmap/v6/rangeOfModeling> Literal("20.0", datatype=xsd:float) ; <https://w3id.org/ascs-                          =
 =                      ev/envited-x/hdmap/v6/speedLimit> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/max> Literal("50.0", datatype=xsd:float) ;   =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/min> Literal("10.0", datatype=xsd:float) ; rdf:type <https://w3id.org/ascs-      =
-=                      ev/envited-x/hdmap/v6/Range2D>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Quantity>,        =
+=                      ev/envited-x/hdmap/v6/Range2D>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Quantity>,        =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quantity>, rdfs:Resource ] ; <https://w3id.org/ascs-                             =
 =                      ev/envited-x/hdmap/v6/hasContent> [ <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>                =
 =                      Literal("false" = False, datatype=xsd:boolean) ;                                                                              =
 =                      <https://openlabel.asam.net/V1-0-0/ontologies/laneSpecificationDimensionsValue> Literal("3.5", datatype=xsd:decimal) ;        =
 =                      rdf:type <https://openlabel.asam.net/V1-0-0/ontologies/LaneSpecificationDimensions>,                                          =
 =                      <https://openlabel.asam.net/V1-0-0/ontologies/Odd>, <https://openlabel.asam.net/V1-0-0/ontologies/OddScenery>,                =
-=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content>,                =
+=                      <https://openlabel.asam.net/V1-0-0/ontologies/Tag>, <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Content>,                =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Class, rdfs:Resource ], [ <https://w3id.org/ascs-     =
 =                      ev/envited-x/hdmap/v6/laneTypes> Literal("driving", datatype=xsd:string), Literal("walking", datatype=xsd:string) ;           =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/levelOfDetail> Literal("crosswalk", datatype=xsd:string) ;                       =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/roadTypes> Literal("town", datatype=xsd:string) ; <https://w3id.org/ascs-        =
 =                      ev/envited-x/hdmap/v6/trafficDirection> Literal("right-hand", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-         =
-=                      ev/envited-x/envited-x/v3/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
+=                      ev/envited-x/envited-x/v4/Content>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Content>, <https://w3id.org/ascs-            =
 =                      ev/envited-x/hdmap/v6/ContentOrOddScenery>, rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDataSource> [   =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/measurementSystem> Literal("3DMS system", datatype=xsd:string) ;                 =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/usedDataSources> Literal("scanner", datatype=xsd:string) ; rdf:type              =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/DataSource>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DataSource>,       =
 =                      rdfs:Resource ] ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasFormat> [ <https://w3id.org/ascs-                           =
 =                      ev/envited-x/hdmap/v6/formatType> Literal("ASAM OpenDRIVE", datatype=xsd:string) ; <https://w3id.org/ascs-                    =
 =                      ev/envited-x/hdmap/v6/version> Literal("1.6", datatype=xsd:string) ; rdf:type <https://w3id.org/ascs-                         =
-=                      ev/envited-x/envited-x/v3/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
+=                      ev/envited-x/envited-x/v4/Format>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Format>, rdfs:Resource ] ;                    =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasGeoreference>                                                                 =
 =                      <did:web:registry.envited-x.net:Georeference:wDgNY3gZAxMe3LjhdAZ9TbPiYnQ-yybNhCu8> ; <https://w3id.org/ascs-                  =
 =                      ev/envited-x/hdmap/v6/hasQuality> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracyLaneModel2d> Literal("0.1",          =
@@ -79,7 +79,7 @@
 =                      datatype=xsd:float) ; <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracyObjects> Literal("0.1", datatype=xsd:float) ;      =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/accuracySignals> Literal("0.1", datatype=xsd:float) ; <https://w3id.org/ascs-    =
 =                      ev/envited-x/hdmap/v6/precision> Literal("0.01", datatype=xsd:float) ; rdf:type <https://w3id.org/ascs-                       =
-=                      ev/envited-x/envited-x/v3/Quality>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quality>, [ owl:onProperty                   =
+=                      ev/envited-x/envited-x/v4/Quality>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quality>, [ owl:onProperty                   =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasRange2D> ; owl:someValuesFrom <https://w3id.org/ascs-                         =
 =                      ev/envited-x/hdmap/v6/Range2D> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] ;                     =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasQuantity> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/elevationRange>      =
@@ -92,38 +92,53 @@
 =                      ev/envited-x/hdmap/v6/rangeOfModeling> Literal("20.0", datatype=xsd:float) ; <https://w3id.org/ascs-                          =
 =                      ev/envited-x/hdmap/v6/speedLimit> [ <https://w3id.org/ascs-ev/envited-x/hdmap/v6/max> Literal("50.0", datatype=xsd:float) ;   =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/min> Literal("10.0", datatype=xsd:float) ; rdf:type <https://w3id.org/ascs-      =
-=                      ev/envited-x/hdmap/v6/Range2D>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Quantity>,        =
+=                      ev/envited-x/hdmap/v6/Range2D>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Quantity>,        =
 =                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/Quantity>, rdfs:Resource ] ; rdf:type <https://w3id.org/ascs-                    =
-=                      ev/envited-x/envited-x/v3/DomainSpecification>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DomainSpecification>, [          =
-=                      owl:cardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                   =
-=                      ev/envited-x/hdmap/v6/hasDataSource> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:cardinality Literal("1",  =
-=                      datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasFormat> ; rdf:type owl:Restriction,    =
-=                      rdfs:Class, rdfs:Resource ], [ owl:cardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-    =
-=                      ev/envited-x/hdmap/v6/hasQuality> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:cardinality Literal("1",     =
-=                      datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasQuantity> ; rdf:type owl:Restriction,  =
-=                      rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs- =
-=                      ev/envited-x/envited-x/v3/hasDataSource> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality        =
-=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasQuality> ; rdf:type   =
-=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasQuantity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [      =
+=                      ev/envited-x/envited-x/v4/DomainSpecification>, <https://w3id.org/ascs-ev/envited-x/hdmap/v6/DomainSpecification>, [          =
+=                      owl:allValuesFrom <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Content> ; owl:onProperty <https://w3id.org/ascs-          =
+=                      ev/envited-x/envited-x/v4/hasContent> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/DataSource> ; owl:onProperty <https://w3id.org/ascs-                         =
+=                      ev/envited-x/envited-x/v4/hasDataSource> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom         =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Format> ; owl:onProperty <https://w3id.org/ascs-                             =
+=                      ev/envited-x/envited-x/v4/hasFormat> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom             =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Quality> ; owl:onProperty <https://w3id.org/ascs-                            =
+=                      ev/envited-x/envited-x/v4/hasQuality> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:allValuesFrom            =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/Quantity> ; owl:onProperty <https://w3id.org/ascs-                           =
+=                      ev/envited-x/envited-x/v4/hasQuantity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:cardinality             =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasDataSource> ; rdf:type    =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:cardinality Literal("1", datatype=xsd:integer) ; owl:onProperty           =
+=                      <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasFormat> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [            =
+=                      owl:cardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasQuality>  =
+=                      ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:cardinality Literal("1", datatype=xsd:integer) ;               =
+=                      owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasQuantity> ; rdf:type owl:Restriction, rdfs:Class,              =
+=                      rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-             =
+=                      ev/envited-x/envited-x/v4/hasDataSource> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality        =
+=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasQuality> ; rdf:type   =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:maxCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasQuantity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [      =
 =                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
-=                      ev/envited-x/hdmap/v6/hasGeoreference> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
-=                      Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasContent> ; rdf:type       =
-=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasContent> ; =
-=                      owl:someValuesFrom <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Content> ; rdf:type owl:Restriction, rdfs:Class,          =
-=                      rdfs:Resource ], [ owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v3/hasFormat> ; owl:someValuesFrom            =
-=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v3/Format> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ],             =
-=                      rdfs:Resource ] must conform to all shapes in [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ] [ sh:property [ =
-=                      sh:in ( Literal("bidirectional", datatype=xsd:string) Literal("biking", datatype=xsd:string) Literal("border",                =
-=                      datatype=xsd:string) Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit",            =
-=                      datatype=xsd:string) Literal("median", datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp",           =
-=                      datatype=xsd:string) Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail",           =
-=                      datatype=xsd:string) Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shoulder", =
-=                      datatype=xsd:string) Literal("sidewalk", datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2",    =
-=                      datatype=xsd:string) Literal("special3", datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("tram",            =
-=                      datatype=xsd:string) ) ; sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.4 and older.", lang=en) ;  =
-=                      sh:path ( hdmap:hasContent hdmap:laneTypes ) ] ] ) ] , [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV15ToV17Shape ] ] [        =
-=                      sh:property [ sh:in ( Literal("HOV", datatype=xsd:string) Literal("bidirectional", datatype=xsd:string) Literal("biking",     =
+=                      ev/envited-x/envited-x/v4/hasDataSource> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality        =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasFormat> ; rdf:type    =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasQuality> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/envited-x/v4/hasQuantity> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality          =
+=                      Literal("0", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-ev/envited-x/hdmap/v6/hasGeoreference> ; rdf:type  =
+=                      owl:Restriction, rdfs:Class, rdfs:Resource ], [ owl:minCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty        =
+=                      <https://w3id.org/ascs-ev/envited-x/envited-x/v4/hasContent> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], [       =
+=                      owl:minCardinality Literal("1", datatype=xsd:integer) ; owl:onProperty <https://w3id.org/ascs-                                =
+=                      ev/envited-x/hdmap/v6/hasContent> ; rdf:type owl:Restriction, rdfs:Class, rdfs:Resource ], rdfs:Resource ] must conform to    =
+=                      all shapes in [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV14OrOlderShape ] ] [ sh:property [ sh:in (                         =
+=                      Literal("bidirectional", datatype=xsd:string) Literal("biking", datatype=xsd:string) Literal("border", datatype=xsd:string)   =
+=                      Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit", datatype=xsd:string)            =
+=                      Literal("median", datatype=xsd:string) Literal("none", datatype=xsd:string) Literal("offRamp", datatype=xsd:string)           =
+=                      Literal("onRamp", datatype=xsd:string) Literal("parking", datatype=xsd:string) Literal("rail", datatype=xsd:string)           =
+=                      Literal("restricted", datatype=xsd:string) Literal("roadWorks", datatype=xsd:string) Literal("shoulder", datatype=xsd:string) =
+=                      Literal("sidewalk", datatype=xsd:string) Literal("special1", datatype=xsd:string) Literal("special2", datatype=xsd:string)    =
+=                      Literal("special3", datatype=xsd:string) Literal("stop", datatype=xsd:string) Literal("tram", datatype=xsd:string) ) ;        =
+=                      sh:message Literal("laneTypes must be a known OpenDRIVE e_laneType for v1.4 and older.", lang=en) ; sh:path (                 =
+=                      hdmap:hasContent hdmap:laneTypes ) ] ] ) ] , [ sh:or ( [ sh:not [ sh:node hdmap:OpenDriveV15ToV17Shape ] ] [ sh:property [    =
+=                      sh:in ( Literal("HOV", datatype=xsd:string) Literal("bidirectional", datatype=xsd:string) Literal("biking",                   =
 =                      datatype=xsd:string) Literal("border", datatype=xsd:string) Literal("bus", datatype=xsd:string) Literal("connectingRamp",     =
 =                      datatype=xsd:string) Literal("driving", datatype=xsd:string) Literal("entry", datatype=xsd:string) Literal("exit",            =
 =                      datatype=xsd:string) Literal("median", datatype=xsd:string) Literal("mwyEntry", datatype=xsd:string) Literal("mwyExit",       =

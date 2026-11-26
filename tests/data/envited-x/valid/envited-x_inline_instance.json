@@ -1,8 +1,8 @@
 {
    "@context": [
       "https://w3id.org/gaia-x/development#",
-      "https://w3id.org/ascs-ev/envited-x/envited-x/v3/",
-      "https://w3id.org/ascs-ev/envited-x/manifest/v5/",
+      "https://w3id.org/ascs-ev/envited-x/envited-x/v4/",
+      "https://w3id.org/ascs-ev/envited-x/manifest/v6/",
       {
          "@vocab": null
       }

@@ -8,13 +8,15 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Error:            Format must conform to either SingleChannelFormatShape (.osi or .txth) or MultiChannelFormatShape (.mcap).                    =
-= -------------------------------------------------------------------------------------------------------------------------------------------------- =
-= 🔹 [Violation] Node: did:web:test.ositrace.net:OSITrace:test_invalid_singlechannel_bad_fileformat                                                  =
-=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasDomainSpecification                                                         =
-=    Error:            Each OSI trace must have one associated DomainSpecification object with content, format, quality, quantity, and dataSource.   =
+=    Error:            Node [ ... ] must conform to one or more shapes in [ rdfs:comment Literal("Single-channel trace file (.osi binary or .txth    =
+=                      text).", lang=en) ; sh:property [ sh:in ( Literal("OSI", datatype=xsd:string) Literal("TXTH", datatype=xsd:string) ) ;        =
+=                      sh:path ositrace:fileFormat ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ositrace:formatType ], [            =
+=                      sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ositrace:version ] ] , [ rdfs:comment Literal("Multi-channel MCAP    =
+=                      container.", lang=en) ; sh:property [ sh:in ( Literal("MCAP", datatype=xsd:string) ) ; sh:minCount Literal("1",               =
+=                      datatype=xsd:integer) ; sh:path ositrace:fileFormat ], [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:path             =
+=                      ositrace:hasChannel ] ]                                                                                                       =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: [BNODE]                                                                                                                       =
-=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v6/hasFormat                                                                      =
-=    Error:            Value does not conform to Shape ositrace:FormatShape. See details for more information.                                       =
+=    Property:         https://w3id.org/ascs-ev/envited-x/ositrace/v7/hasFormat                                                                      =
+=    Error:            ositraceHasFormat (DomainSpecification): File format details of the OSI trace.                                                =
 ======================================================================================================================================================

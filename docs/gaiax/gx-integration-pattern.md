@@ -71,7 +71,7 @@ The key insight: **the closed GX shape only fires on the Layer 1 node**, which c
 The `ascs-ev/envited-x` IRI namespace (`https://w3id.org/ascs-ev/envited-x/`) acts as the **single coupling point** between ENVITED-X domain ontologies and the Gaia-X ecosystem. Domain ontologies never directly subclass or reference GX types — they only interact with GX through the envited-x wrapper layer:
 
 ```
-Domain Ontology  ──imports──►  envited-x/v3  ──imports──►  gx:development#
+Domain Ontology  ──imports──►  envited-x/v4  ──imports──►  gx:development#
      (Layer 3)                  (Layer 2)                    (Layer 1)
 ```
 

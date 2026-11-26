@@ -6,6 +6,11 @@ Unit tests for omb.validators.shacl.inference.
 import pytest
 from rdflib import RDF, RDFS, BNode, Graph, Literal, Namespace
 
+from omb.utils.context_resolver import (
+    build_context_url_map,
+    load_jsonld_with_local_contexts,
+)
+from omb.utils.registry_resolver import RegistryResolver
 from omb.validators.shacl.inference import (
     apply_rdfs_inference,
     apply_rdfs_inference_sparql,
@@ -174,10 +179,15 @@ def test_indexed_engine_matches_the_sparql_rules_on_repository_artifacts(root_di
     ont = Graph()
     for artifact in sorted((root_dir / "artifacts" / "manifest").glob("*.ttl")):
         ont.parse(artifact, format="turtle")
+    # The contexts come from the repository, not from the web: a version that is
+    # not published yet resolves as well.
+    instance = (
+        root_dir / "tests" / "data" / "manifest" / "valid" / "manifest_instance.json"
+    )
+    contexts = build_context_url_map(RegistryResolver(root_dir), root_dir)
     data = Graph()
     data.parse(
-        root_dir / "tests" / "data" / "manifest" / "valid" / "manifest_instance.json",
-        format="json-ld",
+        data=load_jsonld_with_local_contexts(instance, contexts), format="json-ld"
     )
     assert len(ont) > 0 and len(data) > 0
 
@@ -220,3 +230,38 @@ def test_apply_rdfs_inference_reports_the_number_of_new_triples():
     combined, inferred = apply_rdfs_inference(data, ont)
 
     assert inferred == len(set(combined) - before)
+
+
+def test_abox_inference_range_types_blank_and_iri_not_literal(tmp_path):
+    """The per-resource fast path must apply rdfs3 exactly like the full path.
+
+    ``ShaclValidator._abox_inference`` backs per-resource validation. It must
+    type blank-node objects via ``rdfs:range`` as ``apply_rdfs_inference``
+    does, or ``sh:class`` constraints on inline (blank-node) values fail only in
+    per-resource mode.
+    """
+    from omb.validators.shacl.validator import ShaclValidator
+
+    ex = Namespace("http://example.org/")
+    data = Graph()
+    ont = Graph()
+
+    bnode = BNode()
+    data.add((ex.s, ex.hasChild, bnode))
+    data.add((ex.s, ex.hasChild, ex.iriChild))
+    data.add((ex.s, ex.hasLabel, Literal("x")))
+
+    ont.add((ex.hasChild, RDFS.range, ex.Child))
+    ont.add((ex.hasLabel, RDFS.range, ex.LabelType))
+
+    validator = ShaclValidator(tmp_path, inference_mode="rdfs", verbose=False)
+    fast = validator._abox_inference(data, ont)
+    full, _ = apply_rdfs_inference(data, ont)
+
+    for triple in (
+        (bnode, RDF.type, ex.Child),
+        (ex.iriChild, RDF.type, ex.Child),
+    ):
+        assert triple in fast
+        assert triple in full
+    assert (Literal("x"), RDF.type, ex.LabelType) not in fast

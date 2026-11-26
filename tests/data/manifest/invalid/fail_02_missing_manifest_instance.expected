@@ -8,7 +8,7 @@
 =                                                           Structured Validation Errors:                                                            =
 = -------------------------------------------------------------------------------------------------------------------------------------------------- =
 = 🔹 [Violation] Node: did:web:test.manifest.net:Manifest:test_invalid_fail_02_missing_manifest_instance                                             =
-=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v5/hasManifestReference                                                           =
-=    Error:            Less than 1 values on                                                                                                         =
-=                      <did:web:test.manifest.net:Manifest:test_invalid_fail_02_missing_manifest_instance>->manifest:hasManifestReference            =
+=    Property:         https://w3id.org/ascs-ev/envited-x/manifest/v6/hasManifestReference                                                           =
+=    Error:            hasManifestReference (Manifest): Links a Manifest to its corresponding manifest reference file, defining the structure and    =
+=                      contents of a digital asset; only applicable within Manifest instances.                                                       =
 ======================================================================================================================================================

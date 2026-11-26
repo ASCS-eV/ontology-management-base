@@ -85,6 +85,10 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: just
+      - name: Check out the pinned Gaia-X sources
+        # envited-x and ositrace are generated from LinkML schemas that import the
+        # Gaia-X LinkML schemas from this submodule.
+        run: git submodule update --init --depth 1 submodules/service-characteristics
       - name: Run pre-commit
         run: |
           # Hooks like update-registry and update-properties may regenerate
@@ -115,6 +119,10 @@ jobs:
       - uses: taiki-e/install-action@v2
         with:
           tool: just
+      - name: Check out the pinned Gaia-X sources
+        # envited-x and ositrace are generated from LinkML schemas that import the
+        # Gaia-X LinkML schemas from this submodule.
+        run: git submodule update --init --depth 1 submodules/service-characteristics
       - name: Generate artifacts
         run: just generate
       - name: Normalize generated files (same as pre-commit hooks)

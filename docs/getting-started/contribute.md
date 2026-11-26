@@ -4,11 +4,14 @@ This guide describes how to add or update ontologies, shapes, and test data.
 
 ## Workflow
 
-1. Add or update ontology artifacts under `artifacts/{domain}/`.
-2. Add or update JSON-LD contexts in the same folder.
-3. Add test instances under `tests/data/{domain}/`.
-4. Update catalogs and registry.
-5. Run validation.
+1. Change the domain's source:
+    - a generated domain (see [LinkML Models](../future/linkml.md)): its schema
+      `linkml/{domain}/{domain}.yaml`, then run `just generate-domain {domain}`;
+    - a hand-written domain: its OWL ontology, SHACL shapes and JSON-LD context
+      under `artifacts/{domain}/`.
+2. Add test instances under `tests/data/{domain}/`.
+3. Update catalogs and registry.
+4. Run validation.
 
 ## Catalog and Registry Updates
 
@@ -24,6 +27,12 @@ This updates:
 - `artifacts/catalog-v001.xml`
 - `imports/catalog-v001.xml`
 - `tests/catalog-v001.xml`
+- `config/ontoenv.toml`
+
+The pre-commit hooks run this updater, and `properties_updater` for
+`docs/ontologies/catalog.md` and `docs/ontologies/properties.md`, when an artifact
+changes. Commit their output with the change: the documentation site is built from
+the committed registry.
 
 ## Validation
 
@@ -57,6 +66,8 @@ create tagged releases and publish documentation.
 ## Review Checklist
 
 - Ontology IRI and version are consistent
+- A generated domain is changed in its LinkML schema; its artifacts are the
+  output of `just generate`
 - SHACL shapes import the ontology
 - Context points to the correct W3ID namespace
 - Tests cover both valid and invalid cases

@@ -7,8 +7,49 @@ import json
 from pathlib import Path
 
 import pytest
+import rdflib
 
-from omb.utils import properties_updater
+from omb.utils import class_page_generator, properties_updater
+
+
+DECLARED_ONLY_OWL = """
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/domain/> .
+@prefix other: <http://example.org/other/> .
+
+<http://example.org/domain> a owl:Ontology, other:Header .
+other:Header a owl:Class .
+other:Described a owl:Class ; rdfs:label "Described here" .
+ex:Thing a owl:Class ; rdfs:subClassOf other:Described, ex:Parent .
+ex:Parent a owl:Class .
+"""
+# other:Header is only declared and belongs to another namespace; ex:Parent is only
+# declared too, but in the ontology's own namespace.
+DESCRIBED = {
+    "http://example.org/domain/Parent",
+    "http://example.org/domain/Thing",
+    "http://example.org/other/Described",
+}
+
+
+def test_extract_class_definitions_declared_only_class_is_left_out(temp_dir: Path):
+    """A class an ontology only declares belongs to the ontology that defines it."""
+    owl_file = temp_dir / "domain.owl.ttl"
+    owl_file.write_text(DECLARED_ONLY_OWL, encoding="utf-8")
+
+    classes = properties_updater.extract_class_definitions(owl_file)
+
+    assert set(classes) == DESCRIBED
+
+
+def test_extract_classes_declared_only_class_gets_no_page():
+    """The class pages follow the same rule as the properties pages."""
+    graph = rdflib.Graph().parse(data=DECLARED_ONLY_OWL, format="turtle")
+
+    classes = class_page_generator.extract_classes(graph, "domain")
+
+    assert set(classes) == DESCRIBED
 
 
 def test_extract_shacl_properties_from_ttl(temp_dir: Path):

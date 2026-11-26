@@ -87,7 +87,7 @@ class TestManifestContextRoundtrip:
         g.parse(data=json.dumps(instance), format="json-ld")
 
         # Check for expected type using proper RDF.type predicate
-        manifest_type = "https://w3id.org/ascs-ev/envited-x/manifest/v5/Manifest"
+        manifest_type = "https://w3id.org/ascs-ev/envited-x/manifest/v6/Manifest"
         types = [str(o) for s, p, o in g.triples((None, RDF.type, None))]
 
         assert manifest_type in types, (
@@ -104,7 +104,7 @@ class TestManifestContextRoundtrip:
         g.parse(data=json.dumps(instance), format="json-ld")
 
         # Find fileSize triples
-        file_size_uri = "https://w3id.org/ascs-ev/envited-x/manifest/v5/fileSize"
+        file_size_uri = "https://w3id.org/ascs-ev/envited-x/manifest/v6/fileSize"
         xsd_integer = "http://www.w3.org/2001/XMLSchema#integer"
 
         for s, p, o in g:
@@ -125,7 +125,7 @@ class TestManifestContextRoundtrip:
         g.parse(data=json.dumps(instance), format="json-ld")
 
         # Find width triples
-        width_uri = "https://w3id.org/ascs-ev/envited-x/manifest/v5/width"
+        width_uri = "https://w3id.org/ascs-ev/envited-x/manifest/v6/width"
         xsd_float = "http://www.w3.org/2001/XMLSchema#float"
 
         for s, p, o in g:
@@ -211,7 +211,7 @@ def _load_instance_with_local_contexts(instance_path: Path) -> Graph:
 # Namespace IRIs used in assertions
 GX_NS = "https://w3id.org/gaia-x/development#"
 SCHEMA_NS = "https://schema.org/"
-ENVITED_X_NS = "https://w3id.org/ascs-ev/envited-x/envited-x/v3/"
+ENVITED_X_NS = "https://w3id.org/ascs-ev/envited-x/envited-x/v4/"
 RESOURCE_DESC_ID = URIRef(
     "did:web:registry.envited-x.net::ResourceDescription:pX8mN4kL2vR9ZjW5bS7yH3cW1dGf6A8"
 )

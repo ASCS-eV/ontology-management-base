@@ -153,9 +153,59 @@ def _resolve_version_dir(version_entry: dict, fallback: Optional[str]) -> str:
     return _normalize_version_info(version_info or fallback or "unknown")
 
 
+def described_classes(graph: rdflib.Graph) -> List[URIRef]:
+    """
+    Return the named classes that an ontology describes, sorted by IRI.
+
+    A class in another namespace that the graph only declares (``a owl:Class``
+    and nothing else) is one it uses and another ontology defines, such as the
+    class of a class assertion, which OWL 2 DL wants declared (Structural
+    Specification 5.8.1); it is left out. A class in the namespace of the
+    graph's own ontology is always kept.
+
+    Args:
+        graph: Parsed OWL graph
+
+    Returns:
+        IRIs of the classes of the ontology's own namespace and of the classes
+        with at least one statement beyond their declaration
+    """
+    class_types = (OWL.Class, RDFS.Class)
+    own_namespaces = tuple(
+        namespace
+        for ontology in graph.subjects(RDF.type, OWL.Ontology)
+        if isinstance(ontology, URIRef)
+        for namespace in (
+            (str(ontology),)
+            if str(ontology).endswith(("/", "#"))
+            else (f"{ontology}/", f"{ontology}#")
+        )
+    )
+    declared = {
+        subject
+        for class_type in class_types
+        for subject in graph.subjects(RDF.type, class_type)
+        if isinstance(subject, URIRef)
+    }
+    return sorted(
+        (
+            class_iri
+            for class_iri in declared
+            if str(class_iri).startswith(own_namespaces)
+            or any(
+                predicate != RDF.type or value not in class_types
+                for predicate, value in graph.predicate_objects(class_iri)
+            )
+        ),
+        key=str,
+    )
+
+
 def extract_class_definitions(owl_file: Path) -> Dict[str, ClassInfo]:
     """
     Extract class definitions from an OWL Turtle file.
+
+    Classes the file only declares are left out, see :func:`described_classes`.
 
     Args:
         owl_file: Path to OWL TTL file
@@ -164,13 +214,9 @@ def extract_class_definitions(owl_file: Path) -> Dict[str, ClassInfo]:
         Mapping of class IRI to ClassInfo
     """
     graph = parse_graph(owl_file, "turtle")
-    class_iris = set(graph.subjects(RDF.type, OWL.Class))
-    class_iris.update(graph.subjects(RDF.type, RDFS.Class))
 
     classes: Dict[str, ClassInfo] = {}
-    for class_iri in sorted(class_iris, key=lambda x: str(x)):
-        if not isinstance(class_iri, URIRef):
-            continue
+    for class_iri in described_classes(graph):
         iri_str = str(class_iri)
         label = _best_literal(graph.objects(class_iri, RDFS.label))
         comment = _best_literal(graph.objects(class_iri, RDFS.comment))

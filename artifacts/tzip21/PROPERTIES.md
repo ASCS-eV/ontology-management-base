@@ -41,7 +41,7 @@ Class_definition_for_Attribute <|-- Class_definition_for_OntologyConformanceAttr
 ## Prefixes
 
 - dcterms: <http://purl.org/dc/terms/>
-- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v3/>
+- envited-x: <https://w3id.org/ascs-ev/envited-x/envited-x/v4/>
 - owl: <http://www.w3.org/2002/07/owl#>
 - rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 - rdfs: <http://www.w3.org/2000/01/rdf-schema#>

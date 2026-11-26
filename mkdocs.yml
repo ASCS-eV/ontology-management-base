@@ -149,8 +149,8 @@ nav:
       - ENVITED-X Data Space: ecosystem/envited-x.md
       - Release Process: ecosystem/release-process.md
       - Long-Term Maintenance: ecosystem/maintenance.md
-  - Future:
-      - LinkML Migration: future/linkml.md
+  - LinkML:
+      - LinkML Models: future/linkml.md
       - LinkML Modelling Guidelines: future/linkml-modelling-guidelines.md
 
 hooks:
