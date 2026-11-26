@@ -6,12 +6,14 @@
   <uri name="http://code.asam.net/simulation/standard/openscenario" uri="openscenario/openscenario.owl.ttl"/>
   <uri name="http://code.asam.net/simulation/standard/openscenario/shapes" uri="openscenario/openscenario.shacl.ttl"/>
   <uri name="http://purl.org/dc/terms/" uri="dcterms/dcterms.owl.ttl"/>
+  <uri name="http://spdx.org/rdf/terms" uri="spdx/spdx.owl.ttl"/>
   <uri name="http://www.w3.org/1999/02/22-rdf-syntax-ns#" uri="rdf/rdf.owl.ttl"/>
   <uri name="http://www.w3.org/2000/01/rdf-schema#" uri="rdfs/rdfs.owl.ttl"/>
   <uri name="http://www.w3.org/2001/XMLSchema#" uri="xsd/xsd.owl.ttl"/>
   <uri name="http://www.w3.org/2002/07/owl" uri="owl/owl.owl.ttl"/>
   <uri name="http://www.w3.org/2004/02/skos/core" uri="skos/skos.owl.ttl"/>
   <uri name="http://www.w3.org/2006/vcard/ns#" uri="schema/schema.context.jsonld"/>
+  <uri name="http://www.w3.org/ns/dcat" uri="dcat/dcat.owl.ttl"/>
   <uri name="http://www.w3.org/ns/dcat#" uri="schema/schema.context.jsonld"/>
   <uri name="http://www.w3.org/ns/org#" uri="org/org.owl.ttl"/>
   <uri name="http://www.w3.org/ns/prov#" uri="prov/prov.owl.ttl"/>

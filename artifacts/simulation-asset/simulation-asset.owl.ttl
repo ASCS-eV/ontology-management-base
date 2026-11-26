@@ -1,0 +1,434 @@
+@prefix access-right: <http://publications.europa.eu/resource/authority/access-right/> .
+@prefix simulation-asset: <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/> .
+@prefix ontology-header: <https://w3id.org/ascs-ev/envited-x/ontology-header/v1/> .
+@prefix ontologyheader_ontology: <https://w3id.org/ascs-ev/envited-x/ontology-header/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix schema: <https://schema.org/> .
+access-right:NON_PUBLIC a dcterms:RightsStatement , owl:NamedIndividual , simulation-asset:AccessRight ;
+	rdfs:label "NON_PUBLIC"@en .
+access-right:PUBLIC a dcterms:RightsStatement , owl:NamedIndividual , simulation-asset:AccessRight ;
+	rdfs:label "PUBLIC"@en .
+access-right:RESTRICTED a dcterms:RightsStatement , owl:NamedIndividual , simulation-asset:AccessRight ;
+	rdfs:label "RESTRICTED"@en .
+dcterms:RightsStatement a owl:Class .
+dcterms:accessRights a owl:ObjectProperty ;
+	rdfs:comment "Who may access the resource, from the EU access-right authority table (public, restricted, non-public) that DCAT-AP uses."@en ;
+	rdfs:label "accessRights"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:conformsTo a owl:AnnotationProperty ;
+	rdfs:comment "An established standard the file conforms to, e.g. ASAM OpenSCENARIO XML."@en ;
+	rdfs:label "conformsTo"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:contributor a owl:AnnotationProperty .
+dcterms:created a owl:DatatypeProperty ;
+	rdfs:comment "Date and time of creation of the resource as stated by its author."@en ;
+	rdfs:label "created"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:creator a owl:AnnotationProperty .
+dcterms:description a owl:DatatypeProperty ;
+	rdfs:comment "A free-text account of the resource."@en ;
+	rdfs:label "description"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:hasPart a owl:ObjectProperty ;
+	rdfs:comment "A dataset included in the described one, e.g. the scenario, road network and 3D models that make up a simulation asset."@en ;
+	rdfs:label "hasPart"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:identifier a owl:AnnotationProperty ;
+	rdfs:comment "Identifier of the resource in the system that manages it, e.g. a build target label. Stable across versions."@en ;
+	rdfs:label "identifier"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:isVersionOf a owl:ObjectProperty ;
+	rdfs:comment "The resource of which this one is a version: links a content-addressed edition to the stable, version-independent identity of the resource. DCAT 3's inverse dcat:isVersionOf may only be stated in addition to dcat:hasVersion on the logical resource, never in its place (DCAT 3 section 7); the DCMI property carries the back link on its own."@en ;
+	rdfs:label "isVersionOf"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:issued a owl:DatatypeProperty ;
+	rdfs:comment "Date and time of formal issuance (publication) of the resource."@en ;
+	rdfs:label "issued"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:license a owl:AnnotationProperty ;
+	rdfs:comment "A legal document giving permission to use the resource, e.g. an SPDX license IRI."@en ;
+	rdfs:label "license"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:publisher a owl:AnnotationProperty .
+dcterms:references a owl:AnnotationProperty .
+dcterms:requires a owl:ObjectProperty ;
+	rdfs:comment "A separately published dataset the described one needs but does not include, e.g. a road network offered as an asset of its own."@en ;
+	rdfs:label "requires"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:source a owl:AnnotationProperty .
+dcterms:title a owl:AnnotationProperty ;
+	rdfs:comment "A name given to the resource."@en ;
+	rdfs:label "title"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcterms:type a owl:ObjectProperty ;
+	rdfs:comment "The role the dataset plays in a simulation."@en ;
+	rdfs:label "type"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+spdx:Checksum a owl:Class ;
+	rdfs:comment "The result of applying a hash algorithm to a file (SPDX 2.3), as DCAT 3 recommends for distributions."@en ;
+	rdfs:label "Checksum"@en ;
+	rdfs:subClassOf _:b0ca788c990a4 , _:b282edcc6d543 , _:bb3c6e3a1afaa , _:bba599883fb07 , _:bcf73163f2650 ;
+	skos:exactMatch simulation-asset:Checksum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+spdx:ChecksumAlgorithm a owl:Class .
+spdx:algorithm a owl:ObjectProperty ;
+	rdfs:comment "The hash algorithm used to compute the checksum."@en ;
+	rdfs:label "algorithm"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+spdx:checksum a owl:ObjectProperty ;
+	rdfs:comment "A checksum of the file."@en ;
+	rdfs:label "checksum"@en ;
+	rdfs:range spdx:Checksum ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+spdx:checksumAlgorithm_sha256 a spdx:ChecksumAlgorithm , owl:NamedIndividual , simulation-asset:ChecksumAlgorithm ;
+	rdfs:label "checksumAlgorithm_sha256"@en .
+spdx:checksumAlgorithm_sha384 a spdx:ChecksumAlgorithm , owl:NamedIndividual , simulation-asset:ChecksumAlgorithm ;
+	rdfs:label "checksumAlgorithm_sha384"@en .
+spdx:checksumAlgorithm_sha512 a spdx:ChecksumAlgorithm , owl:NamedIndividual , simulation-asset:ChecksumAlgorithm ;
+	rdfs:label "checksumAlgorithm_sha512"@en .
+spdx:checksumValue a owl:DatatypeProperty ;
+	rdfs:comment "The checksum value, in lower-case hexadecimal as SPDX 2.3 requires."@en ;
+	rdfs:label "checksumValue"@en ;
+	rdfs:range xsd:hexBinary ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+xsd:hexBinary a rdfs:Datatype .
+skos:Concept a owl:Class .
+skos:exactMatch a owl:AnnotationProperty .
+skos:inScheme a owl:AnnotationProperty .
+dcat:Catalog a owl:Class ;
+	rdfs:comment "A curated collection of dataset descriptions (W3C DCAT 3), e.g. every simulation asset of one source-repository revision. As in DCAT 3, a catalog is itself a dataset."@en ;
+	rdfs:label "Catalog"@en ;
+	rdfs:subClassOf dcat:Dataset , _:b36b28b18ac7e ;
+	skos:exactMatch simulation-asset:Catalog ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:Dataset a owl:Class ;
+	rdfs:comment "A collection of data published or curated by a single agent (W3C DCAT 3). Every resource a simulation needs or produces is one: a scenario, a road network, a 3D model, an OSI trace."@en ;
+	rdfs:label "Dataset"@en ;
+	rdfs:subClassOf _:b1be2a04ea3aa , _:b2b163e8007ef , _:b42410b308753 , _:b49e8e50e2803 , _:b601125a3fc38 , _:b6c8dfcb2f04a , _:b7ea966e7ee66 , _:bb027510ce292 , _:bc6a599995029 , _:bc6ce5fce6835 , _:bea9332330244 , _:bf648d7e478cd ;
+	skos:exactMatch simulation-asset:Dataset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:Distribution a owl:Class ;
+	rdfs:comment "A specific representation of a dataset (W3C DCAT 3), typically a file, identified by its checksum and reachable through an access or download URL."@en ;
+	rdfs:label "Distribution"@en ;
+	rdfs:subClassOf _:b0faed37663cc , _:b44be8e3a66d4 , _:b5bc91aa5615d , _:b86bc9c5b735c , _:b87b515d3c184 , _:bd0f0fcf49007 ;
+	skos:exactMatch simulation-asset:Distribution ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:accessURL a owl:ObjectProperty ;
+	rdfs:comment "A URL of a resource that gives access to the file, e.g. a repository browser page."@en ;
+	rdfs:label "accessURL"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:byteSize a owl:DatatypeProperty ;
+	rdfs:comment "The size of the file in bytes."@en ;
+	rdfs:label "byteSize"@en ;
+	rdfs:range _:bac4aafcad941 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:dataset a owl:ObjectProperty ;
+	rdfs:comment "A dataset listed in the catalog."@en ;
+	rdfs:label "dataset"@en ;
+	rdfs:range dcat:Dataset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:distribution a owl:ObjectProperty ;
+	rdfs:comment "An available representation of the dataset, e.g. its file or a packaged archive."@en ;
+	rdfs:label "distribution"@en ;
+	rdfs:range dcat:Distribution ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:downloadURL a owl:ObjectProperty ;
+	rdfs:comment "The URL of the downloadable file."@en ;
+	rdfs:label "downloadURL"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:keyword a owl:DatatypeProperty ;
+	rdfs:comment "A keyword or tag describing the resource."@en ;
+	rdfs:label "keyword"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:mediaType a owl:ObjectProperty ;
+	rdfs:comment "The media type of the file, as an IANA media-type IRI (https://www.iana.org/assignments/media-types/<type>/<subtype>)."@en ;
+	rdfs:label "mediaType"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+dcat:version a owl:DatatypeProperty ;
+	rdfs:comment "The version indicator of this edition of the resource, e.g. a content digest or a release number."@en ;
+	rdfs:label "version"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:Activity a owl:Class ;
+	rdfs:comment "Something that occurs over a period of time and acts upon or with entities (W3C PROV-O), e.g. a build, a conversion or a simulation run."@en ;
+	rdfs:label "Activity"@en ;
+	rdfs:subClassOf _:b0c095ca0b5ef , _:b742325f3431b , _:b95eca8b978d5 , _:bf0a589a31cbc ;
+	skos:exactMatch simulation-asset:Activity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:SoftwareAgent a owl:Class ;
+	rdfs:comment "Running software that bears responsibility for an activity (W3C PROV-O), e.g. a simulator or a converter in a given version."@en ;
+	rdfs:label "SoftwareAgent"@en ;
+	rdfs:subClassOf _:b26ebe52a6386 , _:b5ce3e466324d , _:bfab798043969 ;
+	skos:exactMatch simulation-asset:SoftwareAgent ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:endedAtTime a owl:DatatypeProperty ;
+	rdfs:comment "When the activity ended."@en ;
+	rdfs:label "endedAtTime"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:startedAtTime a owl:DatatypeProperty ;
+	rdfs:comment "When the activity started."@en ;
+	rdfs:label "startedAtTime"@en ;
+	rdfs:range xsd:dateTime ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:used a owl:ObjectProperty ;
+	rdfs:comment "A dataset the activity used, e.g. the simulation asset a run executed."@en ;
+	rdfs:label "used"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:wasAssociatedWith a owl:ObjectProperty ;
+	rdfs:comment "The software that carried out the activity."@en ;
+	rdfs:label "wasAssociatedWith"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:wasDerivedFrom a owl:ObjectProperty ;
+	rdfs:comment "A dataset this one was derived from by transformation or modification, e.g. the base scenario of a weather variant."@en ;
+	rdfs:label "wasDerivedFrom"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+prov:wasGeneratedBy a owl:ObjectProperty ;
+	rdfs:comment "The activity that produced the dataset, e.g. a simulation run."@en ;
+	rdfs:label "wasGeneratedBy"@en ;
+	rdfs:range prov:Activity ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+foaf:name a owl:DatatypeProperty ;
+	rdfs:comment "The name of the agent."@en ;
+	rdfs:label "name"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+schema:about a owl:ObjectProperty ;
+	rdfs:comment "The subject matter of the content: a structured content description, such as a scenario description in a domain ontology or a set of ASAM OpenLABEL tags, referenced by IRI."@en ;
+	rdfs:label "about"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+schema:softwareVersion a owl:DatatypeProperty ;
+	rdfs:comment "The version of the software."@en ;
+	rdfs:label "softwareVersion"@en ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+ontology-header:OntologyHeader a owl:Class .
+simulation-asset:AccessRight a owl:Class ;
+	rdfs:comment "Access rights from the EU access-right authority table."@en ;
+	rdfs:label "AccessRight"@en ;
+	owl:oneOf _:b6e32dc4d2dbf ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> ;
+	linkml:permissible_values access-right:NON_PUBLIC , access-right:PUBLIC , access-right:RESTRICTED .
+simulation-asset:ChecksumAlgorithm a owl:Class ;
+	rdfs:comment "Hash algorithms, as SPDX 2.3 checksum-algorithm individuals."@en ;
+	rdfs:label "ChecksumAlgorithm"@en ;
+	owl:oneOf _:b44b2fa98ece7 ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> ;
+	linkml:permissible_values spdx:checksumAlgorithm_sha256 , spdx:checksumAlgorithm_sha384 , spdx:checksumAlgorithm_sha512 .
+simulation-asset:ResourceType a owl:Class ;
+	rdfs:comment "The role a dataset plays in a simulation."@en ;
+	rdfs:label "ResourceType"@en ;
+	owl:oneOf _:bdc757b59c8ce ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> ;
+	linkml:permissible_values simulation-asset:objectModel , simulation-asset:roadNetwork , simulation-asset:scenarioDescription , simulation-asset:sceneryModel , simulation-asset:simulationTrace , simulation-asset:simulatorResource .
+simulation-asset:SimulationAsset a owl:Class ;
+	rdfs:comment "A self-contained set of data that lets a simulator execute one simulation: a scenario together with the datasets it needs (road network, 3D models, simulator resources), listed as its parts. It is the unit a build system or data platform manages internally and the unit a marketplace offers externally. Its content is described by reference (about), not by subclassing."@en ;
+	rdfs:label "SimulationAsset"@en ;
+	rdfs:subClassOf dcat:Dataset , _:bd7be434fdcc0 ;
+	skos:exactMatch simulation-asset:SimulationAsset ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+simulation-asset:SimulationRun a owl:Class ;
+	rdfs:comment "One execution of a simulator. It used a simulation asset (and possibly further configuration datasets) and was carried out by a simulator; the results it produced point back to it with prov:wasGeneratedBy."@en ;
+	rdfs:label "SimulationRun"@en ;
+	rdfs:subClassOf prov:Activity , _:b30b9259f05f6 , _:b7f874e145ad4 ;
+	skos:exactMatch simulation-asset:SimulationRun ;
+	skos:inScheme <https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> .
+simulation-asset:objectModel dcterms:title "Object model"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A 3D model of a road user or another movable object, e.g. in glTF."@en ;
+	rdfs:label "objectModel"@en .
+simulation-asset:roadNetwork dcterms:title "Road network"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A road network or map, e.g. in ASAM OpenDRIVE or NDS."@en ;
+	rdfs:label "roadNetwork"@en .
+simulation-asset:scenarioDescription dcterms:title "Scenario description"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A description of the dynamic content of a simulation, e.g. in ASAM OpenSCENARIO XML."@en ;
+	rdfs:label "scenarioDescription"@en .
+simulation-asset:sceneryModel dcterms:title "Scenery model"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A 3D model of the static environment, e.g. in glTF."@en ;
+	rdfs:label "sceneryModel"@en .
+simulation-asset:simulationTrace dcterms:title "Simulation trace"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A recording of a simulation run, e.g. an ASAM OSI trace."@en ;
+	rdfs:label "simulationTrace"@en .
+simulation-asset:simulatorResource dcterms:title "Simulator resource"@en ;
+	a owl:NamedIndividual , skos:Concept , simulation-asset:ResourceType ;
+	rdfs:comment "A resource the simulator needs to execute the content, e.g. a sensor lookup table or a material definition."@en ;
+	rdfs:label "simulatorResource"@en .
+<https://w3id.org/ascs-ev/envited-x/simulation-asset/v1> dcterms:conformsTo "https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/shapes"@en ;
+	dcterms:contributor <https://github.com/jdsika> ;
+	dcterms:creator "The GAIA-X 4 PLC AAD Project Team"@en ;
+	dcterms:identifier "https://w3id.org/ascs-ev/envited-x/simulation-asset"@en ;
+	dcterms:license "https://www.eclipse.org/legal/epl-2.0/"@en ;
+	dcterms:publisher <https://www.asc-s.de/> ;
+	dcterms:references <https://www.w3.org/TR/vocab-dcat-3/> ;
+	dcterms:source <https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0> ;
+	dcterms:title "Ontology definition for simulation-asset"@en ;
+	a owl:Ontology , ontology-header:OntologyHeader ;
+	rdfs:comment "A marketplace-neutral core for describing simulation assets (scenarios, road networks, 3D models, simulation results) and their lineage. It is a profile of W3C DCAT 3, PROV-O, DCMI Terms and SPDX 2.3: the classes and properties are the standard terms; the profile only adds the constraints needed to reproduce a simulation from its description."@en ;
+	rdfs:label "simulation-asset"@en ;
+	rdfs:seeAlso <https://spdx.github.io/spdx-spec/v2.3/> , <https://www.w3.org/TR/prov-o/> , <https://www.w3.org/TR/vocab-dcat-3/> ;
+	owl:imports ontologyheader_ontology:v1 ;
+	owl:versionInfo "v1"@en .
+linkml:permissible_values a owl:AnnotationProperty .
+_:b0c095ca0b5ef a owl:Restriction ;
+	owl:allValuesFrom dcat:Dataset ;
+	owl:onProperty prov:used .
+_:b0ca788c990a4 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty spdx:checksumValue .
+_:b0faed37663cc a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcat:downloadURL .
+_:b1be2a04ea3aa a owl:Restriction ;
+	owl:allValuesFrom simulation-asset:ResourceType ;
+	owl:onProperty dcterms:type .
+_:b26ebe52a6386 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty foaf:name .
+_:b282edcc6d543 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty spdx:algorithm .
+_:b2b163e8007ef a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:type .
+_:b30b9259f05f6 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty prov:wasAssociatedWith .
+_:b3503b503488b rdf:first _:bed447026b00c ;
+	rdf:rest rdf:nil .
+_:b36b28b18ac7e a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:issued .
+_:b37f0c79bc872 rdf:first xsd:integer ;
+	rdf:rest _:baef5ed385214 .
+_:b42410b308753 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:isVersionOf .
+_:b435a4a7c4d39 xsd:minInclusive 0 .
+_:b435a4a7c4d39_1 xsd:minInclusive 0 .
+_:b44b2fa98ece7 rdf:first spdx:checksumAlgorithm_sha256 ;
+	rdf:rest _:b6e78637d7641 .
+_:b44be8e3a66d4 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcat:accessURL .
+_:b4606b207ba77 rdf:first simulation-asset:simulationTrace ;
+	rdf:rest rdf:nil .
+_:b49e8e50e2803 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcat:version .
+_:b4e91e30a761a rdf:first simulation-asset:simulatorResource ;
+	rdf:rest _:b4606b207ba77 .
+_:b5b57bb3d1bf4 rdf:first xsd:integer ;
+	rdf:rest _:b3503b503488b .
+_:b5bc91aa5615d a owl:Restriction ;
+	owl:allValuesFrom _:b61c4b423754b ;
+	owl:onProperty dcat:byteSize .
+_:b5ce3e466324d a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty foaf:name .
+_:b601125a3fc38 a owl:Restriction ;
+	owl:allValuesFrom dcat:Dataset ;
+	owl:onProperty dcterms:hasPart .
+_:b61c4b423754b a rdfs:Datatype ;
+	owl:intersectionOf _:b5b57bb3d1bf4 .
+_:b6c8dfcb2f04a a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty prov:wasGeneratedBy .
+_:b6e32dc4d2dbf rdf:first access-right:PUBLIC ;
+	rdf:rest _:b9defbbd1c862 .
+_:b6e78637d7641 rdf:first spdx:checksumAlgorithm_sha384 ;
+	rdf:rest _:b7665f6344bb3 .
+_:b742325f3431b a owl:Restriction ;
+	owl:allValuesFrom prov:SoftwareAgent ;
+	owl:onProperty prov:wasAssociatedWith .
+_:b7665f6344bb3 rdf:first spdx:checksumAlgorithm_sha512 ;
+	rdf:rest rdf:nil .
+_:b7ea966e7ee66 a owl:Restriction ;
+	owl:allValuesFrom simulation-asset:AccessRight ;
+	owl:onProperty dcterms:accessRights .
+_:b7f874e145ad4 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty prov:used .
+_:b867e62af7d75 rdf:first access-right:NON_PUBLIC ;
+	rdf:rest rdf:nil .
+_:b86bc9c5b735c a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcat:byteSize .
+_:b87b515d3c184 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty spdx:checksum .
+_:b95eca8b978d5 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty prov:endedAtTime .
+_:b9defbbd1c862 rdf:first access-right:RESTRICTED ;
+	rdf:rest _:b867e62af7d75 .
+_:bac4aafcad941 a rdfs:Datatype ;
+	owl:intersectionOf _:b37f0c79bc872 .
+_:baef5ed385214 rdf:first _:bed447026b00c_1 ;
+	rdf:rest rdf:nil .
+_:bb027510ce292 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:accessRights .
+_:bb3c6e3a1afaa a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty spdx:algorithm .
+_:bba599883fb07 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty spdx:checksumValue .
+_:bba8989c478bd rdf:first simulation-asset:objectModel ;
+	rdf:rest _:bf113a4451913 .
+_:bc6a599995029 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:created .
+_:bc6ce5fce6835 a owl:Restriction ;
+	owl:allValuesFrom dcat:Dataset ;
+	owl:onProperty dcterms:requires .
+_:bcf73163f2650 a owl:Restriction ;
+	owl:allValuesFrom simulation-asset:ChecksumAlgorithm ;
+	owl:onProperty spdx:algorithm .
+_:bd0f0fcf49007 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcat:mediaType .
+_:bd7be434fdcc0 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty dcterms:hasPart .
+_:bdac8876900ae rdf:first _:b435a4a7c4d39 ;
+	rdf:rest rdf:nil .
+_:bdac8876900ae_1 rdf:first _:b435a4a7c4d39_1 ;
+	rdf:rest rdf:nil .
+_:bdc757b59c8ce rdf:first simulation-asset:scenarioDescription ;
+	rdf:rest _:beb6d0431535f .
+_:bea9332330244 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty dcterms:description .
+_:beb6d0431535f rdf:first simulation-asset:roadNetwork ;
+	rdf:rest _:bba8989c478bd .
+_:bed447026b00c a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae .
+_:bed447026b00c_1 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:bdac8876900ae_1 .
+_:bf0a589a31cbc a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty prov:startedAtTime .
+_:bf113a4451913 rdf:first simulation-asset:sceneryModel ;
+	rdf:rest _:b4e91e30a761a .
+_:bf648d7e478cd a owl:Restriction ;
+	owl:allValuesFrom dcat:Dataset ;
+	owl:onProperty prov:wasDerivedFrom .
+_:bfab798043969 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty schema:softwareVersion .

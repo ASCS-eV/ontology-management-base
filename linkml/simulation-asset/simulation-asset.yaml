@@ -1,0 +1,518 @@
+# LinkML source for the simulation-asset core ontology.
+#
+# Build with:  just generate-domain simulation-asset
+# Rationale, identity scheme and the mapping from manifest / envited-x:
+#   docs/concepts/simulation-asset-core.md
+#
+# The core reuses W3C and community standards instead of restating them:
+#
+#   * every class and property IS the standard term (class_uri / slot_uri):
+#     DCAT 3 for datasets and their files, SPDX 2.3 for checksums (as DCAT 3
+#     recommends), PROV-O for lineage, DCMI Terms for descriptions and
+#     relations, schema.org `about` for the link to a content description;
+#   * only two classes are minted, both specialisations: SimulationAsset
+#     (rdfs:subClassOf dcat:Dataset) and SimulationRun (rdfs:subClassOf
+#     prov:Activity), plus six SKOS concepts for the role a dataset plays in
+#     a simulation (ResourceType);
+#   * the schema only adds the constraints a simulation toolchain needs: every
+#     file is checksummed, every asset names its parts, a run names what it
+#     used and the software that executed it.
+#
+# No marketplace term (Gaia-X resource description, owner / registered-user
+# access roles, CIDs, manifest categories) appears here. Publication profiles
+# such as ENVITED-X build on this core and add them.
+
+id: https://w3id.org/ascs-ev/envited-x/simulation-asset/v1
+name: simulation-asset
+title: Ontology definition for simulation-asset
+description: >-
+    A marketplace-neutral core for describing simulation assets (scenarios,
+    road networks, 3D models, simulation results) and their lineage. It is a
+    profile of W3C DCAT 3, PROV-O, DCMI Terms and SPDX 2.3: the classes and
+    properties are the standard terms; the profile only adds the constraints
+    needed to reproduce a simulation from its description.
+source: https://github.com/ASCS-eV/ontology-management-base/releases/tag/v0.6.0
+contributors:
+  - https://github.com/jdsika
+see_also:
+  - https://www.w3.org/TR/vocab-dcat-3/
+  - https://www.w3.org/TR/prov-o/
+  - https://spdx.github.io/spdx-spec/v2.3/
+
+license: https://www.eclipse.org/legal/epl-2.0/
+
+conforms_to: https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/shapes
+
+prefixes:
+  sh: http://www.w3.org/ns/shacl#
+  skos: http://www.w3.org/2004/02/skos/core#
+  linkml: https://w3id.org/linkml/
+  ontology-header: https://w3id.org/ascs-ev/envited-x/ontology-header/v1/
+  ontologyheader_ontology: https://w3id.org/ascs-ev/envited-x/ontology-header/
+  simulation-asset: https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/
+  dcat: http://www.w3.org/ns/dcat#
+  dcterms: http://purl.org/dc/terms/
+  prov: http://www.w3.org/ns/prov#
+  spdx: http://spdx.org/rdf/terms#
+  # schema.org, bound as `sdo` (M10): LinkML's built-in types bind `schema`
+  # to http://schema.org/.
+  sdo: https://schema.org/
+  foaf: http://xmlns.com/foaf/0.1/
+  access-right: http://publications.europa.eu/resource/authority/access-right/
+  owl: http://www.w3.org/2002/07/owl#
+  xsd: http://www.w3.org/2001/XMLSchema#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+default_prefix: simulation-asset
+default_range: string
+
+instantiates: [ontology-header:OntologyHeader]
+# The header names the release with dcterms:source, as every generated domain
+# does, so prov:wasDerivedFrom is only the lineage of the data. The header and
+# the data share dcterms:title, dcterms:license, dcterms:conformsTo and
+# dcterms:identifier; an ontology annotation needs an annotation property, and
+# in OWL 2 DL no IRI is declared as more than one kind of property (§5.8.1), so
+# these four slots implement owl:AnnotationProperty and only the SHACL shapes,
+# the contract, constrain them (GAPS G26). The design is derived from manifest
+# v6; docs/concepts/simulation-asset-core.md maps it.
+annotations:
+  owl:versionInfo: v1
+  dcterms:identifier: https://w3id.org/ascs-ev/envited-x/simulation-asset
+  dcterms:references: https://www.w3.org/TR/vocab-dcat-3/
+  dcterms:creator: The GAIA-X 4 PLC AAD Project Team
+  dcterms:publisher: https://www.asc-s.de/
+
+imports:
+  - linkml:types
+  - ontologyheader_ontology:v1
+
+types:
+  # An XML Schema datatype a standard names, declared by `uri` and `base` only:
+  # with a `typeof` or a facet, gen-owl would state an owl:equivalentClass for
+  # the built-in datatype itself (xsd:hexBinary = xsd:string), which OWL 2
+  # forbids and which is false.
+  HexBinary:
+    uri: xsd:hexBinary
+    base: str
+    description: >-
+      Hexadecimal-encoded binary data (XML Schema hexBinary), the range of
+      spdx:checksumValue in SPDX 2.3.
+
+classes:
+
+  Dataset:
+    class_uri: dcat:Dataset
+    description: >-
+      A collection of data published or curated by a single agent (W3C DCAT 3).
+      Every resource a simulation needs or produces is one: a scenario, a road
+      network, a 3D model, an OSI trace.
+    slots:
+      - identifier
+      - title
+      - description
+      - keyword
+      - type
+      - created
+      - version
+      - isVersionOf
+      - license
+      - accessRights
+      - distribution
+      - hasPart
+      - requires
+      - about
+      - wasDerivedFrom
+      - wasGeneratedBy
+    # Foreign properties keep their standard (wider) range; the profile
+    # narrows them here, so the OWL asserts no rdfs:range on a DCMI, PROV or
+    # SPDX property and RDFS inference cannot retype other data.
+    slot_usage:
+      identifier:
+        required: true
+      type:
+        range: ResourceType
+      accessRights:
+        range: AccessRight
+      hasPart:
+        range: Dataset
+      requires:
+        range: Dataset
+      wasDerivedFrom:
+        range: Dataset
+
+  SimulationAsset:
+    class_uri: simulation-asset:SimulationAsset
+    is_a: Dataset
+    description: >-
+      A self-contained set of data that lets a simulator execute one
+      simulation: a scenario together with the datasets it needs (road
+      network, 3D models, simulator resources), listed as its parts. It is the
+      unit a build system or data platform manages internally and the unit a
+      marketplace offers externally. Its content is described by reference
+      (about), not by subclassing.
+    slot_usage:
+      title:
+        required: true
+      hasPart:
+        required: true
+
+  Distribution:
+    class_uri: dcat:Distribution
+    description: >-
+      A specific representation of a dataset (W3C DCAT 3), typically a file,
+      identified by its checksum and reachable through an access or download
+      URL.
+    slots:
+      - title
+      - accessURL
+      - downloadURL
+      - mediaType
+      - byteSize
+      - conformsTo
+      - checksum
+    slot_usage:
+      checksum:
+        required: true
+
+  Checksum:
+    class_uri: spdx:Checksum
+    description: >-
+      The result of applying a hash algorithm to a file (SPDX 2.3), as DCAT 3
+      recommends for distributions.
+    slots:
+      - algorithm
+      - checksumValue
+    slot_usage:
+      algorithm:
+        required: true
+        range: ChecksumAlgorithm
+      checksumValue:
+        required: true
+
+  Activity:
+    class_uri: prov:Activity
+    description: >-
+      Something that occurs over a period of time and acts upon or with
+      entities (W3C PROV-O), e.g. a build, a conversion or a simulation run.
+    slots:
+      - identifier
+      - title
+      - used
+      - wasAssociatedWith
+      - startedAtTime
+      - endedAtTime
+    slot_usage:
+      used:
+        range: Dataset
+      wasAssociatedWith:
+        range: SoftwareAgent
+
+  SimulationRun:
+    class_uri: simulation-asset:SimulationRun
+    is_a: Activity
+    description: >-
+      One execution of a simulator. It used a simulation asset (and possibly
+      further configuration datasets) and was carried out by a simulator; the
+      results it produced point back to it with prov:wasGeneratedBy.
+    slot_usage:
+      used:
+        required: true
+      wasAssociatedWith:
+        required: true
+
+  SoftwareAgent:
+    class_uri: prov:SoftwareAgent
+    description: >-
+      Running software that bears responsibility for an activity (W3C PROV-O),
+      e.g. a simulator or a converter in a given version.
+    slots:
+      - name
+      - softwareVersion
+    slot_usage:
+      name:
+        required: true
+
+  Catalog:
+    class_uri: dcat:Catalog
+    is_a: Dataset
+    description: >-
+      A curated collection of dataset descriptions (W3C DCAT 3), e.g. every
+      simulation asset of one source-repository revision. As in DCAT 3, a
+      catalog is itself a dataset.
+    slots:
+      - issued
+      - dataset
+    slot_usage:
+      title:
+        required: true
+
+slots:
+
+  identifier:
+    slot_uri: dcterms:identifier
+    description: >-
+      Identifier of the resource in the system that manages it, e.g. a build
+      target label. Stable across versions.
+    implements: [owl:AnnotationProperty]
+
+  title:
+    slot_uri: dcterms:title
+    description: A name given to the resource.
+    implements: [owl:AnnotationProperty]
+
+  description:
+    slot_uri: dcterms:description
+    description: A free-text account of the resource.
+
+  keyword:
+    slot_uri: dcat:keyword
+    description: A keyword or tag describing the resource.
+    multivalued: true
+
+  type:
+    slot_uri: dcterms:type
+    description: The role the dataset plays in a simulation.
+    range: uriorcurie
+
+  created:
+    slot_uri: dcterms:created
+    description: Date and time of creation of the resource as stated by its author.
+    range: datetime
+
+  issued:
+    slot_uri: dcterms:issued
+    description: Date and time of formal issuance (publication) of the resource.
+    range: datetime
+
+  version:
+    slot_uri: dcat:version
+    description: >-
+      The version indicator of this edition of the resource, e.g. a content
+      digest or a release number.
+
+  isVersionOf:
+    slot_uri: dcterms:isVersionOf
+    description: >-
+      The resource of which this one is a version: links a content-addressed
+      edition to the stable, version-independent identity of the resource.
+      DCAT 3's inverse dcat:isVersionOf may only be stated in addition to
+      dcat:hasVersion on the logical resource, never in its place (DCAT 3
+      section 7); the DCMI property carries the back link on its own.
+    range: uriorcurie
+
+  license:
+    slot_uri: dcterms:license
+    description: A legal document giving permission to use the resource, e.g. an SPDX license IRI.
+    range: uriorcurie
+    implements: [owl:AnnotationProperty]
+
+  accessRights:
+    slot_uri: dcterms:accessRights
+    description: >-
+      Who may access the resource, from the EU access-right authority table
+      (public, restricted, non-public) that DCAT-AP uses.
+    range: uriorcurie
+
+  distribution:
+    slot_uri: dcat:distribution
+    description: An available representation of the dataset, e.g. its file or a packaged archive.
+    range: Distribution
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  hasPart:
+    slot_uri: dcterms:hasPart
+    description: >-
+      A dataset included in the described one, e.g. the scenario, road network
+      and 3D models that make up a simulation asset.
+    range: uriorcurie
+    multivalued: true
+
+  requires:
+    slot_uri: dcterms:requires
+    description: >-
+      A separately published dataset the described one needs but does not
+      include, e.g. a road network offered as an asset of its own.
+    range: uriorcurie
+    multivalued: true
+
+  about:
+    slot_uri: sdo:about
+    description: >-
+      The subject matter of the content: a structured content description,
+      such as a scenario description in a domain ontology or a set of ASAM
+      OpenLABEL tags, referenced by IRI.
+    range: uriorcurie
+    multivalued: true
+
+  wasDerivedFrom:
+    slot_uri: prov:wasDerivedFrom
+    description: >-
+      A dataset this one was derived from by transformation or modification,
+      e.g. the base scenario of a weather variant.
+    range: uriorcurie
+    multivalued: true
+
+  wasGeneratedBy:
+    slot_uri: prov:wasGeneratedBy
+    description: The activity that produced the dataset, e.g. a simulation run.
+    range: Activity
+    inlined: false
+
+  accessURL:
+    slot_uri: dcat:accessURL
+    description: A URL of a resource that gives access to the file, e.g. a repository browser page.
+    range: uri
+
+  downloadURL:
+    slot_uri: dcat:downloadURL
+    description: The URL of the downloadable file.
+    range: uri
+
+  mediaType:
+    slot_uri: dcat:mediaType
+    description: >-
+      The media type of the file, as an IANA media-type IRI
+      (https://www.iana.org/assignments/media-types/<type>/<subtype>).
+    range: uri
+
+  byteSize:
+    slot_uri: dcat:byteSize
+    description: The size of the file in bytes.
+    # DCAT 3 recommends xsd:nonNegativeInteger. The validation store (Oxigraph)
+    # rewrites every derived integer datatype to xsd:integer (GAPS.md R7), so
+    # the same value space is stated as an integer of at least zero.
+    range: integer
+    minimum_value: 0
+
+  conformsTo:
+    slot_uri: dcterms:conformsTo
+    description: An established standard the file conforms to, e.g. ASAM OpenSCENARIO XML.
+    range: uriorcurie
+    multivalued: true
+    implements: [owl:AnnotationProperty]
+
+  checksum:
+    slot_uri: spdx:checksum
+    description: A checksum of the file.
+    range: Checksum
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  algorithm:
+    slot_uri: spdx:algorithm
+    description: The hash algorithm used to compute the checksum.
+    range: uriorcurie
+
+  checksumValue:
+    slot_uri: spdx:checksumValue
+    description: The checksum value, in lower-case hexadecimal as SPDX 2.3 requires.
+    # No pattern: gen-owl would state it on xsd:string, whose value space is
+    # disjoint from xsd:hexBinary, leaving the range empty (GAPS.md G23).
+    range: HexBinary
+
+  used:
+    slot_uri: prov:used
+    description: A dataset the activity used, e.g. the simulation asset a run executed.
+    range: uriorcurie
+    multivalued: true
+
+  wasAssociatedWith:
+    slot_uri: prov:wasAssociatedWith
+    description: The software that carried out the activity.
+    range: uriorcurie
+    multivalued: true
+
+  startedAtTime:
+    slot_uri: prov:startedAtTime
+    description: When the activity started.
+    range: datetime
+
+  endedAtTime:
+    slot_uri: prov:endedAtTime
+    description: When the activity ended.
+    range: datetime
+
+  name:
+    slot_uri: foaf:name
+    description: The name of the agent.
+
+  softwareVersion:
+    slot_uri: sdo:softwareVersion
+    description: The version of the software.
+
+  dataset:
+    slot_uri: dcat:dataset
+    description: A dataset listed in the catalog.
+    range: Dataset
+    multivalued: true
+    inlined: false
+
+enums:
+
+  # The roles a dataset plays in a simulation, as SKOS concepts (M12).
+  ResourceType:
+    implements: [owl:NamedIndividual]
+    description: The role a dataset plays in a simulation.
+    permissible_values:
+      scenarioDescription:
+        meaning: simulation-asset:scenarioDescription
+        instantiates: [skos:Concept]
+        title: Scenario description
+        description: A description of the dynamic content of a simulation, e.g. in ASAM OpenSCENARIO XML.
+      roadNetwork:
+        meaning: simulation-asset:roadNetwork
+        instantiates: [skos:Concept]
+        title: Road network
+        description: A road network or map, e.g. in ASAM OpenDRIVE or NDS.
+      objectModel:
+        meaning: simulation-asset:objectModel
+        instantiates: [skos:Concept]
+        title: Object model
+        description: A 3D model of a road user or another movable object, e.g. in glTF.
+      sceneryModel:
+        meaning: simulation-asset:sceneryModel
+        instantiates: [skos:Concept]
+        title: Scenery model
+        description: A 3D model of the static environment, e.g. in glTF.
+      simulatorResource:
+        meaning: simulation-asset:simulatorResource
+        instantiates: [skos:Concept]
+        title: Simulator resource
+        description: A resource the simulator needs to execute the content, e.g. a sensor lookup table or a material definition.
+      simulationTrace:
+        meaning: simulation-asset:simulationTrace
+        instantiates: [skos:Concept]
+        title: Simulation trace
+        description: A recording of a simulation run, e.g. an ASAM OSI trace.
+
+  # SPDX 2.3 named individuals; the subset a build system produces.
+  ChecksumAlgorithm:
+    implements: [owl:NamedIndividual]
+    description: Hash algorithms, as SPDX 2.3 checksum-algorithm individuals.
+    permissible_values:
+      checksumAlgorithm_sha256:
+        meaning: spdx:checksumAlgorithm_sha256
+        instantiates: [spdx:ChecksumAlgorithm]
+      checksumAlgorithm_sha384:
+        meaning: spdx:checksumAlgorithm_sha384
+        instantiates: [spdx:ChecksumAlgorithm]
+      checksumAlgorithm_sha512:
+        meaning: spdx:checksumAlgorithm_sha512
+        instantiates: [spdx:ChecksumAlgorithm]
+
+  # The EU access-right authority table, as DCAT-AP uses it.
+  AccessRight:
+    implements: [owl:NamedIndividual]
+    description: Access rights from the EU access-right authority table.
+    permissible_values:
+      PUBLIC:
+        meaning: access-right:PUBLIC
+        instantiates: [dcterms:RightsStatement]
+      RESTRICTED:
+        meaning: access-right:RESTRICTED
+        instantiates: [dcterms:RightsStatement]
+      NON_PUBLIC:
+        meaning: access-right:NON_PUBLIC
+        instantiates: [dcterms:RightsStatement]

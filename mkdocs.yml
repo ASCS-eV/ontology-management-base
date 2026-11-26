@@ -96,6 +96,7 @@ nav:
         - scenario: ontologies/properties/scenario.md
         - service: ontologies/properties/service.md
         - simulated-sensor: ontologies/properties/simulated-sensor.md
+        - simulation-asset: ontologies/properties/simulation-asset.md
         - simulation-model: ontologies/properties/simulation-model.md
         - surface-model: ontologies/properties/surface-model.md
         - survey: ontologies/properties/survey.md
@@ -120,6 +121,7 @@ nav:
         - scenario: ontologies/classes/scenario/index.md
         - service: ontologies/classes/service/index.md
         - simulated-sensor: ontologies/classes/simulated-sensor/index.md
+        - simulation-asset: ontologies/classes/simulation-asset/index.md
         - simulation-model: ontologies/classes/simulation-model/index.md
         - surface-model: ontologies/classes/surface-model/index.md
         - survey: ontologies/classes/survey/index.md

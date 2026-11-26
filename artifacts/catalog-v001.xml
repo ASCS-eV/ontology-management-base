@@ -31,6 +31,9 @@
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v6" uri="scenario/scenario.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v6/context" uri="scenario/scenario.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/scenario/v6/shapes" uri="scenario/scenario.shacl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/simulation-asset/v1" uri="simulation-asset/simulation-asset.owl.ttl"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/context" uri="simulation-asset/simulation-asset.context.jsonld"/>
+  <uri name="https://w3id.org/ascs-ev/envited-x/simulation-asset/v1/shapes" uri="simulation-asset/simulation-asset.shacl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/surface-model/v6" uri="surface-model/surface-model.owl.ttl"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/surface-model/v6/context" uri="surface-model/surface-model.context.jsonld"/>
   <uri name="https://w3id.org/ascs-ev/envited-x/surface-model/v6/shapes" uri="surface-model/surface-model.shacl.ttl"/>
